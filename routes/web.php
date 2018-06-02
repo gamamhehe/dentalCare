@@ -14,8 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+})->name('admin.dashboard');
+Route::get('/logout', 'AdminController@logout')->name('admin.logout');
 Route::get('/lara-admin', 'AdminController@checkSessionLogin')->name('checkSessionLogin');
-Route::get('/loginAdmin', 'AdminController@checkLogin')->name('admin.login');
+Route::post('/loginAdmin', 'AdminController@checkLogin')->name('admin.login');
 
 Route::group(['middleware' => 'loginFacebook'], function () {
 

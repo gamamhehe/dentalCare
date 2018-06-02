@@ -17,7 +17,8 @@ class AdminController extends Controller
         }
     }
     public function checkLogin(Request $request){
-
+        session(['nameUser' => "abc"]);
+        return view('admin.dashboard');
     }
     public function dashboard(Request $request){
             return view('admin.dashboard');
