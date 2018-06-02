@@ -34,13 +34,9 @@ return array(
     'Carbon\\Exceptions\\InvalidDateException' => $vendorDir . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
     'Carbon\\Translator' => $vendorDir . '/nesbot/carbon/src/Carbon/Translator.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-<<<<<<< HEAD
     'CreateTblRolesTable' => $baseDir . '/database/migrations/2018_05_31_163343_create_tblRoles_table.php',
     'CreateTblUserHasRoleTable' => $baseDir . '/database/migrations/2018_05_31_163312_create_tblUser_has_role_table.php',
     'CreateTblUsersTable' => $baseDir . '/database/migrations/2018_05_31_161937_create_tblUsers_table.php',
-=======
-    'CreateTbleUsersTable' => $baseDir . '/database/migrations/2018_05_31_161922_create_tbleUsers_table.php',
->>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'Cron\\AbstractField' => $vendorDir . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
     'Cron\\CronExpression' => $vendorDir . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
