@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "eve",
   "repo": "adobe-webplatform/eve",
@@ -11,3 +12,18 @@
     "eve.js"
   ]
 }
+=======
+{
+  "name": "eve",
+  "repo": "adobe-webplatform/eve",
+  "description": "Custom Events",
+  "version": "0.5.0",
+  "keywords": ["events"],
+  "dependencies": {},
+  "development": {},
+  "main": "eve.js",
+  "scripts": [
+    "eve.js"
+  ]
+}
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de

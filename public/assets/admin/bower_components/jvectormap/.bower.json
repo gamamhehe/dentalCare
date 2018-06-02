@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "jvectormap",
   "homepage": "https://github.com/bjornd/jvectormap",
@@ -11,4 +12,19 @@
   "_source": "https://github.com/bjornd/jvectormap.git",
   "_target": "^2.0.4",
   "_originalSource": "jvectormap"
+=======
+{
+  "name": "jvectormap",
+  "homepage": "https://github.com/bjornd/jvectormap",
+  "version": "2.0.4",
+  "_release": "2.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.0.4",
+    "commit": "9cf8b5933c2b014f431101b618af30e8c476223f"
+  },
+  "_source": "https://github.com/bjornd/jvectormap.git",
+  "_target": "^2.0.4",
+  "_originalSource": "jvectormap"
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de
 }

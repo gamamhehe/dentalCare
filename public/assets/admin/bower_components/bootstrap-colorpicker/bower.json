@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "bootstrap-colorpicker",
   "main": [
@@ -18,3 +19,25 @@
     "/server.js"
   ]
 }
+=======
+{
+  "name": "bootstrap-colorpicker",
+  "main": [
+    "dist/css/bootstrap-colorpicker.css",
+    "dist/js/bootstrap-colorpicker.js"
+  ],
+  "dependencies": {
+    "jquery": ">=1.10"
+  },
+  "ignore": [
+    "\\.*",
+    "/index.html",
+    "/package.json",
+    "/composer.json",
+    "/Gruntfile.js",
+    "/.travis.yml",
+    "/travis.sh",
+    "/server.js"
+  ]
+}
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de

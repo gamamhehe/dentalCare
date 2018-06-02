@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "moment",
   "license": "MIT",
@@ -33,4 +34,41 @@
   "_source": "https://github.com/moment/moment.git",
   "_target": "^2.18.1",
   "_originalSource": "moment"
+=======
+{
+  "name": "moment",
+  "license": "MIT",
+  "main": "moment.js",
+  "ignore": [
+    "**/.*",
+    "benchmarks",
+    "bower_components",
+    "meteor",
+    "node_modules",
+    "scripts",
+    "tasks",
+    "test",
+    "component.json",
+    "composer.json",
+    "CONTRIBUTING.md",
+    "ender.js",
+    "Gruntfile.js",
+    "Moment.js.nuspec",
+    "package.js",
+    "package.json",
+    "ISSUE_TEMPLATE.md",
+    "typing-tests"
+  ],
+  "homepage": "https://github.com/moment/moment",
+  "version": "2.18.1",
+  "_release": "2.18.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.18.1",
+    "commit": "0af7d4f5f25f911c2eaab2a7ccb534c17e65c536"
+  },
+  "_source": "https://github.com/moment/moment.git",
+  "_target": "^2.18.1",
+  "_originalSource": "moment"
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de
 }

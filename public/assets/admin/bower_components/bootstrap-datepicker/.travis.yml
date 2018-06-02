@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 sudo: false
 
 language: node_js
@@ -7,3 +8,14 @@ node_js:
 
 before_script:
   - npm install -g grunt-cli
+=======
+sudo: false
+
+language: node_js
+
+node_js:
+  - "6"
+
+before_script:
+  - npm install -g grunt-cli
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de

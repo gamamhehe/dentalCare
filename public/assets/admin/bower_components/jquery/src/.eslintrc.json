@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 {
 	"root": true,
 
 	"extends": "../.eslintrc-browser.json"
 }
+=======
+{
+	"root": true,
+
+	"extends": "../.eslintrc-browser.json"
+}
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de

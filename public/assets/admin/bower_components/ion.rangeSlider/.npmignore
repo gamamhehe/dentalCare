@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .idea
 _tmp
 PSD
@@ -5,3 +6,12 @@ bower.json
 ion-rangeSlider.jquery.json
 readme.ru.md
 .npmignore
+=======
+.idea
+_tmp
+PSD
+bower.json
+ion-rangeSlider.jquery.json
+readme.ru.md
+.npmignore
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de

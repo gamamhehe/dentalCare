@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Faroese translation for bootstrap-datepicker
  * Theodor Johannesen <http://github.com/theodorjohannesen>
@@ -13,3 +14,20 @@
 		clear: "Reinsa"
 	};
 }(jQuery));
+=======
+/**
+ * Faroese translation for bootstrap-datepicker
+ * Theodor Johannesen <http://github.com/theodorjohannesen>
+ */
+;(function($){
+	$.fn.datepicker.dates['fo'] = {
+		days: ["Sunnudagur", "Mánadagur", "Týsdagur", "Mikudagur", "Hósdagur", "Fríggjadagur", "Leygardagur"],
+		daysShort: ["Sun", "Mán", "Týs", "Mik", "Hós", "Frí", "Ley"],
+		daysMin: ["Su", "Má", "Tý", "Mi", "Hó", "Fr", "Le"],
+		months: ["Januar", "Februar", "Marts", "Apríl", "Mei", "Juni", "Juli", "August", "Septembur", "Oktobur", "Novembur", "Desembur"],
+		monthsShort: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"],
+		today: "Í Dag",
+		clear: "Reinsa"
+	};
+}(jQuery));
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de

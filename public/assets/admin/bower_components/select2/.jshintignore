@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 src/js/banner.*.js
 src/js/wrapper.*.js
 tests/vendor/*.js
 tests/helpers.js
+=======
+src/js/banner.*.js
+src/js/wrapper.*.js
+tests/vendor/*.js
+tests/helpers.js
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de

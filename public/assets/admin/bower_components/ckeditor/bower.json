@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
 	"name": "ckeditor",
 	"description": "JavaScript WYSIWYG web text editor.",
@@ -8,3 +9,15 @@
 	"main": "./ckeditor.js",
 	"moduleType": "globals"
 }
+=======
+{
+	"name": "ckeditor",
+	"description": "JavaScript WYSIWYG web text editor.",
+	"keywords": [ "ckeditor", "fckeditor", "editor", "wysiwyg", "html", "richtext", "text", "javascript" ],
+	"authors": "CKSource (http://cksource.com/)",
+	"license": "For licensing, see LICENSE.md or http://ckeditor.com/license.",
+	"homepage": "http://ckeditor.com",
+	"main": "./ckeditor.js",
+	"moduleType": "globals"
+}
+>>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de
