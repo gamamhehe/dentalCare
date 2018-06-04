@@ -14,7 +14,7 @@ class CreateTblUserHasRoleTable extends Migration
     public function up()
     {
         Schema::create('tblUser_has_role', function (Blueprint $table) {
-            $table->string('user_id')->unique();
+            $table->string('phone')->unique();
             $table->string('role_id')->unique();
             $table->string('role_start_time');
             $table->string('role_end_time')->nullable();

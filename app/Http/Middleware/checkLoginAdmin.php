@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+use Closure, Auth;
 
 class checkLoginAdmin
 {
@@ -15,9 +15,9 @@ class checkLoginAdmin
      */
     public function handle($request, Closure $next)
     {
-        $sessionUser = $request->session()->get('idAdmin', 'default');
+        $sessionUser = $request->session()->get('admin', 'default');
         if ($sessionUser == 'default') {
-            return redirect('/');
+            return redirect('/lara-admin');
         }
         return $next($request);
     }

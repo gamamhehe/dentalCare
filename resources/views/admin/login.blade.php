@@ -25,7 +25,8 @@
     <![endif]-->
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -38,17 +39,60 @@
 
         <form action="{!! url('/loginAdmin') !!}" method="Post">
             {{ csrf_field() }}
-            <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Phone">
+            <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
+                <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                       required autofocus>
                 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                @if ($errors->has('phone'))
+                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                @endif
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" class="form-control" placeholder="Password" name="password" required>
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                @if ($errors->has('password'))
+                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                @endif
             </div>
+            @if (\Session::has('fail'))
+                <span class="help-block has-error" style="color: #dd4b39">
+                       <strong>{!! \Session::get('fail') !!}</strong>
+                </span>
+            @endif
+
+
+            {{--<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">--}}
+            {{--<label for="email" class="col-md-4 control-label">E-Mail Address</label>--}}
+
+            {{--<div class="col-md-6">--}}
+            {{--<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>--}}
+
+
+            {{--</div>--}}
+            {{--</div>--}}
+
+            {{--<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">--}}
+            {{--<label for="password" class="col-md-4 control-label">Password</label>--}}
+
+            {{--<div class="col-md-6">--}}
+            {{--<input id="password" type="password" class="form-control" name="password" required>--}}
+
+            {{--@if ($errors->has('password'))--}}
+            {{--<span class="help-block">--}}
+            {{--<strong>{{ $errors->first('password') }}</strong>--}}
+            {{--</span>--}}
+            {{--@endif--}}
+            {{--</div>--}}
+            {{--</div>--}}
+
+
             <div class="row">
                 <!-- /.col -->
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                 <!-- /.col -->
             </div>
         </form>

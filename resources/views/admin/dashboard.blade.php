@@ -4,7 +4,7 @@
         <!-- Content Header (Page header) -->
         <section class="content">
             <div class="row">
-                <h1>Hello</h1>
+                <h1> Hello</h1>
             </div>
         </section>
     </div>
