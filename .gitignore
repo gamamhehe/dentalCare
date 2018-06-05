@@ -1,0 +1,4 @@
+.env
+.idea/workspace.xml
+vendor/composer/autoload_classmap.php
+vendor/composer/autoload_static.php
