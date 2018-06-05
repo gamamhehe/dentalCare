@@ -39,7 +39,7 @@ class AdminController extends Controller
             // if successful, then redirect to their intended location
 //            dd(Auth::guard('admins')->user()->has_role()->first()->Role()->first()->name);
             session(['admin' => Auth::guard('admins')->user()]);
-            if (Auth::guard('admins')->user()->has_role()->first()->Role()->first()->id != 1) {
+            if (Auth::guard('admins')->user()->hasRole()->first()->getRole()->first()->id != 1) {
                 return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
             }
             return redirect()->intended(route('admin.dashboard'));
@@ -54,11 +54,8 @@ class AdminController extends Controller
 
     public function logout(Request $request)
     {
-        $request->session()->remove('idFacebook');
-        $request->session()->remove('nameUser');
-        $request->session()->remove('image');
-        $request->session()->remove('gmailAddress');
-        return redirect()->route('main.page');
+        $request->session()->remove('admin');
+        return redirect()->route('checkSessionLogin');
     }
 
     public function initAdmin()

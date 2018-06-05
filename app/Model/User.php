@@ -15,7 +15,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password','remember_token'
     ];
-    public function has_role(){
+    public function hasRole(){
         return $this->hasOne('App\Model\User_has_role', 'phone', 'phone');
+    }
+    public function belongToStaff(){
+        return $this->hasOne('App\Model\Staff', 'phone', 'phone');
     }
 }
