@@ -13,7 +13,7 @@ class CreateTblUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('tblUsers', function (Blueprint $table) {
+        Schema::create('tbl_users', function (Blueprint $table) {
             $table->string("phone")->unique();
             $table->string("password");
             $table->boolean("isActive");
@@ -29,6 +29,6 @@ class CreateTblUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tblUsers');
+        Schema::dropIfExists('tbl_users');
     }
 }

@@ -10,7 +10,7 @@ class User extends Authenticatable
     use Notifiable;
     //
     protected $guard = 'admins';
-    protected $table = 'tblUsers';
+    protected $table = 'tbl_users';
     protected $fillable = ['phone', 'password', 'isActive', 'isDelete'];
     protected $hidden = [
         'password','remember_token'

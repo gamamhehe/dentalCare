@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblStaffsTable extends Migration
+class CreateTblRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateTblStaffsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tblStaffs', function (Blueprint $table) {
+        Schema::create('tbl_roles', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->string('name');
-            $table->string('specialty');
-            $table->date('dateOfBirth');
-            $table->string('phone');
-            $table->string('gender');
-            $table->string('avatar');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateTblStaffsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tblStaffs');
+        Schema::dropIfExists('tblRoles');
     }
 }
