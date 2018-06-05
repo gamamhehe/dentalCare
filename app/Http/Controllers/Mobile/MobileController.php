@@ -7,5 +7,9 @@ use App\Http\Controllers\Controller;
 
 class MobileController extends Controller
 {
+
     //
+    //hello
+
+
 }
