@@ -1,4 +1,7 @@
 .env
+<<<<<<< HEAD
 .idea/workspace.xml
 vendor/composer/autoload_classmap.php
 vendor/composer/autoload_static.php
+=======
+>>>>>>> c42abc3de882353721419dee884e32de28e7a012
