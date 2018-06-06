@@ -25,4 +25,8 @@ class User extends Authenticatable
     public function hasPatient(){
         return $this->hasMany('App\Model\Patient', 'phone', 'phone');
     }
+
+    public function hasAppointment(){
+        return $this->hasMany('App\Model\Appointment', 'phone', 'phone');
+    }
 }
