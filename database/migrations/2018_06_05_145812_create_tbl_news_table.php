@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblUserHasRoleTable extends Migration
+class CreateTblNewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateTblUserHasRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_user_has_role', function (Blueprint $table) {
-            $table->string('phone')->unique();
-            $table->integer('role_id')->unique();
-            $table->string('role_start_time');
-            $table->string('role_end_time')->nullable();
+        Schema::create('tbl_news', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('image_header');
+            $table->string('content');
+            $table->string('title');
+            $table->integer('staff_id');
+            $table->dateTime('create_date');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateTblUserHasRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tblUser_has_role');
+        Schema::dropIfExists('tbl_news');
     }
 }
