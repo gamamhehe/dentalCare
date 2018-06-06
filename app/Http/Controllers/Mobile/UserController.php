@@ -18,39 +18,6 @@ use Mockery\Exception;
 class UserController extends Controller
 {
 
-    /**
-     * @param Request $request
-     * @return json
-     */
-    public function login(Request $request)
-    {
-        try {
-            $error = new \stdClass();
-            $phone = $request->input('phone');
-            $password = $request->input('password');
-            Log::info("LOGIN " . $phone);
-            Log::info("LOGINI2" . $password);
-            $user = User::where('phone', $phone)
-                ->where('password', $password)
-                ->first();
-            if ($user != null) {
-                return response()->json($user, 200);
-            } else {
-                $error->error = "Số điện thoại hoặc mật khẩu không chính xác";
-                $error->exception = "No exception";
-                return response()->json($error, 400);
-            }
-        } catch (Exception $ex) {
-            $error->error = "Đã xảy ra lỗi";
-            $error->exception = $ex;
-            return response()->json($ex, 400);
-        }
-    }
-
-    public function loginGET()
-    {
-        return response()->json(['hello' => 'cha co gi ca haha'], 200);
-    }
 
     public function register(Request $request)
     {
@@ -80,6 +47,34 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return json
+     */
+    public function login(Request $request)
+    {
+        try {
+            $error = new \stdClass();
+            $phone = $request->input('phone');
+            $password = $request->input('password');
+            Log::info("LOGIN " . $phone);
+            Log::info("LOGINI2" . $password);
+            $user = User::where('phone', $phone)
+                ->where('password', $password)
+                ->first();
+            if ($user != null) {
+                return response()->json($user, 200);
+            } else {
+                $error->error = "Số điện thoại hoặc mật khẩu không chính xác";
+                $error->exception = "No exception";
+                return response()->json($error, 400);
+            }
+        } catch (Exception $ex) {
+            $error->error = "Đã xảy ra lỗi";
+            $error->exception = $ex;
+            return response()->json($ex, 400);
+        }
+    }
     public
     function bookAppointment(Request $request)
     {
@@ -87,4 +82,10 @@ class UserController extends Controller
 
         return response()->json([$request->all()], 200);
     }
+    public function loginGET()
+    {
+        return response()->json(['hello' => 'cha co gi ca haha'], 200);
+    }
+
+
 }
