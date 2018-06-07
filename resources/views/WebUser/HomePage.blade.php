@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<title> Example </title>
+<title> Trang chủ </title>
 <meta charset="utf-8">
  
 <meta name="viewport" content="width=device-width, initial-scale=1">  
-<script type="text/javascript" src="vendor/bootstrap.js"></script>
+<script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
 <script src="/assets/user/js/jquery-3.2.1.js"></script>
-<script src="js/jquery.easing.1.3.js"></script>
+<script src="/assets/user/js/jquery.easing.1.3.js"></script>
 
-<link rel="stylesheet" href="js/jquery.fancybox.css" />
+<link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css" />
 <script src="/assets/user/js/jquery.fancybox.js"></script>
 
 <script type="text/javascript" src="/assets/user/js/myjs.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
 <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
 <!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
-<link rel="stylesheet" href="/assets/user/fonts/font-awesome.css">
+<link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
 </head>
 <body>
@@ -33,7 +33,7 @@
 						<a class="nav-link c1" href="#">Giới Thiệu</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c2" href="#about">Chuyên Gia</a>
+						<a class="nav-link c2" href="/doctorList">Chuyên Gia</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link c3" href="#ourmenu">Event</a>
@@ -110,117 +110,39 @@
 	</div>
 	<!-- end banner --> 
 </div>
- 
-	<!-- div bac si -->
-<div class="container" style="margin-top: 30px;margin-bottom: 50px;background-image: ">
+<div class="container" style="margin-top: 30px;margin-bottom: 50px;">
 	<div class="row">
 			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
-				<h3><strong>QUY TỤ ĐỘI NGŨ CHUYÊN GIA</strong></h3>
-				<h4>THẨM MỸ RĂNG HÀM MẶT ĐẦU NGÀNH VIỆT NAM</h4>
+				<h3><strong>CÔNG NGHỆ PHẪU THUẬT THẨM MỸ HOT NHẤT</strong></h3>
 				<div class="gach">
 					<div class="tron"></div>
 				</div>
 			</div>
 	</div>
 	<div class="row">
-			<div class="col-sm-3">
-					<div class="daubep">
-						<div class="tren">
-							<img src="/assets/images/Dentist/Dentist1.PNG" alt="" class="img-fluid xx" >
-							<div class="thongtindp">
-								<div class="goithongtin">
-									<a href="" class="fa fa-facebook"></a>
-									<a href="" class="fa fa-twitter"></a>
-									<a href="" class="fa fa-google-plus"></a>
-									<a href="" class="fa fa-pinterest"></a>
-								</div>
-							</div>
-						</div>
-						<div class="duoi text-xs-center">
-							<h4 class="textdaubep">Bác Sĩxx</h4>
-							<p class="kynang">Hồ Hiệp Anh Tuấn</p>
-						</div>
-					</div>
-			</div>
-			<div class="col-sm-3">
-					<div class="daubep">
-						<div class="tren">
-							<img src="/assets/images/Dentist/Dentist2.PNG" alt="" class="img-fluid xx">
-							<div class="thongtindp">
-								<div class="goithongtin">
-									<a href="" class="fa fa-facebook"></a>
-									<a href="" class="fa fa-twitter"></a>
-									<a href="" class="fa fa-google-plus"></a>
-									<a href="" class="fa fa-pinterest"></a>
-								</div>
-							</div>
-						</div>
-						<div class="duoi text-xs-center">
-							<h4 class="textdaubep">Bác Sĩ</h4>
-							<p class="kynang">Nguyễn Đắc Minh</p>
-						</div>
-					</div>
-			</div>
-			<div class="col-sm-3">
-					<div class="daubep">
-						<div class="tren">
-							<img src="/assets/images/Dentist/Dentist4.PNG" alt="" class="img-fluid xx">
-							<div class="thongtindp">
-								<div class="goithongtin">
-									<a href="" class="fa fa-facebook"></a>
-									<a href="" class="fa fa-twitter"></a>
-									<a href="" class="fa fa-google-plus"></a>
-									<a href="" class="fa fa-pinterest"></a>
-								</div>
-							</div>
-						</div>
-						<div class="duoi text-xs-center">
-							<h4 class="textdaubep">Tiến sĩ - Bác Sĩ</h4>
-							<p class="kynang">Đàm Ngọc Trâm</p>
-						</div>
-					</div>
-			</div>
-			<div class="col-sm-3">
-					<div class="daubep">
-						<div class="tren">
-							<img src="/assets/images/Dentist/Dentist3.PNG" alt="" class="img-fluid xx" >
-							<div class="thongtindp">
-								<div class="goithongtin">
-									<a href="" class="fa fa-facebook"></a>
-									<a href="" class="fa fa-twitter"></a>
-									<a href="" class="fa fa-google-plus"></a>
-									<a href="" class="fa fa-pinterest"></a>
-								</div>
-							</div>
-						</div>
-						<div class="duoi text-xs-center">
-							<h4 class="textdaubep">Bác Sĩ</h4>
-							<p class="kynang">Thái Quốc Long</p>
-						</div>
-					</div>
-			</div>
+		<div class="col-sm-3 motmon">
+			<img src="/assets/images/HomePage/implent.jpg" alt="" class="img-fluid img-responsive">
+			<div class="tieude"><a href="">Trồng răng implent</a></div>
+			<div>ghi gì đó !!!! <button class="btn btn-success roll-button">xem thêm</button></div>
+		</div>
+		<div class="col-sm-3 motmon">
+			<img src="/assets/images/HomePage/rangsu.jpg" alt="" class="img-fluid img-responsive">
+			<div class="tieude"><a href="">Làm răng sứ</a></div>
+			<div>ghi gì đó !!!! <button class="btn btn-success roll-button">xem thêm</button></div>
+		</div>
+		<div class="col-sm-3 motmon">
+			<img src="/assets/images/HomePage/taytrangrag.jpg" alt="" class="img-fluid img-responsive">
+			<div class="tieude"><a href="">Tẩy Trắng Răng</a></div>
+			<div>ghi gì đó !!!! <button class="btn btn-success roll-button">xem thêm</button></div>
+		</div>
+		<div class="col-sm-3 motmon">
+			<img src="/assets/images/HomePage/nienrang.jpg" alt="" class="img-fluid img-responsive">
+			<div class="tieude"><a href="">Niền Răng</a></div>
+			<div>ghi gì đó !!!! <button class="btn btn-success roll-button">xem thêm</button></div>
+		</div>
 	</div>
 </div>
-		<!-- end div bac si -->
-		<!-- dich vu noi bat -->
-<div class="container" style="margin-top: 30px;margin-bottom: 50px;background-image: ">
-	<div class="row">
-			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
-				<h3><strong>DỊCH VỤ NỔI BẬT - PRomotion ???</strong></h3>
-				<h4>THẨM MỸ RĂNG HÀM MẶT ĐẦU NGÀNH VIỆT NAM</h4>
-				<div class="gach">
-					<div class="tron"></div>
-				</div>
-			</div>
-	</div>
-	
-</div>
-<div class="bodyphan2">
-	<img src="/assets/images/carousel/carousel3.jpg" alt="" class="img-responsive" style=" width: 100%;
-height: 600px;
-background-size: cover;
-background-position: center;">
-</div>
+ 	<!-- dich vu noi bat -->
 <div class="container" style="margin-top: 30px;margin-bottom: 50px;">
 	<div class="row">
 			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
@@ -229,6 +151,7 @@ background-position: center;">
 					<div class="tron"></div>
 				</div>
 			</div>
+	</div>
 	</div>
 	<div class="row" style="display: inline-flex;">
 		<div class="col-sm-3">
@@ -272,31 +195,94 @@ background-position: center;">
 				<div class="duoi text-xs-center">
 					<h4 class="textdaubep">ĐIỀU TRỊ VÀ THEO DÕI</h4>
 					<p class="" style="text-align:justify;">Sau khi tiến hành điều trị tại phòng nha. Quí khách sẽ được các nha sĩ theo dõi tình trạng răng cũng như chăm sóc răng định kì</p>
+					<button>Xem thêm</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-		<!-- end dich vu noi bat -->
-		<!-- quangcao -->
-		<div class="container" style="margin-top: 30px;margin-bottom: 50px;">
-
-		</div>
-		<!-- end quangcao -->
-		<!-- lien hệ -->
-<div class="bodyphan2">
-	<img src="/assets/images/Carousel/carousel1.jpg" alt="" class="img-responsive" style=" width: 100%;
-height: 600px;
+	<!-- end dich vu noi bat -->
+<!-- banner 2 -->
+<div  >
+	<div >
+			<img src="/assets/images/HomePage/banner.jpg" alt="" class="img-responsive" style=" width: 100%;
+ 
 background-size: cover;
 background-position: center;">
+</div>  
+	</div>
 </div>
+<!-- end banner 2 -->
+	<!-- thiết bị-->
+<div class="container" style="margin-top: 30px;">
+	<div class="row">
+		<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
+			<h3><strong>HỆ THỐNG PHÒNG KHÁM TIÊN TIẾN NHẤT</strong></h3>
+			<div class="gach">
+				<div class="tron"></div>
+
+			</div>
+		</div>
+		<img src="/assets/images/HomePage/Maymoc.jpg" alt="" class="img-responsive" style=" width: 100%;max-height:450px;">
+	</div>
+</div>	 
+	<!-- end thiet bi -->
+	<!-- Feedback-->
+<div class="container" style="margin-top: 30px;">
+	<div class="row">
+		<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
+			<h3><strong>PHƯƠNG THỨC THANH TOÁN LINH HOẠT</strong></h3>
+			 	<div class="gach">
+				<div class="tron"></div>
+
+			</div>
+		</div>
+	</div>
+	<!-- phuong thuc thanh toan -->
+	<div class="row col-sm" >
+		<div class="col-sm-4  motmon" style="float: left;"> <img src="/assets/images/HomePage/pay1.PNG" alt="" class="img-fluid img-responsive" style=" width: 100%;max-height:300px;"></div>
+		<div class="col-sm-4 motmon"> <img src="/assets/images/HomePage/pay2.PNG" alt="" class="img-responsive" style=" width: 100%;max-height:300px;"></div>
+		<div class="col-sm-4 motmon"> <img src="/assets/images/HomePage/pay3.PNG" alt="" class="img-responsive" style=" width: 100%;max-height:300px;"></div>
+	</div>
+	<!-- end phuong thuc thanh toan -->
+</div>	 
+	<!-- end Feedback --> 
+
 		<!-- end liên hệ -->
 	<!-- footer -->
-<div class="footer">
-	<div class="container">	<div class="container">
-		<div class="col-md-12 bg-blue">CCCC</div>
+<div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
+	<div class="contact" id="contact">
+		<div class="container">
+			 <div class="row">
+			 	<div class="col-sm-4">
+			 		<div><img src="/assets/images/HomePage/logo.png" alt=""></div><br>
+			 		<div>Website: <a href="https://google.com.vn">projectcapstone.vn</a></div>			 		
+			 		<div>Bác sĩ tư vấn (24/7) : <a class="zalovb" id="callme" onclick="ga('send', 'event', 'Phone', 'Click', 'Hotline');" href="tel:0968999777" rel="nofollow">1900.7979</a></div> 
+			 	</div>
+			 	<div class="col-sm-4">
+			 		<div class="place">Hà Nội</div>
+			 		<div>"Tel:"
+			 			<a id="callme" onclick="ga('send', 'event', 'Phone', 'Click', 'Hotline');" href="tel:02473006466">024.73.00.64.66</a><br>
+			 			Mobile:<a class="zalovb" id="callme" onclick="ga('send', 'event', 'Phone', 'Click', 'Hotline');" href="tel:0968999777" rel="nofollow">0968.999.777</a><hr>
+			 		</div>
+			 		<div>
+			 			<a class="chidan" rel="nofollow" target="_blank" href="https://www.google.com/maps/place/B%E1%BB%87nh+Vi%E1%BB%87n+Th%E1%BA%A9m+M%E1%BB%B9+Kangnam/@21.000406,105.8297107,17z/data=!4m13!1m7!3m6!1s0x3135ac8758878c1f:0x8a59d1e808ee7392!2zMTkwIFRyxrDhu51uZyBDaGluaCwgS2jGsMahbmcgVGjGsOG7o25nLCDEkOG7kW5nIMSQYSwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!3b1!8m2!3d21.002795!4d105.828991!3m4!1s0x3135ac7d0b3e238b:0xdf9ae7b52fbbdef!8m2!3d21.0003971!4d105.8305875">190 Trường Chinh - Đống Đa - Hà Nội</a>
+			 		</div>
+			 	</div>
+			 	<div class="col-sm-4">
+			 		<div class="place">Hồ Chí Minh</div>
+			 		<div>"Tel:"
+			 			<a id="callme" onclick="ga('send', 'event', 'Phone', 'Click', 'Hotline');" href="tel:02473006466">024.73.00.64.66</a><br>
+			 			Mobile:<a class="zalovb" id="callme" onclick="ga('send', 'event', 'Phone', 'Click', 'Hotline');" href="tel:0968999777" rel="nofollow">0968.999.777</a><hr>
+			 		</div>
+			 		<div>
+			 			<a class="chidan" rel="nofollow" target="_blank" href="https://www.google.com/maps/place/B%E1%BB%87nh+Vi%E1%BB%87n+Th%E1%BA%A9m+M%E1%BB%B9+Kangnam/@21.000406,105.8297107,17z/data=!4m13!1m7!3m6!1s0x3135ac8758878c1f:0x8a59d1e808ee7392!2zMTkwIFRyxrDhu51uZyBDaGluaCwgS2jGsMahbmcgVGjGsOG7o25nLCDEkOG7kW5nIMSQYSwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!3b1!8m2!3d21.002795!4d105.828991!3m4!1s0x3135ac7d0b3e238b:0xdf9ae7b52fbbdef!8m2!3d21.0003971!4d105.8305875">190 Trường Chinh - Quận 12 - TP.Hồ Chí Minh</a>
+			 		</div>
+			 	</div>
+			 </div>
+		</div>
 	</div>
-	<div class="container">
+	<div class="container" style="background-color: black;width: 100%">
 		<div class="row">
 			<div class="col-xs-12">
 				<p>Designed by Phuc. All Rights Reserved</p>

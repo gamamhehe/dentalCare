@@ -28,7 +28,12 @@
     padding: 4px;
     transition: 0.4s;
 }
-
+.resON{
+    display: block;
+}
+.resOFF{
+    display: none;
+}
 .nut a.fa:hover {
     background: white;
     color: black;
@@ -63,15 +68,26 @@
 .cotmot i.fa {
     font-size: 20px;
 }
-
+.place{
+    font-size: 18px;
+    margin: 5px 0;
+}
 .cotmot span {
     font-size: 13px;
     color: #959696;
 }
-
+.tieude{
+    color: #1760b1;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 1em;
+}
+.roll-button{
+    background-color:#0187ef;border-color:#0187ef;padding:0.6em;
+}
 .contact {
-    background: #171B1E;
-    padding: 100px 0px;
+    /*background: #171B1E;*/
+    padding: 20px 0px;
     overflow: hidden;
 }
 
@@ -326,7 +342,7 @@ body
 .motmon:hover .tenmon {
     opacity: 1;
     transform: translateY(0px);
-    transition-delay: 0.3s;
+    transition-delay: 0.2s;
 }
 
 .gia {
@@ -613,7 +629,20 @@ h3.tdbanner1 {
     background-size: cover;
     background-position: center;
 }
-
+.maymocmot {
+    background: url(/assets/images/HomePage/xquang1.jpg);
+    width: 100%;
+    height: 685px;
+    background-size: cover;
+    background-position: center;
+}
+.maymochai {
+    background: url(/assets/images/HomePage/xquang2.jpg);
+    width: 100%;
+    height: 685px;
+    background-size: cover;
+    background-position: center;
+}
 .thanhmenu ul.navbar-nav li.nav-item
  a.nav-link {
     padding: 20px 9px;
@@ -671,12 +700,61 @@ h3.tdbanner1 {
 .thanhmenu {
     padding: 0px;
     /*background-color: #f04c23;*/
-    background: transparent;
+    /*background: transparent;*/
+    background-color: blue;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: 0.4s;
      
 }
- 
+.divcenter{
+    margin: 0 auto;
+    width: 100%; 
+    
+}
+.img{
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.imgdentist{
+    /*border: 2px solid;*/
+     
+    border-radius: 30px 30px;
+    height: 300px;
+}
+img.centerThing{
+     display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
+.spacebottom{
+    margin-bottom: 2em;
+}
+.docdescript{
+    margin-top: 2em;
+}
+.modaltitle{
+    background: #005296 none repeat scroll 0 0;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 0 10px 25px;
+    position: relative;
+    margin-right: 0px !important;
+}
+.textheader{
+background-color: #e6eeaf;
+    border-width: 1px;
+    border-color: #b5ca28;
+    border-top-width: 3px;
+    border-top-color: #1a80b6;
+    border-style: solid;
+    color: #000;
+    font-size: 16px;
+    padding: 10px 15px 15px 15px;
+    letter-spacing: 0;
+}
 
 .thanhmenu.biendoimenu {
     background: #f04c23;
@@ -712,7 +790,12 @@ h3.tdbanner1 {
 @media (max-width: 576px)
 {
     *{}
-
+.resOFF{
+    display: block;
+}
+.resON{
+    display: none;
+}
 .cotmot {
     text-align: center;
 }
@@ -799,7 +882,12 @@ h3.tdbanner1 {
     margin: 0;
     margin-top: 10px;
 }
-
+/*.resOFF{
+    display: block;
+}
+.resON{
+    display: none;
+}*/
 .nutcontact a.btn {
     font-size: 7px;
     padding: 10px 20px;
