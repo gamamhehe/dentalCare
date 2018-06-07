@@ -29,6 +29,6 @@ class CreateTblUserHasRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tblUser_has_role');
+        Schema::dropIfExists('tbl_user_has_role');
     }
 }
