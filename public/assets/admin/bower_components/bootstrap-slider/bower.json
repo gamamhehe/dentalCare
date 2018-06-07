@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "name": "bootstrap-slider",
   "main": ["bootstrap-slider.js", "slider.css"],
@@ -21,27 +20,3 @@
     "tests"
   ]
 }
-=======
-{
-  "name": "bootstrap-slider",
-  "main": ["bootstrap-slider.js", "slider.css"],
-  "version": "2.0.0",
-  "homepage": "https://github.com/pammacdotnet/bootstrap-slider",
-  "authors": [
-    "pammacdotnet"
-  ],
-  "description": "Eyecon Slider for Bootstrap",
-  "keywords": [
-    "slider",
-    "bootstrap"
-  ],
-  "license": "Apache",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ]
-}
->>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de
