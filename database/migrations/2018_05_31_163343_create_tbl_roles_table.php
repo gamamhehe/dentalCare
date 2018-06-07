@@ -28,6 +28,6 @@ class CreateTblRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tblRoles');
+        Schema::dropIfExists('tbl_roles');
     }
 }
