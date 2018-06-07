@@ -1,9 +1,3 @@
-<<<<<<< HEAD
 node_modules
 dist/js/i18n/build.txt
 .sass-cache
-=======
-node_modules
-dist/js/i18n/build.txt
-.sass-cache
->>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de
