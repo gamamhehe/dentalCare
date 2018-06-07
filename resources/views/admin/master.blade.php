@@ -89,6 +89,7 @@
 {{--<script src="//cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>--}}
 <!-- AdminLTE for demo purposes -->
 <script src="/assets/admin/input_file/fileinput.js"></script>
+<script src="/vendor/laravel-filemanager/js/lfm.js"></script>
 <script src="/assets/admin/dist/js/demo.js"></script>
 <script src="{{URL::to('assets/admin/tinymce/js/tinymce/tinymce.min.js')}}"></script>
 <script src="{{URL::to('assets/admin/main.js')}}"></script>
