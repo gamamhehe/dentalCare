@@ -13,7 +13,7 @@ class CreateTblTreatmentCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_treatment_detail_categories', function (Blueprint $table) {
+        Schema::create('tbl_treatment_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('description');
@@ -29,6 +29,6 @@ class CreateTblTreatmentCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_treatment_detail_categories');
+        Schema::dropIfExists('tbl_treatment_categories');
     }
 }
