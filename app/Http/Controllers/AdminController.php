@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Role;
 use App\Model\User;
+use App\Model\Staff;
 use App\Model\User_has_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -99,6 +100,9 @@ class AdminController extends Controller
             'name' => 'Doctor',
             'description' => 'Doctor of dental Clinic',
         ]);
+
+    }
+    public function initDentist{
 
     }
     // tao ghim lắm nha ! TAO LÀM. DATA Là TAOOO LÀM NHA TÀi !
