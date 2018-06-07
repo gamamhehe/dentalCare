@@ -1,6 +1,2 @@
-<<<<<<< HEAD
 ﻿CKEDITOR.plugins.setLang("image2","nl",{alt:"Alternatieve tekst",btnUpload:"Naar server verzenden",captioned:"Afbeelding met onderschrift",captionPlaceholder:"Onderschrift",infoTab:"Afbeeldingsinformatie",lockRatio:"Verhouding vergrendelen",menu:"Eigenschappen afbeelding",pathName:"afbeelding",pathNameCaption:"onderschrift",resetSize:"Afmetingen herstellen",resizer:"Klik en sleep om te herschalen",title:"Afbeeldingseigenschappen",uploadTab:"Uploaden",urlMissing:"De URL naar de afbeelding ontbreekt.",
-=======
-﻿CKEDITOR.plugins.setLang("image2","nl",{alt:"Alternatieve tekst",btnUpload:"Naar server verzenden",captioned:"Afbeelding met onderschrift",captionPlaceholder:"Onderschrift",infoTab:"Afbeeldingsinformatie",lockRatio:"Verhouding vergrendelen",menu:"Eigenschappen afbeelding",pathName:"afbeelding",pathNameCaption:"onderschrift",resetSize:"Afmetingen herstellen",resizer:"Klik en sleep om te herschalen",title:"Afbeeldingseigenschappen",uploadTab:"Uploaden",urlMissing:"De URL naar de afbeelding ontbreekt.",
->>>>>>> 6647e7f68513f34b86ec6c59d3a99f618da1b2de
 altMissing:"Alternatieve tekst ontbreekt."});
