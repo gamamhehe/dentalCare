@@ -6,6 +6,7 @@ use App\Model\Role;
 use App\Model\User;
 use App\Model\Treatment_category;
 use App\Model\Treatment;
+use App\Model\Staff;
 use App\Model\User_has_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -100,6 +101,23 @@ class AdminController extends Controller
             'id' => '2',
             'name' => 'Doctor',
             'description' => 'Doctor of dental Clinic',
+        ]);
+        User::create([
+            'phone' => '01279011098',
+            'password' => Hash::make('#2017#'),
+            'isActive' => true,
+            'isDelete' => false
+        ]);
+        User_has_role::create([
+            'phone' => '01279011098',
+            'role_id' => 3,
+            'role_start_time' => Carbon::now(),
+            'role_end_time' => null
+        ]);
+        Role::create([
+            'id' => '3',
+            'name' => 'Receptionist',
+            'description' => 'Receptionist of dental Clinic',
         ]);
 
     } 
@@ -459,7 +477,10 @@ class AdminController extends Controller
             'created_at' => '2018-06-13 00:00:00',
             'updated_at' => '2018-06-03 00:00:00'
         ]);
-         
+    
+    public function initRole(){
+
+    }   
 
     }
     public function initTreatmentCate()
