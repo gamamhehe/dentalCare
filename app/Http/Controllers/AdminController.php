@@ -129,8 +129,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'250000',
             'max_price'=>'350000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'Cạo vôi dưới nướu ',
@@ -138,8 +136,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'500000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'Cắt Nướu ',
@@ -147,8 +143,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'1000000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'Phẫu Thuật Nha Chu răng ',
@@ -156,8 +150,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'2000000',
             'max_price'=>'2000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'Nạo Túi Nha Chu ',
@@ -165,8 +157,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'200000',
             'max_price'=>'200000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'TRÁM RĂNG COMPOSITE XOANG I VÀ V',
@@ -174,8 +164,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'300000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
          Treatment::create([
             'name' => 'TRÁM RĂNG COMPOSITE XOANG II ,III VÀ IV hay Đắt mặt',
@@ -183,8 +171,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'500000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'TẨY TRẮNG TẠI PHÒNG KHÁM ',
@@ -192,8 +178,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'2000000',
             'max_price'=>'2000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'TẨY TRẮNG TẠI PHÒNG Nhà ',
@@ -201,8 +185,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'1000000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         
         Treatment::create([
@@ -211,8 +193,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'1000000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'POST TRÁM - POST KIM LOẠI',
@@ -220,8 +200,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'300000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'RĂNG CỬA',
@@ -229,8 +207,6 @@ class AdminController extends Controller
             'treatment_category_id' => '3',
             'min_price' =>'700000 ',
             'max_price'=>'700000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'RĂNG CỐI NHỎ VÀ RĂNG NANH',
@@ -238,8 +214,6 @@ class AdminController extends Controller
             'treatment_category_id' => '3',
             'min_price' =>'900000',
             'max_price'=>'900000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'RĂNG CỐI LỚN',
@@ -247,8 +221,6 @@ class AdminController extends Controller
             'treatment_category_id' => '3',
             'min_price' =>'1100000',
             'max_price'=>'1100000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'LẤY TỦY LẠI',
@@ -256,8 +228,6 @@ class AdminController extends Controller
             'treatment_category_id' => '3',
             'min_price' =>'300000',
             'max_price'=>'300000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG SỮA',
@@ -265,8 +235,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'0',
             'max_price'=>'0',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG CỬA',
@@ -274,8 +242,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'500000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG CỐI NHỎ',
@@ -283,8 +249,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'700000',
             'max_price'=>'700000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG CỐI LỚN HOẶC RĂNG KHÔN HÀM TRÊN',
@@ -292,8 +256,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'1000000',
             'max_price'=>'1500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG TIỂU PHẨU',
@@ -301,8 +263,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'1500000',
             'max_price'=>'2000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ KL THƯỜNG',
@@ -310,8 +270,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'1500000',
             'max_price'=>'1500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ TITAN',
@@ -319,8 +277,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'2500000',
             'max_price'=>'2500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ ZIRCONIA',
@@ -328,8 +284,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'4000000',
             'max_price'=>'4000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ LAVA',
@@ -337,8 +291,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'7000000',
             'max_price'=>'7000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'VENEER',
@@ -346,8 +298,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'6000000',
             'max_price'=>'8000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ CERCON',
@@ -355,8 +305,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'5000000',
             'max_price'=>'5000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'CÙI GIẢ KIM LOẠI',
@@ -364,8 +312,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'500000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'CÙI GIẢ SỨ',
@@ -373,8 +319,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'1500000',
             'max_price'=>'1500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'HÀM NHỰA - RĂNG NHỰA VIỆT NAM',
@@ -382,8 +326,6 @@ class AdminController extends Controller
             'treatment_category_id' => '6',
             'min_price' =>'300000',
             'max_price'=>'300000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
          Treatment::create([
             'name' => 'HÀM NHỰA -RĂNG COMPOSITE',
@@ -391,8 +333,6 @@ class AdminController extends Controller
             'treatment_category_id' => '6',
             'min_price' =>'500000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
           Treatment::create([
             'name' => 'HÀM NHỰA -RĂNG SỨ',
@@ -400,8 +340,6 @@ class AdminController extends Controller
             'treatment_category_id' => '6',
             'min_price' =>'600000',
             'max_price'=>'600000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
          
         Treatment::create([
@@ -410,8 +348,6 @@ class AdminController extends Controller
             'treatment_category_id' => '7',
             'min_price' =>'15400000',
             'max_price'=>'15400000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
          Treatment::create([
             'name' => 'DENTIUM MỸ',
@@ -419,8 +355,6 @@ class AdminController extends Controller
             'treatment_category_id' => '7',
             'min_price' =>'19800000',
             'max_price'=>'19800000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
           Treatment::create([
             'name' => 'NOBEL HAY STRAUMAN',
@@ -428,8 +362,6 @@ class AdminController extends Controller
             'treatment_category_id' => '7',
             'min_price' =>'28600000',
             'max_price'=>'28600000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
 
         Treatment::create([
@@ -438,8 +370,6 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'30000000',
             'max_price'=>'35000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MẮC CÀI SỨ',
@@ -447,8 +377,6 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'40000000',
             'max_price'=>'45000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MẮC CÀI KIM LOẠI TỰ KHÓA',
@@ -456,8 +384,6 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'40000000',
             'max_price'=>'45000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MẮC CÀI SỨ',
@@ -465,8 +391,6 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'55000000',
             'max_price'=>'60000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'INVISALGN( KHÔNG MẮC CÀI)',
@@ -474,73 +398,77 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'88000000',
             'max_price'=>'115000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
     
-    public function initRole(){
+    // public function initRole(){
 
     }   
 
-    }
+    // }
     public function initTreatmentCate()
     {
         Treatment_category::create([
-            'name' => 'Nha Chu',
+            'name' => 'Demo',
             'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
-            'icon_link' => '',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+            'icon_link' => ''
+            
         ]);
-        Treatment_category::create([
-            'name' => 'Trám Răng',
-            'description' => ' XXX',
-            'icon_link' => '',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
-        ]);
-        Treatment_category::create([
-            'name' => 'Nội Nha ',
-            'description' => 'phương pháp điều trị ở bên trong của răng. Bên trong răng, dưới men trắng và một lớp cứng gọi là ngà răng, là một mô mềm gọi là tủy răng. Tủy răng chứa các mạch máu, dây thần kinh, và mô liên kết  ',
-            'icon_link' => '',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
-        ]);
-        Treatment_category::create([
-            'name' => ' Nhổ Răng',
-            'description' => 'Nhổ răng khó là những răng mọc lệch, răng ngầm, răng khôn bị tai biến, răng bị gẫy chân, răng dính khớp..',
-            'icon_link' => '',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
-        ]);
-        Treatment_category::create([
-            'name' => 'PHỤC HÌNH CỐ ĐỊNH',
-            'description' => 'Phục hình cố định (răng giả cố định) là các loại phục hình – răng giả (mão – cầu răng sứ, mão – cầu răng kim loại…) được gắn cố định vào hàm, miệng người mang.  ',
-            'icon_link' => '',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
-        ]);
-        Treatment_category::create([
-            'name' => 'PHỤC HÌNH THÁO LẮP ',
-            'description' => 'Phục hình tháo lắp, cụ thể là phục hình tháo lắp răng là phương pháp phục hồi các răng hư tổn, để tái tạo các chức năng của răng. Hay phục hình tháo lắp có thể hiểu là sử dụng răng giả để tháo lắp. Bạn có thể cho răng vào và lấy ra dễ dàng để vệ sinh răng',
-            'icon_link' => '',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
-        ]);
-        Treatment_category::create([
-            'name' => 'IMPLANT (BAO GỒM PHỤC HÌNH) ',
-            'description' => 'Cấy ghép răng Implant nha khoa là phương pháp phục hình răng tốt nhất cho người bị mất răng, đảm bảo khả năng ăn nhai giống hoàn toàn như một chiếc răng bình thường.',
-            'icon_link' => '',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
-        ]);
-        Treatment_category::create([
-            'name' => 'CHỈNH NHA',
-            'description' => 'Chỉnh nha là một nhánh của ngành nha khoa giúp điều chỉnh vị trí của hàm và những răng sai lệch. Những răng bị lệch lạc và những răng không vừa khít với khuôn miệng. ',
-            'icon_link' => '',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
-        ]);
+        // Treatment_category::create([
+        //     'name' => 'Nha Chu',
+        //     'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
+        //     'icon_link' => '',
+        //     'created_at' => '2018-06-13 00:00:00',
+        //     'updated_at' => '2018-06-03 00:00:00'
+        // ]);
+        // Treatment_category::create([
+        //     'name' => 'Trám Răng',
+        //     'description' => ' XXX',
+        //     'icon_link' => '',
+        //     'created_at' => '2018-06-13 00:00:00',
+        //     'updated_at' => '2018-06-03 00:00:00'
+        // ]);
+        // Treatment_category::create([
+        //     'name' => 'Nội Nha ',
+        //     'description' => 'phương pháp điều trị ở bên trong của răng. Bên trong răng, dưới men trắng và một lớp cứng gọi là ngà răng, là một mô mềm gọi là tủy răng. Tủy răng chứa các mạch máu, dây thần kinh, và mô liên kết  ',
+        //     'icon_link' => '',
+        //     'created_at' => '2018-06-13 00:00:00',
+        //     'updated_at' => '2018-06-03 00:00:00'
+        // ]);
+        // Treatment_category::create([
+        //     'name' => ' Nhổ Răng',
+        //     'description' => 'Nhổ răng khó là những răng mọc lệch, răng ngầm, răng khôn bị tai biến, răng bị gẫy chân, răng dính khớp..',
+        //     'icon_link' => '',
+        //     'created_at' => '2018-06-13 00:00:00',
+        //     'updated_at' => '2018-06-03 00:00:00'
+        // ]);
+        // Treatment_category::create([
+        //     'name' => 'PHỤC HÌNH CỐ ĐỊNH',
+        //     'description' => 'Phục hình cố định (răng giả cố định) là các loại phục hình – răng giả (mão – cầu răng sứ, mão – cầu răng kim loại…) được gắn cố định vào hàm, miệng người mang.  ',
+        //     'icon_link' => '',
+        //     'created_at' => '2018-06-13 00:00:00',
+        //     'updated_at' => '2018-06-03 00:00:00'
+        // ]);
+        // Treatment_category::create([
+        //     'name' => 'PHỤC HÌNH THÁO LẮP ',
+        //     'description' => 'Phục hình tháo lắp, cụ thể là phục hình tháo lắp răng là phương pháp phục hồi các răng hư tổn, để tái tạo các chức năng của răng. Hay phục hình tháo lắp có thể hiểu là sử dụng răng giả để tháo lắp. Bạn có thể cho răng vào và lấy ra dễ dàng để vệ sinh răng',
+        //     'icon_link' => '',
+        //     'created_at' => '2018-06-13 00:00:00',
+        //     'updated_at' => '2018-06-03 00:00:00'
+        // ]);
+        // Treatment_category::create([
+        //     'name' => 'IMPLANT (BAO GỒM PHỤC HÌNH) ',
+        //     'description' => 'Cấy ghép răng Implant nha khoa là phương pháp phục hình răng tốt nhất cho người bị mất răng, đảm bảo khả năng ăn nhai giống hoàn toàn như một chiếc răng bình thường.',
+        //     'icon_link' => '',
+        //     'created_at' => '2018-06-13 00:00:00',
+        //     'updated_at' => '2018-06-03 00:00:00'
+        // ]);
+        // Treatment_category::create([
+        //     'name' => 'CHỈNH NHA',
+        //     'description' => 'Chỉnh nha là một nhánh của ngành nha khoa giúp điều chỉnh vị trí của hàm và những răng sai lệch. Những răng bị lệch lạc và những răng không vừa khít với khuôn miệng. ',
+        //     'icon_link' => '',
+        //     'created_at' => '2018-06-13 00:00:00',
+        //     'updated_at' => '2018-06-03 00:00:00'
+        // ]);
 
     }
 }
