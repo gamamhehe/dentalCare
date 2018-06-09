@@ -1,0 +1,949 @@
+*{margin: 0;padding: 0;}
+.cot4{
+    height: 400px;
+    background-color: red;
+}
+.Bacsititle{
+    font-size: bold;
+}
+.footer {
+    background: #000000;
+    color: white;
+    overflow: hidden;
+}
+
+.footer p {
+    padding: 20px 0px;
+    margin: 0;
+    text-align: center;
+}
+
+.nut a.fa {
+    font-size: 20px;
+    color: white;
+    margin: 32px 10px;
+    background: #f04c23;
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    transition: 0.4s;
+}
+.resON{
+    display: block;
+}
+.resOFF{
+    display: none;
+}
+.nut a.fa:hover {
+    background: white;
+    color: black;
+    text-decoration: none;
+}
+
+.nutcontact {
+    text-align: center;
+}
+
+.logoduoi img {
+    width: 210px;
+}
+
+.cothai h5, .cotba h5, .cotbon h5 {
+    text-align: center;
+    font-size: 20px;
+    color: white;
+}
+
+
+.opening {
+    margin-top: 44px;
+}
+
+.cotmot {
+    color: white;
+    line-height: 38px;
+    margin-top: 25px;
+}
+
+.cotmot i.fa {
+    font-size: 20px;
+}
+.place{
+    font-size: 18px;
+    margin: 5px 0;
+}
+.cotmot span {
+    font-size: 13px;
+    color: #959696;
+}
+.tieude{
+    color: #1760b1;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 1em;
+}
+.roll-button{
+    background-color:#0187ef;border-color:#0187ef;padding:0.6em;
+}
+.contact {
+    /*background: #171B1E;*/
+    padding: 20px 0px;
+    overflow: hidden;
+}
+
+.bando .thongtinkh {
+    position: absolute;
+    top: 0px;
+    background: rgba(0, 0, 0, 0.67);
+    left: 0px;
+    border-radius: 30px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bando {
+    position: relative;
+    width: 100%;
+}
+body
+{
+    font-family: 'Open Sans', sans-serif; 
+}
+
+.mothinhcotba {
+    padding: 8px;
+}
+.daubep {
+    padding: 5px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.daubep:hover {
+    border-color: #F28E83;
+}
+
+.goithongtin a.fa {
+    color: rgb(234, 98, 92);
+    font-size: 20px;
+    background: white;
+    width: 35px;
+    height: 35px;
+    box-sizing: border-box;
+    padding: 9px 9px;
+    margin: 0px 4px;
+}
+
+.goithongtin a.fa:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.goithongtin {
+    display: inline-block;
+}
+
+.motkhoi h5 {
+    margin: 0;
+    color: white;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.motkhoi i.fa {
+    background: white;
+    font-size: 25px;
+    padding: 9px;
+    color: rgba(245, 33, 24, 0.72);
+}
+
+.chusp .motkhoi {
+    display: inline-block;
+    text-align: center;
+    line-height: 66px;
+}
+
+.mothinh .chusp {
+    background: rgba(234, 98, 92, 0.72);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.4s;
+    transform: translateY(-317px);
+}
+
+.mothinh:hover .chusp {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.mothinh {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+}
+
+.gallery .cachinh {
+    padding: 0px;
+}
+
+.gallery {
+    overflow: hidden;
+    margin: 80px 0px;
+}
+
+.trongtext i.fa {
+    color: #f04c23;
+    font-size: 75px;
+}
+
+.text .trongtext {
+    display: inline-block;
+    text-align: center;
+}
+
+.bgourvideo .text {
+    background: rgba(0, 0, 0, 0.71);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*.bgourvideo {
+    background: url(assets/images/images/bg-banner5.jpg);
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-attachment: fixed;
+    overflow: hidden;
+}*/
+
+.tren input, .tren select {
+    margin: 20px 0px;
+    padding: 0px 10px;
+    width: 100%;
+    height: 38px;
+    border: 1px solid #CCCCCC;
+    border-radius: 15px;
+}
+
+.tren input:hover {
+    border: 1px solid red;
+}
+
+.reservation p {
+    font-family: 'Italianno', cursive;
+    font-size: 45px;
+    line-height: 45px;
+    color: #EF4836;
+    border-right: 1px solid #E1E1E1;
+}
+
+.reservation button.btn {
+    background: white;
+    color: black;
+}
+
+.reservation button.btn:hover {
+    background: #EF4836;
+    color: white;
+}
+
+.makereser {
+    margin-top: 50px;
+}
+
+.reservation {
+    background: #F7F7F7;
+    padding: 80px 0px;
+    overflow: hidden;
+}
+
+.motgoi h3 {
+    color: white;
+    font-weight: 500;
+    font-size: 40px;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.motgoi i.fa {
+    font-size: 50px;
+    color: #F22A2A;
+}
+
+.moto {
+    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 215px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 93px;
+}
+
+.nenden {
+    background: rgba(0, 0, 0, 0.57);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.bgourmenu {
+    background: url(images/bg-banner4.jpg) no-repeat;
+    width: 100%;
+    height: 900px;
+    /*background-attachment: fixed;*/
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    background-color: #336600;
+}
+
+.tenmon p {
+    margin: 0;
+    text-align: center;
+    font-size: 15px;
+}
+
+.tenmon h3 {
+    font-size: 27px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    margin-top: 18px;
+}
+
+.motmon img {
+}
+
+.motmon .tenmon {background: rgba(35, 34, 34, 0.92);color: white;width: 100%;height: 30%;position: absolute;bottom: 0px;left: 0px;transition: 0.4s;transform: translateY(90px);opacity: 0;}
+
+.motmon:hover .tenmon {
+    opacity: 1;
+    transform: translateY(0px);
+    transition-delay: 0.2s;
+}
+
+.gia {
+    background: #f04c23;
+    color: white;
+    text-align: center;
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    padding: 36px;
+    top: -19px;
+    right: -43px;
+    transform: rotate(45deg);
+}
+
+.motmon {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 29px;
+    transition: 0.5s;
+}
+
+.motmon:hover img {
+    transform: scale(1.2);
+}
+
+.motmon img {
+    transition: 2s;
+}
+
+.tieudeour {
+    padding-top: 110px;
+}
+
+.bacottren ul.nav-tabs {
+    border: none;
+}
+
+.bacottren ul.nav-tabs li.nav-item a.nav-link.active , .bacottren ul.nav-tabs li.nav-item a.nav-link:hover {
+    background: #f04c23;
+    color: white; 
+    border-radius: 2px;
+}
+
+.bacottren ul.nav-tabs li.nav-item a.nav-link {
+    color:  #f04c23; /*mau chu sp*/
+    margin: 0px 6px;
+    font-size: 15px;
+}
+
+.bacottren {
+    display: flex;
+    justify-content: center;
+    margin-top: 45px;
+}
+
+.nenhinhabout {
+    background: rgba(243, 42, 42, 0.7);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(243, 42, 42);
+    font-size: 20px;
+    transform: translateX(555px);
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.hinhabout:hover .nenhinhabout {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.nenhinhabout i.fa {
+    background: white;
+    padding: 12px;
+}
+
+ 
+
+
+
+
+.textabout {
+    margin-left: 27px;
+    transition: 0.5s;
+    transform: translateX(300px);
+    opacity: 0;
+}
+
+.textabout.phaiqua {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.about a.btn, .reservation button.btn, .cotbon
+ a.btn {
+    border-radius: 23px;
+    padding: 13px 25px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+.about {
+    overflow: hidden;
+}
+
+.tron {
+    height: 25px;
+    width: 25px;
+    background: #f04c23;
+    border-radius: 50%;
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    margin-left: -15px;
+}
+
+.gach {
+    position: relative;
+    background: #f04c23;
+    width: 230px;
+    height: 3px;
+    margin: 20px 0px 40px 0px;
+    display: inline-block;
+}
+
+.nutcontact a.btn {
+    margin-top: 31px;
+}
+
+.about a.btn:hover {
+    background: #EF4836;
+}
+
+.about h4, .tieudeour h4, .gallery h4, .chefs h4, .contact h4 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.contact h4 {
+    color: white;
+}
+
+h4.textdaubep {
+    color: #F33A3A;
+    font-size: 20px;
+    margin: 20px 0px 5px 0px;
+}
+
+.about p, .tieudeour p, .gallery p, .chefs p, .contact p {
+    color: #999999;
+    font-size: 15px;
+    line-height: 21px;
+}
+
+.contact p {
+    color: white;
+    text-align: center;
+}
+
+.cotbon p {
+    color: #959696;
+}
+
+p.gio {
+    color: #959696;
+    font-size: 13px;
+}
+
+p.kynang {
+    margin-bottom: 20px;
+}
+
+.motkhoi p {
+    margin: 0;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.about h3, .tieudeour h3, .motgoi p, .trongtext
+ p, .gallery h3, .chefs h3, .contact h3 {
+    font-family: 'Italianno', cursive;
+    color: #f04c23;
+    font-size: 45px;
+}
+
+.trongtext p {
+    color: white;
+    font-size: 45px;
+    margin: 0;
+    letter-spacing: 8px;
+}
+
+.motgoi p {
+    font-size: 34px;
+    margin: 0;
+}
+
+.nutchuyen .carousel-control {
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    margin-top: -25px;
+    border: solid 1px white;
+    background: transparent;
+}
+
+.nutchuyen .left {
+    left: 3%;
+}
+
+.nutchuyen .right {
+    right: 3%;
+}
+
+.nutbanner a.btn {
+    margin-top: 16px;
+    border-radius: 2px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-size: 20px;
+    transition: 0.3s;
+    animation: dilen 2s forwards;
+}
+
+.nutbanner a.btn:hover {
+    background: #f04c23;
+    border: 1px solid #f04c23;
+}
+
+h4.tdbanner2 {
+    font-size: 44px;
+    font-weight: 600;
+    margin-top: 16px;
+    animation: divao 2s forwards;
+}
+
+h3.tdbanner1 {
+    font-family: 'Italianno', cursive;
+    font-size: 48px;
+    letter-spacing: 9px;
+    animation: divao 2s forwards;
+}
+
+.textbanner {
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hinhmot {
+    background: url(/assets/images/Carousel/carousel1.jpg);
+    width: 100%;
+    height: 685px;
+    background-size: cover;
+    background-position: center;
+}
+.hinhhai {
+    background: url(/assets/images/Carousel/carousel2.jpg);
+    width: 100%;
+    height: 685px;
+    background-size: cover;
+    background-position: center;
+}
+.hinhba {
+    background: url(/assets/images/Carousel/carousel3.jpg);
+    width: 100%;
+    height: 685px;
+    background-size: cover;
+    background-position: center;
+}
+.maymocmot {
+    background: url(/assets/images/HomePage/xquang1.jpg);
+    width: 100%;
+    height: 685px;
+    background-size: cover;
+    background-position: center;
+}
+.maymochai {
+    background: url(/assets/images/HomePage/xquang2.jpg);
+    width: 100%;
+    height: 685px;
+    background-size: cover;
+    background-position: center;
+}
+.thanhmenu ul.navbar-nav li.nav-item
+ a.nav-link {
+    padding: 20px 9px;
+    text-transform: uppercase;
+    color: white;
+    border-bottom: 3px solid transparent;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.thanhmenu ul.navbar-nav li.nav-item
+ a.nav-link:focus { /*menu hien tai*/
+    color: #336600;
+}
+
+.thanhmenu ul.navbar-nav li.nav-item
+ a.nav-link.biendoichumenu {
+    color: white;
+}
+
+.thanhmenu ul.navbar-nav li.nav-item
+ a.nav-link:hover {
+    color: #336600;
+}
+
+.thanhmenu ul.navbar-nav li.nav-item.active
+ a.nav-link:hover {
+    border-color: #336600;
+}
+
+
+.tren .thongtindp {background: rgba(234, 98, 92, 0.77);width: 100%;height: 100px;position: absolute;bottom: 0px;left: 0px;display: flex;justify-content: center;align-items: center;transition: 0.4s;transform: translateY(100px);opacity: 0;}
+
+.daubep .tren {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.daubep .tren:hover .thongtindp {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.chefs {
+    background: #F7F7F7;
+    padding: 80px 0px;
+    overflow: hidden;
+}
+
+.mothinh img {
+    height: 100%;
+    width: 100%;
+}
+.thanhmenu {
+    padding: 0px;
+    /*background-color: #f04c23;*/
+    /*background: transparent;*/
+    background-color: blue;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: 0.4s;
+     
+}
+.divcenter{
+    margin: 0 auto;
+    width: 100%; 
+    
+}
+.img{
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.imgdentist{
+    /*border: 2px solid;*/
+     
+    border-radius: 30px 30px;
+    height: 300px;
+}
+img.centerThing{
+     display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
+.spacebottom{
+    margin-bottom: 2em;
+}
+.docdescript{
+    margin-top: 2em;
+}
+.modaltitle{
+    background: #005296 none repeat scroll 0 0;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 0 10px 25px;
+    position: relative;
+    margin-right: 0px !important;
+}
+.textheader{
+background-color: #e6eeaf;
+    border-width: 1px;
+    border-color: #b5ca28;
+    border-top-width: 3px;
+    border-top-color: #1a80b6;
+    border-style: solid;
+    color: #000;
+    font-size: 16px;
+    padding: 10px 15px 15px 15px;
+    letter-spacing: 0;
+}
+
+.thanhmenu.biendoimenu {
+    background: #f04c23;
+}
+
+ 
+
+.container {
+    padding: 0px;
+} 
+.top
+{
+    overflow: hidden;
+}
+.ourmenu
+{
+    background: #F7F7F7;
+    overflow: hidden;
+    margin-top: 100px;
+    padding-bottom: 100px;
+}
+@-webkit-keyframes divao
+{
+    from {transform: translateY(-50px); opacity: 0;}
+    to {transform: translateY(0px); opacity: 1;}
+}
+@-webkit-keyframes dilen
+{
+    from {transform: translateY(50px); opacity: 0;}
+    to {transform: translateY(0px); opacity: 1;}
+}
+
+@media (max-width: 576px)
+{
+    *{}
+.resOFF{
+    display: block;
+}
+.resON{
+    display: none;
+}
+.cotmot {
+    text-align: center;
+}
+
+.logoduoi {
+    text-align: center;
+}
+
+.daubep {
+    padding: 20px;
+}
+
+.tren img {
+    width: 100%;
+}
+
+.reservation p {
+    font-size: 35px;
+    text-align: center;
+}
+
+.moto {
+    width: 230px;
+    margin: 30px 0px 30px 95px;
+}
+
+.bgourmenu {
+    height: 100%;
+}
+
+.textabout {
+    margin: 0px;
+    text-align: center;
+}
+
+.hinhaboutdt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hinhabout {
+    width: 240px;
+}
+
+.thanhmenu ul.navbar-nav li.nav-item
+ a.nav-link {
+    font-size: 13px;
+    text-align: center;
+    padding: 0px 0px;
+    line-height: 36px;
+}
+ 
+
+.logo img {
+    width: 155px;
+    margin: 5px 8px;
+}
+
+.thanhmenu {
+    background: rgba(26, 26, 26, 0.75);
+}
+ 
+.navbar-toggler {
+    background: rgba(220, 40, 40, 0.74) no-repeat;
+    width: 40px;
+    height: 40px;
+    margin: 8px 5px;
+}
+
+.nutchuyen .carousel-control {
+    display: none;
+}
+
+.carousel-item {
+    height: 667px;
+}
+}
+@media (min-width: 577px) and (max-width:991px)
+{
+    *{}
+
+.nut a.fa {
+    margin: 0;
+    margin-top: 10px;
+}
+/*.resOFF{
+    display: block;
+}
+.resON{
+    display: none;
+}*/
+.nutcontact a.btn {
+    font-size: 7px;
+    padding: 10px 20px;
+}
+
+.cotbon p {
+    font-size: 9px;
+}
+
+p.gio {
+    font-size: 8px;
+}
+
+.opening {
+    margin: 37px 0px;
+}
+
+.cothai h5, .cotba h5, .cotbon h5 {
+    font-size: 15px;
+}
+
+.cotmot span {
+    font-size: 7px;
+}
+
+.cotmot i.fa {
+    font-size: 15px;
+}
+
+.logoduoi img {
+    width: 145px;
+}
+
+.goithongtin a.fa {
+    font-size: 15px;
+    width: 22px;
+    height: 22px;
+    padding: 4px;
+}
+
+.textabout {
+    text-align: center;
+}
+
+/*.thanhmenu ul.navbar-nav li.nav-item
+ a.nav-link {
+    font-size: 9px;
+    padding: 31px 5px;
+
+}*/
+.col-xs-6.traixxx {
+    background-color: red;
+}
+..col-xs-6.phaixxx {
+    background-color: red;
+}{
+    background-color: blue;
+}
+}

