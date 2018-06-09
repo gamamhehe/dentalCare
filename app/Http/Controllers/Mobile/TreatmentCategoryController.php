@@ -10,11 +10,15 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Http\Controllers\Controller;
+use App\Model\Treatment_category;
 
 class TreatmentCategoryController extends Controller
 {
     public function getAll()
     {
-            //treatment
+        $tmCategories = Treatment_category::all();
+
+        return response()->json($tmCategories, 200);
+
     }
 }
