@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<title> Trang chủ </title>
+<title>Bảng Giá Tham Khảo</title>
 <meta charset="utf-8">
  
 <meta name="viewport" content="width=device-width, initial-scale=1">  
 <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
 <script src="/assets/user/js/jquery-3.2.1.js"></script>
 <script src="/assets/user/js/jquery.easing.1.3.js"></script>
+<script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
+<script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
+<script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
 
 <link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css" />
 <script src="/assets/user/js/jquery.fancybox.js"></script>
@@ -17,15 +21,16 @@
 <!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
 <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 </head>
 <body>
-<div class="top">
+ 	<div class="top">
 	<!-- start menu -->
-<<<<<<< HEAD
-	<nav class="navbar navbar-light navbar-fixed-top bg-faded thanhmenu" style="background-color: blue;">
-=======
-	<nav class="navbar navbar-light   bg-faded thanhmenu" style="background-color: blue;">
->>>>>>> UAT
+	<nav class="navbar navbar-light bg-faded thanhmenu" style="background-color: blue;">
 		<div class="container">
 			<button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse" data-target="#navmn">
 			</button>
@@ -46,11 +51,7 @@
 						<a class="nav-link c6" href="#contact">dịch vụ</a>
 					</li>
 					<li class="nav-item">
-<<<<<<< HEAD
 						<a class="nav-link c6" href="#contact">bản giá</a>
-=======
-						<a class="nav-link c6" href="/">bản giá</a>
->>>>>>> UAT
 					</li>
 					<li class="nav-item">
 						<a class="nav-link c6" href="#contact">contact us</a>
@@ -60,96 +61,28 @@
 		</div>
 	</nav> 
 	<!-- end menu -->
-<<<<<<< HEAD
-
-	
-=======
->>>>>>> UAT
 </div>
- 
-	<!-- div bac si -->
-<div class="container" style="margin-top: 50px;margin-bottom: 50px;background-image: ">
-	<div class="row" style="padding-top: 2em;">
-			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
-				<h3><strong>ĐỘI NGŨ BÁC SĨ CHUYÊN SÂU VỀ NHA KHOA  </strong></h3>
-				<div class="gach">
-					<div class="tron"></div>
-				</div>
+	<div class="container" >
+	<div class="row" style="background: url(/assets/images/banggia.jpg);height: 7em;">
+			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle" >
+			<h1 style="margin-top: 0.8em;color: white"><strong>Bảng giá tham khảo</strong></h3>
 			</div>
 	</div>
-
-	
-	<div class="row spacebottom">
-		<div class="textheader spacebottom">
-			 Nha Khoa KIM quy tụ hơn 100 bác sĩ có chứng chỉ hành nghề, nhiều năm kinh nghiệm, tốt nghiệp răng hàm mặt trong và ngoài nước, đã từng học tập cũng như tu nghiệp nhiều năm tại các nước có nền nha khoa phát triển bậc nhất trên thế giới. Với kiến thức chuyên môn vững vàng cùng đôi bàn tay khéo léo, tận tâm với nghề, luôn áp dụng theo quy trình chuẩn quốc tế, các bác sĩ luôn mang đến kết quả tốt nhất cho khách hàng. 
+		<div class="row" >
+			
+			<table id="dup-table" class="table text-center">
+      <thead>
+      <tr style="background-color: #eee;">
+      <td class="col-sm-1">ID</td>
+      <td class="col-sm-2">Tên dịch vụ</td>
+      <td class="col-sm-9">Mô Tả</td>
+      </tr>
+      </thead>
+      </table> 
 		</div>
-<<<<<<< HEAD
-		<div class="col-sm-10 divcenter " style="width: 100%"> 
-		<img class="centerThing"  src="/assets/images/DoctorPage/Trao-giai-bac-si.jpg" alt="" class="img-fluid img-responsive" width="100%">
-=======
-		<div class="col-sm-10 divcenter " style="width: 180%">
-		<img class="centerThing"  src="/assets/images/DoctorPage/Trao-giai-bac-si.jpg" alt="" class="img-fluid img-responsive" width="80%">
->>>>>>> UAT
-		</div>
-		
-		 <br>
-		 <em style="text-align: center;">Từ trái qua phải hàng đứng Gs Jim Yuan( ĐH Toronto Canada), Ts Grace Eun A Kim( ÚC), Ts ManingKy ( Hà Lan), Ths Bs Nguyen Huu Nam ( Viet Nam), Gs Ts Dong-Seok- Sohn ( Hàn Quốc), Ts Eric Park( Mỹ) Hàng ngồi là các bác sĩ được tốt nghiệp sau chương trình đào tạo chuyển giao công nghệ ,các học viên là những bác sĩ của Ấn Độ, Trung quốc, Thái lan, Úc , Hàn Quốc, Hà lan, Mỹ, và Việt Nam.</em>
-		
-	</div>
-	<!-- motbacsi -->
-	@foreach($doctors as $doctor)
-		@if($doctor->id %2 ==0 )
-	 	 <div class="row"  style="background-color: #eee;">
-		<div class="" style="width: 100%;">
-			<div class="modaltitle">
-				<strong>{{$doctor->specialty}} :{{$doctor->name}}</strong>
-			</div>
-			<div class="row" >
-				
-				<div class="col-sm-4"  >
-					<img class="centerThing img imgdentist"  src="{{$doctor->avatar}}" alt="" class="img-fluid img-responsive" >
-				</div>
-			<div class="col-sm-8 docdescript"><p style="padding-left: 4em;">{{$doctor->description}}</p></div>
-			</div>
-		</div>
-	</div>
-		@else 
- 	<div class="row"  style="background-color: #eee;">
-		<div class="" style="width: 100%;">
-			<div class="modaltitle">
-				<strong>{{$doctor->specialty}} :{{$doctor->name}}</strong>
-			</div>
-			<div class="row" >
-				<div class="col-sm-8 docdescript resON"><p style="padding-left: 4em;">{{$doctor->description}}</p></div>
-				<div class="col-sm-4"  >
-					<img class="centerThing img imgdentist"  src="{{$doctor->avatar}}" alt="" class="img-fluid img-responsive" >
-				</div>
-				<div class="col-sm-8 docdescript resOFF"  ><p style="padding-left: 4em;">{{$doctor->description}}</p></div>
-			</div>
-		</div>
-	</div>
-		@endif
-	
-	@endforeach
-	 
-</div>
-		<!-- end div bac si -->
-		<!-- dich vu noi bat -->
-<!-- <div class="container" style="margin-top: 30px;margin-bottom: 50px;background-image: ">
-	<div class="row">
-			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
-				<h3><strong>DỊCH VỤ NỔI BẬT - PRomotion ???</strong></h3>
-				<h4>THẨM MỸ RĂNG HÀM MẶT ĐẦU NGÀNH VIỆT NAM</h4>
-				<div class="gach">
-					<div class="tron"></div>
-				</div>
-			</div>
-	</div>
-	
-</div> -->
- 
-	<!-- footer -->
-<div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
+		 
+	</div> 
+	<div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);margin-top: 30px;">
 	<div class="contact" id="contact">
 		<div class="container">
 			 <div class="row">
@@ -189,11 +122,33 @@
 		</div>
 	</div></div>
 
+
+ 
 <!-- end footer -->
 	
 </body>
 </html>
-<!-- 
-font-family: 'Italianno', cursive;
-font-family: 'Open Sans', sans-serif; 
--->
+<script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
+<script type="text/javascript">
+	 $(function() {
+        $('#dup-table').DataTable({
+        processing: true,
+        serverSide: true,
+        order: [[ 0, "desc" ]],
+        bLengthChange:true,
+        pageLength: 5,
+        ajax: 'http://127.0.0.1:8000/getDB',
+        columns : [
+          
+              {data: 'id'},
+              {data: 'name'},
+              {
+                  
+                  data: 'description'
+              },
+            ],
+        });
+    });
+       
+</script>

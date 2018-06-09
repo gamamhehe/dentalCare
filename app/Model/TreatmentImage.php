@@ -4,9 +4,13 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Treatment_image extends Model
+class TreatmentImage extends Model
 {
     //
     protected $table = 'tbl_treatment_images';
     protected $fillable = ['id', 'treatment_detail_id', 'image_link', 'create_date'];
+
+    public function belongsToTreatmentDetail(){
+        return $this->belongsTo('App\Model\TreatmentDetail', 'treatment_detail_id', 'id');
+    }
 }

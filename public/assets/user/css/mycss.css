@@ -18,6 +18,27 @@
     text-align: center;
 }
 
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+#dup-table_length{
+    background-color: red;
+}
+select.form-control:not([size]):not([multiple]){
+  
+    height: 30px !important; 
+}
+/*tr:hover {background-color:red;}*/
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}
+
 .nut a.fa {
     font-size: 20px;
     color: white;
@@ -941,7 +962,7 @@ p.gio {
 .col-xs-6.traixxx {
     background-color: red;
 }
-..col-xs-6.phaixxx {
+.col-xs-6.phaixxx {
     background-color: red;
 }{
     background-color: blue;
