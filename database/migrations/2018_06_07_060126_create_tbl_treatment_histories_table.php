@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblRolesTable extends Migration
+class CreateTblTreatmentHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateTblRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_roles', function (Blueprint $table) {
-            $table->increments('id')->unique();
-            $table->string('name');
+        Schema::create('tbl_treatment_histories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('treatment_id');
+            $table->integer('patient_id');
             $table->string('description');
+            $table->dateTime('create_date');
+            $table->dateTime('finish_date');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateTblRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_roles');
+        Schema::dropIfExists('tbl_treatment_histories');
     }
 }

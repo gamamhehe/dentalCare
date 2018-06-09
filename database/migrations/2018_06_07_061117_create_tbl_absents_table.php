@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblUserHasRoleTable extends Migration
+class CreateTblAbsentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateTblUserHasRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_user_has_role', function (Blueprint $table) {
-            $table->string('phone')->unique();
-            $table->integer('role_id')->unique();
-            $table->string('role_start_time');
-            $table->string('role_end_time')->nullable();
+        Schema::create('tbl_absents', function (Blueprint $table) {
+            $table->integer('staff_id')->unique();
+            $table->integer('staff_approve_id')->unique();
+            $table->dateTime('date_absent')->unique();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateTblUserHasRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_user_has_role');
+        Schema::dropIfExists('tbl_absents');
     }
 }

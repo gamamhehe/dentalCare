@@ -9,9 +9,11 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Model\Patient;
 use App\Model\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 
@@ -21,29 +23,59 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
+        DB::beginTransaction();
         try {
-            $user = User::where('phone', $request->input('phone'))
-                ->first();
-            if ($user != null) {
+            $user = User::where('phone', $request->input('phone'))->first();
+            if ($user == null) {
+                $user = new User();
+                $phone = $request->input('phone');
+                $password = $request->input('password');
+                $fullname = $request->input('fullname');
+                $gender = $request->input('gender');
+                $birthday = $request->input('birthday');
+                $districtId = $request->input('districtId');
+                $address = $request->input('address');
+                $user->phone = $phone;
+                $user->password = $password;
+                $user->isActive = 1;
+                $user->isDelete = 0;
+                $patient = Patient::where('phone', $request->input('phone'))
+                    ->first();
+                if ($patient != null) {
+                    $error = new \stdClass();
+                    $error->error = "Số điện thoại bệnh nhân đã tồn tại";
+                    $error->exception = "No Exception";
+                    DB::rollback();
+                    return response()->json($error, 400);
+                } else {
+                    $patient = new Patient();
+                    $patient->phone = $phone;
+                    $patient->date_of_birth = $birthday;
+                    $patient->gender = $gender;
+                    $patient->district_id = $districtId;
+                    $patient->name = $fullname;
+                    $patient->avatar = "";
+                    $patient->address = $address;
+                    ////HASH
+                    ///
+                    $user->save();
+                    $patient->save();
+                    DB::commit();
+                    return response()->json($patient, 200);
+                }
+            } else {
                 $error = new \stdClass();
                 $error->error = "Số điện thoại đã tồn tại";
                 $error->exception = "No Exception";
-                return response()->json($error, 200);
-            } else {
-                $user = new User();
-                $user->phone = $request->input('phone');
-                $user->password = $request->input('password');
-                ////HASH
-                $user->isActive = 1;
-                $user->isDelete = 0;
-                $user->save();
-                return response()->json($user, 200);
+                DB::rollback();
+                return response()->json($error, 400);
             }
-        } catch (\Exception $ex) {
+        } catch
+        (\Exception $ex) {
             $error = new \stdClass();
             $error->error = "Không thể đăng kí thông tin người dùng";
             $error->exception = $ex;
-            return response()->json($error, 200);
+            return response()->json($error, 400);
         }
     }
 
@@ -59,11 +91,11 @@ class UserController extends Controller
             $password = $request->input('password');
             Log::info("LOGIN " . $phone);
             Log::info("LOGINI2" . $password);
-            $user = User::where('phone', $phone)
+            $patient = User::where('phone', $phone)
                 ->where('password', $password)
                 ->first();
-            if ($user != null) {
-                return response()->json($user, 200);
+            if ($patient != null) {
+                return response()->json($patient, 200);
             } else {
                 $error->error = "Số điện thoại hoặc mật khẩu không chính xác";
                 $error->exception = "No exception";
@@ -75,6 +107,7 @@ class UserController extends Controller
             return response()->json($ex, 400);
         }
     }
+
     public
     function bookAppointment(Request $request)
     {
@@ -82,6 +115,7 @@ class UserController extends Controller
 
         return response()->json([$request->all()], 200);
     }
+
     public function loginGET()
     {
         return response()->json(['hello' => 'cha co gi ca haha'], 200);

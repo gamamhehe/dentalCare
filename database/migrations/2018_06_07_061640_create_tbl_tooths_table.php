@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblRolesTable extends Migration
+class CreateTblToothsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateTblRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_roles', function (Blueprint $table) {
-            $table->increments('id')->unique();
-            $table->string('name');
-            $table->string('description');
-            $table->timestamps();
+        Schema::create('tbl_tooths', function (Blueprint $table) {
+            $table->integer('tooth_number');
+            $table->string('tooth_name');
         });
     }
 
@@ -28,6 +26,6 @@ class CreateTblRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_roles');
+        Schema::dropIfExists('tbl_tooths');
     }
 }

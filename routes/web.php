@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('initAdmin', 'AdminController@initAdmin')->name('admin.login.initAdmin');
 Route::get('initAdmin2', 'AdminController@initAdmin2')->name('admin.login.initAdmin');
+Route::get('initTreatmentCate', 'AdminController@initTreatmentCate')->name('admin.login.initAdmin');
+Route::get('initTreatment', 'AdminController@initTreatment')->name('admin.login.initAdmin');
 Route::get('logout', 'AdminController@logout')->name('admin.logout');
 Route::get('lara-admin', 'AdminController@checkSessionLogin')->name('checkSessionLogin');
 Route::post('loginAdmin', 'AdminController@checkLogin')->name('admin.login');
