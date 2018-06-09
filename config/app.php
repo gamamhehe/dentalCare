@@ -176,7 +176,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+		// Add them config cho datatable
+       Yajra\Datatables\DatatablesServiceProvider::class
     ],
 
     /*
