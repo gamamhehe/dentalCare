@@ -10,6 +10,6 @@ class Type extends Model
     protected $table = 'tbl_types';
     protected $fillable = ['id', 'type'];
     public function typeBelongTo(){
-        return $this->hasOne('App\Model\News_type','type_id', 'id');
+        return $this->hasOne('App\Model\NewsType','type_id', 'id');
     }
 }

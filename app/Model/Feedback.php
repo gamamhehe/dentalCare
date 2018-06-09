@@ -14,4 +14,8 @@ class Feedback extends Model
     public function belongsToPatient(){
         return $this->belongsTo('App\Model\User', 'id', 'patient_id');
     }
+
+    public function belongsToTreatmentDetail(){
+        return $this->belongsTo('App\Model\TreatmentDetail', 'id', 'patient_id');
+    }
 }

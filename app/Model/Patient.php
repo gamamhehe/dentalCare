@@ -33,6 +33,6 @@ class Patient extends Model
 
     public function hasAnamnesis()
     {
-        return $this->hasMany('App\Model\Anamnesis_patient', 'patient_id', 'id');
+        return $this->hasMany('App\Model\AnamnesisPatient', 'patient_id', 'id');
     }
 }

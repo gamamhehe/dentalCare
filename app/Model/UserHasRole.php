@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User_has_role extends Model
+class UserHasRole extends Model
 {
     //
     protected $table = 'tbl_user_has_role';

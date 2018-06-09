@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Treatment_step extends Model
+class TreatmentStep extends Model
 {
     //
     protected $table = 'tbl_treatment_steps';
