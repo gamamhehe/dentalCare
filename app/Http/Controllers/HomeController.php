@@ -6,12 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use App\Staff;
-<<<<<<< HEAD
-=======
 use App\User;
 use App\Treatment_category;
-use Yajra\Datatables\Facades\Datatables;
->>>>>>> frontendWebuser
+//use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {
     public function homepage(Request $request){
@@ -23,8 +20,6 @@ class HomeController extends Controller
 
     	return view("WebUser.DoctorInformation",['doctors'=>$doctors]);
     }
-<<<<<<< HEAD
-=======
      public function BangGiaDichVu(){
     	return view('WebUser.ServicePrice');
     }
@@ -33,5 +28,4 @@ class HomeController extends Controller
     	return Datatables::of($ahi)->make(true);
     }
 
->>>>>>> frontendWebuser
 }

@@ -21,11 +21,7 @@
 <body>
 <div class="top">
 	<!-- start menu -->
-<<<<<<< HEAD
-	<nav class="navbar navbar-light navbar-fixed-top bg-faded thanhmenu" style="background-color: blue;">
-=======
 	<nav class="navbar navbar-light   bg-faded thanhmenu" style="background-color: blue;">
->>>>>>> frontendWebuser
 		<div class="container">
 			<button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse" data-target="#navmn">
 			</button>
@@ -46,11 +42,7 @@
 						<a class="nav-link c6" href="#contact">dịch vụ</a>
 					</li>
 					<li class="nav-item">
-<<<<<<< HEAD
-						<a class="nav-link c6" href="#contact">bản giá</a>
-=======
 						<a class="nav-link c6" href="/">bản giá</a>
->>>>>>> frontendWebuser
 					</li>
 					<li class="nav-item">
 						<a class="nav-link c6" href="#contact">contact us</a>
@@ -60,11 +52,6 @@
 		</div>
 	</nav> 
 	<!-- end menu -->
-<<<<<<< HEAD
-
-	
-=======
->>>>>>> frontendWebuser
 </div>
  
 	<!-- div bac si -->
@@ -83,13 +70,8 @@
 		<div class="textheader spacebottom">
 			 Nha Khoa KIM quy tụ hơn 100 bác sĩ có chứng chỉ hành nghề, nhiều năm kinh nghiệm, tốt nghiệp răng hàm mặt trong và ngoài nước, đã từng học tập cũng như tu nghiệp nhiều năm tại các nước có nền nha khoa phát triển bậc nhất trên thế giới. Với kiến thức chuyên môn vững vàng cùng đôi bàn tay khéo léo, tận tâm với nghề, luôn áp dụng theo quy trình chuẩn quốc tế, các bác sĩ luôn mang đến kết quả tốt nhất cho khách hàng. 
 		</div>
-<<<<<<< HEAD
-		<div class="col-sm-10 divcenter " style="width: 100%"> 
-		<img class="centerThing"  src="/assets/images/DoctorPage/Trao-giai-bac-si.jpg" alt="" class="img-fluid img-responsive" width="100%">
-=======
-		<div class="col-sm-10 divcenter " style="width: 180%"> 
+		<div class="col-sm-10 divcenter " style="width: 180%">
 		<img class="centerThing"  src="/assets/images/DoctorPage/Trao-giai-bac-si.jpg" alt="" class="img-fluid img-responsive" width="80%">
->>>>>>> frontendWebuser
 		</div>
 		
 		 <br>
