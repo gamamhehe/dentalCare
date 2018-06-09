@@ -20,6 +20,10 @@ class TreatmentCategoryController extends Controller
     {
         try {
             $tmCategories = TreatmentCategory::all();
+            foreach ($tmCategories as $item)
+            {
+                $item->treatment = $item->hasTreatment()->get();
+            }
             return response()->json($tmCategories, 200);
         } catch (Exception $ex) {
             $error = new \stdClass();
