@@ -8,7 +8,7 @@ use DB;
 use App\Staff;
 use App\User;
 use App\Treatment_category;
-//use Yajra\Datatables\Facades\Datatables;
+use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {
     public function homepage(Request $request){
