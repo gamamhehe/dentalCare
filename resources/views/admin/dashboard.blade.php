@@ -17,6 +17,7 @@
                     </div>
                 </div>
                 <div class="form-group">
+                <form action=""></form>
                     <label>Description</label>
                     <textarea id="tinyMCE" name="description" rows="10"
                               class="form-control"
