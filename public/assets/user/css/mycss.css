@@ -17,7 +17,30 @@
     margin: 0;
     text-align: center;
 }
+<<<<<<< HEAD
 
+=======
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+#dup-table_length{
+    background-color: red;
+}
+select.form-control:not([size]):not([multiple]){
+  
+    height: 30px !important; 
+}
+/*tr:hover {background-color:red;}*/
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}
+>>>>>>> frontendWebuser
 .nut a.fa {
     font-size: 20px;
     color: white;

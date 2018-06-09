@@ -21,7 +21,11 @@
 <body>
 <div class="top">
 	<!-- start menu -->
+<<<<<<< HEAD
 	<nav class="navbar navbar-light navbar-fixed-top bg-faded thanhmenu">
+=======
+	<nav class="navbar navbar-light   bg-faded thanhmenu">
+>>>>>>> frontendWebuser
 		<div class="container">
 			<button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse" data-target="#navmn">
 			</button>
@@ -33,6 +37,7 @@
 						<a class="nav-link c1" href="#">Giới Thiệu</a>
 					</li>
 					<li class="nav-item">
+<<<<<<< HEAD
 						<a class="nav-link c2" href="/doctorList">Chuyên Gia</a>
 					</li>
 					<li class="nav-item">
@@ -46,6 +51,21 @@
 					</li>
 					<li class="nav-item">
 						<a class="nav-link c6" href="#contact">contact us</a>
+=======
+						<a class="nav-link  " href="/doctorList">Chuyên Gia</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  " href="#ourmenu">Event</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  " href="#contact">dịch vụ</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  " href="/banggia">bản giá</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  " href="#contact">contact us</a>
+>>>>>>> frontendWebuser
 					</li>
 				</ul>
 			</div>

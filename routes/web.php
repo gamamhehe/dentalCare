@@ -29,3 +29,6 @@ Route::group(['middleware' => 'admins'], function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 });
+
+Route::get('/getDB','HomeController@getDB');
+Route::get('/banggia','HomeController@BangGiaDichVu');
