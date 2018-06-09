@@ -29,3 +29,8 @@ Route::get("news/all", "Mobile\NewsController@getAllNews");
 Route::get("news/loadmore", "Mobile\NewsController@loadMore");
 //treatment category
 Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
+
+//treatment
+
+Route::get("treatment/all" ,"Mobile\TreatmentController@getAll");
+Route::get("treatment/{id}" ,"Mobile\TreatmentController@getById");
