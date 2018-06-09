@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Model\Role;
 use App\Model\User;
-use App\Model\User_has_role;
+use App\Model\UserHasRole;
+use App\Model\TreatmentCategory;
+use App\Model\Treatment;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -66,7 +69,7 @@ class AdminController extends Controller
             'isActive' => true,
             'isDelete' => false
         ]);
-        User_has_role::create([
+        UserHasRole::create([
             'phone' => '01279011096',
             'role_id' => 1,
             'role_start_time' => Carbon::now(),
@@ -88,7 +91,7 @@ class AdminController extends Controller
             'isActive' => true,
             'isDelete' => false
         ]);
-        User_has_role::create([
+        UserHasRole::create([
             'phone' => '01279011097',
             'role_id' => 2,
             'role_start_time' => Carbon::now(),
@@ -105,7 +108,7 @@ class AdminController extends Controller
             'isActive' => true,
             'isDelete' => false
         ]);
-        User_has_role::create([
+        UserHasRole::create([
             'phone' => '01279011098',
             'role_id' => 3,
             'role_start_time' => Carbon::now(),
@@ -408,56 +411,56 @@ class AdminController extends Controller
     public function initTreatmentCate()
     {
 
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => 'Nha Chu',
             'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
             'icon_link' => '',
             'created_at' => '2018-06-13 00:00:00',
             'updated_at' => '2018-06-03 00:00:00'
         ]);
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => 'Trám Răng',
             'description' => ' XXX',
             'icon_link' => '',
             'created_at' => '2018-06-13 00:00:00',
             'updated_at' => '2018-06-03 00:00:00'
         ]);
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => 'Nội Nha ',
             'description' => 'phương pháp điều trị ở bên trong của răng. Bên trong răng, dưới men trắng và một lớp cứng gọi là ngà răng, là một mô mềm gọi là tủy răng. Tủy răng chứa các mạch máu, dây thần kinh, và mô liên kết  ',
             'icon_link' => '',
             'created_at' => '2018-06-13 00:00:00',
             'updated_at' => '2018-06-03 00:00:00'
         ]);
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => ' Nhổ Răng',
             'description' => 'Nhổ răng khó là những răng mọc lệch, răng ngầm, răng khôn bị tai biến, răng bị gẫy chân, răng dính khớp..',
             'icon_link' => '',
             'created_at' => '2018-06-13 00:00:00',
             'updated_at' => '2018-06-03 00:00:00'
         ]);
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => 'PHỤC HÌNH CỐ ĐỊNH',
             'description' => 'Phục hình cố định (răng giả cố định) là các loại phục hình – răng giả (mão – cầu răng sứ, mão – cầu răng kim loại…) được gắn cố định vào hàm, miệng người mang.  ',
             'icon_link' => '',
             'created_at' => '2018-06-13 00:00:00',
             'updated_at' => '2018-06-03 00:00:00'
         ]);
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => 'PHỤC HÌNH THÁO LẮP ',
             'description' => 'Phục hình tháo lắp, cụ thể là phục hình tháo lắp răng là phương pháp phục hồi các răng hư tổn, để tái tạo các chức năng của răng. Hay phục hình tháo lắp có thể hiểu là sử dụng răng giả để tháo lắp. Bạn có thể cho răng vào và lấy ra dễ dàng để vệ sinh răng',
             'icon_link' => '',
             'created_at' => '2018-06-13 00:00:00',
             'updated_at' => '2018-06-03 00:00:00'
         ]);
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => 'IMPLANT (BAO GỒM PHỤC HÌNH) ',
             'description' => 'Cấy ghép răng Implant nha khoa là phương pháp phục hình răng tốt nhất cho người bị mất răng, đảm bảo khả năng ăn nhai giống hoàn toàn như một chiếc răng bình thường.',
             'icon_link' => '',
             'created_at' => '2018-06-13 00:00:00',
             'updated_at' => '2018-06-03 00:00:00'
         ]);
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => 'CHỈNH NHA',
             'description' => 'Chỉnh nha là một nhánh của ngành nha khoa giúp điều chỉnh vị trí của hàm và những răng sai lệch. Những răng bị lệch lạc và những răng không vừa khít với khuôn miệng. ',
             'icon_link' => '',
