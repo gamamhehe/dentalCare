@@ -27,5 +27,9 @@ class HomeController extends Controller
     	$ahi = 	$doctors = DB::table('tbl_treatment_categories')->get();
     	return Datatables::of($ahi)->make(true);
     }
+    public function createNews(Request $request){
+        echo "string";
+        exit();
+    }
 
 }

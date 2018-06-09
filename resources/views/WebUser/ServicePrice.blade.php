@@ -138,7 +138,7 @@
         order: [[ 0, "desc" ]],
         bLengthChange:true,
         pageLength: 5,
-        ajax: 'http://127.0.0.1:8000/getDB',
+        ajax: '/getDB',
         columns : [
           
               {data: 'id'},

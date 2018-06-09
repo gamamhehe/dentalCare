@@ -44,5 +44,9 @@ class NewsController extends Controller
             return response()->json($error, 500);
         }
     }
+    public function createNews(Request $request){
+        $input=$request->all();
+        print_r($input);
+    }
 
 }

@@ -32,3 +32,8 @@ Route::group(['middleware' => 'admins'], function () {
 
 Route::get('/getDB','HomeController@getDB');
 Route::get('/banggia','HomeController@BangGiaDichVu');
+
+//CRUD new
+Route::post('/createNews', 'Mobile\NewsController@createNews');
+// Route::post('/createNews', 'HomeController@createNews');
+//end CRUD new
