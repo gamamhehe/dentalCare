@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Model\Role;
 use App\Model\User;
+use App\Model\UserHasRole;
 use App\Model\TreatmentCategory;
 use App\Model\Treatment;
-use App\Model\User_has_role;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -68,7 +69,7 @@ class AdminController extends Controller
             'isActive' => true,
             'isDelete' => false
         ]);
-        User_has_role::create([
+        UserHasRole::create([
             'phone' => '01279011096',
             'role_id' => 1,
             'role_start_time' => Carbon::now(),
@@ -90,7 +91,7 @@ class AdminController extends Controller
             'isActive' => true,
             'isDelete' => false
         ]);
-        User_has_role::create([
+        UserHasRole::create([
             'phone' => '01279011097',
             'role_id' => 2,
             'role_start_time' => Carbon::now(),
@@ -101,8 +102,25 @@ class AdminController extends Controller
             'name' => 'Doctor',
             'description' => 'Doctor of dental Clinic',
         ]);
+        User::create([
+            'phone' => '01279011098',
+            'password' => Hash::make('#2017#'),
+            'isActive' => true,
+            'isDelete' => false
+        ]);
+        UserHasRole::create([
+            'phone' => '01279011098',
+            'role_id' => 3,
+            'role_start_time' => Carbon::now(),
+            'role_end_time' => null
+        ]);
+        Role::create([
+            'id' => '3',
+            'name' => 'Receptionist',
+            'description' => 'Receptionist of dental Clinic',
+        ]);
 
-    } 
+    }
     public function initTreatment()
     {
         Treatment::create([
@@ -111,8 +129,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'250000',
             'max_price'=>'350000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'Cạo vôi dưới nướu ',
@@ -120,8 +136,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'500000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'Cắt Nướu ',
@@ -129,8 +143,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'1000000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'Phẫu Thuật Nha Chu răng ',
@@ -138,8 +150,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'2000000',
             'max_price'=>'2000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'Nạo Túi Nha Chu ',
@@ -147,8 +157,6 @@ class AdminController extends Controller
             'treatment_category_id' => '1',
             'min_price' =>'200000',
             'max_price'=>'200000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'TRÁM RĂNG COMPOSITE XOANG I VÀ V',
@@ -156,8 +164,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'300000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
          Treatment::create([
             'name' => 'TRÁM RĂNG COMPOSITE XOANG II ,III VÀ IV hay Đắt mặt',
@@ -165,8 +171,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'500000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'TẨY TRẮNG TẠI PHÒNG KHÁM ',
@@ -174,8 +178,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'2000000',
             'max_price'=>'2000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'TẨY TRẮNG TẠI PHÒNG Nhà ',
@@ -183,18 +185,14 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'1000000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
-        
+
         Treatment::create([
             'name' => 'POST TRÁM - POST SỢI',
             'description' => 'POST TRÁM - POST SỢI',
             'treatment_category_id' => '2',
             'min_price' =>'1000000',
             'max_price'=>'1000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'POST TRÁM - POST KIM LOẠI',
@@ -202,8 +200,6 @@ class AdminController extends Controller
             'treatment_category_id' => '2',
             'min_price' =>'300000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'RĂNG CỬA',
@@ -211,8 +207,6 @@ class AdminController extends Controller
             'treatment_category_id' => '3',
             'min_price' =>'700000 ',
             'max_price'=>'700000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'RĂNG CỐI NHỎ VÀ RĂNG NANH',
@@ -220,8 +214,6 @@ class AdminController extends Controller
             'treatment_category_id' => '3',
             'min_price' =>'900000',
             'max_price'=>'900000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'RĂNG CỐI LỚN',
@@ -229,8 +221,6 @@ class AdminController extends Controller
             'treatment_category_id' => '3',
             'min_price' =>'1100000',
             'max_price'=>'1100000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'LẤY TỦY LẠI',
@@ -238,8 +228,6 @@ class AdminController extends Controller
             'treatment_category_id' => '3',
             'min_price' =>'300000',
             'max_price'=>'300000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG SỮA',
@@ -247,8 +235,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'0',
             'max_price'=>'0',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG CỬA',
@@ -256,8 +242,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'500000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG CỐI NHỎ',
@@ -265,8 +249,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'700000',
             'max_price'=>'700000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG CỐI LỚN HOẶC RĂNG KHÔN HÀM TRÊN',
@@ -274,8 +256,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'1000000',
             'max_price'=>'1500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'NHỔ RĂNG TIỂU PHẨU',
@@ -283,8 +263,6 @@ class AdminController extends Controller
             'treatment_category_id' => '4',
             'min_price' =>'1500000',
             'max_price'=>'2000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ KL THƯỜNG',
@@ -292,8 +270,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'1500000',
             'max_price'=>'1500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ TITAN',
@@ -301,8 +277,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'2500000',
             'max_price'=>'2500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ ZIRCONIA',
@@ -310,8 +284,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'4000000',
             'max_price'=>'4000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ LAVA',
@@ -319,8 +291,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'7000000',
             'max_price'=>'7000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'VENEER',
@@ -328,8 +298,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'6000000',
             'max_price'=>'8000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MÃO SỨ CERCON',
@@ -337,8 +305,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'5000000',
             'max_price'=>'5000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'CÙI GIẢ KIM LOẠI',
@@ -346,8 +312,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'500000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'CÙI GIẢ SỨ',
@@ -355,8 +319,6 @@ class AdminController extends Controller
             'treatment_category_id' => '5',
             'min_price' =>'1500000',
             'max_price'=>'1500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'HÀM NHỰA - RĂNG NHỰA VIỆT NAM',
@@ -364,8 +326,6 @@ class AdminController extends Controller
             'treatment_category_id' => '6',
             'min_price' =>'300000',
             'max_price'=>'300000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
          Treatment::create([
             'name' => 'HÀM NHỰA -RĂNG COMPOSITE',
@@ -373,8 +333,6 @@ class AdminController extends Controller
             'treatment_category_id' => '6',
             'min_price' =>'500000',
             'max_price'=>'500000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
           Treatment::create([
             'name' => 'HÀM NHỰA -RĂNG SỨ',
@@ -382,18 +340,14 @@ class AdminController extends Controller
             'treatment_category_id' => '6',
             'min_price' =>'600000',
             'max_price'=>'600000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
-         
+
         Treatment::create([
             'name' => 'DENTIUM HÀN QUỐC',
             'description' => 'DENTIUM HÀN QUỐC',
             'treatment_category_id' => '7',
             'min_price' =>'15400000',
             'max_price'=>'15400000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
          Treatment::create([
             'name' => 'DENTIUM MỸ',
@@ -401,8 +355,6 @@ class AdminController extends Controller
             'treatment_category_id' => '7',
             'min_price' =>'19800000',
             'max_price'=>'19800000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
           Treatment::create([
             'name' => 'NOBEL HAY STRAUMAN',
@@ -410,8 +362,6 @@ class AdminController extends Controller
             'treatment_category_id' => '7',
             'min_price' =>'28600000',
             'max_price'=>'28600000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
 
         Treatment::create([
@@ -420,8 +370,6 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'30000000',
             'max_price'=>'35000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MẮC CÀI SỨ',
@@ -429,8 +377,6 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'40000000',
             'max_price'=>'45000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MẮC CÀI KIM LOẠI TỰ KHÓA',
@@ -438,8 +384,6 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'40000000',
             'max_price'=>'45000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'MẮC CÀI SỨ',
@@ -447,8 +391,6 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'55000000',
             'max_price'=>'60000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
         Treatment::create([
             'name' => 'INVISALGN( KHÔNG MẮC CÀI)',
@@ -456,14 +398,19 @@ class AdminController extends Controller
             'treatment_category_id' => '8',
             'min_price' =>'88000000',
             'max_price'=>'115000000',
-            'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
         ]);
-         
 
+    }
+
+    public function initTooth(){
+        Tooth::create([
+            'tooth_numnber'=>'1.1',
+            'name'=>'Răng số 1 hàm trên'
+            ]);
     }
     public function initTreatmentCate()
     {
+
         TreatmentCategory::create([
             'name' => 'Nha Chu',
             'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
