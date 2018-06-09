@@ -12,4 +12,14 @@ class Staff extends Model
     public function getUser(){
         return $this->belongsTo('App\Model\User','phone', 'phone');
     }
+    public function hasAbsent(){
+        return $this->hasMany('App\Model\Absent', 'staff_id', 'id');
+    }
+    public function approveAbsent(){
+        return $this->hasMany('App\Model\Absent', 'staff_approve_id', 'id');
+    }
+
+    public function hasEvent(){
+        return $this->hasMany('App\Model\Event', 'staff_id', 'id');
+    }
 }

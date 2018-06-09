@@ -16,7 +16,7 @@ class User extends Authenticatable
         'password','remember_token'
     ];
     public function hasRole(){
-        return $this->hasOne('App\Model\User_has_role', 'phone', 'phone');
+        return $this->hasOne('App\Model\UserHasRole', 'phone', 'phone');
     }
     public function belongToStaff(){
         return $this->hasOne('App\Model\Staff', 'phone', 'phone');
