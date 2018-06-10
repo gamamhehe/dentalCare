@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblDistrictsTable extends Migration
+class CreateTblPrescriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTblDistrictsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_districts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->integer('city_id');
+        Schema::create('tbl_prescriptions', function (Blueprint $table) {
+            $table->integer('patient_id');
+            $table->integer('dentist_id');
+            $table->integer('medicine_id');
+            $table->integer('treatment_detail_id');
+            $table->dateTime('create_date');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateTblDistrictsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_districts');
+        Schema::dropIfExists('tbl_prescriptions');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblCitiesTable extends Migration
+class CreateTblTreatmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateTblCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_cities', function (Blueprint $table) {
+        Schema::create('tbl_treatments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description');
+            $table->integer('treatment_category_id');
+            $table->bigInteger('min_price');
+            $table->bigInteger('max_price');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateTblCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_cities');
+        Schema::dropIfExists('tbl_treatments');
     }
 }

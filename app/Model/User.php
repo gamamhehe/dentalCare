@@ -2,21 +2,15 @@
 
 namespace App\Model;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use Notifiable;
     //
-    protected $guard = 'admins';
     protected $table = 'tbl_users';
     protected $fillable = ['phone', 'password', 'isActive', 'isDelete'];
-    protected $hidden = [
-        'password','remember_token'
-    ];
     public function hasRole(){
-        return $this->hasOne('App\Model\User_has_role', 'phone', 'phone');
+        return $this->hasOne('App\Model\UserHasRole', 'phone', 'phone');
     }
     public function belongToStaff(){
         return $this->hasOne('App\Model\Staff', 'phone', 'phone');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblNewsTypeTable extends Migration
+class CreateTblAnamnesisPatientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateTblNewsTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_news_type', function (Blueprint $table) {
-            $table->integer('type_id')->unique();
-            $table->integer('news_id')->unique();
+        Schema::create('tbl_anamnesis_patients', function (Blueprint $table) {
+            $table->integer('patient_id')->unique();
+            $table->integer('anamnesis_id')->unique();
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateTblNewsTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_news_type');
+        Schema::dropIfExists('tbl_anamnesis_patients');
     }
 }

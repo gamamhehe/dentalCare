@@ -33,6 +33,6 @@ class CreateTblStaffsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tblStaffs');
+        Schema::dropIfExists('tbl_staffs');
     }
 }
