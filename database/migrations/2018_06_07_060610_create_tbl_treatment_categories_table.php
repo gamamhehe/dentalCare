@@ -18,6 +18,7 @@ class CreateTblTreatmentCategoriesTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('icon_link');
+            $table->time('estimate_time');
             $table->timestamps();
         });
     }

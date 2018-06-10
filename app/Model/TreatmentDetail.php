@@ -15,5 +15,13 @@ class TreatmentDetail extends Model
     public function hasPayment(){
         return $this->hasMany('App\Model\Payment', 'treatment_detail_id', 'id');
     }
-
+    public function hasFeedback(){
+        return $this->hasOne('App\Model\Feedback','treatment_detail_id', 'id');
+    }
+    public function hasTreatmentDetailStep(){
+        return $this->hasMany('App\Model\TreatmentDetailStep', 'treatment_detail_id', 'id');
+    }
+    public function belongsToStaff(){
+        return $this->belongsTo('App\Model\Staff', 'dentist_id', 'id');
+    }
 }

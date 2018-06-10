@@ -16,7 +16,7 @@ class CreateTblStaffsTable extends Migration
         Schema::create('tbl_staffs', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->string('name');
-            $table->string('specialty')->nullable();
+            $table->string('degree')->nullable();
             $table->string('description')->nullable();
             $table->date('dateOfBirth');
             $table->string('phone');

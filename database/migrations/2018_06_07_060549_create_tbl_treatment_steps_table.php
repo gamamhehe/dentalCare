@@ -14,8 +14,7 @@ class CreateTblTreatmentStepsTable extends Migration
     public function up()
     {
         Schema::create('tbl_treatment_steps', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
+            $table->integer('step_id');
             $table->integer('treatment_id');
             $table->string('description');
             $table->timestamps();
