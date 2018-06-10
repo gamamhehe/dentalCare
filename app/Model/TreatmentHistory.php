@@ -13,5 +13,10 @@ class TreatmentHistory extends Model
     public function belongsToTreatment(){
         return $this->belongsTo('App\Model\Treatment', 'treatment_id', 'id');
     }
-
+    public function belongsToPatient(){
+        return $this->belongsTo('App\Model\Patient', 'patient_id', 'id');
+    }
+    public function belongsToTooth(){
+        return $this->belongsTo('App\Model\Tooth', 'tooth_number', 'id');
+    }
 }

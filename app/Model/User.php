@@ -8,9 +8,9 @@ class User extends Model
 {
     //
     protected $table = 'tbl_users';
-    protected $fillable = ['phone', 'password', 'isActive', 'isDelete'];
+    protected $fillable = ['phone', 'password', 'isDeleted'];
     public function hasRole(){
-        return $this->hasOne('App\Model\UserHasRole', 'phone', 'phone');
+        return $this->hasMany('App\Model\UserHasRole', 'phone', 'phone');
     }
     public function belongToStaff(){
         return $this->hasOne('App\Model\Staff', 'phone', 'phone');

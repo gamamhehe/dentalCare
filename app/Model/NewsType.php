@@ -9,7 +9,7 @@ class NewsType extends Model
     //
     protected $table = 'tbl_news_type';
     protected $fillable = ['type_id', 'news_id'];
-    public function belongsToType(){
+    public function belongsToNews(){
         return $this->belongsTo('App\Model\News', 'news_id', 'id');
     }
     public function getType(){
