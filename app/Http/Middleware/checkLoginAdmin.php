@@ -15,8 +15,8 @@ class checkLoginAdmin
      */
     public function handle($request, Closure $next)
     {
-        $sessionUser = $request->session()->get('admin', 'default');
-        if ($sessionUser == 'default') {
+        $sessionUser = $request->session()->get('role', -1);
+        if ($sessionUser == -1) {
             return redirect('/lara-admin');
         }
         return $next($request);
