@@ -35,7 +35,7 @@ class AdminController extends Controller
             'phone' => 'required|min:10|max:11',
             'password' => 'required|min:6'
         ]);
-        $user = $this->CheckLogin($request->phone, $request->password);
+        $user = $this->checkLogin($request->phone, $request->password);
         if ($user != null) {
             // if successful, then redirect to their intended location
 //            dd(Auth::guard('admins')->user()->has_role()->first()->Role()->first()->name);
