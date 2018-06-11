@@ -14,7 +14,7 @@ use App\Model\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
-
+use Carbon\Carbon;
 class NewsController extends Controller
 {
 
@@ -44,9 +44,40 @@ class NewsController extends Controller
             return response()->json($error, 500);
         }
     }
+    public function loadcreateNews(Request $request){
+        return view('admin.News.createNews');
+    }
     public function createNews(Request $request){
-        $input=$request->all();
-        print_r($input);
+        // $this->validate($request, [
+        //     'image_header' => 'required',
+        //     'title' => 'required|min:6',
+        //     'content' => 'required|min:6'
+
+        // ]);
+        $mess = "ahihi";
+        DB::beginTransaction();
+        try{
+            $input = $request->all();
+            $News = new News;
+            $News->image_header = $input['image_header'];
+            $News->content =  $input['content'];
+            $News->title = $input['title'];
+            $News->staff_id = 1;
+            $News->create_date=Carbon::now();
+            $News->save();
+            DB::commit();
+            return redirect('/list-News')->withSuccess("ssss");
+             // return redirect('/list-News');
+          // return redirect()->back();
+        }catch(\Exception $e){
+            DB::rollback();
+            return redirect()->back()->withSuccess("NOT");
+             
+        }
+    }
+
+    public function loadListNews(Request $request){
+        return view('admin.News.ListNews');
     }
 
 }

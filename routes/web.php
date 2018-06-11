@@ -25,7 +25,7 @@ Route::get('/doctorList','HomeController@DoctorInformation');
 // end webuser
 
 Route::group(['middleware' => 'admins'], function () {
-    Route::get('dashboard', function () {
+Route::get('dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 });
@@ -34,6 +34,8 @@ Route::get('/getDB','HomeController@getDB');
 Route::get('/banggia','HomeController@BangGiaDichVu');
 
 //CRUD new
+Route::get('/create-Newsx', 'Mobile\NewsController@loadcreateNews');
 Route::post('/createNews', 'Mobile\NewsController@createNews');
+Route::get('/list-News', 'Mobile\NewsController@loadListNews');
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
