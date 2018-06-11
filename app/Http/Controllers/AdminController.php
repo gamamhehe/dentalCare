@@ -41,7 +41,7 @@ class AdminController extends Controller
 //            dd(Auth::guard('admins')->user()->has_role()->first()->Role()->first()->name);
             $role = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($role < 3 and $role > 0) {
-                session(['currentUser' => $user]);
+                session(['currentAdmin' => $user]);
                 return redirect()->intended(route('admin.dashboard'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
