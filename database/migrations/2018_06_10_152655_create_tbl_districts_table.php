@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblUsersTable extends Migration
+class CreateTblDistrictsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTblUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_users', function (Blueprint $table) {
-            $table->string("phone")->unique();
-            $table->string("password");
-            $table->boolean("isDeleted");
+        Schema::create('tbl_districts', function (Blueprint $table) {
+            $table->increments('id')->unique();
+            $table->string('name');
+            $table->integer('city_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTblUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_users');
+        Schema::dropIfExists('tbl_districts');
     }
 }

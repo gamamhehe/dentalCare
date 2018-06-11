@@ -17,8 +17,8 @@ class CreateTblAppointmentsTable extends Migration
             $table->increments('id');
             $table->date('date_booking');
             $table->string('note');
-            $table->time('time_booking');
-            $table->integer('dentist_id');
+            $table->time('estimated_time');
+            $table->integer('numerical_order');
             $table->string('phone');
             $table->timestamps();
         });

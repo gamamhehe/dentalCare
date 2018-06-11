@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use App\Staff;
 use App\User;
-use App\Treatment_category;
+use App\TreatmentCategory;
 use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {

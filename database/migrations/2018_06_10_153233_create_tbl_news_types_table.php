@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblAppointmentTimeExpected extends Migration
+class CreateTblNewsTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateTblAppointmentTimeExpected extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_appointment_time_expected', function (Blueprint $table) {
-            $table->integer('appointment_id')->unique();
-            $table->integer('treatment_id')->unique();
-            $table->string('description');
+        Schema::create('tbl_news_types', function (Blueprint $table) {
+            $table->integer('type_id')->unique();
+            $table->integer('news_id')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateTblAppointmentTimeExpected extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_appointment_time_expected');
+        Schema::dropIfExists('tbl_news_types');
     }
 }
