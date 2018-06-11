@@ -73,13 +73,30 @@ class AdminController extends Controller
         User_has_role::create([
             'phone' => '01279011096',
             'role_id' => 1,
-            'role_start_time' => Carbon::now(),
-            'role_end_time' => null
+            'start_time' => Carbon::now(),
+            'end_time' => null
         ]);
         Role::create([
             'id' => '1',
             'name' => 'Administrator',
             'description' => 'Administrator of all system',
+        ]);
+        User::create([
+            'phone' => '01279011099',
+            'password' => Hash::make('#2017#'),
+            'isActive' => true,
+            'isDelete' => false
+        ]);
+        User_has_role::create([
+            'phone' => '01279011099',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        Role::create([
+            'id' => '4',
+            'name' => 'Patient',
+            'description' => 'Patient',
         ]);
 
     }
@@ -95,8 +112,8 @@ class AdminController extends Controller
         User_has_role::create([
             'phone' => '01279011097',
             'role_id' => 2,
-            'role_start_time' => Carbon::now(),
-            'role_end_time' => null
+            'start_time' => Carbon::now(),
+            'end_time' => null
         ]);
         Role::create([
             'id' => '2',
@@ -112,8 +129,8 @@ class AdminController extends Controller
         User_has_role::create([
             'phone' => '01279011098',
             'role_id' => 3,
-            'role_start_time' => Carbon::now(),
-            'role_end_time' => null
+            'start_time' => Carbon::now(),
+            'end_time' => null
         ]);
         Role::create([
             'id' => '3',
