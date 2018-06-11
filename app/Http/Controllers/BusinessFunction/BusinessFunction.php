@@ -26,8 +26,6 @@ trait BusinessFunction
         if ($result != null) {
             if (Hash::check($password, $result->password)) {
                 return $result;
-            } else {
-                return $result;
             }
         } else {
             return null;
