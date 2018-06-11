@@ -17,7 +17,7 @@ use Auth;
 
 class AdminController extends Controller
 {
-    use BusinessFunction;
+    use UserBusinessFunction;
 
     //
 
