@@ -12,7 +12,7 @@ class MedicinesQuantity extends Model
     public function belongsToTreatmentDetail(){
         return $this->belongsTo('App\Model\TreatmentDetail','treatment_detail_id', 'id');
     }
-    public function hasMedicine(){
+    public function belongsToMedicine(){
         return $this->belongsTo('App\Model\Medicine', 'medicine_id', 'id');
     }
 }

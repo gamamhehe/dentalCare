@@ -17,6 +17,7 @@ class CreateTblTreatmentHistoriesTable extends Migration
             $table->increments('id');
             $table->integer('treatment_id');
             $table->integer('patient_id');
+            $table->integer('tooth_number');
             $table->string('description');
             $table->dateTime('create_date');
             $table->dateTime('finish_date');

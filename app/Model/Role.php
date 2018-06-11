@@ -9,7 +9,7 @@ class Role extends Model
     //
     protected $table = 'tbl_roles';
     protected $fillable = ['id', 'name', 'description'];
-    public function roleBelongTo(){
+    public function hasUserHasRole(){
         return $this->hasMany('App\Model\UserHasRole','role_id', 'id');
     }
 }

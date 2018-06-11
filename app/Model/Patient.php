@@ -31,7 +31,7 @@ class Patient extends Model
         return $this->belongsTo('App\Model\District', 'id', 'district_id');
     }
 
-    public function hasAnamnesis()
+    public function hasAnamnesisPatient()
     {
         return $this->hasMany('App\Model\AnamnesisPatient', 'patient_id', 'id');
     }

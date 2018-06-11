@@ -12,7 +12,4 @@ class Appointment extends Model
     public function belongsToUser(){
         return $this->belongsTo('App\Model\User', 'phone', 'phone');
     }
-    public function belongsToDentist(){
-        return $this->belongsTo('App\Model\Staff', 'dentist_id', 'id');
-    }
 }

@@ -18,8 +18,4 @@ class Feedback extends Model
     public function belongsToTreatmentDetail(){
         return $this->belongsTo('App\Model\TreatmentDetail', 'treatment_detail_id', 'id');
     }
-
-    public function belongsToTreatmentDetail(){
-        return $this->belongsTo('App\Model\TreatmentDetail', 'id', 'patient_id');
-    }
 }

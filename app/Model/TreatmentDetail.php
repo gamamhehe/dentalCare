@@ -24,4 +24,10 @@ class TreatmentDetail extends Model
     public function belongsToStaff(){
         return $this->belongsTo('App\Model\Staff', 'dentist_id', 'id');
     }
+    public function hasMedicinesQuantity(){
+        return $this->hasMany('App\Model\MedicinesQuantity', 'treatment_detail_id', 'id');
+    }
+    public function belongsToTreatmentHistory(){
+        return $this->belongsTo('App\Model\TreatmentHistory', 'treatment_history_id', 'id');
+    }
 }

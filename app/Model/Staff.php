@@ -9,7 +9,7 @@ class Staff extends Model
     //
     protected $table = 'tbl_staffs';
     protected $fillable = ['id', 'name','degree', 'date_of_birth', 'phone', 'gender', 'avatar'];
-    public function getUser(){
+    public function belongsToUser(){
         return $this->belongsTo('App\Model\User','phone', 'phone');
     }
     public function hasAbsent(){

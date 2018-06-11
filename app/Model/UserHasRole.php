@@ -12,7 +12,7 @@ class UserHasRole extends Model
     public function belongsToUser(){
         return $this->belongsTo('App\Model\User', 'phone', 'phone');
     }
-    public function getRole(){
+    public function belongsToRole(){
         return $this->belongsTo('App\Model\Role', 'role_id', 'id');
     }
 }

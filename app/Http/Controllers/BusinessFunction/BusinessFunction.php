@@ -25,7 +25,7 @@ trait BusinessFunction
         $result = User::where('phone', $phone)->first();
         if ($result != null) {
             if (Hash::check($password, $result->password)) {
-                return $result->hasRole()->first()->getRole()->first()->id;
+                return $result->hasUserHasRole()->first()->belongsToRole()->first()->id;
             } else {
                 return -1;
             }

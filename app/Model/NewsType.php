@@ -12,7 +12,7 @@ class NewsType extends Model
     public function belongsToNews(){
         return $this->belongsTo('App\Model\News', 'news_id', 'id');
     }
-    public function getType(){
+    public function belongsToType(){
         return $this->belongsTo('App\Model\Type', 'type_id', 'id');
     }
 }
