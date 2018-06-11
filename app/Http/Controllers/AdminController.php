@@ -35,12 +35,13 @@ class AdminController extends Controller
             'phone' => 'required|min:10|max:11',
             'password' => 'required|min:6'
         ]);
-        $role = $this->CheckLogin($request->phone, $request->password);
-        if ($role != -1) {
+        $user = $this->CheckLogin($request->phone, $request->password);
+        if ($user != null) {
             // if successful, then redirect to their intended location
 //            dd(Auth::guard('admins')->user()->has_role()->first()->Role()->first()->name);
+            $role = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($role < 3 and $role > 0) {
-                session(['role' => $role]);
+                session(['currentUser' => $user]);
                 return redirect()->intended(route('admin.dashboard'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));

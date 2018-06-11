@@ -25,12 +25,12 @@ trait BusinessFunction
         $result = User::where('phone', $phone)->first();
         if ($result != null) {
             if (Hash::check($password, $result->password)) {
-                return $result->hasUserHasRole()->first()->belongsToRole()->first()->id;
+                return $result;
             } else {
-                return -1;
+                return $result;
             }
         } else {
-            return -1;
+            return null;
         }
     }
 }
