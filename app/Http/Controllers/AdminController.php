@@ -79,8 +79,7 @@ class AdminController extends Controller
         User::create([
             'phone' => '01279011099',
             'password' => Hash::make('#2017#'),
-            'isActive' => true,
-            'isDelete' => false
+            'isDeleted' => false
         ]);
         UserHasRole::create([
             'phone' => '01279011099',
@@ -117,8 +116,7 @@ class AdminController extends Controller
         User::create([
             'phone' => '01279011098',
             'password' => Hash::make('#2017#'),
-            'isActive' => true,
-            'isDelete' => false
+            'isDeleted' => false
         ]);
         UserHasRole::create([
             'phone' => '01279011098',
