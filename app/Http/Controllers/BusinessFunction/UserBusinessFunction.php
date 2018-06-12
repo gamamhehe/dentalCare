@@ -11,7 +11,7 @@ namespace App\Http\Controllers\BusinessFunction;
 use App\Model\User;
 use Illuminate\Support\Facades\Hash;
 
-trait BusinessFunction
+trait UserBusinessFunction
 {
 
 

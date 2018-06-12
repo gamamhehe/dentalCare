@@ -16,7 +16,7 @@ class CreateTblNewsTable extends Migration
         Schema::create('tbl_news', function (Blueprint $table) {
             $table->increments('id');
             $table->string('image_header');
-            $table->string('content');
+            $table->longText('content');
             $table->string('title');
             $table->integer('staff_id');
             $table->dateTime('create_date');
