@@ -8,7 +8,7 @@ class TreatmentHistory extends Model
 {
     //
     protected $table = 'tbl_treatment_histories';
-    protected $fillable = ['id', 'treatment_id','patient_id', 'description', 'create_date', 'finish_date', 'tooth_number'];
+    protected $fillable = ['id', 'treatment_id','patient_id', 'description', 'create_date', 'finish_date', 'tooth_number', 'price', 'payment_id', 'total_price'];
 
     public function belongsToTreatment(){
         return $this->belongsTo('App\Model\Treatment', 'treatment_id', 'id');
@@ -21,5 +21,8 @@ class TreatmentHistory extends Model
     }
     public function belongsToPatient(){
         return $this->belongsTo('App\Model\Patient', 'patient_id', 'id');
+    }
+    public function belongsToPayment(){
+        return $this->belongsTo('App\Model\Payment', 'payment_id', 'id');
     }
 }

@@ -21,6 +21,9 @@ class CreateTblTreatmentHistoriesTable extends Migration
             $table->string('description');
             $table->dateTime('create_date');
             $table->dateTime('finish_date');
+            $table->bigInteger('price');
+            $table->bigInteger('total_price');
+            $table->integer('payment_id');
             $table->timestamps();
         });
     }

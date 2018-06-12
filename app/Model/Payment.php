@@ -18,4 +18,7 @@ class Payment extends Model
     public function beLongsToTreatmentDetail(){
         return $this->belongsTo('App\Model\TreatmentDetail','treatment_detail_id', 'id');
     }
+    public function hasPaymentDetail(){
+        return $this->hasMany('App\Model\PaymentDetail', 'payment_id', 'id');
+    }
 }
