@@ -37,6 +37,10 @@ trait UserBusinessFunction
     }
 
     public function registerPatient($value){
+        $user = User::where('phone', $value->phone)->first();
+        if($user != null){
+            return 'User with this phone is exist';
+        }
         DB::beginTransaction();
         try {
             User::create([
@@ -44,22 +48,26 @@ trait UserBusinessFunction
                 'password' => Hash::make($value->phone),
                 'isDeleted' => false
             ]);
-            Patient::created($value);
-            UserHasRole::created([
+            Patient::create($value);
+            UserHasRole::create([
                 'phone' => $value->phone,
                 'role_id' => 4,
                 'start_time' => Carbon::now(),
                 'end_time' => null
             ]);
             DB::commit();
-            return true;
+            return 'Create success';
         } catch (\Exception $e) {
             DB::rollback();
-            return false;
+            return 'Create fail';
         }
     }
 
     public function registerStaff($value, $role){
+        $user = User::where('phone', $value->phone)->first();
+        if($user != null){
+            return 'User with this phone is exist';
+        }
         DB::beginTransaction();
         try {
             User::create([
@@ -67,13 +75,25 @@ trait UserBusinessFunction
                 'password' => Hash::make($value->phone),
                 'isDeleted' => false
             ]);
-            Staff::created($value);
-            UserHasRole::created([
+            Staff::create($value);
+            UserHasRole::create([
                 'phone' => $value->phone,
                 'role_id' => $role,
                 'start_time' => Carbon::now(),
                 'end_time' => null
             ]);
+            DB::commit();
+            return 'Create success';
+        } catch (\Exception $e) {
+            DB::rollback();
+            return 'Create fail';
+        }
+    }
+
+    public function createRole($value){
+        DB::beginTransaction();
+        try {
+            Role::create($value);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -82,15 +102,13 @@ trait UserBusinessFunction
         }
     }
 
-    public function createRole($value){
-        DB::beginTransaction();
-        try {
-            Role::created($value);
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            return false;
-        }
+    public function updateRole($role){
+        $role->save();
+        return true;
+    }
+
+    public function deleteRole($role){
+        $role->save();
+        return true;
     }
 }
