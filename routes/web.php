@@ -35,8 +35,9 @@ Route::get('/getDB','HomeController@getDB');
 Route::get('/banggia','HomeController@BangGiaDichVu');
 
 //CRUD new
-Route::get('/create-Newsx', 'Mobile\NewsController@loadcreateNews');
-Route::post('/createNews', 'Mobile\NewsController@createNews');
+Route::get('/create-News', 'Mobile\NewsController@loadcreateNews');
+Route::post('/create-News', 'Mobile\NewsController@createNews');
+Route::get('/getListNew','Mobile\NewsController@getListNew');
 Route::get('/list-News', 'Mobile\NewsController@loadListNews');
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new

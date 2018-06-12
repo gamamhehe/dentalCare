@@ -6,9 +6,7 @@
      
             <div class="row">
                 <div class="box-body">
-                    <label>Image-   @if(session('success'))
-    <h1>{{session('success')}}</h1>
-@endif</label>
+                    <label>Image-  </label>
                     <img id="holder" style="max-height:100px" name="holder" src="{{old('image')}}">
                     <div class="input-group">
                         <input id="thumbnail" class="form-control" type="text" name="image"
@@ -21,29 +19,36 @@
                 </div>
                 <div class="form-group">
 
-                 <form method ="post" class="form-horizontal" action="/createNews">
-                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                    <label>Description</label>
-                    <textarea id="tinyMCE" name="description" rows="10"
-                              class="form-control"
-                              id="input"
-                              placeholder="Write your message..">{!!old('description')!!}</textarea>
-                    <div class="box-footer">
-                        <button type="submit" class="col-md-3 btn btn-default btn-md" style="margin-right: 10px" onclick="checkValid">Create Question</button>
-                         
-                    </div>          
-                    </form>
+                
                 </div>
             </div>
+            <div class="row" >
+      
+      <table id="dup-table" class="table text-center">
+      <thead>
+      <tr style="background-color: #eee;">
+      <td class="col-sm-1">id</td>
+      <!-- <td class="col-sm-2">title</td> -->
+       <td class="col-sm-3">staff_id</td>
+      <td class="col-sm-3">create_date</td>
+      </tr>
+      </thead>
+      </table> 
+    </div>
         </section>
     </div>
 @endsection
 @section('js')
+    <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function() {
-          if
-          swal("Good job!", "You clicked the button!", "success");  
+          <?php if (Session::has('success')): ?>
+          swal("Good job!", "", "success");  
+        <?php endif ?>
+         
         });
         $('#lfm').filemanager('image');
         $(window).on('load', function () {
@@ -52,5 +57,29 @@
                 Page.initLFM();
             });
         });
+         $(function() {
+        $('#dup-table').DataTable({
+        processing: true,
+        serverSide: true,
+        order: [[ 0, "desc" ]],
+        bLengthChange:true,
+        pageLength: 5,
+        ajax: '/getDB',
+        columns : [
+          
+              {data: 'id'},
+              {data: 'title'},
+              {
+                  
+                  data: 'staff_id'
+              },
+              {
+                  
+                  data: 'created_at'
+              },
+            ],
+        });
+    });
     </script>
+
 @endsection

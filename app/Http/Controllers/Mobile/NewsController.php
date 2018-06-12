@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 use Carbon\Carbon;
+use Yajra\Datatables\Facades\Datatables;
 class NewsController extends Controller
 {
 
@@ -54,29 +55,38 @@ class NewsController extends Controller
         //     'content' => 'required|min:6'
 
         // ]);
-        $mess = "ahihi";
+        $input = $request->all();
+         
+        $value = $request->session()->get('currentAdmin');
+        $role = $value->hasUserHasRole()->first()->belongsToRole()->first()->name;
+        $staffId = $value->belongToStaff()->first()->id;
+        
         DB::beginTransaction();
         try{
-            $input = $request->all();
+           
             $News = new News;
             $News->image_header = $input['image_header'];
             $News->content =  $input['content'];
             $News->title = $input['title'];
-            $News->staff_id = 1;
+            $News->staff_id = $staffId;
             $News->create_date=Carbon::now();
             $News->save();
             DB::commit();
-            return redirect('/list-News')->withSuccess("ssss");
-             // return redirect('/list-News');
-          // return redirect()->back();
+            return redirect('/list-News')->withSuccess("Bài viết đã được tạo");
+          
         }catch(\Exception $e){
             DB::rollback();
-            return redirect()->back()->withSuccess("NOT");
+            return redirect()->back()->withSuccess("Bài viết chưa được tạo");
              
         }
     }
+    public function getListNew(Request $request){
+          $listNews = DB::table('tbl_News')->get();
+            return Datatables::of($listNews)->make(true);
 
+    }
     public function loadListNews(Request $request){
+       
         return view('admin.News.ListNews');
     }
 
