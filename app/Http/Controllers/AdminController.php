@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\BusinessFunction\BusinessFunction;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
