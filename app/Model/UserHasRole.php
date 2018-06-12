@@ -8,7 +8,7 @@ class UserHasRole extends Model
 {
     //
     protected $table = 'tbl_user_has_role';
-    protected $fillable = ['phone', 'role_id', 'role_start_time', 'role_end_time'];
+    protected $fillable = ['phone', 'role_id', 'start_time', 'end_time'];
     public function belongsToUser(){
         return $this->belongsTo('App\Model\User', 'phone', 'phone');
     }

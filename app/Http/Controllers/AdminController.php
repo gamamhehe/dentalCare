@@ -82,7 +82,7 @@ class AdminController extends Controller
             'isActive' => true,
             'isDelete' => false
         ]);
-        User_has_role::create([
+        UserHasRole::create([
             'phone' => '01279011099',
             'role_id' => 4,
             'start_time' => Carbon::now(),
@@ -120,7 +120,7 @@ class AdminController extends Controller
             'isActive' => true,
             'isDelete' => false
         ]);
-        User_has_role::create([
+        UserHasRole::create([
             'phone' => '01279011098',
             'role_id' => 3,
             'start_time' => Carbon::now(),
