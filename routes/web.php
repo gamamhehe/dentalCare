@@ -33,3 +33,4 @@ Route::group(['middleware' => 'admins'], function () {
 
 Route::get('/getDB','HomeController@getDB');
 Route::get('/banggia','HomeController@BangGiaDichVu');
+Route::get('/generateKey', 'BlockchainController@GenerateKey');
