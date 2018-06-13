@@ -33,7 +33,7 @@ class AdminController extends Controller
             'phone' => 'required|min:10|max:11',
             'password' => 'required|min:6'
         ]);
-        $user = $this->CheckLogin($request->phone, $request->password);
+        $user = $this->checkLogin($request->phone, $request->password);
         if ($user != null) {
             // if successful, then redirect to their intended location
 //            dd(Auth::guard('admins')->user()->has_role()->first()->Role()->first()->name);
@@ -116,9 +116,10 @@ class AdminController extends Controller
         User::create([
             'phone' => '01279011098',
             'password' => Hash::make('#2017#'),
-            'isDeleted' => false
+            'isActive' => true,
+            'isDelete' => false
         ]);
-        UserHasRole::create([
+        User_has_role::create([
             'phone' => '01279011098',
             'role_id' => 3,
             'start_time' => Carbon::now(),
