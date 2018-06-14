@@ -11,8 +11,9 @@
 |
 */
 
-Route::get('initAdmin', 'Admin\AdminController@initAdmin')->name('admin.login.initAdmin');
-Route::get('initTreatment', 'Admin\AdminController@initTreatment')->name('admin.login.initTreatment');
+Route::get('initAdmin', 'Admin\AdminController@initAdmin');
+Route::get('initTreatment', 'Admin\AdminController@initTreatment');
+Route::get('initTooth', 'Admin\AdminController@initTooth');
 Route::get('logoutAdmin', 'Admin\AdminController@logout')->name('admin.logout');
 Route::post('loginAdmin', 'Admin\AdminController@login')->name('admin.login.post');
 Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
@@ -27,11 +28,25 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::get('dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+    Route::get('/create-News', 'Mobile\NewsController@loadcreateNews');
+
+    Route::get('/getListNews','Mobile\NewsController@getListNew');
+    Route::get('/editNews/{id}','Mobile\NewsController@loadEditNews');
+    Route::get('/deleteNews/{id}','Mobile\NewsController@deleteNews');
+    Route::get('/list-News', 'Mobile\NewsController@loadListNews');
+    Route::get('/deleteNews/{id}', 'Mobile\NewsController@deleteNews');
+    Route::post('/create-News', 'Mobile\NewsController@createNews');
+    Route::post('/created-News', 'Mobile\NewsController@createdNews');
 });
 
-Route::get('/getDB', 'User\HomeController@getDB');
-Route::get('/banggia', 'User\HomeController@BangGiaDichVu');
 
 Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
+Route::get('/getDB','HomeController@getDB');
+Route::get('/banggia','HomeController@BangGiaDichVu');
+
+//CRUD news
+
+// Route::post('/createNews', 'HomeController@createNews');
+//end CRUD new
