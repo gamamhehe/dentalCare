@@ -43,8 +43,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
-Route::get('/getDB','HomeController@getDB');
-Route::get('/banggia','HomeController@BangGiaDichVu');
+Route::get('/getDB','User\HomeController@getDB');
+Route::get('/banggia','User\HomeController@BangGiaDichVu');
 
 //CRUD news
 
