@@ -11,25 +11,27 @@
 |
 */
 
-Route::get('initAdmin', 'AdminController@initAdmin')->name('admin.login.initAdmin');
-Route::get('initAdmin2', 'AdminController@initAdmin2')->name('admin.login.initAdmin2');
-Route::get('initTreatmentCate', 'AdminController@initTreatmentCate')->name('admin.login.initTreatmentCate');
-Route::get('initTreatment', 'AdminController@initTreatment')->name('admin.login.initTreatment');
-Route::get('logoutAdmin', 'AdminController@logout')->name('admin.logout');
-Route::post('loginAdmin', 'AdminController@login')->name('admin.login.post');
-Route::get('lara-admin', 'AdminController@loginGet')->name('admin.login');
+Route::get('initAdmin', 'Admin\AdminController@initAdmin')->name('admin.login.initAdmin');
+Route::get('initTreatment', 'Admin\AdminController@initTreatment')->name('admin.login.initTreatment');
+Route::get('logoutAdmin', 'Admin\AdminController@logout')->name('admin.logout');
+Route::post('loginAdmin', 'Admin\AdminController@login')->name('admin.login.post');
+Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
 
 
 // webuser phuc
-Route::get('/','HomeController@HomePage');
-Route::get('/doctorList','HomeController@DoctorInformation');
+Route::get('/', 'User\HomeController@HomePage');
+Route::get('/doctorList', 'User\HomeController@DoctorInformation');
 // end webuser
 
-Route::group(['middleware' => 'admins'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admins'], function () {
     Route::get('dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 });
 
-Route::get('/getDB','HomeController@getDB');
-Route::get('/banggia','HomeController@BangGiaDichVu');
+Route::get('/getDB', 'User\HomeController@getDB');
+Route::get('/banggia', 'User\HomeController@BangGiaDichVu');
+
+Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
+Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
+});
