@@ -24,18 +24,25 @@
                     </span>
                 </a>
             </li>
-            {{--<li class="treeview">--}}
-                {{--<a href="#">--}}
-                    {{--<i class="fa fa-edit"></i> <span>Form</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-                {{--<ul class="treeview-menu">--}}
-                    {{--<li><a href="{!! route('list.form') !!}"><i class="fa fa-circle-o"></i> List Of Form</a></li>--}}
-                    {{--<li><a href="{!! route('getAdd.form') !!}"><i class="fa fa-circle-o"></i> Add Form</a></li>--}}
-                {{--</ul>--}}
-            {{--</li>--}}
+             <li class="treeview">
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Tin Tức</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                            <li><a href="/list-News">Danh sách tin tức</a></li>
+                            <li><a href="/create-News">Tạo bảng tin</a></li>
+                           <!--  <li><a href="/ks107">Manage Question</a></li>
+                            <li><a href="/feedback">Manage Feedback</a></li> -->
+                </ul>
+            </li>
+              <li class="treeview">
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Bệnh Nguy Hiểm</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                            <li><a href="/list-News">Danh sách bệnh tiền sử</a></li>
+                            <li><a href="/create-News">Thêm bệnh tiền sử<</a></li>
+                           <!--  <li><a href="/ks107">Manage Question</a></li>
+                            <li><a href="/feedback">Manage Feedback</a></li> -->
+                </ul>
+            </li>
+ 
         </ul>
     </section>
 </aside>

@@ -11,7 +11,13 @@
     color: white;
     overflow: hidden;
 }
+.layout{
+    margin-right: 4em;
 
+}
+.dkm{
+    background-color: red;
+}
 .footer p {
     padding: 20px 0px;
     margin: 0;

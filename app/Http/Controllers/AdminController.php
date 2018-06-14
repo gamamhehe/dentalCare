@@ -7,6 +7,9 @@ use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
 use App\Model\User_has_role;
+use App\Model\Treatment;
+use App\Model\TreatmentCategory;
+use App\Model\Tooth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -15,7 +18,7 @@ use Auth;
 
 class AdminController extends Controller
 {
-    use UserBusinessFunction;
+    // use UserBusinessFunction;
 
     //
 
@@ -68,8 +71,8 @@ class AdminController extends Controller
         UserHasRole::create([
             'phone' => '01279011096',
             'role_id' => 1,
-            'start_time' => Carbon::now(),
-            'end_time' => null
+            'role_start_time' => Carbon::now(),
+            'role_end_time' => null
         ]);
         Role::create([
             'id' => '1',
@@ -105,8 +108,8 @@ class AdminController extends Controller
         UserHasRole::create([
             'phone' => '01279011097',
             'role_id' => 2,
-            'start_time' => Carbon::now(),
-            'end_time' => null
+            'role_start_time' => Carbon::now(),
+            'role_end_time' => null
         ]);
         Role::create([
             'id' => '2',
@@ -116,14 +119,13 @@ class AdminController extends Controller
         User::create([
             'phone' => '01279011098',
             'password' => Hash::make('#2017#'),
-            'isActive' => true,
-            'isDelete' => false
+            'isDeleted' => false
         ]);
-        User_has_role::create([
+        UserHasRole::create([
             'phone' => '01279011098',
             'role_id' => 3,
-            'start_time' => Carbon::now(),
-            'end_time' => null
+            'role_start_time' => Carbon::now(),
+            'role_end_time' => null
         ]);
         Role::create([
             'id' => '3',
@@ -409,10 +411,7 @@ class AdminController extends Controller
             'min_price' =>'88000000',
             'max_price'=>'115000000',
         ]);
-        Tooth::create([
-            'tooth_numnber'=>'1.1',
-            'name'=>'Răng số 1 hàm trên'
-            ]);
+
     }
 
 
@@ -420,68 +419,233 @@ class AdminController extends Controller
     {
         Tooth::create([
             'tooth_numnber' => '1.1',
-            'name' => 'Răng số 1 hàm trên'
+            'name' => 'Răng số 1 hàm trên phải - Răng cửa'
         ]);
+         Tooth::create([
+            'tooth_numnber' => '1.2',
+            'name' => 'Răng số 2 hàm trên phải - Răng cửa'
+        ]);
+          Tooth::create([
+            'tooth_numnber' => '1.3',
+            'name' => 'Răng số 3 hàm trên phải - Răng Nanh'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '1.4',
+            'name' => 'Răng số 4 hàm trên phải - Răng cối nhỏ'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '1.5',
+            'name' => 'Răng số 5 hàm trên phải - Răng cối nhỏ'
+        ]);
+             Tooth::create([
+            'tooth_numnber' => '1.6',
+            'name' => 'Răng số 6 hàm trên phải - Răng cối lớn'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '1.7',
+            'name' => 'Răng số 7 hàm trên phải - Răng cối lớn'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '1.8',
+            'name' => 'Răng số 8 hàm trên phải - Răng cối lớn'
+        ]);
+           //end trên phải
+           // dưới trái
+           Tooth::create([
+            'tooth_numnber' => '2.1',
+            'name' => 'Răng số 1 hàm trên trái - Răng cửa'
+        ]);
+         Tooth::create([
+            'tooth_numnber' => '2.2',
+            'name' => 'Răng số 2 hàm trên trái - Răng cửa'
+        ]);
+          Tooth::create([
+            'tooth_numnber' => '2.3',
+            'name' => 'Răng số 3 hàm trên trái - Răng Nanh'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '2.4',
+            'name' => 'Răng số 4 hàm trên trái - Răng cối nhỏ'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '2.5',
+            'name' => 'Răng số 5 hàm trên trái - Răng cối nhỏ'
+        ]);
+             Tooth::create([
+            'tooth_numnber' => '2.6',
+            'name' => 'Răng số 6 hàm trên trái - Răng cối lớn'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '2.7',
+            'name' => 'Răng số 7 hàm trên trái - Răng cối lớn'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '2.8',
+            'name' => 'Răng số 8 hàm trên trái - Răng cối lớn'
+        ]);
+           //endham dưới trái
+           Tooth::create([
+            'tooth_numnber' => '4.1',
+            'name' => 'Răng số 1 hàm dưới phải - Răng cửa'
+        ]);
+         Tooth::create([
+            'tooth_numnber' => '4.2',
+            'name' => 'Răng số 2 hàm dưới phải - Răng cửa'
+        ]);
+          Tooth::create([
+            'tooth_numnber' => '4.3',
+            'name' => 'Răng số 3 hàm dưới phải - Răng Nanh'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '4.4',
+            'name' => 'Răng số 4 hàm dưới phải - Răng cối nhỏ'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '4.5',
+            'name' => 'Răng số 5 hàm dưới phải - Răng cối nhỏ'
+        ]);
+             Tooth::create([
+            'tooth_numnber' => '4.6',
+            'name' => 'Răng số 6 hàm dưới phải - Răng cối lớn'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '4.7',
+            'name' => 'Răng số 7 hàm dưới phải - Răng cối lớn'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '4.8',
+            'name' => 'Răng số 8 hàm dưới phải - Răng cối lớn'
+        ]);
+           //end dưới phải
+           // dưới trái
+           Tooth::create([
+            'tooth_numnber' => '3.1',
+            'name' => 'Răng số 1 hàm dưới trái - Răng cửa'
+        ]);
+         Tooth::create([
+            'tooth_numnber' => '3.2',
+            'name' => 'Răng số 2 hàm dưới trái - Răng cửa'
+        ]);
+          Tooth::create([
+            'tooth_numnber' => '3.3',
+            'name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '3.4',
+            'name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '3.5',
+            'name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
+        ]);
+             Tooth::create([
+            'tooth_numnber' => '3.6',
+            'name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '3.7',
+            'name' => 'Răng số 7 hàm dưới trái - Răng cối lớn'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '3.8',
+            'name' => 'Răng số 8 hàm dưới trái - Răng cối lớn'
+        ]);
+           //endham dưới trái
+           //rang tre con
+           // tren phải
+           Tooth::create([
+            'tooth_numnber' => '5.1',
+            'name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa'
+        ]);
+         Tooth::create([
+            'tooth_numnber' => '5.2',
+            'name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa'
+        ]);
+          Tooth::create([
+            'tooth_numnber' => '5.3',
+            'name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
+        ]);
+           Tooth::create([
+            'tooth_numnber' => '5.4',
+            'name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
+        ]);
+            Tooth::create([
+            'tooth_numnber' => '5.5',
+            'name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
+        ]);
+             Tooth::create([
+            'tooth_numnber' => '5.6',
+            'name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
+        ]);
+          
     }
 
     public function initTreatmentCate()
     {
 
-        Treatment_category::create([
+        TreatmentCategory::create([
             'name' => 'Nha Chu',
             'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
             'icon_link' => '/assets/images/icon/bocrangsu.png',
             'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+           'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3'
         ]);
         TreatmentCategory::create([
             'name' => 'Trám Răng',
             'description' => ' XXX',
             'icon_link' => '/assets/images/icon/tramrangthammy.png',
             'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+           'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3'
         ]);
         TreatmentCategory::create([
             'name' => 'Nội Nha ',
             'description' => 'phương pháp điều trị ở bên trong của răng. Bên trong răng, dưới men trắng và một lớp cứng gọi là ngà răng, là một mô mềm gọi là tủy răng. Tủy răng chứa các mạch máu, dây thần kinh, và mô liên kết  ',
             'icon_link' => '/assets/images/icon/caovoirang.png',
             'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+           'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3'
         ]);
         TreatmentCategory::create([
             'name' => ' Nhổ Răng',
             'description' => 'Nhổ răng khó là những răng mọc lệch, răng ngầm, răng khôn bị tai biến, răng bị gẫy chân, răng dính khớp..',
             'icon_link' => '/assets/images/icon/nhorang.png',
             'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+           'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3'
         ]);
         TreatmentCategory::create([
             'name' => 'PHỤC HÌNH CỐ ĐỊNH',
             'description' => 'Phục hình cố định (răng giả cố định) là các loại phục hình – răng giả (mão – cầu răng sứ, mão – cầu răng kim loại…) được gắn cố định vào hàm, miệng người mang.  ',
             'icon_link' => '/assets/images/icon/ranggiathaolap.png',
             'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+           'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3'
         ]);
         TreatmentCategory::create([
             'name' => 'PHỤC HÌNH THÁO LẮP ',
             'description' => 'Phục hình tháo lắp, cụ thể là phục hình tháo lắp răng là phương pháp phục hồi các răng hư tổn, để tái tạo các chức năng của răng. Hay phục hình tháo lắp có thể hiểu là sử dụng răng giả để tháo lắp. Bạn có thể cho răng vào và lấy ra dễ dàng để vệ sinh răng',
             'icon_link' => '/assets/images/icon/taytrangrang.png',
             'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+           'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3'
         ]);
         TreatmentCategory::create([
             'name' => 'IMPLANT (BAO GỒM PHỤC HÌNH) ',
             'description' => 'Cấy ghép răng Implant nha khoa là phương pháp phục hình răng tốt nhất cho người bị mất răng, đảm bảo khả năng ăn nhai giống hoàn toàn như một chiếc răng bình thường.',
             'icon_link' => '/assets/images/icon/trongimplent.png',
             'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+           'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3'
         ]);
         TreatmentCategory::create([
             'name' => 'CHỈNH NHA',
             'description' => 'Chỉnh nha là một nhánh của ngành nha khoa giúp điều chỉnh vị trí của hàm và những răng sai lệch. Những răng bị lệch lạc và những răng không vừa khít với khuôn miệng. ',
             'icon_link' => '/assets/images/icon/danmatsuVENNER.png',
             'created_at' => '2018-06-13 00:00:00',
-            'updated_at' => '2018-06-03 00:00:00'
+           'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3'
         ]);
 
     }

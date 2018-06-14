@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<title>Bảng Giá Tham Khảo</title>
+<title> Trang chủ </title>
 <meta charset="utf-8">
  
 <meta name="viewport" content="width=device-width, initial-scale=1">  
 <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
 <script src="/assets/user/js/jquery-3.2.1.js"></script>
 <script src="/assets/user/js/jquery.easing.1.3.js"></script>
-<script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
-<script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
-<script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
-<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
 
 <link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css" />
 <script src="/assets/user/js/jquery.fancybox.js"></script>
@@ -21,16 +17,11 @@
 <!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
 <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
-
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 </head>
 <body>
- 	<div class="top">
+<div class="top">
 	<!-- start menu -->
-	<nav class="navbar navbar-light bg-faded thanhmenu" style="background-color: blue;">
+	<nav class="navbar navbar-light   bg-faded thanhmenu">
 		<div class="container">
 			<button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse" data-target="#navmn">
 			</button>
@@ -42,47 +33,36 @@
 						<a class="nav-link c1" href="#">Giới Thiệu</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c2" href="/doctorList">Chuyên Gia</a>
+						<a class="nav-link  " href="/doctorList">Chuyên Gia</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c3" href="#ourmenu">Event</a>
+						<a class="nav-link  " href="#ourmenu">Event</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c6" href="#contact">dịch vụ</a>
+						<a class="nav-link  " href="#contact">dịch vụ</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c6" href="#contact">bản giá</a>
+						<a class="nav-link  " href="/banggia">bản giá</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c6" href="#contact">contact us</a>
+						<a class="nav-link  " href="#contact">contact us</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav> 
 	<!-- end menu -->
-</div>
-	<div class="container" >
-	<div class="row" style="background: url(/assets/images/banggia.jpg);height: 7em;">
-			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle" >
-			<h1 style="margin-top: 0.8em;color: white"><strong>Bảng giá tham khảo</strong></h1>
-			</div>
+
+	<!-- start banner -->
+	<div class="container">
+		{{$News->content}}	
 	</div>
-		<div class="row" >
-			
-			<table id="dup-table" class="table text-center">
-      <thead>
-      <tr style="background-color: #eee;">
-      <td class="col-sm-1">ID</td>
-      <td class="col-sm-2">Tên dịch vụ</td>
-      <td class="col-sm-9">Mô Tả</td>
-      </tr>
-      </thead>
-      </table> 
-		</div>
-		 
-	</div> 
-	<div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);margin-top: 30px;">
+	
+	<!-- end Feedback --> 
+
+		<!-- end liên hệ -->
+	<!-- footer -->
+<div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
 	<div class="contact" id="contact">
 		<div class="container">
 			 <div class="row">
@@ -122,33 +102,12 @@
 		</div>
 	</div></div>
 
-
- 
+</div>
 <!-- end footer -->
 	
 </body>
 </html>
-<script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
-<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
-<script type="text/javascript">
-	 $(function() {
-        $('#dup-table').DataTable({
-        processing: true,
-        serverSide: true,
-        order: [[ 0, "desc" ]],
-        bLengthChange:true,
-        pageLength: 5,
-        ajax: '/getDB',
-        columns : [
-          
-              {data: 'id'},
-              {data: 'name'},
-              {
-                  
-                  data: 'description'
-              },
-            ],
-        });
-    });
-       
-</script>
+<!-- 
+font-family: 'Italianno', cursive;
+font-family: 'Open Sans', sans-serif; 
+-->
