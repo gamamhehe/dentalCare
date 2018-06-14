@@ -34,10 +34,15 @@ Route::get('dashboard', function () {
 Route::get('/getDB','HomeController@getDB');
 Route::get('/banggia','HomeController@BangGiaDichVu');
 
-//CRUD new
+//CRUD news
 Route::get('/create-News', 'Mobile\NewsController@loadcreateNews');
-Route::post('/create-News', 'Mobile\NewsController@createNews');
+
 Route::get('/getListNew','Mobile\NewsController@getListNew');
+Route::get('/editNews/{id}','Mobile\NewsController@loadEditNews');
+Route::get('/deleteNews/{id}','Mobile\NewsController@deleteNews');
 Route::get('/list-News', 'Mobile\NewsController@loadListNews');
+Route::get('/deleteNews/{id}', 'Mobile\NewsController@deleteNews');
+Route::post('/create-News', 'Mobile\NewsController@createNews');
+Route::post('/created-News', 'Mobile\NewsController@createdNews');
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
