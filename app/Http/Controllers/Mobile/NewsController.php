@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
 use App\Http\Controllers\Controller;
 use App\Model\News;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ use Carbon\Carbon;
 use Yajra\Datatables\Facades\Datatables;
 class NewsController extends Controller
 {
-
+use NewsBussinessFunction;
     /**
      * @param
      * @return
@@ -34,9 +35,11 @@ class NewsController extends Controller
     {
         $currentIndex = $request->query('currentIndex');
         $numItem = $request->query('numItem');
+        $typeId = $request->query('typeId');
 //        return response()->json(["n"=>$currentIndex,"n2"=>$numItem],200);
         try {
-            $data = News::skip($currentIndex)->take($numItem)->get();
+            $data = $this->getMoreNews($currentIndex,$numItem,$typeId);
+
             return response()->json($data, 200);
         } catch (Exception $ex) {
             $error = new \stdClass();
