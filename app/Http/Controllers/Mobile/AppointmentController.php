@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\Controller;
-use http\Env\Request;
+use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
@@ -22,6 +22,9 @@ class AppointmentController extends Controller
         $phone = $request->input('phone');
         $note = $request->input('note');
         $bookingDate = $request->input('date_booking');
+//        $phone = '01678589696';
+//        $note = "nothiansdfoasdmf";
+//        $bookingDate = "2018-06-13";
         $appointment = $this->createAppointment($phone, $note, $bookingDate);
         if ($appointment != null) {
             return response()->json($appointment, 200);
@@ -33,4 +36,6 @@ class AppointmentController extends Controller
             return response()->json($error, 400);
         }
     }
+
+
 }
