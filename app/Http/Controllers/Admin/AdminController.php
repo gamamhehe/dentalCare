@@ -6,7 +6,6 @@ use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
-use App\Model\User_has_role;
 use App\Model\Treatment;
 use App\Model\TreatmentCategory;
 use App\Model\Tooth;
@@ -19,7 +18,7 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    // use UserBusinessFunction;
+     use UserBusinessFunction;
 
     //
 

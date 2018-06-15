@@ -17,6 +17,41 @@ use Mockery\Exception;
 
 trait NewsBussinessFunction
 {
+    public function createNews($image_header, $content, $title,$staff_id,$create_date)
+    {
+        DB::beginTransaction();
+        try{
 
+            $News = new News;
+            $News->image_header = $image_header ;
+            $News->content =  $content;
+            $News->title = $title;
+            $News->staff_id = $staff_id;
+            $News->create_date=$create_date;
+            $News->save();
+            DB::commit();
+            return true;
 
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+
+    }
+    public function deleteNews($id){
+        DB::beginTransaction();
+        try{
+
+            $NewsCurrent = News::find($id);
+            $NewsCurrent->delete();
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+    }
 }

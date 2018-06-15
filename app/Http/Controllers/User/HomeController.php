@@ -8,7 +8,7 @@ use DB;
 use App\Staff;
 use App\User;
 use App\TreatmentCategory;
-use Config();
+use Config;
 use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {
@@ -25,11 +25,9 @@ class HomeController extends Controller
     	return view('WebUser.ServicePrice');
     }
     public function getDB(){
-    	// $ahi = 	$doctors = DB::table('tbl_treatment_categories')->get();
-    	// return Datatables::of($ahi)->make(true);
-        // $type = constants('constants.SHIPPING_PENDING');
-// $type = \Config::get('constants.SHIPPING_PENDING' + "xxxx");
-        echo "DKDKD==="+ Config::get('constants.ADMIN');
+    	 $ahi = 	$doctors = DB::table('tbl_treatment_categories')->get();
+    	 return Datatables::of($ahi)->make(true);
+
     }
     public function createNews(Request $request){
         echo "string";
