@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Model\Appointment;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
@@ -642,5 +643,79 @@ class AdminController extends Controller
     }
 
     // tao ghim lắm nha ! TAO LÀM. DATA Là TAOOO LÀM NHA TÀi !
+    public function initAppoinment(){
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-06-21 10:05:42',
+        ]);
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-07-21 10:05:42',
+        ]);
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-06-22 10:05:42',
+        ]);
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-06-24 12:05:42',
+        ]);
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-06-28 10:05:42',
+        ]);
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-06-27 10:05:42',
+        ]);
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-06-26 11:05:42',
+        ]);
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-06-22 19:05:42',
+        ]);
+        Appointment::create([
+            'date_booking' =>'2018-06-29',
+            'note' => 'demo data',
+            'estimated_time'=> '00:00:30',
+            'numerical_oder' => '12',
+            'phone'=>'0915469963',
+            'start_time'=> '2018-06-27 16:05:42',
+        ]);
+    }
 
 }
