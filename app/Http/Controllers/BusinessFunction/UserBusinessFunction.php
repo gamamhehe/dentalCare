@@ -48,13 +48,31 @@ trait UserBusinessFunction
             DB::rollback();
             return false;
         }
+    } public function registerUser($user){
+        DB::beginTransaction();
+        try {
+            $user->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
+    public  function getPatient($phone){
+        $patientParent = Patient::where('phone',$phone)->where('is_parent',1)->first();
+        $subaccount = Patient::where('phone',$phone)->where('is_parent',0)->get();
+        $treatmentHistories = Patient::where('phone',$phone)->first()->hasTreatmentHistory()->get();
+        $patientParent->subaccounts = $subaccount;
+        $patientParent->treatment_histories = $treatmentHistories;
+        return $patientParent;
     }
     public function checkExistUser($phone){
         $user = User::where('phone', $phone)->first();
         if($user != null){
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
     public function registerStaff($user, $staff, $userHasRole){
         DB::beginTransaction();

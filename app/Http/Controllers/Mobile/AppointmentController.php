@@ -13,6 +13,8 @@ use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
 use App\Model\Appointment;
+use App\Model\Patient;
+use App\Model\UserHasRole;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -70,16 +72,8 @@ class AppointmentController extends Controller
     {
         $phone = $request->input('phone');
         $note = $request->input('note');
-        $bookingDate = $request->input('date_booking');
-//        $phone = '01678589696';
-//        $note = "nothiansdfoasdmf";
-//        $bookingDate = "2018-06-13";
-        $appointment = new Appointment();
-        $appointment->phone = $phone;
-        $appointment->note = $note;
-        $appointment->date_booking = $bookingDate;
-
-        $result = $this->createAppointment($appointment);
+        $bookingDate = $request->input('booking_date');
+        $result = $this->createAppointment($bookingDate, $phone, $note);
         if ($result != null) {
             return response()->json($result, 200);
         } else {
@@ -93,37 +87,50 @@ class AppointmentController extends Controller
 
     public function quickBookAppointment(Request $request)
     {
-        $error = new \stdClass();
-        $phone = $request->input('phone');
-        $note = $request->input('note');
-        $bookingDate = $request->input('date_booking');
-        $appointment = new Appointment();
-        $appointment->phone = $phone;
-        $appointment->note = $note;
-        $appointment->date_booking = $bookingDate;
+        try {
+            $error = new \stdClass();
+            $phone = $request->input('phone');
+            $note = $request->input('note');
+            $bookingDate = $request->input('booking_date');
+            $name = $request->input("name");
+            $userExist = $this->checkExistUser($phone);
+            if (!$userExist) {
+                $user = new User();
+                $patient = new Patient();
+                $userHasRole = new UserHasRole();
 
-        $name = $request->input("name");
-        $user = new User();
-        $user->phone = $phone;
-        $user->name = $name;
-        $resgisterResult = $this->registerUser($user);
-        if (strcmp($resgisterResult, "SUCCESS") ||
-            strcmp($resgisterResult, "USER_IS_EXIST")) {
+                $user->phone = $phone;
+                $user->password=Hash::make($phone);
 
-            $bookingResult = $this->createAppointment($appointment);
-            if ($bookingResult != null) {
-                return response()->json($bookingResult, 200);
+                $patient->phone = $phone;
+                $patient->name = $name;
+
+                $userHasRole->phone = $phone;
+                $userHasRole->role_id=1;
+                $registerPatientResult =$this->registerPatient($user,$patient,$userHasRole);
+                $resgisterResult = $this->registerUser($user);
+                if ($resgisterResult) {
+                    Log::info("Appointment register user success");
+                }if ($registerPatientResult) {
+                    Log::info("Appointment register patient success");
+                }
             } else {
-                $error->error = "Cannot save appointment, appointment is null";
-                $error->exception = "No exception";
-                return response()->json($error, 400);
+                $bookingResult = $this->createAppointment($bookingDate, $phone, $note);
+                if ($bookingResult != null) {
+                    return response()->json($bookingResult, 200);
+                } else {
+                    $error->error = "Cannot save appointment, appointment is null";
+                    $error->exception = "No exception";
+                    return response()->json($error, 400);
+
+                }
+
+
             }
-        } else {
+        } catch (Exception $exception) {
             $error->error = "Get appointment null from server";
             $error->exception = "No exception";
             return response()->json($error, 400);
         }
     }
-
-
 }

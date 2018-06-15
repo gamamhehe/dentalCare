@@ -42,28 +42,28 @@ trait AppointmentBussinessFunction
         }
     }
 
-    public function createAppointment($appointment)
+    public function createAppointment($bookingDate,$phone,$note)
     {
         $NUM_OF_DENTIST = 3;
 
         try {
-            if ($appointment != null) {
+//            if ($appointment != null) {
                 $appointmentDB = new Appointment();
-                $dateBooking = (new \DateTime($appointment->date_booking))->format("Y-m-d");
+                $bookingDateNewFormat = (new \DateTime($bookingDate))->format("Y-m-d");
                 $listAppointment = $appointmentDB->where(
-                    "date_booking", "=",
-                    $dateBooking)->get();
+                    "start_time", "=",
+                    $bookingDateNewFormat)->get();
 //                    Carbon::today()->toDateString())->get();
                 $predictAppointmentDate = new \DateTime();
                 $estimatedTime = new \DateTime("00:30");
                 $numericalOrder = $listAppointment->count() + 1;
                 if ($listAppointment->count() < $NUM_OF_DENTIST) {
-                    $bookingDateObj = new \DateTime($appointment->date_booking);
+                    $bookingDateObj = new \DateTime($bookingDate);
                     $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, "07:00:00");
                 } else {
                     $appointmentArray = $listAppointment->toArray();
                     usort($appointmentArray, array($this, "sortByTimeStamp"));
-                    $topElement = array_slice($appointmentArray, 0, 3);
+                    $topElement = array_slice($appointmentArray, 0, $NUM_OF_DENTIST);
                     $maxdate = new \DateTime("2035-12-12");
                     $min = $maxdate->getTimestamp() + $maxdate->getTimestamp();
                     $minAppointment = array();
@@ -82,13 +82,16 @@ trait AppointmentBussinessFunction
 
                     $predictAppointmentDate->add($intervalTime);
                 }
+                $appointment = new Appointment();
+                $appointment->phone = $phone;
+                $appointment->note = $note;
                 $appointment->estimated_time = $estimatedTime->format("H:i:s");
                 $appointment->start_time = $predictAppointmentDate->format("Y-m-d H:i:s");
                 $appointment->numerical_order = $numericalOrder;
                 $appointment->save();
                 return $appointment;
-            }
-            return null;
+//            }
+//            return null;
         } catch (Exception $exception) {
 //            $exception->getTrace();
             return null;
