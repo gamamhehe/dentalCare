@@ -36,6 +36,11 @@ Route::get("treatment/all" ,"Mobile\TreatmentController@getAll");
 Route::get("treatment/{id}" ,"Mobile\TreatmentController@getById");
 
 //appointment
+Route::get("appointment/all", "Mobile\AppointmentController@getAll");
+Route::get("appointment/{id}", "Mobile\AppointmentController@getById");
+Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
+Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
+
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Appointment;
 use App\Model\Role;
+use App\Model\TreatmentHistory;
 use App\Model\User;
 use App\Model\UserHasRole;
 use App\Model\User_has_role;
@@ -20,7 +21,7 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    // use UserBusinessFunction;
+     use UserBusinessFunction;
 
     //
 
@@ -74,8 +75,8 @@ class AdminController extends Controller
         UserHasRole::create([
             'phone' => '01279011096',
             'role_id' => 1,
-            'role_start_time' => Carbon::now(),
-            'role_end_time' => null
+            'start_time' => Carbon::now(),
+            'end_time' => null
         ]);
         Role::create([
             'id' => '1',
@@ -106,8 +107,8 @@ class AdminController extends Controller
         UserHasRole::create([
             'phone' => '01279011097',
             'role_id' => 2,
-            'role_start_time' => Carbon::now(),
-            'role_end_time' => null
+            'start_time' => Carbon::now(),
+            'end_time' => null
         ]);
         Role::create([
             'id' => '2',
@@ -122,8 +123,8 @@ class AdminController extends Controller
         UserHasRole::create([
             'phone' => '01279011098',
             'role_id' => 3,
-            'role_start_time' => Carbon::now(),
-            'role_end_time' => null
+            'start_time' => Carbon::now(),
+            'end_time' => null
         ]);
         Role::create([
             'id' => '3',
@@ -480,175 +481,176 @@ class AdminController extends Controller
     public function initTooth()
     {
         Tooth::create([
-            'tooth_numnber' => '1.1',
-            'name' => 'Răng số 1 hàm trên phải - Răng cửa'
+            'tooth_number' => '1.1',
+            'tooth_name' => 'Răng số 1 hàm trên phải - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '1.2',
-            'name' => 'Răng số 2 hàm trên phải - Răng cửa'
+            'tooth_number' => '1.2',
+            'tooth_name' => 'Răng số 2 hàm trên phải - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '1.3',
-            'name' => 'Răng số 3 hàm trên phải - Răng Nanh'
+            'tooth_number' => '1.3',
+            'tooth_name' => 'Răng số 3 hàm trên phải - Răng Nanh'
         ]);
         Tooth::create([
-            'tooth_numnber' => '1.4',
-            'name' => 'Răng số 4 hàm trên phải - Răng cối nhỏ'
+            'tooth_number' => '1.4',
+            'tooth_name' => 'Răng số 4 hàm trên phải - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '1.5',
-            'name' => 'Răng số 5 hàm trên phải - Răng cối nhỏ'
+            'tooth_number' => '1.5',
+            'tooth_name' => 'Răng số 5 hàm trên phải - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '1.6',
-            'name' => 'Răng số 6 hàm trên phải - Răng cối lớn'
+            'tooth_number' => '1.6',
+            'tooth_name' => 'Răng số 6 hàm trên phải - Răng cối lớn'
         ]);
         Tooth::create([
-            'tooth_numnber' => '1.7',
-            'name' => 'Răng số 7 hàm trên phải - Răng cối lớn'
+            'tooth_number' => '1.7',
+            'tooth_name' => 'Răng số 7 hàm trên phải - Răng cối lớn'
         ]);
         Tooth::create([
-            'tooth_numnber' => '1.8',
-            'name' => 'Răng số 8 hàm trên phải - Răng cối lớn'
+            'tooth_number' => '1.8',
+            'tooth_name' => 'Răng số 8 hàm trên phải - Răng cối lớn'
         ]);
         //end trên phải
         // dưới trái
         Tooth::create([
-            'tooth_numnber' => '2.1',
-            'name' => 'Răng số 1 hàm trên trái - Răng cửa'
+            'tooth_number' => '2.1',
+            'tooth_name' => 'Răng số 1 hàm trên trái - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '2.2',
-            'name' => 'Răng số 2 hàm trên trái - Răng cửa'
+            'tooth_number' => '2.2',
+            'tooth_name' => 'Răng số 2 hàm trên trái - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '2.3',
-            'name' => 'Răng số 3 hàm trên trái - Răng Nanh'
+            'tooth_number' => '2.3',
+            'tooth_name' => 'Răng số 3 hàm trên trái - Răng Nanh'
         ]);
         Tooth::create([
-            'tooth_numnber' => '2.4',
-            'name' => 'Răng số 4 hàm trên trái - Răng cối nhỏ'
+            'tooth_number' => '2.4',
+            'tooth_name' => 'Răng số 4 hàm trên trái - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '2.5',
-            'name' => 'Răng số 5 hàm trên trái - Răng cối nhỏ'
+            'tooth_number' => '2.5',
+            'tooth_name' => 'Răng số 5 hàm trên trái - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '2.6',
-            'name' => 'Răng số 6 hàm trên trái - Răng cối lớn'
+            'tooth_number' => '2.6',
+            'tooth_name' => 'Răng số 6 hàm trên trái - Răng cối lớn'
         ]);
         Tooth::create([
-            'tooth_numnber' => '2.7',
-            'name' => 'Răng số 7 hàm trên trái - Răng cối lớn'
+            'tooth_number' => '2.7',
+            'tooth_name' => 'Răng số 7 hàm trên trái - Răng cối lớn'
         ]);
         Tooth::create([
-            'tooth_numnber' => '2.8',
-            'name' => 'Răng số 8 hàm trên trái - Răng cối lớn'
+            'tooth_number' => '2.8',
+            'tooth_name' => 'Răng số 8 hàm trên trái - Răng cối lớn'
         ]);
         //endham dưới trái
         Tooth::create([
-            'tooth_numnber' => '4.1',
-            'name' => 'Răng số 1 hàm dưới phải - Răng cửa'
+            'tooth_number' => '4.1',
+            'tooth_name' => 'Răng số 1 hàm dưới phải - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '4.2',
-            'name' => 'Răng số 2 hàm dưới phải - Răng cửa'
+            'tooth_number' => '4.2',
+            'tooth_name' => 'Răng số 2 hàm dưới phải - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '4.3',
-            'name' => 'Răng số 3 hàm dưới phải - Răng Nanh'
+            'tooth_number' => '4.3',
+            'tooth_name' => 'Răng số 3 hàm dưới phải - Răng Nanh'
         ]);
         Tooth::create([
-            'tooth_numnber' => '4.4',
-            'name' => 'Răng số 4 hàm dưới phải - Răng cối nhỏ'
+            'tooth_number' => '4.4',
+            'tooth_name' => 'Răng số 4 hàm dưới phải - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '4.5',
-            'name' => 'Răng số 5 hàm dưới phải - Răng cối nhỏ'
+            'tooth_number' => '4.5',
+            'tooth_name' => 'Răng số 5 hàm dưới phải - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '4.6',
-            'name' => 'Răng số 6 hàm dưới phải - Răng cối lớn'
+            'tooth_number' => '4.6',
+            'tooth_name' => 'Răng số 6 hàm dưới phải - Răng cối lớn'
         ]);
         Tooth::create([
-            'tooth_numnber' => '4.7',
-            'name' => 'Răng số 7 hàm dưới phải - Răng cối lớn'
+            'tooth_number' => '4.7',
+            'tooth_name' => 'Răng số 7 hàm dưới phải - Răng cối lớn'
         ]);
         Tooth::create([
-            'tooth_numnber' => '4.8',
-            'name' => 'Răng số 8 hàm dưới phải - Răng cối lớn'
+            'tooth_number' => '4.8',
+            'tooth_name' => 'Răng số 8 hàm dưới phải - Răng cối lớn'
         ]);
         //end dưới phải
         // dưới trái
         Tooth::create([
-            'tooth_numnber' => '3.1',
-            'name' => 'Răng số 1 hàm dưới trái - Răng cửa'
+            'tooth_number' => '3.1',
+            'tooth_name' => 'Răng số 1 hàm dưới trái - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '3.2',
-            'name' => 'Răng số 2 hàm dưới trái - Răng cửa'
+            'tooth_number' => '3.2',
+            'tooth_name' => 'Răng số 2 hàm dưới trái - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '3.3',
-            'name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
+            'tooth_number' => '3.3',
+            'tooth_name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
         ]);
         Tooth::create([
-            'tooth_numnber' => '3.4',
-            'name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
+            'tooth_number' => '3.4',
+            'tooth_name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '3.5',
-            'name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
+            'tooth_number' => '3.5',
+            'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '3.6',
-            'name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
+            'tooth_number' => '3.6',
+            'tooth_name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
         ]);
         Tooth::create([
-            'tooth_numnber' => '3.7',
-            'name' => 'Răng số 7 hàm dưới trái - Răng cối lớn'
+            'tooth_number' => '3.7',
+            'tooth_name' => 'Răng số 7 hàm dưới trái - Răng cối lớn'
         ]);
         Tooth::create([
-            'tooth_numnber' => '3.8',
-            'name' => 'Răng số 8 hàm dưới trái - Răng cối lớn'
+            'tooth_number' => '3.8',
+            'tooth_name' => 'Răng số 8 hàm dưới trái - Răng cối lớn'
         ]);
         //endham dưới trái
         //rang tre con
         // tren phải
         Tooth::create([
-            'tooth_numnber' => '5.1',
-            'name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa'
+            'tooth_number' => '5.1',
+            'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '5.2',
-            'name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa'
+            'tooth_number' => '5.2',
+            'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa'
         ]);
         Tooth::create([
-            'tooth_numnber' => '5.3',
-            'name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
+            'tooth_number' => '5.3',
+            'tooth_name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
         ]);
         Tooth::create([
-            'tooth_numnber' => '5.4',
-            'name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
+            'tooth_number' => '5.4',
+            'tooth_name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '5.5',
-            'name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
+            'tooth_number' => '5.5',
+            'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
         ]);
         Tooth::create([
-            'tooth_numnber' => '5.6',
-            'name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
+            'tooth_number' => '5.6',
+            'tooth_name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
         ]);
 
     }
 
     // tao ghim lắm nha ! TAO LÀM. DATA Là TAOOO LÀM NHA TÀi !
+
     public function initAppoinment(){
         Appointment::create([
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-06-21 10:05:42',
         ]);
@@ -656,7 +658,7 @@ class AdminController extends Controller
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-07-21 10:05:42',
         ]);
@@ -664,7 +666,7 @@ class AdminController extends Controller
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-06-22 10:05:42',
         ]);
@@ -672,7 +674,7 @@ class AdminController extends Controller
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-06-24 12:05:42',
         ]);
@@ -680,7 +682,7 @@ class AdminController extends Controller
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-06-28 10:05:42',
         ]);
@@ -688,7 +690,7 @@ class AdminController extends Controller
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-06-27 10:05:42',
         ]);
@@ -696,7 +698,7 @@ class AdminController extends Controller
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-06-26 11:05:42',
         ]);
@@ -704,7 +706,7 @@ class AdminController extends Controller
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-06-22 19:05:42',
         ]);
@@ -712,10 +714,17 @@ class AdminController extends Controller
             'date_booking' =>'2018-06-29',
             'note' => 'demo data',
             'estimated_time'=> '00:00:30',
-            'numerical_oder' => '12',
+            'numerical_order' => '12',
             'phone'=>'0915469963',
             'start_time'=> '2018-06-27 16:05:42',
         ]);
     }
 
+    public function initTreatmentHistory(){
+        TreatmentHistory::created([
+            'treatment_id' => 1,
+            'patient_id' => 1,
+
+        ]);
+    }
 }
