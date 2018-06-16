@@ -15,7 +15,7 @@ class CreateTblAppointmentsTable extends Migration
     {
         Schema::create('tbl_appointments', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('date_booking');
+            $table->dateTime('start_time');
             $table->string('note');
             $table->time('estimated_time');
             $table->integer('numerical_order');

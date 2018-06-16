@@ -17,6 +17,7 @@ class CreateTblMedicinesQuantityTable extends Migration
             $table->integer('medicine_id');
             $table->integer('treatment_detail_id');
             $table->dateTime('create_date');
+            $table->primary(array('medicine_id', 'treatment_detail_id'),'medicine_of_detail');
             $table->timestamps();
         });
     }

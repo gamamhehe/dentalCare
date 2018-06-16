@@ -14,9 +14,10 @@ class CreateTblTreatmentDetailStepsTable extends Migration
     public function up()
     {
         Schema::create('tbl_treatment_detail_steps', function (Blueprint $table) {
-            $table->integer('treatment_detail_id')->unique();
-            $table->integer('treatment_step_id')->unique();
+            $table->integer('treatment_detail_id');
+            $table->integer('treatment_step_id');
             $table->string('description');
+            $table->primary(array('treatment_detail_id', 'treatment_step_id'), 'detail_of_step');
             $table->timestamps();
         });
     }
