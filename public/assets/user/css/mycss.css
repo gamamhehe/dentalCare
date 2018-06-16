@@ -8,6 +8,23 @@
     width: 280px; text-align: center;
     padding-bottom: 1em;
 }
+.btn {
+    display: inline-block;
+    font-weight: 100;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .3rem 1rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+}
 .img-circle{
     border-radius: 50%;
 }

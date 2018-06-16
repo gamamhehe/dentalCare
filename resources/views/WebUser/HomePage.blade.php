@@ -70,7 +70,10 @@
 						<!-- Menu Footer-->
 						<li class="user-footer">
 							<div class="pull-left" style="padding-left: 1em;">
-								<a href="#" class="btn btn-success btn-flat">Profile</a>
+								<a href="#" class="btn btn-success btn-flat" style="font-size: 10;">Profile</a>
+							</div>
+							<div class="pull-left" style="padding-left: 1em;">
+								<a href="#" class="btn btn-success btn-flat">Payment History</a>
 							</div>
 							<div class="pull-right" style="padding-right: 1em;">
 								<a href="#" class="btn btn-success btn-flat">Sign out</a>
@@ -78,21 +81,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="nav-item dropdown ">
-					<div class="dropdown">
-						<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tutorials
-							<span class="caret"></span></button>
-						<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-							<li role="presentation" class="dropdown-header">Dropdown header 1</li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
-							<li role="presentation" class="divider"></li>
-							<li role="presentation" class="dropdown-header">Dropdown header 2</li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
-						</ul>
-					</div>
-				</li>
+
 
 
 				{{--<li class="nav-item dropdown ">--}}
