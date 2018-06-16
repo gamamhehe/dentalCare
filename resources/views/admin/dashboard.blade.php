@@ -17,12 +17,19 @@
                     </div>
                 </div>
                 <div class="form-group">
-                <form action=""></form>
+
+                 <form method ="post" class="form-horizontal" action="/createNews">
+                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <label>Description</label>
                     <textarea id="tinyMCE" name="description" rows="10"
                               class="form-control"
                               id="input"
                               placeholder="Write your message..">{!!old('description')!!}</textarea>
+                    <div class="box-footer">
+                        <button type="submit" class="col-md-3 btn btn-default btn-md" style="margin-right: 10px" onclick="checkValid">Create Question</button>
+                         
+                    </div>          
+                    </form>
                 </div>
             </div>
         </section>

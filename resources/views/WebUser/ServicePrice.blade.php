@@ -65,7 +65,7 @@
 	<div class="container" >
 	<div class="row" style="background: url(/assets/images/banggia.jpg);height: 7em;">
 			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle" >
-			<h1 style="margin-top: 0.8em;color: white"><strong>Bảng giá tham khảo</strong></h3>
+			<h1 style="margin-top: 0.8em;color: white"><strong>Bảng giá tham khảo</strong></h1>
 			</div>
 	</div>
 		<div class="row" >

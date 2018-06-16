@@ -8,7 +8,7 @@ class Appointment extends Model
 {
     //
     protected $table = 'tbl_appointments';
-    protected $fillable = ['id', 'date_booking', 'note', 'estimated_time', 'numerical_order', 'phone'];
+    protected $fillable = ['id', 'start_time', 'note', 'estimated_time', 'numerical_order', 'phone'];
     public function belongsToUser(){
         return $this->belongsTo('App\Model\User', 'phone', 'phone');
     }

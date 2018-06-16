@@ -15,13 +15,14 @@ class CreateTblPatientsTable extends Migration
     {
         Schema::create('tbl_patients', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->string('address');
             $table->string('phone');
             $table->date('date_of_birth');
             $table->string('gender');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->integer('district_id');
-            $table->integer('parent_id')->default(0)->nullable();
+            $table->integer('is_parent')->default(1)->nullable();
             $table->timestamps();
         });
     }

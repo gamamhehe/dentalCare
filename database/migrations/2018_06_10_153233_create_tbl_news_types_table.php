@@ -14,8 +14,9 @@ class CreateTblNewsTypesTable extends Migration
     public function up()
     {
         Schema::create('tbl_news_types', function (Blueprint $table) {
-            $table->integer('type_id')->unique();
-            $table->integer('news_id')->unique();
+            $table->integer('type_id');
+            $table->integer('news_id');
+            $table->primary(array('type_id', 'news_id'));
             $table->timestamps();
         });
     }

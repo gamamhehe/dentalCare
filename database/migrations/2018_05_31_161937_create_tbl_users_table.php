@@ -14,10 +14,11 @@ class CreateTblUsersTable extends Migration
     public function up()
     {
         Schema::create('tbl_users', function (Blueprint $table) {
-            $table->string("phone")->unique();
+            $table->string("phone");
             $table->string("password");
             $table->boolean("isDeleted");
             $table->timestamps();
+            $table->primary('phone');
         });
     }
 
