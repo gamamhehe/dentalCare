@@ -8,6 +8,7 @@ use DB;
 use App\Staff;
 use App\TreatmentCategory;
 use Config;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {
