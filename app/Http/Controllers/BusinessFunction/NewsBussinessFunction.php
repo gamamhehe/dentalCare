@@ -14,20 +14,22 @@ use App\Providers\AppServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Mockery\Exception;
+use App\Model\News;
+use DB;
 
 trait NewsBussinessFunction
 {
-    public function createNews($image_header, $content, $title,$staff_id,$create_date)
+    public function createNewsBusiness($Newsxx)
     {
         DB::beginTransaction();
         try{
 
             $News = new News;
-            $News->image_header = $image_header ;
-            $News->content =  $content;
-            $News->title = $title;
-            $News->staff_id = $staff_id;
-            $News->create_date=$create_date;
+            $News->image_header = $Newsxx->image_header ;
+            $News->content = $Newsxx->content;
+            $News->title =$Newsxx->title;
+            $News->staff_id = $Newsxx->staff_id;
+            $News->create_date=$Newsxx->create_date;
             $News->save();
             DB::commit();
             return true;

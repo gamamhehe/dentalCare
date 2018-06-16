@@ -33,5 +33,8 @@ class HomeController extends Controller
         echo "string";
         exit();
     }
+    public function Profile(Request $request){
+        return view('WebUser.User.Profile');
+    }
 
 }

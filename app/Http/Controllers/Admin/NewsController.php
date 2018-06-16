@@ -13,10 +13,21 @@ class NewsController extends Controller
 {
     use NewsBussinessFunction;
     public function createNews(Request $request){
-
+        echo "DKM";exit();
         $input = $request->all();
-        $News = $this->createNews($input['image_header'],$input['content'],$input['title'],1,Carbon::now());
-        return redirect('/list-News')->withSuccess("Bài viết đã được tạo");
+
+        $News = new News;
+        $News->image_header = $input['image_header'];
+        $News->content =  $input['content'];
+        $News->title = $input['title'];
+        $News->staff_id = 1;
+        $News->create_date=Carbon::now();
+        $Newsxxx = $this->createNewsBusiness($News);
+        if($Newsxxx){
+            return redirect('admin/list-News')->withSuccess("Bài viết đã được tạo");
+        }else{
+            return redirect('admin/list-News')->withSuccess("Bài viết đã được tạo");
+        }
 
 
     }
@@ -40,7 +51,8 @@ class NewsController extends Controller
 
         return view("admin.News.editNews",['news'=>$news,'xxx'=>$content]);
     }
-    public function createdNews(Request $request){
+    public function createdNews($id){
+        echo $id;exit();
 //        $input = $request->all();
 //        DB::beginTransaction();
 //        try{
