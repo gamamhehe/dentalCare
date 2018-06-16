@@ -642,7 +642,6 @@ class AdminController extends Controller
 
 
             Appointment::create([
-                'date_booking' => '2018-06-29',
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
@@ -650,7 +649,6 @@ class AdminController extends Controller
                 'start_time' => '2018-07-21 10:05:42',
             ]);
             Appointment::create([
-                'date_booking' => '2018-06-29',
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
@@ -658,7 +656,6 @@ class AdminController extends Controller
                 'start_time' => '2018-06-22 10:05:42',
             ]);
             Appointment::create([
-                'date_booking' => '2018-06-29',
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
@@ -666,7 +663,6 @@ class AdminController extends Controller
                 'start_time' => '2018-06-24 12:05:42',
             ]);
             Appointment::create([
-                'date_booking' => '2018-06-29',
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
@@ -674,7 +670,6 @@ class AdminController extends Controller
                 'start_time' => '2018-06-28 10:05:42',
             ]);
             Appointment::create([
-                'date_booking' => '2018-06-29',
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
@@ -682,7 +677,6 @@ class AdminController extends Controller
                 'start_time' => '2018-06-27 10:05:42',
             ]);
             Appointment::create([
-                'date_booking' => '2018-06-29',
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
@@ -690,7 +684,6 @@ class AdminController extends Controller
                 'start_time' => '2018-06-26 11:05:42',
             ]);
             Appointment::create([
-                'date_booking' => '2018-06-29',
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
@@ -698,7 +691,6 @@ class AdminController extends Controller
                 'start_time' => '2018-06-22 19:05:42',
             ]);
             Appointment::create([
-                'date_booking' => '2018-06-29',
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
@@ -829,12 +821,13 @@ class AdminController extends Controller
                 'start_time' => Carbon::now(),
                 'note' => 'dume lo di kham di',
                 'phone' => '01279011096',
-                'number_order' => '1',
+                'numerical_order' => '1',
                 'estimated_time' => '30'
             ]);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
         }
     }
 }
