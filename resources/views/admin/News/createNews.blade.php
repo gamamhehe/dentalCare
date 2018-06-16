@@ -7,6 +7,7 @@
              <div class="row" style="text-align: center;">
                  <label><h1>Tạo bài viết</h1></label>
              </div>
+
              <form method ="post" class="form-horizontal" action="create-News" enctype="multipart/form-data" id="createNews">
                   {{ csrf_field() }}
                    <div class="row" style="margin-bottom: 1em;">
@@ -42,10 +43,10 @@
                         <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Create Question</button>
                     </div>        
                   </div>
-                </div>
+
                 </form>
          </div>
-        
+
           
         </section>
 
