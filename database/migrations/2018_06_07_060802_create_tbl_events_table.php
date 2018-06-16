@@ -22,7 +22,6 @@ class CreateTblEventsTable extends Migration
             $table->integer('staff_id');
             $table->dateTime('create_date');
             $table->integer('treatment_id');
-
             $table->timestamps();
         });
     }

@@ -14,9 +14,10 @@ class CreateTblAnamnesisPatientsTable extends Migration
     public function up()
     {
         Schema::create('tbl_anamnesis_patients', function (Blueprint $table) {
-            $table->integer('patient_id')->unique();
-            $table->integer('anamnesis_id')->unique();
+            $table->integer('patient_id');
+            $table->integer('anamnesis_id');
             $table->string('description');
+            $table->primary(array('patient_id', 'anamnesis_id'));
             $table->timestamps();
         });
     }
