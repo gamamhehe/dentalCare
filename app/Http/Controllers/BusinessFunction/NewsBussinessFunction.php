@@ -19,6 +19,27 @@ use Mockery\Exception;
 
 trait NewsBussinessFunction
 {
+    public function createNewsBusiness($Newsxx)
+    {
+        DB::beginTransaction();
+        try{
+            $News = new News;
+            $News->image_header = $Newsxx->image_header ;
+            $News->content = $Newsxx->content;
+            $News->title =$Newsxx->title;
+            $News->staff_id = $Newsxx->staff_id;
+            $News->create_date=$Newsxx->create_date;
+            $News->save();
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+
+    }
 
     public function getMoreNews($currentIndex, $numItem,$typeId)
     {
@@ -37,4 +58,19 @@ trait NewsBussinessFunction
         return $listNews;
     }
 
+    public function deleteNews($id){
+        DB::beginTransaction();
+        try{
+
+            $NewsCurrent = News::find($id);
+            $NewsCurrent->delete();
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+    }
 }

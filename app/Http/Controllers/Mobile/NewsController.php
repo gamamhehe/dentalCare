@@ -52,21 +52,10 @@ use NewsBussinessFunction;
         return view('admin.News.createNews');
     }
     public function createNews(Request $request){
-        // $this->validate($request, [
-        //     'image_header' => 'required',
-        //     'title' => 'required|min:6',
-        //     'content' => 'required|min:6'
-
-        // ]);
         $input = $request->all();
-         
-        $value = $request->session()->get('currentAdmin');
-        // $role = $value->hasUserHasRole()->first()->belongsToRole()->first()->name;
-        // $staffId = $value->belongToStaff()->first()->id;
-        
         DB::beginTransaction();
         try{
-           
+
             $News = new News;
             $News->image_header = $input['image_header'];
             $News->content =  $input['content'];
@@ -77,16 +66,16 @@ use NewsBussinessFunction;
             $News->save();
             DB::commit();
             return redirect('/list-News')->withSuccess("Bài viết đã được tạo");
-          
+
         }catch(\Exception $e){
             DB::rollback();
             return redirect()->back()->withSuccess("Bài viết chưa được tạo");
-             
+
         }
     }
     public function getListNew(Request $request){
           $listNews = DB::table('tbl_News')->get();
-            
+
             return Datatables::of($listNews)
      ->addColumn('action', function($listNews) {
     return '<a href="/editNews/'.$listNews->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="'.$listNews->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';

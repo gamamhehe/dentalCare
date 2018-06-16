@@ -23,21 +23,22 @@ Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
 // webuser phuc
 Route::get('/', 'User\HomeController@HomePage');
 Route::get('/doctorList', 'User\HomeController@DoctorInformation');
+Route::get('/profile', 'User\HomeController@Profile');
 // end webuser
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admins'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
     Route::get('/create-News', 'Mobile\NewsController@loadcreateNews');
 
-    Route::get('/getListNews','Mobile\NewsController@getListNew');
-    Route::get('/editNews/{id}','Mobile\NewsController@loadEditNews');
-    Route::get('/deleteNews/{id}','Mobile\NewsController@deleteNews');
-    Route::get('/list-News', 'Mobile\NewsController@loadListNews');
-    Route::get('/deleteNews/{id}', 'Mobile\NewsController@deleteNews');
-    Route::post('/create-News', 'Mobile\NewsController@createNews');
-    Route::post('/created-News', 'Mobile\NewsController@createdNews');
+    Route::get('/getListNews','Admin\NewsController@getListNew');
+    Route::get('/editNews/{id}','Admin\NewsController@loadEditNews');
+    Route::get('/deleteNews/{id}','Admin\NewsController@deleteNews');
+    Route::get('/list-News', 'Admin\NewsController@loadListNews');
+    Route::get('/deleteNews/{id}', 'Admin\NewsController@deleteNews');
+    Route::post('/create-News', 'Admin\NewsController@createNews');
+    Route::post('/editNews/{id}', 'Admin\NewsController@createdNews')->name('admin.edit.news');
 });
 
 

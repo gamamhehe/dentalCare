@@ -8,7 +8,6 @@ use App\Model\Role;
 use App\Model\TreatmentHistory;
 use App\Model\User;
 use App\Model\UserHasRole;
-use App\Model\User_has_role;
 use App\Model\Treatment;
 use App\Model\TreatmentCategory;
 use App\Model\Tooth;

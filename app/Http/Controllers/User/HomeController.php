@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use App\Staff;
 use App\TreatmentCategory;
+use Config;
 use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {
@@ -25,10 +26,14 @@ class HomeController extends Controller
     public function getDB(){
     	 $ahi = 	$doctors = DB::table('tbl_treatment_categories')->get();
     	 return Datatables::of($ahi)->make(true);
+
     }
     public function createNews(Request $request){
         echo "string";
         exit();
+    }
+    public function Profile(Request $request){
+        return view('WebUser.User.Profile');
     }
 
 }

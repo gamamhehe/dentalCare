@@ -7,7 +7,7 @@
              <div class="row" style="text-align: center;">
                  <label><h1>Chỉnh sửa viết</h1></label>
              </div>
-             <form method ="post" class="form-horizontal" action="/created-News" enctype="multipart/form-data" id="createNews">
+             <form method ="post" class="form-horizontal" action="{{ route('admin.edit.news', ['id' => 7]) }}" enctype="multipart/form-data" id="createNews">
                   {{ csrf_field() }}
                    <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
                         
@@ -21,7 +21,7 @@
                     </div>
                     <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
                     
-                        <div class="col-sm-2"><label>Image Header </label></div>
+                        <div class="col-sm-2"><label>Image Header{{$news->id}} </label></div>
                         <input type="hidden" name="id" value="{{$news->id}}" />
                         <div class="col-sm-10">  
                             <div class="col-sm-10" style="padding-left: 0 " id="divan">  
@@ -46,7 +46,7 @@
                 </div>
                 </form>
          </div>
-        
+
           
         </section>
 
