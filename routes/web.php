@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('initAdmin', 'Admin\AdminController@initAdmin');
-Route::get('initTreatment', 'Admin\AdminController@initTreatment');
-Route::get('initTooth', 'Admin\AdminController@initTooth');
+Route::get('initData', 'Admin\AdminController@initData');
 Route::get('logoutAdmin', 'Admin\AdminController@logout')->name('admin.logout');
 Route::post('loginAdmin', 'Admin\AdminController@login')->name('admin.login.post');
 Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
@@ -40,7 +38,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 });
 
 
-Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
+    Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
 Route::get('/getDB','User\HomeController@getDB');

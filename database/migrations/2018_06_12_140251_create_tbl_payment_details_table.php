@@ -14,7 +14,7 @@ class CreateTblPaymentDetailsTable extends Migration
     public function up()
     {
         Schema::create('tbl_payment_details', function (Blueprint $table) {
-            $table->increments('id')->unique();
+            $table->increments('id');
             $table->string('payment_id');
             $table->string('receptionist_id');
             $table->dateTime('date_create');

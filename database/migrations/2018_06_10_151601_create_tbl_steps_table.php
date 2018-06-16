@@ -14,7 +14,7 @@ class CreateTblStepsTable extends Migration
     public function up()
     {
         Schema::create('tbl_steps', function (Blueprint $table) {
-            $table->increments('id')->unique();
+            $table->increments('id');
             $table->string('name');
             $table->string('description');
             $table->timestamps();

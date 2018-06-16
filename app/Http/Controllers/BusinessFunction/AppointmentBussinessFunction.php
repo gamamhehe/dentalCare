@@ -11,6 +11,7 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Appointment;
 use App\Providers\AppServiceProvider;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Mockery\Exception;
@@ -92,4 +93,16 @@ trait AppointmentBussinessFunction
         return $timestampAP;
     }
 
+    public function getAppointmentOfUser($phone){
+        $listAppointment = User::where('phone', $phone)->first()->hasAppointment()->get();
+        $max = 0;
+        $result = false;
+        foreach ($listAppointment as $appointment){
+            $dateTimeAppointment = new \DateTime($appointment['start_time']);
+            if($max < $dateTimeAppointment->getTimestamp()){
+                $result = $appointment;
+            }
+        }
+        return $result;
+    }
 }

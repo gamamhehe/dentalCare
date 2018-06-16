@@ -97,7 +97,7 @@ trait UserBusinessFunction
     public function deleteRole($id){
         DB::beginTransaction();
         try {
-            Role::deleted($id);
+            Role::delete($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {

@@ -14,9 +14,10 @@ class CreateTblAbsentsTable extends Migration
     public function up()
     {
         Schema::create('tbl_absents', function (Blueprint $table) {
-            $table->integer('staff_id')->unique();
-            $table->integer('staff_approve_id')->unique();
-            $table->dateTime('date_absent')->unique();
+            $table->integer('staff_id');
+            $table->integer('staff_approve_id');
+            $table->dateTime('date_absent');
+            $table->primary(array('staff_id', 'staff_approve_id', 'date_absent'), 'staff_date_off');
             $table->timestamps();
         });
     }
