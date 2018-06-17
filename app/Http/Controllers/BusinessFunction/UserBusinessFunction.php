@@ -14,6 +14,7 @@ use App\Model\User;
 use App\Model\UserHasRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 trait UserBusinessFunction
 {
@@ -26,17 +27,22 @@ trait UserBusinessFunction
      */
     public function checkLogin($phone, $password)
     {
-        $result = User::where('phone', $phone)->first();
-        if ($result != null) {
-            if (Hash::check($password, $result->password)) {
-                return $result;
+        try {
+            $result = User::where('phone', $phone)->first();
+            if ($result != null) {
+                if (Hash::check($password, $result->password)) {
+                    return $result;
+                }
+            } else {
+                return null;
             }
-        } else {
-            return null;
+        } catch (\Exception $exception) {
+            Log::info($exception->getTraceAsString());
         }
     }
 
-    public function registerPatient($user, $patient, $userHasRole){
+    public function registerPatient($user, $patient, $userHasRole)
+    {
         DB::beginTransaction();
         try {
             $user->save();
@@ -48,7 +54,10 @@ trait UserBusinessFunction
             DB::rollback();
             return false;
         }
-    } public function registerUser($user){
+    }
+
+    public function registerUser($user)
+    {
         DB::beginTransaction();
         try {
             $user->save();
@@ -59,22 +68,43 @@ trait UserBusinessFunction
             return false;
         }
     }
-    public  function getPatient($phone){
-        $patientParent = Patient::where('phone',$phone)->where('is_parent',1)->first();
-        $subaccount = Patient::where('phone',$phone)->where('is_parent',0)->get();
-        $treatmentHistories = Patient::where('phone',$phone)->first()->hasTreatmentHistory()->get();
-        $patientParent->subaccounts = $subaccount;
-        $patientParent->treatment_histories = $treatmentHistories;
-        return $patientParent;
+
+    public function getPatient($phone)
+    {
+        $patients = Patient::where('phone', $phone)->get();
+        if ($patients != null) {
+            return $patients;
+        }
+        return null;
     }
-    public function checkExistUser($phone){
+    public function getPatientByPhone($phone)
+    {
+        $patient = Patient::where('phone', $phone)->first();
+        if ($patient != null) {
+            return $patient;
+        }
+        return null;
+    }
+public function getUserByPhone($phone)
+    {
         $user = User::where('phone', $phone)->first();
-        if($user != null){
+        if ($user != null) {
+            return $user;
+        }
+        return null;
+    }
+
+    public function checkExistUser($phone)
+    {
+        $user = User::where('phone', $phone)->first();
+        if ($user != null) {
             return true;
         }
         return false;
     }
-    public function registerStaff($user, $staff, $userHasRole){
+
+    public function registerStaff($user, $staff, $userHasRole)
+    {
         DB::beginTransaction();
         try {
             $user->save();
@@ -88,7 +118,8 @@ trait UserBusinessFunction
         }
     }
 
-    public function createRole($role){
+    public function createRole($role)
+    {
         DB::beginTransaction();
         try {
             $role->save();
@@ -100,7 +131,8 @@ trait UserBusinessFunction
         }
     }
 
-    public function updateRole($role){
+    public function updateRole($role)
+    {
         DB::beginTransaction();
         try {
             $role->save();
@@ -112,7 +144,8 @@ trait UserBusinessFunction
         }
     }
 
-    public function deleteRole($id){
+    public function deleteRole($id)
+    {
         DB::beginTransaction();
         try {
             Role::delete($id);
