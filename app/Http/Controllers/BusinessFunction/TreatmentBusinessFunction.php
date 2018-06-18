@@ -17,6 +17,7 @@ trait TreatmentBusinessFunction
     public function getTreatmentHistory($id)
     {
         $listResult = [];
+
         $patient = Patient::where('id',$id)->first();
             $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
             foreach ($treatmentHistoryList as $treatmentHistory) {
@@ -32,11 +33,13 @@ trait TreatmentBusinessFunction
             dd($dentist);
 //        dd($treatmentHistoryList);
 
+
         return $treatmentHistoryList;
     }
 
-    public function  getTreatmentHistories($phone){
-        $treatmentHistories = Patient::where('phone',$phone)->first()->hasTreatmentHistory()->get();
+    public function getTreatmentHistories($phone)
+    {
+        $treatmentHistories = Patient::where('phone', $phone)->first()->hasTreatmentHistory()->get();
         return $treatmentHistories;
     }
 }

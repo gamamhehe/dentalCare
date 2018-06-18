@@ -16,7 +16,7 @@ trait PaymentBusinessFunction
     public function getPaymentByPhone($phone){
         $payments = Payment::where('phone', $phone)->get();
         foreach($payments as $item){
-            $item->payment_details = $item->hasPaymentDetail();
+            $item->payment_details = $item->hasPaymentDetail()->get();
         }
         return $payments;
     }
@@ -24,5 +24,17 @@ trait PaymentBusinessFunction
     public  function  getAllPayment(){
         $payments = Payment::all();
         return $payments;
+    }
+
+    public function createPayment($payment){
+        DB::beginTransaction();
+        try {
+            Role::delete($payment);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
     }
 }
