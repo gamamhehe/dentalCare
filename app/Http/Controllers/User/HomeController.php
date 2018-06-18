@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
@@ -11,6 +12,7 @@ use Config;
 use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {
+    use NewsBussinessFunction;
     public function homepage(Request $request){
     	 return view('WebUser.HomePage');
     }
@@ -34,6 +36,25 @@ class HomeController extends Controller
     }
     public function Profile(Request $request){
         return view('WebUser.User.Profile');
+    }
+    public function getNewsWebUser($id){
+
+       $News = $this->getNews($id);
+       if($News){
+           return view("WebUser.News.News",['News'=>$News]);
+       }else{
+         return view($this->errorBag());
+       }
+
+    }
+    public function eventLoad(Request $request){
+       return view('WebUser.Events');
+    }
+    public function myProfile($id){
+        return view("WebUser.User.MyProfile");
+    }
+    public function aboutUs(Request $request){
+        return view("WebUser.User.aboutUs");
     }
 
 }

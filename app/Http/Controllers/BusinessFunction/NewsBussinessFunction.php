@@ -52,6 +52,10 @@ trait NewsBussinessFunction
             ->get();
         return $listNews;
     }
+    public function getNews($id){
+         $News =  News::find($id);
+        return $News;
+    }
 
     public function getAllNews(){
         $listNews = News::all();
