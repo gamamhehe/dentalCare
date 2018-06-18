@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<title> Trang chủ </title>
+<title> Đội ngũ bác sĩ </title>
 <meta charset="utf-8">
  
 <meta name="viewport" content="width=device-width, initial-scale=1">  
@@ -30,22 +30,22 @@
 				<!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
 				<ul class="nav navbar-nav float-sm-right">
 					<li class="nav-item active">
-						<a class="nav-link c1" href="#">Giới Thiệu</a>
+						<a class="nav-link " href="#">Giới Thiệu</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c2" href="/doctorList">Chuyên Gia</a>
+						<a class="nav-link " href="/doctorList">Chuyên Gia</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c3" href="#ourmenu">Event</a>
+						<a class="nav-link " href="#ourmenu">Event</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c6" href="#contact">dịch vụ</a>
+						<a class="nav-link " href="#contact">dịch vụ</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c6" href="/">bản giá</a>
+						<a class="nav-link " href="/banggia">bảng giá</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link c6" href="#contact">contact us</a>
+						<a class="nav-link " href="#contact">contact us</a>
 					</li>
 				</ul>
 			</div>
@@ -68,14 +68,15 @@
 	
 	<div class="row spacebottom">
 		<div class="textheader spacebottom">
-			 Nha Khoa KIM quy tụ hơn 100 bác sĩ có chứng chỉ hành nghề, nhiều năm kinh nghiệm, tốt nghiệp răng hàm mặt trong và ngoài nước, đã từng học tập cũng như tu nghiệp nhiều năm tại các nước có nền nha khoa phát triển bậc nhất trên thế giới. Với kiến thức chuyên môn vững vàng cùng đôi bàn tay khéo léo, tận tâm với nghề, luôn áp dụng theo quy trình chuẩn quốc tế, các bác sĩ luôn mang đến kết quả tốt nhất cho khách hàng. 
+			 Nha Khoa 'updated_at' => '2018-06-03 00:00:00',
+            'estimate_time'=>'3' quy tụ hơn 100 bác sĩ có chứng chỉ hành nghề, nhiều năm kinh nghiệm, tốt nghiệp răng hàm mặt trong và ngoài nước, đã từng học tập cũng như tu nghiệp nhiều năm tại các nước có nền nha khoa phát triển bậc nhất trên thế giới. Với kiến thức chuyên môn vững vàng cùng đôi bàn tay khéo léo, tận tâm với nghề, luôn áp dụng theo quy trình chuẩn quốc tế, các bác sĩ luôn mang đến kết quả tốt nhất cho khách hàng. 
 		</div>
 		<div class="col-sm-10 divcenter " style="width: 180%">
 		<img class="centerThing"  src="/assets/images/DoctorPage/Trao-giai-bac-si.jpg" alt="" class="img-fluid img-responsive" width="80%">
 		</div>
 		
 		 <br>
-		 <em style="text-align: center;">Từ trái qua phải hàng đứng Gs Jim Yuan( ĐH Toronto Canada), Ts Grace Eun A Kim( ÚC), Ts ManingKy ( Hà Lan), Ths Bs Nguyen Huu Nam ( Viet Nam), Gs Ts Dong-Seok- Sohn ( Hàn Quốc), Ts Eric Park( Mỹ) Hàng ngồi là các bác sĩ được tốt nghiệp sau chương trình đào tạo chuyển giao công nghệ ,các học viên là những bác sĩ của Ấn Độ, Trung quốc, Thái lan, Úc , Hàn Quốc, Hà lan, Mỹ, và Việt Nam.</em>
+		 <em style="text-align: center;">Từ trái qua phải hàng đứng Gs Jim Yuan( ĐH Toronto Canada), Ts Grace Eun A  ( ÚC), Ts ManingKy ( Hà Lan), Ths Bs Nguyen Huu Nam ( Viet Nam), Gs Ts Dong-Seok- Sohn ( Hàn Quốc), Ts Eric Park( Mỹ) Hàng ngồi là các bác sĩ được tốt nghiệp sau chương trình đào tạo chuyển giao công nghệ ,các học viên là những bác sĩ của Ấn Độ, Trung quốc, Thái lan, Úc , Hàn Quốc, Hà lan, Mỹ, và Việt Nam.</em>
 		
 	</div>
 	<!-- motbacsi -->
@@ -84,14 +85,16 @@
 	 	 <div class="row"  style="background-color: #eee;">
 		<div class="" style="width: 100%;">
 			<div class="modaltitle">
-				<strong>{{$doctor->specialty}} :{{$doctor->name}}</strong>
+				<strong>xxx{{$doctor->degree}} :{{$doctor->name}}</strong>
 			</div>
 			<div class="row" >
 				
 				<div class="col-sm-4"  >
 					<img class="centerThing img imgdentist"  src="{{$doctor->avatar}}" alt="" class="img-fluid img-responsive" >
 				</div>
-			<div class="col-sm-8 docdescript"><p style="padding-left: 4em;">{{$doctor->description}}</p></div>
+			<div class="col-sm-8 docdescript"><p style="padding-left: 0em;">Tốt nghiệp Đại học Y Dược TPHCM (chuyên ngành Bác sĩ Răng Hàm Mặt).
+                    Chuyên gia cấy ghép implant (Hoàn thành khóa đào tạo cắm ghép implant tại Singapore).
+                    Hơn 5 năm kinh nghiệm làm việc tại Bệnh viện Quận 2, Bệnh viện Răng Hàm Mặt TP.HCM…</p></div>
 			</div>
 		</div>
 	</div>
@@ -99,14 +102,18 @@
  	<div class="row"  style="background-color: #eee;">
 		<div class="" style="width: 100%;">
 			<div class="modaltitle">
-				<strong>{{$doctor->specialty}} :{{$doctor->name}}</strong>
+				<strong>{{$doctor->degree}} :{{$doctor->name}}</strong>
 			</div>
 			<div class="row" >
-				<div class="col-sm-8 docdescript resON"><p style="padding-left: 4em;">{{$doctor->description}}</p></div>
+				<div class="col-sm-8 docdescript resON"><p style="padding-left: 4em;">Tốt nghiệp Đại Học Y Hà Nội (Chuyên ngành Bác sĩ Răng Hàm Mặt).
+                        Chứng chỉ đào tạo liên tục chuyên ngành phục hình răng, chứng chỉ đào tạo cấy ghép implant tại Bệnh viện Răng Hàm Mặt Trung Ương TP.HCM.
+                        Hơn 5 năm kinh nghiệm.</p></div>
 				<div class="col-sm-4"  >
 					<img class="centerThing img imgdentist"  src="{{$doctor->avatar}}" alt="" class="img-fluid img-responsive" >
 				</div>
-				<div class="col-sm-8 docdescript resOFF"  ><p style="padding-left: 4em;">{{$doctor->description}}</p></div>
+				<div class="col-sm-8 docdescript resOFF"  ><p style="padding-left: 4em;">Tốt nghiệp Đại Học Y Hà Nội (Chuyên ngành Bác sĩ Răng Hàm Mặt).
+                        Chứng chỉ đào tạo liên tục chuyên ngành phục hình răng, chứng chỉ đào tạo cấy ghép implant tại Bệnh viện Răng Hàm Mặt Trung Ương TP.HCM.
+                        Hơn 5 năm kinh nghiệm.</p></div>
 			</div>
 		</div>
 	</div>

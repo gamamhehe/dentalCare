@@ -21,6 +21,12 @@ Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
 Route::get('/', 'User\HomeController@HomePage');
 Route::get('/doctorList', 'User\HomeController@DoctorInformation');
 Route::get('/profile', 'User\HomeController@Profile');
+Route::get('/getDB','User\HomeController@getDB');
+Route::get('/banggia','User\HomeController@BangGiaDichVu');
+Route::get('/tintuc/{id}','User\HomeController@getNewsWebUser');
+Route::get('/event','User\HomeController@eventLoad');
+Route::get('/myProfile/{id}','User\HomeController@myProfile');
+Route::get('/gioithieu','User\HomeController@aboutUs');
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
@@ -42,8 +48,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
-Route::get('/getDB','User\HomeController@getDB');
-Route::get('/banggia','User\HomeController@BangGiaDichVu');
 
 //CRUD news
 

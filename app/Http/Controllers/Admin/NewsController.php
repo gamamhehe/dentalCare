@@ -13,7 +13,7 @@ class NewsController extends Controller
 {
     use NewsBussinessFunction;
     public function createNews(Request $request){
-        echo "DKM";exit();
+
         $input = $request->all();
 
         $News = new News;
