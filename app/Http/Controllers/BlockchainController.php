@@ -4,40 +4,58 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Model\Key;
 use phpseclib\Crypt\RSA;
+use App\Model\TreatmentHistory;
 
 class BlockchainController extends Controller
 {
 
     public function GenerateKey()
     {
+        $patientId = '1'; // query from databse
         $config = array(
             "digest_alg" => "sha512",
             "private_key_bits" => 4096,
             "private_key_type" => OPENSSL_KEYTYPE_RSA,
         );
-
+        
         // Create the private and public key
         $res = openssl_pkey_new($config);
         // Extract the private key from $res to $privKey
         openssl_pkey_export($res, $privKey);
 
-// Extract the public key from $res to $pubKey
+    // Extract the public key from $res to $pubKey
         $pubKey = openssl_pkey_get_details($res);
         $pubKey = $pubKey["key"];
+        $data = $patientId;
 
-        $data = 'data';
-
-// Encrypt the data to $encrypted using the public key
+    // Encrypt the data to $encrypted using the public key
         openssl_public_encrypt($data, $encrypted, $pubKey);
 
-// Decrypt the data using the private key and store the results in $decrypted
+    // Decrypt the data using the private key and store the results in $decrypted
         openssl_private_decrypt($encrypted, $decrypted, $privKey);
         var_dump($encrypted);
-        dd($decrypted);
+        // dd($decrypted);
 
+        Key::create(array(
+            'patient_id' => $patientId,//query from tblUser
+            'private_key' => $privKey,
+            'public_key' => $pubKey
+        ));
     }
+
+    public function EncryptTreatmentHistory()
+    {
+        $patientId = '1';
+        $key = Key::where('patient_id', '=', $patientId) -> first();
+        $pubKey = $key -> public_key;
+        
+        $history = TreatmentHistory::where('patient_id', '=', $patientId) -> first();
+        var_dump($pubKey);
+        var_dump($history);
+    }
+
     //
 //    public function GenerateKey()
 //    {
