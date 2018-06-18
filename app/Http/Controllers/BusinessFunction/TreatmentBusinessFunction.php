@@ -28,7 +28,7 @@ trait TreatmentBusinessFunction
             $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
             $treatmentHistory->patient_id = $patient->first();
         }
-        dd($treatmentHistoryList);
+        return $treatmentHistoryList;
     }
 
     public function getTreatmentHistories($phone)

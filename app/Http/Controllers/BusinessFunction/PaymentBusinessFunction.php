@@ -16,7 +16,7 @@ trait PaymentBusinessFunction
     public function getPaymentByPhone($phone){
         $payments = Payment::where('phone', $phone)->get();
         foreach($payments as $item){
-            $item->payment_details = $item->hasPaymentDetail();
+            $item->payment_details = $item->hasPaymentDetail()->get();
         }
         return $payments;
     }
