@@ -13,6 +13,7 @@ use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
 use App\Model\User;
+use App\Model\UserHasRole;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -23,34 +24,30 @@ use Mockery\Exception;
 class UserController extends Controller
 {
 
-use UserBusinessFunction;
-use TreatmentBusinessFunction;
+    use UserBusinessFunction;
+    use TreatmentBusinessFunction;
 
     public function register(Request $request)
     {
-        DB::beginTransaction();
         try {
-            $user = User::where('phone', $request->input('phone'))->first();
+            $phone = $request->input('phone');
+            $user = $this->getUserByPhone($phone);
             if ($user == null) {
                 $user = new User();
-                $phone = $request->input('phone');
                 $password = $request->input('password');
-                $fullname = $request->input('fullname');
+                $name = $request->input('name');
                 $gender = $request->input('gender');
                 $birthday = $request->input('birthday');
                 $districtId = $request->input('districtId');
                 $address = $request->input('address');
                 $user->phone = $phone;
                 $user->password = Hash::make($password);
-                $user->isActive = 1;
-                $user->isDelete = 0;
-                $patient = Patient::where('phone', $request->input('phone'))
-                    ->first();
+                $user->isDeleted = 0;
+                $patient = $this->getPatientByPhone($phone);
                 if ($patient != null) {
                     $error = new \stdClass();
                     $error->error = "Số điện thoại bệnh nhân đã tồn tại";
                     $error->exception = "No Exception";
-                    DB::rollback();
                     return response()->json($error, 400);
                 } else {
                     $patient = new Patient();
@@ -58,28 +55,26 @@ use TreatmentBusinessFunction;
                     $patient->date_of_birth = $birthday;
                     $patient->gender = $gender;
                     $patient->district_id = $districtId;
-                    $patient->name = $fullname;
+                    $patient->name = $name;
                     $patient->avatar = "";
                     $patient->address = $address;
                     ////HASH
-                    ///
-                    $user->save();
-                    $patient->save();
-                    DB::commit();
+                    $userHasRole = new UserHasRole();
+                    $userHasRole->phone = $phone;
+                    $userHasRole->role_id = 0;
+                    $this->registerPatient($user, $patient, $userHasRole);
                     return response()->json($patient, 200);
                 }
             } else {
                 $error = new \stdClass();
                 $error->error = "Số điện thoại đã tồn tại";
                 $error->exception = "No Exception";
-                DB::rollback();
                 return response()->json($error, 400);
             }
-        } catch
-        (\Exception $ex) {
+        } catch (\Exception $ex) {
             $error = new \stdClass();
             $error->error = "Không thể đăng kí thông tin người dùng";
-            $error->exception = $ex;
+            $error->exception = $ex->getMessage();
             return response()->json($error, 400);
         }
     }
@@ -93,22 +88,23 @@ use TreatmentBusinessFunction;
         try {
             $phone = $request->input('phone');
             $password = $request->input('password');
-            $result = $this->checkLogin($phone,$password);
+            $result = $this->checkLogin($phone, $password);
             if ($result != null) {
-            $patientParent = $this->getPatient($phone);
-                return response()->json($patientParent, 200);
+                $patients = $this->getPatient($phone);
+                $userResponse = new \stdClass();
+                $userResponse->phone = $phone;
+                $userResponse->patients = $patients;
+                return response()->json($userResponse, 200);
             } else {
+                $error = new \stdClass();
                 $error->error = "Số điện thoại hoặc mật khẩu không chính xác";
                 $error->exception = "No exception";
                 return response()->json($error, 400);
             }
-        }
-
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             $error = new \stdClass();
             $error->error = "Đã xảy ra lỗi";
             $error->exception = $ex->getMessage();
-//            var_dump($ex);
             return response()->json($error, 400);
         }
     }
@@ -126,5 +122,19 @@ use TreatmentBusinessFunction;
         return response()->json(['hello' => 'cha co gi ca haha'], 200);
     }
 
+    public function resetpassword($phone, $password)
+    {
+//        $phone = $request->get('phone');
+//        $password = $request->get('password');
+
+        $user = User::where('phone', $phone)->first();
+        if (
+            $user != null
+        ) {
+            $user->password = Hash::make($password);
+            $user->save();
+            return response()->json("Update Phone: " . $phone . " and password: " . $password . " Successful!");
+        }
+    }
 
 }

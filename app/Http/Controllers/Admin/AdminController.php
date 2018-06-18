@@ -861,4 +861,7 @@ class AdminController extends Controller
             dd($e);
         }
     }
+    public function initDoctor(){
+
+    }
 }

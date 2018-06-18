@@ -22,7 +22,7 @@ class TreatmentCategoryController extends Controller
             $tmCategories = TreatmentCategory::all();
             foreach ($tmCategories as $item)
             {
-                $item->treatments = $item->hasTreatment()->get();
+                $item->treatments = $item->hasTrealtment()->get();
             }
             return response()->json($tmCategories, 200);
         } catch (Exception $ex) {
