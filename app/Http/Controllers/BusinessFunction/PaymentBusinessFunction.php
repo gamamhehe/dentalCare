@@ -25,4 +25,16 @@ trait PaymentBusinessFunction
         $payments = Payment::all();
         return $payments;
     }
+
+    public function createPayment($payment){
+        DB::beginTransaction();
+        try {
+            Role::delete($payment);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
 }

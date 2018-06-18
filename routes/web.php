@@ -34,7 +34,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
     Route::get('/create-News', 'Mobile\NewsController@loadcreateNews');
-
+    //UserController
+    Route::get('/register', 'Admin\Usercontroller@registerGet');
+    Route::post('/register', 'Admin\Usercontroller@registerPost');
+    //NewsController
     Route::get('/getListNews','Admin\NewsController@getListNew');
     Route::get('/editNews/{id}','Admin\NewsController@loadEditNews');
     Route::get('/deleteNews/{id}','Admin\NewsController@deleteNews');

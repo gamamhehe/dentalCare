@@ -93,12 +93,13 @@ class HomeController extends Controller
         $this->getCurrentNumberDentist();
     }
 
-    public function register(Request $request){
+    public function registerPost(Request $request){
         $this->validate($request, [
             'phone' => 'required|min:10|max:11',
             'password' => 'required|min:6',
             'address' => 'required',
             'date_of_birth' => 'required',
+            'district_id' => 'required'
         ]);
     }
 }

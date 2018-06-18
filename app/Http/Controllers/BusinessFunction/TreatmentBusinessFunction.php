@@ -14,33 +14,26 @@ use App\Model\User;
 
 trait TreatmentBusinessFunction
 {
-    public function getTreatmentHistory($phone)
+    public function getTreatmentHistory($id)
     {
         $listResult = [];
-        $patientList = User::where('phone', $phone)->first()->hasPatient()->get();
-        foreach ($patientList as $patient) {
-            $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
-            foreach ($treatmentHistoryList as $treatmentHistory) {
-                $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
-                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
-                    $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
-                }
-                $treatmentHistory->detailList = $treatmentHistoryDetailList;
-                $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
-                $treatmentHistory->patient_id = $patient->first();
+        $patient = Patient::where('id', $id)->first();
+        $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
+        foreach ($treatmentHistoryList as $treatmentHistory) {
+            $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
+            foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail) {
+                $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
             }
-            if ($patient->is_parent == 1) {
-                array_unshift($listResult, $treatmentHistoryList);
-            }
-            else{
-                $listResult[] = $treatmentHistoryList;
-            }
+            $treatmentHistory->detailList = $treatmentHistoryDetailList;
+            $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
+            $treatmentHistory->patient_id = $patient->first();
         }
-        dd($listResult);
+        dd($treatmentHistoryList);
     }
 
-    public function  getTreatmentHistories($phone){
-        $treatmentHistories = Patient::where('phone',$phone)->first()->hasTreatmentHistory()->get();
+    public function getTreatmentHistories($phone)
+    {
+        $treatmentHistories = Patient::where('phone', $phone)->first()->hasTreatmentHistory()->get();
         return $treatmentHistories;
     }
 }
