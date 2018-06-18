@@ -123,4 +123,14 @@ trait UserBusinessFunction
             return false;
         }
     }
+
+    public function checkParentOfPatient($phone, $date_of_birth){
+        $currentParent = User::where('phone', $phone)->first()->hasPatient()->where('is_parent', 1)->first();
+        if($currentParent->date_of_birth < $date_of_birth){
+            $currentParent->is_parent = 0;
+            $currentParent->save();
+            return false;
+        }
+        return true;
+    }
 }

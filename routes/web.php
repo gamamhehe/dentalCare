@@ -49,3 +49,4 @@ Route::get('/banggia','User\HomeController@BangGiaDichVu');
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
+Route::get('/testFunction','User\HomeController@testFunction');

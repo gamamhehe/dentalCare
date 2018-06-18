@@ -6,6 +6,7 @@ use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Appointment;
 use App\Model\Patient;
 use App\Model\Role;
+use App\Model\Absent;
 use App\Model\Staff;
 use App\Model\Step;
 use App\Model\TreatmentDetail;
@@ -813,16 +814,46 @@ class AdminController extends Controller
                 'degree' => 'Chịch',
                 'address' => '188 Nguyễn xí',
                 'district_id' => 1,
+                'phone' => '01279011097',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'male',
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Huỳnh Tài Administrator',
+                'degree' => 'Chịch',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
                 'phone' => '01279011096',
                 'date_of_birth' => '1996-10-01',
                 'gender' => 'male',
             ]);
+            Staff::create([
+                'name' => 'Nguyễn Huỳnh Tài Reception',
+                'degree' => 'Chịch',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
+                'phone' => '01279011098',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'male',
+            ]);
+
             Appointment::create([
                 'start_time' => Carbon::now(),
                 'note' => 'dume lo di kham di',
                 'phone' => '01279011096',
                 'numerical_order' => '1',
                 'estimated_time' => '30'
+            ]);
+
+            Absent::create([
+               'staff_id' => 1,
+               'staff_approve_id' => 2,
+               'date_absent' =>  Carbon::now(),
+            ]);
+            Absent::create([
+                'staff_id' => 1,
+                'staff_approve_id' => 2,
+                'date_absent' =>  '2018-06-15',
             ]);
             DB::commit();
         } catch (\Exception $e) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
@@ -14,7 +15,7 @@ class HomeController extends Controller
 {
 
     use UserBusinessFunction;
-
+    use StaffBusinessFunction;
     public function homepage(Request $request){
     	 return view('WebUser.HomePage');
     }
@@ -55,5 +56,18 @@ class HomeController extends Controller
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
         }
         return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
+    }
+
+    public function testFunction(){
+        $this->getCurrentNumberDentist();
+    }
+
+    public function register(Request $request){
+        $this->validate($request, [
+            'phone' => 'required|min:10|max:11',
+            'password' => 'required|min:6',
+            'address' => 'required',
+            'date_of_birth' => 'required',
+        ]);
     }
 }

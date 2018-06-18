@@ -16,8 +16,8 @@ class CreateTblUserHasRoleTable extends Migration
         Schema::create('tbl_user_has_role', function (Blueprint $table) {
             $table->string('phone');
             $table->integer('role_id');
-            $table->string('start_time');
-            $table->string('end_time')->nullable();
+            $table->date('start_time');
+            $table->date('end_time')->nullable();
             $table->primary(array('phone', 'role_id'));
             $table->timestamps();
         });
