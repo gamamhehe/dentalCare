@@ -46,9 +46,9 @@ class NewsController extends Controller
         return view('admin.News.ListNews');
     }
     public function loadEditNews($id){
+
         $news = News::find($id)->first();
         $content = $news->image_header;
-
         return view("admin.News.editNews",['news'=>$news,'xxx'=>$content]);
     }
     public function createdNews($id){

@@ -27,6 +27,9 @@ Route::get('/tintuc/{id}','User\HomeController@getNewsWebUser');
 Route::get('/event','User\HomeController@eventLoad');
 Route::get('/myProfile/{id}','User\HomeController@myProfile');
 Route::get('/gioithieu','User\HomeController@aboutUs');
+Route::get('/danhsachchitra','User\HomeController@Payment');
+Route::get('/lichsubenhan/{id}','User\HomeController@TreatmentHistory');
+Route::get('/signOut','User\HomeController@logout');
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
@@ -44,7 +47,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/editNews/{id}', 'Admin\NewsController@createdNews')->name('admin.edit.news');
 });
 
-Route::get('loginUser', 'User\HomeController@login')->name('user.login');
+Route::post('/loginUser', 'User\HomeController@login')->name('user.login');
+
     Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });

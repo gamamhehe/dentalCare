@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-    <title>Bảng Giá Tham Khảo</title>
+    <title>Lịch sử bệnh án</title>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,40 +85,75 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                    <div class="container">
-                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Payment</a>
+                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Trám răng</a>
                    </div>
                    <div class="container">
-                       <div class="col-sm-4"></div>
-                       <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                       <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
+                        <div class="col-sm-4">Giá           : 1.200.000 VNĐ</div>
+                        <div class="col-sm-4">Khuyến mãi    : 10%</div>
+                        <div class="col-sm-4">Còn lại       : 1.080.000 VNĐ</div>
+                        <div class="col-sm-4">Răng          : Răng cửa</div>
+                        <div class="col-sm-4">Ngày bắt đầu  : 12/4/2018</div>
+                        <div class="col-sm-4">Ngày kết thúc : 18/6/2018</div>
                    </div>
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in">
                 <div class="panel-body">
-                <table>
-                    <tr>
-                        <th>Ngày thực hiện</th>
-                        <th>Số tiền chi trả</th>
-                        <th>Người thu</th>
-                    </tr>
-                    <tr>
-                        <th>14/2/2018</th>
-                        <th>400.000 VNĐ</th>
-                        <th>Tài móm</th>
-                    </tr>
-                    <tr>
-                        <th>24/2/2018</th>
-                        <th>400.000 VNĐ</th>
-                        <th>Lực Sĩ</th>
-                    </tr>
-                    <tr>
-                        <th>30/3/2018</th>
-                        <th>400.000 VNĐ</th>
-                        <th>Trịnh Võ</th>
-                    </tr>
-
-                </table>
+                <div class="container" style="border: solid 1px grey;">
+                    <div class="row">
+                        <div class="col-sm-2">BÁC SĨ</div>
+                        <div class="col-sm-8">Huỳnh Võ THiên Phúc</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Ngày điều trị</div>
+                        <div class="col-sm-8">30/4/2017</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Các bước đã thực hiện</div>
+                        <div class="col-sm-8">- Nạo vôi răng <br>- Trám răng</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Toa thuốc</div>
+                        <div class="col-sm-8">
+                                giảm đau--------------------------30 viên <br>
+                                chóng sưng------------------------40 viên <br>
+                                aprical analink 500gram-----------40 viên <br>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-sm-4">
+                            <img src="/photos/shares/implant-2.png" alt="" class="img-responsive img-fluid">
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="/photos/shares/implant-1.png" alt="" class="img-responsive img-fluid">
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="/photos/shares/nieng-rang-00-1.jpg" alt="" class="img-responsive img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="container" style="border: solid 1px grey;margin-top: 10px;">
+                    <div class="row">
+                        <div class="col-sm-2">BÁC SĨ</div>
+                        <div class="col-sm-8">Nhiêu Sĩ Lực</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Ngày điều trị</div>
+                        <div class="col-sm-8">12/4/2017</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Các bước đã thực hiện</div>
+                        <div class="col-sm-8">- Khám sơ bộ <br>- Nha chu</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Toa thuốc</div>
+                        <div class="col-sm-8">
+                                giảm đau--------------------------30 viên <br>
+                                aprical analink 500gram-----------40 viên <br>
+                                chỉ nha khoa----------------------2 cuộn
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
 

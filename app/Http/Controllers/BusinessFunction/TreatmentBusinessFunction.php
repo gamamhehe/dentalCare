@@ -14,11 +14,10 @@ use App\Model\User;
 
 trait TreatmentBusinessFunction
 {
-    public function getTreatmentHistory($phone)
+    public function getTreatmentHistory($id)
     {
         $listResult = [];
-        $patientList = User::where('phone', $phone)->first()->hasPatient()->get();
-        foreach ($patientList as $patient) {
+        $patient = Patient::where('id',$id)->first();
             $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
             foreach ($treatmentHistoryList as $treatmentHistory) {
                 $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
@@ -28,15 +27,12 @@ trait TreatmentBusinessFunction
                 $treatmentHistory->detailList = $treatmentHistoryDetailList;
                 $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
                 $treatmentHistory->patient_id = $patient->first();
-            }
-            if ($patient->is_parent == 1) {
-                array_unshift($listResult, $treatmentHistoryList);
-            }
-            else{
-                $listResult[] = $treatmentHistoryList;
-            }
         }
-        dd($listResult);
+        $dentist =$treatmentHistoryList[0];
+            dd($dentist);
+//        dd($treatmentHistoryList);
+
+        return $treatmentHistoryList;
     }
 
     public function  getTreatmentHistories($phone){
