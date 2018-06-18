@@ -18,7 +18,7 @@ Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
 
 
 // webuser phuc
-Route::get('/', 'User\HomeController@HomePage');
+Route::get('/', 'User\HomeController@HomePage')->name('homepage');
 Route::get('/doctorList', 'User\HomeController@DoctorInformation');
 Route::get('/profile', 'User\HomeController@Profile');
 Route::get('/getDB','User\HomeController@getDB');
@@ -44,7 +44,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/editNews/{id}', 'Admin\NewsController@createdNews')->name('admin.edit.news');
 });
 
-
+Route::get('loginUser', 'User\HomeController@login')->name('user.login');
     Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
