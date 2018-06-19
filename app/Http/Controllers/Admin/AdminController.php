@@ -18,6 +18,8 @@ use App\Model\Treatment;
 use App\Model\TreatmentCategory;
 use App\Model\Tooth;
 use App\Model\News;
+use App\Model\Payment;
+use App\Model\PaymentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -1355,6 +1357,82 @@ class AdminController extends Controller
                 'staff_id'=>'1',
                 'created_date'=>'2018-06-19 04:31:27',
             ]);
+            Payment::create([
+                'prepaid' => '100000',
+                'note_payable' => 'Trả góp',
+                'total_price' => '300000',
+                'phone' => '1279011097',
+                'is_done' =>    '0',
+            ]);
+            Payment::create([
+                'prepaid' => '200000',
+                'note_payable' => 'Chị Tài Trả góp',
+                'total_price' => '600000',
+                'phone' => '1279011096',
+                'is_done' =>    '0',
+            ]);
+            Payment::create([
+                'prepaid' => '150000',
+                'note_payable' => 'Anh Huỳnh Trả góp',
+                'total_price' => '600000',
+                'phone' => '1279011098',
+                'is_done' =>    '0',
+            ]);
+            Payment::create([
+                'prepaid' => '250000',
+                'note_payable' => 'Anh Tâm Trả góp',
+                'total_price' => '500000',
+                'phone' => '1279011099',
+                'is_done' =>    '0',
+            ]);
+            PaymentDetail::created([
+                'payment_id' => '1',
+                'receptionist' => '1',
+                'date_create'=>'2018-06-13 20:08:18',
+                'received_money' => '100000',
+            ]);
+            PaymentDetail::created([
+                'payment_id' => '1',
+                'receptionist' => '2',
+                'date_create'=>'2018-06-18 20:08:18',
+                'received_money' => '200000',
+            ]);
+            PaymentDetail::created([
+                'payment_id' => '2',
+                'receptionist' => '2',
+                'date_create'=>'2018-06-14 20:08:18',
+                'received_money' => '200000',
+            ]);
+            PaymentDetail::created([
+                'payment_id' => '2',
+                'receptionist' => '2',
+                'date_create'=>'2018-06-19 20:08:18',
+                'received_money' => '400000',
+            ]);
+            PaymentDetail::created([
+                'payment_id' => '3',
+                'receptionist' => '2',
+                'date_create'=>'2018-06-19 20:08:18',
+                'received_money' => '150000',
+            ]);
+            PaymentDetail::created([
+                'payment_id' => '3',
+                'receptionist' => '2',
+                'date_create'=>'2018-06-22 20:08:18',
+                'received_money' => '450000',
+            ]);
+            PaymentDetail::created([
+                'payment_id' => '4',
+                'receptionist' => '1',
+                'date_create'=>'2018-06-22 20:08:18',
+                'received_money' => '250000',
+            ]);
+            PaymentDetail::created([
+                'payment_id' => '4',
+                'receptionist' => '1',
+                'date_create'=>'2018-06-30 20:08:18',
+                'received_money' => '250000',
+            ]);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -1364,13 +1442,5 @@ class AdminController extends Controller
     public function initDoctor(){
 
     }
-    public function initNews(){
-        News::create([
-            'image_header' => 1,
-            'content' => 2,
-            'title' =>  '2018-06-15',
-            'staff_id'=>'1',
-            'created_date'=>'2018-06-15',
-        ]);
-    }
+
 }
