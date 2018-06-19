@@ -48,7 +48,7 @@
                     <a class="nav-link  " href="/banggia">bản giá</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="#contact">contact us</a>
+                    <a class="nav-link  " href="/gioithieu">contact us</a>
                 </li>
                 <li class="nav-item">
 
@@ -95,15 +95,15 @@
                                 </p>
                             </li>
                             <li class="a-hover">
-                                <a href="#">Lịch sử khám bệnh</a>
+                                <a href="/lichsubenhan">Lịch sử khám bệnh</a>
                             </li>
                             <li class="gachngang"></li>
                             <li class="  a-hover">
-                                <a href="#"><span>Danh sách chi trả</span></a>
+                                <a href="/danhsachchitra"><span>Danh sách chi trả</span></a>
                             </li>
                             <li class="gachngang"></li>
                             <li class=" a-hover">
-                                <a href="#"><span>Lịch hẹn</span></a>
+                                <a href="/lichsubenhan"><span>Lịch hẹn</span></a>
                             </li>
 
                             <!-- Menu Body -->
@@ -251,22 +251,22 @@
         <div class="col-sm-3 motmon">
             <img src="/assets/images/HomePage/implent.jpg" alt="" class="img-fluid img-responsive">
             <div class="tieude"><a href="">Trồng răng implent</a></div>
-            <div>Trồng implent với công nghệ <a href="/tintuc/18"> ... </a></div>
+            <div>Trồng implent với công nghệ tiên tiến của Nhật Bản <a href="/tintuc/7"> Chi tiết</a></div>
         </div>
         <div class="col-sm-3 motmon">
             <img src="/assets/images/HomePage/rangsu.jpg" alt="" class="img-fluid img-responsive">
             <div class="tieude"><a href="">Làm răng sứ</a></div>
-            <div>Răng sứ được nhập khẩu<a href="/tintuc/20"> ... </a></div>
+            <div>Răng sứ được nhập khẩu từ Anh và Pháp mang đến sự an tâm và vẻ đẹp thẩm mỹ rạng ngời<a href="/tintuc/8"> Chi tiết</a></div>
         </div>
         <div class="col-sm-3 motmon">
             <img src="/assets/images/HomePage/taytrangrag.jpg" alt="" class="img-fluid img-responsive">
             <div class="tieude"><a href="">Tẩy Trắng Răng</a></div>
-            <div>Quy trình tẩy trắng<a href="/tintuc/21"> ... </a></div>
+            <div>Quy trình tẩy trắng nhanh và không đau mang lại cảm giác tự tin với nụ cười tỏa sáng <a href="/tintuc/9">Chi tiết </a></div>
         </div>
         <div class="col-sm-3 motmon">
             <img src="/assets/images/HomePage/nienrang.jpg" alt="" class="img-fluid img-responsive">
             <div class="tieude"><a href="">Niền Răng</a></div>
-            <div>Niền răng được phân loại<a href="/tintuc/19"> ... </a></div>
+            <div>Niền răng giúp nụ cười tự tin tỏa sáng trước mọi ánh nhìn , đồng thời mang lại sự cân đối<a href="/tintuc/10"> Chi tiết</a></div>
         </div>
     </div>
 </div>

@@ -7,10 +7,7 @@
     <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
     <script src="/assets/user/js/jquery-3.2.1.js"></script>
     <script src="/assets/user/js/jquery.easing.1.3.js"></script>
-    <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
-    <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
-    <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
-    <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+
 
     <link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css" />
     <script src="/assets/user/js/jquery.fancybox.js"></script>
@@ -23,44 +20,163 @@
     <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
     <link rel="stylesheet" href="/assets/user/css/mycss.css">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 </head>
 <body>
 <div class="top">
     <!-- start menu -->
-    <nav class="navbar navbar-light bg-faded thanhmenu" style="background-color: blue;">
+    <nav class="navbar navbar-light   bg-faded thanhmenu">
         <div class="container">
-            <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse" data-target="#navmn">
+            <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
+                    data-target="#navmn">
             </button>
 
             <div class="collapse navbar-toggleable-xs" id="navmn">
                 <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
                 <ul class="nav navbar-nav float-sm-right">
+
                     <li class="nav-item active">
-                        <a class="nav-link c1" href="#">Giới Thiệu</a>
+                        <a class="nav-link " href="/gioithieu">Giới Thiệu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link c2" href="/doctorList">Chuyên Gia</a>
+                        <a class="nav-link  " href="/doctorList">Chuyên Gia</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link c3" href="#ourmenu">Event</a>
+                        <a class="nav-link  " href="/event">Event</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link c6" href="#contact">dịch vụ</a>
+                        <a class="nav-link  " href="#contact">dịch vụ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link c6" href="#contact">bản giá</a>
+                        <a class="nav-link  " href="/banggia">bản giá</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link c6" href="#contact">contact us</a>
+                        <a class="nav-link  " href="/gioithieu">contact us</a>
                     </li>
+                    <li class="nav-item">
+
+                    @if(Session::has('currentUser'))
+                        <li class="nav-item dropdown ">
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
+                                     class="img-fluid img-responsive" style="max-height: 25px;">
+
+                            </a>
+                            <ul class="dropdown-menu"
+                                style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                                <!-- User image -->
+
+                                <li class="user-header">
+                                    <div class="container" style=";padding:10px 0px;">
+                                        <div class="row">
+                                            <div class="col-sm-6 hoverImg" style="float: left;padding-left: 20px;">
+                                                <img src="assets/images/icon/user.jpg"
+                                                     class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image" onclick="changeInfo()" width="50px;">
+                                            </div>
+                                            <div class="col-sm-6"  >
+                                                <img src="assets/images/icon/user.jpg"
+                                                     class="img-circle img-responsive img-fluid" alt="User Image"  id="divAcc2" width="50px;" onclick="changeInfo2()">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {{--<p>--}}
+                                    {{--Alexander Pierce - Web Developer--}}
+                                    {{--<small>Member since Nov. 2012</small>--}}
+                                    {{--</p>--}}
+                                </li>
+                                <li class="user-header" id="acc1" style="display: block">
+                                    <p>
+                                        Phúc Huỳnh
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                </li>
+                                <li class="user-header" id="acc2" style="display: none">
+                                    <p>
+                                        Lực
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                </li>
+                                <li class="a-hover">
+                                    <a href="#">Lịch sử khám bệnh</a>
+                                </li>
+                                <li class="gachngang"></li>
+                                <li class="  a-hover">
+                                    <a href="/danhsachchitra"><span>Danh sách chi trả</span></a>
+                                </li>
+                                <li class="gachngang"></li>
+                                <li class=" a-hover">
+                                    <a href="#/lichsubenhan/1"><span>Lịch hẹn</span></a>
+                                </li>
+
+                                <!-- Menu Body -->
+
+                                <!-- Menu Footer-->
+                                <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                                    <div class="pull-left" style="padding-left: 1em;">
+                                        <a href="/myProfile/1" class="btn btn-success btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right" style="padding-right: 1em;">
+                                        <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </li>
+
+                    @else
+                        <li class="nav-item dropdown ">
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
+                                {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
+                                Đăng Nhập
+                            </a>
+                            <ul class="dropdown-menu"
+                                style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    Đăng nhập
+                                </li>
+                                <!-- Menu Body -->
+
+                                <!-- Menu Footer-->
+                                <li class="user-footer" style="background-color: whitesmoke">
+                                    <div class="col-ms-12 col-md-offset-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
+                                                <form method ="post" class="form-horizontal" action="/loginUser" enctype="multipart/form-data"  >
+                                                    {{ csrf_field() }}
+                                                    <fieldset>
+                                                        <div class="form-group">
+                                                            <input class="form-control" placeholder="Phone" name="phone" id="phone"
+                                                                   type="text">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input class="form-control" placeholder="Password" name="password" id="password"
+                                                                   type="password" value="">
+                                                        </div>
+                                                        <input class="btn btn-lg btn-success btn-block" type="submit"
+                                                               value="Login">
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+
+
+                        </li>
+
+
+
                 </ul>
             </div>
         </div>
     </nav>
+
     <!-- end menu -->
 </div>
 <div class="container" >
@@ -74,27 +190,22 @@
 </div>
 <div class="container">
     <br />
-
-
-
     <br />
-
     <div class="panel-group" id="accordion">
-
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                    <div class="container">
-                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Payment</a>
+                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne44">Payment <div class="container">
+                               <div class="col-sm-4">Ngày tạo:</div>
+                               <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
+                               <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
+                           </div></a>
                    </div>
-                   <div class="container">
-                       <div class="col-sm-4"></div>
-                       <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                       <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                   </div>
+
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
+            <div id="collapseOne44" class="panel-collapse collapse in">
                 <div class="panel-body">
                 <table>
                     <tr>
@@ -127,16 +238,17 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                    <div class="container">
-                       <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Payment</a>
+                       <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne45">Payment
+                           <div class="container">
+                               <div class="col-sm-4">Ngày tạo:</div>
+                               <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
+                               <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
+                           </div></a>
                    </div>
-                    <div class="container">
-                        <div class="col-sm-4">Ngày tạo:</div>
-                        <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                    </div>
+
                 </h4>
             </div>
-            <div id="collapseEleven" class="panel-collapse collapse">
+            <div id="collapseOne45" class="panel-collapse collapse">
                 <div class="panel-body">
                     <table>
                         <tr>
@@ -145,151 +257,25 @@
                             <th>Người thu</th>
                         </tr>
                         <tr>
-                            <th>14/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Tài móm</th>
+                            <th>13/7/2018</th>
+                            <th>300.000 VNĐ</th>
+                            <th>Hồng Hòa</th>
                         </tr>
                         <tr>
-                            <th>24/2/2018</th>
-                            <th>400.000 VNĐ</th>
+                            <th>14/3/2018</th>
+                            <th>500.000 VNĐ</th>
                             <th>Lực Sĩ</th>
                         </tr>
                         <tr>
                             <th>30/3/2018</th>
                             <th>400.000 VNĐ</th>
-                            <th>Trịnh Võ</th>
+                            <th>Trịnh Huỳnh</th>
                         </tr>
 
                     </table>
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <div class="container">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Payment</a>
-                    </div>
-                    <div class="container">
-                        <div class="col-sm-4">Ngày tạo:</div>
-                        <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                    </div>
-                </h4>
-            </div>
-            <div id="collapseEleven" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table>
-                        <tr>
-                            <th>Ngày thực hiện</th>
-                            <th>Số tiền chi trả</th>
-                            <th>Người thu</th>
-                        </tr>
-                        <tr>
-                            <th>14/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Tài móm</th>
-                        </tr>
-                        <tr>
-                            <th>24/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Lực Sĩ</th>
-                        </tr>
-                        <tr>
-                            <th>30/3/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Trịnh Võ</th>
-                        </tr>
-
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <div class="container">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Payment</a>
-                    </div>
-                    <div class="container">
-                        <div class="col-sm-4">Ngày tạo:</div>
-                        <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                    </div>
-                </h4>
-            </div>
-            <div id="collapseEleven" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table>
-                        <tr>
-                            <th>Ngày thực hiện</th>
-                            <th>Số tiền chi trả</th>
-                            <th>Người thu</th>
-                        </tr>
-                        <tr>
-                            <th>14/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Tài móm</th>
-                        </tr>
-                        <tr>
-                            <th>24/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Lực Sĩ</th>
-                        </tr>
-                        <tr>
-                            <th>30/3/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Trịnh Võ</th>
-                        </tr>
-
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <div class="container">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Payment</a>
-                    </div>
-                    <div class="container">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                    </div>
-                </h4>
-            </div>
-            <div id="collapseEleven" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table>
-                        <tr>
-                            <th>Ngày thực hiện</th>
-                            <th>Số tiền chi trả</th>
-                            <th>Người thu</th>
-                        </tr>
-                        <tr>
-                            <th>14/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Tài móm</th>
-                        </tr>
-                        <tr>
-                            <th>24/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Lực Sĩ</th>
-                        </tr>
-                        <tr>
-                            <th>30/3/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Trịnh Võ</th>
-                        </tr>
-
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
-
     </div>
 </div>
 <div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);margin-top: 30px;">

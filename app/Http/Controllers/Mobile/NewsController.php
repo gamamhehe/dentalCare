@@ -49,7 +49,7 @@ use NewsBussinessFunction;
         }
     }
     public function loadcreateNews(Request $request){
-        return view('admin.News.createNews');
+        return view('admin.News.create');
     }
     public function createNews(Request $request){
         $input = $request->all();

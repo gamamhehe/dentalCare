@@ -50,6 +50,7 @@ class HomeController extends Controller
     public function getNewsWebUser($id){
 
        $News = $this->getNews($id);
+        
        if($News){
            return view("WebUser.News.News",['News'=>$News]);
        }else{
@@ -76,16 +77,17 @@ class HomeController extends Controller
         $user = $this->checkLogin($request->phone, $request->password);
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
+
             if ($roleID == 2) {
                 session(['currentUser' => $user]);
                 $listPatient = $user->hasPatient()->get();
                 session(['listPatient' => $listPatient]);
-//                foreach ($listPatient as $patient){
-//                    if ($patient->is_parent == 1){
-//                        session(['currentPatient' => $patient]);
-//                    }
-//
-//                }
+                foreach ($listPatient as $patient){
+                    if ($patient->is_parent == 1){
+                        session(['currentPatient' => $patient]);
+                    }
+
+                }
                 return redirect()->intended(route('homepage'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
@@ -106,9 +108,6 @@ class HomeController extends Controller
             'district_id' => 'required'
         ]);
     }
-    public function Payment(Request $request){
-       return view("WebUser.Payment");
-    }
     public function logout(Request $request){
         $request->session()->remove('currentUser');
         $request->session()->remove('listPatient');
@@ -119,9 +118,7 @@ class HomeController extends Controller
         if($patient){
             $patient_id = $patient->id;
             $listTreatmentHistory = $this->getTreatmentHistory($patient_id);
-            dd($listTreatmentHistory);
-            exit();
         }
-        return view("WebUser.TreatmentHistory");
+        return view("WebUser.TreatmentHistory",['listTreatmentHistory'=>$listTreatmentHistory]);
     }
 }

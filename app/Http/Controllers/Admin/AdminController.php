@@ -17,6 +17,7 @@ use App\Model\UserHasRole;
 use App\Model\Treatment;
 use App\Model\TreatmentCategory;
 use App\Model\Tooth;
+use App\Model\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -855,6 +856,505 @@ class AdminController extends Controller
                 'staff_approve_id' => 2,
                 'date_absent' =>  '2018-06-15',
             ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
+                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
+<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
+<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
+<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
+<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
+<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
+<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
+</figure>
+<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
+<ul>
+<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
+</ul>
+<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
+<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
+<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
+</figure>
+<ul>
+<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
+</ul>
+<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
+<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
+<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
+</figure>
+<ul>
+<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
+</ul>
+<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
+<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
+<ol>
+<li>
+<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
+</li>
+</ol>
+<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
+<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
+<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
+<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
+</figure>
+<ol start="2">
+<li>
+<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
+</li>
+</ol>
+<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
+<ol start="3">
+<li>
+<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
+</figure>
+<ol start="4">
+<li>
+<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
+</li>
+</ol>
+<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
+<ol start="5">
+<li>
+<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
+<ol start="6">
+<li>
+<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
+</li>
+</ol>
+<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
+                'title' =>  'TRỒNG RĂNG IMPLANT – GIẢI PHÁP PHỤC HÌNH RĂNG BỊ MẤT HOÀN HẢO',
+                'staff_id'=>'1',
+                'created_date'=>'2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
+                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
+<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
+<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
+<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
+<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
+<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
+<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
+</figure>
+<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
+<ul>
+<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
+</ul>
+<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
+<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
+<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
+</figure>
+<ul>
+<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
+</ul>
+<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
+<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
+<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
+</figure>
+<ul>
+<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
+</ul>
+<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
+<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
+<ol>
+<li>
+<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
+</li>
+</ol>
+<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
+<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
+<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
+<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
+</figure>
+<ol start="2">
+<li>
+<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
+</li>
+</ol>
+<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
+<ol start="3">
+<li>
+<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
+</figure>
+<ol start="4">
+<li>
+<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
+</li>
+</ol>
+<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
+<ol start="5">
+<li>
+<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
+<ol start="6">
+<li>
+<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
+</li>
+</ol>
+<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
+                'title' =>  'Trám răng đẹp như thủy tiên',
+                'staff_id'=>'1',
+                'created_date'=>'2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/photos/shares/veneer-su-gia-bao-nhieu-1.jpg',
+                'content' => '<p>iện nay, tại c&aacute;c trung t&acirc;m nha khoa lớn thường &aacute;p dụng phổ biến phương ph&aacute;p n&agrave;y cho một số trường hợp dưới đ&acirc;y:</p>
+<p><img class="alignnone size-full wp-image-2953" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" alt="" width="30" height="30" data-lazy-src="https://nhakhoakim.com/wp-content/uploads/2016/11/tick-1.png" />Răng bị nhiễm m&agrave;u do nhiễm thuốc kh&aacute;ng sinh m&agrave; tẩy trắng răng kh&ocirc;ng thể mang lại hiệu quả</p>
+<p><img class="alignnone size-full wp-image-2953" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" alt="" width="30" height="30" data-lazy-src="https://nhakhoakim.com/wp-content/uploads/2016/11/tick-1.png" />&nbsp;Răng bị thưa,&nbsp;hai răng cửa c&oacute; k&iacute;ch thước to hơn c&aacute;c răng c&ograve;n lại</p>
+<p><img class="alignnone size-full wp-image-2953" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" alt="" width="30" height="30" data-lazy-src="https://nhakhoakim.com/wp-content/uploads/2016/11/tick-1.png" />&nbsp;Răng bị sứt mẻ,&nbsp;bể vỡ</p>
+<p><img class="alignnone size-full wp-image-2953" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" alt="" width="30" height="30" data-lazy-src="https://nhakhoakim.com/wp-content/uploads/2016/11/tick-1.png" />&nbsp;Răng cửa bị tổn thương&hellip;</p>
+<p><strong>Tại sao mặt d&aacute;n sứ Veneer lại được nhiều người y&ecirc;u th&iacute;ch?</strong></p>
+<p>Mặc d&ugrave; vẫn c&ograve;n l&agrave; một phương ph&aacute;p kh&aacute; mới mẻ nhưng mặt d&aacute;n sứ veneer lại thu h&uacute;t được sự quan t&acirc;m của rất nhiều người v&agrave; nhanh ch&oacute;ng chiếm trọn sự tin y&ecirc;u của đ&ocirc;ng đảo kh&aacute;ch h&agrave;ng tr&ecirc;n khắp thế giới nhờ v&agrave;o những ưu điểm nổi trội như:</p>
+<p><strong><img class="alignnone size-full wp-image-26933 lazyloaded" src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" alt="tick-3" width="22" height="24" data-lazy-src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" />&nbsp;Hạn chế m&agrave;i răng, bảo tồn răng thật tối đa</strong></p>
+<p>Thay v&igrave; phải m&agrave;i xung quanh răng như c&aacute;c phương ph&aacute;p bọc răng sứ kh&aacute;c, mặt d&aacute;n&nbsp;răng&nbsp;sứ Veneer chỉ cần thực hiện m&agrave;i một phần men răng ở mặt trước của răng v&agrave; tỷ lệ m&agrave;i rất &iacute;t, khoảng 1/2 so với l&agrave;m răng th&ocirc;ng thường n&ecirc;n c&oacute; thể gi&uacute;p&nbsp;hỗ trợ bảo tồn răng thật tối đa,&nbsp;kh&ocirc;ng cần phải lấy tủy, kh&ocirc;ng&nbsp;l&agrave;m răng bị &ecirc; buốt cả trong v&agrave; sau khi&nbsp;l&agrave;m.</p>
+<p><strong><img class="alignnone size-full wp-image-26933 lazyloaded" src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" alt="tick-3" width="22" height="24" data-lazy-src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" />&nbsp;Đảm bảo t&iacute;nh thẩm mỹ cao</strong></p>
+<p>Mặt d&aacute;n sứ Veneer được cấu tạo từ chất liệu sứ nguy&ecirc;n chất, v&igrave; vậy c&oacute; thể gi&uacute;p khắc phục hiệu quả c&aacute;c khiếm khuyết tr&ecirc;n răng như: Răng bị mất men, sứt mẻ, m&eacute;o , vẹo, thiếu c&acirc;n đối&hellip; đặc biệt l&agrave; đối với răng cửa.</p>
+<p><strong><img class="alignnone size-full wp-image-26933 lazyloaded" src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" alt="tick-3" width="22" height="24" data-lazy-src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" />&nbsp;Kh&ocirc;ng g&acirc;y ảnh hưởng đến răng thật</strong></p>
+<p>&nbsp;Kh&aacute;c với c&aacute;c phương ph&aacute;p bọc răng sứ th&ocirc;ng thường, mặt d&aacute;n sứ Veneer c&oacute; thể bảo tồn được tối đa răng thật , nhờ đ&oacute; gi&uacute;p giảm thiểu tối đa t&igrave;nh trạng m&agrave;i răng, cũng như kh&ocirc;ng g&acirc;y ảnh hưởng đến c&aacute;c răng kế cận.</p>
+<p><strong><img class="alignnone size-full wp-image-26933 lazyloaded" src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" alt="tick-3" width="22" height="24" data-lazy-src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" />&nbsp;Kh&ocirc;ng g&acirc;y kh&oacute; khăn khi ăn nhai&nbsp;</strong></p>
+<p>Mặt d&aacute;n&nbsp;răng&nbsp;sứ Veneer được thiết kế kh&aacute; mỏng, chỉ khoảng từ 0,5 &ndash; 0,6 mm, do đ&oacute; khi được gắn v&agrave;o răng sẽ kh&ocirc;ng l&agrave;m bạn cảm thấy vướng v&iacute;u, cộm cấn hay kh&oacute; chịu.Thoải m&aacute;i ăn nhai v&agrave; giao tiếp m&agrave; kh&ocirc;ng sợ bị người kh&aacute;c ph&aacute;t hiện.</p>
+<p><img src="/photos/shares/veneer-su-gia-bao-nhieu-1.jpg" alt="" width="600" height="437" /></p>
+<p><em>Mặt d&aacute;n&nbsp;răng&nbsp;sứ Veneer được thiết kế kh&aacute; mỏng n&ecirc;n kh&aacute; thoải m&aacute;i khi ăn nhai, kh&ocirc;ng lo cộm cấn</em></p>
+<p><strong><img class="alignnone size-full wp-image-26933 lazyloaded" src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" alt="tick-3" width="22" height="24" data-lazy-src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" />&nbsp;Tuổi thọ cao</strong></p>
+<p>Tuổi thọ của mặt d&aacute;n sứ Veneer c&oacute; thể k&eacute;o d&agrave;i từ 10 &ndash; 15 năm nếu được chăm s&oacute;c v&agrave; bảo vệ đ&uacute;ng c&aacute;ch.&nbsp; B&ecirc;n cạnh đ&oacute;, mặt d&aacute;n sứ c&ograve;n b&aacute;m&nbsp;chắc tr&ecirc;n th&acirc;n răng, kh&ocirc;ng bị k&ecirc;nh hở, kh&ocirc;ng dễ bị bong, bật khi nhai gắn, chải răng nhờ chất liệu kết d&iacute;nh đặc biệt, kh&ocirc;ng dễ bị h&oacute;a lỏng l&agrave;m rơi miếng d&aacute;n n&ecirc;n bạn c&oacute; thể y&ecirc;n t&acirc;m khi sử dụng.</p>',
+                'title' =>  'LÀM RĂNG SỨ MẶT DÁN SỨ VENEER – ĐẢM BẢO TÍNH THẨM MỸ CAO',
+                'staff_id'=>'1',
+                'created_date'=>'2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/TrongImplent.jpg',
+                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
+<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
+<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
+<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
+<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
+<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
+<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
+</figure>
+<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
+<ul>
+<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
+</ul>
+<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
+<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
+<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
+</figure>
+<ul>
+<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
+</ul>
+<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
+<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
+<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
+</figure>
+<ul>
+<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
+</ul>
+<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
+<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
+<ol>
+<li>
+<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
+</li>
+</ol>
+<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
+<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
+<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
+<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
+</figure>
+<ol start="2">
+<li>
+<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
+</li>
+</ol>
+<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
+<ol start="3">
+<li>
+<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
+</figure>
+<ol start="4">
+<li>
+<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
+</li>
+</ol>
+<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
+<ol start="5">
+<li>
+<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
+<ol start="6">
+<li>
+<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
+</li>
+</ol>
+<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
+                'title' =>  'Nghệ thuật tẩy trắng răng công nghệ Úc',
+                'staff_id'=>'1',
+                'created_date'=>'2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/TayTrangRang.jpg',
+                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
+<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
+<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
+<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
+<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
+<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
+<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
+</figure>
+<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
+<ul>
+<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
+</ul>
+<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
+<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
+<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
+</figure>
+<ul>
+<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
+</ul>
+<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
+<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
+<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
+</figure>
+<ul>
+<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
+</ul>
+<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
+<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
+<ol>
+<li>
+<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
+</li>
+</ol>
+<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
+<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
+<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
+<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
+</figure>
+<ol start="2">
+<li>
+<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
+</li>
+</ol>
+<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
+<ol start="3">
+<li>
+<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
+</figure>
+<ol start="4">
+<li>
+<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
+</li>
+</ol>
+<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
+<ol start="5">
+<li>
+<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
+<ol start="6">
+<li>
+<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
+</li>
+</ol>
+<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
+                'title' =>  'Bảo vệ hàm răng chắc khỏe cho trẻ',
+                'staff_id'=>'1',
+                'created_date'=>'2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/RangSuVEENER.png',
+                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
+<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
+<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
+<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
+<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
+<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
+<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
+</figure>
+<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
+<ul>
+<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
+</ul>
+<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
+<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
+<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
+</figure>
+<ul>
+<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
+</ul>
+<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
+<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
+<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
+</figure>
+<ul>
+<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
+</ul>
+<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
+<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
+<ol>
+<li>
+<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
+</li>
+</ol>
+<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
+<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
+<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
+<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
+</figure>
+<ol start="2">
+<li>
+<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
+</li>
+</ol>
+<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
+<ol start="3">
+<li>
+<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
+</figure>
+<ol start="4">
+<li>
+<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
+</li>
+</ol>
+<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
+<ol start="5">
+<li>
+<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
+<ol start="6">
+<li>
+<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
+</li>
+</ol>
+<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
+                'title' =>  'Trồng răng sứ tặng tặng thẻ',
+                'staff_id'=>'1',
+                'created_date'=>'2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/NiengRang.jpg',
+                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
+<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
+<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
+<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
+<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
+<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
+<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
+</figure>
+<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
+<ul>
+<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
+</ul>
+<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
+<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
+<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
+</figure>
+<ul>
+<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
+</ul>
+<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
+<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
+<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
+</figure>
+<ul>
+<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
+</ul>
+<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
+<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
+<ol>
+<li>
+<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
+</li>
+</ol>
+<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
+<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
+<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
+<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
+</figure>
+<ol start="2">
+<li>
+<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
+</li>
+</ol>
+<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
+<ol start="3">
+<li>
+<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
+<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
+<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
+</figure>
+<ol start="4">
+<li>
+<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
+</li>
+</ol>
+<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
+<ol start="5">
+<li>
+<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
+</li>
+</ol>
+<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
+<ol start="6">
+<li>
+<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
+</li>
+</ol>
+<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
+                'title' =>  'Nạo tủy công nghệ Mỹ - gây tê nhanh chóng',
+                'staff_id'=>'1',
+                'created_date'=>'2018-06-19 04:31:27',
+            ]);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -863,5 +1363,14 @@ class AdminController extends Controller
     }
     public function initDoctor(){
 
+    }
+    public function initNews(){
+        News::create([
+            'image_header' => 1,
+            'content' => 2,
+            'title' =>  '2018-06-15',
+            'staff_id'=>'1',
+            'created_date'=>'2018-06-15',
+        ]);
     }
 }

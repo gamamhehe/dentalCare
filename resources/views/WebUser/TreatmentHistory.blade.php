@@ -7,10 +7,7 @@
     <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
     <script src="/assets/user/js/jquery-3.2.1.js"></script>
     <script src="/assets/user/js/jquery.easing.1.3.js"></script>
-    <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
-    <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
-    <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
-    <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+
 
     <link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css" />
     <script src="/assets/user/js/jquery.fancybox.js"></script>
@@ -22,47 +19,160 @@
     <!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
     <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
     <link rel="stylesheet" href="/assets/user/css/mycss.css">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 </head>
 <body>
-<div class="top">
-    <!-- start menu -->
-    <nav class="navbar navbar-light bg-faded thanhmenu" style="background-color: blue;">
-        <div class="container">
-            <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse" data-target="#navmn">
-            </button>
+<nav class="navbar navbar-light     bg-faded thanhmenu">
+    <div class="container">
+        <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
+                data-target="#navmn">
+        </button>
 
-            <div class="collapse navbar-toggleable-xs" id="navmn">
-                <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
-                <ul class="nav navbar-nav float-sm-right">
-                    <li class="nav-item active">
-                        <a class="nav-link c1" href="#">Giới Thiệu</a>
+        <div class="collapse navbar-toggleable-xs" id="navmn">
+            <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+            <ul class="nav navbar-nav float-sm-right">
+
+                <li class="nav-item active">
+                    <a class="nav-link " href="/gioithieu">Giới Thiệu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/doctorList">Chuyên Gia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/event">Event</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="#contact">dịch vụ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/banggia">bản giá</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/gioithieu">contact us</a>
+                </li>
+                <li class="nav-item">
+
+                @if(Session::has('currentUser'))
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
+                                 class="img-fluid img-responsive" style="max-height: 25px;">
+
+                        </a>
+                        <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
+
+                            <li class="user-header">
+                                <div class="container" style=";padding:10px 0px;">
+                                    <div class="row">
+                                        <div class="col-sm-6 hoverImg" style="float: left;padding-left: 20px;">
+                                            <img src="assets/images/icon/user.jpg"
+                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image" onclick="changeInfo()" width="50px;">
+                                        </div>
+                                        <div class="col-sm-6"  >
+                                            <img src="assets/images/icon/user.jpg"
+                                                 class="img-circle img-responsive img-fluid" alt="User Image"  id="divAcc2" width="50px;" onclick="changeInfo2()">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {{--<p>--}}
+                                {{--Alexander Pierce - Web Developer--}}
+                                {{--<small>Member since Nov. 2012</small>--}}
+                                {{--</p>--}}
+                            </li>
+                            <li class="user-header" id="acc1" style="display: block">
+                                <p>
+                                    Phúc Huỳnh
+                                    <small>Member since Nov. 2012</small>
+                                </p>
+                            </li>
+                            <li class="user-header" id="acc2" style="display: none">
+                                <p>
+                                    Lực
+                                    <small>Member since Nov. 2012</small>
+                                </p>
+                            </li>
+                            <li class="a-hover">
+                                <a href="#">Lịch sử khám bệnh</a>
+                            </li>
+                            <li class="gachngang"></li>
+                            <li class="  a-hover">
+                                <a href="/danhsachchitra"><span>Danh sách chi trả</span></a>
+                            </li>
+                            <li class="gachngang"></li>
+                            <li class=" a-hover">
+                                <a href="#/lichsubenhan/1"><span>Lịch hẹn</span></a>
+                            </li>
+
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                                <div class="pull-left" style="padding-left: 1em;">
+                                    <a href="/myProfile/1" class="btn btn-success btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right" style="padding-right: 1em;">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
+                                </div>
+
+                            </li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link c2" href="/doctorList">Chuyên Gia</a>
+
+                @else
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
+                            {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
+                            Đăng Nhập
+                        </a>
+                        <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
+                            <!-- User image -->
+                            <li class="user-header">
+                                Đăng nhập
+                            </li>
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke">
+                                <div class="col-ms-12 col-md-offset-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
+                                            <form method ="post" class="form-horizontal" action="/loginUser" enctype="multipart/form-data"  >
+                                                {{ csrf_field() }}
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <input class="form-control" placeholder="Phone" name="phone" id="phone"
+                                                               type="text">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input class="form-control" placeholder="Password" name="password" id="password"
+                                                               type="password" value="">
+                                                    </div>
+                                                    <input class="btn btn-lg btn-success btn-block" type="submit"
+                                                           value="Login">
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link c3" href="#ourmenu">Event</a>
+                    @endif
+
+
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link c6" href="#contact">dịch vụ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link c6" href="#contact">bản giá</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link c6" href="#contact">contact us</a>
-                    </li>
-                </ul>
-            </div>
+
+
+
+            </ul>
         </div>
-    </nav>
-    <!-- end menu -->
-</div>
+    </div>
+</nav>
 <div class="container" >
     <div class="row" style="background: url(/assets/images/banggia.jpg);height: 7em;">
         <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle" >
@@ -81,32 +191,36 @@
 
     <div class="panel-group" id="accordion">
 
+
+        @foreach($listTreatmentHistory as $treatmentHistory)
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                    <div class="container">
-                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Trám răng</a>
+                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$treatmentHistory->treatment_id->id}}">{{$treatmentHistory->treatment_id->name}} </a>
                    </div>
                    <div class="container">
-                        <div class="col-sm-4">Giá           : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Khuyến mãi    : 10%</div>
-                        <div class="col-sm-4">Còn lại       : 1.080.000 VNĐ</div>
-                        <div class="col-sm-4">Răng          : Răng cửa</div>
-                        <div class="col-sm-4">Ngày bắt đầu  : 12/4/2018</div>
-                        <div class="col-sm-4">Ngày kết thúc : 18/6/2018</div>
+                        <div class="col-sm-4">Giá           : {{$treatmentHistory->treatment_id->max_price}}  VNĐ</div>
+                        <div class="col-sm-4">Khuyến mãi    : 0%</div>
+                        <div class="col-sm-4">Còn lại       : {{$treatmentHistory->treatment_id->max_price}} VNĐ</div>
+                        <div class="col-sm-4">Răng          : {{$treatmentHistory->tooth_number}}</div>
+                        <div class="col-sm-4">Ngày bắt đầu  : {{$treatmentHistory->create_date}}</div>
+                        <div class="col-sm-4">Ngày kết thúc : {{$treatmentHistory->finish_date}}</div>
                    </div>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
+            <div id="collapse{{$treatmentHistory->treatment_id->id}}" class="panel-collapse collapse in">
                 <div class="panel-body">
+                    @foreach($treatmentHistory->detailList as $a)
+
                 <div class="container" style="border: solid 1px grey;">
                     <div class="row">
-                        <div class="col-sm-2">BÁC SĨ</div>
-                        <div class="col-sm-8">Huỳnh Võ THiên Phúc</div>
+                        <div class="col-sm-2">BÁC SĨ : </div>
+                        <div class="col-sm-8">{{$a->dentist_id->name}} </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-2">Ngày điều trị</div>
-                        <div class="col-sm-8">30/4/2017</div>
+                        <div class="col-sm-8">{{$a->dentist_id->created_at}} </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-2">Các bước đã thực hiện</div>
@@ -132,196 +246,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="container" style="border: solid 1px grey;margin-top: 10px;">
-                    <div class="row">
-                        <div class="col-sm-2">BÁC SĨ</div>
-                        <div class="col-sm-8">Nhiêu Sĩ Lực</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">Ngày điều trị</div>
-                        <div class="col-sm-8">12/4/2017</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">Các bước đã thực hiện</div>
-                        <div class="col-sm-8">- Khám sơ bộ <br>- Nha chu</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">Toa thuốc</div>
-                        <div class="col-sm-8">
-                                giảm đau--------------------------30 viên <br>
-                                aprical analink 500gram-----------40 viên <br>
-                                chỉ nha khoa----------------------2 cuộn
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                {{--<div class="container" style="border: solid 1px grey;margin-top: 10px;">--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-2">BÁC SĨ</div>--}}
+                        {{--<div class="col-sm-8">Nhiêu Sĩ Lực</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-2">Ngày điều trị</div>--}}
+                        {{--<div class="col-sm-8">12/4/2017</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-2">Các bước đã thực hiện</div>--}}
+                        {{--<div class="col-sm-8">- Khám sơ bộ <br>- Nha chu</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-2">Toa thuốc</div>--}}
+                        {{--<div class="col-sm-8">--}}
+                                {{--giảm đau--------------------------30 viên <br>--}}
+                                {{--aprical analink 500gram-----------40 viên <br>--}}
+                                {{--chỉ nha khoa----------------------2 cuộn--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 </div>
             </div>
 
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                   <div class="container">
-                       <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Payment</a>
-                   </div>
-                    <div class="container">
-                        <div class="col-sm-4">Ngày tạo:</div>
-                        <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                    </div>
-                </h4>
-            </div>
-            <div id="collapseEleven" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table>
-                        <tr>
-                            <th>Ngày thực hiện</th>
-                            <th>Số tiền chi trả</th>
-                            <th>Người thu</th>
-                        </tr>
-                        <tr>
-                            <th>14/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Tài móm</th>
-                        </tr>
-                        <tr>
-                            <th>24/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Lực Sĩ</th>
-                        </tr>
-                        <tr>
-                            <th>30/3/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Trịnh Võ</th>
-                        </tr>
+        @endforeach
 
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <div class="container">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Payment</a>
-                    </div>
-                    <div class="container">
-                        <div class="col-sm-4">Ngày tạo:</div>
-                        <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                    </div>
-                </h4>
-            </div>
-            <div id="collapseEleven" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table>
-                        <tr>
-                            <th>Ngày thực hiện</th>
-                            <th>Số tiền chi trả</th>
-                            <th>Người thu</th>
-                        </tr>
-                        <tr>
-                            <th>14/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Tài móm</th>
-                        </tr>
-                        <tr>
-                            <th>24/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Lực Sĩ</th>
-                        </tr>
-                        <tr>
-                            <th>30/3/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Trịnh Võ</th>
-                        </tr>
 
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <div class="container">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Payment</a>
-                    </div>
-                    <div class="container">
-                        <div class="col-sm-4">Ngày tạo:</div>
-                        <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                    </div>
-                </h4>
-            </div>
-            <div id="collapseEleven" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table>
-                        <tr>
-                            <th>Ngày thực hiện</th>
-                            <th>Số tiền chi trả</th>
-                            <th>Người thu</th>
-                        </tr>
-                        <tr>
-                            <th>14/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Tài móm</th>
-                        </tr>
-                        <tr>
-                            <th>24/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Lực Sĩ</th>
-                        </tr>
-                        <tr>
-                            <th>30/3/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Trịnh Võ</th>
-                        </tr>
 
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <div class="container">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Payment</a>
-                    </div>
-                    <div class="container">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                        <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                    </div>
-                </h4>
-            </div>
-            <div id="collapseEleven" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table>
-                        <tr>
-                            <th>Ngày thực hiện</th>
-                            <th>Số tiền chi trả</th>
-                            <th>Người thu</th>
-                        </tr>
-                        <tr>
-                            <th>14/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Tài móm</th>
-                        </tr>
-                        <tr>
-                            <th>24/2/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Lực Sĩ</th>
-                        </tr>
-                        <tr>
-                            <th>30/3/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Trịnh Võ</th>
-                        </tr>
 
-                    </table>
-                </div>
-            </div>
-        </div>
 
 
 
