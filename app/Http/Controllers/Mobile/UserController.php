@@ -137,7 +137,8 @@ class UserController extends Controller
         }
     }
 
-    public function  changeAvatar(Request $request){
+    public function changeAvatar(Request $request)
+    {
         try {
             if ($request->hasFile('image')) {
                 $phone = $request->input('phone');
@@ -152,7 +153,10 @@ class UserController extends Controller
                         mkdir($path, 0777);
                     }
                     $hostname = $request->getHttpHost();
-                    $fullPath = implode('/', array_filter(explode('/', $hostname . $path . $filename)));
+                    $fullPath = implode('/',
+                        array_filter(
+                            explode('/', $hostname . '\photos\avatar' . $filename))
+                    );
                     $image->move($path, $filename);
 //                $post->image = $path;
                     $patient->avatar = $filename;
@@ -176,7 +180,7 @@ class UserController extends Controller
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
-            return response()->json( $ex->getMessage(), 400);
+            return response()->json($ex->getMessage(), 400);
         }
     }
 
