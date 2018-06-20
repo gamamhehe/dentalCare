@@ -1359,28 +1359,28 @@ class AdminController extends Controller
             ]);
             Payment::create([
                 'prepaid' => '100000',
-                'note_payable' => 'Trả góp',
+                'note_payable' => '2000',
                 'total_price' => '300000',
                 'phone' => '1279011097',
                 'is_done' =>    '0',
             ]);
             Payment::create([
                 'prepaid' => '200000',
-                'note_payable' => 'Chị Tài Trả góp',
+                'note_payable' => '2000',
                 'total_price' => '600000',
                 'phone' => '1279011096',
                 'is_done' =>    '0',
             ]);
             Payment::create([
                 'prepaid' => '150000',
-                'note_payable' => 'Anh Huỳnh Trả góp',
+                'note_payable' => '2000',
                 'total_price' => '600000',
                 'phone' => '1279011098',
                 'is_done' =>    '0',
             ]);
             Payment::create([
                 'prepaid' => '250000',
-                'note_payable' => 'Anh Tâm Trả góp',
+                'note_payable' => '2000',
                 'total_price' => '500000',
                 'phone' => '1279011099',
                 'is_done' =>    '0',
