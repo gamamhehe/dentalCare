@@ -32,7 +32,7 @@ class MobileController extends Controller
                 $image = $request->file('image');
                 $path = public_path() . '/photos/avatar';
                 $filename = 'user_avatar_'.$phone. '.'.$image->getClientOriginalExtension();
-//                dd($filename); 
+//                dd($filename);
                 $fullpath = $path .$filename;
                 $image->move($path, $filename);
 //                $post->image = $path;
