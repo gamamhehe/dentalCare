@@ -41,7 +41,7 @@ class MobileController extends Controller
 
             }
         }catch(\Exception $ex){
-            return response()->json('php sida');
+            return response()->json('php sida'.$ex->getMessage());
         }
     }
 
