@@ -151,7 +151,8 @@ class UserController extends Controller
                     if (!file_exists($path)) {
                         mkdir($path, 0777);
                     }
-                    $fullPath = implode('/', array_filter(explode('/', $path . $filename)));
+                    $hostname = Request::getHttpHost();
+                    $fullPath = implode('/', array_filter(explode('/', $hostname . $path . $filename)));
                     $image->move($path, $filename);
 //                $post->image = $path;
                     $patient->avatar = $filename;
@@ -175,7 +176,7 @@ class UserController extends Controller
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
-            return response()->json( $ex->getMessage());
+            return response()->json( $ex->getMessage(), 400);
         }
     }
 
