@@ -155,7 +155,7 @@ class UserController extends Controller
                     $hostname = $request->getHttpHost();
                     $fullPath = implode('/',
                         array_filter(
-                            explode('/', $hostname . '\photos\avatar' . $filename))
+                            explode('/', $hostname . '\photos\avatar\\' . $filename))
                     );
                     $image->move($path, $filename);
 //                $post->image = $path;
