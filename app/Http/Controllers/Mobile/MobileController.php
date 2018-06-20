@@ -37,14 +37,17 @@ class MobileController extends Controller
                     $path = public_path('\photos\avatar');
                     $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
 //                dd($filename);
-                    $fullPath = implode('/',array_filter(explode('/', $path .$filename)));
+                    if (!file_exists($path)) {
+                        mkdir($path, 0777);
+                    }
+                    $fullPath = implode('/', array_filter(explode('/', $path . $filename)));
                     $image->move($path, $filename);
 //                $post->image = $path;
                     $patient->avatar = $filename;
                     $patient->save();
                     $response = new \stdClass();
                     $response->message = "Thay đổi ảnh đại diện thành công";
-                    $response->status ="OK";
+                    $response->status = "OK";
                     $response->data = $fullPath;
                     return response()->json($response, 200);
                 } else {
@@ -56,12 +59,12 @@ class MobileController extends Controller
             } else {
 
                 $error = new \stdClass();
-                $error->error = "Lỗi khi nhận hình ảnh " ;
+                $error->error = "Lỗi khi nhận hình ảnh ";
                 $error->exception = "Nothing";
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
-            return response()->json('php sida' . $ex->getMessage());
+            return response()->json( $ex->getMessage());
         }
     }
 
