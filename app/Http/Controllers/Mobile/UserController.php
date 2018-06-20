@@ -146,7 +146,8 @@ class UserController extends Controller
                 if ($patient != null) {
 
                     $image = $request->file('image');
-                    $path = public_path('\photos\avatar');
+                    $avatarFolder = '\photos\shares\avatar\\';
+                    $path = public_path($avatarFolder);
                     $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
 //                dd($filename);
                     if (!file_exists($path)) {
@@ -155,7 +156,7 @@ class UserController extends Controller
                     $hostname = $request->getHttpHost();
                     $fullPath = implode('/',
                         array_filter(
-                            explode('/', $hostname . '\photos\avatar\\' . $filename))
+                            explode('/', $hostname .$avatarFolder . $filename))
                     );
                     $image->move($path, $filename);
 //                $post->image = $path;
