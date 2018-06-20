@@ -151,7 +151,7 @@ class UserController extends Controller
                     if (!file_exists($path)) {
                         mkdir($path, 0777);
                     }
-                    $hostname = Request::getHttpHost();
+                    $hostname = $request->getHttpHost();
                     $fullPath = implode('/', array_filter(explode('/', $hostname . $path . $filename)));
                     $image->move($path, $filename);
 //                $post->image = $path;
