@@ -77,6 +77,7 @@ trait UserBusinessFunction
         }
         return null;
     }
+
     public function getPatientByPhone($phone)
     {
         $patient = Patient::where('phone', $phone)->first();
@@ -85,11 +86,19 @@ trait UserBusinessFunction
         }
         return null;
     }
-public function getUserByPhone($phone)
+
+    public function getUserByPhone($phone)
     {
         $user = User::where('phone', $phone)->first();
         if ($user != null) {
             return $user;
+        }
+        return null;
+    } public function getPatientById($id)
+    {
+        $patient = Patient::where('id', $id)->first();
+        if ($patient != null) {
+            return $patient;
         }
         return null;
     }
@@ -157,13 +166,44 @@ public function getUserByPhone($phone)
         }
     }
 
-    public function checkParentOfPatient($phone, $date_of_birth){
+
+    public function checkParentOfPatient($phone, $date_of_birth)
+    {
         $currentParent = User::where('phone', $phone)->first()->hasPatient()->where('is_parent', 1)->first();
-        if($currentParent->date_of_birth < $date_of_birth){
+        if ($currentParent->date_of_birth < $date_of_birth) {
             $currentParent->is_parent = 0;
             $currentParent->save();
             return false;
         }
         return true;
+    }
+
+
+    public function editAvatar($image, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $patient = Patient::where('id', $id)->first();
+            $avatarFolder = '/assets/images/avatar/';
+            $path = public_path($avatarFolder);
+            $filename = 'user_avatar_' . $id . '.' . $image->getClientOriginalExtension();
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $hostname = request()->getHttpHost();
+            $fullPath = implode('/',
+                array_filter(
+                    explode('/', $hostname . $avatarFolder . $filename))
+            );
+            $image->move($path, $filename);
+            $patient->avatar = $fullPath;
+            $patient->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            DB::rollback();
+            return false;
+        }
     }
 }

@@ -141,47 +141,40 @@ class UserController extends Controller
     {
         try {
             if ($request->hasFile('image')) {
-                $phone = $request->input('phone');
-                $patient = Patient::where('phone', $phone)->first();
-                if ($patient != null) {
-
-                    $image = $request->file('image');
-                    $avatarFolder = '/assets/images/avatar/';
-                    $path = public_path($avatarFolder);
-                    $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
-//                dd($filename);
-                    if (!file_exists($path)) {
-                        mkdir($path, 0755, true);
+                $id = $request->input('id');
+                $image = $request->file('image');
+                $tmpPatient = $this->getPatientById($id);
+                if ($tmpPatient != null) {
+                    if($this->editAvatar($image, $id)){
+                        $patient = $this->getPatientById($id);
+                        $response = new \stdClass();
+                        $response->status ="OK";
+                        $response->message = "Chỉnh sửa avatar thành côngs";
+                        $response->data = $patient->avatar;
+                        return response()->json($response, 200);
+                    }else{
+                        $error = new \stdClass();
+                        $error->error = "Có lỗi xảy ra, không thể chỉnh sửa avatar" ;
+                        $error->exception = "Nothing";
+                        return response()->json($error, 400);
                     }
-                    $hostname = $request->getHttpHost();
-                    $fullPath = implode('/',
-                        array_filter(
-                            explode('/', $hostname .$avatarFolder . $filename))
-                    );
-                    $image->move($path, $filename);
-//                $post->image = $path;
-                    $patient->avatar = $filename;
-                    $patient->save();
-                    $response = new \stdClass();
-                    $response->message = "Thay đổi ảnh đại diện thành công";
-                    $response->status = "OK";
-                    $response->data = $fullPath;
-                    return response()->json($response, 200);
                 } else {
                     $error = new \stdClass();
-                    $error->error = "Không thể tìm thấy số điện thoại " . $phone;
+                    $error->error = "Không thể tìm thấy bệnh nhân ";
                     $error->exception = "Nothing";
                     return response()->json($error, 400);
                 }
             } else {
-
                 $error = new \stdClass();
                 $error->error = "Lỗi khi nhận hình ảnh ";
                 $error->exception = "Nothing";
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
-            return response()->json($ex->getMessage(), 400);
+            $error = new \stdClass();
+            $error->error = "Lỗi máy chủ";
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
         }
     }
 
