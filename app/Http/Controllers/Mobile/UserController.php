@@ -151,7 +151,7 @@ class UserController extends Controller
                     $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
 //                dd($filename);
                     if (!file_exists($path)) {
-                        mkdir($path, 0777);
+                        mkdir($path, 0755, true);
                     }
                     $hostname = $request->getHttpHost();
                     $fullPath = implode('/',
