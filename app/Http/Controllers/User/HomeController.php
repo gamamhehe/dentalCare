@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
+use App\Model\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
@@ -90,6 +91,7 @@ class HomeController extends Controller
     }
 
     public function testFunction(){
+        User::All();
         $this->getCurrentNumberDentist();
     }
 
