@@ -103,7 +103,7 @@ class UserController extends Controller
             }
         } catch (\Exception $ex) {
             $error = new \stdClass();
-            $error->error = "Đã xảy ra lỗi";
+            $error->error = "Lỗi server";
             $error->exception = $ex->getMessage();
             return response()->json($error, 400);
         }
@@ -134,6 +134,54 @@ class UserController extends Controller
             $user->password = Hash::make($password);
             $user->save();
             return response()->json("Update Phone: " . $phone . " and password: " . $password . " Successful!");
+        }
+    }
+
+    public function changeAvatar(Request $request)
+    {
+        try {
+            if ($request->hasFile('image')) {
+                $phone = $request->input('phone');
+                $patient = Patient::where('phone', $phone)->first();
+                if ($patient != null) {
+
+                    $image = $request->file('image');
+                    $avatarFolder = '/assets/images/avatar/';
+                    $path = public_path($avatarFolder);
+                    $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
+//                dd($filename);
+                    if (!file_exists($path)) {
+                        mkdir($path, 0755, true);
+                    }
+                    $hostname = $request->getHttpHost();
+                    $fullPath = implode('/',
+                        array_filter(
+                            explode('/', $hostname .$avatarFolder . $filename))
+                    );
+                    $image->move($path, $filename);
+//                $post->image = $path;
+                    $patient->avatar = $filename;
+                    $patient->save();
+                    $response = new \stdClass();
+                    $response->message = "Thay đổi ảnh đại diện thành công";
+                    $response->status = "OK";
+                    $response->data = $fullPath;
+                    return response()->json($response, 200);
+                } else {
+                    $error = new \stdClass();
+                    $error->error = "Không thể tìm thấy số điện thoại " . $phone;
+                    $error->exception = "Nothing";
+                    return response()->json($error, 400);
+                }
+            } else {
+
+                $error = new \stdClass();
+                $error->error = "Lỗi khi nhận hình ảnh ";
+                $error->exception = "Nothing";
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            return response()->json($ex->getMessage(), 400);
         }
     }
 
