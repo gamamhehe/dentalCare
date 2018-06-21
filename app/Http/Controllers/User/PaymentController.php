@@ -12,7 +12,9 @@ class PaymentController extends Controller
     use PaymentBusinessFunction;
     public function getPaymentOfUser(Request $request){
         $currentUser = $request->session()->get('currentUser', null);
-        return $this->getPaymentByPhone($currentUser->phone);
+//        dd($currentUser->phone);
+        dd($this->getPaymentByPhone($currentUser->phone));
+        return view("WebUser.Payment",['Payment'=>$this->getPaymentByPhone($currentUser->phone)]);
     }
 
     public function getListPayment(){

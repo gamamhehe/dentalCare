@@ -66,7 +66,7 @@
         </div>
     </div>
 	<!-- start banner -->
-    @if($News->id == 18)
+    @if($News->id == 7)
 	<div class="container">
         <div>
             <div>
@@ -155,7 +155,7 @@
             <p><em>Lưu &yacute;: Kết quả t&ugrave;y thuộc v&agrave;o cơ địa của từng người.</em></p>
         </div>
 	</div>
-    @elseif($News->id==19)
+    @elseif($News->id==8)
     <div class="container">
         <p>NI&Ecirc;̀NG RĂNG INVISALIGN &ndash; GIẢI PHÁP CHỈNH NHA AN TOÀN, TH&Acirc;̉M MỸ CAO</p>
         <p data-fontsize="22" data-lineheight="48">Niềng răng invisalign l&agrave; kỹ thuật chỉnh nha hi&ecirc;̣n đại do các nh&agrave; khoa học hàng đ&acirc;̀u nước&nbsp;Mỹ nghi&ecirc;n cứu v&agrave; sáng ch&ecirc;́. Bằng cách sử dụng các khay ni&ecirc;̀ng trong su&ocirc;́t được thi&ecirc;́t k&ecirc;́ bằng nhự dẻo cao c&acirc;́p đ&ecirc;̉ &ocirc;m sát khít vào th&acirc;n răng, từ đó&nbsp;tạo ra một lực k&eacute;o dịch chuyển, xắp xếp cố định c&aacute;c răng bị h&ocirc;, móm, v&acirc;̉u, răng thưa, mọc kh&acirc;́p kh&ecirc;̉nh&hellip;. trở về đ&uacute;ng vị tr&iacute; khớp cắn tr&ecirc;n cung hàm, đ&ocirc;̀ng thời mang lại cho người d&ugrave;ng những&nbsp;c&ocirc;ng&nbsp;dụng n&ocirc;̉i b&acirc;̣t như:</p>
@@ -184,7 +184,7 @@
             <p><img class="alignnone size-full wp-image-7610     lazyloaded" src="https://nhakhoakim.com/wp-content/uploads/2016/11/cong-i.png" alt="" width="25" height="24" data-lazy-src="https://nhakhoakim.com/wp-content/uploads/2016/11/cong-i.png" />&nbsp;Trước khi thực hiện niềng răng Invisalign tại Nha Khoa KIM, kh&aacute;ch h&agrave;ng c&ograve;n được &nbsp;k&yacute; hợp đồng để cam kết hiệu quả v&agrave; thời gian niềng răng theo đ&uacute;ng lộ tr&igrave;nh điều trị đ&atilde; lập ra ban đầu.</p>
         </div>
     </div>
-    @elseif($News->id==20)
+    @elseif($News->id==9)
         <div class="container">
             <p><strong>Mặt d&aacute;n sứ Veneer l&agrave; g&igrave;? Ph&ugrave; hợp với đối tượng n&agrave;o?</strong></p>
             <p>Mặt d&aacute;n sứ Veneer l&agrave; kỹ thuật phục h&igrave;nh răng tối ưu, sử dụng vật liệu d&aacute;n răng được thiết kế dựa tr&ecirc;n k&iacute;ch thước răng của từng người với độ d&agrave;y từ 0,5 &ndash; 0,6 mm để thay thế men răng thật, nhằm khắc phục nhanh ch&oacute;ng c&aacute;c khuyết điểm về răng xấu, bảo to&agrave;n cấu tr&uacute;c răng v&agrave; đặc biệt l&agrave; cải thiện t&iacute;nh thẩm mỹ tốt hơn.</p>
@@ -212,7 +212,7 @@
             <p><strong><img class="alignnone size-full wp-image-26933 lazyloaded" src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" alt="tick-3" width="22" height="24" data-lazy-src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" />&nbsp;Tuổi thọ cao</strong></p>
             <p>Tuổi thọ của mặt d&aacute;n sứ Veneer c&oacute; thể k&eacute;o d&agrave;i từ 10 &ndash; 15 năm nếu được chăm s&oacute;c v&agrave; bảo vệ đ&uacute;ng c&aacute;ch.&nbsp; B&ecirc;n cạnh đ&oacute;, mặt d&aacute;n sứ c&ograve;n b&aacute;m&nbsp;chắc tr&ecirc;n th&acirc;n răng, kh&ocirc;ng bị k&ecirc;nh hở, kh&ocirc;ng dễ bị bong, bật khi nhai gắn, chải răng nhờ chất liệu kết d&iacute;nh đặc biệt, kh&ocirc;ng dễ bị h&oacute;a lỏng l&agrave;m rơi miếng d&aacute;n n&ecirc;n bạn c&oacute; thể y&ecirc;n t&acirc;m khi sử dụng.</p>
         </div>
-    @else
+    @elseif($News->id==10)
         <div class="container">
             <p>TẠI SAO N&Ecirc;N TẨY TRẮNG RĂNG BẰNG C&Ocirc;NG NGHỆ BLEACH BRIGHT?</p>
             <p>Tẩy trắng răng c&ocirc;ng nghệ Bleach Bright được coi l&agrave; một ph&aacute;t minh vượt bậc của ng&agrave;nh nha khoa thẩm mỹ. Hoạt động dựa tr&ecirc;n sự kết hợp đặc biệt giữa chất gel l&agrave;m trắng với &aacute;nh s&aacute;ng xanh dịu nhẹ, tẩy trắng răng c&ocirc;ng nghệ Bleach Bright&nbsp;sẽ nhanh ch&oacute;ng ph&aacute; vỡ c&aacute;c li&ecirc;n kết h&oacute;a học b&ecirc;n trong răng, gi&uacute;p loại bỏ hiệu quả c&aacute;c lớp ng&agrave; răng ố v&agrave;ng đem đến vẻ trắng s&aacute;ng cho h&agrave;m răng v&agrave; chiếm trọn cảm t&igrave;nh của đ&ocirc;ng đảo kh&aacute;ch h&agrave;ng cũng như nhiều chuy&ecirc;n gia nha khoa bởi:</p>

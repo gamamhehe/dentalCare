@@ -17,17 +17,21 @@ trait TreatmentBusinessFunction
     public function getTreatmentHistory($id)
     {
         $listResult = [];
-        $patient = Patient::where('id', $id)->first();
-        $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
-        foreach ($treatmentHistoryList as $treatmentHistory) {
-            $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
-            foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail) {
-                $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
-            }
-            $treatmentHistory->detailList = $treatmentHistoryDetailList;
-            $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
-            $treatmentHistory->patient_id = $patient->first();
+
+        $patient = Patient::where('id',$id)->first();
+            $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
+
+            foreach ($treatmentHistoryList as $treatmentHistory) {
+                $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
+                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+                    $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
+                }
+                $treatmentHistory->detailList = $treatmentHistoryDetailList;
+                $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
+                $treatmentHistory->patient_id = $patient;
         }
+
+
         return $treatmentHistoryList;
     }
 

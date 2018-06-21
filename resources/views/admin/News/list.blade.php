@@ -5,7 +5,7 @@
         <section class="content" >
     <div class="container"  >
       <div class="row " style="text-align: center; margin-right: 4em">
-          <label><h1>Danh sách Bài viết</h1></label>
+          <label><h1>Danh sách Tin Tức</h1></label>
       </div>
       <div class="row layout" style=" margin-right: 4em"  >
         <table id="dup-table" class="table ">
@@ -59,12 +59,13 @@
         });
     });
          function deleteNews(obj){
-          var linkDelete = "admin/deleteNews/";
+             alert("D");
+//          var linkDelete = "admin/deleteNews/";
            var id = obj.getAttribute("id");
            $.ajax(
             {
-            url: "deleteNews/"+id,
-            method:"get",
+            url: "/admin/deleteNews/"+id,
+            method:"post",
             data: {
                 id:id
             },
@@ -72,6 +73,7 @@
             {
                 $('#dup-table').DataTable().ajax.reload();
             }
+
         });
          }
     </script>

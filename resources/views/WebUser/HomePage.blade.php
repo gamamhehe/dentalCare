@@ -48,116 +48,128 @@
                     <a class="nav-link  " href="/banggia">bản giá</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="#contact">contact us</a>
+                    <a class="nav-link  " href="/gioithieu">contact us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="#contact">contact us</a>
-                </li>
-                <li class="nav-item dropdown ">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
-                             class="img-fluid img-responsive" style="max-height: 25px;">
 
-                    </a>
-                    <ul class="dropdown-menu"
-                        style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
-                        <!-- User image -->
+                        @if(Session::has('currentUser'))
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
+                                 class="img-fluid img-responsive" style="max-height: 25px;">
 
-                        <li class="user-header">
-                            <div class="container" style=";padding:10px 0px;">
-                                <div class="row">
-                                    <div class="col-sm-6" style="float: left;padding-left: 20px;">
-                                        <img src="assets/images/icon/user.jpg"
-                                             class="img-circle img-responsive img-fluid" alt="User Image" width="50px;">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <img src="assets/images/icon/user.jpg"
-                                             class="img-circle img-responsive img-fluid" alt="User Image" width="50px;">
-                                    </div>
+                        </a>
+                        <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
 
-                                </div>
-                            </div>
-                            {{--<p>--}}
-                            {{--Alexander Pierce - Web Developer--}}
-                            {{--<small>Member since Nov. 2012</small>--}}
-                            {{--</p>--}}
-                        </li>
-                        <li class="user-header">
-                            {{--<img src="assets/images/icon/user.jpg" class="img-circle" alt="User Image">--}}
+                            <li class="user-header">
+                                <div class="container" style=";padding:10px 0px;">
+                                    <div class="row">
+                                        <div class="col-sm-6 hoverImg" style="float: left;padding-left: 20px;">
+                                            <img src="assets/images/icon/user.jpg"
+                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image" onclick="changeInfo()" width="50px;">
+                                        </div>
+                                        <div class="col-sm-6"  >
+                                            <img src="assets/images/icon/user.jpg"
+                                                 class="img-circle img-responsive img-fluid" alt="User Image"  id="divAcc2" width="50px;" onclick="changeInfo2()">
+                                        </div>
 
-                            <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
-                            </p>
-                        </li>
-                        <li class="a-hover">
-                            <a href="#">Lịch sử khám bệnh</a>
-                        </li>
-                        <li class="gachngang"></li>
-                        <li class="  a-hover">
-                            <a href="#"><span>Danh sách chi trả</span></a>
-                        </li>
-                        <li class="gachngang"></li>
-                        <li class=" a-hover">
-                            <a href="#"><span>Lịch hẹn</span></a>
-                        </li>
-
-                        <!-- Menu Body -->
-
-                        <!-- Menu Footer-->
-                        <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
-
-                            <div class="pull-left" style="padding-left: 1em;">
-                                <a href="/myProfile/1" class="btn btn-success btn-flat">Profile</a>
-                            </div>
-                            <div class="pull-right" style="padding-right: 1em;">
-                                <a href="#" class="btn btn-success btn-flat">Sign out</a>
-                            </div>
-
-                        </li>
-                    </ul>
-                </li>
-
-
-                <li class="nav-item dropdown ">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
-                             class="img-fluid img-responsive" style="max-height: 25px;">
-
-                    </a>
-                    <ul class="dropdown-menu"
-                        style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
-                        <!-- User image -->
-                        <li class="user-header">
-                            Đăng nhập
-                        </li>
-                        <!-- Menu Body -->
-
-                        <!-- Menu Footer-->
-                        <li class="user-footer" style="background-color: whitesmoke">
-                            <div class="col-ms-12 col-md-offset-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
-                                        <form accept-charset="UTF-8" role="form" action="">
-                                            <fieldset>
-                                                <div class="form-group">
-                                                    <input class="form-control" placeholder="Phone" name="email"
-                                                           type="text">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input class="form-control" placeholder="Password" name="password"
-                                                           type="password" value="">
-                                                </div>
-                                                <input class="btn btn-lg btn-success btn-block" type="submit"
-                                                       value="Login">
-                                            </fieldset>
-                                        </form>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                                {{--<p>--}}
+                                {{--Alexander Pierce - Web Developer--}}
+                                {{--<small>Member since Nov. 2012</small>--}}
+                                {{--</p>--}}
+                            </li>
+                            <li class="user-header" id="acc1" style="display: block">
+                                <p>
+                                   Phúc Huỳnh
+                                    <small>Member since Nov. 2012</small>
+                                </p>
+                            </li>
+                            <li class="user-header" id="acc2" style="display: none">
+                                <p>
+                                   Lực
+                                    <small>Member since Nov. 2012</small>
+                                </p>
+                            </li>
+                            <li class="a-hover">
+                                <a href="/lichsubenhan">Lịch sử khám bệnh</a>
+                            </li>
+                            <li class="gachngang"></li>
+                            <li class="  a-hover">
+                                <a href="/danhsachchitra"><span>Danh sách chi trả</span></a>
+                            </li>
+                            <li class="gachngang"></li>
+                            <li class=" a-hover">
+                                <a href="/lichsubenhan"><span>Lịch hẹn</span></a>
+                            </li>
+
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                                <div class="pull-left" style="padding-left: 1em;">
+                                    <a href="/myProfile/1" class="btn btn-success btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right" style="padding-right: 1em;">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </li>
+
+                    @else
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
+                                 {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
+                                Đăng Nhập
+                        </a>
+                        <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
+                            <!-- User image -->
+                            <li class="user-header">
+                                Đăng nhập
+                            </li>
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke">
+                                <div class="col-ms-12 col-md-offset-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
+                                            <form method ="post" class="form-horizontal" action="/loginUser" enctype="multipart/form-data"  >
+                                                {{ csrf_field() }}
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <input class="form-control" placeholder="Phone" name="phone" id="phone"
+                                                               type="text">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input class="form-control" placeholder="Password" name="password" id="password"
+                                                               type="password" value="">
+                                                    </div>
+                                                    <input class="btn btn-lg btn-success btn-block" type="submit"
+                                                           value="Login">
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                        @endif
+
+
                 </li>
+
+
+
             </ul>
         </div>
     </div>
@@ -239,22 +251,22 @@
         <div class="col-sm-3 motmon">
             <img src="/assets/images/HomePage/implent.jpg" alt="" class="img-fluid img-responsive">
             <div class="tieude"><a href="">Trồng răng implent</a></div>
-            <div>Trồng implent với công nghệ <a href="/tintuc/18"> ... </a></div>
+            <div>Trồng implent với công nghệ tiên tiến của Nhật Bản <a href="/tintuc/7"> Chi tiết</a></div>
         </div>
         <div class="col-sm-3 motmon">
             <img src="/assets/images/HomePage/rangsu.jpg" alt="" class="img-fluid img-responsive">
             <div class="tieude"><a href="">Làm răng sứ</a></div>
-            <div>Răng sứ được nhập khẩu<a href="/tintuc/20"> ... </a></div>
+            <div>Răng sứ được nhập khẩu từ Anh và Pháp mang đến sự an tâm và vẻ đẹp thẩm mỹ rạng ngời<a href="/tintuc/8"> Chi tiết</a></div>
         </div>
         <div class="col-sm-3 motmon">
             <img src="/assets/images/HomePage/taytrangrag.jpg" alt="" class="img-fluid img-responsive">
             <div class="tieude"><a href="">Tẩy Trắng Răng</a></div>
-            <div>Quy trình tẩy trắng<a href="/tintuc/21"> ... </a></div>
+            <div>Quy trình tẩy trắng nhanh và không đau mang lại cảm giác tự tin với nụ cười tỏa sáng <a href="/tintuc/9">Chi tiết </a></div>
         </div>
         <div class="col-sm-3 motmon">
             <img src="/assets/images/HomePage/nienrang.jpg" alt="" class="img-fluid img-responsive">
             <div class="tieude"><a href="">Niền Răng</a></div>
-            <div>Niền răng được phân loại<a href="/tintuc/19"> ... </a></div>
+            <div>Niền răng giúp nụ cười tự tin tỏa sáng trước mọi ánh nhìn , đồng thời mang lại sự cân đối<a href="/tintuc/10"> Chi tiết</a></div>
         </div>
     </div>
 </div>
@@ -437,3 +449,17 @@ background-position: center;">
 
 </body>
 </html>
+<script>
+    function changeInfo() {
+        document.getElementById("acc1").style.display= "block";
+        document.getElementById("acc2").style.display= "none";
+        document.getElementById("divAcc2").classList.remove("borderImg");
+        document.getElementById("divAcc1").classList.add("borderImg");
+    }
+    function changeInfo2() {
+        document.getElementById("acc1").style.display= "none";
+        document.getElementById("acc2").style.display= "block";
+        document.getElementById("divAcc2").classList.add("borderImg");
+        document.getElementById("divAcc1").classList.remove("borderImg");
+    }
+</script>

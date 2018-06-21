@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('initNews', 'Admin\AdminController@initNews');
 Route::get('initData', 'Admin\AdminController@initData');
 Route::get('logoutAdmin', 'Admin\AdminController@logout')->name('admin.logout');
 Route::post('loginAdmin', 'Admin\AdminController@login')->name('admin.login.post');
@@ -27,6 +27,11 @@ Route::get('/tintuc/{id}','User\HomeController@getNewsWebUser');
 Route::get('/event','User\HomeController@eventLoad');
 Route::get('/myProfile/{id}','User\HomeController@myProfile');
 Route::get('/gioithieu','User\HomeController@aboutUs');
+Route::get('/danhsachchitra','User\PaymentController@getPaymentOfUser');
+Route::get('/lichsubenhan','User\HomeController@TreatmentHistory');
+Route::get('/signOut','User\HomeController@logout');
+
+
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
@@ -40,14 +45,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     //NewsController
     Route::get('/getListNews','Admin\NewsController@getListNew');
     Route::get('/editNews/{id}','Admin\NewsController@loadEditNews');
-    Route::get('/deleteNews/{id}','Admin\NewsController@deleteNews');
-    Route::get('/list-News', 'Admin\NewsController@loadListNews');
+    Route::get('/list-News', 'Admin\NewsController@loadListNews')->name('admin.list.news');
     Route::get('/deleteNews/{id}', 'Admin\NewsController@deleteNews');
     Route::post('/create-News', 'Admin\NewsController@createNews');
     Route::post('/editNews/{id}', 'Admin\NewsController@createdNews')->name('admin.edit.news');
+
+    Route::get('/getListAnamnesis','Admin\AnamnesisController@getListAnamnesis');
+    Route::get('/list-Anamnesis', 'Admin\AnamnesisController@loadListAnamnesis')->name('admin.list.anamnesis');
+    Route::get('/create-Anamnesis', 'Admin\AnamnesisController@loadcreateAnamnesis');
+    Route::post('/create-Anamnesis', 'Admin\AnamnesisController@createAnamnesis');
+    Route::get('/editAnamnesis/{id}','Admin\AnamnesisController@loadEditAnamnesis');
 });
 
-Route::get('loginUser', 'User\HomeController@login')->name('user.login');
+Route::post('/loginUser', 'User\HomeController@login')->name('user.login');
+
     Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });

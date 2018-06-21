@@ -5,24 +5,20 @@
         <section class="content">
          <div class="container"  >
              <div class="row" style="text-align: center;">
-                 <label><h1>Chỉnh sửa viết</h1></label>
+                 <label><h1>Chỉnh sửa Tin tức</h1></label>
              </div>
              <form method ="post" class="form-horizontal" action="{{ route('admin.edit.news', ['id' => 7]) }}" enctype="multipart/form-data" id="createNews">
                   {{ csrf_field() }}
                    <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
-                        
                             <div class="col-sm-2"><label>Title </label></div>
-                            <div class="col-sm-10" style="padding-right: 0;">  
-                              
+                            <div class="col-sm-10" style="padding-right: 0;">
                               <input type="text" class="form-control input-width" id="title" name="title" placeholder="Input Title News" required="required" value="{{$news->title}}" />
-                              
                             </div>
-                        
                     </div>
                     <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
                     
-                        <div class="col-sm-2"><label>Image Header{{$news->id}} </label></div>
-                        <input type="hidden" name="id" value="{{$news->id}}" />
+                        <div class="col-sm-2"><label>Image Header</label></div>
+                        <input type="hidden" value="{{$news->id}} " name="News_id" />
                         <div class="col-sm-10">  
                             <div class="col-sm-10" style="padding-left: 0 " id="divan">  
                                 <input id="thumbnail" class="form-control" type="text" name="image_header"  required="required" readonly="readonly" value="{{$news->image_header}}" >  
@@ -37,18 +33,19 @@
                     <div class="row layout" style="margin-bottom: 1em;margin-right: 4em" >    
                     <div>   
                     <textarea id="tinyMCE" name="content" rows="10"                         
-                              placeholder="Write your message.." >{{$xxx}}</textarea></div>         
+                              placeholder="Write your message.." >{{$news->content}}</textarea></div>
                  
                     <div class=""  style="margin-top: 1em;padding-bottom: 5em;">
                         <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Create Question</button>
                     </div>        
                   </div>
-                </div>
+
+
                 </form>
          </div>
 
-          
         </section>
+
 
 
     </div>

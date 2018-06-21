@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-    <title>Bảng Giá Tham Khảo</title>
+    <title>Lịch sử bệnh án</title>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,13 +8,14 @@
     <script src="/assets/user/js/jquery-3.2.1.js"></script>
     <script src="/assets/user/js/jquery.easing.1.3.js"></script>
 
-    <link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css"/>
+
+    <link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css" />
     <script src="/assets/user/js/jquery.fancybox.js"></script>
 
     <script type="text/javascript" src="/assets/user/js/myjs.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
     <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap2.css">
     <!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
     <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
     <link rel="stylesheet" href="/assets/user/css/mycss.css">
@@ -173,124 +174,114 @@
     </div>
 </nav>
 <div class="container" >
-    <div class="row">
-        <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
-            <h3><strong>Thông tin cá nhân</strong></h3>
-            <div class="gach">
-                <div class="tron"></div>
-            </div>
+    <div class="row" style="background: url(/assets/images/banggia.jpg);height: 7em;">
+        <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle" >
+            <h1 style="margin-top: 0.8em;color: white"><strong>Danh sách chi trả</strong></h1>
         </div>
     </div>
-    <div class="row" style="background-color: whitesmoke">
-        <div class="col-sm-3">
-            <div><img src="/assets/images/dentist/Dentist11.PNG" alt="" class="img-responsive img-fluid"></div>
-            {{--<div style="text-align: center">--}}
-                {{--<button class="btn btn-success">Thay đổi ảnh đại diện</button></div>--}}
-        </div>
-        <div class="col-sm-7">
-            <div style="padding: 2em 5em;">
-                <div class="row" style="padding: 10px;">
-                    <div class="col-sm-4">Họ và Tên :</div>
-                    <div class="col-sm-8">Huỳnh Võ Thiên Phúc</div>
-                </div>
-                <div class="row" style="padding: 10px;">
-                    <div class="col-sm-4">Địa chỉ :</div>
-                    <div class="col-sm-8">322/30 Cách mạng Tháng 8 P10 Q3 TpHCM</div>
-                </div>
-                <div class="row" style="padding: 10px;">
-                    <div class="col-sm-4">Năm Sinh :</div>
-                    <div class="col-sm-8">4/1/1995</div>
-                </div>
-                <div class="row" style="padding: 10px;">
-                    <div class="col-sm-4">Điện thoại :</div>
-                    <div class="col-sm-8">0915469963</div>
-                </div>
-                <div class="row" style="padding: 10px;">
-                    <div class="col-sm-4">Giới tính :</div>
-                    <div class="col-sm-8">Nam</div>
-                </div>
-                <div class="row" style="padding: 10px;">
-                    <div class="col-sm-4">Bệnh tiền sử :</div>
-                    <div class="col-sm-8">Không có</div>
-                </div>
 
 
-            </div>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
-            <h3><strong>Lịch hẹn</strong></h3>
-            <div class="gach">
-                <div class="tron"></div>
-            </div>
-        </div>
-    </div>
-  
 </div>
-<div class="top" style="max-height: 600px;">
+<div class="container">
+    <br />
 
-    <!-- start menu -->
 
-    <!-- end menu -->
 
-    <!-- start banner -->
-    <div class="banner">
-        <div id="carousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel" data-slide-to="1"></li>
-                <li data-target="#carousel" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                <div class="carousel-item active lichhen1">
+    <br />
 
-                    <div class="carousel-caption textbanner" style="left:0%">
-                        <div class="goi">
-                            <h3 class="tdbanner1">Kiểm tra răng định kì lần 3</h3>
-                            <h4 class="tdbanner2">Ngày 21/7/2018</h4>
-                            <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số 12 - Khung giờ 9:00~9.30 AM</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item  lichhen2">
-                    <div class="carousel-caption textbanner" style="left:0%">
-                           <div class="goi">
-                            <h3 class="tdbanner1">Tái khám Trám răng</h3>
-                            <h4 class="tdbanner2">Ngày 28/6/2018</h4>
-                            <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số 7 - Khung giờ 12:30~14.00 AM</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item  lichhen3">
-                    <div class="carousel-caption textbanner" style="left:0%">
-                           <div class="goi">
-                            <h3 class="tdbanner1">Tẩy trắng răng lần 2</h3>
-                            <h4 class="tdbanner2">Ngày 17/6/2018</h4>
-                            <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số 9 - Khung giờ 10:00~11.00 AM</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="panel-group" id="accordion">
 
+
+        @foreach($listTreatmentHistory as $treatmentHistory)
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                   <div class="container">
+                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$treatmentHistory->treatment_id->id}}">{{$treatmentHistory->treatment_id->name}} </a>
+                   </div>
+                   <div class="container">
+                        <div class="col-sm-4">Giá           : {{$treatmentHistory->treatment_id->max_price}}  VNĐ</div>
+                        <div class="col-sm-4">Khuyến mãi    : 0%</div>
+                        <div class="col-sm-4">Còn lại       : {{$treatmentHistory->treatment_id->max_price}} VNĐ</div>
+                        <div class="col-sm-4">Răng          : {{$treatmentHistory->tooth_number}}</div>
+                        <div class="col-sm-4">Ngày bắt đầu  : {{$treatmentHistory->create_date}}</div>
+                        <div class="col-sm-4">Ngày kết thúc : {{$treatmentHistory->finish_date}}</div>
+                   </div>
+                </h4>
             </div>
-            <div class="nutchuyen">
-                <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-                    <i class="fa fa-angle-double-left fa-2x"></i>
-                </a>
-                <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-                    <i class="fa fa-angle-double-right fa-2x"></i>
-                </a>
+            <div id="collapse{{$treatmentHistory->treatment_id->id}}" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    @foreach($treatmentHistory->detailList as $a)
+
+                <div class="container" style="border: solid 1px grey;">
+                    <div class="row">
+                        <div class="col-sm-2">BÁC SĨ : </div>
+                        <div class="col-sm-8">{{$a->dentist_id->name}} </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Ngày điều trị</div>
+                        <div class="col-sm-8">{{$a->dentist_id->created_at}} </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Các bước đã thực hiện</div>
+                        <div class="col-sm-8">- Nạo vôi răng <br>- Trám răng</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">Toa thuốc</div>
+                        <div class="col-sm-8">
+                                giảm đau--------------------------30 viên <br>
+                                chóng sưng------------------------40 viên <br>
+                                aprical analink 500gram-----------40 viên <br>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-sm-4">
+                            <img src="/photos/shares/implant-2.png" alt="" class="img-responsive img-fluid">
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="/photos/shares/implant-1.png" alt="" class="img-responsive img-fluid">
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="/photos/shares/nieng-rang-00-1.jpg" alt="" class="img-responsive img-fluid">
+                        </div>
+                    </div>
+                </div>
+                    @endforeach
+                {{--<div class="container" style="border: solid 1px grey;margin-top: 10px;">--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-2">BÁC SĨ</div>--}}
+                        {{--<div class="col-sm-8">Nhiêu Sĩ Lực</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-2">Ngày điều trị</div>--}}
+                        {{--<div class="col-sm-8">12/4/2017</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-2">Các bước đã thực hiện</div>--}}
+                        {{--<div class="col-sm-8">- Khám sơ bộ <br>- Nha chu</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-2">Toa thuốc</div>--}}
+                        {{--<div class="col-sm-8">--}}
+                                {{--giảm đau--------------------------30 viên <br>--}}
+                                {{--aprical analink 500gram-----------40 viên <br>--}}
+                                {{--chỉ nha khoa----------------------2 cuộn--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                </div>
             </div>
+
         </div>
+        @endforeach
+
+
+
+
+
+
+
     </div>
-    <!-- end banner -->
 </div>
 <div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);margin-top: 30px;">
     <div class="contact" id="contact">
@@ -341,6 +332,5 @@
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
 <script type="text/javascript">
-  
 
 </script>

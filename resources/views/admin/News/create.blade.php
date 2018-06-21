@@ -5,7 +5,7 @@
         <section class="content">
          <div class="container"  >
              <div class="row" style="text-align: center;">
-                 <label><h1>Tạo bài viết</h1></label>
+                 <label><h1>Tạo Tin Tức</h1></label>
              </div>
 
              <form method ="post" class="form-horizontal" action="create-News" enctype="multipart/form-data" id="createNews">
