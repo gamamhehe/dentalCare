@@ -18,18 +18,18 @@ Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
 
 
 // webuser phuc
-Route::get('/', 'User\HomeController@HomePage')->name('homepage');
-Route::get('/doctorList', 'User\HomeController@DoctorInformation');
-Route::get('/profile', 'User\HomeController@Profile');
-Route::get('/getDB','User\HomeController@getDB');
-Route::get('/banggia','User\HomeController@BangGiaDichVu');
-Route::get('/tintuc/{id}','User\HomeController@getNewsWebUser');
-Route::get('/event','User\HomeController@eventLoad');
-Route::get('/myProfile/{id}','User\HomeController@myProfile');
-Route::get('/gioithieu','User\HomeController@aboutUs');
-Route::get('/danhsachchitra','User\PaymentController@getPaymentOfUser');
-Route::get('/lichsubenhan','User\HomeController@TreatmentHistory');
-Route::get('/signOut','User\HomeController@logout');
+Route::get('/', 'Admin\HomeController@HomePage')->name('homepage');
+Route::get('/doctorList', 'Admin\HomeController@DoctorInformation');
+Route::get('/profile', 'Admin\HomeController@Profile');
+Route::get('/getDB','Admin\HomeController@getDB');
+Route::get('/banggia','Admin\HomeController@BangGiaDichVu');
+Route::get('/tintuc/{id}','Admin\HomeController@getNewsWebUser');
+Route::get('/event','Admin\HomeController@eventLoad');
+Route::get('/myProfile/{id}','Admin\HomeController@myProfile');
+Route::get('/gioithieu','Admin\HomeController@aboutUs');
+Route::get('/danhsachchitra','Admin\PaymentController@getPaymentOfUser');
+Route::get('/lichsubenhan','Admin\HomeController@TreatmentHistory');
+Route::get('/signOut','Admin\HomeController@logout');
 
 
 // end webuser
@@ -60,9 +60,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
 });
 
-Route::post('/loginUser', 'User\HomeController@login')->name('user.login');
+Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
 
-    Route::get('/getTreatmentHistory', 'User\TreatmentController@showTreatmentHistory');
+    Route::get('/getTreatmentHistory', 'Admin\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
 
@@ -70,4 +70,4 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','User\HomeController@testFunction');
+Route::get('/testFunction','Admin\HomeController@testFunction');

@@ -14,5 +14,6 @@ class TreatmentDetailStep extends Model
     }
     public function belongsToStep(){
         return $this->belongsTo('App\Model\Step', 'treatment_step_id', 'id');
+//        return $this->belongsTo('App\Model\Step', 'treatment_step_ids', 'id');
     }
 }
