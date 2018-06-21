@@ -146,7 +146,7 @@ class UserController extends Controller
                 if ($patient != null) {
 
                     $image = $request->file('image');
-                    $avatarFolder = '/photos/shares/avatar/';
+                    $avatarFolder = '/assets/images/avatar/';
                     $path = public_path($avatarFolder);
                     $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
 //                dd($filename);
