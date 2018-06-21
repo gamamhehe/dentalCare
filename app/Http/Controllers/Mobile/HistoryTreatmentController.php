@@ -10,17 +10,18 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Http\Controllers\BusinessFunction\HistoryTreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\Controller;
 use http\Env\Request;
 
 class HistoryTreatmentController extends  Controller
 {
-    use HistoryTreatmentBusinessFunction;
+    use TreatmentBusinessFunction;
 
     public function getByPhone($phone)
     {
         try {
-            $historyTreatments = $this->getHistoryTreatmentByPhone($phone);
+            $historyTreatments = $this->getByPhone($phone);
             return response()->json($historyTreatments, 200);
         } catch (\Exception $ex) {
             $error = new \stdClass();
@@ -47,7 +48,20 @@ class HistoryTreatmentController extends  Controller
     {
         $id = $request->query('id');
         try {
-            $historyTreatments = $this->getHistoryTreatmentById($id);
+            $historyTreatments = $this->getTreatmentHistory($id);
+            return response()->json($historyTreatments, 200);
+        } catch (\Exception $ex) {
+            $error = new \stdClass();
+            $error->error = "Có lỗi xảy ra Không thể lấy dữ liệu";
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
+        }
+    }
+    public function getByPatientId(Request $request)
+    {
+        $id = $request->query('id');
+        try {
+            $historyTreatments = $this->getTreatmentHistory($id);
             return response()->json($historyTreatments, 200);
         } catch (\Exception $ex) {
             $error = new \stdClass();
