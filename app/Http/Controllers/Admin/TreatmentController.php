@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use Illuminate\Http\Request;
