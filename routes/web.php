@@ -55,6 +55,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/create-Anamnesis', 'Admin\AnamnesisController@loadcreateAnamnesis');
     Route::post('/create-Anamnesis', 'Admin\AnamnesisController@createAnamnesis');
     Route::get('/editAnamnesis/{id}','Admin\AnamnesisController@loadEditAnamnesis');
+
+    Route::get('/list-Feedback', 'Admin\FeedbackController@loadListAnamnesis')->name('admin.list.anamnesis');
+
 });
 
 Route::post('/loginUser', 'User\HomeController@login')->name('user.login');

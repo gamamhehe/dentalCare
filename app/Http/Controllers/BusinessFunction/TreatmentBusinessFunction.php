@@ -23,15 +23,29 @@ trait TreatmentBusinessFunction
 
             foreach ($treatmentHistoryList as $treatmentHistory) {
                 $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
+
                 foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+
                     $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
                 }
+                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->first()->belongsToStep()->first();
+                }
+
+
+
+//
+//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+//                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
+//
+//                }
+
                 $treatmentHistory->detailList = $treatmentHistoryDetailList;
-                $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
-                $treatmentHistory->patient_id = $patient;
+                $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
+                $treatmentHistory->patient = $patient;
+                $treatmentHistory->tooth= $treatmentHistory->belongsToTooth()->first();
         }
-
-
+        dd($treatmentHistoryList);
         return $treatmentHistoryList;
     }
 

@@ -50,6 +50,14 @@
 
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Đánh giá </span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li><a href="/list-feedback">Danh sách Đánh giá</a></li>
+                    <!-- <li><a href="#"></a></li> -->
+
+                </ul>
+            </li>
  
         </ul>
     </section>
