@@ -15,6 +15,7 @@ use App\Model\UserHasRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Mockery\Exception;
 
 trait UserBusinessFunction
 {
@@ -68,6 +69,32 @@ trait UserBusinessFunction
             return false;
         }
     }
+    public  function updatePatient($patient){
+        DB::beginTransaction();
+        try {
+            $patient->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::info($e->getMessage());
+            throw new Exception($e->getMessage());
+        }
+    }
+
+public function changeUserPassword($phone, $password){
+    DB::beginTransaction();
+    try {
+        $user = User::where('phone', $phone)->first();
+        $user->password =Hash::make($password);
+        $user->save();
+        DB::commit();
+        return true;
+    } catch (\Exception $e) {
+        DB::rollback();
+        return false;
+    }
+}
 
     public function getPatient($phone)
     {
@@ -78,9 +105,9 @@ trait UserBusinessFunction
         return null;
     }
 
-    public function getPatientByPhone($phone)
+    public function getPatientsByPhone($phone)
     {
-        $patient = Patient::where('phone', $phone)->first();
+        $patient = Patient::where('phone', $phone)->get();
         if ($patient != null) {
             return $patient;
         }
