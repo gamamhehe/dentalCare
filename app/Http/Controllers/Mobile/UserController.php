@@ -242,4 +242,35 @@ class UserController extends Controller
         }
     }
 
+    public function sendFirebase(){
+        try {
+            $notification = new \stdClass();
+            $notification->title = 'Lonnn';
+            $notification->text = 'is is my text Tex';
+            $notification->click_action = 'android.intent.action.MAIN';
+
+            $data = new \stdClass();
+            $data->keyname = 'sss';
+
+
+            $requestObj = new \stdClass();
+            $requestObj->notification = $notification;
+            $requestObj->data = $data;
+            $requestObj->to = '/topics/all';
+            $client = new Client();
+            $request = $client->request('POST', 'https://fcm.googleapis.com/fcm/send',
+                [
+                    'body'=>json_encode($requestObj),
+                    'Content-Type' => 'application/json',
+                    'authorization'=>'key=AAAAUj5G2Bc:APA91bF8TkhDriuoevyt_I0G3G-qNniLSDdDHbULjcvsas4sHCuTKueiODRnuvVuYk6YkCHKLt3fr-Sw7UhZMzRSfmWMWzt2NZXzljYZxch39fg0v3NsBzQM5_QKUEy4bOdnnjigzaBX'
+                ]
+            );
+//            $request->setBody($requestObj);
+            $response = $request->getBody()->getContents();
+            return response()->json($response);
+        } catch (GuzzleException $exception) {
+            return response()->json($exception->getMessage(), 500);
+        }
+    }
+
 }
