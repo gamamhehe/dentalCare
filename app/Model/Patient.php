@@ -28,7 +28,7 @@ class Patient extends Model
     }
 
     public function belongsToDistrict(){
-        return $this->belongsTo('App\Model\District', 'id', 'district_id');
+        return $this->belongsTo('App\Model\District', 'district_id', 'id');
     }
 
     public function hasAnamnesisPatient()

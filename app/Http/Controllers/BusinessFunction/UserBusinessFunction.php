@@ -102,6 +102,7 @@ public function changeUserPassword($phone, $password){
         if ($patients != null) {
             foreach($patients as $item){
                 $item->district = $item->belongsToDistrict()->first();
+                $item->city = $item->belongsToDistrict()->first()->belongsToCity()->first();
             }
             return $patients;
         }
