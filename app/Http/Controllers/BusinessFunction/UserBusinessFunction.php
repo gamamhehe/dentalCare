@@ -101,7 +101,7 @@ public function changeUserPassword($phone, $password){
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
             foreach($patients as $item){
-                $item->district = $item->belongsToDistrict();
+                $item->district = $item->belongsToDistrict()->first();
             }
             return $patients;
         }
