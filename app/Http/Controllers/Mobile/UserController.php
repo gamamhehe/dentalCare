@@ -40,31 +40,25 @@ class UserController extends Controller
                 $birthday = $request->input('birthday');
                 $districtId = $request->input('districtId');
                 $address = $request->input('address');
+
                 $user->phone = $phone;
                 $user->password = Hash::make($password);
                 $user->isDeleted = 0;
-                $patient = $this->getPatientByPhone($phone);
-                if ($patient != null) {
-                    $error = new \stdClass();
-                    $error->error = "Số điện thoại bệnh nhân đã tồn tại";
-                    $error->exception = "No Exception";
-                    return response()->json($error, 400);
-                } else {
-                    $patient = new Patient();
-                    $patient->phone = $phone;
-                    $patient->date_of_birth = $birthday;
-                    $patient->gender = $gender;
-                    $patient->district_id = $districtId;
-                    $patient->name = $name;
-                    $patient->avatar = "";
-                    $patient->address = $address;
-                    ////HASH
-                    $userHasRole = new UserHasRole();
-                    $userHasRole->phone = $phone;
-                    $userHasRole->role_id = 0;
-                    $this->registerPatient($user, $patient, $userHasRole);
-                    return response()->json($patient, 200);
-                }
+
+                $patient = new Patient();
+                $patient->phone = $phone;
+                $patient->date_of_birth = $birthday;
+                $patient->gender = $gender;
+                $patient->district_id = $districtId;
+                $patient->name = $name;
+                $patient->avatar = "";
+                $patient->address = $address;
+                ////HASH
+                $userHasRole = new UserHasRole();
+                $userHasRole->phone = $phone;
+                $userHasRole->role_id = 0;
+                $this->registerPatient($user, $patient, $userHasRole);
+                return response()->json($patient, 200);
             } else {
                 $error = new \stdClass();
                 $error->error = "Số điện thoại đã tồn tại";
@@ -122,6 +116,33 @@ class UserController extends Controller
         return response()->json(['hello' => 'cha co gi ca haha'], 200);
     }
 
+    public function changePassword(Request $request)
+    {
+        $phone = $request->input('phone');
+        $newPassword = $request->input('password');
+        $currentPassword = $request->input('current_password');
+        $user = $this->checkLogin($phone, $currentPassword);
+        $errorResponse = new \stdClass();
+        if ($user != null) {
+            if ($this->changeUserPassword($phone, $newPassword)) {
+                $successResponse = new \stdClass();
+                $successResponse->status = "OK";
+                $successResponse->code = 200;
+                $successResponse->message = "Sửa mật khẩu thành công";
+                $successResponse->data = null;
+                return response()->json($successResponse, 200);
+            } else {
+                $errorResponse->error = "Không thể sửa mật khẩu";
+                $errorResponse->exception = null;
+                return response()->json($errorResponse, 400);
+            }
+        } else {
+            $errorResponse->error = "Mật khẩu hiện tại không hợp lệ";
+            $errorResponse->exception = null;
+            return response()->json($errorResponse, 400);
+        }
+    }
+//get function to change password quickly
     public function resetpassword($phone, $password)
     {
 //        $phone = $request->get('phone');
@@ -137,6 +158,50 @@ class UserController extends Controller
         }
     }
 
+    public function updatePatientInfo(Request $request)
+    {
+        try {
+            $patientId = $request->input('id');
+            $name = $request->input('name');
+            $gender = $request->input('gender');
+            $birthday = $request->input('date_of_birth');
+            $address = $request->input('address');
+            $districtId = $request->input('district_id');
+            $patient = $this->getPatientById($patientId);
+            if ($patient != null) {
+                $patient->name = $name;
+                $patient->gender = $gender;
+                $patient->date_of_birth = $birthday;
+                $patient->address = $address;
+                $patient->district_id = $districtId;
+                $result = $this->updatePatient($patient);
+                if ($result == true) {
+                    $successResponse = new \stdClass();
+                    $successResponse->status = "OK";
+                    $successResponse->code = 200;
+                    $successResponse->message = "Sửa tài khoản thành công";
+                    $successResponse->data = $patient;
+                    return response()->json($successResponse, 200);
+                } else {
+                    $error = new \stdClass();
+                    $error->error = "Không thể sửa đổi thông tin người dùng";
+                    $error->exeption = null;
+                    return response()->json($error, 400);
+                }
+            } else {
+                $error = new \stdClass();
+                $error->error = "Không thể tìm thấy id bệnh nhân";
+                $error->exeption = null;
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = new \stdClass();
+            $error->error = "Lỗi máy chủ";
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
+        }
+    }
+
     public function changeAvatar(Request $request)
     {
         try {
@@ -145,16 +210,16 @@ class UserController extends Controller
                 $image = $request->file('image');
                 $tmpPatient = $this->getPatientById($id);
                 if ($tmpPatient != null) {
-                    if($this->editAvatar($image, $id)){
+                    if ($this->editAvatar($image, $id)) {
                         $patient = $this->getPatientById($id);
                         $response = new \stdClass();
-                        $response->status ="OK";
+                        $response->status = "OK";
                         $response->message = "Chỉnh sửa avatar thành côngs";
                         $response->data = $patient->avatar;
                         return response()->json($response, 200);
-                    }else{
+                    } else {
                         $error = new \stdClass();
-                        $error->error = "Có lỗi xảy ra, không thể chỉnh sửa avatar" ;
+                        $error->error = "Có lỗi xảy ra, không thể chỉnh sửa avatar";
                         $error->exception = "Nothing";
                         return response()->json($error, 400);
                     }
@@ -175,6 +240,37 @@ class UserController extends Controller
             $error->error = "Lỗi máy chủ";
             $error->exception = $ex->getMessage();
             return response()->json($error, 400);
+        }
+    }
+
+    public function sendFirebase(){
+        try {
+            $notification = new \stdClass();
+            $notification->title = 'Lonnn';
+            $notification->text = 'is is my text Tex';
+            $notification->click_action = 'android.intent.action.MAIN';
+
+            $data = new \stdClass();
+            $data->keyname = 'sss';
+
+
+            $requestObj = new \stdClass();
+            $requestObj->notification = $notification;
+            $requestObj->data = $data;
+            $requestObj->to = '/topics/all';
+            $client = new Client();
+            $request = $client->request('POST', 'https://fcm.googleapis.com/fcm/send',
+                [
+                    'body'=>json_encode($requestObj),
+                    'Content-Type' => 'application/json',
+                    'authorization'=>'key=AAAAUj5G2Bc:APA91bF8TkhDriuoevyt_I0G3G-qNniLSDdDHbULjcvsas4sHCuTKueiODRnuvVuYk6YkCHKLt3fr-Sw7UhZMzRSfmWMWzt2NZXzljYZxch39fg0v3NsBzQM5_QKUEy4bOdnnjigzaBX'
+                ]
+            );
+//            $request->setBody($requestObj);
+            $response = $request->getBody()->getContents();
+            return response()->json($response);
+        } catch (GuzzleException $exception) {
+            return response()->json($exception->getMessage(), 500);
         }
     }
 

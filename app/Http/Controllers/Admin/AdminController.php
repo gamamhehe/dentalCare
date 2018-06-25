@@ -728,7 +728,7 @@ class AdminController extends Controller
                 'address' => '188 Nguyễn xí',
                 'phone' => '01279011096',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'male',
+                'gender' => 'MALE',
                 'district_id' => 1,
             ]);
 
@@ -737,7 +737,7 @@ class AdminController extends Controller
                 'address' => '188 Cầu xí',
                 'phone' => '01279011096',
                 'date_of_birth' => '1996-10-02',
-                'gender' => 'female',
+                'gender' => 'FEMALE',
                 'district_id' => 1,
                 'is_parent' => 0
             ]);
@@ -747,7 +747,7 @@ class AdminController extends Controller
                 'address' => '188 Cầu Đường',
                 'phone' => '01279011097',
                 'date_of_birth' => '1996-10-03',
-                'gender' => 'female',
+                'gender' => 'FEMALE',
                 'district_id' => 1,
             ]);
             TreatmentHistory::create([
@@ -827,7 +827,7 @@ class AdminController extends Controller
                 'district_id' => 1,
                 'phone' => '01279011097',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'male',
+                'gender' => 'MALE',
             ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Administrator',
@@ -836,7 +836,7 @@ class AdminController extends Controller
                 'district_id' => 1,
                 'phone' => '01279011096',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'male',
+                'gender' => 'MALE',
             ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Reception',
@@ -845,7 +845,7 @@ class AdminController extends Controller
                 'district_id' => 1,
                 'phone' => '01279011098',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'male',
+                'gender' => 'MALE',
             ]);
 
             Appointment::create([

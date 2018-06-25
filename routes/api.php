@@ -23,6 +23,10 @@ Route::get("user/login", "Mobile\UserController@loginGET");
 Route::post("user/register", "Mobile\UserController@register");
 Route::post("user/bookAppointment", "Mobile\UserController@bookAppointment");
 Route::post("user/changeAvatar","Mobile\UserController@changeAvatar");
+Route::post("user/changePassword","Mobile\UserController@changePassword");
+Route::post("user/updatePatient","Mobile\UserController@updatePatientInfo");
+
+
 Route::get("city/all", "Mobile\AddressController@getAllCitites");
 Route::get("city/{id}/districts/", "Mobile\AddressController@getDistrictsByCity");
 Route::get("news/all", "Mobile\NewsController@getAllNews");

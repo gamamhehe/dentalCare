@@ -15,6 +15,7 @@ use App\Model\UserHasRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Mockery\Exception;
 
 trait UserBusinessFunction
 {
@@ -68,19 +69,49 @@ trait UserBusinessFunction
             return false;
         }
     }
+    public  function updatePatient($patient){
+        DB::beginTransaction();
+        try {
+            $patient->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::info($e->getMessage());
+            throw new Exception($e->getMessage());
+        }
+    }
+
+public function changeUserPassword($phone, $password){
+    DB::beginTransaction();
+    try {
+        $user = User::where('phone', $phone)->first();
+        $user->password =Hash::make($password);
+        $user->save();
+        DB::commit();
+        return true;
+    } catch (\Exception $e) {
+        DB::rollback();
+        return false;
+    }
+}
 
     public function getPatient($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
+            foreach($patients as $item){
+                $item->district = $item->belongsToDistrict()->first();
+                $item->city = $item->belongsToDistrict()->first()->belongsToCity()->first();
+            }
             return $patients;
         }
         return null;
     }
 
-    public function getPatientByPhone($phone)
+    public function getPatientsByPhone($phone)
     {
-        $patient = Patient::where('phone', $phone)->first();
+        $patient = Patient::where('phone', $phone)->get();
         if ($patient != null) {
             return $patient;
         }
@@ -191,10 +222,13 @@ trait UserBusinessFunction
                 mkdir($path, 0777, true);
             }
             $hostname = request()->getHttpHost();
-            $fullPath = implode('/',
+            //get time stamp
+            $date = new \DateTime();
+           $timestamp = $date->getTimestamp();
+            $fullPath = 'http://'.implode('/',
                 array_filter(
                     explode('/', $hostname . $avatarFolder . $filename))
-            );
+            ) . '?time='. $timestamp;
             $image->move($path, $filename);
             $patient->avatar = $fullPath;
             $patient->save();
