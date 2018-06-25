@@ -222,7 +222,7 @@ public function changeUserPassword($phone, $password){
                 mkdir($path, 0777, true);
             }
             $hostname = request()->getHttpHost();
-            $fullPath = implode('/',
+            $fullPath = 'http://'.implode('/',
                 array_filter(
                     explode('/', $hostname . $avatarFolder . $filename))
             );
