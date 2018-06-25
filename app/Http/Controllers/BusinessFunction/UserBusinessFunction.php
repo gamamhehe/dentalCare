@@ -222,10 +222,13 @@ public function changeUserPassword($phone, $password){
                 mkdir($path, 0777, true);
             }
             $hostname = request()->getHttpHost();
+            //get time stamp
+            $date = new \DateTime();
+           $timestamp = $date->getTimestamp();
             $fullPath = 'http://'.implode('/',
                 array_filter(
                     explode('/', $hostname . $avatarFolder . $filename))
-            );
+            ) . '?time='. $timestamp;
             $image->move($path, $filename);
             $patient->avatar = $fullPath;
             $patient->save();
