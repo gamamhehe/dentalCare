@@ -119,11 +119,12 @@ class UserController extends Controller
     public function changePassword(Request $request)
     {
         $phone = $request->input('phone');
-        $password = $request->input('password');
-        $user = $this->getUserByPhone($phone);
+        $newPassword = $request->input('password');
+        $currentPassword = $request->input('current_password');
+        $user = $this->checkLogin($phone, $currentPassword);
         $errorResponse = new \stdClass();
         if ($user != null) {
-            if ($this->changeUserPassword($phone, $password)) {
+            if ($this->changeUserPassword($phone, $newPassword)) {
                 $successResponse = new \stdClass();
                 $successResponse->status = "OK";
                 $successResponse->code = 200;
@@ -136,12 +137,12 @@ class UserController extends Controller
                 return response()->json($errorResponse, 400);
             }
         } else {
-            $errorResponse->error = "Không thể tìm thấy người dùng";
+            $errorResponse->error = "Mật khẩu hiện tại không hợp lệ";
             $errorResponse->exception = null;
             return response()->json($errorResponse, 400);
         }
     }
-
+//get function to change password quickly
     public function resetpassword($phone, $password)
     {
 //        $phone = $request->get('phone');
