@@ -8,7 +8,7 @@ class Absent extends Model
 {
     //
     protected $table = 'tbl_absents';
-    protected $fillable = ['staff_id', 'staff_approve_id', 'date_absent'];
+    protected $fillable = ['id', 'staff_id', 'staff_approve_id', 'date_absent'];
     public function belongsToStaff(){
         return $this->belongsTo('App\Model\Staff','staff_id', 'id');
     }

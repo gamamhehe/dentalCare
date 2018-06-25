@@ -57,7 +57,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/editAnamnesis/{id}','Admin\AnamnesisController@loadEditAnamnesis');
 });
 
-Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
+Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
 
     Route::get('/getTreatmentHistory', 'Admin\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
@@ -67,4 +67,4 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','Admin\HomeController@testFunction');
+Route::get('/testFunction','Admin\AbsentController@approveAbsent')->name('testFunction');

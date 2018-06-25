@@ -650,6 +650,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
+                'dentist_id' => 1,
                 'start_time' => '2018-07-21 10:05:42',
             ]);
             Appointment::create([
@@ -657,6 +658,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
+                'dentist_id' => 1,
                 'start_time' => '2018-06-22 10:05:42',
             ]);
             Appointment::create([
@@ -664,6 +666,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
+                'dentist_id' => 1,
                 'start_time' => '2018-06-24 12:05:42',
             ]);
             Appointment::create([
@@ -671,6 +674,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
+                'dentist_id' => 1,
                 'start_time' => '2018-06-28 10:05:42',
             ]);
             Appointment::create([
@@ -678,6 +682,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
+                'dentist_id' => 1,
                 'start_time' => '2018-06-27 10:05:42',
             ]);
             Appointment::create([
@@ -685,6 +690,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
+                'dentist_id' => 1,
                 'start_time' => '2018-06-26 11:05:42',
             ]);
             Appointment::create([
@@ -692,6 +698,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
+                'dentist_id' => 1,
                 'start_time' => '2018-06-22 19:05:42',
             ]);
             Appointment::create([
@@ -699,6 +706,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
+                'dentist_id' => 1,
                 'start_time' => '2018-06-27 16:05:42',
             ]);
 
@@ -844,6 +852,7 @@ class AdminController extends Controller
                 'start_time' => Carbon::now(),
                 'note' => 'dume lo di kham di',
                 'phone' => '01279011096',
+                'dentist_id' => 1,
                 'numerical_order' => '1',
                 'estimated_time' => '30'
             ]);
@@ -856,6 +865,10 @@ class AdminController extends Controller
             Absent::create([
                 'staff_id' => 1,
                 'staff_approve_id' => 2,
+                'date_absent' =>  '2018-06-15',
+            ]);
+            Absent::create([
+                'staff_id' => 1,
                 'date_absent' =>  '2018-06-15',
             ]);
             News::create([
