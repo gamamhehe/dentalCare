@@ -16,6 +16,8 @@ class CreateTblToothsTable extends Migration
         Schema::create('tbl_tooths', function (Blueprint $table) {
             $table->integer('tooth_number');
             $table->string('tooth_name');
+            $table->primary('tooth_number');
+            $table->timestamps();
         });
     }
 

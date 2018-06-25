@@ -9,17 +9,22 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
 use App\Model\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 
 class UserController extends Controller
 {
 
+use UserBusinessFunction;
+use TreatmentBusinessFunction;
 
     public function register(Request $request)
     {
@@ -36,7 +41,7 @@ class UserController extends Controller
                 $districtId = $request->input('districtId');
                 $address = $request->input('address');
                 $user->phone = $phone;
-                $user->password = $password;
+                $user->password = Hash::make($password);
                 $user->isActive = 1;
                 $user->isDelete = 0;
                 $patient = Patient::where('phone', $request->input('phone'))
@@ -83,28 +88,28 @@ class UserController extends Controller
      * @param Request $request
      * @return json
      */
-    public function login(Request $request)
+    public function loginPatient(Request $request)
     {
         try {
-            $error = new \stdClass();
             $phone = $request->input('phone');
             $password = $request->input('password');
-            Log::info("LOGIN " . $phone);
-            Log::info("LOGINI2" . $password);
-            $patient = User::where('phone', $phone)
-                ->where('password', $password)
-                ->first();
-            if ($patient != null) {
-                return response()->json($patient, 200);
+            $result = $this->checkLogin($phone,$password);
+            if ($result != null) {
+            $patientParent = $this->getPatient($phone);
+                return response()->json($patientParent, 200);
             } else {
                 $error->error = "Số điện thoại hoặc mật khẩu không chính xác";
                 $error->exception = "No exception";
                 return response()->json($error, 400);
             }
-        } catch (Exception $ex) {
+        }
+
+        catch (\Exception $ex) {
+            $error = new \stdClass();
             $error->error = "Đã xảy ra lỗi";
-            $error->exception = $ex;
-            return response()->json($ex, 400);
+            $error->exception = $ex->getMessage();
+//            var_dump($ex);
+            return response()->json($error, 400);
         }
     }
 

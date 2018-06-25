@@ -15,8 +15,8 @@ class CreateTblKeysTable extends Migration
     {
         Schema::create('tbl_keys', function (Blueprint $table) {
             $table->string('patient_id');
-            $table->string('private_key');
-            $table->string('public_key');
+            $table->longText('private_key');
+            $table->longText('public_key');
             $table->timestamps();
         });
     }

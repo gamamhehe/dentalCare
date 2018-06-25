@@ -15,13 +15,11 @@ class CreateTblPaymentsTable extends Migration
     {
         Schema::create('tbl_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('treatment_history_id');
-            $table->integer('patient_id');
-            $table->integer('treatment_id');
-            $table->dateTime('date_pay');
             $table->bigInteger('prepaid');
             $table->bigInteger('note_payable');
-            $table->integer('reception_id');
+            $table->bigInteger('total_price');
+            $table->integer('phone');
+            $table->boolean('is_done');
             $table->timestamps();
         });
     }

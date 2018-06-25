@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Key;
 use phpseclib\Crypt\RSA;
 use App\Model\TreatmentHistory;
+use App\Model\NodeInfo;
 
 class BlockchainController extends Controller
 {
@@ -52,8 +53,45 @@ class BlockchainController extends Controller
         $pubKey = $key -> public_key;
         
         $history = TreatmentHistory::where('patient_id', '=', $patientId) -> first();
-        var_dump($pubKey);
-        var_dump($history);
+
+        $nameHop = 'Thanh Hung';
+        $server = NodeInfo::where('name_hopital','=',$nameHop) -> first();
+        
+        $name = $server -> name_hopital;
+        $jsonServer = array(
+            'ip' =>  $server -> ip_server,
+            'name' => $server -> name_hopital,
+        );
+        $jsonHistory = array(
+            'id' => $history -> id , 
+            'treatment_id' => $history -> treatment_id,
+            'patient_id' => $history -> patient_id, 
+            'description' => $history -> description,
+            'create_date' => $history -> create_date,
+            'finish_date' => $history -> finish_date,
+            'tooth_number' => $history -> tooth_number,
+            'price' => $history -> price,
+            'payment_id' => $history -> payment_id,
+            'total_price' => $history -> total_price, 
+        );  
+        $mainJson = json_encode(array_merge($jsonHistory,$jsonServer));
+        openssl_public_encrypt($mainJson, $encrypted, $pubKey);
+
+        $priKey = $key -> private_key;
+        var_dump($encrypted);
+          
+    }
+
+    public function DecryptTreatmentHistory()
+    {
+        $patientId = '1';
+        $key = Key::where('patient_id', '=', $patientId) -> first();
+        $priKey = $key -> public_key;
+
+        //
+
+        openssl_private_decrypt($encrypted, $decrypted, $priKey);
+        var_dump($decrypted); 
     }
 
     //

@@ -3,15 +3,32 @@
     height: 400px;
     background-color: red;
 }
-.Bacsititle{
-    font-size: bold;
+.user-header{
+    background-color: whitesmoke;
+    width: 280px; text-align: center;
+    padding-bottom: 1em;
+}
+.img-circle{
+    border-radius: 50%;
+}
+.user-footer{
+    background-color: grey;
+}
+.used{
+    background: url(assets/images/about_01.png);
 }
 .footer {
     background: #000000;
     color: white;
     overflow: hidden;
 }
+.layout{
+    margin-right: 4em;
 
+}
+.dkm{
+    background-color: red;
+}
 .footer p {
     padding: 20px 0px;
     margin: 0;
@@ -31,8 +48,8 @@ th, td {
     background-color: red;
 }
 select.form-control:not([size]):not([multiple]){
-  
-    height: 30px !important; 
+
+    height: 30px !important;
 }
 /*tr:hover {background-color:red;}*/
 tr:nth-child(even) {background: #CCC}
@@ -129,7 +146,7 @@ tr:nth-child(odd) {background: #FFF}
 }
 body
 {
-    font-family: 'Open Sans', sans-serif; 
+    font-family: 'Open Sans', sans-serif;
 }
 
 .mothinhcotba {
@@ -287,7 +304,21 @@ body
     background: #EF4836;
     color: white;
 }
+.navbar-nav>.user-menu>.dropdown-menu {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    padding: 1px 0 0 0;
+    border-top-width: 0;
 
+
+}
+.navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+    position: absolute;
+    right: 0;
+    left: auto;
+    width: 280px;
+    background-color: red;
+}
 .makereser {
     margin-top: 50px;
 }
@@ -403,7 +434,7 @@ body
 
 .bacottren ul.nav-tabs li.nav-item a.nav-link.active , .bacottren ul.nav-tabs li.nav-item a.nav-link:hover {
     background: #f04c23;
-    color: white; 
+    color: white;
     border-radius: 2px;
 }
 
@@ -447,7 +478,7 @@ body
     padding: 12px;
 }
 
- 
+
 
 
 
@@ -465,7 +496,7 @@ body
 }
 
 .about a.btn, .reservation button.btn, .cotbon
- a.btn {
+a.btn {
     border-radius: 23px;
     padding: 13px 25px;
     text-transform: uppercase;
@@ -552,7 +583,7 @@ p.kynang {
 }
 
 .about h3, .tieudeour h3, .motgoi p, .trongtext
- p, .gallery h3, .chefs h3, .contact h3 {
+p, .gallery h3, .chefs h3, .contact h3 {
     font-family: 'Italianno', cursive;
     color: #f04c23;
     font-size: 45px;
@@ -663,7 +694,7 @@ h3.tdbanner1 {
     background-position: center;
 }
 .thanhmenu ul.navbar-nav li.nav-item
- a.nav-link {
+a.nav-link {
     padding: 20px 9px;
     text-transform: uppercase;
     color: white;
@@ -673,22 +704,22 @@ h3.tdbanner1 {
 }
 
 .thanhmenu ul.navbar-nav li.nav-item
- a.nav-link:focus { /*menu hien tai*/
+a.nav-link:focus { /*menu hien tai*/
     color: #336600;
 }
 
 .thanhmenu ul.navbar-nav li.nav-item
- a.nav-link.biendoichumenu {
+a.nav-link.biendoichumenu {
     color: white;
 }
 
 .thanhmenu ul.navbar-nav li.nav-item
- a.nav-link:hover {
+a.nav-link:hover {
     color: #336600;
 }
 
 .thanhmenu ul.navbar-nav li.nav-item.active
- a.nav-link:hover {
+a.nav-link:hover {
     border-color: #336600;
 }
 
@@ -723,12 +754,12 @@ h3.tdbanner1 {
     background-color: blue;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: 0.4s;
-     
+
 }
 .divcenter{
     margin: 0 auto;
-    width: 100%; 
-    
+    width: 100%;
+
 }
 .img{
     max-width: 100%;
@@ -738,14 +769,14 @@ h3.tdbanner1 {
 }
 .imgdentist{
     /*border: 2px solid;*/
-     
+
     border-radius: 30px 30px;
     height: 300px;
 }
 img.centerThing{
-     display: block;
+    display: block;
     margin-left: auto;
-    margin-right: auto 
+    margin-right: auto
 }
 .spacebottom{
     margin-bottom: 2em;
@@ -763,7 +794,7 @@ img.centerThing{
     margin-right: 0px !important;
 }
 .textheader{
-background-color: #e6eeaf;
+    background-color: #e6eeaf;
     border-width: 1px;
     border-color: #b5ca28;
     border-top-width: 3px;
@@ -779,11 +810,8 @@ background-color: #e6eeaf;
     background: #f04c23;
 }
 
- 
 
-.container {
-    padding: 0px;
-} 
+
 .top
 {
     overflow: hidden;
@@ -809,160 +837,160 @@ background-color: #e6eeaf;
 @media (max-width: 576px)
 {
     *{}
-.resOFF{
-    display: block;
-}
-.resON{
-    display: none;
-}
-.cotmot {
-    text-align: center;
-}
+    .resOFF{
+        display: block;
+    }
+    .resON{
+        display: none;
+    }
+    .cotmot {
+        text-align: center;
+    }
 
-.logoduoi {
-    text-align: center;
-}
+    .logoduoi {
+        text-align: center;
+    }
 
-.daubep {
-    padding: 20px;
-}
+    .daubep {
+        padding: 20px;
+    }
 
-.tren img {
-    width: 100%;
-}
+    .tren img {
+        width: 100%;
+    }
 
-.reservation p {
-    font-size: 35px;
-    text-align: center;
-}
+    .reservation p {
+        font-size: 35px;
+        text-align: center;
+    }
 
-.moto {
-    width: 230px;
-    margin: 30px 0px 30px 95px;
-}
+    .moto {
+        width: 230px;
+        margin: 30px 0px 30px 95px;
+    }
 
-.bgourmenu {
-    height: 100%;
-}
+    .bgourmenu {
+        height: 100%;
+    }
 
-.textabout {
-    margin: 0px;
-    text-align: center;
-}
+    .textabout {
+        margin: 0px;
+        text-align: center;
+    }
 
-.hinhaboutdt {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .hinhaboutdt {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-.hinhabout {
-    width: 240px;
-}
+    .hinhabout {
+        width: 240px;
+    }
 
-.thanhmenu ul.navbar-nav li.nav-item
- a.nav-link {
-    font-size: 13px;
-    text-align: center;
-    padding: 0px 0px;
-    line-height: 36px;
-}
- 
+    .thanhmenu ul.navbar-nav li.nav-item
+    a.nav-link {
+        font-size: 13px;
+        text-align: center;
+        padding: 0px 0px;
+        line-height: 36px;
+    }
 
-.logo img {
-    width: 155px;
-    margin: 5px 8px;
-}
 
-.thanhmenu {
-    background: rgba(26, 26, 26, 0.75);
-}
- 
-.navbar-toggler {
-    background: rgba(220, 40, 40, 0.74) no-repeat;
-    width: 40px;
-    height: 40px;
-    margin: 8px 5px;
-}
+    .logo img {
+        width: 155px;
+        margin: 5px 8px;
+    }
 
-.nutchuyen .carousel-control {
-    display: none;
-}
+    .thanhmenu {
+        background: rgba(26, 26, 26, 0.75);
+    }
 
-.carousel-item {
-    height: 667px;
-}
+    .navbar-toggler {
+        background: rgba(220, 40, 40, 0.74) no-repeat;
+        width: 40px;
+        height: 40px;
+        margin: 8px 5px;
+    }
+
+    .nutchuyen .carousel-control {
+        display: none;
+    }
+
+    .carousel-item {
+        height: 667px;
+    }
 }
 @media (min-width: 577px) and (max-width:991px)
 {
     *{}
 
-.nut a.fa {
-    margin: 0;
-    margin-top: 10px;
-}
-/*.resOFF{
-    display: block;
-}
-.resON{
-    display: none;
-}*/
-.nutcontact a.btn {
-    font-size: 7px;
-    padding: 10px 20px;
-}
+    .nut a.fa {
+        margin: 0;
+        margin-top: 10px;
+    }
+    /*.resOFF{
+        display: block;
+    }
+    .resON{
+        display: none;
+    }*/
+    .nutcontact a.btn {
+        font-size: 7px;
+        padding: 10px 20px;
+    }
 
-.cotbon p {
-    font-size: 9px;
-}
+    .cotbon p {
+        font-size: 9px;
+    }
 
-p.gio {
-    font-size: 8px;
-}
+    p.gio {
+        font-size: 8px;
+    }
 
-.opening {
-    margin: 37px 0px;
-}
+    .opening {
+        margin: 37px 0px;
+    }
 
-.cothai h5, .cotba h5, .cotbon h5 {
-    font-size: 15px;
-}
+    .cothai h5, .cotba h5, .cotbon h5 {
+        font-size: 15px;
+    }
 
-.cotmot span {
-    font-size: 7px;
-}
+    .cotmot span {
+        font-size: 7px;
+    }
 
-.cotmot i.fa {
-    font-size: 15px;
-}
+    .cotmot i.fa {
+        font-size: 15px;
+    }
 
-.logoduoi img {
-    width: 145px;
-}
+    .logoduoi img {
+        width: 145px;
+    }
 
-.goithongtin a.fa {
-    font-size: 15px;
-    width: 22px;
-    height: 22px;
-    padding: 4px;
-}
+    .goithongtin a.fa {
+        font-size: 15px;
+        width: 22px;
+        height: 22px;
+        padding: 4px;
+    }
 
-.textabout {
-    text-align: center;
-}
+    .textabout {
+        text-align: center;
+    }
 
-/*.thanhmenu ul.navbar-nav li.nav-item
- a.nav-link {
-    font-size: 9px;
-    padding: 31px 5px;
+    /*.thanhmenu ul.navbar-nav li.nav-item
+     a.nav-link {
+        font-size: 9px;
+        padding: 31px 5px;
 
-}*/
-.col-xs-6.traixxx {
-    background-color: red;
-}
-..col-xs-6.phaixxx {
-    background-color: red;
-}{
+    }*/
+    .col-xs-6.traixxx {
+        background-color: red;
+    }
+    .col-xs-6.phaixxx {
+        background-color: red;
+    }{
     background-color: blue;
 }
 }

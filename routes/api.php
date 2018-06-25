@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post("user/login", "Mobile\UserController@login");
+Route::post("user/login", "Mobile\UserController@loginPatient");
 Route::get("user/login", "Mobile\UserController@loginGET");
 Route::post("user/register", "Mobile\UserController@register");
 Route::post("user/bookAppointment", "Mobile\UserController@bookAppointment");
@@ -36,6 +36,11 @@ Route::get("treatment/all" ,"Mobile\TreatmentController@getAll");
 Route::get("treatment/{id}" ,"Mobile\TreatmentController@getById");
 
 //appointment
+Route::get("appointment/all", "Mobile\AppointmentController@getAll");
+Route::get("appointment/{id}", "Mobile\AppointmentController@getById");
+Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
+Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
+
 
 
