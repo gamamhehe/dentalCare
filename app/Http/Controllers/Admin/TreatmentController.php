@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use Illuminate\Http\Request;
@@ -11,6 +11,6 @@ class TreatmentController extends Controller
     use TreatmentBusinessFunction;
     //
     public function showTreatmentHistory(Request $request){
-        return $this->getTreatmentHistory('01279011096');
+        return $this->getTreatmentHistory('1');
     }
 }

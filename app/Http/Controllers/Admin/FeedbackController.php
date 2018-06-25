@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AppointmentController extends Controller
+class FeedbackController extends Controller
 {
     //
-
 }

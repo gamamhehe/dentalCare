@@ -14,12 +14,13 @@ use App\Model\User;
 
 trait TreatmentBusinessFunction
 {
-    public function getTreatmentHistory($phone)
+    public function getTreatmentHistory($id)
     {
         $listResult = [];
-        $patientList = User::where('phone', $phone)->first()->hasPatient()->get();
-        foreach ($patientList as $patient) {
+
+        $patient = Patient::where('id',$id)->first();
             $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
+
             foreach ($treatmentHistoryList as $treatmentHistory) {
                 $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
                 foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
@@ -27,20 +28,16 @@ trait TreatmentBusinessFunction
                 }
                 $treatmentHistory->detailList = $treatmentHistoryDetailList;
                 $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
-                $treatmentHistory->patient_id = $patient->first();
-            }
-            if ($patient->is_parent == 1) {
-                array_unshift($listResult, $treatmentHistoryList);
-            }
-            else{
-                $listResult[] = $treatmentHistoryList;
-            }
+                $treatmentHistory->patient_id = $patient;
         }
-        dd($listResult);
+
+
+        return $treatmentHistoryList;
     }
 
-    public function  getTreatmentHistories($phone){
-        $treatmentHistories = Patient::where('phone',$phone)->first()->hasTreatmentHistory()->get();
+    public function getTreatmentHistories($phone)
+    {
+        $treatmentHistories = Patient::where('phone', $phone)->first()->hasTreatmentHistory()->get();
         return $treatmentHistories;
     }
 }

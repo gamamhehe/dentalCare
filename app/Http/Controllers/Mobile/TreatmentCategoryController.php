@@ -12,7 +12,6 @@ namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\Controller;
 use App\Model\TreatmentCategory;
 use http\Env\Request;
-use Mockery\Exception;
 
 class TreatmentCategoryController extends Controller
 {
@@ -25,10 +24,10 @@ class TreatmentCategoryController extends Controller
                 $item->treatments = $item->hasTreatment()->get();
             }
             return response()->json($tmCategories, 200);
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             $error = new \stdClass();
             $error->error = "Không có dữ liệu";
-            $error->exception = $ex;
+            $error->exception = $ex->getMessage();
             return response()->json($error, 400);
         }
     }
