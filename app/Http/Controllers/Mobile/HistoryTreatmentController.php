@@ -12,7 +12,7 @@ namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\BusinessFunction\HistoryTreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\Controller;
-use http\Env\Request;
+use Illuminate\Http\Request;
 
 class HistoryTreatmentController extends  Controller
 {
@@ -46,7 +46,7 @@ class HistoryTreatmentController extends  Controller
 
     public function getById(Request $request)
     {
-        $id = $request->query('id');
+        $id = $request->input('id');
         try {
             $historyTreatments = $this->getTreatmentHistory($id);
             return response()->json($historyTreatments, 200);
