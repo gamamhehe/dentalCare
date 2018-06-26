@@ -11,6 +11,8 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Appointment;
 use App\Model\News;
+use App\Model\NewsType;
+use App\Model\Type;
 use App\Providers\AppServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -22,18 +24,18 @@ trait NewsBussinessFunction
     public function createNewsBusiness($Newsxx)
     {
         DB::beginTransaction();
-        try{
+        try {
             $News = new News;
-            $News->image_header = $Newsxx->image_header ;
+            $News->image_header = $Newsxx->image_header;
             $News->content = $Newsxx->content;
-            $News->title =$Newsxx->title;
+            $News->title = $Newsxx->title;
             $News->staff_id = $Newsxx->staff_id;
-            $News->create_date=$Newsxx->create_date;
+            $News->create_date = $Newsxx->create_date;
             $News->save();
             DB::commit();
             return true;
 
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return false;
 
@@ -41,37 +43,46 @@ trait NewsBussinessFunction
 
     }
 
-    public function getMoreNews($currentIndex, $numItem,$typeId)
+    public function getMoreNews($currentIndex, $numItem, $typeId)
     {
-        $listNews = DB::table('tbl_news')
-            ->join('tbl_news_types','tbl_news_types.news_id','=','tbl_news.id')
-            ->select('tbl_news.*')
-            ->where('tbl_news_types.type_id','=',$typeId)
+        $data = Type::find($typeId)->first()
+            ->hasNewsType()
             ->skip($currentIndex)
             ->take($numItem)
             ->get();
+        $listNews = [];
+        foreach ($data as $item) {
+            $listNews[] = $item->belongsToNews()->first();
+        }
+        foreach ($listNews as $item) {
+            $item->staff = $item->belongsToStaff()->first();
+        }
         return $listNews;
     }
-    public function getNews($id){
-         $News =  News::find($id);
+
+    public function getNews($id)
+    {
+        $News = News::find($id);
         return $News;
     }
 
-    public function getAllNews(){
+    public function getAllNews()
+    {
         $listNews = News::all();
         return $listNews;
     }
 
-    public function deleteNews($id){
+    public function deleteNews($id)
+    {
         DB::beginTransaction();
-        try{
+        try {
 
             $NewsCurrent = News::find($id);
             $NewsCurrent->delete();
             DB::commit();
             return true;
 
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return false;
 
