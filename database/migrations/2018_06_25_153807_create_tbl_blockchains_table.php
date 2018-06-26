@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblNodeInfoTable extends Migration
+class CreateTblBlockchainsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateTblNodeInfoTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_node_info', function (Blueprint $table) {
+        Schema::create('tbl_blockchains', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("ip")->unique();
-            $table->string("name");
+            $table->longText('dataEncrypt');
+            $table->string('previousHash');
+            $table->string('Hash');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateTblNodeInfoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_node_info');
+        Schema::dropIfExists('tbl_blockchains');
     }
 }
