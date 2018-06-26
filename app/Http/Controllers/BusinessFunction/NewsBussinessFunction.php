@@ -45,7 +45,7 @@ trait NewsBussinessFunction
 
     public function getMoreNews($currentIndex, $numItem, $typeId)
     {
-        $data = Type::find($typeId)->first()
+        $data = Type::where('id',$typeId)->first()
             ->hasNewsType()
             ->skip($currentIndex)
             ->take($numItem)
