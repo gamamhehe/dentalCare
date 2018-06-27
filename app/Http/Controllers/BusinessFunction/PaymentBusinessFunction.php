@@ -25,7 +25,9 @@ trait PaymentBusinessFunction
             $treatmentNames = [];
             $listTreatmentHistories = $item->hasManyTreatmentHistory()->get();
             foreach ($listTreatmentHistories as $treatmentHistory) {
-                $treatmentNames = $treatmentHistory->belongsToTreatment()->first()->name;
+                if( $treatmentNames = $treatmentHistory->belongsToTreatment()!=null) {
+                    $treatmentNames[] = $treatmentHistory->belongsToTreatment()->first()->name;
+                }
             }
             $item->payment_details = $listPaymentDetail;
             $item->treatment_names = $treatmentNames;
