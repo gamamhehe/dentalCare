@@ -18,7 +18,7 @@ class CreateTblPaymentsTable extends Migration
             $table->bigInteger('prepaid');
             $table->bigInteger('note_payable');
             $table->bigInteger('total_price');
-            $table->integer('phone');
+            $table->text('phone');
             $table->boolean('is_done');
             $table->timestamps();
         });
