@@ -16,7 +16,7 @@ class CreateTblPaymentDetailsTable extends Migration
         Schema::create('tbl_payment_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('payment_id');
-            $table->string('staff_id');
+            $table->integer('staff_id');
             $table->dateTime('date_create');
             $table->bigInteger('received_money');
             $table->timestamps();
