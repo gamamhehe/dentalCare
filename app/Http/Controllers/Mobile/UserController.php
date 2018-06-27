@@ -254,7 +254,7 @@ class UserController extends Controller
     {
         try {
             $notification = new \stdClass();
-            $notification->title = 'Lonnn';
+            $notification->title = 'asdf';
             $notification->text = 'is is my text Tex';
             $notification->click_action = 'android.intent.action.MAIN';
 
@@ -287,7 +287,7 @@ class UserController extends Controller
         $token = $request->input('notif_token');
         $phone = $request->input('phone');
         $user = $this->getUserByPhone($phone);
-        if ($user) {
+        if ($userg) {
             $user->notif_token = $token;
             $this->updateUser($user);
             return response()->json("Change firebase notification token successful", 200);
