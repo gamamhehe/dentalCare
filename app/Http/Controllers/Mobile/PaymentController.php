@@ -25,7 +25,7 @@ class PaymentController extends Controller
             }catch (\Exception $ex){
                 $error = new \stdClass();
                 $error->error="Có lỗi xảy ra, không thể lấy dữ liệu";
-                $error->exception = $ex->getMessage();
+                $error->exception = $ex->getMessage(). " File: " . $ex->getFile(). " line: " . $ex->getLine();
                 return response()->json($error, 400);
             }
         }
