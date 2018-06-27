@@ -14,7 +14,7 @@ use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HistoryTreatmentController extends  Controller
+class HistoryTreatmentController extends Controller
 {
     use TreatmentBusinessFunction;
 
@@ -57,12 +57,22 @@ class HistoryTreatmentController extends  Controller
             return response()->json($error, 400);
         }
     }
+
     public function getByPatientId(Request $request)
     {
         $id = $request->input('id');
+
         try {
-            $historyTreatments = $this->getTreatmentHistory($id);
-            return response()->json($historyTreatments, 200);
+            $patient = $this->getByPatientId($id);
+            if ($patient == null) {
+                $error = new \stdClass();
+                $error->error = "Không thể tìm thấy id bệnh nhân";
+                $error->exception = "";
+                return response()->json($error, 400);
+            } else {
+                $historyTreatments = $this->getTreatmentHistory($id);
+                return response()->json($historyTreatments, 200);
+            }
         } catch (\Exception $ex) {
             $error = new \stdClass();
             $error->error = "Có lỗi xảy ra Không thể lấy dữ liệu";
