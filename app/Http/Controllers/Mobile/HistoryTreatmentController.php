@@ -59,7 +59,7 @@ class HistoryTreatmentController extends  Controller
     }
     public function getByPatientId(Request $request)
     {
-        $id = $request->query('id');
+        $id = $request->input('id');
         try {
             $historyTreatments = $this->getTreatmentHistory($id);
             return response()->json($historyTreatments, 200);
