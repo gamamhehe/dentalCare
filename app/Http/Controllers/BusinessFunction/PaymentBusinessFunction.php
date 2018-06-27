@@ -22,7 +22,13 @@ trait PaymentBusinessFunction
             foreach ($listPaymentDetail as $paymentDetail) {
                 $paymentDetail->staff = $paymentDetail->beLongsToStaff()->first();
             }
+            $treatmentNames = [];
+            $listTreatmentHistories = $item->hasManyTreatmentHistory()->get();
+            foreach ($listTreatmentHistories as $treatmentHistory) {
+                $treatmentNames = $treatmentHistory->belongsToTreatment()->first()->name;
+            }
             $item->payment_details = $listPaymentDetail;
+            $item->treatment_names = $treatmentNames;
         }
         return $payments;
     }
