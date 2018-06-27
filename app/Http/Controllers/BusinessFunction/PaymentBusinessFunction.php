@@ -20,7 +20,7 @@ trait PaymentBusinessFunction
             $listPaymentDetail = $item->hasPaymentDetail()->get();
 //            dd($listPaymentDetail);
             foreach ($listPaymentDetail as $paymentDetail) {
-                $paymentDetail->receptionist = $paymentDetail->beLongsToStaff()->first();
+                $paymentDetail->staff = $paymentDetail->beLongsToStaff()->first();
             }
             $item->payment_details = $listPaymentDetail;
         }
