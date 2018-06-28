@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Mobile;
 use App\Model\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Route;
 use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 class MobileController extends Controller
 {
@@ -17,7 +20,37 @@ class MobileController extends Controller
      */
     public function test(Request $request)
     {
+//        try {
+//            $notification = new \stdClass();
+//            $notification->title = 'Lonnn';
+//            $notification->text = 'is is my text Tex';
+//            $notification->click_action = 'android.intent.action.MAIN';
+//
+//            $data = new \stdClass();
+//            $data->keyname = 'sss';
+//
+//
+//            $requestObj = new \stdClass();
+//            $requestObj->notification = $notification;
+//            $requestObj->data = $data;
+//            $requestObj->to = '/topics/all';
+//            $client = new Client();
+//            $request = $client->request('POST', 'https://fcm.googleapis.com/fcm/send',
+//                [
+//                    'body'=>json_encode($requestObj),
+//                    'Content-Type' => 'application/json',
+//                    'authorization'=>'key=AAAAUj5G2Bc:APA91bF8TkhDriuoevyt_I0G3G-qNniLSDdDHbULjcvsas4sHCuTKueiODRnuvVuYk6YkCHKLt3fr-Sw7UhZMzRSfmWMWzt2NZXzljYZxch39fg0v3NsBzQM5_QKUEy4bOdnnjigzaBX'
+//                ]
+//            );
+////            $request->setBody($requestObj);
+//            $response = $request->getBody()->getContents();
+//            return response()->json($response);
+//        } catch (GuzzleException $exception) {
+//            return response()->json($exception->getMessage(), 500);
+//        }
 
+        $test = env('API_FIREBASE_SERVER_TOKEN',  false);
+        return response()->json($test);
     }
 
     /**
@@ -27,46 +60,6 @@ class MobileController extends Controller
      */
     public function testPOST(Request $request)
     {
-        try {
-            if ($request->hasFile('image')) {
-                $phone = $request->input('phone');
-                $patient = Patient::where('phone', $phone)->first();
-                if ($patient != null) {
-
-                    $image = $request->file('image');
-                    $path = public_path('\photos\avatar');
-                    $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
-//                dd($filename);
-                    if (!file_exists($path)) {
-                        mkdir($path, 0777);
-                    }
-                    $fullPath = implode('/', array_filter(explode('/', $path . $filename)));
-                    $image->move($path, $filename);
-//                $post->image = $path;
-                    $patient->avatar = $filename;
-                    $patient->save();
-                    $response = new \stdClass();
-                    $response->message = "Thay đổi ảnh đại diện thành công";
-                    $response->status = "OK";
-                    $response->data = $fullPath;
-                    return response()->json($response, 200);
-                } else {
-                    $error = new \stdClass();
-                    $error->error = "Không thể tìm thấy số điện thoại " . $phone;
-                    $error->exception = "Nothing";
-                    return response()->json($error, 400);
-                }
-            } else {
-
-                $error = new \stdClass();
-                $error->error = "Lỗi khi nhận hình ảnh ";
-                $error->exception = "Nothing";
-                return response()->json($error, 400);
-            }
-        } catch (\Exception $ex) {
-            return response()->json( $ex->getMessage());
-        }
+        return response()->json("Success", 200);
     }
-
-
 }

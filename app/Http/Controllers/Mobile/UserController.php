@@ -82,11 +82,15 @@ class UserController extends Controller
         try {
             $phone = $request->input('phone');
             $password = $request->input('password');
+            $notifToken = $request->input('noti_token');
             $result = $this->checkLogin($phone, $password);
             if ($result != null) {
+                $result->noti_token = $notifToken;
+                $this->updateUser($result);
                 $patients = $this->getPatient($phone);
                 $userResponse = new \stdClass();
                 $userResponse->phone = $phone;
+                $userResponse->noti_token = $notifToken;
                 $userResponse->patients = $patients;
                 return response()->json($userResponse, 200);
             } else {
@@ -142,6 +146,7 @@ class UserController extends Controller
             return response()->json($errorResponse, 400);
         }
     }
+
 //get function to change password quickly
     public function resetpassword($phone, $password)
     {
@@ -155,6 +160,8 @@ class UserController extends Controller
             $user->password = Hash::make($password);
             $user->save();
             return response()->json("Update Phone: " . $phone . " and password: " . $password . " Successful!");
+        } else {
+            return response()->json("Không tìm thấy số điện thoại " . $phone);
         }
     }
 
@@ -243,10 +250,11 @@ class UserController extends Controller
         }
     }
 
-    public function sendFirebase(){
+    public function sendFirebase()
+    {
         try {
             $notification = new \stdClass();
-            $notification->title = 'Lonnn';
+            $notification->title = 'asdf';
             $notification->text = 'is is my text Tex';
             $notification->click_action = 'android.intent.action.MAIN';
 
@@ -261,9 +269,9 @@ class UserController extends Controller
             $client = new Client();
             $request = $client->request('POST', 'https://fcm.googleapis.com/fcm/send',
                 [
-                    'body'=>json_encode($requestObj),
+                    'body' => json_encode($requestObj),
                     'Content-Type' => 'application/json',
-                    'authorization'=>'key=AAAAUj5G2Bc:APA91bF8TkhDriuoevyt_I0G3G-qNniLSDdDHbULjcvsas4sHCuTKueiODRnuvVuYk6YkCHKLt3fr-Sw7UhZMzRSfmWMWzt2NZXzljYZxch39fg0v3NsBzQM5_QKUEy4bOdnnjigzaBX'
+                    'authorization' => 'key=AAAAUj5G2Bc:APA91bF8TkhDriuoevyt_I0G3G-qNniLSDdDHbULjcvsas4sHCuTKueiODRnuvVuYk6YkCHKLt3fr-Sw7UhZMzRSfmWMWzt2NZXzljYZxch39fg0v3NsBzQM5_QKUEy4bOdnnjigzaBX'
                 ]
             );
 //            $request->setBody($requestObj);
@@ -271,6 +279,23 @@ class UserController extends Controller
             return response()->json($response);
         } catch (GuzzleException $exception) {
             return response()->json($exception->getMessage(), 500);
+        }
+    }
+
+    public function updateNotifToken(Request $request)
+    {
+        $token = $request->input('noti_token');
+        $phone = $request->input('phone');
+        $user = $this->getUserByPhone($phone);
+        if ($userg) {
+            $user->noti_token = $token;
+            $this->updateUser($user);
+            return response()->json("Change firebase notification token successful", 200);
+        } else {
+            $error = new \stdClass();
+            $error->error = "Không tìm thấy số điện thoại " . $phone;
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
         }
     }
 
