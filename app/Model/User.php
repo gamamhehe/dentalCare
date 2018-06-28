@@ -9,7 +9,7 @@ class User extends Model
     //
     protected $table = 'tbl_users';
     protected $primaryKey = "phone";
-    protected $fillable = ['phone', 'password','notif_token', 'isDeleted'];
+    protected $fillable = ['phone', 'password','noti_token', 'is_deleted'];
     public function hasUserHasRole(){
         return $this->hasMany('App\Model\UserHasRole', 'phone', 'phone');
     }
