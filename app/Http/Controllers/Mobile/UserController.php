@@ -287,10 +287,15 @@ class UserController extends Controller
         $token = $request->input('noti_token');
         $phone = $request->input('phone');
         $user = $this->getUserByPhone($phone);
-        if ($userg) {
+        if ($user!=null) {
             $user->noti_token = $token;
-            $this->updateUser($user);
+            $result = $this->updateUser($user);
+            if($result){
             return response()->json("Change firebase notification token successful", 200);
+
+            }else{
+                return response()->json("change firebase notification token error", 400);
+            }
         } else {
             $error = new \stdClass();
             $error->error = "Không tìm thấy số điện thoại " . $phone;
