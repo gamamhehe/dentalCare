@@ -16,6 +16,7 @@ class CreateTblUsersTable extends Migration
         Schema::create('tbl_users', function (Blueprint $table) {
             $table->string("phone");
             $table->string("password");
+            $table->string("notif_token",500);
             $table->boolean("isDeleted");
             $table->timestamps();
             $table->primary('phone');
