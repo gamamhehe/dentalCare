@@ -62,11 +62,11 @@ trait NewsBussinessFunction
         return $listNews;
     }
 
-    public function deleteNews($id){
+    public function deleteNewsX($id){
         DB::beginTransaction();
         try{
 
-            $NewsCurrent = News::find($id);
+            $NewsCurrent = News::where('id', $id)->first();
             $NewsCurrent->delete();
             DB::commit();
             return true;

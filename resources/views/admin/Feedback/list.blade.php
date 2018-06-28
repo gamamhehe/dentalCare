@@ -12,8 +12,9 @@
                         <thead>
                         <tr style="background-color: #eee;">
                             <td class="col-sm-1">id</td>
-                            <td class="col-sm-6" style="text-align: left;">Tên Bệnh</td>
-                            <td class="col-sm-3">Triệu chứng</td>
+                            <td class="col-sm-6" style="text-align: left;">Nội dung</td>
+                            <td class="col-sm-1" style="text-align: left;">Đánh giá</td>
+                            <td class="col-sm-2">xx </td>
                         </tr>
                         </thead>
                     </table>
@@ -46,11 +47,12 @@
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,
                 pageLength: 5,
-                ajax: '/admin/getListAnamnesis',
+                ajax: '/admin/getListFeedback',
                 columns : [
 
                     {data: 'id'},
-                    {data: 'name'},
+                    {data: 'content'},
+                    {data: 'demo'},
                     {
 
                         data: 'action'
@@ -58,12 +60,13 @@
                 ],
             });
         });
-        function deleteNews(obj){
+        function deleteFeedback(obj){
             var linkDelete = "admin/deleteNews/";
             var id = obj.getAttribute("id");
+
             $.ajax(
                 {
-                    url: "deleteNews/"+id,
+                    url: "/admin/deleteFeedback/"+id,
                     method:"get",
                     data: {
                         id:id

@@ -621,28 +621,91 @@ class AdminController extends Controller
             // tren phải
             Tooth::create([
                 'tooth_number' => '51',
-                'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa'
+                'tooth_name' => 'Răng số 1 hàm trên phải (Trẻ em) - Răng cửa giữa'
             ]);
             Tooth::create([
                 'tooth_number' => '52',
-                'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa'
+                'tooth_name' => 'Răng số 1 hàm trên phải (Trẻ em) - Răng cửa bên'
             ]);
             Tooth::create([
                 'tooth_number' => '53',
-                'tooth_name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
+                'tooth_name' => 'Răng số 3 hàm trên phải - Răng nanh sữa'
             ]);
             Tooth::create([
                 'tooth_number' => '54',
-                'tooth_name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
+                'tooth_name' => 'Răng số 4 hàm trên phải - Răng cối sữa 1'
             ]);
             Tooth::create([
                 'tooth_number' => '55',
-                'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
+                'tooth_name' => 'Răng số 5 hàm trên phải - Răng cối sữa 2'
+            ]);
+            //end tren phai
+            // tren trái
+            Tooth::create([
+                'tooth_number' => '61',
+                'tooth_name' => 'Răng số 1 hàm trên trái (Trẻ em) - Răng cửa giữa'
             ]);
             Tooth::create([
-                'tooth_number' => '56',
-                'tooth_name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
+                'tooth_number' => '62',
+                'tooth_name' => 'Răng số 1 hàm trên trái (Trẻ em) - Răng cửa bên'
             ]);
+            Tooth::create([
+                'tooth_number' => '63',
+                'tooth_name' => 'Răng số 3 hàm trên trái - Răng nanh sữa'
+            ]);
+            Tooth::create([
+                'tooth_number' => '64',
+                'tooth_name' => 'Răng số 4 hàm trên trái - Răng cối sữa 1'
+            ]);
+            Tooth::create([
+                'tooth_number' => '65',
+                'tooth_name' => 'Răng số 5 hàm trên trái - Răng cối sữa 2'
+            ]);
+            //end tren trái
+            // dưới phải
+            Tooth::create([
+                'tooth_number' => '81',
+                'tooth_name' => 'Răng số 1 hàm dưới phải (Trẻ em) - Răng cửa giữa'
+            ]);
+            Tooth::create([
+                'tooth_number' => '82',
+                'tooth_name' => 'Răng số 1 hàm dưới phải (Trẻ em) - Răng cửa bên'
+            ]);
+            Tooth::create([
+                'tooth_number' => '83',
+                'tooth_name' => 'Răng số 3 hàm dưới phải  - Răng nanh sữa'
+            ]);
+            Tooth::create([
+                'tooth_number' => '84',
+                'tooth_name' => 'Răng số 4 hàm dưới phải  - Răng cối sữa 1'
+            ]);
+            Tooth::create([
+                'tooth_number' => '85',
+                'tooth_name' => 'Răng số 5 hàm dưới phải - Răng cối sữa 2'
+            ]);
+            //end dưới phải
+            // dưới trái
+            Tooth::create([
+                'tooth_number' => '71',
+                'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa giữa'
+            ]);
+            Tooth::create([
+                'tooth_number' => '72',
+                'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa bên'
+            ]);
+            Tooth::create([
+                'tooth_number' => '73',
+                'tooth_name' => 'Răng số 3 hàm dưới trái - Răng nanh sữa'
+            ]);
+            Tooth::create([
+                'tooth_number' => '74',
+                'tooth_name' => 'Răng số 4 hàm dưới trái - Răng cối sữa 1'
+            ]);
+            Tooth::create([
+                'tooth_number' => '75',
+                'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối sữa 2'
+            ]);
+            //end dưới trái
 
 
             Appointment::create([
@@ -1439,8 +1502,57 @@ class AdminController extends Controller
             dd($e);
         }
     }
-    public function initDoctor(){
 
+    public function index()
+    {
+        return view('admin.CalendarUser.ManageCalendar');
     }
+
+    public function action(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $query = $request->get('query');
+            if($query != '')
+            {
+                $data = DB::table('tbl_patients')
+                    ->where('phone', 'like', '%'.$query.'%')
+                    ->orderBy('phone', 'desc')
+                    ->get();
+
+            }
+
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+        <tr>
+         <td>'.$row->name.'</td>
+         <td>'.$row->address.'</td>
+         <td>'.$row->phone.'</td>
+        </tr>
+        ';
+                }
+            }
+            else
+            {
+                $output = '
+       <tr>
+        <td align="center" colspan="5">No Data Found</td>
+       </tr>
+       ';
+            }
+            $data = array(
+                'table_data'  => $output,
+                'total_data'  => $total_row
+            );
+
+            echo json_encode($data);
+        }
+    }
+
 
 }
