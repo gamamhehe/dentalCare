@@ -35,7 +35,7 @@ class FirebaseController extends Controller
                 $error->exception = null;
                 return response()->json($error, 400);
             }
-            $token = $user->notif_token;
+            $token = $user->noti_token;
             $data = new \stdClass();
             $data->type = $type;
             $data->body = $body;
@@ -60,7 +60,7 @@ class FirebaseController extends Controller
             return response()->json($responseObj, 200);
         } catch (GuzzleException $ex) {
             $error = new \stdClass();
-            $error->error = "Lỗi máy chủ";
+            $error->error = $ex->getTraceAsString();
             $error->exception = $ex->getMessage() . " File: " . $ex->getFile() . " Line: " . $ex->getLine();
             return response()->json($error, 500);
         }
