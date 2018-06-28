@@ -33,11 +33,24 @@ trait TreatmentBusinessFunction
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
             foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail) {
                 $treatmentHistoryDetail->dentist = $treatmentHistoryDetail->belongsToStaff()->first();
+                $treatmentHistoryDetail->treatment_images = $treatmentHistoryDetail->hasTreatmentImage()->get();
+                $treatmentMedicines = $treatmentHistoryDetail->hasMedicinesQuantity()->get();
+                foreach ($treatmentMedicines as $treatmentMedicine){
+                    $treatmentMedicine->medicine = $treatmentMedicine->belongsToMedicine()->first();
+                }
+                $treatmentDetailSteps = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
+                foreach ($treatmentDetailSteps as $treatmentDetailStep){
+                    $treatmentDetailStep->step = $treatmentDetailStep->belongsToStep()->first();
+                }
             }
             $treatmentHistory->details = $treatmentHistoryDetailList;
             $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
             $treatmentHistory->patient = $patient;
+            $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
+
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
+
+
         }
         return $treatmentHistoryList;
     }
