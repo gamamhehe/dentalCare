@@ -90,12 +90,12 @@ class HomeController extends Controller
         $request->session()->remove('listPatient');
         return redirect()->route('homepage');
     }
-    public function TreatmentHistory(Request $request){
-        $patient = $request->session()->get('currentPatient',null);
-        if($patient){
-            $patient_id = $patient->id;
-            $listTreatmentHistory = $this->getTreatmentHistory($patient_id);
-        }
-        return view("WebUser.TreatmentHistory",['listTreatmentHistory'=>$listTreatmentHistory]);
-    }
+//    public function TreatmentHistory(Request $request){
+//        $patient = $request->session()->get('currentPatient',null);
+//        if($patient){
+//            $patient_id = $patient->id;
+//            $listTreatmentHistory = $this->getTreatmentHistory($patient_id);
+//        }
+//        return view("WebUser.TreatmentHistory",['listTreatmentHistory'=>$listTreatmentHistory]);
+//    }
 }

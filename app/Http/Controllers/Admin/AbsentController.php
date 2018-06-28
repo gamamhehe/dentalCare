@@ -22,18 +22,19 @@ class AbsentController extends Controller
             return false;
     }
 
-    public function showAbsentnotApprove(){
-        $result = Absent::where('staff_approve_id', 0)->get();
-        return $result;
+    public function showAbsentnotApprove()
+    {
+        $result = $this->getListAbsentNotApprove();
+        return view('admin.absent.list', ['listAbsent' => $result]);
     }
 
-    public function approveAbsent(Request $request){
+    public function approveAbsent(Request $request)
+    {
         $listId = $request->Absent;
-        $idCurrentAdmin = $request->session()->get('currentAdmin',null)->belongToStaff()->first()->id;
-        foreach ($listId as $id){
-            $absent = Absent::find($id);
-            $absent->staff_approve_id = $idCurrentAdmin;
-            $absent->save();
+        $idCurrentAdmin = $request->session()->get('currentAdmin', null)->belongToStaff()->first()->id;
+        foreach ($listId as $id) {
+
+            $this->approveAbsent($id, $idCurrentAdmin);
         }
         return view('admin.absent.list');
     }

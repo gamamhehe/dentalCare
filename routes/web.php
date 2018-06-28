@@ -28,7 +28,7 @@ Route::get('/event','Admin\HomeController@eventLoad');
 Route::get('/myProfile/{id}','Admin\HomeController@myProfile');
 Route::get('/gioithieu','Admin\HomeController@aboutUs');
 Route::get('/danhsachchitra','Admin\PaymentController@getPaymentOfUser');
-Route::get('/lichsubenhan','Admin\HomeController@TreatmentHistory');
+Route::get('/lichsubenhan','Admin\TreatmentController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
 
 
@@ -68,3 +68,4 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
 Route::get('/testFunction','Admin\AbsentController@approveAbsent')->name('testFunction');
+Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');

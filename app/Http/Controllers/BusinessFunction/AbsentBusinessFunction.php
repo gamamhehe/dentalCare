@@ -29,13 +29,33 @@ trait AbsentBusinessFunction
 
     public function createAbsent($staff, $date_absent)
     {
-            Absent::create([
-                'staff_id' => $staff->id,
-                'date_absent' => $date_absent,
-            ]);
+        Absent::create([
+            'staff_id' => $staff->id,
+            'date_absent' => $date_absent,
+        ]);
     }
 
-    public function getListAbsentNotApprove(){
+    public function getListAbsentNotApprove()
+    {
         return Absent::whereNull('staff_approve_id');
+    }
+
+    public function approveAbsent($id, $idAdmin)
+    {
+        DB::beginTransaction();
+        try {
+            $absent = Absent::find($id);
+            if ($absent) {
+                $absent->staff_approve_id = $idAdmin;
+                $absent->save();
+            }
+            DB::commit();
+            return true;
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Appointment;
+use App\Model\Event;
 use App\Model\Patient;
 use App\Model\Role;
 use App\Model\Absent;
@@ -421,64 +422,48 @@ class AdminController extends Controller
                 'name' => 'Nha Chu',
                 'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
                 'icon_link' => '/assets/images/icon/bocrangsu.png',
-                'created_at' => '2018-06-13 00:00:00',
-                'updated_at' => '2018-06-03 00:00:00',
                 'estimate_time' => '3'
             ]);
             TreatmentCategory::create([
                 'name' => 'Trám Răng',
                 'description' => ' XXX',
                 'icon_link' => '/assets/images/icon/tramrangthammy.png',
-                'created_at' => '2018-06-13 00:00:00',
-                'updated_at' => '2018-06-03 00:00:00',
                 'estimate_time' => '3'
             ]);
             TreatmentCategory::create([
                 'name' => 'Nội Nha ',
                 'description' => 'phương pháp điều trị ở bên trong của răng. Bên trong răng, dưới men trắng và một lớp cứng gọi là ngà răng, là một mô mềm gọi là tủy răng. Tủy răng chứa các mạch máu, dây thần kinh, và mô liên kết  ',
                 'icon_link' => '/assets/images/icon/caovoirang.png',
-                'created_at' => '2018-06-13 00:00:00',
-                'updated_at' => '2018-06-03 00:00:00',
                 'estimate_time' => '3'
             ]);
             TreatmentCategory::create([
                 'name' => ' Nhổ Răng',
                 'description' => 'Nhổ răng khó là những răng mọc lệch, răng ngầm, răng khôn bị tai biến, răng bị gẫy chân, răng dính khớp..',
                 'icon_link' => '/assets/images/icon/nhorang.png',
-                'created_at' => '2018-06-13 00:00:00',
-                'updated_at' => '2018-06-03 00:00:00',
                 'estimate_time' => '3'
             ]);
             TreatmentCategory::create([
                 'name' => 'PHỤC HÌNH CỐ ĐỊNH',
                 'description' => 'Phục hình cố định (răng giả cố định) là các loại phục hình – răng giả (mão – cầu răng sứ, mão – cầu răng kim loại…) được gắn cố định vào hàm, miệng người mang.  ',
                 'icon_link' => '/assets/images/icon/ranggiathaolap.png',
-                'created_at' => '2018-06-13 00:00:00',
-                'updated_at' => '2018-06-03 00:00:00',
                 'estimate_time' => '3'
             ]);
             TreatmentCategory::create([
                 'name' => 'PHỤC HÌNH THÁO LẮP ',
                 'description' => 'Phục hình tháo lắp, cụ thể là phục hình tháo lắp răng là phương pháp phục hồi các răng hư tổn, để tái tạo các chức năng của răng. Hay phục hình tháo lắp có thể hiểu là sử dụng răng giả để tháo lắp. Bạn có thể cho răng vào và lấy ra dễ dàng để vệ sinh răng',
                 'icon_link' => '/assets/images/icon/taytrangrang.png',
-                'created_at' => '2018-06-13 00:00:00',
-                'updated_at' => '2018-06-03 00:00:00',
                 'estimate_time' => '3'
             ]);
             TreatmentCategory::create([
                 'name' => 'IMPLANT (BAO GỒM PHỤC HÌNH) ',
                 'description' => 'Cấy ghép răng Implant nha khoa là phương pháp phục hình răng tốt nhất cho người bị mất răng, đảm bảo khả năng ăn nhai giống hoàn toàn như một chiếc răng bình thường.',
                 'icon_link' => '/assets/images/icon/trongimplent.png',
-                'created_at' => '2018-06-13 00:00:00',
-                'updated_at' => '2018-06-03 00:00:00',
                 'estimate_time' => '3'
             ]);
             TreatmentCategory::create([
                 'name' => 'CHỈNH NHA',
                 'description' => 'Chỉnh nha là một nhánh của ngành nha khoa giúp điều chỉnh vị trí của hàm và những răng sai lệch. Những răng bị lệch lạc và những răng không vừa khít với khuôn miệng. ',
                 'icon_link' => '/assets/images/icon/danmatsuVENNER.png',
-                'created_at' => '2018-06-13 00:00:00',
-                'updated_at' => '2018-06-03 00:00:00',
                 'estimate_time' => '3'
             ]);
 
@@ -858,18 +843,18 @@ class AdminController extends Controller
             ]);
 
             Absent::create([
-               'staff_id' => 1,
-               'staff_approve_id' => 2,
-               'date_absent' =>  Carbon::now(),
+                'staff_id' => 1,
+                'staff_approve_id' => 2,
+                'date_absent' => Carbon::now(),
             ]);
             Absent::create([
                 'staff_id' => 1,
                 'staff_approve_id' => 2,
-                'date_absent' =>  '2018-06-15',
+                'date_absent' => '2018-06-15',
             ]);
             Absent::create([
                 'staff_id' => 1,
-                'date_absent' =>  '2018-06-15',
+                'date_absent' => '2018-06-15',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
@@ -946,9 +931,9 @@ class AdminController extends Controller
 </li>
 </ol>
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' =>  'TRỒNG RĂNG IMPLANT – GIẢI PHÁP PHỤC HÌNH RĂNG BỊ MẤT HOÀN HẢO',
-                'staff_id'=>'1',
-                'create_date'=>'2018-06-19 04:31:27',
+                'title' => 'TRỒNG RĂNG IMPLANT – GIẢI PHÁP PHỤC HÌNH RĂNG BỊ MẤT HOÀN HẢO',
+                'staff_id' => '1',
+                'create_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
@@ -1025,9 +1010,9 @@ class AdminController extends Controller
 </li>
 </ol>
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' =>  'Trám răng đẹp như thủy tiên',
-                'staff_id'=>'1',
-                'create_date'=>'2018-06-19 04:31:27',
+                'title' => 'Trám răng đẹp như thủy tiên',
+                'staff_id' => '1',
+                'create_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/veneer-su-gia-bao-nhieu-1.jpg',
@@ -1050,9 +1035,9 @@ class AdminController extends Controller
 <p><em>Mặt d&aacute;n&nbsp;răng&nbsp;sứ Veneer được thiết kế kh&aacute; mỏng n&ecirc;n kh&aacute; thoải m&aacute;i khi ăn nhai, kh&ocirc;ng lo cộm cấn</em></p>
 <p><strong><img class="alignnone size-full wp-image-26933 lazyloaded" src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" alt="tick-3" width="22" height="24" data-lazy-src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" />&nbsp;Tuổi thọ cao</strong></p>
 <p>Tuổi thọ của mặt d&aacute;n sứ Veneer c&oacute; thể k&eacute;o d&agrave;i từ 10 &ndash; 15 năm nếu được chăm s&oacute;c v&agrave; bảo vệ đ&uacute;ng c&aacute;ch.&nbsp; B&ecirc;n cạnh đ&oacute;, mặt d&aacute;n sứ c&ograve;n b&aacute;m&nbsp;chắc tr&ecirc;n th&acirc;n răng, kh&ocirc;ng bị k&ecirc;nh hở, kh&ocirc;ng dễ bị bong, bật khi nhai gắn, chải răng nhờ chất liệu kết d&iacute;nh đặc biệt, kh&ocirc;ng dễ bị h&oacute;a lỏng l&agrave;m rơi miếng d&aacute;n n&ecirc;n bạn c&oacute; thể y&ecirc;n t&acirc;m khi sử dụng.</p>',
-                'title' =>  'LÀM RĂNG SỨ MẶT DÁN SỨ VENEER – ĐẢM BẢO TÍNH THẨM MỸ CAO',
-                'staff_id'=>'1',
-                'create_date'=>'2018-06-19 04:31:27',
+                'title' => 'LÀM RĂNG SỨ MẶT DÁN SỨ VENEER – ĐẢM BẢO TÍNH THẨM MỸ CAO',
+                'staff_id' => '1',
+                'create_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/TrongImplent.jpg',
@@ -1129,9 +1114,9 @@ class AdminController extends Controller
 </li>
 </ol>
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' =>  'Nghệ thuật tẩy trắng răng công nghệ Úc',
-                'staff_id'=>'1',
-                'create_date'=>'2018-06-19 04:31:27',
+                'title' => 'Nghệ thuật tẩy trắng răng công nghệ Úc',
+                'staff_id' => '1',
+                'create_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/TayTrangRang.jpg',
@@ -1208,9 +1193,9 @@ class AdminController extends Controller
 </li>
 </ol>
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' =>  'Bảo vệ hàm răng chắc khỏe cho trẻ',
-                'staff_id'=>'1',
-                'create_date'=>'2018-06-19 04:31:27',
+                'title' => 'Bảo vệ hàm răng chắc khỏe cho trẻ',
+                'staff_id' => '1',
+                'create_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/RangSuVEENER.png',
@@ -1287,9 +1272,9 @@ class AdminController extends Controller
 </li>
 </ol>
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' =>  'Trồng răng sứ tặng tặng thẻ',
-                'staff_id'=>'1',
-                'create_date'=>'2018-06-19 04:31:27',
+                'title' => 'Trồng răng sứ tặng tặng thẻ',
+                'staff_id' => '1',
+                'create_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/NiengRang.jpg',
@@ -1366,93 +1351,120 @@ class AdminController extends Controller
 </li>
 </ol>
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' =>  'Nạo tủy công nghệ Mỹ - gây tê nhanh chóng',
-                'staff_id'=>'1',
-                'create_date'=>'2018-06-19 04:31:27',
+                'title' => 'Nạo tủy công nghệ Mỹ - gây tê nhanh chóng',
+                'staff_id' => '1',
+                'create_date' => '2018-06-19 04:31:27',
             ]);
             Payment::create([
                 'prepaid' => '100000',
-                'note_payable' => '2000',
                 'total_price' => '300000',
                 'phone' => '1279011097',
-                'is_done' =>    '0',
+                'is_done' => false,
             ]);
             Payment::create([
                 'prepaid' => '200000',
-                'note_payable' => '2000',
                 'total_price' => '600000',
                 'phone' => '1279011096',
-                'is_done' =>    '0',
+                'is_done' => false,
             ]);
             Payment::create([
                 'prepaid' => '150000',
-                'note_payable' => '2000',
                 'total_price' => '600000',
                 'phone' => '1279011098',
-                'is_done' =>    '0',
+                'is_done' => false,
             ]);
             Payment::create([
                 'prepaid' => '250000',
-                'note_payable' => '2000',
                 'total_price' => '500000',
                 'phone' => '1279011099',
-                'is_done' =>    '0',
+                'is_done' => false,
             ]);
-            PaymentDetail::created([
+            PaymentDetail::create([
                 'payment_id' => '1',
-                'receptionist' => '1',
-                'date_create'=>'2018-06-13 20:08:18',
+                'receptionist_id' => '1',
+                'date_create' => '2018-06-13 20:08:18',
                 'received_money' => '100000',
             ]);
-            PaymentDetail::created([
+            PaymentDetail::create([
                 'payment_id' => '1',
-                'receptionist' => '2',
-                'date_create'=>'2018-06-18 20:08:18',
+                'receptionist_id' => '2',
+                'date_create' => '2018-06-18 20:08:18',
                 'received_money' => '200000',
             ]);
-            PaymentDetail::created([
+            PaymentDetail::create([
                 'payment_id' => '2',
-                'receptionist' => '2',
-                'date_create'=>'2018-06-14 20:08:18',
+                'receptionist_id' => '2',
+                'date_create' => '2018-06-14 20:08:18',
                 'received_money' => '200000',
             ]);
-            PaymentDetail::created([
+            PaymentDetail::create([
                 'payment_id' => '2',
-                'receptionist' => '2',
-                'date_create'=>'2018-06-19 20:08:18',
+                'receptionist_id' => '2',
+                'date_create' => '2018-06-19 20:08:18',
                 'received_money' => '400000',
             ]);
-            PaymentDetail::created([
+            PaymentDetail::create([
                 'payment_id' => '3',
-                'receptionist' => '2',
-                'date_create'=>'2018-06-19 20:08:18',
+                'receptionist_id' => '2',
+                'date_create' => '2018-06-19 20:08:18',
                 'received_money' => '150000',
             ]);
-            PaymentDetail::created([
+            PaymentDetail::create([
                 'payment_id' => '3',
-                'receptionist' => '2',
-                'date_create'=>'2018-06-22 20:08:18',
+                'receptionist_id' => '2',
+                'date_create' => '2018-06-22 20:08:18',
                 'received_money' => '450000',
             ]);
-            PaymentDetail::created([
+            PaymentDetail::create([
                 'payment_id' => '4',
-                'receptionist' => '1',
-                'date_create'=>'2018-06-22 20:08:18',
+                'receptionist_id' => '1',
+                'date_create' => '2018-06-22 20:08:18',
                 'received_money' => '250000',
             ]);
-            PaymentDetail::created([
+            PaymentDetail::create([
                 'payment_id' => '4',
-                'receptionist' => '1',
-                'date_create'=>'2018-06-30 20:08:18',
+                'receptionist_id' => '1',
+                'date_create' => '2018-06-30 20:08:18',
                 'received_money' => '250000',
             ]);
+            Event::create([
+                'name' => 'Khuyến Mãi Trám răng',
+                'start_date' => '2018-06-15 20:08:18',
+                'end_date' => '2018-07-15 20:08:18',
+                'discount' => '20',
+                'staff_id' => 1,
+                'create_date' => Carbon::now(),
+                'treatment_id' => 1,
+            ]);
+            Event::create([
+                'name' => 'Khuyến Mãi Trám răng',
+                'start_date' => '2018-06-15 20:08:18',
+                'end_date' => '2018-06-17 20:08:18',
+                'discount' => '30',
+                'staff_id' => 1,
+                'create_date' => Carbon::now(),
+                'treatment_id' => 1,
+            ]);
+            Event::create([
+                'name' => 'Khuyến Mãi Trám răng',
+                'start_date' => '2018-06-15 20:08:18',
+                'end_date' => '2018-07-15 20:08:18',
+                'discount' => '20',
+                'staff_id' => 1,
+                'create_date' => Carbon::now(),
+                'treatment_id' => 2,
+            ]);
+
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
             dd($e);
         }
     }
-    public function initDoctor(){
+
+    public function initDoctor()
+    {
 
     }
 
