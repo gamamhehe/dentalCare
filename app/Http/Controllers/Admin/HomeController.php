@@ -66,7 +66,7 @@ class HomeController extends Controller
         return view("WebUser.User.MyProfile");
     }
     public function aboutUs(Request $request){
-        return view("WebUser.User.aboutUs");
+        return view("WebUser.User.AboutUs");
     }
 
 
