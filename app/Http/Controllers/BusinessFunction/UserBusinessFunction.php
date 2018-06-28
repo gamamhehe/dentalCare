@@ -68,7 +68,9 @@ trait UserBusinessFunction
             DB::rollback();
             return false;
         }
-    } public function updateUser($user)
+    }
+
+    public function updateUser($user)
     {
         DB::beginTransaction();
         try {
@@ -80,19 +82,9 @@ trait UserBusinessFunction
             return false;
         }
     }
-    public  function updatePatient($patient){
-        DB::beginTransaction();
-        try {
-            $patient->save();
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::info($e->getMessage());
-            throw new Exception($e->getMessage());
-        }
-    }
-    public  function updatePatient($patient){
+
+    public function updatePatient($patient)
+    {
         DB::beginTransaction();
         try {
             $patient->save();
@@ -105,39 +97,26 @@ trait UserBusinessFunction
         }
     }
 
-public function changeUserPassword($phone, $password){
-    DB::beginTransaction();
-    try {
-        $user = User::where('phone', $phone)->first();
-        $user->password =Hash::make($password);
-        $user->save();
-        DB::commit();
-        return true;
-    } catch (\Exception $e) {
-        DB::rollback();
-        return false;
+    public function changeUserPassword($phone, $password)
+    {
+        DB::beginTransaction();
+        try {
+            $user = User::where('phone', $phone)->first();
+            $user->password = Hash::make($password);
+            $user->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
     }
-}
-
-public function changeUserPassword($phone, $password){
-    DB::beginTransaction();
-    try {
-        $user = User::where('phone', $phone)->first();
-        $user->password =Hash::make($password);
-        $user->save();
-        DB::commit();
-        return true;
-    } catch (\Exception $e) {
-        DB::rollback();
-        return false;
-    }
-}
 
     public function getPatient($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
-            foreach($patients as $item){
+            foreach ($patients as $item) {
                 $item->district = $item->belongsToDistrict()->first();
                 $item->city = $item->belongsToDistrict()->first()->belongsToCity()->first();
             }
@@ -162,7 +141,9 @@ public function changeUserPassword($phone, $password){
             return $user;
         }
         return null;
-    } public function getPatientById($id)
+    }
+
+    public function getPatientById($id)
     {
         $patient = Patient::where('id', $id)->first();
         if ($patient != null) {
@@ -261,11 +242,11 @@ public function changeUserPassword($phone, $password){
             $hostname = request()->getHttpHost();
             //get time stamp
             $date = new \DateTime();
-           $timestamp = $date->getTimestamp();
-            $fullPath = 'http://'.implode('/',
-                array_filter(
-                    explode('/', $hostname . $avatarFolder . $filename))
-            ) . '?time='. $timestamp;
+            $timestamp = $date->getTimestamp();
+            $fullPath = 'http://' . implode('/',
+                    array_filter(
+                        explode('/', $hostname . $avatarFolder . $filename))
+                ) . '?time=' . $timestamp;
             $image->move($path, $filename);
             $patient->avatar = $fullPath;
             $patient->save();
