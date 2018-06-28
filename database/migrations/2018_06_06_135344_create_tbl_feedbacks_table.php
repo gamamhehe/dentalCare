@@ -15,11 +15,11 @@ class CreateTblFeedbacksTable extends Migration
     {
         Schema::create('tbl_feedbacks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content');
+            $table->string('content')->nullable();
             $table->integer('patient_id');
             $table->integer('treatment_detail_id');
             $table->dateTime('date_feedback');
-            $table->integer('number_start');
+            $table->integer('num_of_stars');
             $table->timestamps();
         });
     }

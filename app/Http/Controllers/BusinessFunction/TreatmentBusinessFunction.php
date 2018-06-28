@@ -12,6 +12,7 @@ use App\Model\Patient;
 use App\Model\Treatment;
 use App\Model\TreatmentDetail;
 use App\Model\TreatmentDetailStep;
+use App\Model\Payment;
 use App\Model\TreatmentHistory;
 use App\Model\TreatmentImage;
 use App\Model\User;
@@ -24,19 +25,31 @@ trait TreatmentBusinessFunction
 
     public function getTreatmentHistory($id)
     {
-        $patient = Patient::find($id);
+        $listResult = [];
+        $patient = Patient::where('id', $id)->first();
         $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
 
         foreach ($treatmentHistoryList as $treatmentHistory) {
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
             foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail) {
-                $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
+                $treatmentHistoryDetail->dentist = $treatmentHistoryDetail->belongsToStaff()->first();
             }
-            $treatmentHistory->detailList = $treatmentHistoryDetailList;
-            $treatmentHistory->treatment_id = $treatmentHistory->belongsToTreatment()->first();
-            $treatmentHistory->patient_id = $patient;
+            $treatmentHistory->details = $treatmentHistoryDetailList;
+            $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
+            $treatmentHistory->patient = $patient;
+            $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
         }
         return $treatmentHistoryList;
+    }
+
+    public function getTreatmentHistoryByPatientId($id)
+    {
+        $patient = Patient::where('id', $id)->first();
+        if($patient!=null){
+            $treatmentHistories = $patient->hasTreatmentHistory()->get();
+            return $treatmentHistories;
+        }
+        return null;
     }
 
     public function getTreatmentHistories($phone)

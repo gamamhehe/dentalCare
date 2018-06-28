@@ -12,7 +12,7 @@ class Payment extends Model
     public function beLongsToUser(){
         return $this->belongsTo('App\Model\User','phone', 'id');
     }
-    public function beLongsToTreatmentHistory(){
+    public function hasManyTreatmentHistory(){
         return $this->hasMany('App\Model\TreatmentHistory','payment_id', 'id');
     }
     public function hasPaymentDetail(){

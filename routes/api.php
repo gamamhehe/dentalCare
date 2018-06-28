@@ -53,7 +53,12 @@ Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
 //payment
 Route::post('payment/getByPhone','Mobile\PaymentController@getByPhone');
-
+///feedback
+Route::post('feedback/create',"Mobile\FeedbackController@create");
+Route::post('feedback/create',"Mobile\FeedbackController@create");
+//firebase
+Route::post("user/updateNotifToken","Mobile\UserController@updateNotifToken");
+Route::post("firebase/notify","Mobile\FirebaseController@sendNotification");
 ///backdddd
 Route::get("rsPW/{phone}/{pass}","Mobile\UserController@resetpassword");
 Route::get("test","Mobile\MobileController@test");

@@ -14,11 +14,10 @@ class CreateTblAbsentsTable extends Migration
     public function up()
     {
         Schema::create('tbl_absents', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('staff_id');
-            $table->integer('staff_approve_id')->default(0);
-            $table->date('date_absent');
-            $table->unique(array('staff_id', 'staff_approve_id', 'date_absent'), 'staff_date_off');
+            $table->integer('staff_approve_id');
+            $table->integer('request_absent_id');
+            $table->string('message_from_staff');
+            $table->primary(array('staff_approve_id', 'request_absent_id'), 'staff_approve');
             $table->timestamps();
         });
     }
