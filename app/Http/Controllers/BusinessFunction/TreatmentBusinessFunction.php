@@ -42,6 +42,9 @@ trait TreatmentBusinessFunction
                 foreach ($treatmentDetailSteps as $treatmentDetailStep){
                     $treatmentDetailStep->step = $treatmentDetailStep->belongsToStep()->first();
                 }
+                //add property to object
+                $treatmentHistoryDetail->medicines = $treatmentMedicines;
+                $treatmentHistoryDetail->steps=$treatmentDetailSteps;
             }
             $treatmentHistory->details = $treatmentHistoryDetailList;
             $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
