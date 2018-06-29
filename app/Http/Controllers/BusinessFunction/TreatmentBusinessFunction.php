@@ -43,7 +43,7 @@ trait TreatmentBusinessFunction
                     $treatmentDetailStep->step = $treatmentDetailStep->belongsToStep()->first();
                 }
                 //add property to object
-                $treatmentHistoryDetail->medicines = $treatmentMedicines;
+                $treatmentHistoryDetail->prescriptions = $treatmentMedicines;
                 $treatmentHistoryDetail->treatment_detail_steps = $treatmentDetailSteps;
             }
             $treatmentHistory->details = $treatmentHistoryDetailList;
