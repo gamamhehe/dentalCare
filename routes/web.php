@@ -28,7 +28,7 @@ Route::get('/event','Admin\HomeController@eventLoad');
 Route::get('/myProfile/{id}','Admin\HomeController@myProfile');
 Route::get('/gioithieu','Admin\HomeController@aboutUs');
 Route::get('/danhsachchitra','Admin\PaymentController@getPaymentOfUser');
-Route::get('/lichsubenhan','Admin\HomeController@TreatmentHistory');
+Route::get('/lichsubenhan','Admin\TreatmentController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
 
 
@@ -57,6 +57,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/editAnamnesis/{id}','Admin\AnamnesisController@loadEditAnamnesis');
 });
 
+<<<<<<< HEAD
 Route::get('/getDB','HomeController@getDB');
 Route::get('/banggia','HomeController@BangGiaDichVu');
 Route::get('/generateKey', 'BlockchainController@GenerateKey');
@@ -64,6 +65,9 @@ Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
 
 
 Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
+=======
+Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
+>>>>>>> UAT
 
     Route::get('/getTreatmentHistory', 'Admin\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
@@ -73,4 +77,5 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','Admin\HomeController@testFunction');
+Route::get('/testFunction','Admin\AbsentController@approveAbsent')->name('testFunction');
+Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');

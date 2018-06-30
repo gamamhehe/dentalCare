@@ -187,10 +187,6 @@
 
 	
 	<div class="row spacebottom">
-		<div class="textheader spacebottom">
-			 Nha Khoa 'updated_at' => '2018-06-03 00:00:00',
-            'estimate_time'=>'3' quy tụ hơn 100 bác sĩ có chứng chỉ hành nghề, nhiều năm kinh nghiệm, tốt nghiệp răng hàm mặt trong và ngoài nước, đã từng học tập cũng như tu nghiệp nhiều năm tại các nước có nền nha khoa phát triển bậc nhất trên thế giới. Với kiến thức chuyên môn vững vàng cùng đôi bàn tay khéo léo, tận tâm với nghề, luôn áp dụng theo quy trình chuẩn quốc tế, các bác sĩ luôn mang đến kết quả tốt nhất cho khách hàng. 
-		</div>
 		<div class="col-sm-10 divcenter " style="width: 180%">
 		<img class="centerThing"  src="/assets/images/DoctorPage/Trao-giai-bac-si.jpg" alt="" class="img-fluid img-responsive" width="80%">
 		</div>

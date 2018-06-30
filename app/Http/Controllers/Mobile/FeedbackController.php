@@ -23,7 +23,11 @@ class FeedbackController extends Controller
         $patientId = $request->input("patient_id");
         $treatmentDetailId = $request->input("treatment_detail_id");
         $dateFeedback = $request->input("date_feedback");
+<<<<<<< HEAD
         $numStar = $request->input("num_of_star");
+=======
+        $numStar = $request->input("num_of_stars");
+>>>>>>> UAT
 
         $feedbackBoolean = $this->checkTreatmentFeedbackExists($treatmentDetailId);
         if(!$feedbackBoolean){

@@ -15,11 +15,15 @@ class CreateTblPaymentsTable extends Migration
     {
         Schema::create('tbl_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('prepaid');
-            $table->bigInteger('note_payable');
+            $table->bigInteger('prepaid')->default(0);
             $table->bigInteger('total_price');
+<<<<<<< HEAD
             $table->text('phone');
             $table->boolean('is_done');
+=======
+            $table->integer('phone');
+            $table->boolean('is_done')->default(false);
+>>>>>>> UAT
             $table->timestamps();
         });
     }
