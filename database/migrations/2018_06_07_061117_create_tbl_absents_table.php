@@ -16,7 +16,7 @@ class CreateTblAbsentsTable extends Migration
         Schema::create('tbl_absents', function (Blueprint $table) {
             $table->integer('staff_approve_id');
             $table->integer('request_absent_id');
-            $table->string('message_from_staff');
+            $table->longText('message_from_staff')->nullabe();
             $table->primary(array('staff_approve_id', 'request_absent_id'), 'staff_approve');
             $table->timestamps();
         });

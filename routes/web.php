@@ -43,18 +43,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/register', 'Admin\Usercontroller@registerGet');
     Route::post('/register', 'Admin\Usercontroller@registerPost');
     //NewsController
-    Route::get('/getListNews','Admin\NewsController@getListNew');
-    Route::get('/editNews/{id}','Admin\NewsController@loadEditNews');
-    Route::get('/list-News', 'Admin\NewsController@loadListNews')->name('admin.list.news');
-    Route::get('/deleteNews/{id}', 'Admin\NewsController@deleteNews');
-    Route::post('/create-News', 'Admin\NewsController@createNews');
-    Route::post('/editNews/{id}', 'Admin\NewsController@createdNews')->name('admin.edit.news');
+    Route::get('/getListNews','Admin\NewsController@getList');
+    Route::get('/editNews/{id}','Admin\NewsController@loadEdit');
+    Route::get('/list-News', 'Admin\NewsController@loadList')->name('admin.list.news');
+    Route::get('/deleteNews/{id}', 'Admin\NewsController@delete');
+    Route::post('/create-News', 'Admin\NewsController@create');
+    Route::post('/editNews/{id}', 'Admin\NewsController@created')->name('admin.edit.news');
 
-    Route::get('/getListAnamnesis','Admin\AnamnesisController@getListAnamnesis');
-    Route::get('/list-Anamnesis', 'Admin\AnamnesisController@loadListAnamnesis')->name('admin.list.anamnesis');
-    Route::get('/create-Anamnesis', 'Admin\AnamnesisController@loadcreateAnamnesis');
-    Route::post('/create-Anamnesis', 'Admin\AnamnesisController@createAnamnesis');
-    Route::get('/editAnamnesis/{id}','Admin\AnamnesisController@loadEditAnamnesis');
+    Route::get('/getListAnamnesis','Admin\AnamnesisController@getList');
+    Route::get('/list-Anamnesis', 'Admin\AnamnesisController@loadList')->name('admin.list.anamnesis');
+    Route::get('/create-Anamnesis', 'Admin\AnamnesisController@loadcreate');
+    Route::post('/create-Anamnesis', 'Admin\AnamnesisController@create');
+    Route::get('/editAnamnesis/{id}','Admin\AnamnesisController@loadEdit');
 });
 
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
@@ -67,5 +67,5 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','Admin\AbsentController@approveAbsent')->name('testFunction');
+Route::get('/testFunction','Admin\AbsentController@approve')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');

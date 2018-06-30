@@ -13,7 +13,7 @@ use DB;
 class AnamnesisController extends Controller
 {
     use NewsBussinessFunction;
-    public function createAnamnesis(Request $request){
+    public function create(Request $request){
 
         $input = $request->all();
 
@@ -31,7 +31,7 @@ class AnamnesisController extends Controller
 
     }
 
-    public function getListAnamnesis(Request $request){
+    public function getList(Request $request){
         $AnamnesisCatalog = AnamnesisCatalog::all();
 
         return Datatables::of($AnamnesisCatalog)
@@ -40,14 +40,14 @@ class AnamnesisController extends Controller
             })->make(true);
 
     }
-    public function loadcreateAnamnesis(Request $request){
+    public function loadcreate(Request $request){
         return view('admin.anamnesis.create');
     }
-    public function loadListAnamnesis(Request $request){
+    public function loadList(Request $request){
 //
         return view('admin.anamnesis.list');
     }
-    public function loadEditAnamnesis($id){
+    public function loadEdit($id){
 
         $AnamnesisCatalog = AnamnesisCatalog::find($id);
 

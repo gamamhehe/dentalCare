@@ -11,7 +11,7 @@ class AppointmentController extends Controller
     //
     use AppointmentBussinessFunction;
 
-    public function createAppointmentController(Request $request){
+    public function create(Request $request){
 
         $this->createAppointment($request->bookingDate,$request->phone,$request->note);
     }
