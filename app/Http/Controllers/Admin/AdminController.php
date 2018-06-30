@@ -12,6 +12,7 @@ use App\Model\Step;
 use App\Model\TreatmentDetail;
 use App\Model\TreatmentDetailStep;
 use App\Model\TreatmentHistory;
+use App\Model\TreatmentStep;
 use App\Model\User;
 use App\Model\UserHasRole;
 use App\Model\Treatment;
@@ -71,7 +72,15 @@ class AdminController extends Controller
         $request->session()->remove('role');
         return redirect()->route('admin.login');
     }
+    public function initStep(){
 
+            Step::create([
+                'name' => 'Khám và tư vấn',
+                'description' => 'Bác sĩ sẽ khám tổng quát để đánh giá tình hình sức khỏe răng miệng cũng như tình hình trạng răng miệng của bệnh nhân.Sau đó, tư vấn phương pháp điều trị cụ thể.',
+
+            ]);
+
+    }
     public function initData()
     {
         DB::beginTransaction();
@@ -410,8 +419,8 @@ class AdminController extends Controller
                 'max_price' => '60000000',
             ]);
             Treatment::create([
-                'name' => 'INVISALGN( KHÔNG MẮC CÀI)',
-                'description' => 'INVISALGN( KHÔNG MẮC CÀI)',
+                'name' => 'INVISALIGN( KHÔNG MẮC CÀI)',
+                'description' => 'INVISALIGN( KHÔNG MẮC CÀI)',
                 'treatment_category_id' => '8',
                 'min_price' => '88000000',
                 'max_price' => '115000000',
@@ -912,14 +921,26 @@ class AdminController extends Controller
             ]);
 
             Absent::create([
-               'staff_id' => 1,
                'staff_approve_id' => 2,
-               'date_absent' =>  Carbon::now(),
+               'request_absent_id' =>  1,
+                'message_from_staff' => 'deoo cho',
             ]);
             Absent::create([
-                'staff_id' => 1,
                 'staff_approve_id' => 2,
-                'date_absent' =>  '2018-06-15',
+                'request_absent_id' =>  2,
+                'message_from_staff' => 'okie cho',
+            ]);
+            RequestAbsent::create([
+                'staff_id' => 2,
+                'start_date' => '2018-06-26',
+                'start_date' => '2018-06-28',
+                'reason' =>  'tao thich',
+            ]);
+            RequestAbsent::create([
+                'staff_id' => 1,
+                'start_date' => '2018-06-25',
+                'start_date' => '2018-07-01',
+                'reason' =>  'tao thich',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
@@ -1496,6 +1517,791 @@ class AdminController extends Controller
                 'date_create'=>'2018-06-30 20:08:18',
                 'received_money' => '250000',
             ]);
+
+            //Cai nao cung cần:
+            Step::create([
+                'name' => 'Khám và tư vấn',
+                'description' => 'Bác sĩ sẽ khám tổng quát để đánh giá tình hình sức khỏe răng miệng cũng như tình hình trạng răng miệng của bệnh nhân.Sau đó, tư vấn phương pháp điều trị cụ thể.',
+
+            ]);
+            Step::create([
+                'name' => 'chụp X-quang',
+                'description' => 'Bệnh nhân sẽ được chụp X-quang và kiểm tra tình trạng răng miệng, mức độ sâu răng cụ thể để bác sỹ có cơ sở chỉ định việc điều trị sâu răng hay buộc phải nhổ bỏ răng sâu.',
+
+            ]);
+            Step::create([
+                'name' => 'Vệ sinh khoang miệng',
+                'description' => 'Tiến hành vệ sinh vùng khoang miệng để thực hiện các bước điều trị',
+
+            ]);
+            //end
+            //Cạo vôi răng
+            Step::create([
+                'name' => 'Cạo vôi răng (scaling)',
+                'description' => '   Bác sĩ sử dụng đầu máy siêu âm siêu nhỏ với chuyển động rung của các bước sóng lên toàn bộ bề mặt có mảng bám, vôi răng. Những mảng bám, vôi răng sẽ được loại bỏ nhanh chóng ngay cả khi chúng nằm sâu dưới nướu hay trong các kẽ răng.',
+
+            ]);
+            Step::create([
+                'name' => 'Đánh bóng răng',
+                'description' => 'Sau khi hoàn tất cạo vôi răng, bác sĩ sử dụng cụ và thuốc đánh bóng cho răng, giúp răng không chỉ sạch sẽ mà còn sáng bóng, có khả năng hạn chế sự tích tụ mảng bám sau này.',
+
+            ]);
+            //end cao vội răng
+            // cạo vôi rang nướu dưới
+            Step::create([
+                'name' => 'Siêu âm Cavitron BP 8.0',
+                'description' => ' Đây là phương pháp lấy cao răng tối ưu nhất hiện nay, được ứng dụng ở tất cả các trung tâm nha khoa lớn trên thế giới:',
+
+            ]);
+            //end cạo vôi rang nướu dưới
+            //Cắt Nướu
+            Step::create([
+                'name' => 'Lập phác đồ điều trị',
+                'description' => 'Bác sĩ đưa kết quả chụp phim được mô phỏng trên hình ảnh không gian 3 chiều để bệnh nhân có thể hình dung cụ thể tình trạng, sau đó tư vấn về chi phí, thời gian, phương pháp tiến hành…',
+
+            ]);
+            Step::create([
+                'name' => 'Phẫu thuật cắt nướu',
+                'description' => 'Dựa vào phác đồ điều trị đã lập ra, bác sĩ sẽ tiến hành điều trị cho bệnh nhân theo đúng quy trình và kỹ thuật yêu cầu.
+',
+
+            ]);
+            //end Cắt Nướu
+            //nạo túi nha chu
+            Step::create([
+                'name' => 'Làm sạch sâu (root planing)',
+                'description' => 'Còn làm sạch sâu là quá trình làm mịn bề mặt gốc chân răng và loại bỏ bất cứ cấu trúc răng nào bị nhiễm bệnh.',
+
+            ]);
+            //end nạo túi nha chu
+            //XOANG
+            Step::create([
+                'name' => 'Tạo hình chất trám',
+                'description' => 'bác sĩ sẽ tiến hành đưa vật liệu trám composite vào bề mặt răng nơi vị trí cần trám, sử dụng dụng cụ nha khoa để tạo hình miếng trám sao cho vừa khít với vị trí cần trám đảm bảo thẩm mỹ cho vết trám.',
+
+            ]);
+            Step::create([
+                'name' => 'chiếu đèn laser hóa cứng miếng trám',
+                'description' => 'Sau khi cố định được miếng trám vào vị trí trám bác sĩ sẽ sử dụng bước sóng laser để làm cứng vật liệu trám composite và kết thúc quy trình điều trị. ',
+
+            ]);
+            //end XOANG
+            //tẩy trắng răng tại phòng
+            Step::create([
+                'name' => 'Bôi gel bảo vệ nướu',
+                'description' => 'Chất gel bảo vệ nướu sẽ được thoa lên vùng tiếp xúc giữa răng và nướu với mục đích không làm tổn thương nướu khi chiếu đèn tẩy trắng. Công đoạn bôi gel che nướu và chiếu đèn sẽ được thực hiện khoảng 2 – 3 lần trong toàn bộ quy trình',
+
+            ]);
+            Step::create([
+                'name' => 'Phủ gel tẩy trắng răng',
+                'description' => 'Sau khi bề mặt răng được vệ sinh sạch, đồng thời lắp dụng cụ che nướu và bảo vệ nướu, bệnh nhân sẽ được phủ lên một lớp gel tẩy trắng dày khoảng 2mm bằng cọ phủ, quy trình này được lặp lại 2 lần. ',
+
+            ]);
+            Step::create([
+                'name' => 'Tẩy trắng răng bằng đèn Plasma',
+                'description' => 'Sau khi bề mặt răng được vệ sinh sạch, đồng thời lắp dụng cụ che nướu và bảo vệ nướu, bệnh nhân sẽ được phủ lên một lớp gel tẩy trắng dày khoảng 2mm bằng cọ phủ, quy trình này được lặp lại 2 lần. ',
+
+            ]);
+            Step::create([
+                'name' => 'Vệ sinh sau tẩy',
+                'description' => 'Sau khi hết thời gian phủ gel, bệnh nhân sẽ được vệ sinh sạch gel tẩy trắng, đánh bóng lại răng bằng bột kim cương và so lại màu sắc răng sau khi tẩy trắng.
+',
+
+            ]);
+            //end tẩy trắng tại phòng
+            // tẩy trắng tại nhà
+            Step::create([
+                'name' => 'Tạo khay răng bằng nhựa dẻo',
+                'description' => 'Bác sĩ sẽ lấy dấu răng của bạn và làm một cặp khay bằng nhựa dẻo vừa khít với răng của bạn',
+
+            ]);
+
+            Step::create([
+                'name' => 'Bôi gel tẩy trắng (dành cho tại nhà)',
+                'description' => 'gel tẩy trắng răng với hàm lượng Hydrogen Peroxide thấp tại nhà ',
+
+            ]);
+            //end tẩy trắng tại nhà
+            //post sợi
+            Step::create([
+                'name' => 'Post Kim Loại',
+                'description' => 'Trám răng có chốt cắm bằng kim loại',
+
+            ]);
+//            end post soi
+//            post kim loai
+            Step::create([
+                'name' => 'Post Sợi',
+                'description' => 'Trám răng có chốt cắm bằng sợi thủy tinh - hạn chế gãy như  chốt kim loại',
+
+            ]);
+//            end post kim loai
+            // chữa đau răng
+            Step::create([
+                'name' => 'Chữa đau răng',
+                'description' => 'Điều trị nội nha dứt điểm về triệu chứng dau răng do bên trong răng - dưới men trắng  hoặc do tủy , dây thần kinh...',
+
+            ]);
+            // end chữa đau răng
+
+            //lấy lại tủy
+            Step::create([
+                'name' => 'Chữa tủy răng ( lấy lại tủy)',
+                'description' => 'Đây là một quy trình chữa tủy răng cho các răng đã được chữa tủy rồi nhưng vẫn còn các triệu chứng đau, khó chịu hay răng không có triệu chứng gì nhưng chất lượng nội nha không đạt yêu cầu.',
+
+            ]);
+            //end lấy lại tủy
+
+            //nhổ răng
+            Step::create([
+                'name' => 'Gây tê',
+                'description' => 'Tại vị trí răng sâu cần nhổ, bác sỹ sẽ gây tê để bệnh nhân không cảm thấy đau đớn và thoải mái trong khi bác sỹ nhổ răng.',
+
+            ]);
+            Step::create([
+                'name' => 'Nhổ răng sâu',
+                'description' => 'Bác sỹ sẽ sử dụng dụng cụ để nạy nướu, làm răng lung lay, sau đó dùng kìm nha khoa để nhổ răng và lấy toàn bộ chân răng ra. Sau đó, bác sỹ tiến hành khâu lại vết nhổ và cầm máu.',
+
+            ]);
+            Step::create([
+                'name' => 'Tiểu phẩu',
+                'description' => 'Phẩu thuật nhỏ không cần gây mê mà chỉ cần gây tê tại chổ.Trước khi tiểu khẩu cần xét nghiệm máu và đảm bảo khả năng đông của máu',
+
+            ]);
+            // end nhổ răng
+            // dinh hình răng
+            Step::create([
+                'name' => 'MÃO SỨ KL THƯỜNG',
+                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu : kim loại quý như vàng, ',
+
+            ]);
+            Step::create([
+                'name' => 'MÃO SỨ TITAN',
+                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu TITAN',
+
+            ]);
+            Step::create([
+                'name' => 'MÃO SỨ ZIRCONIA',
+                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ ZIRCONIA',
+
+            ]);
+            Step::create([
+                'name' => 'MÃO SỨ LAVA',
+                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ LAVA ',
+
+            ]);
+           
+            Step::create([
+                'name' => 'VENEER',
+                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu VENEER',
+
+            ]);
+            Step::create([
+                'name' => 'MÃO SỨ CERCON',
+                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ CERCON',
+
+            ]);
+            Step::create([
+                'name' => 'Mài cùi & làm khuông',
+                'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
+
+            ]);
+            Step::create([
+                'name' => 'Lắp răng sứ',
+                'description' => 'Tiến hành lắp ráp mẫu răng mới cho khách hàng và điều chỉnh cho thích hợp. ',
+
+            ]);
+//            end dinh hinh rang
+
+
+            //ham nhua rang VN
+            Step::create([
+                'name' => 'Lắp ráp & hoàn thiện',
+                'description' => 'Lắp ráp khung răng cho khách hàng',
+
+            ]);
+            Step::create([
+                'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG NHỰA VIỆT NAM',
+                'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
+
+            ]);
+            Step::create([
+                'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG COMPOSITE  ',
+                'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
+
+            ]);
+            Step::create([
+                'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG SỨ  ',
+                'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
+
+            ]);
+            //end
+
+
+            //Trám
+//            Step::create([
+//                'name' => 'Sửa soạn răng hỏng và xử lý bệnh lý',
+//                'description' => 'Sau khi được thăm khám, nha sỹ sẽ tiến hành sửa soạn răng hỏng cho bệnh nhân. Xác định ổ bệnh cần nạo vét và sử dụng dụng cụ đã được thanh trùng lấy đi chất bẩn.',
+//
+//            ]);
+//            Step::create([
+//                'name' => 'Hàn trám tạm thời',
+//                'description' => 'Trong quy trình trám răng bị sâu, nha sỹ trám miếng trám thời lên răng sâu sau khi đó hẹn bạn tái khám để kiểm tra xem ổ sâu đã được nạo vét hết chưa.',
+//
+//            ]);
+//            Step::create([
+//                'name' => 'Tái khám và tiến hành trám răng vĩnh viễn',
+//                'description' => 'Sau khoảng 1 tuần, nếu vị trí sâu răng không có biểu hiện đau nhức gì tức là khoang sâu đã sạch. Lúc này, nha sỹ sẽ bóc miếng trám tạm thời và dùng vật liệu composite lên răng bệnh trám vĩnh viễn.',
+//
+//            ]);
+//            Step::create([
+//                'name' => 'Hoàn thành quá trình điều trị',
+//                'description' => 'Bước sau cùng của quy trình trám răng sâu, bác sỹ sẽ tư vấn cho bệnh nhân sau khi thực hiện hàn trám về cách chăm sóc răng miệng và chế độ ăn uống để miếng trám được bền chặt và hạn chế sâu răng tái phát.',
+//
+//            ]);
+            //xxx
+
+
+            //implant end + xquang
+            Step::create([
+                'name' => 'Phẫu thuật đặt Implant (tiểu phẫu)',
+                'description' => 'Bác sĩ sẽ thực hiện 1 tiểu phẫu để đặt Implant vào xương hàm. Với mỗi Implant sẽ cần 10-15 phút để thực hiện. Với các trường hợp đặt implant vùng răng cửa, ngay sau phẫu thuật bạn sẽ được gắn răng tạm để sử dụng như bình thường .',
+
+            ]);
+            Step::create([
+                'name' => 'Đặt trụ Implant Mỹ',
+                'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
+',
+
+            ]);
+            Step::create([
+                'name' => 'Đặt trụ Implant Hàn Quốc',
+                'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
+',
+
+            ]);
+            Step::create([
+                'name' => 'Đặt trụ Implant NOBEL HAY STRAUMAN',
+                'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
+',
+
+            ]);
+            Step::create([
+                'name' => 'Phục hình cố định trên Implant - giai đoạn 1',
+                'description' => 'Bác sĩ sẽ tiến hành đặt Abutment trên implant và lấy dấu bằng các vật liệu & dụng cụ chuyên biệt cho phục hình trên Implant  đồng thời chọn màu răng sứ cho phù hợp với màu răng tự nhiên của bạn.',
+
+            ]);
+            Step::create([
+                'name' => 'Phục hình cố định trên Implant - giai đoạn 2',
+                'description' => 'sau khi labo đã hoàn tất răng sứ, bác sĩ sẽ thử răng cho bạn và sau đó gắn chặt răng sứ trên Implant bằng ciment hoặc ốc vặn.',
+            ]);
+            //implant end
+            //chinh nha mắc cài
+            Step::create([
+                'name' => 'Chỉnh nha mắc cài kim loại',
+                'description' => 'Niềng răng mắc cài kim loại hay còn được gọi là phương pháp niềng răng truyền thống, giúp khách hàng cải thiện khuyết điểm của hàm răng một cách hiệu quả.
+',
+
+            ]);
+            Step::create([
+                'name' => 'Chỉnh nha mắc cài Sứ',
+                'description' => ' Niềng răng mắc cài sứ: Được cải tiến từ mắc cài inox truyền thống nhưng được làm bằng hợp kim sứ và một số vật liệu vô cơ khác.',
+
+            ]);
+            Step::create([
+                'name' => 'Chỉnh nha mắc cài kim loại tự khóa',
+                'description' => 'Niềng răng mắc cài kim loại tự đóng/tự khóa được cải tiến từ mắc cài inox cổ điển, ',
+
+            ]);
+            Step::create([
+                'name' => 'Chỉnh nha mắc cài sứ tự khóa',
+                'description' => 'Phương pháp niềng răng mắc cài sứ tự đóng/tự khóa, có cấu tạo giống với niềng răng mắc cài kim loại và mắc cài sứ thông thường.',
+
+            ]);
+            Step::create([
+                'name' => 'Chỉnh nha INVISALIGN',
+                'description' => 'Chỉnh nha bằng Invisalign đem lại nhiều ưu điểm và thuận tiện cho bệnh nhân như thẩm mỹ cao, dễ vệ sinh, có thể tháo ra trong những dịp quan trọng',
+
+            ]);
+//            end chinh nha mac cai
+
+            //treatment_detail_step
+            TreatmentStep::create([
+                'step_id'=>'1',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'1',
+                'treatment_id' =>'4',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'1',
+                'treatment_id' =>'5',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'2',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'2',
+                'treatment_id' =>'6',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'2',
+                'treatment_id' =>'5',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'3',
+                'treatment_id' =>'7',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'3',
+                'treatment_id' =>'5',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'3',
+                'treatment_id' =>'8',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'4',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'4',
+                'treatment_id' =>'4',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'4',
+                'treatment_id' =>'6',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'5',
+                'treatment_id' =>'7',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'5',
+                'treatment_id' =>'9',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'6',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'7',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'6',
+                'treatment_id' =>'10',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'7',
+                'treatment_id' =>'10',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'6',
+                'treatment_id' =>'11',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'7',
+                'treatment_id' =>'11',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'8',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'8',
+                'treatment_id' =>'12',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'8',
+                'treatment_id' =>'13',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'8',
+                'treatment_id' =>'14',
+                'description' =>'Chưa có',
+            ]);TreatmentStep::create([
+                'step_id'=>'8',
+                'treatment_id' =>'15',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'9',
+                'treatment_id' =>'16',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'9',
+                'treatment_id' =>'17',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'10',
+                'treatment_id' =>'18',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'11',
+                'treatment_id' =>'19',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'12',
+                'treatment_id' =>'20',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'13',
+                'treatment_id' =>'20',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'14',
+                'treatment_id' =>'20',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'15',
+                'treatment_id' =>'21',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'16',
+                'treatment_id' =>'1',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'16',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'16',
+                'treatment_id' =>'22',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'16',
+                'treatment_id' =>'23',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'17',
+                'treatment_id' =>'1',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'17',
+                'treatment_id' =>'2',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'17',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'17',
+                'treatment_id' =>'22',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'17',
+                'treatment_id' =>'23',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'18',
+                'treatment_id' =>'1',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'18',
+                'treatment_id' =>'2',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'18',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'18',
+                'treatment_id' =>'22',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'18',
+                'treatment_id' =>'23',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'19',
+                'treatment_id' =>'1',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'19',
+                'treatment_id' =>'2',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'19',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'19',
+                'treatment_id' =>'22',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'19',
+                'treatment_id' =>'23',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'20',
+                'treatment_id' =>'1',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'20',
+                'treatment_id' =>'2',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'20',
+                'treatment_id' =>'3',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'20',
+                'treatment_id' =>'22',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'20',
+                'treatment_id' =>'24',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'20',
+                'treatment_id' =>'23',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'21',
+                'treatment_id' =>'31',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'21',
+                'treatment_id' =>'25',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'21',
+                'treatment_id' =>'32',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'22',
+                'treatment_id' =>'31',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'22',
+                'treatment_id' =>'26',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'22',
+                'treatment_id' =>'32',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'23',
+                'treatment_id' =>'31',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'23',
+                'treatment_id' =>'27',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'23',
+                'treatment_id' =>'32',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'24',
+                'treatment_id' =>'31',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'24',
+                'treatment_id' =>'28',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'24',
+                'treatment_id' =>'32',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'25',
+                'treatment_id' =>'31',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'25',
+                'treatment_id' =>'29',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'25',
+                'treatment_id' =>'32',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+            TreatmentStep::create([
+                'step_id'=>'26',
+                'treatment_id' =>'31',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'26',
+                'treatment_id' =>'30',
+                'description' =>'Chưa có',
+            ]);
+            TreatmentStep::create([
+                'step_id'=>'26',
+                'treatment_id' =>'32',
+                'description' =>'Chưa có',
+            ]);
+            //--------------
+//            TreatmentStep::create([
+//                'step_id'=>'27',
+//                'treatment_id' =>'1',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+//            TreatmentStep::create([
+//                'step_id'=>'8',
+//                'treatment_id' =>'15',
+//                'description' =>'Chưa có',
+//            ]);
+            //end
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

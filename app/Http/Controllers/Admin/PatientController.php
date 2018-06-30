@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
 {
     //
+    use UserBusinessFunction;
     public function login(Request $request){
 
 //        $this->validate($request, [

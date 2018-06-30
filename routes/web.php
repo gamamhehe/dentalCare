@@ -11,6 +11,7 @@
 |
 */
 Route::get('initNews', 'Admin\AdminController@initNews');
+Route::get('initStep', 'Admin\AdminController@initStep');
 Route::get('initData', 'Admin\AdminController@initData');
 Route::get('logoutAdmin', 'Admin\AdminController@logout')->name('admin.logout');
 Route::post('loginAdmin', 'Admin\AdminController@login')->name('admin.login.post');
