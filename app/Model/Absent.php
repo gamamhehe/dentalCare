@@ -8,11 +8,11 @@ class Absent extends Model
 {
     //
     protected $table = 'tbl_absents';
-    protected $fillable = ['staff_id', 'staff_approve_id', 'date_absent'];
-    public function belongsToStaff(){
-        return $this->belongsTo('App\Model\Staff','staff_id', 'id');
+    protected $fillable = ['staff_approve_id', 'request_absent_id', 'message_from_staff'];
+    public function belongsToRequestAbsent(){
+        return $this->belongsTo('App\Model\RequestAbsent','request_absent_id', 'id');
     }
-    public function belongsToApproveStaff(){
+    public function belongsToStaff(){
         return $this->belongsTo('App\Model\Staff','staff_approve_id', 'id');
     }
 }

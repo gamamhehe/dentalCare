@@ -5,7 +5,14 @@ namespace App\Http\Controllers\Mobile;
 use App\Model\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Route;
+use SMSGatewayMe\Client\Api\MessageApi;
+use SMSGatewayMe\Client\ApiClient;
+use SMSGatewayMe\Client\Configuration;
+use SMSGatewayMe\Client\Model\SendMessageRequest;
 use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 class MobileController extends Controller
 {
@@ -16,8 +23,31 @@ class MobileController extends Controller
      * @param Request $request
      */
     public function test(Request $request)
-    {
-
+    {// Configure client
+        $config = Configuration::getDefaultConfiguration();
+        $smsApiToken = env('SMS_API_TOKEN', false);
+        $smsDeviceId = env('SMS_DEVICE_ID', false);
+        $deviceNumber = env('SMS_DEVICE_NUMBER', false);
+        $config->setApiKey('Authorization', $smsApiToken);
+        $apiClient = new ApiClient($config);
+        $messageClient = new MessageApi($apiClient);
+        $order = 999;
+        $message = 'Cam on ban da dat lich, so thu tu cua ban la ' . $order;
+        $sendMessageRequest1 = new SendMessageRequest([
+            'phoneNumber' => $deviceNumber,
+            'message' => $message,
+            'deviceId' => $smsDeviceId
+        ]);
+        $sendMessageRequest2 = new SendMessageRequest([
+            'phoneNumber' => '07791064781',
+            'message' => 'Cam on ban da dat lich, so thu tu cua ban la ' . $order,
+            'deviceId' => 95056
+        ]);
+        $sendMessages = $messageClient->sendMessages([
+            $sendMessageRequest1
+        ]);
+        $result = json_decode($sendMessages[0]);
+        return response()->json($result);
     }
 
     /**
@@ -27,46 +57,6 @@ class MobileController extends Controller
      */
     public function testPOST(Request $request)
     {
-        try {
-            if ($request->hasFile('image')) {
-                $phone = $request->input('phone');
-                $patient = Patient::where('phone', $phone)->first();
-                if ($patient != null) {
-
-                    $image = $request->file('image');
-                    $path = public_path('\photos\avatar');
-                    $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
-//                dd($filename);
-                    if (!file_exists($path)) {
-                        mkdir($path, 0777);
-                    }
-                    $fullPath = implode('/', array_filter(explode('/', $path . $filename)));
-                    $image->move($path, $filename);
-//                $post->image = $path;
-                    $patient->avatar = $filename;
-                    $patient->save();
-                    $response = new \stdClass();
-                    $response->message = "Thay đổi ảnh đại diện thành công";
-                    $response->status = "OK";
-                    $response->data = $fullPath;
-                    return response()->json($response, 200);
-                } else {
-                    $error = new \stdClass();
-                    $error->error = "Không thể tìm thấy số điện thoại " . $phone;
-                    $error->exception = "Nothing";
-                    return response()->json($error, 400);
-                }
-            } else {
-
-                $error = new \stdClass();
-                $error->error = "Lỗi khi nhận hình ảnh ";
-                $error->exception = "Nothing";
-                return response()->json($error, 400);
-            }
-        } catch (\Exception $ex) {
-            return response()->json( $ex->getMessage());
-        }
+        return response()->json("Success", 200);
     }
-
-
 }

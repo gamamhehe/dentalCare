@@ -12,4 +12,8 @@ class News extends Model
     public function hasNewsType(){
         return $this->hasMany('App\Model\NewsType','news_id', 'id');
     }
+
+    public function belongsToStaff(){
+        return $this->belongsTo('App\Model\Staff', 'staff_id', 'id');
+    }
 }
