@@ -11,12 +11,14 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\BusinessFunction\HistoryTreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HistoryTreatmentController extends Controller
 {
     use TreatmentBusinessFunction;
+    use UserBusinessFunction;
 
     public function getByPhone($phone)
     {
@@ -61,9 +63,9 @@ class HistoryTreatmentController extends Controller
     public function getByPatientId(Request $request)
     {
         $id = $request->input('id');
-
+var_dump($id);
         try {
-            $patient = $this->getByPatientId($id);
+            $patient = $this->getPatientById($id);
             if ($patient == null) {
                 $error = new \stdClass();
                 $error->error = "Không thể tìm thấy id bệnh nhân";

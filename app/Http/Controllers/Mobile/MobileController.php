@@ -6,6 +6,10 @@ use App\Model\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Route;
+use SMSGatewayMe\Client\Api\MessageApi;
+use SMSGatewayMe\Client\ApiClient;
+use SMSGatewayMe\Client\Configuration;
+use SMSGatewayMe\Client\Model\SendMessageRequest;
 use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -19,38 +23,31 @@ class MobileController extends Controller
      * @param Request $request
      */
     public function test(Request $request)
-    {
-//        try {
-//            $notification = new \stdClass();
-//            $notification->title = 'Lonnn';
-//            $notification->text = 'is is my text Tex';
-//            $notification->click_action = 'android.intent.action.MAIN';
-//
-//            $data = new \stdClass();
-//            $data->keyname = 'sss';
-//
-//
-//            $requestObj = new \stdClass();
-//            $requestObj->notification = $notification;
-//            $requestObj->data = $data;
-//            $requestObj->to = '/topics/all';
-//            $client = new Client();
-//            $request = $client->request('POST', 'https://fcm.googleapis.com/fcm/send',
-//                [
-//                    'body'=>json_encode($requestObj),
-//                    'Content-Type' => 'application/json',
-//                    'authorization'=>'key=AAAAUj5G2Bc:APA91bF8TkhDriuoevyt_I0G3G-qNniLSDdDHbULjcvsas4sHCuTKueiODRnuvVuYk6YkCHKLt3fr-Sw7UhZMzRSfmWMWzt2NZXzljYZxch39fg0v3NsBzQM5_QKUEy4bOdnnjigzaBX'
-//                ]
-//            );
-////            $request->setBody($requestObj);
-//            $response = $request->getBody()->getContents();
-//            return response()->json($response);
-//        } catch (GuzzleException $exception) {
-//            return response()->json($exception->getMessage(), 500);
-//        }
-
-        $test = env('API_FIREBASE_SERVER_TOKEN',  false);
-        return response()->json($test);
+    {// Configure client
+        $config = Configuration::getDefaultConfiguration();
+        $smsApiToken = env('SMS_API_TOKEN', false);
+        $smsDeviceId = env('SMS_DEVICE_ID', false);
+        $deviceNumber = env('SMS_DEVICE_NUMBER', false);
+        $config->setApiKey('Authorization', $smsApiToken);
+        $apiClient = new ApiClient($config);
+        $messageClient = new MessageApi($apiClient);
+        $order = 999;
+        $message = 'Cam on ban da dat lich, so thu tu cua ban la ' . $order;
+        $sendMessageRequest1 = new SendMessageRequest([
+            'phoneNumber' => $deviceNumber,
+            'message' => $message,
+            'deviceId' => $smsDeviceId
+        ]);
+        $sendMessageRequest2 = new SendMessageRequest([
+            'phoneNumber' => '07791064781',
+            'message' => 'Cam on ban da dat lich, so thu tu cua ban la ' . $order,
+            'deviceId' => 95056
+        ]);
+        $sendMessages = $messageClient->sendMessages([
+            $sendMessageRequest1
+        ]);
+        $result = json_decode($sendMessages[0]);
+        return response()->json($result);
     }
 
     /**

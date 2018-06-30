@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class FeedbackController extends Controller
 {
     //
-    public function createFeedback(Request $request){
+    public function create(Request $request){
         $feedback = new Feedback();
         $feedback->content = $request->content_feedback;
         $feedback->patient_id = $request->session()->get('currentPatient',null)->id;

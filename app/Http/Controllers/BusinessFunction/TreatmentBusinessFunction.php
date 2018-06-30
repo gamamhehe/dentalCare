@@ -33,11 +33,27 @@ trait TreatmentBusinessFunction
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
             foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail) {
                 $treatmentHistoryDetail->dentist = $treatmentHistoryDetail->belongsToStaff()->first();
+                $treatmentHistoryDetail->treatment_images = $treatmentHistoryDetail->hasTreatmentImage()->get();
+                $treatmentMedicines = $treatmentHistoryDetail->hasMedicinesQuantity()->get();
+                foreach ($treatmentMedicines as $treatmentMedicine) {
+                    $treatmentMedicine->medicine = $treatmentMedicine->belongsToMedicine()->first();
+                }
+                $treatmentDetailSteps = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
+                foreach ($treatmentDetailSteps as $treatmentDetailStep) {
+                    $treatmentDetailStep->step = $treatmentDetailStep->belongsToStep()->first();
+                }
+                //add property to object
+                $treatmentHistoryDetail->prescriptions = $treatmentMedicines;
+                $treatmentHistoryDetail->treatment_detail_steps = $treatmentDetailSteps;
             }
             $treatmentHistory->details = $treatmentHistoryDetailList;
             $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
             $treatmentHistory->patient = $patient;
+            $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
+
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
+
+
         }
         return $treatmentHistoryList;
     }
@@ -45,7 +61,7 @@ trait TreatmentBusinessFunction
     public function getTreatmentHistoryByPatientId($id)
     {
         $patient = Patient::where('id', $id)->first();
-        if($patient!=null){
+        if ($patient != null) {
             $treatmentHistories = $patient->hasTreatmentHistory()->get();
             return $treatmentHistories;
         }
@@ -148,14 +164,15 @@ trait TreatmentBusinessFunction
         }
     }
 
-    public function createTreatmentImage($imageLink, $idTreatmentDetail){
+    public function createTreatmentImage($imageLink, $idTreatmentDetail)
+    {
         DB::beginTransaction();
         try {
-                TreatmentImage::create([
-                    'treatment_detail_id' => $idTreatmentDetail,
-                    'image_link' => $imageLink,
-                    'create_date' => Carbon::now(),
-                ]);
+            TreatmentImage::create([
+                'treatment_detail_id' => $idTreatmentDetail,
+                'image_link' => $imageLink,
+                'create_date' => Carbon::now(),
+            ]);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -165,22 +182,24 @@ trait TreatmentBusinessFunction
         }
     }
 
-    public function showTreatmentStepForTreatment($idTreatment){
+    public function showTreatmentStepForTreatment($idTreatment)
+    {
         $listTreatmentStep = Treatment::find($idTreatment)->hasTreatmentStep()->get();
         $result = [];
-        foreach ($listTreatmentStep as $treatmentStep){
+        foreach ($listTreatmentStep as $treatmentStep) {
             $result[] = $treatmentStep->belongsToStep()->first();
         }
         return $result;
     }
 
-    public function showTreatmentDetailStepDone($idTreatmentHistory){
+    public function showTreatmentDetailStepDone($idTreatmentHistory)
+    {
         $treatmentHistory = TreatmentHistory::find($idTreatmentHistory);
         $listTreatmentDetail = $treatmentHistory->hasTreatmentDetail()->get();
         $result = [];
-        foreach ($listTreatmentDetail as $treatmentDetail){
+        foreach ($listTreatmentDetail as $treatmentDetail) {
             $listTreatmentDetailStep = $treatmentDetail->hasTreatmentDetailStep()->get();
-            foreach ($listTreatmentDetailStep as $treatmentDetailStep){
+            foreach ($listTreatmentDetailStep as $treatmentDetailStep) {
                 $result[] = $treatmentDetailStep->treatment_step_id;
             }
         }
