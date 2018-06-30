@@ -15,6 +15,7 @@ use App\Model\UserHasRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Mockery\Exception;
 
 trait UserBusinessFunction
 {
@@ -69,27 +70,84 @@ trait UserBusinessFunction
         }
     }
 
+    public function updateUser($user)
+    {
+        DB::beginTransaction();
+        try {
+            $user->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
+
+    public function updatePatient($patient)
+    {
+        DB::beginTransaction();
+        try {
+            $patient->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::info($e->getMessage());
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function changeUserPassword($phone, $password)
+    {
+        DB::beginTransaction();
+        try {
+            $user = User::where('phone', $phone)->first();
+            $user->password = Hash::make($password);
+            $user->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
+
     public function getPatient($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
+            foreach ($patients as $item) {
+                $item->district = $item->belongsToDistrict()->first();
+                $item->city = $item->belongsToDistrict()->first()->belongsToCity()->first();
+            }
             return $patients;
         }
         return null;
     }
-    public function getPatientByPhone($phone)
+
+    public function getPatientsByPhone($phone)
     {
-        $patient = Patient::where('phone', $phone)->first();
+        $patient = Patient::where('phone', $phone)->get();
         if ($patient != null) {
             return $patient;
         }
         return null;
     }
-public function getUserByPhone($phone)
+
+    public function getUserByPhone($phone)
     {
         $user = User::where('phone', $phone)->first();
         if ($user != null) {
             return $user;
+        }
+        return null;
+    }
+
+    public function getPatientById($id)
+    {
+        $patient = Patient::where('id', $id)->first();
+        if ($patient != null) {
+            return $patient;
         }
         return null;
     }
@@ -157,13 +215,47 @@ public function getUserByPhone($phone)
         }
     }
 
-    public function checkParentOfPatient($phone, $date_of_birth){
+
+    public function checkParentOfPatient($phone, $date_of_birth)
+    {
         $currentParent = User::where('phone', $phone)->first()->hasPatient()->where('is_parent', 1)->first();
-        if($currentParent->date_of_birth < $date_of_birth){
+        if ($currentParent->date_of_birth < $date_of_birth) {
             $currentParent->is_parent = 0;
             $currentParent->save();
             return false;
         }
         return true;
+    }
+
+
+    public function editAvatar($image, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $patient = Patient::where('id', $id)->first();
+            $avatarFolder = '/assets/images/avatar/';
+            $path = public_path($avatarFolder);
+            $filename = 'user_avatar_' . $id . '.' . $image->getClientOriginalExtension();
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $hostname = request()->getHttpHost();
+            //get time stamp
+            $date = new \DateTime();
+            $timestamp = $date->getTimestamp();
+            $fullPath = 'http://' . implode('/',
+                    array_filter(
+                        explode('/', $hostname . $avatarFolder . $filename))
+                ) . '?time=' . $timestamp;
+            $image->move($path, $filename);
+            $patient->avatar = $fullPath;
+            $patient->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            DB::rollback();
+            return false;
+        }
     }
 }

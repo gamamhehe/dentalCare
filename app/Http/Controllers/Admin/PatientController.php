@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
 {
+    use UserBusinessFunction;
     //
     use UserBusinessFunction;
     public function login(Request $request){

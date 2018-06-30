@@ -58,4 +58,14 @@ trait EventBusinessFunction
         }
     }
 
+    public function checkDiscount($idTreatment)
+    {
+        $event = Event::where('treatment_id', '=', $idTreatment)
+            ->where('start_date', '<', Carbon::now())
+            ->where('end_date', '>', Carbon::now())
+            ->get();
+        if($event){
+            return $event->discount;
+        }else return 0;
+    }
 }

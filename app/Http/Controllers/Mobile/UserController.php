@@ -40,31 +40,25 @@ class UserController extends Controller
                 $birthday = $request->input('birthday');
                 $districtId = $request->input('districtId');
                 $address = $request->input('address');
+
                 $user->phone = $phone;
                 $user->password = Hash::make($password);
                 $user->isDeleted = 0;
-                $patient = $this->getPatientByPhone($phone);
-                if ($patient != null) {
-                    $error = new \stdClass();
-                    $error->error = "Số điện thoại bệnh nhân đã tồn tại";
-                    $error->exception = "No Exception";
-                    return response()->json($error, 400);
-                } else {
-                    $patient = new Patient();
-                    $patient->phone = $phone;
-                    $patient->date_of_birth = $birthday;
-                    $patient->gender = $gender;
-                    $patient->district_id = $districtId;
-                    $patient->name = $name;
-                    $patient->avatar = "";
-                    $patient->address = $address;
-                    ////HASH
-                    $userHasRole = new UserHasRole();
-                    $userHasRole->phone = $phone;
-                    $userHasRole->role_id = 0;
-                    $this->registerPatient($user, $patient, $userHasRole);
-                    return response()->json($patient, 200);
-                }
+
+                $patient = new Patient();
+                $patient->phone = $phone;
+                $patient->date_of_birth = $birthday;
+                $patient->gender = $gender;
+                $patient->district_id = $districtId;
+                $patient->name = $name;
+                $patient->avatar = "";
+                $patient->address = $address;
+                ////HASH
+                $userHasRole = new UserHasRole();
+                $userHasRole->phone = $phone;
+                $userHasRole->role_id = 0;
+                $this->registerPatient($user, $patient, $userHasRole);
+                return response()->json($patient, 200);
             } else {
                 $error = new \stdClass();
                 $error->error = "Số điện thoại đã tồn tại";
@@ -88,11 +82,15 @@ class UserController extends Controller
         try {
             $phone = $request->input('phone');
             $password = $request->input('password');
+            $notifToken = $request->input('noti_token');
             $result = $this->checkLogin($phone, $password);
             if ($result != null) {
+                $result->noti_token = $notifToken;
+                $this->updateUser($result);
                 $patients = $this->getPatient($phone);
                 $userResponse = new \stdClass();
                 $userResponse->phone = $phone;
+                $userResponse->noti_token = $notifToken;
                 $userResponse->patients = $patients;
                 return response()->json($userResponse, 200);
             } else {
@@ -122,6 +120,34 @@ class UserController extends Controller
         return response()->json(['hello' => 'cha co gi ca haha'], 200);
     }
 
+    public function changePassword(Request $request)
+    {
+        $phone = $request->input('phone');
+        $newPassword = $request->input('password');
+        $currentPassword = $request->input('current_password');
+        $user = $this->checkLogin($phone, $currentPassword);
+        $errorResponse = new \stdClass();
+        if ($user != null) {
+            if ($this->changeUserPassword($phone, $newPassword)) {
+                $successResponse = new \stdClass();
+                $successResponse->status = "OK";
+                $successResponse->code = 200;
+                $successResponse->message = "Sửa mật khẩu thành công";
+                $successResponse->data = null;
+                return response()->json($successResponse, 200);
+            } else {
+                $errorResponse->error = "Không thể sửa mật khẩu";
+                $errorResponse->exception = null;
+                return response()->json($errorResponse, 400);
+            }
+        } else {
+            $errorResponse->error = "Mật khẩu hiện tại không hợp lệ";
+            $errorResponse->exception = null;
+            return response()->json($errorResponse, 400);
+        }
+    }
+
+//get function to change password quickly
     public function resetpassword($phone, $password)
     {
 //        $phone = $request->get('phone');
@@ -134,6 +160,52 @@ class UserController extends Controller
             $user->password = Hash::make($password);
             $user->save();
             return response()->json("Update Phone: " . $phone . " and password: " . $password . " Successful!");
+        } else {
+            return response()->json("Không tìm thấy số điện thoại " . $phone);
+        }
+    }
+
+    public function updatePatientInfo(Request $request)
+    {
+        try {
+            $patientId = $request->input('id');
+            $name = $request->input('name');
+            $gender = $request->input('gender');
+            $birthday = $request->input('date_of_birth');
+            $address = $request->input('address');
+            $districtId = $request->input('district_id');
+            $patient = $this->getPatientById($patientId);
+            if ($patient != null) {
+                $patient->name = $name;
+                $patient->gender = $gender;
+                $patient->date_of_birth = $birthday;
+                $patient->address = $address;
+                $patient->district_id = $districtId;
+                $result = $this->updatePatient($patient);
+                if ($result == true) {
+                    $successResponse = new \stdClass();
+                    $successResponse->status = "OK";
+                    $successResponse->code = 200;
+                    $successResponse->message = "Sửa tài khoản thành công";
+                    $successResponse->data = $patient;
+                    return response()->json($successResponse, 200);
+                } else {
+                    $error = new \stdClass();
+                    $error->error = "Không thể sửa đổi thông tin người dùng";
+                    $error->exeption = null;
+                    return response()->json($error, 400);
+                }
+            } else {
+                $error = new \stdClass();
+                $error->error = "Không thể tìm thấy id bệnh nhân";
+                $error->exeption = null;
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = new \stdClass();
+            $error->error = "Lỗi máy chủ";
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
         }
     }
 
@@ -141,47 +213,94 @@ class UserController extends Controller
     {
         try {
             if ($request->hasFile('image')) {
-                $phone = $request->input('phone');
-                $patient = Patient::where('phone', $phone)->first();
-                if ($patient != null) {
-
-                    $image = $request->file('image');
-                    $avatarFolder = '/assets/images/avatar/';
-                    $path = public_path($avatarFolder);
-                    $filename = 'user_avatar_' . $phone . '.' . $image->getClientOriginalExtension();
-//                dd($filename);
-                    if (!file_exists($path)) {
-                        mkdir($path, 0755, true);
+                $id = $request->input('id');
+                $image = $request->file('image');
+                $tmpPatient = $this->getPatientById($id);
+                if ($tmpPatient != null) {
+                    if ($this->editAvatar($image, $id)) {
+                        $patient = $this->getPatientById($id);
+                        $response = new \stdClass();
+                        $response->status = "OK";
+                        $response->message = "Chỉnh sửa avatar thành côngs";
+                        $response->data = $patient->avatar;
+                        return response()->json($response, 200);
+                    } else {
+                        $error = new \stdClass();
+                        $error->error = "Có lỗi xảy ra, không thể chỉnh sửa avatar";
+                        $error->exception = "Nothing";
+                        return response()->json($error, 400);
                     }
-                    $hostname = $request->getHttpHost();
-                    $fullPath = implode('/',
-                        array_filter(
-                            explode('/', $hostname .$avatarFolder . $filename))
-                    );
-                    $image->move($path, $filename);
-//                $post->image = $path;
-                    $patient->avatar = $filename;
-                    $patient->save();
-                    $response = new \stdClass();
-                    $response->message = "Thay đổi ảnh đại diện thành công";
-                    $response->status = "OK";
-                    $response->data = $fullPath;
-                    return response()->json($response, 200);
                 } else {
                     $error = new \stdClass();
-                    $error->error = "Không thể tìm thấy số điện thoại " . $phone;
+                    $error->error = "Không thể tìm thấy bệnh nhân ";
                     $error->exception = "Nothing";
                     return response()->json($error, 400);
                 }
             } else {
-
                 $error = new \stdClass();
                 $error->error = "Lỗi khi nhận hình ảnh ";
                 $error->exception = "Nothing";
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
-            return response()->json($ex->getMessage(), 400);
+            $error = new \stdClass();
+            $error->error = "Lỗi máy chủ";
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
+        }
+    }
+
+    public function sendFirebase()
+    {
+        try {
+            $notification = new \stdClass();
+            $notification->title = 'asdf';
+            $notification->text = 'is is my text Tex';
+            $notification->click_action = 'android.intent.action.MAIN';
+
+            $data = new \stdClass();
+            $data->keyname = 'sss';
+
+
+            $requestObj = new \stdClass();
+            $requestObj->notification = $notification;
+            $requestObj->data = $data;
+            $requestObj->to = '/topics/all';
+            $client = new Client();
+            $request = $client->request('POST', 'https://fcm.googleapis.com/fcm/send',
+                [
+                    'body' => json_encode($requestObj),
+                    'Content-Type' => 'application/json',
+                    'authorization' => 'key=AAAAUj5G2Bc:APA91bF8TkhDriuoevyt_I0G3G-qNniLSDdDHbULjcvsas4sHCuTKueiODRnuvVuYk6YkCHKLt3fr-Sw7UhZMzRSfmWMWzt2NZXzljYZxch39fg0v3NsBzQM5_QKUEy4bOdnnjigzaBX'
+                ]
+            );
+//            $request->setBody($requestObj);
+            $response = $request->getBody()->getContents();
+            return response()->json($response);
+        } catch (GuzzleException $exception) {
+            return response()->json($exception->getMessage(), 500);
+        }
+    }
+
+    public function updateNotifToken(Request $request)
+    {
+        $token = $request->input('noti_token');
+        $phone = $request->input('phone');
+        $user = $this->getUserByPhone($phone);
+        if ($user!=null) {
+            $user->noti_token = $token;
+            $result = $this->updateUser($user);
+            if($result){
+            return response()->json("Change firebase notification token successful", 200);
+
+            }else{
+                return response()->json("change firebase notification token error", 400);
+            }
+        } else {
+            $error = new \stdClass();
+            $error->error = "Không tìm thấy số điện thoại " . $phone;
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
         }
     }
 

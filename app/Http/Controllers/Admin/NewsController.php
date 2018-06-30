@@ -12,7 +12,7 @@ use DB;
 class NewsController extends Controller
 {
     use NewsBussinessFunction;
-    public function createNews(Request $request){
+    public function create(Request $request){
 
         $input = $request->all();
         $constants = "http://150.95.104.237";
@@ -37,7 +37,7 @@ class NewsController extends Controller
 
     }
 
-    public function getListNew(Request $request){
+    public function getList(Request $request){
         $listNews = News::all();
 
         return Datatables::of($listNews)
@@ -46,18 +46,18 @@ class NewsController extends Controller
             })->make(true);
 
     }
-    public function loadListNews(Request $request){
+    public function loadList(Request $request){
 //            return redirect("admin.News.list");
         return view('admin.News.list');
     }
-    public function loadEditNews($id){
+    public function loadEdit($id){
 
         $news = News::find($id);
 
         $content = $news->image_header;
         return view("admin.News.edit",['news'=>$news,'xxx'=>$content]);
     }
-    public function createdNews(Request $request){
+    public function created(Request $request){
 
         $input = $request->all();
         DB::beginTransaction();
@@ -84,10 +84,11 @@ class NewsController extends Controller
 
 
     }
-    public function deleteNews(Request $request,$id){
-        $Newsxxx = $this->deleteNewsX($id);
-       if($Newsxxx){
-           return redirect('admin/list-News')->withSuccess("Bài viết đã được xóa");
+    public function delete($id){
+       $News = $this->deleteNews($id);
+       dd($News);
+       if($News){
+           return redirect('/list-News')->withSuccess("Bài viết đã được xóa");
        }else{
            return redirect('admin/list-News')->withSuccess("Bài viết chưa được xóa");
        }

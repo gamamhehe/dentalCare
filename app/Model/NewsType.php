@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class NewsType extends Model
 {
     //
-    protected $table = 'tbl_news_type';
+    protected $table = 'tbl_news_types';
     protected $fillable = ['type_id', 'news_id'];
     public function belongsToNews(){
         return $this->belongsTo('App\Model\News', 'news_id', 'id');

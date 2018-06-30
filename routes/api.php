@@ -23,6 +23,10 @@ Route::get("user/login", "Mobile\UserController@loginGET");
 Route::post("user/register", "Mobile\UserController@register");
 Route::post("user/bookAppointment", "Mobile\UserController@bookAppointment");
 Route::post("user/changeAvatar","Mobile\UserController@changeAvatar");
+Route::post("user/changePassword","Mobile\UserController@changePassword");
+Route::post("user/updatePatient","Mobile\UserController@updatePatientInfo");
+
+
 Route::get("city/all", "Mobile\AddressController@getAllCitites");
 Route::get("city/{id}/districts/", "Mobile\AddressController@getDistrictsByCity");
 Route::get("news/all", "Mobile\NewsController@getAllNews");
@@ -49,7 +53,12 @@ Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
 //payment
 Route::post('payment/getByPhone','Mobile\PaymentController@getByPhone');
-
+///feedback
+Route::post('feedback/create',"Mobile\FeedbackController@create");
+Route::post('feedback/create',"Mobile\FeedbackController@create");
+//firebase
+Route::post("user/updateNotifToken","Mobile\UserController@updateNotifToken");
+Route::post("firebase/notify","Mobile\FirebaseController@sendNotification");
 ///backdddd
 Route::get("rsPW/{phone}/{pass}","Mobile\UserController@resetpassword");
 Route::get("test","Mobile\MobileController@test");

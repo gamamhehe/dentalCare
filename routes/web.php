@@ -29,7 +29,7 @@ Route::get('/event','Admin\HomeController@eventLoad');
 Route::get('/myProfile/{id}','Admin\HomeController@myProfile');
 Route::get('/gioithieu','Admin\HomeController@aboutUs');
 Route::get('/danhsachchitra','Admin\PaymentController@getPaymentOfUser');
-Route::get('/lichsubenhan','Admin\HomeController@TreatmentHistory');
+Route::get('/lichsubenhan','Admin\TreatmentController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
 
 
@@ -95,9 +95,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
     Route::get('/live_search', 'Admin\AdminController@index');
     Route::get('/live_search/action', 'Admin\AdminController@action')->name('live_search.action');
+
 });
 
-Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
+Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
 
     Route::get('/getTreatmentHistory', 'Admin\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
@@ -107,4 +108,5 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','Admin\HomeController@testFunction');
+Route::get('/testFunction','Admin\AbsentController@approve')->name('testFunction');
+Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');

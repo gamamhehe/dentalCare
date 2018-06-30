@@ -85,7 +85,8 @@ class FeedbackController extends Controller
         return redirect('admin/list-Feedback');
     }
 
-    public function deleteFeedback(Request $request, $id){
+    public function deleteFeedback(Request $request, $id)
+    {
 
         $Feedback = $this->deleteFeedbackBusiness($id);
 
@@ -94,7 +95,12 @@ class FeedbackController extends Controller
         } else {
             return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá chưa được xóa");
         }
-
+    }
+    //
+    public function create(Request $request){
+        $feedback = new Feedback();
+        $feedback->content = $request->content_feedback;
+        $feedback->patient_id = $request->session()->get('currentPatient',null)->id;
 
     }
 }
