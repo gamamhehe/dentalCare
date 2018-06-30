@@ -13,7 +13,7 @@ use DB;
 class AnamnesisController extends Controller
 {
     use NewsBussinessFunction;
-    public function createAnamnesis(Request $request){
+    public function create(Request $request){
 
         $input = $request->all();
 
@@ -31,7 +31,7 @@ class AnamnesisController extends Controller
 
     }
 
-    public function getListAnamnesis(Request $request){
+    public function getList(Request $request){
         $AnamnesisCatalog = AnamnesisCatalog::all();
 
         return Datatables::of($AnamnesisCatalog)
@@ -40,50 +40,60 @@ class AnamnesisController extends Controller
             })->make(true);
 
     }
-    public function loadcreateAnamnesis(Request $request){
+    public function loadcreate(Request $request){
         return view('admin.anamnesis.create');
     }
-    public function loadListAnamnesis(Request $request){
+    public function loadList(Request $request){
 //
         return view('admin.anamnesis.list');
     }
-    public function loadEditAnamnesis($id){
+    public function loadEdit($id){
 
         $AnamnesisCatalog = AnamnesisCatalog::find($id);
 
         $content = $AnamnesisCatalog->image_header;
         return view("admin.anamnesis.edit",['AnamnesisCatalog'=>$AnamnesisCatalog,'xxx'=>$content]);
     }
-//    public function createdNews(Request $request){
-//
-//        $input = $request->all();
-//        DB::beginTransaction();
-//        try{
-//            $NewsCurrent = News::find($input['News_id']);
-//            $NewsCurrent->image_header = $input['image_header'];
-//            $NewsCurrent->content = $input['content'];
-//            $NewsCurrent->title = $input['title'];
-//            $NewsCurrent->save();
-//            DB::commit();
-//            return redirect()->route("admin.list.news")->withSuccess("Bài viết đã được chỉnh");
-//
-//        }catch(\Exception $e){
-//            DB::rollback();
-//            return redirect()->back()->withSuccess("Bài viết chưa được chỉnh");
-//
-//        }
-//
-//
-//    }
-//    public function deleteNews($id){
-//        $News = $this->deleteNews($id);
-//        dd($News);
-//        if($News){
-//            return redirect('/list-News')->withSuccess("Bài viết đã được xóa");
-//        }else{
-//            return redirect('/list-News')->withSuccess("Bài viết chưa được xóa");
-//        }
-//
-//
-//    }
+    public function editdAnamnesis(Request $request,$id){
+
+        $input = $request->all();
+
+        DB::beginTransaction();
+        try{
+
+            $AnamnesisCatalog = AnamnesisCatalog::where('id', $id)->first();
+            $AnamnesisCatalog->name = $input['name'];
+            $AnamnesisCatalog->description =  $input['description'];
+            $AnamnesisCatalog->save();
+            DB::commit();
+            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh đã được chỉnh sửa");
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh chưa được chỉnh sửa");
+        }
+
+
+    }
+    public function deleteAnamnesis(Request $request,$id){
+
+        DB::beginTransaction();
+        try{
+            $AnamnesisCurrent = AnamnesisCatalog::where('id', $id)->first();
+            $AnamnesisCurrent->delete();
+            DB::commit();
+            return true;
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+        if($Newsxxx){
+            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh đã được xóa");
+        }else{
+            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh chưa được xóa");
+        }
+
+
+    }
 }

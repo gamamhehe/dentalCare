@@ -10,6 +10,7 @@ class PatientController extends Controller
 {
     use UserBusinessFunction;
     //
+    use UserBusinessFunction;
     public function login(Request $request){
 
 //        $this->validate($request, [
