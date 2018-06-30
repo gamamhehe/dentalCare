@@ -29,6 +29,21 @@ trait TreatmentBusinessFunction
         $patient = Patient::where('id', $id)->first();
         $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
 
+//        $patient = Patient::where('id',$id)->first();
+//            $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
+//
+//            foreach ($treatmentHistoryList as $treatmentHistory) {
+//                $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
+//
+//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+//
+//                    $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
+//                }
+//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+//                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->first()->belongsToStep()->first();
+//                }
+
+
         foreach ($treatmentHistoryList as $treatmentHistory) {
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
             foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail) {
@@ -50,10 +65,16 @@ trait TreatmentBusinessFunction
             $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
             $treatmentHistory->patient = $patient;
             $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
-
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
 
+//
+//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+//                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
+//
+//                }
 
+//        }
+//        dd($treatmentHistoryList);
         }
         return $treatmentHistoryList;
     }

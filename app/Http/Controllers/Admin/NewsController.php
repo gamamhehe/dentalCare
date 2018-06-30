@@ -15,9 +15,14 @@ class NewsController extends Controller
     public function create(Request $request){
 
         $input = $request->all();
-
+        $constants = "http://150.95.104.237";
+        $link_img = $input['image_header'];
+        $var =  strpos($input['image_header'], $constants);
+        if($var!= 1){
+            $link_img= $constants."".$input['image_header'];
+        }
         $News = new News;
-        $News->image_header = $input['image_header'];
+        $News->image_header = $link_img;
         $News->content =  $input['content'];
         $News->title = $input['title'];
         $News->staff_id = 1;
@@ -57,8 +62,14 @@ class NewsController extends Controller
         $input = $request->all();
         DB::beginTransaction();
         try{
+            $constants = "http://150.95.104.237";
+            $link_img = $input['image_header'];
+            $var =  strpos($input['image_header'], $constants);
+            if($var!= 1){
+                $link_img= $constants."".$input['image_header'];
+            }
             $NewsCurrent = News::find($input['News_id']);
-            $NewsCurrent->image_header = $input['image_header'];
+            $NewsCurrent->image_header = $link_img;
             $NewsCurrent->content = $input['content'];
             $NewsCurrent->title = $input['title'];
             $NewsCurrent->save();
@@ -79,9 +90,10 @@ class NewsController extends Controller
        if($News){
            return redirect('/list-News')->withSuccess("Bài viết đã được xóa");
        }else{
-           return redirect('/list-News')->withSuccess("Bài viết chưa được xóa");
+           return redirect('admin/list-News')->withSuccess("Bài viết chưa được xóa");
        }
 
 
     }
+
 }

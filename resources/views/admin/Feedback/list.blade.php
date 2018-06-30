@@ -5,15 +5,16 @@
         <section class="content" >
             <div class="container"  >
                 <div class="row " style="text-align: center; margin-right: 4em">
-                    <label><h1>Danh sách Bệnh Tiền Sử cho bệnh nhân</h1></label>
+                    <label><h1>Danh sách Đánh giá Bác sĩ</h1></label>
                 </div>
                 <div class="row layout" style=" margin-right: 4em"  >
                     <table id="dup-table" class="table ">
                         <thead>
                         <tr style="background-color: #eee;">
                             <td class="col-sm-1">id</td>
-                            <td class="col-sm-6" style="text-align: left;">Tên Bệnh</td>
-                            <td class="col-sm-3">Triệu chứng</td>
+                            <td class="col-sm-6" style="text-align: left;">Nội dung</td>
+                            <td class="col-sm-1" style="text-align: left;">Đánh giá</td>
+                            <td class="col-sm-2">xx </td>
                         </tr>
                         </thead>
                     </table>
@@ -46,11 +47,12 @@
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,
                 pageLength: 5,
-                ajax: '/admin/getListAnamnesis',
+                ajax: '/admin/getListFeedback',
                 columns : [
 
                     {data: 'id'},
-                    {data: 'name'},
+                    {data: 'content'},
+                    {data: 'demo'},
                     {
 
                         data: 'action'
@@ -58,12 +60,13 @@
                 ],
             });
         });
-        function deleteAnamnesis(obj){
-            var linkDelete = "admin/deleteAnamnesis/";
+        function deleteFeedback(obj){
+            var linkDelete = "admin/deleteNews/";
             var id = obj.getAttribute("id");
+
             $.ajax(
                 {
-                    url: "/admin/deleteAnamnesis/"+id,
+                    url: "/admin/deleteFeedback/"+id,
                     method:"get",
                     data: {
                         id:id
@@ -72,7 +75,6 @@
                     {
                         $('#dup-table').DataTable().ajax.reload();
                     }
-
                 });
         }
     </script>

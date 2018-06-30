@@ -176,7 +176,7 @@
 <div class="container" >
     <div class="row" style="background: url(/assets/images/banggia.jpg);height: 7em;">
         <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle" >
-            <h1 style="margin-top: 0.8em;color: white"><strong>Danh sách chi trả</strong></h1>
+            <h1 style="margin-top: 0.8em;color: white"><strong>Lịch sử khám</strong></h1>
         </div>
     </div>
 
@@ -197,19 +197,19 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                    <div class="container">
-                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$treatmentHistory->treatment_id->id}}">{{$treatmentHistory->treatment_id->name}} </a>
+                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$treatmentHistory->treatment->id}}">{{$treatmentHistory->treatment->name}} </a>
                    </div>
                    <div class="container">
-                        <div class="col-sm-4">Giá           : {{$treatmentHistory->treatment_id->max_price}}  VNĐ</div>
+                        <div class="col-sm-4">Giá           : {{$treatmentHistory->treatment->max_price}}  VNĐ</div>
                         <div class="col-sm-4">Khuyến mãi    : 0%</div>
-                        <div class="col-sm-4">Còn lại       : {{$treatmentHistory->treatment_id->max_price}} VNĐ</div>
-                        <div class="col-sm-4">Răng          : {{$treatmentHistory->tooth_number}}</div>
+                        <div class="col-sm-4">Còn lại       : {{$treatmentHistory->treatment->max_price}} VNĐ</div>
+                        <div class="col-sm-4">Răng          : {{$treatmentHistory->tooth->tooth_name}}</div>
                         <div class="col-sm-4">Ngày bắt đầu  : {{$treatmentHistory->create_date}}</div>
                         <div class="col-sm-4">Ngày kết thúc : {{$treatmentHistory->finish_date}}</div>
                    </div>
                 </h4>
             </div>
-            <div id="collapse{{$treatmentHistory->treatment_id->id}}" class="panel-collapse collapse in">
+            <div id="collapse{{$treatmentHistory->treatment->id}}" class="panel-collapse collapse in">
                 <div class="panel-body">
                     @foreach($treatmentHistory->detailList as $a)
 
@@ -224,7 +224,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-2">Các bước đã thực hiện</div>
-                        <div class="col-sm-8">- Nạo vôi răng <br>- Trám răng</div>
+                        <div class="col-sm-8">- {{$a->step->name}}</div>
                     </div>
                     <div class="row">
                         <div class="col-sm-2">Toa thuốc</div>

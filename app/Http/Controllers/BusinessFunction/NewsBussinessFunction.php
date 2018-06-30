@@ -77,7 +77,7 @@ trait NewsBussinessFunction
         DB::beginTransaction();
         try {
 
-            $NewsCurrent = News::find($id);
+            $NewsCurrent = News::where('id', $id)->first();
             $NewsCurrent->delete();
             DB::commit();
             return true;
