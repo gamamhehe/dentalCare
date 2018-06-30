@@ -82,11 +82,15 @@ class UserController extends Controller
         try {
             $phone = $request->input('phone');
             $password = $request->input('password');
+            $notifToken = $request->input('notif_token');
             $result = $this->checkLogin($phone, $password);
             if ($result != null) {
+                $result->notif_token  = $notifToken;
+                $this->updateUser($result);
                 $patients = $this->getPatient($phone);
                 $userResponse = new \stdClass();
                 $userResponse->phone = $phone;
+                $userResponse->notif_token = $notifToken;
                 $userResponse->patients = $patients;
                 return response()->json($userResponse, 200);
             } else {
@@ -155,6 +159,8 @@ class UserController extends Controller
             $user->password = Hash::make($password);
             $user->save();
             return response()->json("Update Phone: " . $phone . " and password: " . $password . " Successful!");
+        }else{
+            return response()->json("Không tìm thấy số điện thoại " . $phone);
         }
     }
 

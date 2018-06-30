@@ -19,7 +19,7 @@ class CreateTblFeedbacksTable extends Migration
             $table->integer('patient_id');
             $table->integer('treatment_detail_id');
             $table->dateTime('date_feedback');
-            $table->integer('number_start');
+            $table->integer('num_of_stars');
             $table->timestamps();
         });
     }

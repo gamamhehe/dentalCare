@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\Controller;
 use App\Model\Treatment;
 use Illuminate\Http\Request;
-use Mockery\Exception;
 
 class TreatmentController extends Controller
 {
@@ -14,10 +13,10 @@ class TreatmentController extends Controller
         try {
             $treatments = Treatment::get();
             return response()->json($treatments, 200);
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             $error = new \stdClass();
             $error->error = "Không có dữ liệu";
-            $error->exception = $ex;
+            $error->exception = $ex->getMessage();
             return response()->json($error, 400);
         }
     }

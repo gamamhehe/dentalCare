@@ -53,7 +53,8 @@ Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
 //payment
 Route::post('payment/getByPhone','Mobile\PaymentController@getByPhone');
-
+///feedback
+Route::post('feedback/create',"Mobile\FeedbackController@create");
 ///backdddd
 Route::get("rsPW/{phone}/{pass}","Mobile\UserController@resetpassword");
 Route::get("test","Mobile\MobileController@test");

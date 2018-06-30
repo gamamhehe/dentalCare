@@ -8,7 +8,7 @@ class Feedback extends Model
 {
     //
     protected $table = 'tbl_feedbacks';
-    protected $fillable = ['id', 'content', 'patient_id', 'treatment_detail_id', 'date_feedback', 'number_start'];
+    protected $fillable = ['id', 'content', 'patient_id', 'treatment_detail_id', 'date_feedback', 'num_of_stars'];
 
 
     public function belongsToPatient(){
