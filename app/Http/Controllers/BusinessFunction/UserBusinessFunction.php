@@ -81,19 +81,6 @@ trait UserBusinessFunction
         }
     }
 
-    public function updateUser($user)
-    {
-        DB::beginTransaction();
-        try {
-            $user->save();
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            return false;
-        }
-    }
-
     public function updatePatient($patient)
     {
         DB::beginTransaction();
