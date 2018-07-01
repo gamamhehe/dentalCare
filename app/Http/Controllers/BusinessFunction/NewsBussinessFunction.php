@@ -21,16 +21,23 @@ use Mockery\Exception;
 
 trait NewsBussinessFunction
 {
-    public function createNewsBusiness($Newsxx)
+    public function createNews($input)
     {
+
         DB::beginTransaction();
         try {
+            $constants = "http://150.95.104.237";
+            $link_img = $input['image_header'];
+            $var =  strpos($input['image_header'], $constants);
+            if($var!= 1){
+                $link_img= $constants."".$input['image_header'];
+            }
             $News = new News;
-            $News->image_header = $Newsxx->image_header;
-            $News->content = $Newsxx->content;
-            $News->title = $Newsxx->title;
-            $News->staff_id = $Newsxx->staff_id;
-            $News->create_date = $Newsxx->create_date;
+            $News->image_header = $link_img;
+            $News->content =  $input['content'];
+            $News->title = $input['title'];
+            $News->staff_id = 1;
+            $News->create_date=Carbon::now();
             $News->save();
             DB::commit();
             return true;
@@ -65,7 +72,29 @@ trait NewsBussinessFunction
         $News = News::find($id);
         return $News;
     }
+    public function editNews($input){
+        DB::beginTransaction();
+        try{
+            $constants = "http://150.95.104.237";
+            $link_img = $input['image_header'];
+            $var =  strpos($input['image_header'], $constants);
+            if($var!= 1){
+                $link_img= $constants."".$input['image_header'];
+            }
+            $NewsCurrent = $this->getNews($input['News_id']);
+            $NewsCurrent->image_header = $link_img;
+            $NewsCurrent->content = $input['content'];
+            $NewsCurrent->title = $input['title'];
+            $NewsCurrent->save();
+            DB::commit();
+            return true;
 
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+    }
     public function getAllNews()
     {
         $listNews = News::all();

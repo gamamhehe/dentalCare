@@ -52,7 +52,7 @@
 
                 @if(Session::has('currentUser'))
                     <li class="nav-item dropdown ">
-                        <a href="#" class="  nav-link"  >
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
                                  class="img-fluid img-responsive" style="max-height: 25px;">
 
@@ -62,7 +62,7 @@
                             <!-- User image -->
 
                             <li class="user-header">
-                                <div class="container" style=";padding:10px 0px;">
+                                <div class="container" style=";padding:10px 0px; position: absolute; ">
                                     <div class="row">
                                         <div class="col-sm-6 hoverImg" style="float: left;padding-left: 20px;">
                                             <img src="assets/images/icon/user.jpg"

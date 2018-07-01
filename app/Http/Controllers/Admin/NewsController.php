@@ -13,22 +13,7 @@ class NewsController extends Controller
 {
     use NewsBussinessFunction;
     public function create(Request $request){
-
-        $input = $request->all();
-        $constants = "http://150.95.104.237";
-        $link_img = $input['image_header'];
-        $var =  strpos($input['image_header'], $constants);
-        if($var!= 1){
-            $link_img= $constants."".$input['image_header'];
-        }
-        $News = new News;
-        $News->image_header = $link_img;
-        $News->content =  $input['content'];
-        $News->title = $input['title'];
-        $News->staff_id = 1;
-        $News->create_date=Carbon::now();
-        $Newsxxx = $this->createNewsBusiness($News);
-        if($Newsxxx){
+        if( $this->createNews($request->all())){
             return redirect()->route("admin.list.news")->withSuccess("Bài viết đã được tạo");
         }else{
             return redirect('admin/News/list')->withSuccess("Bài viết chưa được tạo");
@@ -38,7 +23,7 @@ class NewsController extends Controller
     }
 
     public function getList(Request $request){
-        $listNews = News::all();
+        $listNews = $this->getAllNews();
 
         return Datatables::of($listNews)
             ->addColumn('action', function($listNews) {
@@ -47,47 +32,28 @@ class NewsController extends Controller
 
     }
     public function loadList(Request $request){
-//            return redirect("admin.News.list");
         return view('admin.News.list');
     }
     public function loadEdit($id){
 
-        $news = News::find($id);
-
+        $news = $this->getNews($id);
         $content = $news->image_header;
         return view("admin.News.edit",['news'=>$news,'xxx'=>$content]);
     }
-    public function created(Request $request){
-
-        $input = $request->all();
-        DB::beginTransaction();
-        try{
-            $constants = "http://150.95.104.237";
-            $link_img = $input['image_header'];
-            $var =  strpos($input['image_header'], $constants);
-            if($var!= 1){
-                $link_img= $constants."".$input['image_header'];
-            }
-            $NewsCurrent = News::find($input['News_id']);
-            $NewsCurrent->image_header = $link_img;
-            $NewsCurrent->content = $input['content'];
-            $NewsCurrent->title = $input['title'];
-            $NewsCurrent->save();
-            DB::commit();
+    public function edit(Request $request){
+        if( $this->editNews($request->all())){
             return redirect()->route("admin.list.news")->withSuccess("Bài viết đã được chỉnh");
 
-        }catch(\Exception $e){
-            DB::rollback();
+        }else{
             return redirect()->back()->withSuccess("Bài viết chưa được chỉnh");
-
         }
+
+
 
 
     }
     public function delete($id){
-       $News = $this->deleteNews($id);
-       dd($News);
-       if($News){
+       if( $this->deleteNews($id)){
            return redirect('/list-News')->withSuccess("Bài viết đã được xóa");
        }else{
            return redirect('admin/list-News')->withSuccess("Bài viết chưa được xóa");

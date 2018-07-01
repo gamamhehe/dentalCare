@@ -13,21 +13,28 @@ use DB;
 class FeedbackController extends Controller
 {
     use FeedbackBusinessFunction;
-
+    //admin
+    public function delete(Request $request, $id)
+    {
+        if ($this->deleteFeedback($id)) {
+            return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá đã được xóa");
+        } else {
+            return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá chưa được xóa");
+        }
+    }
     public function loadListFeedback(Request $request)
     {
         $sessionUser = $request->session()->get('currentAdmin', null);
         $roleID = $sessionUser->hasUserHasRole()->first()->belongsToRole()->first()->id;
         return view('admin.feedback.list', ['role' => $roleID]);
     }
-
     public function getListFeedback(Request $request)
     {
 
-        $feedbackList = Feedback::all();
+        $feedbackList = $this->getAllFeedback();
         $Static_html = "☆";
         foreach ($feedbackList as $feedback) {
-            $number_start = $feedback->number_start;
+            $number_start = $feedback->num_of_stars;
             $html_numberStart = "";
             for ($x = 1; $x <= $number_start; $x++) {
                 $html_numberStart = $html_numberStart . "" . $Static_html;
@@ -51,52 +58,33 @@ class FeedbackController extends Controller
 
 
     }
-
-    public function getDetailsFeedback(Request $request, $id)
+    public function getDetailsFeedback($id)
     {
-        $Feedback = Feedback::find($id);
+        $Feedback = $this->getFeedbackID($id);
         $contet = $Feedback->content;
         $Feedback->content = trim($contet);
         $Feedback->treatment_detail_id = $Feedback->belongsToTreatmentDetail()->first()->belongsToStaff()->first();
 
         return view('admin.feedback.details', ['Feedback' => $Feedback]);
     }
-
-
     public function getViewsFeedback(Request $request, $id)
     {
-
-//        $Feedback = $this->getDetailsFeedback($id);
-        $Feedback = Feedback::find($id);
-//        $Feedback->treatment_detail_id = $Feedback->belongsToTreatmentDetail()->first();
+        $Feedback = $this->getFeedbackID($id);
         $Feedback->treatment_detail_id = $Feedback->belongsToTreatmentDetail()->first()->belongsToStaff()->first();
-//        dd($Feedback->treatment_detail_id->name);
         return view('admin.feedback.views', ['Feedback' => $Feedback]);
     }
-
-    public function editFeedback(Request $request, $id)
+    //user
+    public function edit(Request $request, $id)
     {
-        $input = $request->all();
-        $content = $request->input('content');
+        if( $this->editFeedback($request->all(), $id)){
+            return redirect()->route("admin.list.feedback")->withSuccess("Feedback đã được chỉnh");
 
-        $Feedback = Feedback::find($id);
-        $Feedback->content = $content;
-        $Feedback->save();
-        return redirect('admin/list-Feedback');
-    }
-
-    public function deleteFeedback(Request $request, $id)
-    {
-
-        $Feedback = $this->deleteFeedbackBusiness($id);
-
-        if ($Feedback) {
-            return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá đã được xóa");
-        } else {
-            return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá chưa được xóa");
+        }else{
+            return redirect()->back()->withSuccess("Bài viết chưa được chỉnh");
         }
     }
-    //
+
+
     public function create(Request $request){
         $feedback = new Feedback();
         $feedback->content = $request->content_feedback;

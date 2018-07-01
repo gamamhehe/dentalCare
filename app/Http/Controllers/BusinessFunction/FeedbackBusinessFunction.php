@@ -25,13 +25,18 @@ trait FeedbackBusinessFunction
 {
     public function getDetailsFeedback(Request $request, $id)
     {
-
         $feedback = Feedback::where('id', $id)->get();
         $feedback->treatment_detail_id = $feedback->belongsToTreatmentDetail()->first()->detist_id;
-        dd($feedback);
     }
-
-    public function deleteFeedbackBusiness($id)
+    public function getFeedbackID($id){
+        $Feedback = Feedback::find($id);
+        return $Feedback;
+    }
+    public function getAllFeedback(){
+        $Feedback = Feedback::all();
+        return $Feedback;
+    }
+    public function deleteFeedback($id)
     {
         DB::beginTransaction();
         try {
@@ -73,5 +78,23 @@ trait FeedbackBusinessFunction
     {
         $feedback = Feedback::where('treatment_detail_id', $treatmentDetailId)->first();
         return $feedback;
+    }
+    public function editFeedback($input,$id){
+        DB::beginTransaction();
+        try{
+            $content = $input['content'];
+            $Feedback = $this->getFeedbackID($id);
+            $Feedback->content = $content;
+            $Feedback->save();
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+
+
     }
 }
