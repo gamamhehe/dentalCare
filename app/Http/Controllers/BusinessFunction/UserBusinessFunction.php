@@ -42,22 +42,7 @@ trait UserBusinessFunction
         }
     }
 
-    public function registerPatient($user, $patient, $userHasRole)
-    {
-        DB::beginTransaction();
-        try {
-            $user->save();
-            $patient->save();
-            $userHasRole->save();
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            return false;
-        }
-    }
-
-    public function registerUser($user)
+    public function createUser($user)
     {
         DB::beginTransaction();
         try {
@@ -83,19 +68,7 @@ trait UserBusinessFunction
         }
     }
 
-    public function updatePatient($patient)
-    {
-        DB::beginTransaction();
-        try {
-            $patient->save();
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::info($e->getMessage());
-            throw new Exception($e->getMessage());
-        }
-    }
+
 
     public function changeUserPassword($phone, $password)
     {
@@ -112,42 +85,11 @@ trait UserBusinessFunction
         }
     }
 
-    public function getPatient($phone)
-    {
-        $patients = Patient::where('phone', $phone)->get();
-        if ($patients != null) {
-            foreach ($patients as $item) {
-                $item->district = $item->belongsToDistrict()->first();
-                $item->city = $item->belongsToDistrict()->first()->belongsToCity()->first();
-            }
-            return $patients;
-        }
-        return null;
-    }
-
-    public function getPatientsByPhone($phone)
-    {
-        $patient = Patient::where('phone', $phone)->get();
-        if ($patient != null) {
-            return $patient;
-        }
-        return null;
-    }
-
     public function getUserByPhone($phone)
     {
         $user = User::where('phone', $phone)->first();
         if ($user != null) {
             return $user;
-        }
-        return null;
-    }
-
-    public function getPatientById($id)
-    {
-        $patient = Patient::where('id', $id)->first();
-        if ($patient != null) {
-            return $patient;
         }
         return null;
     }
@@ -159,21 +101,6 @@ trait UserBusinessFunction
             return true;
         }
         return false;
-    }
-
-    public function registerStaff($user, $staff, $userHasRole)
-    {
-        DB::beginTransaction();
-        try {
-            $user->save();
-            $staff->save();
-            $userHasRole->save();
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            return false;
-        }
     }
 
     public function createRole($role)
@@ -213,18 +140,6 @@ trait UserBusinessFunction
             DB::rollback();
             return false;
         }
-    }
-
-
-    public function checkParentOfPatient($phone, $date_of_birth)
-    {
-        $currentParent = User::where('phone', $phone)->first()->hasPatient()->where('is_parent', 1)->first();
-        if ($currentParent->date_of_birth < $date_of_birth) {
-            $currentParent->is_parent = 0;
-            $currentParent->save();
-            return false;
-        }
-        return true;
     }
 
 

@@ -128,4 +128,8 @@ class TreatmentController extends Controller
         }
 
     }
+
+    public function createMedicineForTreatmentDetail($idTreatmentDetail, $quantity, $medicine_id){
+            
+    }
 }

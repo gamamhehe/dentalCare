@@ -21,8 +21,7 @@ class CreateTblPatientsTable extends Migration
             $table->date('date_of_birth');
             $table->string('gender');
             $table->string('avatar')->nullable();
-            $table->integer('district_id');
-            $table->integer('is_parent')->default(1)->nullable();
+            $table->integer('district_id'); 
             $table->timestamps();
         });
     }

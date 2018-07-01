@@ -17,7 +17,7 @@ class CreateTblTreatmentDetailStepsTable extends Migration
             $table->integer('treatment_detail_id');
             $table->integer('step_id');
             $table->string('description');
-            $table->primary(array('treatment_detail_id', 'treatment_step_id'), 'detail_of_step');
+            $table->primary(array('treatment_detail_id', 'step_id'), 'detail_of_step');
             $table->timestamps();
         });
     }

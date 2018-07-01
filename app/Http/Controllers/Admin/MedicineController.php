@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\MedicineBusinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Medicine;
@@ -10,73 +11,59 @@ use Yajra\Datatables\Facades\Datatables;
 
 class MedicineController extends Controller
 {
-    public function createMedicines(Request $request){
-        $input = $request->all();
-        DB::beginTransaction();
-        try{
-            $Medicines = new Medicine();
-            $Medicines->name =  $input['name'];
-            $Medicines->use = $input['use'];
-            $Medicines->description =$input['description'];
-            $Medicines->save();
-            DB::commit();
+    use MedicineBusinessFunction;
+
+    public function create(Request $request)
+    {
+        if($this->createMedicine($request->all())){
             return redirect()->route("admin.list.medicines")->withSuccess("Sự kiện đã được tạo");
-        }catch(\Exception $e){
-            dd($e);
-            DB::rollback();
+        } else {
             return redirect('admin/list-Medicines')->withSuccess("Sự kiện chưa được tạo");
         }
     }
 
-    public function getListMedicines(Request $request){
-        $listEvent = Medicine::all();
+    public function getList()
+    {
+        $listEvent = $this->getListMedicine();
         return Datatables::of($listEvent)
-            ->addColumn('action', function($listEvent) {
-                return '<a href="editMedicines/'.$listEvent->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="'.$listEvent->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+            ->addColumn('action', function ($listEvent) {
+                return '<a href="editMedicines/' . $listEvent->id . '" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="' . $listEvent->id . '" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
             })->make(true);
     }
-    public function loadcreateMedicines(Request $request){
+
+    public function loadcreate(Request $request)
+    {
         return view('admin.medicines.create');
     }
-    public function loadListMedicines(Request $request){
+
+    public function loadList(Request $request)
+    {
         return view('admin.medicines.list');
     }
-    public function loadeditMedicines($id){
-      $Medicines = Medicine::find($id);
 
-        return view("admin.medicines.edit",['Medicines'=>$Medicines]);
+    public function loadedit($id)
+    {
+        return view("admin.medicines.edit", ['Medicines' => $this->loadeditMedicine($id)]);
     }
-    public function editMedicines(Request $request,$id){
+
+    public function edit(Request $request, $id)
+    {
 
         $input = $request->all();
-        DB::beginTransaction();
-        try{
-            $Medicines = Medicine::find($id);
-            $Medicines->name = $input['name'];
-            $Medicines->use = $input['use'];
-            $Medicines->description = $input['description'];
-            $Medicines->save();
-            DB::commit();
+        if ($this->editMedicine($input, $id)) {
             return redirect()->route("admin.list.medicines")->withSuccess("Thuốc đã được chỉnh");
-
-        }catch(\Exception $e){
-            DB::rollback();
+        } else {
             return redirect()->back()->withSuccess("Thuốc chưa được chỉnh");
-
         }
 
     }
-    public function deletMedicines(Request $request,$id){
-        DB::beginTransaction();
-        try{
-            $Medicine = Medicine::where('id', $id)->first();
-            $Medicine->delete();
-            DB::commit();
-            return redirect('admin/list-Medicines')->withSuccess("Thuốc đã được xóa");
-        }catch(\Exception $e){
-            DB::rollback();
-            return redirect('admin/list-Medicines')->withSuccess("Thuốc chưa được xóa");
 
+    public function delete($id)
+    {
+        if ($this->deleteMedicines($id)) {
+            return redirect('admin/list-Medicines')->withSuccess("Thuốc đã được xóa");
+        } else {
+            return redirect('admin/list-Medicines')->withSuccess("Thuốc chưa được xóa");
         }
     }
 }

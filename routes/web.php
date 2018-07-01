@@ -13,9 +13,9 @@
 Route::get('initNews', 'Admin\AdminController@initNews');
 Route::get('initStep', 'Admin\AdminController@initStep');
 Route::get('initData', 'Admin\AdminController@initData');
-Route::get('logoutAdmin', 'Admin\AdminController@logout')->name('admin.logout');
-Route::post('loginAdmin', 'Admin\AdminController@login')->name('admin.login.post');
-Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
+Route::get('logoutAdmin', 'Admin\StaffController@logout')->name('admin.logout');
+Route::post('loginAdmin', 'Admin\StaffController@login')->name('admin.login.post');
+Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
 
 
 // webuser phuc
@@ -78,13 +78,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/editEvent/{id}', 'Admin\EventController@loadeditEvent');
     Route::post('/editEvent/{id}', 'Admin\EventController@editEvent')->name('admin.edit.event');
     //MedicineController
-    Route::get('/getListMedicines','Admin\MedicineController@getListMedicines');
-    Route::get('/list-Medicines', 'Admin\MedicineController@loadListMedicines')->name('admin.list.medicines');
-    Route::get('/deleteMedicines/{id}', 'Admin\MedicineController@deletMedicines');
-    Route::get('/create-Medicines', 'Admin\MedicineController@loadcreateMedicines')->name('admin.create.medicines');
-    Route::post('/create-Medicines', 'Admin\MedicineController@createMedicines');
-    Route::get('/editMedicines/{id}', 'Admin\MedicineController@loadeditMedicines');
-    Route::post('/editMedicines/{id}', 'Admin\MedicineController@editMedicines')->name('admin.edit.medicines');
+    Route::get('/getListMedicines','Admin\MedicineController@getList');
+    Route::get('/list-Medicines', 'Admin\MedicineController@loadList')->name('admin.list.medicines');
+    Route::get('/deleteMedicines/{id}', 'Admin\MedicineController@delet');
+    Route::get('/create-Medicines', 'Admin\MedicineController@loadcreate')->name('admin.create.medicines');
+    Route::post('/create-Medicines', 'Admin\MedicineController@create');
+    Route::get('/editMedicines/{id}', 'Admin\MedicineController@loadedit');
+    Route::post('/editMedicines/{id}', 'Admin\MedicineController@edit')->name('admin.edit.medicines');
     //TreatmentController
     Route::get('/getListTreatment','Admin\TreatmentController@getListTreatment');
     Route::get('/list-Treatment', 'Admin\TreatmentController@loadListTreatment')->name('admin.list.treatment');
