@@ -13,9 +13,9 @@
 Route::get('initNews', 'Admin\AdminController@initNews');
 Route::get('initStep', 'Admin\AdminController@initStep');
 Route::get('initData', 'Admin\AdminController@initData');
-Route::get('logoutAdmin', 'Admin\AdminController@logout')->name('admin.logout');
-Route::post('loginAdmin', 'Admin\AdminController@login')->name('admin.login.post');
-Route::get('lara-admin', 'Admin\AdminController@loginGet')->name('admin.login');
+Route::get('logoutAdmin', 'Admin\StaffController@logout')->name('admin.logout');
+Route::post('loginAdmin', 'Admin\StaffController@login')->name('admin.login.post');
+Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
 
 
 // webuser phuc

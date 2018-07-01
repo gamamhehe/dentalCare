@@ -37,43 +37,12 @@ class AdminController extends Controller
 
     //
 
-    public function loginGet(Request $request)
-    {
-        $sessionUser = $request->session()->get('role', -1);
-        if ($sessionUser != -1) {
-            return redirect()->route('admin.dashboard');
-        }
-        return view('admin.login');
-    }
-
-    public function login(Request $request)
-    {
-        $this->validate($request, [
-            'phone' => 'required|min:10|max:11',
-            'password' => 'required|min:6'
-        ]);
-        $user = $this->checkLogin($request->phone, $request->password);
-        if ($user != null) {
-            $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
-            if ($roleID < 3 and $roleID > 0) {
-                session(['currentAdmin' => $user]);
-                return redirect()->intended(route('admin.dashboard'));
-            }
-            return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
-        }
-        return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
-    }
 
     public function dashboard(Request $request)
     {
         return view('admin.dashboard');
     }
 
-    public function logout(Request $request)
-    {
-        $request->session()->remove('role');
-        return redirect()->route('admin.login');
-    }
     public function initStep(){
 
             Step::create([
