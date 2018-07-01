@@ -206,6 +206,7 @@ trait TreatmentBusinessFunction
     public function showTreatmentStepForTreatment($idTreatment)
     {
         $listTreatmentStep = Treatment::find($idTreatment)->hasTreatmentStep()->get();
+        dd($listTreatmentStep);
         $result = [];
         foreach ($listTreatmentStep as $treatmentStep) {
             $result[] = $treatmentStep->belongsToStep()->first();

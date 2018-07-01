@@ -122,4 +122,8 @@ class TreatmentController extends Controller
         }
 
     }
+
+    public function testFunction(){
+        dd($this->showTreatmentStepForTreatment(40));
+    }
 }
