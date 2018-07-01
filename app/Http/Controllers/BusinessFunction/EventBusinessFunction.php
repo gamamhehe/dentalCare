@@ -68,4 +68,8 @@ trait EventBusinessFunction
             return $event->discount;
         }else return 0;
     }
+    public function getList(){
+        $event = Event::all();
+        return $event;
+    }
 }
