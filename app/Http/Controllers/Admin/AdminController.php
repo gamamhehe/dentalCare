@@ -781,7 +781,7 @@ class AdminController extends Controller
             ]);
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 1,
-                'treatment_step_id' => 1,
+                'step_id' => 1,
                 'description' => 'cho phuc'
             ]);
 
@@ -793,7 +793,7 @@ class AdminController extends Controller
             ]);
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 2,
-                'treatment_step_id' => 2,
+                'step_id' => 2,
                 'description' => 'cho phuc'
             ]);
 
@@ -816,7 +816,7 @@ class AdminController extends Controller
             ]);
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 3,
-                'treatment_step_id' => 1,
+                'step_id' => 1,
                 'description' => 'cho phuc'
             ]);
 
@@ -828,7 +828,7 @@ class AdminController extends Controller
             ]);
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 4,
-                'treatment_step_id' => 2,
+                'step_id' => 2,
                 'description' => 'cho phuc'
             ]);
 
