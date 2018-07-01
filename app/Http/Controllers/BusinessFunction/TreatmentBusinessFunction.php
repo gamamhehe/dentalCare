@@ -226,4 +226,8 @@ trait TreatmentBusinessFunction
         }
         return $result;
     }
+
+    public function createMedicineForTreatmentDetailBusiness(){
+
+    }
 }

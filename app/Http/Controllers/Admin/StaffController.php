@@ -16,8 +16,8 @@ class StaffController extends Controller
 
     public function loginGet(Request $request)
     {
-        $sessionUser = $request->session()->get('role', -1);
-        if ($sessionUser != -1) {
+        $sessionUser = $request->session()->get('currentAdmin', null);
+        if ($sessionUser != null) {
             return redirect()->route('admin.dashboard');
         }
         return view('admin.login');
