@@ -29,9 +29,7 @@ trait TreatmentBusinessFunction
         $patient = Patient::where('id', $id)->first();
         $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
 
-//        $patient = Patient::where('id',$id)->first();
-//            $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
-//
+
 //            foreach ($treatmentHistoryList as $treatmentHistory) {
 //                $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
 //

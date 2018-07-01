@@ -26,11 +26,14 @@ Route::get('/getDB','Admin\HomeController@getDB');
 Route::get('/banggia','Admin\HomeController@BangGiaDichVu');
 Route::get('/tintuc/{id}','Admin\HomeController@getNewsWebUser');
 Route::get('/event','Admin\HomeController@eventLoad');
+Route::get('/event/{id}','Admin\HomeController@eventLoadByID');
 Route::get('/myProfile/{id}','Admin\HomeController@myProfile');
 Route::get('/gioithieu','Admin\HomeController@aboutUs');
-Route::get('/danhsachchitra','Admin\PaymentController@getPaymentOfUser');
+Route::get('/danhsachchitra','Admin\PaymentController@getOfUser');
 Route::get('/lichsubenhan','Admin\TreatmentController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
+Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
+
 
 
 // end webuser

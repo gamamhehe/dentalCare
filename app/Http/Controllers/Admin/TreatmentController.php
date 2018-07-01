@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Model\TreatmentHistory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,13 +14,18 @@ use Yajra\Datatables\Facades\Datatables;
 class TreatmentController extends Controller
 {
     use TreatmentBusinessFunction;
+
     //
     public function showTreatmentHistory(Request $request){
         $patient = $request->session()->get('currentPatient', null);
+        $result =[];
         if($patient){
             $idPatient = $patient->id;
             $result = $this->getTreatmentHistory($idPatient);
+
         }
+
+        dd($patient);
         return view('WebUser.TreatmentHistory', ['listTreatmentHistory'=>$result]);
     }
 

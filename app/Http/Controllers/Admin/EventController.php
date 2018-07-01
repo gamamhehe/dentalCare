@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\EventBusinessFunction;
-use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
 use App\Model\News;
 use App\Model\Treatment;
 use App\Model\Event;

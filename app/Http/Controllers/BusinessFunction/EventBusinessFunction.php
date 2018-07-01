@@ -13,13 +13,16 @@ use App\Model\Absent;
 use App\Model\Event;
 use App\Model\Feedback;
 use App\Model\Role;
+use App\Model\News;
+use App\Model\NewsType;
+use App\Model\Type;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
 
 trait EventBusinessFunction
 {
-    public function createEventBusiness($Event){
+    public function createEventBusiness($EventBusinessFunction){
         DB::beginTransaction();
         try{
             $NewEvent = new Event();
@@ -68,8 +71,19 @@ trait EventBusinessFunction
             return $event->discount;
         }else return 0;
     }
-    public function getList(){
+    public function getListEvent(){
+       $typeNews =  NewsType::where('type_id',2)->get();
+        $event=[];
+        foreach($typeNews as $x)
+        {
+            $event[]= $x->belongsToNews()->first();
+        }
+        dd($event);
+        return $event;
+    }
+     public function getTopEvent(){
         $event = Event::all();
+        dd($event);
         return $event;
     }
 }

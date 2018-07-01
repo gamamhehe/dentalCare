@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Model\Appointment;
 use App\Model\Event;
 use App\Model\Patient;
@@ -34,6 +35,7 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     use UserBusinessFunction;
+    use PatientBusinessFunction;
 
     //
 
@@ -63,6 +65,8 @@ class AdminController extends Controller
         }
         return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
     }
+
+
 
     public function dashboard(Request $request)
     {

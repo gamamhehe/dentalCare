@@ -88,4 +88,38 @@ trait NewsBussinessFunction
 
         }
     }
+    public function getListNewsOfEvent(){
+        $typeNews =  NewsType::where('type_id',2)->get();
+        $event=[];
+        foreach($typeNews as $x)
+        {
+            $event[]= $x->belongsToNews()->first();
+        }
+        
+       return $event;
+    }
+    public function getNewestNews(){
+        $typeNews =  NewsType::where('type_id',2)->get();
+        $event=[];
+        foreach($typeNews as $x)
+        {
+            $event[]= $x->belongsToNews()->first();
+        }
+        $largestID=0;
+        if($event){
+                foreach ($event as $key ) {
+                $term = $key->id;
+                $largestID = max($largestID,$term);
+                }
+            $newestEvent = News::where('id', $largestID)->first(); 
+
+            return $newestEvent;    
+        }else{
+             $newestEvent = News::where('id',1)->first(); 
+            return $newestEvent;
+        }
+
+
+       
+    }
 }

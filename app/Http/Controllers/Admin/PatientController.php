@@ -13,24 +13,19 @@ class PatientController extends Controller
     use UserBusinessFunction;
     public function login(Request $request){
 
-//        $this->validate($request, [
-//            'phone' => 'required|min:10|max:11',
-//            'password' => 'required|min:6'
-//        ]);
+        $this->validate($request, [
+            'phone' => 'required|min:10|max:11',
+            'password' => 'required|min:6'
+        ]);
         $user = $this->checkLogin($request->phone, $request->password);
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
-
-            if ($roleID == 2) {
+            if ($roleID == 4) {
                 session(['currentUser' => $user]);
                 $listPatient = $user->hasPatient()->get();
                 session(['listPatient' => $listPatient]);
-                foreach ($listPatient as $patient){
-                    if ($patient->is_parent == 1){
-                        session(['currentPatient' => $patient]);
-                    }
+                session(['currentPatient' => $listPatient[0]]);
 
-                }
                 return redirect()->intended(route('homepage'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));

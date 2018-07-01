@@ -30,6 +30,7 @@
 }
 .leftmenu{
     margin-left: 2em;
+    width: 100%;
 }
 .borderImg{
     border: solid 3px red;
@@ -40,10 +41,7 @@ hoverImg{
 .firstleftmenu{
     margin-top: 20px;
 }
-.more-content, .more-content ul {
-    padding: 0;
-    list-style: none;
-}
+
 .more-content li {
     list-style: none;
     display: block;
@@ -51,12 +49,12 @@ hoverImg{
     border: 1px solid #eeeeee;
     border-radius: 4px;
     margin-bottom: 10px;
-    padding: 6px 12px;
+    padding: 2px 4px;
 }
 .more-content li:before {
     content: "\f046";
     font-family: 'FontAwesome';
-    padding-right: 8px;
+    /*padding-right: 8px;*/
     display: inline;
     color: #1DBC60;
 }
