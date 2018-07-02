@@ -34,10 +34,11 @@
                 <div class="form-group">
                     <form method ="get" class="form-horizontal" action="{{route('testFunction')}}">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                        <input type="checkbox" name="Absent[]" value="1">
-                        <input type="checkbox" name="Absent[]" value="2">
-                        <input type="checkbox" name="Absent[]" value="3">
-                        <input type="checkbox" name="Absent[]" value="4">
+                        <input type="hidden" name="Absent[]" value="1">
+                        <input type="hidden" name="Quantity[]" value="1">
+                        <input type="text" name="Absent[]" value="2">
+                        <input type="text" name="Absent[]" value="3">
+                        <input type="text" name="Absent[]" value="4">
                         <label>Description</label>
                             <button type="submit" class="col-md-3 btn btn-default btn-md" style="margin-right: 10px" onclick="checkValid">Create Question</button>
 

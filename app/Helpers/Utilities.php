@@ -78,10 +78,9 @@ class Utilities
                         ]
                     ]
                 );
-
                 $response = $request->getBody()->getContents();
                 $responseObj = json_decode($response);
-                self::logDebug("Firebase Appointment:  Response is " . $responseObj);
+                self::logDebug("Firebase Appointment:  Response is " . $response);
                 return $responseObj;
             }
         } catch (GuzzleException $ex) {
