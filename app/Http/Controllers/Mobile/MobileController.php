@@ -30,7 +30,7 @@ class MobileController extends Controller
     {
 //      $response =  Utilities::sendRemindingAppointment('01678589696');
         $currentDateTime = new \DateTime();
-        return response()->json($currentDateTime->format('Y-m-d'));
+        return response()->json($currentDateTime->format('Y-m-d H:i:s'));
 
     }
 
