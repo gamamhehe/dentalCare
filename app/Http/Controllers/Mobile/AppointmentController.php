@@ -73,9 +73,10 @@ class AppointmentController extends Controller
         $phone = $request->input('phone');
         $note = $request->input('note');
         $bookingDate = $request->input('booking_date');
-        $result = $this->createAppointment($bookingDate, $phone, $note);
+        $result = $this->createAppointment($bookingDate, $phone, $note,null, null);
         if ($result != null) {
-            return response()->json($result, 200);
+            $listAppointment = $this->getAppointmentByPhone($phone);
+            return response()->json($listAppointment, 200);
         } else {
 
             $error = new \stdClass();
