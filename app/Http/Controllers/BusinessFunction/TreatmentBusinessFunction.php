@@ -45,8 +45,6 @@ trait TreatmentBusinessFunction
         $listResult = [];
         $patient = Patient::where('id', $id)->first();
         $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
-<<<<<<< HEAD
-=======
 
 
 //            foreach ($treatmentHistoryList as $treatmentHistory) {
@@ -61,7 +59,6 @@ trait TreatmentBusinessFunction
 //                }
 
 
->>>>>>> UAT
         foreach ($treatmentHistoryList as $treatmentHistory) {
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
             foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail) {

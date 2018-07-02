@@ -117,10 +117,5 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-<<<<<<< HEAD
-Route::get('/testFunction','Admin\AbsentController@approveAbsent')->name('testFunction');
-Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
-=======
 Route::get('/testFunction','Admin\AbsentController@approve')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
->>>>>>> UAT
