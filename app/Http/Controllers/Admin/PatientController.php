@@ -26,14 +26,17 @@ class PatientController extends Controller
             'password' => 'required|min:6'
         ]);
         $user = $this->checkLogin($request->phone, $request->password);
+
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID == 4) {
+
                 session(['currentUser' => $user]);
+
                 $listPatient = $user->hasPatient()->get();
                 session(['listPatient' => $listPatient]);
-                session(['currentPatient' => $listPatient[0]]);
 
+                session(['currentPatient' => $listPatient[0]]);
                 return redirect()->intended(route('homepage'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));

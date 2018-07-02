@@ -782,6 +782,33 @@ class AdminController extends Controller
                 'gender' => 'FEMALE',
                 'district_id' => 1,
             ]);
+            Patient::create([
+                'name' => 'Bệnh Nhân 1',
+                'address' => '188 Cầu Đường',
+                'phone' => '01279011099',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'FEMALE',
+                'avatar' => 'assets/images/icon/user.jpg',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Bệnh Nhân 2',
+                'address' => '188 Cầu Đường',
+                'phone' => '01279011099',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'FEMALE',
+                'avatar' => 'assets/images/icon/user1.jpg',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Bệnh Nhân 3',
+                'address' => '188 Cầu Đường',
+                'phone' => '01279011099',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'FEMALE',
+                'avatar' => 'assets/images/icon/user2.jpg',
+                'district_id' => 1,
+            ]);
             TreatmentHistory::create([
                 'treatment_id' => 1,
                 'patient_id' => 1,
