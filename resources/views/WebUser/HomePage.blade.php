@@ -54,8 +54,8 @@
                 @if(Session::has('currentUser'))
                     <li class="nav-item dropdown ">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                            <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
-                                 class="img-fluid img-responsive" style="max-height: 25px;">
+                            {{--<img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"--}}
+                                 {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
 
                         </a>
                         <ul class="dropdown-menu"
@@ -66,14 +66,14 @@
                                 <div class="container" style=";padding:10px 0px; ">
                                     <div class="row">
                                         <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
-                                            <img src="{{Session::get('currentPatient')->avatar}}"
-                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
+                                            {{--<img src="{{Session::get('currentPatient')->avatar}}"--}}
+                                                 {{--class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">--}}
                                         </div>
                                         @foreach(\Session::get('listPatient') as $key => $value)
                                             <div class="col-sm-2"  >
 
-                                                <img src="{{ $value->avatar }}"
-                                                     class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
+                                                {{--<img src="{{ $value->avatar }}"--}}
+                                                     {{--class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">--}}
                                             </div>
                                         @endforeach
                                     </div>
@@ -83,7 +83,7 @@
                             <li class="user-header" id="acc1" style="display: block">
                                 <p>
 
-                                    {{Session::get('currentPatient')->name}}
+                                    {{--{{Session::get('currentPatient')->name}}--}}
                                 </p>
                             </li>
                             <li class="user-header" id="acc2" style="display: none">
