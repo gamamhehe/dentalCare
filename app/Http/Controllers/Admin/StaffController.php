@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Staff;
+use App\Model\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,7 +15,7 @@ class StaffController extends Controller
     //
     use UserBusinessFunction;
     use StaffBusinessFunction;
-
+    use AppointmentBussinessFunction;
     public function loginGet(Request $request)
     {
         $sessionUser = $request->session()->get('currentAdmin', null);
@@ -79,5 +81,9 @@ class StaffController extends Controller
 
     public function getList(){
         return $this->getListStaff();
+    }
+
+    public function viewAppointment(){
+        $listAppointment = $this->viewAppointmentForDentist(1);
     }
 }

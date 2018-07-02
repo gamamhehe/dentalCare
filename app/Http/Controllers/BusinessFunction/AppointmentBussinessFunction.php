@@ -16,6 +16,7 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
+use Carbon\Carbon;
 
 trait AppointmentBussinessFunction
 {
@@ -375,7 +376,28 @@ trait AppointmentBussinessFunction
         return $result;
     }
 
+    public function saveAppointment($appointment){
+        DB::beginTransaction();
+        try {
+            $appointment->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
+
     public function checkAppointmentForPatient($phone){
-        Appointment::where('phone', $phone);
+        return Appointment::where('phone', $phone)
+            ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
+            ->where('is_coming', false)
+            ->first();
+    }
+
+    public function viewAppointmentForDentist($dentist_id){
+        return Appointment::where('staff_id', $dentist_id)
+            ->where('start_time', '>=', Carbon::now()->format('Y-m-d'))
+            ->get();
     }
 }
