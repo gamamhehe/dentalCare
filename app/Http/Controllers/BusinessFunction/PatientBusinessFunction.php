@@ -10,7 +10,8 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Patient;
-use Illuminate\Support\Facades\DB; 
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 trait PatientBusinessFunction
 {
