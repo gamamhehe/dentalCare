@@ -13,7 +13,7 @@ class MedicineController extends Controller
 {
     use MedicineBusinessFunction;
 
-    public function create(Request $request)
+    public function createNews(Request $request)
     {
         if($this->createMedicine($request->all())){
             return redirect()->route("admin.list.medicines")->withSuccess("Sự kiện đã được tạo");

@@ -17,6 +17,9 @@ class PaymentController extends Controller
     public function getOfUser(Request $request)
     {
         $currentUser = $request->session()->get('currentUser', null);
+
+        $listPayment = $this->getPaymentByPhone($currentUser->phone);
+        dd($currentUser);
         return view("WebUser.Payment", ['Payment' => $this->getPaymentByPhone($currentUser->phone)]);
     }
 

@@ -9,11 +9,13 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
 use App\Model\User;
 use App\Model\UserHasRole;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +25,7 @@ use Mockery\Exception;
 
 class UserController extends Controller
 {
-
+    use PatientBusinessFunction;
     use UserBusinessFunction;
     use TreatmentBusinessFunction;
 
@@ -43,7 +45,6 @@ class UserController extends Controller
 
                 $user->phone = $phone;
                 $user->password = Hash::make($password);
-                $user->isDeleted = 0;
 
                 $patient = new Patient();
                 $patient->phone = $phone;
@@ -56,8 +57,10 @@ class UserController extends Controller
                 ////HASH
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
-                $userHasRole->role_id = 0;
-                $this->registerPatient($user, $patient, $userHasRole);
+                $userHasRole->role_id = 4;
+                $userHasRole->start_time =   Carbon::now();
+                $this->createUserWithRole($user,$patient, $userHasRole);
+
                 return response()->json($patient, 200);
             } else {
                 $error = new \stdClass();
@@ -77,7 +80,7 @@ class UserController extends Controller
      * @param Request $request
      * @return json
      */
-    public function loginPatient(Request $request)
+    public function loginUser(Request $request)
     {
         try {
             $phone = $request->input('phone');
@@ -287,13 +290,13 @@ class UserController extends Controller
         $token = $request->input('noti_token');
         $phone = $request->input('phone');
         $user = $this->getUserByPhone($phone);
-        if ($user!=null) {
+        if ($user != null) {
             $user->noti_token = $token;
             $result = $this->updateUser($user);
-            if($result){
-            return response()->json("Change firebase notification token successful", 200);
+            if ($result) {
+                return response()->json("Change firebase notification token successful", 200);
 
-            }else{
+            } else {
                 return response()->json("change firebase notification token error", 400);
             }
         } else {

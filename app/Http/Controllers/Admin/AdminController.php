@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Model\Appointment;
 use App\Model\Event;
 use App\Model\Patient;
@@ -34,8 +35,11 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     use UserBusinessFunction;
+    use PatientBusinessFunction;
 
     //
+
+
 
 
     public function dashboard(Request $request)
@@ -673,7 +677,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'start_time' => '2018-07-21 10:05:42',
             ]);
             Appointment::create([
@@ -681,7 +685,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'start_time' => '2018-06-22 10:05:42',
             ]);
             Appointment::create([
@@ -689,7 +693,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'start_time' => '2018-06-24 12:05:42',
             ]);
             Appointment::create([
@@ -697,7 +701,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'start_time' => '2018-06-28 10:05:42',
             ]);
             Appointment::create([
@@ -705,7 +709,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'start_time' => '2018-06-27 10:05:42',
             ]);
             Appointment::create([
@@ -713,7 +717,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'start_time' => '2018-06-26 11:05:42',
             ]);
             Appointment::create([
@@ -721,7 +725,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'start_time' => '2018-06-22 19:05:42',
             ]);
             Appointment::create([
@@ -729,7 +733,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'start_time' => '2018-06-27 16:05:42',
             ]);
 
@@ -775,7 +779,7 @@ class AdminController extends Controller
             ]);
             TreatmentDetail::create([
                 'treatment_history_id' => 1,
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'create_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
@@ -787,7 +791,7 @@ class AdminController extends Controller
 
             TreatmentDetail::create([
                 'treatment_history_id' => 1,
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'create_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
@@ -810,7 +814,7 @@ class AdminController extends Controller
             ]);
             TreatmentDetail::create([
                 'treatment_history_id' => 2,
-                'dentist_id' => 2,
+                'staff_id' => 2,
                 'create_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
@@ -822,7 +826,7 @@ class AdminController extends Controller
 
             TreatmentDetail::create([
                 'treatment_history_id' => 2,
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'create_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
@@ -864,7 +868,7 @@ class AdminController extends Controller
                 'start_time' => Carbon::now(),
                 'note' => 'dume lo di kham di',
                 'phone' => '01279011096',
-                'dentist_id' => 1,
+                'staff_id' => 1,
                 'numerical_order' => '1',
                 'estimated_time' => '30'
             ]);

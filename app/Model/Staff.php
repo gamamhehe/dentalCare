@@ -13,7 +13,7 @@ class Staff extends Model
         return $this->belongsTo('App\Model\User','phone', 'phone');
     }
     public function hasAbsent(){
-        return $this->hasMany('App\Model\Absent', 'staff_id', 'id');
+        return $this->hasMany('App\Model\RequestAbsent', 'staff_id', 'id');
     }
     public function approveAbsent(){
         return $this->hasMany('App\Model\Absent', 'staff_approve_id', 'id');

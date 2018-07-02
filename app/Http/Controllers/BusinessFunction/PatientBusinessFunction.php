@@ -10,7 +10,8 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Patient;
-use GuzzleHttp\Psr7\Request;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 trait PatientBusinessFunction
 {
@@ -68,7 +69,6 @@ trait PatientBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            Log::info($e->getMessage());
             throw new Exception($e->getMessage());
         }
     }

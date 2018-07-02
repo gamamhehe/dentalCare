@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Mobile;
 
+use App\Helpers\Utilities;
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Model\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,12 +19,22 @@ use GuzzleHttp\Client;
 class MobileController extends Controller
 {
 
+    use AppointmentBussinessFunction;
+
     /**
      *Dummy code to test laravel function
      * @GET
      * @param Request $request
      */
     public function test(Request $request)
+    {
+//      $response =  Utilities::sendRemindingAppointment('01678589696');
+        $currentDateTime = new \DateTime();
+        return response()->json($currentDateTime->format('Y-m-d H:i:s'));
+
+    }
+
+    public function tests2(Request $request)
     {// Configure client
         $config = Configuration::getDefaultConfiguration();
         $smsApiToken = env('SMS_API_TOKEN', false);

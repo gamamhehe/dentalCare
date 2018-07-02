@@ -52,7 +52,7 @@
                 <div class="row layout" style="margin-bottom: 1em;margin-right: 4em" >
 
                     <div class=""  style="margin-top: 1em;padding-bottom: 5em;">
-                        <button type="submit" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Create Question</button>
+                        <button type="submit" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Hoàn tất chỉnh sửa</button>
                     </div>
                 </div>
 
