@@ -11,7 +11,63 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\AnamnesisCatalog;
 use App\Model\AnamnesisPatient;
+use DB;
 
 trait AnamnesisBusinessFunction
 {
+    public function createAnamnesis($input){
+        DB::beginTransaction();
+        try {
+            $AnamnesisCatalog = new AnamnesisCatalog;
+            $AnamnesisCatalog->name = $input['name'];
+            $AnamnesisCatalog->description =  $input['description'];
+            $AnamnesisCatalog->save();
+            $AnamnesisCatalog->save();
+            DB::commit();
+            return true;
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+
+        }
+    }
+    public function getAllAnamnesis(){
+        $listAnamnesis = AnamnesisCatalog::all();
+        return $listAnamnesis;
+    }
+    public function deletAnamnesis($id)
+    {
+        DB::beginTransaction();
+        try{
+            $AnamnesisCurrent = $this->getAnamnesis($id);
+            $AnamnesisCurrent->delete();
+            DB::commit();
+            return true;
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+    }
+    public function editAnamnesis($input,$id){
+        DB::beginTransaction();
+        try{
+
+            $AnamnesisCatalog = AnamnesisCatalog::where('id', $id)->first();
+            $AnamnesisCatalog->name = $input['name'];
+            $AnamnesisCatalog->description =  $input['description'];
+            $AnamnesisCatalog->save();
+            DB::commit();
+            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh đã được chỉnh sửa");
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh chưa được chỉnh sửa");
+        }
+    }
+    public function getAnamnesis($id){
+        $AnamnesisCatalog = AnamnesisCatalog::find($id);
+        return $AnamnesisCatalog;
+    }
 }

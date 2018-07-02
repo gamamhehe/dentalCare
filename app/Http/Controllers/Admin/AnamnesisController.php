@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
 use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
 use App\Model\AnamnesisCatalog;
 use App\Model\News;
@@ -13,26 +14,19 @@ use DB;
 class AnamnesisController extends Controller
 {
     use NewsBussinessFunction;
-    public function createAnamnesis(Request $request){
+    use AnamnesisBusinessFunction;
 
-        $input = $request->all();
-
-        $AnamnesisCatalog = new AnamnesisCatalog;
-        $AnamnesisCatalog->name = $input['name'];
-        $AnamnesisCatalog->description =  $input['description'];
-        $AnamnesisCatalog->save();
-
-        if($AnamnesisCatalog){
-            return redirect()->route("admin.list.anamnesis")->withSuccess("Bài viết đã được tạo");
+    public function create(Request $request){
+        if($this->createAnamnesis($request->all())){
+            return redirect()->route("admin.list.anamnesis")->withSuccess("Loại bệnh đã được tạo");
         }else{
-            return redirect('admin/Anamnesis/list')->withSuccess("Bài viết chưa được tạo");
+            return redirect('admin/Anamnesis/list')->withSuccess("Loại bệnh chưa được tạo");
         }
 
 
     }
-
-    public function getListAnamnesis(Request $request){
-        $AnamnesisCatalog = AnamnesisCatalog::all();
+    public function getList(Request $request){
+        $AnamnesisCatalog = $this->getAllAnamnesis();
 
         return Datatables::of($AnamnesisCatalog)
             ->addColumn('action', function($AnamnesisCatalog) {
@@ -40,50 +34,48 @@ class AnamnesisController extends Controller
             })->make(true);
 
     }
-    public function loadcreateAnamnesis(Request $request){
+    public function loadcreate(Request $request){
         return view('admin.anamnesis.create');
     }
-    public function loadListAnamnesis(Request $request){
+    public function loadList(Request $request){
 //
         return view('admin.anamnesis.list');
     }
-    public function loadEditAnamnesis($id){
-
+    public function loadEdit($id){
         $AnamnesisCatalog = AnamnesisCatalog::find($id);
-
         $content = $AnamnesisCatalog->image_header;
         return view("admin.anamnesis.edit",['AnamnesisCatalog'=>$AnamnesisCatalog,'xxx'=>$content]);
     }
-//    public function createdNews(Request $request){
-//
-//        $input = $request->all();
-//        DB::beginTransaction();
-//        try{
-//            $NewsCurrent = News::find($input['News_id']);
-//            $NewsCurrent->image_header = $input['image_header'];
-//            $NewsCurrent->content = $input['content'];
-//            $NewsCurrent->title = $input['title'];
-//            $NewsCurrent->save();
-//            DB::commit();
-//            return redirect()->route("admin.list.news")->withSuccess("Bài viết đã được chỉnh");
-//
-//        }catch(\Exception $e){
-//            DB::rollback();
-//            return redirect()->back()->withSuccess("Bài viết chưa được chỉnh");
-//
-//        }
-//
-//
-//    }
-//    public function deleteNews($id){
-//        $News = $this->deleteNews($id);
-//        dd($News);
-//        if($News){
-//            return redirect('/list-News')->withSuccess("Bài viết đã được xóa");
-//        }else{
-//            return redirect('/list-News')->withSuccess("Bài viết chưa được xóa");
-//        }
-//
-//
-//    }
+    public function edit(Request $request,$id){
+
+        if($this->editAnamnesis($request->all(),$id)){
+            return redirect()->route("admin.list.anamnesis")->withSuccess("Loại bệnh đã được tạo");
+        }else{
+            return redirect('admin/Anamnesis/list')->withSuccess("Loại bệnh chưa được tạo");
+        }
+
+
+
+    }
+    public function delete($id){
+        if( $this->deletAnamnesis($id)){
+            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh đã được xóa");
+        }else{
+            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh chưa được xóa");
+        }
+        DB::beginTransaction();
+        try{
+            $AnamnesisCurrent = AnamnesisCatalog::where('id', $id)->first();
+            $AnamnesisCurrent->delete();
+            DB::commit();
+            return true;
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+
+        }
+
+
+
+    }
 }

@@ -12,7 +12,7 @@
                   {{ csrf_field() }}
                    <div class="row" style="margin-bottom: 1em;">
                         
-                            <div class="col-sm-2"><label>Title </label></div>
+                            <div class="col-sm-2"><label>Tiêu đề</label></div>
                             <div class="col-sm-10" style="padding-right: 0;">  
                               
                               <input type="text" class="form-control input-width" id="title" name="title" placeholder="Input Title News" required="required" />
@@ -22,7 +22,7 @@
                     </div>
                     <div class="row" style="margin-bottom: 1em;">
                     
-                        <div class="col-sm-2"><label>Image Header </label></div>
+                        <div class="col-sm-2"><label>Ảnh tiêu đề</label></div>
                         <div class="col-sm-10">  
                             <div class="col-sm-10" style="padding-left: 0 " id="divan">  
                                 <input id="thumbnail" class="form-control" type="text" name="image_header"  required="required" readonly="readonly"  >  
@@ -30,21 +30,21 @@
                             </div>
                             <div class="col-sm-2"> 
                             <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary" >
-                               <i class="fa fa-picture-o"></i> Choose</a>
+                               <i class="fa fa-picture-o"></i> Chọn ảnh</a>
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-bottom: 1em;" >    
-                    <div>   
+                    <div class="row" style="margin-bottom: 1em;" >
+                        <div class="col-sm-2"><label>Nội dung </label></div>
+                    <div class="col-sm-10">
                     <textarea id="tinyMCE" name="content" rows="10"                              
                               placeholder="Write your message.." s ></textarea></div>         
-                 
-                    <div class=""  style="margin-top: 1em;">
-                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Create Question</button>
-                    </div>        
                   </div>
+                 <div class="row"> <div class=""  style="margin-top: 1em;">
+                         <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Tạo câu hỏi</button>
+                     </div></div>
 
-                </form>
+             </form>
          </div>
 
           

@@ -17,17 +17,51 @@ use App\Model\TreatmentHistory;
 use App\Model\TreatmentImage;
 use App\Model\User;
 use Carbon\Carbon;
+use DB;
 
 trait TreatmentBusinessFunction
 {
     use PaymentBusinessFunction;
     use EventBusinessFunction;
+    public function getAllTreatment(){
+        $listTreat = Treatment::all();
+        return $listTreat;
+    }
+    public function deleteTreatment($id){
+        DB::beginTransaction();
+        try{
+            $Treatment = Treatment::where('id', $id)->first();
+            $Treatment->delete();
+            DB::commit();
+            return true;
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
 
+        }
+    }
     public function getTreatmentHistory($id)
     {
         $listResult = [];
         $patient = Patient::where('id', $id)->first();
         $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
+<<<<<<< HEAD
+=======
+
+
+//            foreach ($treatmentHistoryList as $treatmentHistory) {
+//                $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
+//
+//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+//
+//                    $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
+//                }
+//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+//                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->first()->belongsToStep()->first();
+//                }
+
+
+>>>>>>> UAT
         foreach ($treatmentHistoryList as $treatmentHistory) {
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
             foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail) {
@@ -49,14 +83,40 @@ trait TreatmentBusinessFunction
             $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
             $treatmentHistory->patient = $patient;
             $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
-
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
 
+//
+//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
+//                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
+//
+//                }
 
+//        }
+//        dd($treatmentHistoryList);
         }
         return $treatmentHistoryList;
     }
-
+    public function createTreatment($input){
+        DB::beginTransaction();
+        try{
+            $Treatment = new Treatment();
+            $Treatment->name =  $input['name'];
+            $Treatment->treatment_category_id = $input['TreatmentCate'];
+            $Treatment->description =$input['description'];
+            $Treatment->max_price =(int)$input['max_price'];
+            $Treatment->min_price =(int)$input['min_price'];
+            $Treatment->save();
+            DB::commit();
+            return true;
+        }catch(\Exception $e){
+            DB::rollback();
+            return  false;
+        }
+    }
+    public function getTreatmentByID($id){
+        $Treatment = Treatment::find($id);
+        return $Treatment;
+    }
     public function getTreatmentHistoryByPatientId($id)
     {
         $patient = Patient::where('id', $id)->first();
@@ -65,6 +125,23 @@ trait TreatmentBusinessFunction
             return $treatmentHistories;
         }
         return null;
+    }
+    public function editTreatment($input,$id){
+        DB::beginTransaction();
+        try{
+            $Treatment = Treatment::find($id);
+            $Treatment->name =  $input['name'];
+            $Treatment->treatment_category_id = $input['TreatmentCate'];
+            $Treatment->description =$input['description'];
+            $Treatment->max_price =(int)$input['max_price'];
+            $Treatment->min_price =(int)$input['min_price'];
+            $Treatment->save();
+            DB::commit();
+            return true;
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+        }
     }
 
     public function getTreatmentHistories($phone)
@@ -98,7 +175,7 @@ trait TreatmentBusinessFunction
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;
             if ($payment) {
-                $this->updatePayment($total_price, $payment);
+                $this->updatePayment($total_price, $payment->id);
                 $idPayment = $payment->id;
             } else {
                 $idPayment = $this->createPayment($total_price, $phone);
@@ -203,5 +280,9 @@ trait TreatmentBusinessFunction
             }
         }
         return $result;
+    }
+
+    public function createMedicineForTreatmentDetailBusiness(){
+
     }
 }

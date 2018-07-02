@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post("user/login", "Mobile\UserController@loginPatient");
+Route::post("user/login", "Mobile\UserController@loginUser");
 Route::get("user/login", "Mobile\UserController@loginGET");
 Route::post("user/register", "Mobile\UserController@register");
 Route::post("user/bookAppointment", "Mobile\UserController@bookAppointment");

@@ -10,7 +10,72 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Patient;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait PatientBusinessFunction
 {
+    public function getPatientById($id)
+    {
+        $patient = Patient::where('id', $id)->first();
+        if ($patient != null) {
+            return $patient;
+        }
+        return null;
+    }
+
+    public function getPatient($phone)
+    {
+        $patients = Patient::where('phone', $phone)->get();
+        if ($patients != null) {
+            foreach ($patients as $item) {
+                $item->district = $item->belongsToDistrict()->first();
+                $item->city = $item->belongsToDistrict()->first()->belongsToCity()->first();
+            }
+            return $patients;
+        }
+        return null;
+    }
+
+    public function createPatient($patient, $userHasRole)
+    {
+        DB::beginTransaction();
+        try {
+            $patient->save();
+            $userHasRole->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
+
+    public function updatePatient($request, $idPatient)
+    {
+        DB::beginTransaction();
+        try {
+            $patient = Patient::find($idPatient);
+            $patient->name = $request->name;
+            $patient->address = $request->address;
+            $patient->phone = $request->phone;
+            $patient->date_of_birth = $request->date_of_birth;
+            $patient->gender = $request->gender;
+            $patient->avatar = $request->avatar;
+            $patient->district_id = $request->district_id;
+            $patient->is_parent = $request->is_parent;
+            $patient->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::info($e->getMessage());
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function getListPatient(){
+        return Patient::all();
+    }
 }

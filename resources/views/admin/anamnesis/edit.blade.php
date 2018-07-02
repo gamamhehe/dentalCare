@@ -7,7 +7,7 @@
                 <div class="row" style="text-align: center;">
                     <label><h1>Chỉnh sửa Bệnh Tiền Sử</h1></label>
                 </div>
-                <form method ="post" class="form-horizontal" action="{{$AnamnesisCatalog->id}}" enctype="multipart/form-data" id="createAnamnesis">
+                <form method ="post" class="form-horizontal" action="{{ route('admin.edit.anamnesis', ['id' => $AnamnesisCatalog->id]) }}" enctype="multipart/form-data" id="createNews">
                     {{ csrf_field() }}
                     <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
                         <div class="col-sm-3"><label>Tên bệnh </label></div>
@@ -23,7 +23,7 @@
 
                     </div>
                     <div class=""  style="margin-top: 1em;">
-                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Chỉnh sửa</button>
+                        <button type="submit" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Chỉnh sửa</button>
                     </div>
 
 
@@ -64,18 +64,14 @@
         });
         function validateQuestionBeforeCreate(evt,sel){
 
-            var title = document.getElementById('title').value;
-            var img = document.getElementById('thumbnail').value;
+            var name = document.getElementById('name').value;
+            var description = document.getElementById('description').value;
 
-            var textarea  =tinyMCE.get('tinyMCE').getContent({format: 'text'});
 
-            if($.trim(title) == ''){
-                swal("Vui lòng điền tiêu đề!", "", "error");
-            }else if($.trim(img) == ''){
-                swal("Vui lòng chọn ảnh!", "", "error");
-
-            }else if($.trim(textarea) == ''){
-                swal("Vui lòng thêm nội dung bài viết!", "", "error");
+            if($.trim(name) == ''){
+                swal("Vui lòng điền tên bệnh!", "", "error");
+            } else if($.trim(textarea) == ''){
+                swal("Vui lòng thêm mô tả bệnh!", "", "error");
             }
             else{
                 document.getElementById('createNews').submit();

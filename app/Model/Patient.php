@@ -8,7 +8,7 @@ class Patient extends Model
 {
     //
     protected $table = 'tbl_patients';
-    protected $fillable = ['name', 'address', 'phone', 'date_of_birth', 'gender', 'avatar', 'district_id', 'is_parent'];
+    protected $fillable = ['name', 'address', 'phone', 'date_of_birth', 'gender', 'avatar', 'district_id'];
 
     public function parent()
     {

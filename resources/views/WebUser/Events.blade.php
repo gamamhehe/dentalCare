@@ -62,7 +62,7 @@
                             <!-- User image -->
 
                             <li class="user-header">
-                                <div class="container" style=";padding:10px 0px;">
+                                <div class="container" style=";padding:10px 0px; position: absolute; ">
                                     <div class="row">
                                         <div class="col-sm-6 hoverImg" style="float: left;padding-left: 20px;">
                                             <img src="assets/images/icon/user.jpg"
@@ -82,16 +82,11 @@
                             </li>
                             <li class="user-header" id="acc1" style="display: block">
                                 <p>
-                                    Phúc Huỳnh
-                                    <small>Member since Nov. 2012</small>
+                                    {{ Session::get('currentPatient')->name }}
+
                                 </p>
                             </li>
-                            <li class="user-header" id="acc2" style="display: none">
-                                <p>
-                                    Lực
-                                    <small>Member since Nov. 2012</small>
-                                </p>
-                            </li>
+
                             <li class="a-hover">
                                 <a href="#">Lịch sử khám bệnh</a>
                             </li>
@@ -140,21 +135,42 @@
                                 <div class="col-ms-12 col-md-offset-12">
                                     <div class="panel panel-default">
                                         <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
-                                            <form method ="post" class="form-horizontal" action="/loginUser" enctype="multipart/form-data"  >
+
+                                            <form action="{!! url('/loginUser') !!}" method="Post">
                                                 {{ csrf_field() }}
-                                                <fieldset>
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="Phone" name="phone" id="phone"
-                                                               type="text">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="Password" name="password" id="password"
-                                                               type="password" value="">
-                                                    </div>
-                                                    <input class="btn btn-lg btn-success btn-block" type="submit"
-                                                           value="Login">
-                                                </fieldset>
+                                                <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                           required autofocus>
+                                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                                    @if ($errors->has('phone'))
+                                                        <span class="help-block">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group has-feedback">
+                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                                    @if ($errors->has('password'))
+                                                        <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                                    @endif
+                                                </div>
+                                                @if (\Session::has('fail'))
+                                                    <span class="help-block has-error" style="color: #dd4b39">
+                       <strong>{!! \Session::get('fail') !!}</strong>
+                </span>
+                                                @endif
+                                                <div class="row">
+                                                    <!-- /.col -->
+                                                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                                    <!-- /.col -->
+                                                </div>
                                             </form>
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -177,203 +193,16 @@
     <div class="row" style="background-color: white;padding-top: 1em;">
         {{--left--}}
         <div class="col-sm-8" style="background-color: white;padding-left: 2em;">
-            <div class="description">
-                <h2 style="text-align: center; font-size: 26px;"><span style="color: #ff0000;"><strong>&nbsp;NHA KHOA ĐANG CÓ CHƯƠNG TRÌNH KHUYẾN MÃI</strong></span></h2>
-                <p style="text-align: center;"><span style="color: #ff0000;"><strong>Giảm ngay 35% đến 50% - tại&nbsp;<strong>Phòng Khám Nha khoa </strong><a href="/" target="_blank"><span style="color: #ff0000;"><br></span></a> </strong> </span></p>
-                <p style="text-align: center;">&nbsp;</p>
-                <p><img src="http://hoanmydental.vn/templates/hoanmydental.vn/data/img/upload/gioithieu/hoanmygiam30.jpg" class="full-width"></p>
-                <p>&nbsp;</p>
-                <ul class="more-content">
-                    <li><a href="http://hoanmydental.vn/cac-loai-rang-su"><strong>Răng Sứ kim loại&nbsp;&nbsp;<span style="color: #ff6600;">700.000 VNĐ</span></strong></a></li>
-                    <li><a href="http://hoanmydental.vn/cac-loai-rang-su"><strong>Răng Sứ Titan&nbsp;<span style="color: #ff6600;">1.200.000 VNĐ</span></strong></a></li>
-                    <li><a href="http://hoanmydental.vn/cac-loai-rang-su"><strong>Răng Sứ Cecon <span style="color: #ff6600;">2.500.000 VNĐ</span></strong></a></li>
-                    <li><strong>Tẩy trắng răng <span style="color: #ff6600;">850.000 VNĐ</span></strong></li>
-                    <li><strong>Trám răng thẩm mỹ <span style="color: #ff6600;">250.000 VNĐ</span></strong></li>
-                    <li><a href="http://hoanmydental.vn/cam-ghep-implant"><strong>Implant <span style="color: #ff6600;">10.000.000 VNĐ</span></strong></a></li>
-                    <li><strong>Chỉnh nha niềng răng&nbsp;<span style="color: #ff6600;">20.000.000 VNĐ</span></strong></li>
-                    <li><a href="http://hoanmydental.vn/mat-dan-su-veneer-3d"><strong>Mặt dán Veneer sứ 3D :<span style="background-color: #ffffff; color: #ff6600;"> 3.000.000 VNĐ</span></strong></a></li>
-                    <li><strong>Răng toàn sứ Diamond : <span style="color: #ff6600;">3.500.000 VNĐ</span></strong></li>
-                </ul>
-                <p>&nbsp;</p>
-                <p><strong>Tham khảo bảng giá dịch vụ <strong>nha khoa&nbsp;</strong>bên dưới: giảm giá được áp dụng&nbsp;<span style="color: #ff0000;">đến hết&nbsp;2-6</span></strong></p>
-                <div>&nbsp;</div>
-                <table class="table table-bordered"><colgroup> <col width="50%"> <col width="50%"> </colgroup>
-                    <tbody>
-
-                    <tr class="rbg-1">
-                        <td colspan="2" rowspan="1">
-                            <h2 style="text-align: center;"><strong>Bảng giá dịch vụ điều trị nha khoa/ Price list</strong></h2>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span style="font-size: medium;">Danh mục dịch vụ / Services</span></td>
-                        <td><span style="font-size: medium;">Giá tham khảo / Prices</span></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><strong>Nhổ Răng</strong></p>
-                            <p>Tooth Extract</p>
-                        </td>
-                        <td>
-                            <p><strong>50.000 - 500.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><span style="color: #ff0000;"><strong><a style="color: #ff0000;" title="Cạo vôi đánh bóng" href="http://hoanmydental.vn/cao-voi-danh-bong">Cạo vôi đánh bóng</a></strong></span></p>
-                            <p>Plaque Removal - Flossing</p>
-                        </td>
-                        <td>
-                            <p><strong>100.000 - 150.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><strong>Điều trị nội nha</strong></p>
-                            <p>Pulp - treatment</p>
-                        </td>
-                        <td>
-                            <p><strong>200.000 - 500.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><strong>Trám răng thẩm mỹ</strong></p>
-                            <p>Aesthetic Tooth filling&nbsp;</p>
-                        </td>
-                        <td>
-                            <p><strong>100.000 - 500.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><span style="color: #ff0000;"><strong>Phục hình tháo lắp</strong></span></p>
-                            <p>Removable Restoration</p>
-                        </td>
-                        <td>
-                            <p><strong>150.000 - 500.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><strong>Hàm khung</strong></p>
-                            <p>Teeth brace</p>
-                        </td>
-                        <td>
-                            <p><strong>1.500.000 - 2.000.000 VNĐ</strong>&nbsp;</p>
-                        </td>
-                    </tr>
-                    <tr style="height: 72px;">
-                        <td style="height: 72px; width: 145px;">
-                            <p><span style="color: #ff0000;"><strong>Răng sứ kim loại</strong></span></p>
-                            <p>Porcelain fused to metal tooth</p>
-                        </td>
-                        <td style="height: 72px; width: 145px;">
-                            <p><strong>1.000.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height: 72px;">
-                        <td style="height: 72px; width: 145px;">
-                            <p><span style="color: #ff0000;"><strong>Răng sứ Titan</strong></span></p>
-                            <p>Porcelain fused to Titan tooth&nbsp;</p>
-                        </td>
-                        <td style="height: 72px; width: 145px;">
-                            <p><strong>1.800.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height: 72px;">
-                        <td style="height: 72px; width: 145px;">
-                            <p><span style="color: #ff0000;"><strong>Răng sứ Cromcoban</strong></span></p>
-                            <p>Porcelain fused to Cromcoban tooth&nbsp;</p>
-                        </td>
-                        <td style="height: 72px; width: 145px;">
-                            <p><strong>2.500.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height: 72px;">
-                        <td style="height: 72px; width: 145px;">
-                            <p><span style="color: #ff0000;"><strong>Răng sứ Zirconia</strong></span></p>
-                            <p>Porcelain fused to Zirconia tooth</p>
-                        </td>
-                        <td style="height: 72px; width: 145px;">
-                            <p><strong>3.500.000 VNĐ</strong>&nbsp;</p>
-                        </td>
-                    </tr>
-                    <tr style="height: 72px;">
-                        <td style="height: 72px; width: 145px;">
-                            <p><strong>Răng sứ Cercon</strong></p>
-                            <p>Porcelain fused to Cercon tooth</p>
-                        </td>
-                        <td style="height: 72px; width: 145px;">
-                            <p><strong>4.000.000 VNĐ</strong>&nbsp;</p>
-                        </td>
-                    </tr>
-                    <tr style="height: 53px;">
-                        <td style="height: 53px; width: 145px;">
-                            <p><a title="Mặt dán sứ Veneer 3D" href="/mat-dan-su-veneer-3d"><span style="color: #ff0000;"><strong>Mặt dán toàn&nbsp;<strong>Sứ&nbsp;</strong>Veneer 3D</strong></span></a></p>
-                        </td>
-                        <td style="height: 53px; width: 145px;">
-                            <p><span style="color: #ff0000;"><strong>5.000.000 VNĐ</strong></span></p>
-                        </td>
-                    </tr>
-                    <tr style="height: 70.1563px;">
-                        <td style="height: 70.1563px; width: 145px;">
-                            <p><span style="color: #ff0000;"><strong><span style="background-color: #ffffff;">Răng toàn sứ Diamond</span></strong> </span></p>
-                        </td>
-                        <td style="height: 70.1563px; width: 145px;">
-                            <p><span style="color: #ff0000;"><strong><span style="background-color: #ffffff;">5.500.000 VNĐ&nbsp;</span></strong> </span></p>
-                        </td>
-                    </tr>
-                    <tr style="height: 85px;">
-                        <td style="height: 85px; width: 145px;">
-                            <p><strong>Tẩy trắng răng (tại nhà)</strong></p>
-                            <p>Teeth whitening (At home)&nbsp;</p>
-                        </td>
-                        <td style="height: 85px; width: 145px;">
-                            <p><strong>1.000.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height: 72px;">
-                        <td style="height: 72px; width: 145px;">
-                            <p><strong>Tẩy trắng răng (tại phòng khám)</strong></p>
-                            <p>Teeth whitening (At clinic)</p>
-                        </td>
-                        <td style="height: 72px; width: 145px;">
-                            <p><strong>1.200.000 - 2.000.000 VNĐ</strong></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><strong><a title="Chỉnh nha niềng răng" href="http://hoanmydental.vn/chinh-nha-nieng-rang">Chỉnh nha niềng răng</a></strong></p>
-                            <p>Orthodontics</p>
-                        </td>
-                        <td>
-                            <p><strong>15.000.000 - 30.000.000 VNĐ</strong>&nbsp;</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p><strong><a title="Cắm ghép răng Implant" href="http://hoanmydental.vn/cam-ghep-implant">Cắm ghép răng</a></strong></p>
-                            <p><span style="color: #ff0000;"><strong><span style="color: #000000;">Implant</span></strong> </span></p>
-                        </td>
-                        <td>
-                            <p><span style="color: #ff0000;"><strong>15.000.000 - 25.000.000 VNĐ</strong>&nbsp;</span></p>
-                        </td>
-                    </tr>
-                    <tr class="rbg-1" style="height: 68px;">
-                        <td style="text-align: center; height: 68px; width: 290px;" colspan="2" rowspan="1">
-                            <p><span style="font-family: 'trebuchet ms', geneva; font-size: large;"><strong>Toả sáng nụ cười xinh</strong></span></p>
-                            <p><span style="font-family: 'trebuchet ms', geneva;"><strong>Shine up with charming smile</strong></span></p>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p>&nbsp;</p>
-                    </div>
+            <div class="title">
+               <h1 style="text-align: center;padding: 1em;"> {{$NewEventNews->title}}</h1>
+            </div>
+            <div class="content">
+                {!! $NewEventNews->content !!}
+            </div>
         </div>
         {{--right--}}
         <div class="col-sm-4" style="background-color:white;height: 500px;">
-            <div class="" style="height:100px;padding-top: 2em;margin-bottom: 2em;" >
+            <div class="" style="height:100px;padding-top: 2em;margin-bottom: 1em;" >
                 <div class="text-xs-center Bacsititle">
                     <h5><strong>Danh sách Khuyến mại </strong></h5>
                     <div class="gach">
@@ -381,23 +210,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="border: 2px dashed #FF0000" >
-                <ul class="more-content" style="list-style-type: none;">
-                    <li class="a-hover leftmenu">
-                        <img src="assets/images/icon/nhorang.png" class="img-responsive img-fluid" alt=""">    <a href="#">Khuyến mãi tháng 5</a>
-                    </li>
-                    <li class="a-hover leftmenu" >
-                        <img src="assets/images/icon/niengrang.png" class="img-responsive img-fluid" alt="">    <a href="#">Nhổ răng trẻ em miễn phí</a>
-                    </li>
-                    <li class="a-hover leftmenu" >
-                        <img src="assets/images/icon/caovoirang.png" class="img-responsive img-fluid" alt="">    <a href="#">Răng khỏe đẹp mùa tụ trường</a>
-                    </li>
-                    <li class="a-hover leftmenu" >
-                        <img src="assets/images/icon/trongimplent.png" class="img-responsive img-fluid" alt="">    <a href="#">Trắng răng giảm 20% nhân ngày 8/3</a>
-                    </li>
+            <div >
+                <ul class="more-content" style="padding: 2em;">
+                    @foreach($listNews as $News)
+                        <li class="a-hover leftmenu">
+                            <a href="/event/{{$News->id}}">{{$News->title}}</a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
+
     </div>
 
 </div>

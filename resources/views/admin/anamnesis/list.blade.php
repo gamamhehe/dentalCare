@@ -58,12 +58,12 @@
                 ],
             });
         });
-        function deleteNews(obj){
-            var linkDelete = "admin/deleteNews/";
+        function deleteAnamnesis(obj){
+            var linkDelete = "admin/deleteAnamnesis/";
             var id = obj.getAttribute("id");
             $.ajax(
                 {
-                    url: "deleteNews/"+id,
+                    url: "/admin/deleteAnamnesis/"+id,
                     method:"get",
                     data: {
                         id:id
@@ -72,6 +72,7 @@
                     {
                         $('#dup-table').DataTable().ajax.reload();
                     }
+
                 });
         }
     </script>
