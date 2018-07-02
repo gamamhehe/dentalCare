@@ -81,16 +81,8 @@ trait TreatmentBusinessFunction
             $treatmentHistory->patient = $patient;
             $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
-
-//
-//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
-//                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
-//
-//                }
-
-//        }
-//        dd($treatmentHistoryList);
         }
+
         return $treatmentHistoryList;
     }
     public function createTreatment($input){
