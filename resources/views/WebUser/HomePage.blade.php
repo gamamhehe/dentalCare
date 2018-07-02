@@ -21,8 +21,7 @@
     <link rel="stylesheet" href="/assets/user/css/mycss.css">
 </head>
 <body style="margin: 0px;padding: 0px;">
-
-<nav class="navbar navbar-light navbar-fixed-top   bg-faded thanhmenu">
+<nav class="navbar navbar-light     bg-faded thanhmenu">
     <div class="container">
         <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
                 data-target="#navmn">
@@ -52,10 +51,10 @@
                 </li>
                 <li class="nav-item">
 
-                        @if(Session::has('currentUser'))
+                @if(Session::has('currentUser'))
                     <li class="nav-item dropdown ">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                            <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
+                            <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
                                  class="img-fluid img-responsive" style="max-height: 25px;">
 
                         </a>
@@ -64,38 +63,42 @@
                             <!-- User image -->
 
                             <li class="user-header">
-                                <div class="container" style=";padding:10px 0px;">
+                                <div class="container" style=";padding:10px 0px; ">
                                     <div class="row">
-                                        <div class="col-sm-6 hoverImg" style="float: left;padding-left: 20px;">
-                                            <img src="assets/images/icon/user.jpg"
-                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image" onclick="changeInfo()" width="50px;">
+                                        <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
+                                            <img src="{{Session::get('currentPatient')->avatar}}"
+                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
                                         </div>
-                                        <div class="col-sm-6"  >
-                                            <img src="assets/images/icon/user.jpg"
-                                                 class="img-circle img-responsive img-fluid" alt="User Image"  id="divAcc2" width="50px;" onclick="changeInfo2()">
-                                        </div>
+                                        @foreach(\Session::get('listPatient') as $key => $value)
+                                            <div class="col-sm-2"  >
 
+                                                <img src="{{ $value->avatar }}"
+                                                     class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                                {{--<p>--}}
-                                {{--Alexander Pierce - Web Developer--}}
-                                {{--<small>Member since Nov. 2012</small>--}}
-                                {{--</p>--}}
+
                             </li>
                             <li class="user-header" id="acc1" style="display: block">
                                 <p>
-                                   Phúc Huỳnh
-                                    <small>Member since Nov. 2012</small>
+
+                                    {{Session::get('currentPatient')->name}}
                                 </p>
                             </li>
                             <li class="user-header" id="acc2" style="display: none">
                                 <p>
-                                   Lực
-                                    <small>Member since Nov. 2012</small>
-                                </p>
+                                @foreach(\Session::get('listPatient') as $key)
+                                    @if($key->id != Session::get('currentPatient')->id )
+                                        <h1>{{$key->name}}</h1>
+                                        @endif
+
+                                        @endforeach
+                                        </p>
                             </li>
+
                             <li class="a-hover">
-                                <a href="/lichsubenhan">Lịch sử khám bệnh</a>
+                                <a href="#">Lịch sử khám bệnh</a>
                             </li>
                             <li class="gachngang"></li>
                             <li class="  a-hover">
@@ -103,7 +106,7 @@
                             </li>
                             <li class="gachngang"></li>
                             <li class=" a-hover">
-                                <a href="/lichsubenhan"><span>Lịch hẹn</span></a>
+                                <a href="#/lichsubenhan/1"><span>Lịch hẹn</span></a>
                             </li>
 
                             <!-- Menu Body -->
@@ -122,18 +125,19 @@
                         </ul>
                     </li>
 
-                    @else
+                @else
                     <li class="nav-item dropdown ">
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" id="buttonLogin">
                             {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
-                                 {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
-                                Đăng Nhập
+                            {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
+                            Đăng Nhập
                         </a>
-                        <ul class="dropdown-menu"
+                        <ul class="dropdown-menu" id="drop"
                             style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
                             <!-- User image -->
                             <li class="user-header">
                                 Đăng nhập
+
                             </li>
                             <!-- Menu Body -->
 
@@ -142,20 +146,39 @@
                                 <div class="col-ms-12 col-md-offset-12">
                                     <div class="panel panel-default">
                                         <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
-                                            <form method ="post" class="form-horizontal" action="/loginUser" enctype="multipart/form-data"  >
+
+                                            <form action="{!! url('/loginUser') !!}" method="Post">
                                                 {{ csrf_field() }}
-                                                <fieldset>
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="Phone" name="phone" id="phone"
-                                                               type="text">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="Password" name="password" id="password"
-                                                               type="password" value="">
-                                                    </div>
-                                                    <input class="btn btn-lg btn-success btn-block" type="submit"
-                                                           value="Login">
-                                                </fieldset>
+                                                <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                           required autofocus>
+                                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                                    @if ($errors->has('phone'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('phone') }} </strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group has-feedback">
+                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                                    @if ($errors->has('password'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('password') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                @if (\Session::has('fail'))
+                                                    <span class="help-block has-error" style="color: #dd4b39">
+                                                       <strong>{!! \Session::get('fail') !!} </strong>
+                                                </span>
+                                                @endif
+                                                <div class="row">
+                                                    <!-- /.col -->
+                                                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                                    <!-- /.col -->
+
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -163,10 +186,8 @@
                             </li>
                         </ul>
                     </li>
-                        @endif
-
-
-                </li>
+                    @endif
+                    </li>
 
 
 
@@ -174,7 +195,6 @@
         </div>
     </div>
 </nav>
-
 <div class="top">
 
     <!-- start menu -->
@@ -450,16 +470,32 @@ background-position: center;">
 </body>
 </html>
 <script>
-    function changeInfo() {
-        document.getElementById("acc1").style.display= "block";
-        document.getElementById("acc2").style.display= "none";
-        document.getElementById("divAcc2").classList.remove("borderImg");
-        document.getElementById("divAcc1").classList.add("borderImg");
+    $(document).ready( function(){
+
+        var phone = '{{$errors->first('phone')}}';
+        var pass = '{{$errors->first('password')}}';
+        if(phone){
+            $("#drop").toggle();
+            $(document).click(function(){
+                $("#drop").toggle();
+            });
+        }else{
+
+        }
+    });
+    function changeInfo(id) {
+        var Chooseid = id;
+
+
+        $.ajax({
+            url: 'changeCP/' + Chooseid,
+            type:'GET',
+            success: function(result){
+                location.reload();
+            } ,error: function (data) {
+                alert(data);
+            }
+        });
     }
-    function changeInfo2() {
-        document.getElementById("acc1").style.display= "none";
-        document.getElementById("acc2").style.display= "block";
-        document.getElementById("divAcc2").classList.add("borderImg");
-        document.getElementById("divAcc1").classList.remove("borderImg");
-    }
+
 </script>
