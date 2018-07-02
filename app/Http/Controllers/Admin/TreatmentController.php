@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Treatment;
 use App\Model\TreatmentCategory;
-use DB;
 use Yajra\Datatables\Facades\Datatables;
+use Illuminate\Support\Facades\DB;
+
 class TreatmentController extends Controller
 {
     use TreatmentBusinessFunction;
@@ -124,6 +125,6 @@ class TreatmentController extends Controller
     }
 
     public function testFunction(){
-        dd($this->showTreatmentStepForTreatment(40));
+        dd($this->createTreatmentProcess(1, 1,11, 50000, 'abc'));
     }
 }

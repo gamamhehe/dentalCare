@@ -17,6 +17,7 @@ use App\Model\TreatmentHistory;
 use App\Model\TreatmentImage;
 use App\Model\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 trait TreatmentBusinessFunction
 {
@@ -172,7 +173,7 @@ trait TreatmentBusinessFunction
             foreach ($listStep as $step) {
                 TreatmentDetailStep::create([
                     'treatment_detail_id' => $idTreatmentDetail,
-                    'treatment_step_id' => $step->id,
+                    'step_id' => $step->id,
                     'description' => $description,
                 ]);
             }
@@ -206,7 +207,6 @@ trait TreatmentBusinessFunction
     public function showTreatmentStepForTreatment($idTreatment)
     {
         $listTreatmentStep = Treatment::find($idTreatment)->hasTreatmentStep()->get();
-        dd($listTreatmentStep);
         $result = [];
         foreach ($listTreatmentStep as $treatmentStep) {
             $result[] = $treatmentStep->belongsToStep()->first();

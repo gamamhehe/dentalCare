@@ -60,12 +60,16 @@ trait EventBusinessFunction
 
     public function checkDiscount($idTreatment)
     {
-        $event = Event::where('treatment_id', '=', $idTreatment)
+        $listEvent = Event::where('treatment_id', '=', $idTreatment)
             ->where('start_date', '<', Carbon::now())
             ->where('end_date', '>', Carbon::now())
             ->get();
-        if($event){
-            return $event->discount;
+        if($listEvent){
+            $result = 0;
+            foreach ($listEvent as $event){
+                $result += $event->discount;
+            }
+            return $result;
         }else return 0;
     }
     public function getList(){

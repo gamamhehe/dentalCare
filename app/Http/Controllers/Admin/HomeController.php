@@ -71,9 +71,8 @@ class HomeController extends Controller
 
 
 
-    public function testFunction(){
-        User::All();
-        $this->getCurrentNumberDentist();
+    public function testFunction(Request $request){
+        dd($request->Absent);
     }
 
     public function registerPost(Request $request){

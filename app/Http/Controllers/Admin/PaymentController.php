@@ -43,9 +43,9 @@ class PaymentController extends Controller
         $paymentDetail->staff_id = $idStaff;
         $paymentDetail->payment_id = $request->payment_id;
         $paymentDetail->received_money = $request->received_money;
-        $paymentDetail->create_date = Carbon::now();
+        $paymentDetail->date_create = Carbon::now();
         $this->createPaymentDetail($paymentDetail);
-        $this->updatePayment(-($request->received_money), $request->payment_id);
+        $this->updatePaymentPrepaid($request->received_money, $request->payment_id);
         return true;
     }
 }
