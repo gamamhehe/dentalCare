@@ -25,7 +25,7 @@ class HistoryTreatmentController extends Controller
     public function getByPhone($phone)
     {
         try {
-            $historyTreatments = $this->getByPhone($phone);
+            $historyTreatments = $this->getTreatmentHistories($phone);
             return response()->json($historyTreatments, 200);
         } catch (\Exception $ex) {
             $error = new \stdClass();
