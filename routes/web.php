@@ -98,6 +98,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
     Route::get('/live_search', 'Admin\AdminController@index');
     Route::get('/live_search/action', 'Admin\AdminController@action')->name('live_search.action');
+    Route::get('/live_search/{xx}', 'Admin\AdminController@action1') ;
 
 });
 

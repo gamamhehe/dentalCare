@@ -14,7 +14,13 @@
         <div class="panel-heading">Search User</div>
         <div class="panel-body">
             <div class="form-group">
-                <input type="text" name="search" id="search" class="form-control" placeholder="Search Customer Data" />
+                <input type="text" name="search" id="search" class="form-control" placeholder="Search Customer Data"  />
+                <div class="row" style="margin-bottom: 1em;" >
+                    <div class=""  style="margin-top: 1em;">
+                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="search()" >Tìm</button>
+                    </div>
+                </div>
+
             </div>
             <div class="table-responsive">
                 <h3 align="center">Total Data : <span id="total_records"></span></h3>
@@ -42,26 +48,23 @@
 <script>
     $(document).ready(function(){
 
-        fetch_customer_data();
-
-        function fetch_customer_data(query ='')
-        {
-            $.ajax({
-                url:"{{ route('live_search.action') }}",
-                method:'GET',
-                data:{query:query},
-                dataType:'json',
-                success:function(data)
-                {
-                    $('tbody').html(data.table_data);
-                    $('#total_records').text(data.total_data);
-                }
-            })
-        }
-
-        $(document).on('keyup', '#search', function(){
-            var query = $(this).val();
-            fetch_customer_data(query);
-        });
     });
+    function search(){
+        alert("d");
+        var x = 01;
+        $.ajax({
+            url: '/admin/live_search/'+ x, //this is your uri
+            type: 'GET', //this is your method
+
+            dataType: 'json',
+            success: function(data){
+            alert("DKM");
+                $('tbody').html(data.table_data);
+                $('#total_records').text(data.total_data);
+            },error: function (data) {
+                alert("SS");
+            }
+        });
+    }
+
 </script>
