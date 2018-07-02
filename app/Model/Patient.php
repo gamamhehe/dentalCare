@@ -10,15 +10,6 @@ class Patient extends Model
     protected $table = 'tbl_patients';
     protected $fillable = ['name', 'address', 'phone', 'date_of_birth', 'gender', 'avatar', 'district_id'];
 
-    public function parent()
-    {
-        return $this->belongsTo('App\Model\Patient', 'parent_id');
-    }
-    public function children()
-    {
-        return $this->hasMany('App\Model\Patient', 'parent_id');
-    }
-
     public function belongsToUser(){
         return $this->belongsTo('App\Model\User', 'phone', 'phone');
     }
@@ -38,6 +29,9 @@ class Patient extends Model
 
     public function hasPayment(){
         return $this->hasMany('App\Model\Payment', 'patient_id', 'id');
+    }
+    public function hasAppointment(){
+        return $this->hasMany('App\Model\Appointment', 'patient_id', 'id');
     }
     public function hasTreatmentHistory(){
         return $this->hasMany('App\Model\TreatmentHistory', 'patient_id', 'id');

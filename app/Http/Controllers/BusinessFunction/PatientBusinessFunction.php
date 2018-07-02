@@ -29,8 +29,9 @@ trait PatientBusinessFunction
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
             foreach ($patients as $item) {
-                $item->district = $item->belongsToDistrict()->first();
-                $item->city = $item->belongsToDistrict()->first()->belongsToCity()->first();
+                $district = $item->belongsToDistrict()->first();
+                $item->district = $district;
+                $item->city = $district == null ? null : $district->belongsToCity()->first();
             }
             return $patients;
         }
@@ -73,7 +74,8 @@ trait PatientBusinessFunction
         }
     }
 
-    public function getListPatient(){
+    public function getListPatient()
+    {
         return Patient::all();
     }
 }
