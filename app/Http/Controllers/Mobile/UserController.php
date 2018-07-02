@@ -15,6 +15,7 @@ use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
 use App\Model\User;
 use App\Model\UserHasRole;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +45,6 @@ class UserController extends Controller
 
                 $user->phone = $phone;
                 $user->password = Hash::make($password);
-                $user->isDeleted = 0;
 
                 $patient = new Patient();
                 $patient->phone = $phone;
@@ -58,7 +58,9 @@ class UserController extends Controller
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
                 $userHasRole->role_id = 4;
+                $userHasRole->start_time =   Carbon::now();
                 $this->createUserWithRole($user,$patient, $userHasRole);
+
                 return response()->json($patient, 200);
             } else {
                 $error = new \stdClass();

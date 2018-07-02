@@ -20,7 +20,6 @@ use Mockery\Exception;
 trait UserBusinessFunction
 {
 
-
     /**
      * @param $phone
      * @param $password
@@ -62,11 +61,12 @@ trait UserBusinessFunction
             $user->save();
             $patient->save();
             $userHasRole->save();
+            Log::info("LOGOGOOG");
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return false;
+            throw new Exception($e->getMessage());
         }
     }
 
