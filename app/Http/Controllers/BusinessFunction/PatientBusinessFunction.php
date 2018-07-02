@@ -11,6 +11,8 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Patient;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait PatientBusinessFunction
 {
