@@ -86,8 +86,7 @@ class UserController extends Controller
             $phone = $request->input('phone');
             $password = $request->input('password');
             $notifToken = $request->input('noti_token');
-//            $result = $this->checkLogin($phone, $password);
-            $result = $this->checkLogin('01279011097', '123456789');
+            $result = $this->checkLogin($phone, $password);
             if ($result != null) {
                 $result->noti_token = $notifToken;
                 $this->updateUser($result);
