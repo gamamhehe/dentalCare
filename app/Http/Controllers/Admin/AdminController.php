@@ -2438,12 +2438,14 @@ class AdminController extends Controller
 
     public function action(Request $request)
     {
+
         if($request->ajax())
         {
             $output = '';
             $query = $request->get('query');
             if($query != '')
             {
+
                 $data = DB::table('tbl_patients')
                     ->where('phone', 'like', '%'.$query.'%')
                     ->orderBy('phone', 'desc')
@@ -2452,6 +2454,7 @@ class AdminController extends Controller
             }
 
             $total_row = $data->count();
+
             if($total_row > 0)
             {
                 foreach($data as $row)
@@ -2481,6 +2484,40 @@ class AdminController extends Controller
             echo json_encode($data);
         }
     }
+    public function action1($xx){
+        $output = '';
+        $data = DB::table('tbl_patients')
+            ->where('phone', 'like', '%'.$xx.'%')
+            ->orderBy('phone', 'desc')
+            ->get();
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+        <tr>
+         <td>'.$row->name.'</td>
+         <td>'.$row->address.'</td>
+         <td>'.$row->phone.'</td>
+        </tr>
+        ';
+            }
+        }
+        else
+        {
+            $output = '
+       <tr>
+        <td align="center" colspan="5">No Data Found</td>
+       </tr>
+       ';
+        }
+        $data = array(
+            'table_data'  => $output,
+            'total_data'  => $total_row
+        );
 
+        echo json_encode($data);
+    }
 
 }

@@ -48,20 +48,27 @@ trait AppointmentBussinessFunction
         return $appointments;
     }
 
+    public function getAppointmentByDate($phone, $date)
+    {
+        $result = Appointment::where('phone', $phone)
+            ->whereDate('start_time', $date)->get();
+        return $result;
+    }
+
     public function createAppointment($bookingDate, $phone, $note, $dentistId, $estimatedTime)
     {
         try {
             $suitableDentistId = -1;
             $listDentist = $this->getAvailableDentist((new \DateTime())->format('Y-m-d'));
             $NUM_OF_DENTIST = count($listDentist);
-            $this->logDebug('NUM_DENTIST'.$NUM_OF_DENTIST );
+            $this->logDebug('NUM_DENTIST' . $NUM_OF_DENTIST);
             $bookingDateNewFormat = (new \DateTime($bookingDate))->format("Y-m-d");
             $listAppointment = $this->getAppointmentsByStartTime($bookingDateNewFormat);
             $predictAppointmentDate = new \DateTime();
             $bookingDateObj = new \DateTime($bookingDate);
             $appointmentArray = $listAppointment->toArray();
             usort($appointmentArray, array($this, "sortByTimeStamp"));
-            //'if statement' return the $predictAppointmentDate for the code below it
+            //'if statement' return the $predictAppointmentDate and $suitableDentistId for the code below it
             if ($listAppointment->count() < $NUM_OF_DENTIST) {
                 // kieu j cung co loi
                 if ($dentistId == null) {
@@ -366,5 +373,9 @@ trait AppointmentBussinessFunction
             }
         }
         return $result;
+    }
+
+    public function checkAppointmentForPatient($phone){
+        Appointment::where('phone', $phone);
     }
 }

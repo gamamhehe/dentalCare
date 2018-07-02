@@ -10,7 +10,7 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Payment;
-
+use Illuminate\Support\Facades\DB;
 trait PaymentBusinessFunction
 {
     public function getPaymentByPhone($phone)
@@ -67,11 +67,27 @@ trait PaymentBusinessFunction
     }
 
     public function updatePayment($price, $idPayment){
+    DB::beginTransaction();
+    try {
+        $payment = Payment::find($idPayment);
+        $payment->total_price = $payment->total_price + $price;
+        if($payment->total_price == 0){
+            $payment->is_done = true;
+        }
+        $payment->save();
+        DB::commit();
+        return true;
+    } catch (\Exception $e) {
+        DB::rollback();
+        return false;
+    }
+}
+    public function updatePaymentPrepaid($price, $idPayment){
         DB::beginTransaction();
         try {
             $payment = Payment::find($idPayment);
-            $payment->price = $payment->price + $price;
-            if($payment->price == 0){
+            $payment->prepaid = $payment->prepaid + $price;
+            if($payment->total_price == $payment->prepaid){
                 $payment->is_done = true;
             }
             $payment->save();
@@ -91,6 +107,7 @@ trait PaymentBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             return false;
         }
     }
