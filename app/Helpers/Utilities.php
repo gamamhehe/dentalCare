@@ -78,7 +78,6 @@ class Utilities
                         ]
                     ]
                 );
-
                 $response = $request->getBody()->getContents();
                 $responseObj = json_decode($response);
                 self::logDebug("Firebase Appointment:  Response is " . $response);

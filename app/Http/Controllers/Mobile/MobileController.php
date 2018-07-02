@@ -28,9 +28,9 @@ class MobileController extends Controller
      */
     public function test(Request $request)
     {
-      $response =  Utilities::sendRemindingAppointment('01678589696');
+//      $response =  Utilities::sendRemindingAppointment('01678589696');
         $currentDateTime = new \DateTime();
-        return response()->json($response);
+        return response()->json($currentDateTime->format('Y-m-d'));
 
     }
 
