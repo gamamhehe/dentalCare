@@ -44,7 +44,6 @@ class Utilities
     }
     public static function sendRemindingAppointment($phone)
     {
-
         try {
             $type = "RESPONSE_REMINDER";
             $body = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";

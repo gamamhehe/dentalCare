@@ -58,7 +58,8 @@ class UserController extends Controller
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
                 $userHasRole->role_id = 0;
-                $this->registerPatient($user, $patient, $userHasRole);
+                $this->createUser($user);
+                $this->createPatient($patient, $userHasRole);
                 return response()->json($patient, 200);
             } else {
                 $error = new \stdClass();
@@ -78,7 +79,7 @@ class UserController extends Controller
      * @param Request $request
      * @return json
      */
-    public function loginPatient(Request $request)
+    public function loginUser(Request $request)
     {
         try {
             $phone = $request->input('phone');

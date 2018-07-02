@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Mobile;
 
+use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Model\Patient;
 use Illuminate\Http\Request;
@@ -19,21 +20,20 @@ class MobileController extends Controller
 {
 
     use AppointmentBussinessFunction;
+
     /**
      *Dummy code to test laravel function
      * @GET
      * @param Request $request
      */
-    public function test (Request $request){
-//        $app = $this->createAppointment(
-//            '2018-07-03',
-//            '01678589696',
-//            'ko co j',
-//            null,null);
-//        $appointments =$this->getAppointmentsByStartTime('2018-07-03');
-        $dentists = $this->getAvailableDentist('2018-07-02');
- return response()->json($dentists);
+    public function test(Request $request)
+    {
+//      $response =  Utilities::sendRemindingAppointment('01678589696');
+        $currentDateTime = new \DateTime();
+        return response()->json($currentDateTime->format('Y-m-d H:i:s'));
+
     }
+
     public function tests2(Request $request)
     {// Configure client
         $config = Configuration::getDefaultConfiguration();
