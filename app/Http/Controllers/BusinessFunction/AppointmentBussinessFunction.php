@@ -374,4 +374,8 @@ trait AppointmentBussinessFunction
         }
         return $result;
     }
+
+    public function checkAppointmentForPatient($phone){
+        Appointment::where('phone', $phone);
+    }
 }

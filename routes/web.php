@@ -111,5 +111,5 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','Admin\AbsentController@approve')->name('testFunction');
+Route::get('/testFunction','Admin\HomeController@testFunction')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
