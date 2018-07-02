@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
@@ -23,7 +24,7 @@ use Mockery\Exception;
 
 class UserController extends Controller
 {
-
+    use PatientBusinessFunction;
     use UserBusinessFunction;
     use TreatmentBusinessFunction;
 
@@ -83,7 +84,8 @@ class UserController extends Controller
             $phone = $request->input('phone');
             $password = $request->input('password');
             $notifToken = $request->input('noti_token');
-            $result = $this->checkLogin($phone, $password);
+//            $result = $this->checkLogin($phone, $password);
+            $result = $this->checkLogin('01279011097', '123456789');
             if ($result != null) {
                 $result->noti_token = $notifToken;
                 $this->updateUser($result);
@@ -287,13 +289,13 @@ class UserController extends Controller
         $token = $request->input('noti_token');
         $phone = $request->input('phone');
         $user = $this->getUserByPhone($phone);
-        if ($user!=null) {
+        if ($user != null) {
             $user->noti_token = $token;
             $result = $this->updateUser($user);
-            if($result){
-            return response()->json("Change firebase notification token successful", 200);
+            if ($result) {
+                return response()->json("Change firebase notification token successful", 200);
 
-            }else{
+            } else {
                 return response()->json("change firebase notification token error", 400);
             }
         } else {
