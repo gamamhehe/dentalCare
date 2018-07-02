@@ -58,8 +58,7 @@ class PatientController extends Controller
         $patient->is_parent = $request->is_parent;
         $user->phone = $user->phone;
         $user->password = Hash::make($user->phone);
-        $this->createPatient($patient, $userHasRole);
-        $this->createUser($user);
+        $this->createUserWithRole($user,$patient, $userHasRole);
     }
 
     public function create(Request $request){

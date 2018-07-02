@@ -55,6 +55,21 @@ trait UserBusinessFunction
         }
     }
 
+    public function createUserWithRole($user, $patient, $userHasRole)
+    {
+        DB::beginTransaction();
+        try {
+            $user->save();
+            $patient->save();
+            $userHasRole->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
+
     public function updateUser($user)
     {
         DB::beginTransaction();
@@ -67,7 +82,6 @@ trait UserBusinessFunction
             return false;
         }
     }
-
 
 
     public function changeUserPassword($phone, $password)

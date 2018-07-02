@@ -50,8 +50,8 @@ class StaffController extends Controller
         $staff->degree = $request->degree;
         $user->phone = $user->phone;
         $user->password = Hash::make($user->phone);
-        $this->createStaff($staff, $userHasRole);
-        $this->createUser($user);
+
+        $this->createUserWithRole($user,$patient, $userHasRole);
     }
     public function login(Request $request)
     {

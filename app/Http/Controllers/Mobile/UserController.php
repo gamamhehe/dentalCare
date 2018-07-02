@@ -57,9 +57,8 @@ class UserController extends Controller
                 ////HASH
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
-                $userHasRole->role_id = 0;
-                $this->createUser($user);
-                $this->createPatient($patient, $userHasRole);
+                $userHasRole->role_id = 4;
+                $this->createUserWithRole($user,$patient, $userHasRole);
                 return response()->json($patient, 200);
             } else {
                 $error = new \stdClass();
