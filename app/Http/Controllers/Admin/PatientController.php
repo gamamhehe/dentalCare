@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
@@ -17,6 +18,7 @@ class PatientController extends Controller
 {
     use UserBusinessFunction;
     use PatientBusinessFunction;
+    use AppointmentBussinessFunction;
     public function login(Request $request){
 
         $this->validate($request, [
@@ -66,8 +68,7 @@ class PatientController extends Controller
         $patient->is_parent = $request->is_parent;
         $user->phone = $user->phone;
         $user->password = Hash::make($user->phone);
-        $this->createPatient($patient, $userHasRole);
-        $this->createUser($user);
+        $this->createUserWithRole($user,$patient, $userHasRole);
     }
 
     public function create(Request $request){
@@ -100,5 +101,9 @@ class PatientController extends Controller
 
     public function getList(){
         return $this->getListPatient();
+    }
+
+    public function receive(Request $request){
+        $appointment = $this->checkAppointmentForPatient($request->phone);
     }
 }

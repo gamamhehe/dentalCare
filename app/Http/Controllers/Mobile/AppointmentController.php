@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
@@ -73,16 +74,52 @@ class AppointmentController extends Controller
         $phone = $request->input('phone');
         $note = $request->input('note');
         $bookingDate = $request->input('booking_date');
-        $result = $this->createAppointment($bookingDate, $phone, $note,null, null);
-        if ($result != null) {
-            $listAppointment = $this->getAppointmentByPhone($phone);
-            return response()->json($listAppointment, 200);
-        } else {
-
-            $error = new \stdClass();
-            $error->error = "Get appointment null from server";
-            $error->exception = "No exception";
+        if ($this->getAppointmentByDate($phone, $bookingDate) && $this->checkExistUser($phone)) {
+            $error = Utilities::getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
+                "No exception");
             return response()->json($error, 400);
+        } else {
+            $result = $this->createAppointment($bookingDate, $phone, $note, null, null);
+            if ($result != null) {
+                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
+                $smsSendingResult = Utilities::sendSMS($phone,
+                    "Cam on ban da dat lich kham, so kham cua ban la " . $result->numerical_order. ' .Kham vao ngay ' .$bookingDate);
+                $smsDecode = json_encode($smsSendingResult);
+                Utilities::logDebug($smsDecode);
+                return response()->json($listAppointment, 200);
+            } else {
+
+                $error = new \stdClass();
+                $error->error = "Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác";
+                $error->exception = "Result is null, No exception";
+                return response()->json($error, 400);
+            }
+        }
+    }
+  public function editAppointment(Request $request)
+    {
+        $phone = $request->input('phone');
+        $note = $request->input('note');
+        $oldBookingDate = $request->input('booking_date');
+        if ($this->getAppointmentByDate($phone, $oldBookingDate) && $this->checkExistUser($phone)) {
+            $error = Utilities::getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
+                "No exception");
+            return response()->json($error, 400);
+        } else {
+            $result = $this->createAppointment($bookingDate, $phone, $note, null, null);
+            if ($result != null) {
+                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
+                $smsSendingResult = Utilities::sendSMS($phone, "Cam on ban da dat lich kham, so kham cua ban la " . $result->numerical_order);
+                $smsDecode = json_encode($smsSendingResult);
+                Utilities::logDebug($smsDecode);
+                return response()->json($listAppointment, 200);
+            } else {
+
+                $error = new \stdClass();
+                $error->error = "Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác";
+                $error->exception = "Result is null, No exception";
+                return response()->json($error, 400);
+            }
         }
     }
 
@@ -101,18 +138,19 @@ class AppointmentController extends Controller
                 $userHasRole = new UserHasRole();
 
                 $user->phone = $phone;
-                $user->password=Hash::make($phone);
+                $user->password = Hash::make($phone);
 
                 $patient->phone = $phone;
                 $patient->name = $name;
 
                 $userHasRole->phone = $phone;
-                $userHasRole->role_id=1;
-                $registerPatientResult =$this->registerPatient($user,$patient,$userHasRole);
+                $userHasRole->role_id = 1;
+                $registerPatientResult = $this->registerPatient($user, $patient, $userHasRole);
                 $resgisterResult = $this->registerUser($user);
                 if ($resgisterResult) {
                     Log::info("Appointment register user success");
-                }if ($registerPatientResult) {
+                }
+                if ($registerPatientResult) {
                     Log::info("Appointment register patient success");
                 }
             } else {

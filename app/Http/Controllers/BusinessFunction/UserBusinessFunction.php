@@ -15,11 +15,9 @@ use App\Model\UserHasRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Mockery\Exception;
 
 trait UserBusinessFunction
 {
-
 
     /**
      * @param $phone
@@ -55,6 +53,22 @@ trait UserBusinessFunction
         }
     }
 
+    public function createUserWithRole($user, $patient, $userHasRole)
+    {
+        DB::beginTransaction();
+        try {
+            $user->save();
+            $patient->save();
+            $userHasRole->save();
+            Log::info("LOGOGOOG");
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function updateUser($user)
     {
         DB::beginTransaction();
@@ -67,7 +81,6 @@ trait UserBusinessFunction
             return false;
         }
     }
-
 
 
     public function changeUserPassword($phone, $password)
