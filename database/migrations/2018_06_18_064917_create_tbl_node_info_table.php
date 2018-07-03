@@ -14,8 +14,7 @@ class CreateTblNodeInfoTable extends Migration
     public function up()
     {
         Schema::create('tbl_node_info', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string("ip")->unique();
+            $table->string("ip")->primary();
             $table->string("name");
             $table->timestamps();
         });

@@ -17,6 +17,8 @@ class CreateTblKeysTable extends Migration
             $table->string('patient_id');
             $table->longText('private_key');
             $table->longText('public_key');
+            $table->string('ip');
+            $table->primary(array('patient_id', 'ip'));
             $table->timestamps();
         });
     }

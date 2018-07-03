@@ -16,7 +16,7 @@ class CreateTblQueuesTable extends Migration
         Schema::create('tbl_queues', function (Blueprint $table) {
             $table->increments('id');
             $table->longText('dataEncrypt');
-            $table->string('status');
+            $table->boolean('status');
             $table->string('ip');
             $table->timestamps();
         });
