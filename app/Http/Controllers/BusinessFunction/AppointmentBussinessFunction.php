@@ -400,4 +400,8 @@ trait AppointmentBussinessFunction
             ->where('start_time', '>=', Carbon::now()->format('Y-m-d'))
             ->get();
     }
+    public function viewAppointmentForReception(){
+        return Appointment::where('start_time', '>=', Carbon::now()->format('Y-m-d'))
+            ->get();
+    }
 }

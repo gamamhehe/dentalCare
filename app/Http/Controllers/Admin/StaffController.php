@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Staff;
 use App\Model\User;
@@ -16,10 +17,11 @@ class StaffController extends Controller
     use UserBusinessFunction;
     use StaffBusinessFunction;
     use AppointmentBussinessFunction;
+    use TreatmentHistoryBusinessFunction;
     public function loginGet(Request $request)
     {
-        $sessionUser = $request->session()->get('currentAdmin', null);
-        if ($sessionUser != null) {
+        $sessionAdmin = $request->session()->get('currentAdmin', null);
+        if ($sessionAdmin != null) {
             return redirect()->route('admin.dashboard');
         }
         return view('admin.login');
@@ -31,9 +33,10 @@ class StaffController extends Controller
         return redirect()->route('admin.login');
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $checkExist = $this->checkExistUser($request->phone);
-        if($checkExist){
+        if ($checkExist) {
             return false;
         }
         $userHasRole = new UserHasRole();
@@ -53,8 +56,9 @@ class StaffController extends Controller
         $user->phone = $user->phone;
         $user->password = Hash::make($user->phone);
 
-        $this->createUserWithRole($user,$staff, $userHasRole);
+        $this->createUserWithRole($user, $staff, $userHasRole);
     }
+
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -73,17 +77,32 @@ class StaffController extends Controller
         return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $idStaff = $request->staff_id;
         $this->updateStaff($request, $idStaff);
 
     }
 
-    public function getList(){
+    public function getList()
+    {
         return $this->getListStaff();
     }
 
-    public function viewAppointment(){
-        $listAppointment = $this->viewAppointmentForDentist(1);
+    public function viewAppointment(Request $request)
+    {
+        $sessionAdmin = $request->session()->get('currentAdmin', null);
+        $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
+        if ($role == 2) {
+            $listAppointment = $this->viewAppointmentForDentist($sessionAdmin->belongToStaff()->first()->id);
+        } else {
+            $listAppointment = $this->viewAppointmentForReception();
+        }
+        return $listAppointment;
+    }
+
+    public function receiveAppointment(Request $request){
+        $listTreatmentHistory = $this->checkCurrentTreatmentHistoryForPatient($request->patient_id);
+        return true;
     }
 }

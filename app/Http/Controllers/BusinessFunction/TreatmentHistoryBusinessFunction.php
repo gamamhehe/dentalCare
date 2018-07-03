@@ -142,4 +142,9 @@ trait TreatmentHistoryBusinessFunction
         }
 
     }
+
+    public function checkCurrentTreatmentHistoryForPatient($idPatient){
+       return TreatmentHistory::where('patient_id', $idPatient)
+            ->whereNull('finish_date')->get();
+    }
 }

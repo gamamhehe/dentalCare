@@ -106,7 +106,6 @@ class PatientController extends Controller
     public function receive(Request $request)
     {
         $appointment = $this->checkAppointmentForPatient('01279011096');
-//        dd($appointment);
         if ($appointment) {
             $appointment->patient_id = 5;
             $appointment->is_coming = true;
