@@ -78,7 +78,9 @@ class AppointmentController extends Controller
             $phone = $request->input('phone');
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
-            $result = $this->createAppointment($bookingDate, $phone, $note, null, null);
+            $dentistId = $request->input('dentist_id');
+            $estimatedTime = $request->input('estimated_time');
+            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $estimatedTime);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
@@ -96,6 +98,9 @@ class AppointmentController extends Controller
 
         } catch (ApiException $e) {
             $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
+            return response()->json($error, 400);
+        }catch (\Exception $ex){
+            $error = Utilities::getErrorObj("Lỗi server", $ex->getMessage());
             return response()->json($error, 400);
         }
     }
