@@ -112,17 +112,24 @@ class PatientController extends Controller
         return $this->getListPatient();
     }
 
-    public function receive(Request $request){
-        $appointment = $this->checkAppointmentForPatient($request->phone);
+    public function receive($id){
+        $appointment = $this->checkAppointmentForPatient($id);
+        //truyền ID ,lya phone di
+        if($appointment){
+            dd("no");
+            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Đã có  lich");
+        }else{
+            return redirect()->back()->withErrors(['message1'=>'Error ! No Appointment']);
+        }
     }
     public function listAppointment($id){
         dd($id);
-        return view('admin.AppoinmentPatient.list');
+        return view('admin.AppointmentPatient.list');
     }
      public function index()
     {
 
-        return view('admin.AppoinmentPatient.index');
+        return view('admin.AppointmentPatient.index');
     }
     public function action1($xx){
         $output = '';
