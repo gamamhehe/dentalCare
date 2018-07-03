@@ -58,6 +58,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 });
 
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
+Route::get('/getDB','HomeController@getDB');
+Route::get('/banggia','HomeController@BangGiaDichVu');
+Route::get('/generateKey', 'BlockchainController@GenerateKey');
+Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
+
+
+Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
 
     Route::get('/getTreatmentHistory', 'Admin\TreatmentController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {

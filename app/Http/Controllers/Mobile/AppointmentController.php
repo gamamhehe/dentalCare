@@ -12,11 +12,11 @@ namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Model\Appointment;
 use App\Model\Patient;
 use App\Model\UserHasRole;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 
@@ -72,6 +72,7 @@ class AppointmentController extends Controller
     {
         $phone = $request->input('phone');
         $note = $request->input('note');
+
         $bookingDate = $request->input('booking_date');
         $result = $this->createAppointment($bookingDate, $phone, $note);
         if ($result != null) {

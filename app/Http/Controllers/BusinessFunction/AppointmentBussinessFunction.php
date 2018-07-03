@@ -22,6 +22,7 @@ trait AppointmentBussinessFunction
 {
 
 
+
     public function getAllAppointment()
     {
         $appointments = Appointment::orderBy('start_time', 'desc')->get();
