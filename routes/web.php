@@ -33,7 +33,7 @@ Route::get('/danhsachchitra','Admin\PaymentController@getOfUser');
 Route::get('/lichsubenhan','Admin\TreatmentController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
-
+Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 
 
 // end webuser

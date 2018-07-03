@@ -15,7 +15,6 @@ class StaffController extends Controller
 {
     //
     use UserBusinessFunction;
-    use StaffBusinessFunction;
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
     public function loginGet(Request $request)

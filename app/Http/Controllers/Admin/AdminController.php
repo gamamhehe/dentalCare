@@ -446,7 +446,23 @@ class AdminController extends Controller
                 'estimate_time' => '3'
             ]);
 
+            Tooth::create([
+                'tooth_number' => '1',
+                'tooth_name' => 'Nguyên hàm'
+            ]);
 
+            Tooth::create([
+                'tooth_number' => '2',
+                'tooth_name' => 'Hàm trên'
+            ]);
+            Tooth::create([
+                'tooth_number' => '3',
+                'tooth_name' => 'Hàm dưới'
+            ]);
+            Tooth::create([
+                'tooth_number' => '4',
+                'tooth_name' => 'Nhiều răng'
+            ]);
             Tooth::create([
                 'tooth_number' => '11',
                 'tooth_name' => 'Răng số 1 hàm trên phải - Răng cửa'

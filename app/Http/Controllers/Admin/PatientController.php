@@ -11,6 +11,7 @@ use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Session;
 use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
@@ -42,8 +43,15 @@ class PatientController extends Controller
         return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
     }
 
-    public function createBoth(Request $request)
-    {
+    public function changeCurrentPatient(Request $requet,$id){
+        $requet->session()->remove('currentPatient');
+        $patient = $this->getPatientById($id);
+        session(['currentPatient' => $patient]);
+
+        return redirect()->intended(route('homepage'));
+    }
+    public function createBoth(Request $request){
+
         $checkExist = $this->checkExistUser($request->phone);
         if ($checkExist) {
             return false;
