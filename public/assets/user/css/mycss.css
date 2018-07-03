@@ -41,7 +41,9 @@ hoverImg{
 .firstleftmenu{
     margin-top: 20px;
 }
-
+.text-yellow {
+    color: #f39c12 !important;
+}
 .more-content li {
     list-style: none;
     display: block;

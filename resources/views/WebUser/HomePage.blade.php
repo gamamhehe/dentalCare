@@ -67,15 +67,23 @@
                                     <div class="row">
                                         <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
                                             <img src="{{Session::get('currentPatient')->avatar}}"
-                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
+                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="70px;">
                                         </div>
-                                        @foreach(\Session::get('listPatient') as $key => $value)
-                                            <div class="col-sm-2"  >
+                                        <div class="col-sm-7 " style="float: left ;padding-left: 0;padding-right: 0;">
 
-                                                <img src="{{ $value->avatar }}"
-                                                     class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
-                                            </div>
-                                        @endforeach
+                                            @foreach(\Session::get('listPatient') as $key => $value)
+                                            <img src="{{ $value->avatar }}" style="margin: 0.3em;"
+                                            class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="40px;" onclick="changeInfo(this.id)">
+                                            @endforeach
+                                        </div>
+
+                                        {{--@foreach(\Session::get('listPatient') as $key => $value)--}}
+
+
+                                                {{--<img src="{{ $value->avatar }}"--}}
+                                                     {{--class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">--}}
+
+                                        {{--@endforeach--}}
                                     </div>
                                 </div>
 

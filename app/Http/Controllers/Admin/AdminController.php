@@ -62,7 +62,7 @@ class AdminController extends Controller
         try {
             User::create([
                 'phone' => '01279011096',
-                'password' => Hash::make('#2017#'),
+                'password' => Hash::make('123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011096',
@@ -77,7 +77,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011099',
-                'password' => Hash::make('#2017#'),
+                'password' => Hash::make('123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011099',
@@ -92,7 +92,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011097',
-                'password' => Hash::make('#2017#'),
+                'password' => Hash::make('123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011097',
@@ -107,7 +107,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011098',
-                'password' => Hash::make('#2017#'),
+                'password' => Hash::make('123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011098',
