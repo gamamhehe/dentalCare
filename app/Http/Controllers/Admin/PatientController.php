@@ -19,7 +19,9 @@ class PatientController extends Controller
     use UserBusinessFunction;
     use PatientBusinessFunction;
     use AppointmentBussinessFunction;
-    public function login(Request $request){
+
+    public function login(Request $request)
+    {
 
         $this->validate($request, [
             'phone' => 'required|min:10|max:11',
@@ -40,6 +42,7 @@ class PatientController extends Controller
         }
         return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
     }
+
     public function changeCurrentPatient(Request $requet,$id){
         $requet->session()->remove('currentPatient');
         $patient = $this->getPatientById($id);
@@ -48,8 +51,9 @@ class PatientController extends Controller
         return redirect()->intended(route('homepage'));
     }
     public function createBoth(Request $request){
+
         $checkExist = $this->checkExistUser($request->phone);
-        if($checkExist){
+        if ($checkExist) {
             return false;
         }
         $patient = new Patient();
@@ -68,10 +72,11 @@ class PatientController extends Controller
         $patient->is_parent = $request->is_parent;
         $user->phone = $user->phone;
         $user->password = Hash::make($user->phone);
-        $this->createUserWithRole($user,$patient, $userHasRole);
+        $this->createUserWithRole($user, $patient, $userHasRole);
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $patient = new Patient();
         $userHasRole = new UserHasRole();
         $userHasRole->phone = $request->phone;
@@ -89,21 +94,32 @@ class PatientController extends Controller
 
     }
 
-    public function get($phone){
+    public function get($phone)
+    {
         return $this->getPatient($phone);
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $idPatient = $request->patient_id;
         $this->updatePatient($request, $idPatient);
 
     }
 
-    public function getList(){
+    public function getList()
+    {
         return $this->getListPatient();
     }
 
-    public function receive(Request $request){
-        $appointment = $this->checkAppointmentForPatient($request->phone);
+    public function receive(Request $request)
+    {
+        $appointment = $this->checkAppointmentForPatient('01279011096');
+        if ($appointment) {
+            $appointment->patient_id = 5;
+            $appointment->is_coming = true;
+            $this->saveAppointment($appointment);
+        } else {
+            return false;
+        }
     }
 }
