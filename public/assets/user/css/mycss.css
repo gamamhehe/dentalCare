@@ -3,7 +3,9 @@
     font-size: 27px;
     margin: 20px;
 }
-
+.dkm{
+    color :red;
+}
 .panel-heading [data-toggle="collapse"]:after {
     font-family: 'Glyphicons Halflings';
     content: "."; /* "play" icon */

@@ -94,12 +94,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/editTreatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
     Route::post('/editTreatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
     //Nurse
-    Route::get('/manageUserCalendar','Admin\AdminController@getManageUserCalendar');
+    Route::get('/live_search', 'Admin\PatientController@index');
+    Route::get('/live_search/{xx}', 'Admin\PatientController@action1') ;
+    Route::get('/list-Appointment/{id}', 'Admin\PatientController@listAppointment')->name('admin.listAppointment.patient');
 
-    Route::get('/live_search', 'Admin\AdminController@index');
-    Route::get('/live_search/action', 'Admin\AdminController@action')->name('live_search.action');
-    Route::get('/live_search/{xx}', 'Admin\AdminController@action1') ;
-
+    //Patient
+      Route::get('/create-Patient', 'Admin\PatientController@create');
 });
 
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
