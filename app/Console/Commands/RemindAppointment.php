@@ -41,7 +41,6 @@ class RemindAppointment extends Command
      */
     public function handle()
     {
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
        //call firebase notify patient
         $currentDateTime = new \DateTime();
         $appointments = $this->getAppointmentsByStartTime($currentDateTime->format('Y-m-d'));
@@ -57,6 +56,5 @@ class RemindAppointment extends Command
                 }
             }
         }
-        $this->logDebug("Call firebase success");
     }
 }

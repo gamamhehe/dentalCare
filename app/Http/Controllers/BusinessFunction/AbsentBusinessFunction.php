@@ -18,11 +18,10 @@ trait AbsentBusinessFunction
 {
     public function checkExistAbsentStaff($staff, $start_date, $end_Date)
     {
-        $checkExistAbsentStaff = RequestAbsent::whereColumn([
-            ['staff_id', '=', $staff->id],
-            ['end_date', '>', $start_date->format("Y-m-d")],
-            ['end_date', '>', Carbon::now()->format("Y-m-d")]
-        ])->get();
+        $checkExistAbsentStaff = RequestAbsent::where('staff_id', $staff->id)
+            ->get()->where('end_date', '>', $start_date->format("Y-m-d"))
+            ->get()->where('end_date', '>', Carbon::now())
+            ->get();
         if ($checkExistAbsentStaff != null)
             return false;
         else
