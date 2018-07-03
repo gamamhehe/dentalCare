@@ -16,22 +16,6 @@ use Carbon\Carbon;
 
 trait StaffBusinessFunction{
 
-    public function getCurrentNumberDentist(){
-        $totalDentist = count(Role::find('2')->hasUserHasRole()->whereNull('end_time')->get());
-        $currentAbsent = RequestAbsent::whereColumn([
-            ['start_date', '<=', Carbon::now()->format("Y-m-d")],
-            ['end_date', '>=', Carbon::now()->format("Y-m-d")]
-        ])->get();
-        $countDentistAbsent = 0;
-        foreach ($currentAbsent as $staffAbsent){
-            if($staffAbsent->belongsToStaff()->first()->belongsToUser()->first()->hasUserHasRole()->first()->belongsToRole()->first()->id == 2){
-                $countDentistAbsent++;
-            }
-        }
-        return $totalDentist - $countDentistAbsent;
-    }
-
-
     public function createStaff($staff, $userHasRole)
     {
         DB::beginTransaction();
@@ -75,7 +59,10 @@ trait StaffBusinessFunction{
             return false;
         }
     }
-
+public function getStaffById($id){
+    $staff = Staff::where('id', $id)->first();
+    return $staff;
+}
     public function getListStaff(){
         return Staff::all();
     }

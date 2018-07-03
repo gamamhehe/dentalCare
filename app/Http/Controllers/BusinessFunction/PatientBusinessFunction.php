@@ -10,9 +10,8 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Patient;
-use GuzzleHttp\Psr7\Request;
+use Exception;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 trait PatientBusinessFunction
 {
@@ -30,8 +29,9 @@ trait PatientBusinessFunction
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
             foreach ($patients as $item) {
-                $item->district = $item->belongsToDistrict()->first();
-                $item->city = $item->belongsToDistrict()->first()->belongsToCity()->first();
+                $district = $item->belongsToDistrict()->first();
+                $item->district = $district;
+                $item->city = $district == null ? null : $district->belongsToCity()->first();
             }
             return $patients;
         }
@@ -70,12 +70,25 @@ trait PatientBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            Log::info($e->getMessage());
             throw new Exception($e->getMessage());
         }
     }
 
-    public function getListPatient(){
+    public function updatePatientWithModel($patient)
+    {
+        DB::beginTransaction();
+        try {
+            $patient->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function getListPatient()
+    {
         return Patient::all();
     }
 }

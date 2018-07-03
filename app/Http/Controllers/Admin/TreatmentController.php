@@ -10,47 +10,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Treatment;
 use App\Model\TreatmentCategory;
-use DB;
 use Yajra\Datatables\Facades\Datatables;
+use Illuminate\Support\Facades\DB;
+
 class TreatmentController extends Controller
 {
     use TreatmentBusinessFunction;
     //
-    public function showTreatmentHistory(Request $request){
-        $patient = $request->session()->get('currentPatient', null);
-        $result =[];
-        if($patient){
-            $idPatient = $patient->id;
-            $result = $this->getTreatmentHistory($idPatient);
-        }
-        return view('WebUser.TreatmentHistory', ['listTreatmentHistory'=>$result]);
-    }
 
-    public function createTreatmentHistory(Request $request){
-        $treatmentHistory = new TreatmentHistory();
-        $treatmentHistory->treatment_id = $request->treatment_id;
-        $treatmentHistory->patient_id = $request->patient_id;
-        $treatmentHistory->descripttion = $request->descripttion;
-        $treatmentHistory->create_date = Carbon::now();
-        $treatmentHistory->tooth_number = $request->tooth_number;
-        $treatmentHistory->price = $request->price;
-        $treatmentHistory->payment_id = $request->payment_id;
-        $treatmentHistory->total_price = $request->total_price;
-        $this->saveTreatmentHistory($treatmentHistory);
-    }
-
-
-    public function startTreatment(Request $request){
-        $idTreatment = $request->treatment_id;
-        $idPatient = $request->patient_id;
-        $toothNumber = $request->tooth_number;
-        $price = $request->price;
-        $description = $request->description;
-        $listTreatmentStep = $request->listTreatmentStep;
-        $note = $request->note;
-        $idTreatmentHistory = $this->createTreatmentProcess($idTreatment, $idPatient, $toothNumber, $price, $description);
-        $this->creatTreatmentDetail($listTreatmentStep, $idTreatmentHistory, $note);
-    }
     public function getListTreatment(Request $request){
         $listTreatment = $this->getAllTreatment();
         return Datatables::of($listTreatment)
@@ -98,7 +65,7 @@ class TreatmentController extends Controller
         }
     }
 
-    public function createMedicineForTreatmentDetail($idTreatmentDetail, $quantity, $medicine_id){
-
+    public function testFunction(){
+        dd($this->createTreatmentProcess(1, 1,11, 50000, 'abc'));
     }
 }
