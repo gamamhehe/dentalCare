@@ -413,8 +413,17 @@ trait AppointmentBussinessFunction
         }
     }
 
-    public function checkAppointmentForPatient($phone)
+    public function checkAppointmentForPatient($phone, $idPatient)
     {
+
+        $appointment = Appointment::where('phone', $phone)
+                ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
+                ->where('is_coming', false)
+                ->where('patient_id', $idPatient)
+                ->first();
+        if($appointment){
+            return $appointment;
+        }
         return Appointment::where('phone', $phone)
             ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
             ->where('is_coming', false)

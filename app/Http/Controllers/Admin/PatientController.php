@@ -82,7 +82,7 @@ class PatientController extends Controller
         $patient->avatar = $request->avatar;
         $patient->district_id = $request->district_id;
         $patient->is_parent = $request->is_parent;
-        $this->createPatient($patient, $userHasRole);
+        $this->createPatient($patient);
 
     }
 
@@ -93,8 +93,16 @@ class PatientController extends Controller
 
     public function update(Request $request)
     {
-        $idPatient = $request->patient_id;
-        $this->updatePatient($request, $idPatient);
+        $patient  = $this->getPatientById($request->patient_id);
+        $patient->name = $request->name;
+        $patient->address = $request->address;
+        $patient->phone = $request->phone;
+        $patient->date_of_birth = $request->date_of_birth;
+        $patient->gender = $request->gender;
+        $patient->avatar = $request->avatar;
+        $patient->district_id = $request->district_id;
+        $patient->is_parent = $request->is_parent;
+        $this->updatePatient($patient);
 
     }
 
@@ -105,7 +113,7 @@ class PatientController extends Controller
 
     public function receive(Request $request)
     {
-        $appointment = $this->checkAppointmentForPatient('01279011096');
+        $appointment = $this->checkAppointmentForPatient('01279011096', '2');
         if ($appointment) {
             $appointment->patient_id = 5;
             $appointment->is_coming = true;
