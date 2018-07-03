@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
@@ -17,9 +18,11 @@ use App\Model\Appointment;
 use App\Model\Patient;
 use App\Model\UserHasRole;
 use App\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
+use SMSGatewayMe\Client\ApiException;
 
 class AppointmentController extends Controller
 {
@@ -71,32 +74,33 @@ class AppointmentController extends Controller
 
     public function bookAppointment(Request $request)
     {
-        $phone = $request->input('phone');
-        $note = $request->input('note');
-        $bookingDate = $request->input('booking_date');
-        if ($this->getAppointmentByDate($phone, $bookingDate) && $this->checkExistUser($phone)) {
-            $error = Utilities::getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
-                "No exception");
-            return response()->json($error, 400);
-        } else {
+        try {
+            $phone = $request->input('phone');
+            $note = $request->input('note');
+            $bookingDate = $request->input('booking_date');
             $result = $this->createAppointment($bookingDate, $phone, $note, null, null);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
-                $smsSendingResult = Utilities::sendSMS($phone,
-                    "Cam on ban da dat lich kham, so kham cua ban la " . $result->numerical_order. ' .Kham vao ngay ' .$bookingDate);
+                $startDateTime = new DateTime($result->start_time);
+                $smsSendingResult = Utilities::sendSMS(
+                    $phone, AppConst::getSmsMSG($result->numerical_order, $startDateTime)
+                );
                 $smsDecode = json_encode($smsSendingResult);
                 Utilities::logDebug($smsDecode);
                 return response()->json($listAppointment, 200);
             } else {
-
-                $error = new \stdClass();
-                $error->error = "Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác";
-                $error->exception = "Result is null, No exception";
+                $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                    "Result is null, No exception");
                 return response()->json($error, 400);
             }
+
+        } catch (ApiException $e) {
+            $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
+            return response()->json($error, 400);
         }
     }
-  public function editAppointment(Request $request)
+
+    public function editAppointment(Request $request)
     {
         $phone = $request->input('phone');
         $note = $request->input('note');

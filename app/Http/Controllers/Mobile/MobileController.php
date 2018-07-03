@@ -28,10 +28,27 @@ class MobileController extends Controller
      */
     public function test(Request $request)
     {
-//      $response =  Utilities::sendRemindingAppointment('01678589696');
+//call firebase notify patient
         $currentDateTime = new \DateTime();
-        return response()->json($currentDateTime->format('Y-m-d H:i:s'));
+        $appointments = $this->getAppointmentsByStartTime($currentDateTime->format('Y-m-d'));
+        $currentTimeStamp = $currentDateTime->getTimestamp();
+        foreach ($appointments as $appointment){
+            $tmpDateTime = (new \DateTime($appointment->start_time));
+            $tmpTimeStamp =$tmpDateTime->getTimestamp();
+            if($tmpTimeStamp > $currentTimeStamp){
+                $minute = $tmpDateTime->diff($currentDateTime)->i;
+                $this->logDebug("MINUTE ".$minute);
+                if($minute<=30 && $minute>=26){
+                    Utilities::logDebug("FIND ONCE".$minute." date in db: " . $tmpDateTime->format('Y-m-d H:i:s'));
+                    Utilities::sendRemindingAppointment($appointment->phone);
 
+                    return response()->json("SEND SUCCESS");
+
+
+                }
+            }
+        }
+        return response()->json("RETURN ");
     }
 
     public function tests2(Request $request)
