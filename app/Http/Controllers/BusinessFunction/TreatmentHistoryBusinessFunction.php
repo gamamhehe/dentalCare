@@ -21,26 +21,17 @@ use Illuminate\Support\Facades\DB;
 
 trait TreatmentHistoryBusinessFunction
 {
-    use PaymentBusinessFunction;
-    use EventBusinessFunction;
+//    use PaymentBusinessFunction;
+//    use EventBusinessFunction;
     public function getTreatmentHistory($id)
     {
         $listResult = [];
         $patient = Patient::where('id', $id)->first();
-        $treatmentHistoryList = $patient->hasTreatmentHistory()->get();
-
-
-//            foreach ($treatmentHistoryList as $treatmentHistory) {
-//                $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
-//
-//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
-//
-//                    $treatmentHistoryDetail->dentist_id = $treatmentHistoryDetail->belongsToStaff()->first();
-//                }
-//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
-//                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->first()->belongsToStep()->first();
-//                }
-
+        if ($patient == null) {
+            return null;
+        }
+        $treatmentHistoryList = $patient->hasTreatmentHistory() == null ?
+            null : $patient->hasTreatmentHistory()->get();
 
         foreach ($treatmentHistoryList as $treatmentHistory) {
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
@@ -64,18 +55,10 @@ trait TreatmentHistoryBusinessFunction
             $treatmentHistory->patient = $patient;
             $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
-
-//
-//                foreach ($treatmentHistoryDetailList as $treatmentHistoryDetail){
-//                    $treatmentHistoryDetail->step = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
-//
-//                }
-
-//        }
-//        dd($treatmentHistoryList);
         }
         return $treatmentHistoryList;
     }
+
     public function getTreatmentHistoryByPatientId($id)
     {
         $patient = Patient::where('id', $id)->first();

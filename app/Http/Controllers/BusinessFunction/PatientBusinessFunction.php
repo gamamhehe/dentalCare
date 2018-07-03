@@ -74,6 +74,19 @@ trait PatientBusinessFunction
         }
     }
 
+    public function updatePatientWithModel($patient)
+    {
+        DB::beginTransaction();
+        try {
+            $patient->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function getListPatient()
     {
         return Patient::all();
