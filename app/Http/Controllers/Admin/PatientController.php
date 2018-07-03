@@ -120,7 +120,7 @@ class PatientController extends Controller
         return $this->getListPatient();
     }
 
- 
+
     public function receive($id){
         $appointment = $this->checkAppointmentForPatient($id);
         //truyền ID ,lya phone di
