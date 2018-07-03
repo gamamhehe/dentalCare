@@ -32,7 +32,7 @@ class FeedbackController extends Controller
     {
 
         $feedbackList = $this->getAllFeedback();
-        $Static_html = "☆";
+        $Static_html = "<i class=\"fa fa-star text-yellow\"></i>";
         foreach ($feedbackList as $feedback) {
             $number_start = $feedback->num_of_stars;
             $html_numberStart = "";
@@ -48,12 +48,12 @@ class FeedbackController extends Controller
             return Datatables::of($feedbackList)
                 ->addColumn('action', function ($feedbackList) {
                     return '<a href="detailsFeedback/' . $feedbackList->id . '" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>View details</a> <a id="' . $feedbackList->id . '" onclick="deleteFeedback(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
-                })->make(true);
+                })->rawColumns(['demo','action'])->make(true);
         } else {
             return Datatables::of($feedbackList)
                 ->addColumn('action', function ($feedbackList) {
                     return '<a href="viewsFeedback/' . $feedbackList->id . '" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>View</a> ';
-                })->make(true);
+                })->rawColumns(['demo','action'])->make(true);
         }
 
 

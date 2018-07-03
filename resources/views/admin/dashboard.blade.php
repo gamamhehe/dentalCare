@@ -13,6 +13,7 @@
                         <span class="input-group-btn">
                              <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary ">
                                <i class="fa fa-picture-o"></i> Choose</a>
+
                            </span>
                     </div>
                 </div>
@@ -20,7 +21,7 @@
 
                  <form method ="post" class="form-horizontal" action="/createNews">
                      <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                    <label>Description</label>
+                    <label>Description  <i class="fa fa-star text-yellow"></i></label>
                     <textarea id="tinyMCE" name="description" rows="10"
                               class="form-control"
                               id="input"
