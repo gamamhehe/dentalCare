@@ -9,11 +9,13 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
 use App\Model\User;
 use App\Model\UserHasRole;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +25,7 @@ use Mockery\Exception;
 
 class UserController extends Controller
 {
-
+    use PatientBusinessFunction;
     use UserBusinessFunction;
     use TreatmentBusinessFunction;
 
@@ -43,7 +45,6 @@ class UserController extends Controller
 
                 $user->phone = $phone;
                 $user->password = Hash::make($password);
-                $user->isDeleted = 0;
 
                 $patient = new Patient();
                 $patient->phone = $phone;
@@ -56,8 +57,10 @@ class UserController extends Controller
                 ////HASH
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
-                $userHasRole->role_id = 0;
-                $this->registerPatient($user, $patient, $userHasRole);
+                $userHasRole->role_id = 4;
+                $userHasRole->start_time =   Carbon::now();
+                $this->createUserWithRole($user,$patient, $userHasRole);
+
                 return response()->json($patient, 200);
             } else {
                 $error = new \stdClass();
@@ -77,7 +80,7 @@ class UserController extends Controller
      * @param Request $request
      * @return json
      */
-    public function loginPatient(Request $request)
+    public function loginUser(Request $request)
     {
         try {
             $phone = $request->input('phone');
@@ -165,49 +168,7 @@ class UserController extends Controller
         }
     }
 
-    public function updatePatientInfo(Request $request)
-    {
-        try {
-            $patientId = $request->input('id');
-            $name = $request->input('name');
-            $gender = $request->input('gender');
-            $birthday = $request->input('date_of_birth');
-            $address = $request->input('address');
-            $districtId = $request->input('district_id');
-            $patient = $this->getPatientById($patientId);
-            if ($patient != null) {
-                $patient->name = $name;
-                $patient->gender = $gender;
-                $patient->date_of_birth = $birthday;
-                $patient->address = $address;
-                $patient->district_id = $districtId;
-                $result = $this->updatePatient($patient);
-                if ($result == true) {
-                    $successResponse = new \stdClass();
-                    $successResponse->status = "OK";
-                    $successResponse->code = 200;
-                    $successResponse->message = "Sửa tài khoản thành công";
-                    $successResponse->data = $patient;
-                    return response()->json($successResponse, 200);
-                } else {
-                    $error = new \stdClass();
-                    $error->error = "Không thể sửa đổi thông tin người dùng";
-                    $error->exeption = null;
-                    return response()->json($error, 400);
-                }
-            } else {
-                $error = new \stdClass();
-                $error->error = "Không thể tìm thấy id bệnh nhân";
-                $error->exeption = null;
-                return response()->json($error, 400);
-            }
-        } catch (\Exception $ex) {
-            $error = new \stdClass();
-            $error->error = "Lỗi máy chủ";
-            $error->exception = $ex->getMessage();
-            return response()->json($error, 400);
-        }
-    }
+
 
     public function changeAvatar(Request $request)
     {
@@ -287,13 +248,13 @@ class UserController extends Controller
         $token = $request->input('noti_token');
         $phone = $request->input('phone');
         $user = $this->getUserByPhone($phone);
-        if ($user!=null) {
+        if ($user != null) {
             $user->noti_token = $token;
             $result = $this->updateUser($user);
-            if($result){
-            return response()->json("Change firebase notification token successful", 200);
+            if ($result) {
+                return response()->json("Change firebase notification token successful", 200);
 
-            }else{
+            } else {
                 return response()->json("change firebase notification token error", 400);
             }
         } else {

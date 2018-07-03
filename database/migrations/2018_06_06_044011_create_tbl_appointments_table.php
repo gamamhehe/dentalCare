@@ -19,8 +19,11 @@ class CreateTblAppointmentsTable extends Migration
             $table->string('note');
             $table->time('estimated_time');
             $table->integer('numerical_order');
-            $table->integer('dentist_id');
+            $table->integer('staff_id');
+            $table->integer('patient_id')->nullable();
             $table->string('phone');
+            $table->boolean('is_delete')->default(0);
+            $table->boolean('is_coming')->default(0);
             $table->timestamps();
         });
     }

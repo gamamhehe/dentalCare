@@ -11,17 +11,21 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\BusinessFunction\HistoryTreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HistoryTreatmentController extends Controller
 {
     use TreatmentBusinessFunction;
+    use UserBusinessFunction;
+    use TreatmentHistoryBusinessFunction;
 
     public function getByPhone($phone)
     {
         try {
-            $historyTreatments = $this->getByPhone($phone);
+            $historyTreatments = $this->getTreatmentHistories($phone);
             return response()->json($historyTreatments, 200);
         } catch (\Exception $ex) {
             $error = new \stdClass();
@@ -61,9 +65,9 @@ class HistoryTreatmentController extends Controller
     public function getByPatientId(Request $request)
     {
         $id = $request->input('id');
-
+var_dump($id);
         try {
-            $patient = $this->getByPatientId($id);
+            $patient = $this->getPatientById($id);
             if ($patient == null) {
                 $error = new \stdClass();
                 $error->error = "Không thể tìm thấy id bệnh nhân";

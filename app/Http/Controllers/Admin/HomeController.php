@@ -6,6 +6,7 @@ use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
 use App\Model\User;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\EventBusinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
@@ -21,9 +22,8 @@ class HomeController extends Controller
     use TreatmentBusinessFunction;
     use UserBusinessFunction;
     use StaffBusinessFunction;
-
-
     use NewsBussinessFunction;
+
     public function homepage(Request $request){
     	 return view('WebUser.HomePage');
     }
@@ -37,7 +37,7 @@ class HomeController extends Controller
     	return view('WebUser.ServicePrice');
     }
     public function getDB(){
-    	 $ahi = 	$doctors = DB::table('tbl_treatment_categories')->get();
+    	 $ahi = $doctors = DB::table('tbl_treatment_categories')->get();
     	 return Datatables::of($ahi)->make(true);
 
     }
@@ -60,8 +60,17 @@ class HomeController extends Controller
 
     }
     public function eventLoad(Request $request){
-       return view('WebUser.Events');
+        $listNews = $this->getListNewsOfEvent();
+        $NewEventNews = $this->getNewestNews();
+       return view('WebUser.Events',['listNews'=>$listNews,'NewEventNews'=>$NewEventNews]);
     }
+    public function eventLoadByID(Request $request,$id){
+        $listNews = $this->getListNewsOfEvent();
+        $NewEventNews = $this->getNews($id);
+
+        return view('WebUser.Events',['listNews'=>$listNews,'NewEventNews'=>$NewEventNews]);
+    }
+
     public function myProfile($id){
         return view("WebUser.User.MyProfile");
     }
@@ -71,9 +80,8 @@ class HomeController extends Controller
 
 
 
-    public function testFunction(){
-        User::All();
-        $this->getCurrentNumberDentist();
+    public function testFunction(Request $request){
+        dd($request->Absent);
     }
 
     public function registerPost(Request $request){
@@ -90,12 +98,4 @@ class HomeController extends Controller
         $request->session()->remove('listPatient');
         return redirect()->route('homepage');
     }
-//    public function TreatmentHistory(Request $request){
-//        $patient = $request->session()->get('currentPatient',null);
-//        if($patient){
-//            $patient_id = $patient->id;
-//            $listTreatmentHistory = $this->getTreatmentHistory($patient_id);
-//        }
-//        return view("WebUser.TreatmentHistory",['listTreatmentHistory'=>$listTreatmentHistory]);
-//    }
 }

@@ -17,7 +17,7 @@ class TreatmentHistory extends Model
         return $this->hasMany('App\Model\TreatmentDetail', 'treatment_history_id', 'id');
     }
     public function belongsToTooth(){
-        return $this->belongsTo('App\Model\Tooth', 'tooth_number', 'id');
+        return $this->belongsTo('App\Model\Tooth', 'tooth_number', 'tooth_number');
     }
     public function belongsToPatient(){
         return $this->belongsTo('App\Model\Patient', 'patient_id', 'id');

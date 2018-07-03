@@ -10,7 +10,7 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Payment;
-
+use Illuminate\Support\Facades\DB;
 trait PaymentBusinessFunction
 {
     public function getPaymentByPhone($phone)
@@ -18,7 +18,6 @@ trait PaymentBusinessFunction
         $payments = Payment::where('phone', $phone)->get();
         foreach ($payments as $item) {
             $listPaymentDetail = $item->hasPaymentDetail()->get();
-//            dd($listPaymentDetail);
             foreach ($listPaymentDetail as $paymentDetail) {
                 $paymentDetail->staff = $paymentDetail->beLongsToStaff()->first();
             }
@@ -35,7 +34,7 @@ trait PaymentBusinessFunction
         return $payments;
     }
 
-    public function getAllPayment()
+    public function getListPayment()
     {
         $payments = Payment::all();
         return $payments;
@@ -64,13 +63,33 @@ trait PaymentBusinessFunction
                 return $payment;
             }
         }
-        return false;
+        return null;
     }
 
-    public function updatePayment($price, $payment){
+    public function updatePayment($price, $idPayment){
+    DB::beginTransaction();
+    try {
+        $payment = Payment::find($idPayment);
+        $payment->total_price = $payment->total_price + $price;
+        if($payment->total_price == 0){
+            $payment->is_done = true;
+        }
+        $payment->save();
+        DB::commit();
+        return true;
+    } catch (\Exception $e) {
+        DB::rollback();
+        return false;
+    }
+}
+    public function updatePaymentPrepaid($price, $idPayment){
         DB::beginTransaction();
         try {
-            $payment->price = $payment->price + $price;
+            $payment = Payment::find($idPayment);
+            $payment->prepaid = $payment->prepaid + $price;
+            if($payment->total_price == $payment->prepaid){
+                $payment->is_done = true;
+            }
             $payment->save();
             DB::commit();
             return true;
@@ -78,6 +97,18 @@ trait PaymentBusinessFunction
             DB::rollback();
             return false;
         }
+    }
 
+    public function createPaymentDetail($paymentDetail){
+        DB::beginTransaction();
+        try {
+            $paymentDetail->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return false;
+        }
     }
 }

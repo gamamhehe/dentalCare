@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-    <title>Bảng Giá Tham Khảo</title>
+    <title>Danh sách chi trả</title>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -166,12 +166,7 @@
                             </ul>
                         </li>
                         @endif
-
-
                         </li>
-
-
-
                 </ul>
             </div>
         </div>
@@ -192,90 +187,51 @@
     <br />
     <br />
     <div class="panel-group" id="accordion">
+        @foreach($listPayment as $Payment)
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                    <div class="container">
-                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne44">Payment <div class="container">
-                               <div class="col-sm-4">Ngày tạo:</div>
-                               <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                               <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
+                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$Payment->id}}"><div class="container">
+                               <div class="col-sm-4">Ngày tạo: {{$Payment->created_at}}</div>
+                               <div class="col-sm-4">Tổng tiền : {{$Payment->total_price}} VNĐ</div>
+                               <div class="col-sm-4">Đã tiền : {{$Payment->prepaid}} VNĐ</div>
+                               <div class="col-sm-4">Trạng Thái :
+                               @if($Payment->is_done == 0)
+                                   hoàn thành
+                               @else
+                                   chưa hoàn thành
+                                   @endif
+                               </div>
                            </div></a>
                    </div>
 
                 </h4>
             </div>
-            <div id="collapseOne44" class="panel-collapse collapse in">
+
+            <div id="collapse{{$Payment->id}}" class="panel-collapse collapse in">
                 <div class="panel-body">
                 <table>
                     <tr>
-                        <th>Ngày thực hiện</th>
-                        <th>Số tiền chi trả</th>
-                        <th>Người thu</th>
+                        <th>Ngày thực hiện </th>
+                        <th>Số tiền chi trả : </th>
+                        <th>Người thu : </th>
                     </tr>
+                    @foreach($Payment->payment_details as $paymentDetail)
                     <tr>
-                        <th>14/2/2018</th>
-                        <th>400.000 VNĐ</th>
-                        <th>Tài móm</th>
+                        <th>{{$paymentDetail->payment_id}}</th>
+                        <th>{{$paymentDetail->received_money}} VNĐ</th>
+                        <th>{{$paymentDetail->receptionist->name}}</th>
                     </tr>
-                    <tr>
-                        <th>24/2/2018</th>
-                        <th>400.000 VNĐ</th>
-                        <th>Lực Sĩ</th>
-                    </tr>
-                    <tr>
-                        <th>30/3/2018</th>
-                        <th>400.000 VNĐ</th>
-                        <th>Trịnh Võ</th>
-                    </tr>
+                    @endforeach
+
 
                 </table>
                 </div>
             </div>
 
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                   <div class="container">
-                       <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne45">Payment
-                           <div class="container">
-                               <div class="col-sm-4">Ngày tạo:</div>
-                               <div class="col-sm-4">Tổng tiền : 1.200.000 VNĐ</div>
-                               <div class="col-sm-4">Trạng Thái : Hoàn thành</div>
-                           </div></a>
-                   </div>
-
-                </h4>
-            </div>
-            <div id="collapseOne45" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <table>
-                        <tr>
-                            <th>Ngày thực hiện</th>
-                            <th>Số tiền chi trả</th>
-                            <th>Người thu</th>
-                        </tr>
-                        <tr>
-                            <th>13/7/2018</th>
-                            <th>300.000 VNĐ</th>
-                            <th>Hồng Hòa</th>
-                        </tr>
-                        <tr>
-                            <th>14/3/2018</th>
-                            <th>500.000 VNĐ</th>
-                            <th>Lực Sĩ</th>
-                        </tr>
-                        <tr>
-                            <th>30/3/2018</th>
-                            <th>400.000 VNĐ</th>
-                            <th>Trịnh Huỳnh</th>
-                        </tr>
-
-                    </table>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
 <div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);margin-top: 30px;">
@@ -317,11 +273,7 @@
             </div>
         </div>
     </div></div>
-
-
-
 <!-- end footer -->
-
 </body>
 </html>
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>

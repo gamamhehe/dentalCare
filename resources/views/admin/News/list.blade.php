@@ -8,9 +8,9 @@
           <label><h1>Danh sách Tin Tức</h1></label>
       </div>
       <div class="row layout" style=" margin-right: 4em"  >
-        <table id="dup-table" class="table ">
+        <table id="dup-table" class="table">
           <thead>
-          <tr style="background-color: #eee;">
+          <tr style="background-color: #eee;height: 1.3em;">
             <td class="col-sm-1">id</td>
             <td class="col-sm-6" style="text-align: left;">Tên Bài Viết</td>
             <td class="col-sm-3">Lựa chọn</td>
@@ -59,13 +59,13 @@
         });
     });
          function deleteNews(obj){
-             alert("D");
+
 //          var linkDelete = "admin/deleteNews/";
            var id = obj.getAttribute("id");
            $.ajax(
             {
             url: "/admin/deleteNews/"+id,
-            method:"post",
+            method:"get",
             data: {
                 id:id
             },

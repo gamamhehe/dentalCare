@@ -16,7 +16,7 @@ class CreateTblMedicinesQuantityTable extends Migration
         Schema::create('tbl_medicines_quantity', function (Blueprint $table) {
             $table->integer('medicine_id');
             $table->integer('treatment_detail_id');
-            $table->dateTime('create_date');
+            $table->integer('quantity');
             $table->primary(array('medicine_id', 'treatment_detail_id'),'medicine_of_detail');
             $table->timestamps();
         });
