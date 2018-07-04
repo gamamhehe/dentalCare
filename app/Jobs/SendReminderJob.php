@@ -12,7 +12,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class SendReminderJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-protected $phone;
+    protected $phone;
+
     /**
      * Create a new job instance.
      *
@@ -30,7 +31,6 @@ protected $phone;
      */
     public function handle()
     {
-        $response = Utilities::sendRemindingAppointment($this->phone);
-        Utilities::logDebug("Response Sending Firebase: ".$response);
+        Utilities::sendRemindingAppointment($this->phone);
     }
 }
