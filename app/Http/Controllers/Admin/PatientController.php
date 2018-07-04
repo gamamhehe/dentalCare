@@ -110,8 +110,16 @@ class PatientController extends Controller
 
     public function update(Request $request)
     {
-        $idPatient = $request->patient_id;
-        $this->updatePatient($request, $idPatient);
+        $patient  = $this->getPatientById($request->patient_id);
+        $patient->name = $request->name;
+        $patient->address = $request->address;
+        $patient->phone = $request->phone;
+        $patient->date_of_birth = $request->date_of_birth;
+        $patient->gender = $request->gender;
+        $patient->avatar = $request->avatar;
+        $patient->district_id = $request->district_id;
+        $patient->is_parent = $request->is_parent;
+        $this->updatePatient($patient);
 
     }
 
@@ -122,9 +130,13 @@ class PatientController extends Controller
 
 
     public function receive($id){
-        $appointment = $this->checkAppointmentForPatient($id);
+        $phone = $this->getPhoneOfPatient($id);
+        $appointment = $this->checkAppointmentForPatient($phone, $id);
         //truyền ID ,lya phone di
         if($appointment){
+            $appointment->patient_id = $id;
+            $appointment->is_coming = true;
+            $this->saveAppointment($appointment);
             return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Đã có  lich");
         }else{
             return redirect()->back()->withErrors(['message1'=>'Error ! No Appointment']);
