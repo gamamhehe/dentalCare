@@ -15,7 +15,7 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Tìm bệnh nhân</div>
+                        <div class="col-sm-5" style="text-align: left">Tìm bệnh nhân  </div>
                         <div class="col-sm-7" style="text-align: right">
                             <button class="btn btn-success" id="User" >Tạo tài khoản</button>
                             <button class="btn btn-success" id="Patient" >Tạo bệnh nhân</button>
@@ -44,7 +44,7 @@
                                 <th>Địa Chỉ</th>
                                 <th>Ngày Sinh</th>
                                 <th>Tùy chọn</th>
-                                <th>Country</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -67,8 +67,13 @@
  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     $(document).ready(function(){
+        <?php if (Session::has('success')): ?>
+        swal("Xong nha má", "", "success");
+        <?php endif ?>
 
-       
+        <?php if ($errors->first('message1')): ?>
+        swal("Error", "", "success");
+        <?php endif ?>
     });
     function search(){
         

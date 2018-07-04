@@ -69,4 +69,8 @@ trait PatientBusinessFunction
     {
         return Patient::all();
     }
+
+    public function getPhoneOfPatient($id){
+        return Patient::find($id)->phone;
+    }
 }

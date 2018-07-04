@@ -94,9 +94,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/editTreatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
     Route::post('/editTreatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
     //Nurse
-    Route::get('/live_search', 'Admin\PatientController@index');
+    Route::get('/live_search', 'Admin\PatientController@index')->name('admin.AppointmentPatient.index');
     Route::get('/live_search/{xx}', 'Admin\PatientController@action1') ;
-    Route::get('/list-Appointment/{id}', 'Admin\PatientController@listAppointment')->name('admin.listAppointment.patient');
+    Route::get('/list-Appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
 
     //Patient
       Route::get('/create-Patient', 'Admin\PatientController@create');
