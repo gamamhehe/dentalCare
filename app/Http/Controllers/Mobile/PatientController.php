@@ -31,7 +31,7 @@ class PatientController
                 $patient->date_of_birth = $birthday;
                 $patient->address = $address;
                 $patient->district_id = $districtId;
-                $result = $this->updatePatientWithModel($patient);
+                $result = $this->updatePatient($patient);
                 if ($result == true) {
                     $successResponse = new \stdClass();
                     $successResponse->status = "OK";
