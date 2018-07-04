@@ -14,6 +14,7 @@ use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendSmsJob;
 use App\Model\Appointment;
 use App\Model\Patient;
 use App\Model\UserHasRole;
@@ -84,11 +85,8 @@ class AppointmentController extends Controller
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
-                $smsSendingResult = Utilities::sendSMS(
-                    $phone, AppConst::getSmsMSG($result->numerical_order, $startDateTime)
-                );
-                $smsDecode = json_encode($smsSendingResult);
-                Utilities::logDebug($smsDecode);
+                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+                $this->dispatch(new SendSmsJob($phone, $smsMessage));
                 return response()->json($listAppointment, 200);
             } else {
                 $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",

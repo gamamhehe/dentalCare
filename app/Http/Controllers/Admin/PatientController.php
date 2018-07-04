@@ -144,7 +144,7 @@ class PatientController extends Controller
         }
     }
     public function listAppointment($id){
-        dd($id);
+      
         return view('admin.AppointmentPatient.list');
     }
      public function index()
