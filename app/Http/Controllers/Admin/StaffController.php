@@ -10,12 +10,11 @@ use App\Model\Staff;
 use App\Model\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Yajra\Datatables\Facades\Datatables;
 class StaffController extends Controller
 {
     //
     use UserBusinessFunction;
-    use StaffBusinessFunction;
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
     public function loginGet(Request $request)
@@ -35,6 +34,8 @@ class StaffController extends Controller
 
     public function create(Request $request)
     {
+        $post = Staff::all();
+        return view('admin.dentist.list',['post'=>$post]);
         $checkExist = $this->checkExistUser($request->phone);
         if ($checkExist) {
             return false;
@@ -83,7 +84,16 @@ class StaffController extends Controller
         $this->updateStaff($request, $idStaff);
 
     }
+    public function getListAppointmentByDentist(Request $request){
+        $sessionAdmin = $request->session()->get('currentAdmin', null);
+        $list = $this->getAppointmentByPhone( $sessionAdmin->phone);
 
+        return Datatables::of($list)
+            ->addColumn('action', function($appoint) {
+                return '<a href="editNews/'.$appoint->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>CC gì</a> <a id="'.$appoint->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Ai biet</a>';
+            })->make(true);
+        
+    }
     public function getList()
     {
         return $this->getListStaff();
@@ -91,18 +101,49 @@ class StaffController extends Controller
 
     public function viewAppointment(Request $request)
     {
-        $sessionAdmin = $request->session()->get('currentAdmin', null);
-        $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
-        if ($role == 2) {
-            $listAppointment = $this->viewAppointmentForDentist($sessionAdmin->belongToStaff()->first()->id);
-        } else {
-            $listAppointment = $this->viewAppointmentForReception();
-        }
-        return $listAppointment;
+        // $sessionAdmin = $request->session()->get('currentAdmin', null);
+        // $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
+        // if ($role == 2) {
+        //     $listAppointment = $this->viewAppointmentForDentist($sessionAdmin->belongToStaff()->first()->id);
+        // } else {
+        //     $listAppointment = $this->viewAppointmentForReception();
+        // }
+
+        return view('admin.dentist.listAppointment');
     }
 
     public function receiveAppointment(Request $request){
         $listTreatmentHistory = $this->checkCurrentTreatmentHistoryForPatient($request->patient_id);
         return true;
+    }
+
+    public function addPost(Request $request){
+
+        $post = new Staff;
+        $post->name = $request->name;
+        $post->address = $request->address;
+        $post->save();
+        return response()->json($post);
+    }
+
+    public function editPost(request $request){
+        $post = Staff::find ($request->id);
+        $post->name = $request->name;
+        $post->address = $request->address;
+        $post->save();
+        return response()->json($post);
+    }
+    public function deletePost(Request $request){
+        $id = $request->id;
+        if($id){
+             $data = array(
+            'id'  => $id,
+            );
+        $post = Staff::find ($request->id)->delete();
+        return response()->json($data);
+        }        
+
+
+       
     }
 }

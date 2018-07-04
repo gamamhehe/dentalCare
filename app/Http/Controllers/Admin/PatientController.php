@@ -125,7 +125,6 @@ class PatientController extends Controller
         $appointment = $this->checkAppointmentForPatient($id);
         //truyền ID ,lya phone di
         if($appointment){
-            dd("no");
             return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Đã có  lich");
         }else{
             return redirect()->back()->withErrors(['message1'=>'Error ! No Appointment']);
@@ -133,7 +132,7 @@ class PatientController extends Controller
         }
     }
     public function listAppointment($id){
-        dd($id);
+      
         return view('admin.AppointmentPatient.list');
     }
      public function index()

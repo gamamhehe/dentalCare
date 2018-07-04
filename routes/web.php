@@ -99,7 +99,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/list-Appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
 
     //Patient
-      Route::get('/create-Patient', 'Admin\PatientController@create');
+    Route::get('/create-Patient', 'Admin\PatientController@create');
+    //Dentist getListAppointmentByDentist
+    Route::get('/list-Appointment', 'Admin\StaffController@viewAppointment');
+    Route::get('/getAppointment', 'Admin\StaffController@getListAppointmentByDentist');
+    Route::get('/create-Dentist', 'Admin\StaffController@create');
+    Route::get('/addPost','Admin\StaffController@addPost');
+    Route::post('/editPost','Admin\StaffController@editPost');
+    Route::get('/deletePost','Admin\StaffController@deletePost');
+
 });
 
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
