@@ -36,6 +36,7 @@ class SendSmsJob implements ShouldQueue
     public function handle()
     {
         try {
+            sleep(10);
             $smsSendingResult =  Utilities::sendSMS($this->phone, $this->message);
             $smsDecode = json_encode($smsSendingResult);
             Utilities::logDebug("HANDLE SendSmsJob".$smsDecode);
