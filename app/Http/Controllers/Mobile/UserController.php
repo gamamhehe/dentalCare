@@ -16,6 +16,8 @@ use App\Model\Patient;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -260,7 +262,7 @@ class UserController extends Controller
         } else {
             $error = new \stdClass();
             $error->error = "Không tìm thấy số điện thoại " . $phone;
-            $error->exception = $ex->getMessage();
+            $error->exception = "nothing";
             return response()->json($error, 400);
         }
     }
