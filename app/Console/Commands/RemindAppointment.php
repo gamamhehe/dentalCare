@@ -4,19 +4,21 @@ namespace App\Console\Commands;
 
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Jobs\SendReminderJob;
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Facades\Log;
 
 class RemindAppointment extends Command
 {
     use AppointmentBussinessFunction;
+    use DispatchesJobs;
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'remind:appointment';
-
     /**
      * The console command description.
      *
@@ -41,20 +43,18 @@ class RemindAppointment extends Command
      */
     public function handle()
     {
-       //call firebase notify patient
+        //call firebase notify patient
         $currentDateTime = new \DateTime();
         $appointments = $this->getAppointmentsByStartTime($currentDateTime->format('Y-m-d'));
-        $currentTimeStamp = $currentDateTime->getTimestamp();
-        foreach ($appointments as $appointment){
-            $tmpDateTime = (new \DateTime($appointment->start_time));
-            $tmpTimeStamp =$tmpDateTime->getTimestamp();
-            if($tmpTimeStamp > $currentTimeStamp){
-                $minute = $tmpDateTime->diff($currentDateTime);
-                if($minute<=30 && $minute>=26){
-                    Utilities::logDebug("FIND ONCE".$minute." date in db: " . $tmpDateTime->format('Y-m-d H:i:s'));
-                    Utilities::sendRemindingAppointment($appointment->phone);
-                }
+        $numOfReminder = 0;
+        foreach ($appointments as $appointment) {
+            $apptDateTime = (new \DateTime($appointment->start_time));
+            if ($this->isUpCommingAppointment($currentDateTime, $apptDateTime)) {
+                $numOfReminder++;
+                Utilities::logDebug('Send for appointment id: ' . $appointment->id);
+                $this->dispatch(new SendReminderJob($appointment->phone));
             }
         }
+        Utilities::logDebug("Remind: " . $numOfReminder . " appointments");
     }
 }

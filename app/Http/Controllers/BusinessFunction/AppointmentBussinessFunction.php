@@ -74,7 +74,7 @@ trait AppointmentBussinessFunction
             $bookingDateNewFormat = (new \DateTime($bookingDate))->format("Y-m-d");
             $listAppointment = $this->getAppointmentsByStartTime($bookingDateNewFormat);
             $dentistObj = $this->getStaffById($dentistId);
-            $this->logDebug(($dentistObj==null)? ("DENTIST OBJ ID".$dentistId.' NULL'): "DENTIST OBJ NOT NULL");
+            $this->logDebug(($dentistObj == null) ? ("DENTIST OBJ ID" . $dentistId . ' NULL') : "DENTIST OBJ NOT NULL");
             $predictAppointmentDate = new \DateTime();
             $bookingDateObj = new \DateTime($bookingDate);
 //            $appointmentArray = $listAppointment->toArray();
@@ -234,6 +234,22 @@ trait AppointmentBussinessFunction
         Log::info("LOG_DEBUG_Appointment: " . $message);
     }
 
+    public function isUpCommingAppointment($currentDateObj, $appointmentDateObj)
+    {
+
+        $currentTimeStamp = $currentDateObj->getTimestamp();
+        $apptTimeStamp = $appointmentDateObj->getTimestamp();
+        if ($apptTimeStamp > $currentTimeStamp) {
+            $diffTime = $currentDateObj->diff($appointmentDateObj);
+            $hours = $diffTime->h;
+            $minute = $diffTime->i;
+            if ($hours == 0 && $minute >= 28 && $minute <= 30) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private function isInLunchBreak($appointmentEndDateTime)
     {
         $time = $appointmentEndDateTime->format('H:i:s');
@@ -365,9 +381,9 @@ trait AppointmentBussinessFunction
      * @return mixed
      * @throws \Exception
      */
-    private function addTimeToDate($date, $time)
+    private function addTimeToDate($date, $timeStr)
     {
-        $intervalTime = new \DateInterval('P0000-00-00T' . $time);
+        $intervalTime = new \DateInterval('P0000-00-00T' . $timeStr);
         $date->add($intervalTime);
         return $date;
     }
@@ -432,7 +448,9 @@ trait AppointmentBussinessFunction
             ->where('start_time', '>=', Carbon::now()->format('Y-m-d'))
             ->get();
     }
-    public function viewAppointmentForReception(){
+
+    public function viewAppointmentForReception()
+    {
         return Appointment::where('start_time', '>=', Carbon::now()->format('Y-m-d'))
             ->get();
     }

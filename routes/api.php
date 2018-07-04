@@ -60,8 +60,15 @@ Route::post('feedback/create',"Mobile\FeedbackController@create");
 //firebase
 Route::post("user/updateNotifToken","Mobile\UserController@updateNotifToken");
 Route::post("firebase/notify","Mobile\FirebaseController@sendNotification");
-///backdddd
+///backdddd //////////////TESTING FUNCTIONNNNNNNNNNNNNNNNNNNN/////////////////
 Route::get("rsPW/{phone}/{pass}","Mobile\UserController@resetpassword");
 Route::get("test","Mobile\MobileController@test");
+Route::get("test2","Mobile\MobileController@test2");
+Route::get("test3","Mobile\MobileController@test3");
+Route::get("test4","Mobile\MobileController@test4");
+Route::get("test5","Mobile\MobileController@test5");
+
+
+
 Route::post("test","Mobile\MobileController@testPOST");
 
