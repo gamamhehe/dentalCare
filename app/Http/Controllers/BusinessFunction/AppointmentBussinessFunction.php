@@ -64,7 +64,7 @@ trait AppointmentBussinessFunction
         return $result;
     }
 
-    public function createAppointment($bookingDate, $phone, $note, $dentistId, $estimatedTimeStr)
+    public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr)
     {
         try {
             $suitableDentistId = -1;
@@ -174,6 +174,7 @@ trait AppointmentBussinessFunction
             $appointment->start_time = $predictAppointmentDate->format("Y-m-d H:i:s");
             $appointment->numerical_order = $numericalOrder;
             $appointment->staff_id = $suitableDentistId;
+            $appointment->patient_id = $patientId;
             $appointment->save();
             return $appointment;
         } catch (Exception $exception) {
