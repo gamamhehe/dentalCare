@@ -30,8 +30,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('remind:appointment')
-            ->everyFiveMinutes();
-        Log::info("RUNNIGN SCHEDULE");
+            ->cron("*/2 * * * *");
+        Log::info("Running Schedule");
     }
 
     /**

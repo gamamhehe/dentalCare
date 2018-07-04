@@ -33,7 +33,7 @@ Route::get('/danhsachchitra','Admin\PaymentController@getOfUser');
 Route::get('/lichsubenhan','Admin\TreatmentController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
-
+Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 
 
 // end webuser
@@ -94,10 +94,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/editTreatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
     Route::post('/editTreatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
     //Nurse
-    Route::get('/manageUserCalendar','Admin\AdminController@getManageUserCalendar');
+    Route::get('/live_search', 'Admin\PatientController@index')->name('admin.AppointmentPatient.index');
+    Route::get('/live_search/{xx}', 'Admin\PatientController@action1') ;
+    Route::get('/list-Appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
 
-    Route::get('/live_search', 'Admin\AdminController@index');
-    Route::get('/live_search/action', 'Admin\AdminController@action')->name('live_search.action');
+    //Patient
+    Route::get('/create-Patient', 'Admin\PatientController@create');
+    //Dentist getListAppointmentByDentist
+    Route::get('/list-Appointment', 'Admin\StaffController@viewAppointment');
+    Route::get('/getAppointment', 'Admin\StaffController@getListAppointmentByDentist');
+    Route::get('/create-Dentist', 'Admin\StaffController@create');
+    Route::get('/addPost','Admin\StaffController@addPost');
+    Route::post('/editPost','Admin\StaffController@editPost');
+    Route::get('/deletePost','Admin\StaffController@deletePost');
 
 });
 

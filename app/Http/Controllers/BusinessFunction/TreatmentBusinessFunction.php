@@ -40,6 +40,7 @@ trait TreatmentBusinessFunction
 
         }
     }
+
     public function createTreatment($input){
         DB::beginTransaction();
         try{
