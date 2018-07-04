@@ -52,6 +52,11 @@ trait AppointmentBussinessFunction
         return $appointments;
     }
 
+    /**
+     * @param $phone
+     * @param $date
+     * @return List Appointment
+     */
     public function getAppointmentByDate($phone, $date)
     {
         $result = Appointment::where('phone', $phone)
