@@ -68,13 +68,18 @@ trait AppointmentBussinessFunction
     {
         try {
             $suitableDentistId = -1;
+            $defaultEstimatedTime = "00:30";
+            $defaultStartOfDay = "07:00:00";
+            $defaultStartAfternoon= ' 13:00:00';
             $listDentist = $this->getAvailableDentist((new \DateTime())->format('Y-m-d'));
             $NUM_OF_DENTIST = count($listDentist);
             $this->logDebug('NUM_DENTIST' . $NUM_OF_DENTIST);
             $bookingDateNewFormat = (new \DateTime($bookingDate))->format("Y-m-d");
             $listAppointment = $this->getAppointmentsByStartTime($bookingDateNewFormat);
             $dentistObj = $this->getStaffById($dentistId);
-            $this->logDebug(($dentistObj == null) ? ("DENTIST OBJ ID" . $dentistId . ' NULL') : "DENTIST OBJ NOT NULL");
+            $this->logDebug(($dentistObj == null) ?
+                ("DENTIST OBJ ID" . $dentistId . ' NULL') :
+                "DENTIST OBJ NOT NULL");
             $predictAppointmentDate = new \DateTime();
             $bookingDateObj = new \DateTime($bookingDate);
 //            $appointmentArray = $listAppointment->toArray();
@@ -86,14 +91,13 @@ trait AppointmentBussinessFunction
                 // kieu j cung co loi
                 if ($dentistId == null || $dentistObj == null) {
                     $this->logDebug("INTO COUNT< NUMMOF DENTIST ___ Dentistt id = null");
-                    $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, "07:00:00");
+                    $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, $defaultStartOfDay);
                     $listFreeDentists = $this->getFreeDentistsAtDate($listDentist, $bookingDateNewFormat);
                     $randomDentist = $this->getRandomDentist($listFreeDentists);
                     $suitableDentistId = $randomDentist->id;
                 } else {///neu nguoi dat la bac si
                     $this->logDebug("INTO COUNT< NUMMOF DENTIST ___ Dentistt id != null");
                     $suitableDentistId = $dentistId;
-                    $dentistAppointment = null;
                     //lay ra lich cuoi cung cua bac si, vi lich nay chi co 1 hang nen trich tu list ra luon
                     $dentistAppointment = $this->getLastestAppointment($bookingDate, $dentistId);
                     if ($dentistAppointment == null) {
@@ -105,15 +109,12 @@ trait AppointmentBussinessFunction
             } else {
                 if ($dentistId == null || $dentistObj == null) {
                     $this->logDebug("INTO COUNT >= NUMMOF DENTIST ___ Dentistt id == null");
-//                    $topElement = $this->getAppointmentOnTop($appointmentArray, $NUM_OF_DENTIST);
                     $equallyAppointment = [];
                     $equallyAppointment[] = $appointmentArray[0];
                     $this->arrangeEquallyAppointment($equallyAppointment, $appointmentArray, 1);
                     if (count($equallyAppointment) > 1) {
                         $this->logDebug("INTO COUNT EQUALLY > 1");
                         $appointment = $this->getRandomAppointment($equallyAppointment);
-                        $this->logDebug('size: ' . count($appointmentArray));
-                        $this->logDebug('size: ' . count($equallyAppointment));
                         $predictAppointmentDate = $this->getNextStartTime($appointment);
                         $suitableDentistId = $appointment['staff_id'];
                     } else {
@@ -143,7 +144,7 @@ trait AppointmentBussinessFunction
                 //if the predict time is in lunch break, add it to the afternoon start at 13h
             }
             ////////////////////////////VALIDATE START_TIME - variable: $predictAppointmentDate //////////////////////////////
-            $estimatedTimeObj = new \DateTime("00:30");
+            $estimatedTimeObj = new \DateTime($defaultEstimatedTime);
             if ($estimatedTimeStr != null) {
                 $estimatedTimeObj = new DateTime($estimatedTimeStr);
             }
@@ -161,7 +162,7 @@ trait AppointmentBussinessFunction
             $endAppointmentTime = $this->addTimeToDate($tmpPredictTime, $estimatedTimeObj->format("H:i:s"));
             if ($this->isInLunchBreak($endAppointmentTime)) {
                 $this->logDebug("IS in lunch");
-                $predictAppointmentDate = new \DateTime($bookingDateNewFormat . ' 13:00:00');
+                $predictAppointmentDate = new \DateTime($bookingDateNewFormat .$defaultStartAfternoon);
             } else if ($this->isEndOfTheDay($predictAppointmentDate)) {
                 $this->logDebug("isEndOfTheDay");
                 throw new \Exception ('isEndOfTheDay');
