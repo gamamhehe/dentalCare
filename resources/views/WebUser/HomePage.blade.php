@@ -54,8 +54,8 @@
                 @if(Session::has('currentUser'))
                     <li class="nav-item dropdown ">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                            {{--<img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"--}}
-                                 {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
+                           <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
+                                class="img-fluid img-responsive" style="max-height: 25px;">
 
                         </a>
                         <ul class="dropdown-menu"
@@ -77,17 +77,7 @@
                                             @endforeach
                                         </div>
 
-                                        {{--@foreach(\Session::get('listPatient') as $key => $value)--}}
-
-
-                                                {{--<img src="{{ $value->avatar }}"--}}
-                                                     {{--class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">--}}
-
-                                        {{--@endforeach--}}
-                                                {{--<img src="{{ $value->avatar }}"--}}
-                                                     {{--class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">--}}
-                                            </div>
-                                        @endforeach
+                                      
                                     </div>
                                 </div>
 
