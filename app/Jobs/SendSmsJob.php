@@ -37,9 +37,10 @@ class SendSmsJob implements ShouldQueue
     {
         try {
             sleep(10);
-            $smsSendingResult =  Utilities::sendSMS($this->phone, $this->message);
-            $smsDecode = json_encode($smsSendingResult);
-            Utilities::logDebug("HANDLE SendSmsJob".$smsDecode);
+//            $smsSendingResult =  Utilities::sendSMS($this->phone, $this->message);
+//            $smsDecode = json_encode($smsSendingResult);
+            Utilities::logDebug("HANDLE SendSmsJob test With sleep");
+//            Utilities::logDebug("HANDLE SendSmsJob".$smsDecode);
         } catch (ApiException $e) {
             Log::info('SendSmsJob'.$e->getMessage());
         }
