@@ -203,6 +203,13 @@
                                    chưa hoàn thành
                                    @endif
                                </div>
+                               <div>
+                                   <form id="payment-form" role="form" action="{!! route('paypal') !!}" method="POST">
+                                       <input type="hidden" name="amount" value="{{ $Payment->total_price - $Payment->prepaid }}">
+                                       <input type="hidden" name="payment_id" value="{{ $Payment->id}}">
+                                   <button type="submit">Paypal Payment</button>
+                                   </form>
+                               </div>
                            </div></a>
                    </div>
 

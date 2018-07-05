@@ -439,7 +439,7 @@ trait AppointmentBussinessFunction
 
         $appointment = Appointment::where('phone', $phone)
                 ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
-                ->where('is_coming', false)
+                ->where('status', 0)
                 ->where('patient_id', $idPatient)
                 ->first();
         if($appointment){
@@ -447,7 +447,7 @@ trait AppointmentBussinessFunction
         }
         return Appointment::where('phone', $phone)
             ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
-            ->where('is_coming', false)
+            ->where('status', 0)
             ->first();
     }
 

@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Medicine;
+use App\Model\MedicinesQuantity;
 use Illuminate\Support\Facades\DB;
 trait MedicineBusinessFunction
 {
@@ -72,5 +73,28 @@ trait MedicineBusinessFunction
 
     public function getListMedicine(){
         return Medicine::all();
+    }
+
+    public function createMedicineForTreatmentDetail($listMedicine, $treatment_detail_id, $listQuantity){
+        DB::beginTransaction();
+        try {
+            for ($i = 0; $i < count($listMedicine) - 1; $i++){
+                MedicinesQuantity::create([
+                    'medicine_id' => $listMedicine[$i],
+                    'treatment_detail_id' => $treatment_detail_id,
+                    'quantity' => $listQuantity[$i]
+                ]);
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+
+        }
+    }
+
+    public function loadMedicineOfTreatmentDetail($treatment_detail_id){
+        MedicinesQuantity::where('treatment_detail_id', $treatment_detail_id)->get();
     }
 }

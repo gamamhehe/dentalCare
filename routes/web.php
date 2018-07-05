@@ -122,3 +122,9 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 //end CRUD new
 Route::get('/testFunction','Admin\StaffController@viewAppointment')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
+
+//Route::get('paywithpaypal','Admin\PaypalController@payWithPaypal');
+// route for post request
+Route::post('paypal','Admin\PaypalController@postPaymentWithpaypal')->name('paypal');
+// route for check status responce
+Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');

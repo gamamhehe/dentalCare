@@ -135,7 +135,7 @@ class PatientController extends Controller
         //truyền ID ,lya phone di
         if($appointment){
             $appointment->patient_id = $id;
-            $appointment->is_coming = true;
+            $appointment->status = 1;
             $this->saveAppointment($appointment);
             return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Đã có  lich");
         }else{
