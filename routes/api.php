@@ -67,6 +67,10 @@ Route::get("test2","Mobile\MobileController@test2");
 Route::get("test3","Mobile\MobileController@test3");
 Route::get("test4","Mobile\MobileController@test4");
 Route::get("test5","Mobile\MobileController@test5");
+//input topappt?date=value
+Route::get("topappt","Mobile\MobileController@topappt");
+//input topappt?date=value
+Route::get("bacsiranh","Mobile\TestController@getDentist");
 
 
 
