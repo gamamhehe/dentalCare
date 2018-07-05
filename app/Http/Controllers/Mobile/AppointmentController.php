@@ -80,8 +80,9 @@ class AppointmentController extends Controller
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
             $dentistId = $request->input('dentist_id');
+            $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
-            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $estimatedTime);
+            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
@@ -97,7 +98,7 @@ class AppointmentController extends Controller
         } catch (ApiException $e) {
             $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
             return response()->json($error, 400);
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             $error = Utilities::getErrorObj("Lỗi server", $ex->getMessage());
             return response()->json($error, 400);
         }
@@ -113,7 +114,7 @@ class AppointmentController extends Controller
                 "No exception");
             return response()->json($error, 400);
         } else {
-            $result = $this->createAppointment($bookingDate, $phone, $note, null, null);
+            $result = $this->createAppointment($oldBookingDate, $phone, $note, null, null);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $smsSendingResult = Utilities::sendSMS($phone, "Cam on ban da dat lich kham, so kham cua ban la " . $result->numerical_order);
