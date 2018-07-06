@@ -11,9 +11,16 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Absent;
 use App\Model\Role;
+use App\Model\Blockchain;
 use App\RequestAbsent;
 use Carbon\Carbon;
 
 trait BlockchainBusinessFunction
 {
+    public function getDataBlockChain()
+    {
+        $blockchains = Blockchain::all();
+   
+        return $blockchains;
+    }
 }
