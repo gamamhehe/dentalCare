@@ -101,9 +101,10 @@ class UserController extends BaseController
                 $userResponse->phone = $phone;
                 $userResponse->noti_token = $notifToken;
                 $userResponse->patients = $patients;
-                $clientSecret = env('PASS_SECRET', false);
+                $clientSecret = env(AppConst::PASSWORD_CLIENT_SECRET, false);
+                $clientId = env(AppConst::PASSWORD_CLIENT_ID, false);
                 $request->request->add([
-                    'client_id' => '1',
+                    'client_id' => $clientId,
                     'grant_type' => 'password',
                     'client_secret' => $clientSecret,
                     'scope' => '',
