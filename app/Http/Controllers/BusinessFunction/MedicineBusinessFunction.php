@@ -78,7 +78,7 @@ trait MedicineBusinessFunction
     public function createMedicineForTreatmentDetail($listMedicine, $treatment_detail_id, $listQuantity){
         DB::beginTransaction();
         try {
-            for ($i = 0; $i < count($listMedicine) - 1; $i++){
+            for ($i = 0; $i < count($listMedicine); $i++){
                 MedicinesQuantity::create([
                     'medicine_id' => $listMedicine[$i],
                     'treatment_detail_id' => $treatment_detail_id,
@@ -96,5 +96,9 @@ trait MedicineBusinessFunction
 
     public function loadMedicineOfTreatmentDetail($treatment_detail_id){
         MedicinesQuantity::where('treatment_detail_id', $treatment_detail_id)->get();
+    }
+
+    public function getMedicineByName($medicine){
+        return Medicine::where('name', 'like',  '%'.$medicine.'%')->get();
     }
 }

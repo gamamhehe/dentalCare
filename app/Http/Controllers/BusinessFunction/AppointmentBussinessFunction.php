@@ -473,6 +473,7 @@ trait AppointmentBussinessFunction
                 ->where('status', 0)
                 ->where('patient_id', $idPatient)
                 ->first();
+
         if($appointment){
             return $appointment;
         }

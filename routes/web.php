@@ -30,7 +30,7 @@ Route::get('/event/{id}','Admin\HomeController@eventLoadByID');
 Route::get('/myProfile/{id}','Admin\HomeController@myProfile');
 Route::get('/gioithieu','Admin\HomeController@aboutUs');
 Route::get('/danhsachchitra','Admin\PaymentController@getOfUser');
-Route::get('/lichsubenhan','Admin\TreatmentController@showTreatmentHistory');
+Route::get('/lichsubenhan','Admin\TreatmentHistoryController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
@@ -98,6 +98,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/live_search/{xx}', 'Admin\PatientController@action1') ;
     Route::get('/list-Appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
 
+    Route::get('/createPrescription', 'Admin\MedicineController@createPrescription')->name('admin.AppointmentPatient.index');
+    Route::get('/medicine_search/{xx}', 'Admin\MedicineController@ajaxSearch') ;
+
+    Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
+
     //Patient
     Route::get('/create-Patient', 'Admin\PatientController@create');
     //Dentist getListAppointmentByDentist
@@ -112,7 +117,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
 
-    Route::get('/getTreatmentHistory', 'Admin\TreatmentController@showTreatmentHistory');
+    Route::get('/getTreatmentHistory', 'Admin\TreatmentHistoryController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
 
