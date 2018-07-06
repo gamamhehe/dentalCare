@@ -62,6 +62,7 @@ trait TreatmentHistoryBusinessFunction
     public function getTreatmentHistoryByPatientId($id)
     {
         $patient = Patient::where('id', $id)->first();
+        
         if ($patient != null) {
             $treatmentHistories = $patient->hasTreatmentHistory()->get();
             return $treatmentHistories;
@@ -77,12 +78,12 @@ trait TreatmentHistoryBusinessFunction
 
     public function saveTreatmentHistory($treatmentHistory)
     {
+
         DB::beginTransaction();
         try {
             $treatmentHistory->save();
             DB::commit();
             return true;
-
         } catch (\Exception $e) {
             DB::rollback();
             return false;

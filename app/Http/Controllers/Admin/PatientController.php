@@ -183,7 +183,9 @@ class PatientController extends Controller
          <td>'.$row->name.'</td>
          <td>'.$row->address.'</td>
          <td>'.$row->date_of_birth.'</td>
-         <td><a href="list-Appointment/'.$row->id.'" class="btn btn-info" role="button">Lịch hẹn</a></td>
+         <td><a href="list-Appointment/'.$row->id.'" class="btn btn-info" role="button">Skip</a>
+<a href="list-Appointment/'.$row->id.'" class="btn btn-info" role="button">Đặt Lịch</a>
+         </td>
         </tr>
         ';
             }

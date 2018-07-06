@@ -6,8 +6,11 @@ use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentCategoriesBusinessFunction;
 use App\Model\Staff;
+use App\Model\TreatmentCategory;
 use App\Model\User;
+use App\Model\Tooth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
@@ -17,6 +20,7 @@ class StaffController extends Controller
     use UserBusinessFunction;
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
+    use TreatmentCategoriesBusinessFunction;
     public function loginGet(Request $request)
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
@@ -87,16 +91,23 @@ class StaffController extends Controller
     public function getListAppointmentByDentist(Request $request){
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         $list = $this->getAppointmentByPhone( $sessionAdmin->phone);
-
         return Datatables::of($list)
             ->addColumn('action', function($appoint) {
-                return '<a href="editNews/'.$appoint->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>CC gì</a> <a id="'.$appoint->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Ai biet</a>';
+                return '
+                <button value="'.$appoint->patient_id.'" class="btn btn-primary btn-xs btn-sm btn-dell"> Skip</button>
+                <a href="createTreatment/'.$appoint->patient_id.'"  class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Create Treatment</a>';
             })->make(true);
         
     }
     public function getList()
     {
         return $this->getListStaff();
+    }
+    public function createTreatmentByStaff(Request $request,$id){
+        $patient_id=$id;
+        $listTreatment = $this->getAllTreatmentCategories();
+        $listTooth = Tooth::all();
+        return view ('admin.dentist.createTreatment',['listTreatmentCategories'=>$listTreatment,'listTooth'=>$listTooth,'patient_id'=>$patient_id]);
     }
 
     public function viewAppointment(Request $request)

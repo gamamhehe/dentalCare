@@ -64,7 +64,14 @@ class TreatmentController extends Controller
 
         }
     }
-
+    public function getTreatment($id){
+        $treatment = $this->getTreatmentByID($id);
+        return $treatment;
+    }
+    public function getTreatmentByCategoryId($id){
+        $treat =$this->getTreatmentByCategori($id);
+       return $treat;
+    }
     public function testFunction(){
         dd($this->createTreatmentProcess(1, 1,11, 50000, 'abc'));
     }

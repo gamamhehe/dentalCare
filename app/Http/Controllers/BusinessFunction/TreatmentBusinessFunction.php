@@ -40,7 +40,10 @@ trait TreatmentBusinessFunction
 
         }
     }
-
+    public function getTreatmentByCategori($id){
+        $listTreat = Treatment::where('treatment_category_id','=',$id)->get();
+        return $listTreat;
+    }
     public function createTreatment($input){
         DB::beginTransaction();
         try{
