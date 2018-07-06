@@ -14,16 +14,19 @@ use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+<<<<<<< .merge_file_a06208
+use Illuminate\Http\Request;
+=======
 use App\Jobs\SendSmsJob;
+>>>>>>> .merge_file_a05852
 use App\Model\Appointment;
 use App\Model\Patient;
 use App\Model\UserHasRole;
 use App\User;
 use DateTime;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
-use SMSGatewayMe\Client\ApiException;
+//use SMSGatewayMe\Client\ApiException;
 
 class AppointmentController extends Controller
 {
@@ -108,6 +111,10 @@ class AppointmentController extends Controller
     {
         $phone = $request->input('phone');
         $note = $request->input('note');
+        $bookingDate = $request->input('booking_date');
+        $result = $this->createAppointment($bookingDate, $phone, $note);
+        if ($result != null) {
+            return response()->json($result, 200);
         $oldBookingDate = $request->input('booking_date');
         if ($this->getAppointmentByDate($phone, $oldBookingDate) && $this->checkExistUser($phone)) {
             $error = Utilities::getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
@@ -129,6 +136,7 @@ class AppointmentController extends Controller
                 return response()->json($error, 400);
             }
         }
+    }
     }
 
     public function quickBookAppointment(Request $request)

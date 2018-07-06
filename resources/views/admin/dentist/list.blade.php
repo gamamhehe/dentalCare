@@ -260,6 +260,7 @@
     });
     $(document).on('click', '.btn-dell', function(e) {
             var id=$(this).val();
+            alert(id);
             $.ajax({
              url: '/admin/deletePost', //this is your uri
             type: 'GET', //this is your method
