@@ -99,7 +99,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/list-Appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
 
     Route::get('/createPrescription', 'Admin\MedicineController@createPrescription')->name('admin.AppointmentPatient.index');
-    Route::get('/medicine_search/{xx}', 'Admin\MedicineController@ajaxSearch') ;
+    Route::get('/medicine_search/{id}', 'Admin\MedicineController@ajaxSearch') ;
 
     Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
 
