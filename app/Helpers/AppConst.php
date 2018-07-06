@@ -18,6 +18,9 @@ class AppConst
 
     const MSG_SMS_APPOINTMENT = "";
     const MSG_REMINDER_APPOINTMENT = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";
+
+    const MSG_LOGOUT_ERROR = "Không tìm thấy phiên đăng nhập của tài khoản";
+    const MSG_LOGOUT_SUCCESS = "Đăng xuất thành công";
 //0 vua tao
 //1 dang kham
 //2 xong
