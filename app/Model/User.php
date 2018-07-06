@@ -7,9 +7,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 class User extends Authenticatable
 {
-    use HasApiTokens,Notifiable;
+    use HasApiTokens, Notifiable;
 
     public function findForPassport($phone)
     {
@@ -18,13 +19,13 @@ class User extends Authenticatable
 
     public function AauthAcessToken()
     {
-        return $this->hasMany('\App\Model\OauthAccessToken','user_id','phone');
+        return $this->hasMany('\App\Model\OauthAccessToken', 'user_id', 'phone');
     }
 
     protected $table = 'tbl_users';
-    protected $primaryKey  = "phone";
+    protected $primaryKey = "phone";
     protected $casts = ['phone' => 'string'];
-    protected $fillable = [  'password', 'noti_token', 'is_deleted'];
+    protected $fillable = ['phone', 'password', 'noti_token', 'is_deleted'];
 
     public function hasUserHasRole()
     {
