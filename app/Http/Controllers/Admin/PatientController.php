@@ -135,7 +135,7 @@ class PatientController extends Controller
         //truyền ID ,lya phone di
         if($appointment){
             $appointment->patient_id = $id;
-            $appointment->is_coming = true;
+            $appointment->status = 1;
             $this->saveAppointment($appointment);
             return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Đã có  lich");
         }else{
@@ -152,9 +152,9 @@ class PatientController extends Controller
 
         return view('admin.AppointmentPatient.index');
     }
-    public function action1($xx){
+    public function action1($phone){
         $output = '';
-        $user = $this->getUserByPhone($xx);
+        $user = $this->getUserByPhone($phone);
         if(!$user){
              $total_row = -1;
               Session::flash('taikhoan', 'khongco');
@@ -165,7 +165,7 @@ class PatientController extends Controller
        ';
         }else{
              $data = DB::table('tbl_patients')
-            ->where('phone', '=',$xx)
+            ->where('phone', '=',$phone)
             ->orderBy('phone', 'desc')
             ->get();
 

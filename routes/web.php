@@ -101,6 +101,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/list-Appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
     //TreatmentCategory
 
+    Route::get('/createPrescription', 'Admin\MedicineController@createPrescription')->name('admin.AppointmentPatient.index');
+    Route::get('/medicine_search/{xx}', 'Admin\MedicineController@ajaxSearch') ;
+
+    Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
+
     //Patient
     Route::get('/create-Patient', 'Admin\PatientController@create');
     //Dentist  
@@ -133,7 +138,7 @@ Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
 
 Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
 
-    Route::get('/getTreatmentHistory', 'Admin\TreatmentController@showTreatmentHistory');
+    Route::get('/getTreatmentHistory', 'Admin\TreatmentHistoryController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
 
@@ -143,3 +148,9 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 //end CRUD new
 Route::get('/testFunction','Admin\StaffController@viewAppointment')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
+
+//Route::get('paywithpaypal','Admin\PaypalController@payWithPaypal');
+// route for post request
+Route::post('paypal','Admin\PaypalController@postPaymentWithpaypal')->name('paypal');
+// route for check status responce
+Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');

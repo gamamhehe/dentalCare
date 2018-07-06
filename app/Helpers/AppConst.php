@@ -18,7 +18,9 @@ class AppConst
 
     const MSG_SMS_APPOINTMENT = "";
     const MSG_REMINDER_APPOINTMENT = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";
-
+//0 vua tao
+//1 dang kham
+//2 xong
     /**
      * @param $order numerical_order of appointment
      * @param $date DateTime Object

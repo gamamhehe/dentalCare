@@ -142,6 +142,14 @@ trait UserBusinessFunction
         }
     }
 
+    public function getUserPhones($keyword)
+    {
+        $phones = User::where('phone', 'like', '%'.$keyword.'%')
+            ->pluck('phone')
+            ->toArray();
+        return $phones;
+    }
+
     public function deleteRole($id)
     {
         DB::beginTransaction();

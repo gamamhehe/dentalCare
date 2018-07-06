@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
+use App\Model\MedicinesQuantity;
 use App\Model\Patient;
 use App\Model\Treatment;
 use App\Model\TreatmentDetail;
@@ -54,6 +55,7 @@ trait TreatmentDetailBusinessFunction
                     'description' => $description,
                 ]);
             }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -77,7 +79,9 @@ trait TreatmentDetailBusinessFunction
         return $result;
     }
 
-    public function createMedicineForTreatmentDetailBusiness(){
+
+
+    public function checkDoneTreatmentHistory($idTreatmnet, $idTreatmentHistory){
 
     }
 }

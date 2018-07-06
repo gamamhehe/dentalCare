@@ -22,10 +22,10 @@ Route::post("user/login", "Mobile\UserController@loginUser");
 Route::get("user/login", "Mobile\UserController@loginGET");
 Route::post("user/register", "Mobile\UserController@register");
 Route::post("user/bookAppointment", "Mobile\UserController@bookAppointment");
-Route::post("user/changeAvatar","Mobile\UserController@changeAvatar");
-Route::post("user/changePassword","Mobile\UserController@changePassword");
+Route::post("user/changeAvatar", "Mobile\UserController@changeAvatar");
+Route::post("user/changePassword", "Mobile\UserController@changePassword");
 //patient
-Route::post("user/updatePatient","Mobile\PatientController@updatePatientInfo");
+Route::post("user/updatePatient", "Mobile\PatientController@updatePatientInfo");
 
 
 Route::get("city/all", "Mobile\AddressController@getAllCitites");
@@ -36,15 +36,15 @@ Route::get("news/loadmore", "Mobile\NewsController@loadMore");
 Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
 //History Treatment
 
-Route::post("historyTreatment/all","Mobile\HistoryTreatmentController@getAll");
-Route::post("historyTreatment/getByPhone/{phone}","Mobile\HistoryTreatmentController@getByPhone");
-Route::post("historyTreatment/getById/","Mobile\HistoryTreatmentController@getById");
-Route::post("historyTreatment/getByPatientId/","Mobile\HistoryTreatmentController@getByPatientId");
+Route::post("historyTreatment/all", "Mobile\HistoryTreatmentController@getAll");
+Route::post("historyTreatment/getByPhone/{phone}", "Mobile\HistoryTreatmentController@getByPhone");
+Route::post("historyTreatment/getById/", "Mobile\HistoryTreatmentController@getById");
+Route::post("historyTreatment/getByPatientId/", "Mobile\HistoryTreatmentController@getByPatientId");
 
 //treatment
 
-Route::get("treatment/all" ,"Mobile\TreatmentController@getAll");
-Route::get("treatment/{id}" ,"Mobile\TreatmentController@getById");
+Route::get("treatment/all", "Mobile\TreatmentController@getAll");
+Route::get("treatment/{id}", "Mobile\TreatmentController@getById");
 
 //appointment
 Route::get("appointment/all", "Mobile\AppointmentController@getAll");
@@ -53,22 +53,32 @@ Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getBy
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
 //payment
-Route::post('payment/getByPhone','Mobile\PaymentController@getByPhone');
+Route::post('payment/getByPhone', 'Mobile\PaymentController@getByPhone');
 ///feedback
-Route::post('feedback/create',"Mobile\FeedbackController@create");
-Route::post('feedback/create',"Mobile\FeedbackController@create");
+Route::post('feedback/create', "Mobile\FeedbackController@create");
+Route::post('feedback/create', "Mobile\FeedbackController@create");
 //firebase
-Route::post("user/updateNotifToken","Mobile\UserController@updateNotifToken");
-Route::post("firebase/notify","Mobile\FirebaseController@sendNotification");
+Route::post("user/updateNotifToken", "Mobile\UserController@updateNotifToken");
+Route::post("firebase/notify", "Mobile\FirebaseController@sendNotification");
 ///backdddd //////////////TESTING FUNCTIONNNNNNNNNNNNNNNNNNNN/////////////////
-Route::get("rsPW/{phone}/{pass}","Mobile\UserController@resetpassword");
-Route::get("test","Mobile\MobileController@test");
-Route::get("test2","Mobile\MobileController@test2");
-Route::get("test3","Mobile\MobileController@test3");
-Route::get("test4","Mobile\MobileController@test4");
-Route::get("test5","Mobile\MobileController@test5");
+Route::get("rsPW/{phone}/{pass}", "Mobile\UserController@resetpassword");
+Route::get("test", "Mobile\MobileController@test");
+Route::get("test2", "Mobile\MobileController@test2");
+Route::get("test3", "Mobile\MobileController@test3");
+Route::get("test4", "Mobile\MobileController@test4");
+Route::get("test5", "Mobile\MobileController@test5");
+//input topappt?date=value
+Route::get("topappt", "Mobile\MobileController@topappt");
+//input topappt?date=value
+Route::get("bacsiranh", "Mobile\TestController@getDentist");
+
+Route::middleware('auth:api')->group(function () {
+
+    Route::get("getUser","Mobile\UserController@getUser");
+});
+    Route::get("testpassport","Mobile\UserController@testPassport");
 
 
-
-Route::post("test","Mobile\MobileController@testPOST");
-
+Route::post("test", "Mobile\MobileController@testPOST");
+///ADMIN
+Route::get('searchListPhone', 'Mobile\UserController@searchListPhone');
