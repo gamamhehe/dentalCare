@@ -6,6 +6,12 @@
 .dkm{
     color :red;
 }
+/*start star*/
+
+
+
+
+/*end star*/
 .panel-heading [data-toggle="collapse"]:after {
     font-family: 'Glyphicons Halflings';
     content: "."; /* "play" icon */
@@ -37,7 +43,7 @@
 .borderImg{
     border: solid 3px red;
 }
-hoverImg{
+.hoverImg{
     border-color: green;
 }
 .firstleftmenu{

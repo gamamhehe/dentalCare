@@ -19,7 +19,7 @@
                         <div class="col-sm-7" style="text-align: right">
                             <button class="btn btn-success" id="User" >Tạo tài khoản</button>
                             <button class="btn btn-success" id="Patient" >Tạo bệnh nhân</button>
-                             <button class="btn btn-success" id="Appoint" >Tạo lịch hẹn</button>
+                             <button class="btn btn-success create-modal" id="Appoint" >Tạo lịch hẹn</button>
                         </div>
                     </div>
                 </div>
@@ -54,18 +54,81 @@
                 </div>
             </div>
         </div>
+          <div id="create" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group row add">
+                                        <label class="control-label col-sm-2" for="title">Bệnh nhân :</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                   placeholder="Your name Here" required>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="body">Date-picker :</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="address" name="address"
+                                                   placeholder="Your Body Here" required>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="body">Bác sĩ :</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="district" name="address"
+                                                   placeholder="Your Body Here" required>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                      <div class="form-group">
+                                        <label class="control-label col-sm-2" for="body">Estimate time</label>
+                                        <div class="col-sm-10">
+                                           
+                                      <input class="form-control datepicker">
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    
+                                    </div>
+                                    <div>
+                                      <div class="span5 col-md-5" id="sandbox-container"><input type="text" class="form-control"></div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-warning" type="submit" id="add" onclick="save()" >
+                                    <span class="glyphicon glyphicon-plus"></span>Save Post
+                                </button>
+                                <button class="btn btn-warning" type="button" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-remobe"></span>Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
 
 <!-- </body>
 </html> -->
 @endsection
 @section('js')
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+     
     $(document).ready(function(){
+        $('#sandbox-container input').datepicker({
+    startDate: "07/02/2018"
+});
         <?php if (Session::has('success')): ?>
         swal("Nhận bệnh nhân thành công", "", "success");
         <?php endif ?>
@@ -77,6 +140,12 @@
         swal("Bác sĩ đang bận", "", "error");
         <?php endif ?>
     });
+     $(document).on('click','.create-modal', function() {
+        $('#create').modal('show');
+        $('.form-horizontal').show();
+        $('.modal-title').text('Add Post');
+    });
+      
     function search(){
         
         var user = document.getElementById('User');
