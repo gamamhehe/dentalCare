@@ -25,7 +25,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <input type="text" name="search" id="search" class="form-control" placeholder="Số điên thoại bệnh nhân"  />
+                        <input type="text" name="search" id="search" class="form-control" placeholder="Số điên thoại bệnh nhân" value="{{old('search')}}" />
                         <div class="row" style="margin-bottom: 1em;" >
                             <div class=""  style="margin-top: 1em;">
                                 <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="search()" >Tìm</button>
@@ -36,14 +36,13 @@
                   
  
                     <div class="table-responsive">
-                        <h3 align="left" id="xxx">Số lượng bệnh nhân của tài khoản: <span id="total_records"></span></h3>
-                        <table class="table table-striped table-bordered">
+                        <table class="table table-striped table-bordered" style="text-align: center">
                             <thead>
                             <tr>
-                                <th>Họ Tên</th>
-                                <th>Địa Chỉ</th>
-                                <th>Ngày Sinh</th>
-                                <th>Tùy chọn</th>
+                                <th style="text-align: center; width: 30%">Họ Tên</th>
+                                <th style="text-align: center; width: 30%">Địa Chỉ</th>
+                                <th style="text-align: center; width: 20%">Ngày Sinh</th>
+                                <th style="text-align: center; width: 20%">Tùy chọn</th>
 
                             </tr>
                             </thead>
@@ -68,11 +67,14 @@
 <script>
     $(document).ready(function(){
         <?php if (Session::has('success')): ?>
-        swal("Xong nha má", "", "success");
+        swal("Nhận bệnh nhân thành công", "", "success");
         <?php endif ?>
 
-        <?php if ($errors->first('message1')): ?>
-        swal("Error", "", "success");
+        <?php if ($errors->first('notHaveAppointment')): ?>
+        swal("Không có lịch hẹn cho bệnh nhân này", "", "error");
+        <?php endif ?>
+        <?php if ($errors->first('dentistBusy')): ?>
+        swal("Bác sĩ đang bận", "", "error");
         <?php endif ?>
     });
     function search(){
@@ -93,7 +95,9 @@
             dataType: 'json',
             success: function(data){
                 $('tbody').html(data.table_data);
-                
+                $('#User').prop('disabled', false);
+                $('#Patient').prop('disabled', false)
+                $('#Appoint').prop('disabled', false)
                 if(data.total_data == -1){
                     swal("Hãy tạo tài khoản", "", "error");
                     $('#xxx').text(" ");
@@ -113,6 +117,26 @@
             }
         });
     }
+    function receive(id){
+        $.ajax({
+            url: '/admin/list-Appointment/'+ id, //this is your uri
+            type: 'GET', //this is your method
 
+            dataType: 'json',
+            success: function(data){
+                if(data.statusOfReceive == 0){
+                    swal("Bác sĩ đang bận", "", "error");
+                }
+                if(data.statusOfReceive == 1){
+                    swal("Nhận bệnh nhân thành công", "", "success");
+                }
+                if(data.statusOfReceive == 2){
+                    swal("Không có lịch hẹn cho bệnh nhân này", "", "error");
+                }
+            },error: function (data) {
+                swal("Check connnection", "", "error");
+            }
+        });
+    }
 </script>
 @endsection

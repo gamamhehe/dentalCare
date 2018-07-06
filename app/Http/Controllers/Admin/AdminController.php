@@ -61,6 +61,26 @@ class AdminController extends Controller
         DB::beginTransaction();
         try {
             User::create([
+                'phone' => '01279011091',
+                'password' => Hash::make('123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '01279011091',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '01279011092',
+                'password' => Hash::make('123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '01279011092',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
                 'phone' => '01279011096',
                 'password' => Hash::make('123123'),
             ]);
@@ -885,6 +905,24 @@ class AdminController extends Controller
                 'address' => '188 Nguyễn xí',
                 'district_id' => 1,
                 'phone' => '01279011097',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'MALE',
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Huỳnh Tài Dentist2',
+                'degree' => 'Chịch',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
+                'phone' => '01279011091',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'MALE',
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Huỳnh Tài Dentist 3',
+                'degree' => 'Chịch',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
+                'phone' => '01279011092',
                 'date_of_birth' => '1996-10-01',
                 'gender' => 'MALE',
             ]);

@@ -132,16 +132,23 @@ class PatientController extends Controller
     public function receive($id){
         $phone = $this->getPhoneOfPatient($id);
         $appointment = $this->checkAppointmentForPatient($phone, $id);
-        //truyền ID ,lya phone di
+        if($appointment === false){
+            $status = 0;
+        } else
         if($appointment){
             $appointment->patient_id = $id;
             $appointment->status = 1;
             $this->saveAppointment($appointment);
-            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Đã có  lich");
+            $status = 1;
         }else{
-            return redirect()->back()->withErrors(['message1'=>'Error ! No Appointment']);
+            $status = 2;
 
         }
+        $data = array(
+            'statusOfReceive'  => $status
+        );
+
+        echo json_encode($data);
     }
     public function listAppointment($id){
       
@@ -180,10 +187,12 @@ class PatientController extends Controller
             {
                 $output .= '
         <tr>
-         <td>'.$row->name.'</td>
-         <td>'.$row->address.'</td>
-         <td>'.$row->date_of_birth.'</td>
-         <td><a href="list-Appointment/'.$row->id.'" class="btn btn-info" role="button">Lịch hẹn</a></td>
+         <td style="width: 30%">'.$row->name.'</td>
+         <td style="width: 30%">'.$row->address.'</td>
+         <td style="width: 20%">'.$row->date_of_birth.'</td>
+         <td align="center" style="width: 20%">
+         <button type="button" class="btn btn-default btn-success"
+                                 onclick="receive('.$row->id.')">Nhận bệnh nhân</button>
         </tr>
         ';
             }
