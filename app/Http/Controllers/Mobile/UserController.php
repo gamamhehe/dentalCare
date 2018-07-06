@@ -20,12 +20,15 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Mockery\Exception;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     use PatientBusinessFunction;
     use UserBusinessFunction;
@@ -60,8 +63,8 @@ class UserController extends Controller
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
                 $userHasRole->role_id = 4;
-                $userHasRole->start_time =   Carbon::now();
-                $this->createUserWithRole($user,$patient, $userHasRole);
+                $userHasRole->start_time = Carbon::now();
+                $this->createUserWithRole($user, $patient, $userHasRole);
 
                 return response()->json($patient, 200);
             } else {
@@ -97,6 +100,28 @@ class UserController extends Controller
                 $userResponse->phone = $phone;
                 $userResponse->noti_token = $notifToken;
                 $userResponse->patients = $patients;
+
+                $clientSecret = env('PASS_SECRET', false);
+                Log::info("phone: " . $phone);
+                $request->request->add([
+                    'client_id' => '1',
+                    'grant_type' => 'password',
+                    'client_secret' => $clientSecret,
+                    'scope' => '',
+                    'username' => $phone
+                ]);
+//                var_dump($request->all());return;
+                $tokenRequest = Request::create('/oauth/token', 'post');
+                $tokenResponse = (Route::dispatch($tokenRequest));
+                $tokenResponseBody = json_decode($tokenResponse->getContent());
+//                var_dump($tokenResponseBody);
+//                return;
+                if ($tokenResponse != null) {
+                    $userResponse->access_token = $tokenResponseBody->access_token;
+                    $userResponse->refresh_token = $tokenResponseBody->refresh_token;
+                    $userResponse->token_type = $tokenResponseBody->token_type;
+                    $userResponse->expires_in = $tokenResponseBody->expires_in;
+                }
                 return response()->json($userResponse, 200);
             } else {
                 $error = new \stdClass();
@@ -105,19 +130,46 @@ class UserController extends Controller
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
-            $error = new \stdClass();
-            $error->error = "Lỗi server";
-            $error->exception = $ex->getMessage();
-            return response()->json($error, 400);
+            return response()->json($this->getErrorObj('Lỗi server', $ex), 400);
         }
     }
 
-    public
-    function bookAppointment(Request $request)
+    public function searchListPhone(Request $request)
     {
-        ///lclclclcl
+        try {
+            $keyword = $request->input('keyword');
+            $phones = $this->getUserPhones($keyword);
+            return response()->json($phones, 200);
+        } catch (Exception $ex) {
+            return response()->json($this->getErrorObj('Lỗi server', $ex),400);
+        }
 
-        return response()->json([$request->all()], 200);
+    }
+
+    public function logout(Request $request)
+    {
+        if (!$this->guard()->check()) {
+            return response([
+                'message' => 'No active user session was found'
+            ], 404);
+        }
+
+        // Taken from: https://laracasts.com/discuss/channels/laravel/laravel-53-passport-password-grant-logout
+        $request->user('api')->token()->revoke();
+
+        Auth::guard()->logout();
+
+//        Session::flush();
+//
+//        Session::regenerate();
+        return response([
+            'message' => 'User was logged out'
+        ]);
+    }
+
+    public function testPassport()
+    {
+        return "TEST PASSPORT SUCCESS";
     }
 
     public function loginGET()
@@ -152,6 +204,16 @@ class UserController extends Controller
         }
     }
 
+    public function getUser()
+    {
+//        $u = Auth::guard('api')->user();
+        $user = Auth::guard('api')->user();
+        $token = $user->AauthAcessToken()->get();
+//        $token = json_decode($token);
+        return response()->json($token);
+    }
+
+
 //get function to change password quickly
     public function resetpassword($phone, $password)
     {
@@ -169,7 +231,6 @@ class UserController extends Controller
             return response()->json("Không tìm thấy số điện thoại " . $phone);
         }
     }
-
 
 
     public function changeAvatar(Request $request)
