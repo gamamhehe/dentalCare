@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\DB;
 
 trait TreatmentHistoryBusinessFunction
 {
-//    use PaymentBusinessFunction;
-//    use EventBusinessFunction;
+   use PaymentBusinessFunction;
+   use EventBusinessFunction;
     public function getTreatmentHistory($id)
     {
         $listResult = [];
@@ -96,8 +96,11 @@ trait TreatmentHistoryBusinessFunction
         DB::beginTransaction();
         try {
             $patient = Patient::find($idPatient);
+
             $phone = $patient->belongsToUser()->first()->phone;
-            $payment = $this->checkPaymentIsDone($phone);
+            $payment=1;
+            // $payment = $this->checkPaymentIsDone($phone);
+            dd($payment);
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;
             if ($payment) {
@@ -116,10 +119,14 @@ trait TreatmentHistoryBusinessFunction
                 'total_price' => $total_price,
                 'payment_id' => $idPayment,
             ])->id;
+
+            dd("DM");
             DB::commit();
+
             return $idTreatmentHistory;
 
         } catch (\Exception $e) {
+            dd("NO");
             DB::rollback();
             return false;
 
