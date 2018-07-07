@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Helpers\AppConst;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
@@ -100,23 +101,19 @@ class UserController extends BaseController
                 $userResponse->phone = $phone;
                 $userResponse->noti_token = $notifToken;
                 $userResponse->patients = $patients;
-
-                $clientSecret = env('PASS_SECRET', false);
-                Log::info("phone: " . $phone);
+                $clientSecret = env(AppConst::PASSWORD_CLIENT_SECRET, false);
+                $clientId = env(AppConst::PASSWORD_CLIENT_ID, false);
                 $request->request->add([
-                    'client_id' => '1',
+                    'client_id' => $clientId,
                     'grant_type' => 'password',
                     'client_secret' => $clientSecret,
                     'scope' => '',
                     'username' => $phone
                 ]);
-//                var_dump($request->all());return;
                 $tokenRequest = Request::create('/oauth/token', 'post');
                 $tokenResponse = (Route::dispatch($tokenRequest));
                 $tokenResponseBody = json_decode($tokenResponse->getContent());
-//                var_dump($tokenResponseBody);
-//                return;
-                if ($tokenResponse != null) {
+                if ($tokenResponseBody != null) {
                     $userResponse->access_token = $tokenResponseBody->access_token;
                     $userResponse->refresh_token = $tokenResponseBody->refresh_token;
                     $userResponse->token_type = $tokenResponseBody->token_type;
@@ -141,35 +138,27 @@ class UserController extends BaseController
             $phones = $this->getUserPhones($keyword);
             return response()->json($phones, 200);
         } catch (Exception $ex) {
-            return response()->json($this->getErrorObj('Lỗi server', $ex),400);
+            return response()->json($this->getErrorObj('Lỗi server', $ex), 400);
         }
-
     }
 
     public function logout(Request $request)
     {
-        if (!$this->guard()->check()) {
-            return response([
-                'message' => 'No active user session was found'
-            ], 404);
+        if (!Auth::guard('api')->check()) {
+            $error = $this->getErrorObj(AppConst::MSG_LOGOUT_ERROR, null);
+            return response()->json($error, 404);
         }
-
-        // Taken from: https://laracasts.com/discuss/channels/laravel/laravel-53-passport-password-grant-logout
         $request->user('api')->token()->revoke();
-
         Auth::guard()->logout();
 
 //        Session::flush();
-//
 //        Session::regenerate();
-        return response([
-            'message' => 'User was logged out'
-        ]);
-    }
-
-    public function testPassport()
-    {
-        return "TEST PASSPORT SUCCESS";
+        $successResponse = new \stdClass();
+        $successResponse->code = 200;
+        $successResponse->status = "OK";
+        $successResponse->message = AppConst::MSG_LOGOUT_SUCCESS;
+        $successResponse->data = null;
+        return response()->json($successResponse, 200);
     }
 
     public function loginGET()
