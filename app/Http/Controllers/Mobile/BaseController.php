@@ -35,7 +35,7 @@ class BaseController extends Controller
     public function getExceptionMsg($exceptionObj)
     {
         $message = "No exception";
-        if ($exceptionObj != null) {
+        if ($exceptionObj != null && is_object($exceptionObj)) {
             $message = 'Message: ' . ($exceptionObj->getMessage())
                 . ' File: ' . $exceptionObj->getFile()
                 . ' Line: ' . $exceptionObj->getLine();
