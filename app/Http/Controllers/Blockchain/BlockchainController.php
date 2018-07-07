@@ -24,8 +24,9 @@ class BlockchainController extends Controller
         return response() -> json($dataBlockchainJson, 400);
     }
 
-    public function callAPI_GetData(Request $request) {
-        return $request;
-    }
+    // public function callAPI_GetData() {
+    //     $client = new \Guzzle\Service\Client('http://api.github.com/users/');
+    //     $response = $client->getAll("")->send();
+    // }
 
 }
