@@ -75,4 +75,4 @@ Route::get("testpassport", "Mobile\UserController@testPassport");
 
 Route::post("test", "Mobile\MobileController@testPOST");
 ///ADMIN
-Route::get('searchListPhone', 'Mobile\UserController@searchListPhone');
+Route::get('user/searchListPhone', 'Mobile\UserController@searchListPhone');

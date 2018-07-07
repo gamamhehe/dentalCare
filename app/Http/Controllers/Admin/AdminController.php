@@ -47,15 +47,6 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function initStep(){
-
-            Step::create([
-                'name' => 'Khám và tư vấn',
-                'description' => 'Bác sĩ sẽ khám tổng quát để đánh giá tình hình sức khỏe răng miệng cũng như tình hình trạng răng miệng của bệnh nhân.Sau đó, tư vấn phương pháp điều trị cụ thể.',
-
-            ]);
-
-    }
     public function initData()
     {
         DB::beginTransaction();
@@ -898,7 +889,15 @@ class AdminController extends Controller
                 'step_id' => 2,
                 'description' => 'cho phuc'
             ]);
-
+            Staff::create([
+                'name' => 'Paypal',
+                'degree' => 'Paypal',
+                'address' => 'Paypal',
+                'district_id' => '0',
+                'phone' => '0000000000',
+                'date_of_birth' => '1900-01-01',
+                'gender' => 'MALE',
+            ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Dentist',
                 'degree' => 'Chịch',
