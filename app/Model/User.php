@@ -24,7 +24,7 @@ class User extends Authenticatable
     protected $table = 'tbl_users';
     protected $primaryKey  = "phone";
     protected $casts = ['phone' => 'string'];
-    protected $fillable = [  'password', 'noti_token', 'is_deleted'];
+    protected $fillable = ['phone', 'password', 'noti_token', 'is_deleted'];
 
     public function hasUserHasRole()
     {

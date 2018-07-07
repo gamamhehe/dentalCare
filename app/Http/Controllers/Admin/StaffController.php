@@ -32,7 +32,7 @@ class StaffController extends Controller
 
     public function logout(Request $request)
     {
-        $request->session()->remove('role');
+        $request->session()->remove('currentAdmin');
         return redirect()->route('admin.login');
     }
 
@@ -88,14 +88,25 @@ class StaffController extends Controller
         $this->updateStaff($request, $idStaff);
 
     }
-    public function getListAppointmentByDentist(Request $request){
+    public function getListAppointmentForStaff(Request $request){
         $sessionAdmin = $request->session()->get('currentAdmin', null);
-        $list = $this->getAppointmentByPhone( $sessionAdmin->phone);
-        return Datatables::of($list)
+        $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
+        if ($role == 2) {
+            $listAppointment = $this->viewAppointmentForDentist($sessionAdmin->belongToStaff()->first()->id);
+        } else {
+            $listAppointment = $this->viewAppointmentForReception();
+        }
+
+        return Datatables::of($listAppointment)
             ->addColumn('action', function($appoint) {
                 return '
-                <button value="'.$appoint->patient_id.'" class="btn btn-primary btn-xs btn-sm btn-dell"> Skip</button>
-                <a href="createTreatment/'.$appoint->patient_id.'"  class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Create Treatment</a>';
+                <div>
+                    <button style="width: 30%" value="'.$appoint->patient_id.'" class="btn btn-primary btn-xs btn-sm btn-dell"> Skip</button>
+                    <form onsubmit="return checkHidden('.$appoint->status.');" action="createTreatment/'.$appoint->patient_id.'" style="width: 50%; float:right">
+                        <button type="submit" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Create Treatment</button>
+                    </form>
+                </div>
+                ';
             })->make(true);
         
     }
@@ -112,14 +123,6 @@ class StaffController extends Controller
 
     public function viewAppointment(Request $request)
     {
-        // $sessionAdmin = $request->session()->get('currentAdmin', null);
-        // $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
-        // if ($role == 2) {
-        //     $listAppointment = $this->viewAppointmentForDentist($sessionAdmin->belongToStaff()->first()->id);
-        // } else {
-        //     $listAppointment = $this->viewAppointmentForReception();
-        // }
-
         return view('admin.dentist.listAppointment');
     }
 

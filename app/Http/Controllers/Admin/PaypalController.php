@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Http\Requests;
+use App\Model\PaymentDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 use URL;
@@ -49,7 +51,7 @@ class PaypalController extends Controller
      */
     public function payWithPaypal()
     {
-        return view('paywithpaypal');
+        return view('danhsachchitra');
     }
 
     /**
@@ -86,13 +88,13 @@ class PaypalController extends Controller
         } catch (\PayPal\Exception\PPConnectionException $ex) {
             if (\Config::get('app.debug')) {
                 \Session::put('error','Connection timeout');
-                return Redirect::route('paywithpaypal');
+                return Redirect::route('danhsachchitra');
                 /** echo "Exception: " . $ex->getMessage() . PHP_EOL; **/
                 /** $err_data = json_decode($ex->getData(), true); **/
                 /** exit; **/
             } else {
                 \Session::put('error','Some error occur, sorry for inconvenient');
-                return Redirect::route('paywithpaypal');
+                return Redirect::route('danhsachchitra');
                 /** die('Some error occur, sorry for inconvenient'); **/
             }
         }
@@ -114,7 +116,7 @@ class PaypalController extends Controller
         }
 
         \Session::put('error','Unknown error occurred');
-        return Redirect::route('paywithpaypal');
+        return Redirect::route('danhsachchitra');
     }
 
     public function getPaymentStatus(Request $request)
@@ -126,7 +128,7 @@ class PaypalController extends Controller
 //        dd($request);
         if (empty($request->PayerID) || empty($request->token)) {
             \Session::put('error','Payment failed');
-            return Redirect::route('paywithpaypal');
+            return Redirect::route('danhsachchitra');
         }
         $payment = Payment::get($payment_id, $this->_api_context);
         /** PaymentExecution object includes information necessary **/
@@ -142,7 +144,14 @@ class PaypalController extends Controller
 
             /** it's all right **/
             /** Here Write your database logic like that insert record or value in database if you want **/
-            $this->updatePaymentPrepaid($request->session()->remove('amount') * 20000, $request->session()->remove('payment_id'));
+            $this->updatePaymentPrepaid($request->session()->get('amount', 0) * 20000, $request->session()->get('payment_id'));
+            $paymentDetail = new PaymentDetail();
+            $paymentDetail->payment_id = $request->session()->get('payment_id');
+            $paymentDetail->received_money = $request->session()->get('amount', 0) * 20000;
+            $paymentDetail->date_create = Carbon::now();
+            $paymentDetail->staff_id = 1;
+
+            $this->createPaymentDetail($paymentDetail);
             $request->session()->remove('payment_id');
             $request->session()->remove('amount');
             \Session::put('success','Payment success');

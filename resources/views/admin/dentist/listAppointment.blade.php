@@ -125,7 +125,15 @@
                 },
             });
     });
-
+    function checkHidden(id) {
+        if(id != 1){
+            swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error")
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 
     </script>
 
