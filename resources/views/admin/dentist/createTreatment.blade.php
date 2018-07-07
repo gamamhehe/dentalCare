@@ -25,8 +25,10 @@
                  <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Ghi chú </label></div>
                     <div class="col-sm-10" style="padding-right: 0;">
-                        <textarea  type="text" class="form-control input-width" id="description" name="description" placeholder="Ghi chú về trường hợp bệnh nhân" required="required" >
-                            
+                        <textarea id="tinyMCE" name="description" rows="7"
+                                  class="form-control"
+                                  id="input"
+                                  placeholder="Write your message..">{!!old('description')!!}</textarea>
                         </textarea> 
                     </div>
                 </div>
@@ -82,6 +84,13 @@
 @section('js')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+   $('#lfm').filemanager('image');
+        $(window).on('load', function () {
+            $(document).ready(function () {
+                Page.initTinyMCE();
+                Page.initLFM();
+            });
+        });
 
     $(document).ready(function() {
 getTreat(sel);

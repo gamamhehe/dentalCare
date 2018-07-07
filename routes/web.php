@@ -122,9 +122,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
     //Step
     Route::get('/stepTreatment','Admin\StepController@create'); //view
-
+    Route::post('/create-Step','Admin\StepController@add');
     //Absent
     Route::get('/createAbsent','Admin\AbsentController@loadcreate');
+
 
 
 });

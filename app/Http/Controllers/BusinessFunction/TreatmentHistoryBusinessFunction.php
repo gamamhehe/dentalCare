@@ -99,8 +99,7 @@ trait TreatmentHistoryBusinessFunction
 
             $phone = $patient->belongsToUser()->first()->phone;
             $payment=1;
-            // $payment = $this->checkPaymentIsDone($phone);
-            dd($payment);
+            $payment = $this->checkPaymentIsDone($phone);
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;
             if ($payment) {
@@ -119,14 +118,11 @@ trait TreatmentHistoryBusinessFunction
                 'total_price' => $total_price,
                 'payment_id' => $idPayment,
             ])->id;
-
-            dd("DM");
             DB::commit();
 
             return $idTreatmentHistory;
 
         } catch (\Exception $e) {
-            dd("NO");
             DB::rollback();
             return false;
 
