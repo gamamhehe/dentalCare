@@ -2,57 +2,74 @@
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="container">
+        <div class="content">
             <div class="row" style="text-align: center;">
                 <label><h1>Tạo Đơn Thuốc</h1></label>
             </div>
             <div class="row" style="text-align: center;">
-                <div class="panel-body col-md-6">
-                    <div class="form-group">
-                        <input type="text" name="search" id="search" class="form-control" placeholder="Tên thuốc"/>
-                        <div class="row" style="margin-bottom: 1em;">
-                            <div class="" style="margin-top: 1em;">
-                                <button type="button" class="col-md-3 btn btn-default btn-success"
-                                        style="margin-right: 10px;float: right;" onclick="search()">Tìm
-                                </button>
-                            </div>
+                <div class="col-xs-6">
+                      <div class="box"  style="border-top:green 3px solid">
+                        <div>
+                          <h3 class="box-title">Tạo Đơn Thuốc</h3>
                         </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                           <div class="form-group">
+                                    <input type="text" name="search" id="search" class="form-control" placeholder="Tên thuốc"/>
+                                    <div class="row" style="margin-bottom: 1em;">
+                                        <div class="" style="margin-top: 1em;">
+                                            <button type="button" class="col-xs-3 btn btn-default btn-success"
+                                                    style="margin-right: 10px;float: right;" onclick="search()">Tìm
+                                            </button>
+                                        </div>
+                                    </div>
 
-                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Tên thuốc</th>
+                                            <th>Công dụng</th>
+                                            <th>Thêm vào đơn thuốc</th>
 
-
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Tên thuốc</th>
-                                <th>Công dụng</th>
-                                <th>Thêm vào đơn thuốc</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+                      </div>
                 </div>
-                <div class="panel-body col-md-6" style="text-align: center;">
-                    <label><h1>Đơn Thuốc</h1></label>
+                <div class="panel-body col-xs-6" style="background-color: white;border-top:green 3px solid"">
+                    <label><h1 style="text-align: center;font-family: 'Italianno', cursive;
+    font-size: 48px;">Đơn Thuốc</h1></label>
                     <form action="{{ route('prescription') }}" class="form-horizontal" enctype="multipart/form-data">
+
+                    <div style="background-color: white;border-top: green 2px solid;text-align: left;">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                        <div id="prescription">
+                        <div class="row">
+                                <div class="col-xs-7">Tên thuốc</div>
+                                <div class="col-xs-2">Số lượng</div>
                         </div>
-                        <button type="submit">Tạo</button>
+                        <div id="prescription" style="">
+
+                          
+                        </div>
+                        <hr>
+                        <button class="btn btn-success" style="float: right" type="submit">Tạo</button>
+                    </div>
+                      
+                        
                     </form>
                 </div>
             </div>
+            
         </div>
-
     </div>
 
     </section>
-
-
     </div>
 @endsection
 @section('js')
@@ -92,9 +109,12 @@
                     return
                 }
             }
-            document.getElementById('prescription').insertAdjacentHTML('beforeend', "<div name='medicine'><input type='hidden' name='medicine[]' value='" + id +
-                "'><span>" + name + "</span><input type='number' name='quantity[]' value='1' style='width:40px'></div>");
+            document.getElementById('prescription').insertAdjacentHTML('beforeend', 
+                " <div class='row' name='medicine'> <div class='col-xs-7'> <input type='hidden' name='medicine[]' value='" + id +
+                "'><span>" + name + "</span></div> <div class='col-xs-3'> <input type='number' name='quantity[]' value='1' style='width:40px;border-radius:5px;border:1px green solid;'> vien</div></div>");
         }
     </script>
 @endsection
-  
+ 
+                          
+                   
