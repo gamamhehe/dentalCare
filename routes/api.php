@@ -59,13 +59,13 @@ Route::middleware('auth:api')->group(function () {
     Route::get("treatment/all", "Mobile\TreatmentController@getAll");
     Route::get("treatment/{id}", "Mobile\TreatmentController@getById");
 
-//appointment
+    //appointment
     Route::get("appointment/all", "Mobile\AppointmentController@getAll");
     Route::get("appointment/{id}", "Mobile\AppointmentController@getById");
     Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
     Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
-//payment
-    Route::get('payment/getByPhone', 'Mobile\PaymentController@getByPhone');
+    //payment
+    Route::get('payment/getByPhone/{phone}', 'Mobile\PaymentController@getByPhone');
 
     //test in token
     Route::get("getUser", "Mobile\UserController@getUser");

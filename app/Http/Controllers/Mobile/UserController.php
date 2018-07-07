@@ -113,7 +113,7 @@ class UserController extends BaseController
                 $tokenRequest = Request::create('/oauth/token', 'post');
                 $tokenResponse = (Route::dispatch($tokenRequest));
                 $tokenResponseBody = json_decode($tokenResponse->getContent());
-                if ($tokenResponse != null) {
+                if ($tokenResponseBody != null) {
                     $userResponse->access_token = $tokenResponseBody->access_token;
                     $userResponse->refresh_token = $tokenResponseBody->refresh_token;
                     $userResponse->token_type = $tokenResponseBody->token_type;

@@ -14,11 +14,8 @@ use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
-<<<<<<< .merge_file_a06208
 use Illuminate\Http\Request;
-=======
 use App\Jobs\SendSmsJob;
->>>>>>> .merge_file_a05852
 use App\Model\Appointment;
 use App\Model\Patient;
 use App\Model\UserHasRole;
