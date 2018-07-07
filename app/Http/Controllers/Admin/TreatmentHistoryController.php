@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 class TreatmentHistoryController extends Controller
 {
     //
-    use EventBusinessFunction;
+//    use EventBusinessFunction;
     use TreatmentHistoryBusinessFunction;
     public function createTreatmentHistory(Request $request){
         // $treatmentHistory = new TreatmentHistory();
