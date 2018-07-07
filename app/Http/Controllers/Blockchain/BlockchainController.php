@@ -26,7 +26,7 @@ class BlockchainController extends Controller
 
     public function callAPI_GetData() {
         $client = new \Guzzle\Service\Client('http://163.44.193.228/');
-        $response = $client->get("datajson")->send();
+        $response = $client->get('datajson')->send();
         dd($response);
     }
 
