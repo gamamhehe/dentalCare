@@ -71,7 +71,7 @@ Route::middleware('auth:api')->group(function () {
 });
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::get("testpassport", "Mobile\UserController@testPassport");
-
+Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPayment");
 
 Route::post("test", "Mobile\MobileController@testPOST");
 ///ADMIN
