@@ -24,12 +24,8 @@ class BlockchainController extends Controller
         return response() -> json($dataBlockchainJson, 400);
     }
 
-    public function callAPI_GetData() {
-        $url = urlencode ("http://163.44.193.228/datajson");
-    
-        $json = json_decode(file_get_contents($url), true);
-    
-        dd($json);
+    public function callAPI_GetData(Request $request) {
+        return $request;
     }
 
 }
