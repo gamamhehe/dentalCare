@@ -17,7 +17,7 @@ Route::get('logoutAdmin', 'Admin\StaffController@logout')->name('admin.logout');
 Route::post('loginAdmin', 'Admin\StaffController@login')->name('admin.login.post');
 Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
 
-Route::get('datajson', 'Blockchain\BlockchainController@getDataBlockchainJson');
+Route::post('datajson', 'Blockchain\BlockchainController@getDataBlockchainJson');
 Route::get('datajsonFromSever', 'Blockchain\BlockchainController@callAPI_GetData');
 
 
