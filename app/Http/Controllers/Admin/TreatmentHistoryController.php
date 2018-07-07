@@ -15,18 +15,17 @@ class TreatmentHistoryController extends Controller
     use EventBusinessFunction;
     use TreatmentHistoryBusinessFunction;
     public function createTreatmentHistory(Request $request){
-        $treatmentHistory = new TreatmentHistory();
-        $treatmentHistory->treatment_id = $request->treatment_id;
-        $treatmentHistory->patient_id = $request->patient_id;
-        $treatmentHistory->description = $request->description;
-        $treatmentHistory->create_date = Carbon::now();
-        $treatmentHistory->tooth_number = $request->tooth_number;
-        $treatmentHistory->price = $request->price;
+        // $treatmentHistory = new TreatmentHistory();
+        // $treatmentHistory->treatment_id = $request->treatment_id;
+        // $treatmentHistory->patient_id = $request->patient_id;
+        // $treatmentHistory->description = $request->description;
+        // $treatmentHistory->create_date = Carbon::now();
+        // $treatmentHistory->tooth_number = $request->tooth_number;
+        // $treatmentHistory->price = $request->price;
         // $treatmentHistory->payment_id = $request->payment_id;
-        $treatmentHistory->payment_id =1;
-        $treatmentHistory->total_price = $total_price;
+        // $treatmentHistory->total_price = $total_price;
 
-         if($this->saveTreatmentHistory($treatmentHistory)){
+         if($this->createTreatmentProcess($request->treatment_id,$request->patient_id,$request->tooth_number,$request->price,$request->description)){
             return redirect()->route("admin.listAppointment.dentist")->withSuccess("Feedback đã được chỉnh");
 
         }else{
