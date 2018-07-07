@@ -378,8 +378,7 @@ trait AppointmentBussinessFunction
         return $availableDentist;
     }
 
-    public
-    function isDentistAbsent($dentist, $dateStr)
+    public function isDentistAbsent($dentist, $dateStr)
     {
         $dentistRequestAbsent = $dentist->hasAbsent()->get();
         if ($dentistRequestAbsent != null) {
@@ -473,14 +472,25 @@ trait AppointmentBussinessFunction
                 ->where('status', 0)
                 ->where('patient_id', $idPatient)
                 ->first();
-
+        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
         if($appointment){
-            return $appointment;
+            if(in_array($appointment->staff_id, $listCurrentFreeDentist))
+                return $appointment;
+            else
+                return false;
         }
-        return Appointment::where('phone', $phone)
+
+        $appointment = Appointment::where('phone', $phone)
             ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
             ->where('status', 0)
             ->first();
+        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
+        if($appointment){
+            if(in_array($appointment->staff_id, $listCurrentFreeDentist))
+                return $appointment;
+            else
+                return false;
+        }
     }
 
     public function viewAppointmentForDentist($dentist_id)
@@ -494,5 +504,21 @@ trait AppointmentBussinessFunction
     {
         return Appointment::where('start_time', '>=', Carbon::now()->format('Y-m-d'))
             ->get();
+    }
+
+    public function getCurrentFreeDentist(){
+        $listAvailableDentist = $this->getAvailableDentist(Carbon::now());
+        $listCurrentBusyAppointment = Appointment::where('status', 1)->get();
+        $listCurrentBusyDentist = [];
+        foreach ($listCurrentBusyAppointment as $appointment){
+            $listCurrentBusyDentist[] = $appointment->staff_id;
+        }
+        $listCurrentFreeDentist = [];
+        foreach ($listAvailableDentist as $dentist){
+            if (!in_array($dentist->id, $listCurrentBusyDentist)){
+                $listCurrentFreeDentist[] = $dentist->id;
+            }
+        }
+        return $listCurrentFreeDentist;
     }
 }

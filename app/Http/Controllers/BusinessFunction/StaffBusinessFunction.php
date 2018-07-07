@@ -59,11 +59,13 @@ trait StaffBusinessFunction{
             return false;
         }
     }
-public function getStaffById($id){
-    $staff = Staff::where('id', $id)->first();
+    public function getStaffById($id){
+        $staff = Staff::where('id', $id)->first();
     return $staff;
-}
+    }
     public function getListStaff(){
         return Staff::all();
     }
+
+
 }
