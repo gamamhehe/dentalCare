@@ -28,10 +28,10 @@ trait TreatmentHistoryBusinessFunction
         $listResult = [];
         $patient = Patient::where('id', $id)->first();
         if ($patient == null) {
-            return null;
+            return [];
         }
         $treatmentHistoryList = $patient->hasTreatmentHistory() == null ?
-            null : $patient->hasTreatmentHistory()->get();
+            [] : $patient->hasTreatmentHistory()->get();
 
         foreach ($treatmentHistoryList as $treatmentHistory) {
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
