@@ -14,6 +14,8 @@ use App\Http\Controllers\Mobile\BaseController;
 use Exception;
 use Illuminate\Http\Request;
 use PayPal\Api\Payment;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Rest\ApiContext;
 
 
 class PaymentController extends BaseController
@@ -47,8 +49,8 @@ class PaymentController extends BaseController
         try {
             $payment_client = json_decode($paymentClientJson, true);
 
-            $apiContext = new \PayPal\Rest\ApiContext(
-                new \PayPal\Auth\OAuthTokenCredential(
+            $apiContext = new  ApiContext(
+                new OAuthTokenCredential(
                     env('PAYPAL_CLIENT_ID', false), // ClientID
                     env('PAYPAL_SECRET', false)// ClientSecret
                 )

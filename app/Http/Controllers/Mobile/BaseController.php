@@ -36,7 +36,7 @@ class BaseController extends Controller
     {
         $message = "No exception";
         if ($exceptionObj != null) {
-            $message = 'Message: ' . $exceptionObj->getMessage()
+            $message = 'Message: ' . ($exceptionObj->getMessage())
                 . ' File: ' . $exceptionObj->getFile()
                 . ' Line: ' . $exceptionObj->getLine();
         }
