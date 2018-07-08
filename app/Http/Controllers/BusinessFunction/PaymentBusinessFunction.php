@@ -96,6 +96,21 @@ trait PaymentBusinessFunction
         }
     }
 
+    public function updatePaymentModel($payment, $paymentDetail)
+    {
+        DB::beginTransaction();
+        try {
+            $payment->save();
+            $paymentDetail->save();
+            return true;
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollback();
+            throw  new Exception($exception->getMessage());
+        }
+
+    }
+
     public function updatePaymentPaid($price, $idPayment)
     {
         DB::beginTransaction();

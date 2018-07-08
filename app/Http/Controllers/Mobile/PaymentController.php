@@ -11,6 +11,8 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Http\Controllers\Mobile\BaseController;
+use App\Model\PaymentDetail;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -47,7 +49,7 @@ class PaymentController extends BaseController
         $paymentId = $request->input('payment_id');
         $localPaymentId = $request->input('local_payment_id');
         $paymentClientJson = $request->input('payment_client_json');
-        Log::info("PaymentId: " . $localPaymentId." PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
+        Log::info("PaymentId: " . $localPaymentId . " PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
         try {
             $payment_client = json_decode($paymentClientJson, true);
 
@@ -118,13 +120,27 @@ class PaymentController extends BaseController
                     "No exception completed");
                 return response()->json($error, 400);
             }
-            // storing the saled items
-//            insertItemSales($payment_id_in_db, $transaction, $sale_state);
-//            return response()->json($response);
-            $result = $this->updatePaymentPaid($amountClient, $localPaymentId);
-            if($result){
-                return response()->json("SUCCESS",200);
-            }else{
+
+            $payment = $this->getPaymentById($localPaymentId);
+            if ($payment == null) {
+                $error = $this->getErrorObj("Không tìm thấy thông tin thanh toán",
+                    "No exception in payment == null");
+                return response()->json($error, 400);
+            }
+            $user = $payment->bebeLongsToUser()->first();
+            $staff = $user == null ? null : $user->belongToStaff()->first();
+            $payment->paid = $payment->total_price;
+            $payment->is_done = 1;
+            $paymentDetail = new PaymentDetail();
+            $paymentDetail->payment_id = $localPaymentId;
+            $paymentDetail->received_money = $payment->total_price - $payment->paid;
+            $paymentDetail->date_create = Carbon::now();
+            $paymentDetail->staff_id = $staff->id;
+            $result = $this->updatePaymentModel($payment, $paymentDetail);
+            if ($result) {
+                $listPayments = $this->getPaymentByPhone($payment->phone);
+                return response()->json($listPayments, 200);
+            } else {
                 $error = $this->getErrorObj("Lỗi không thể lưu dữ liệu",
                     "No exception result null");
                 return response()->json($error, 400);
