@@ -47,7 +47,7 @@ class PaymentController extends BaseController
         $paymentId = $request->input('payment_id');
         $localPaymentId = $request->input('local_payment_id');
         $paymentClientJson = $request->input('payment_client_json');
-        Log::info("PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
+        Log::info("PaymentId: " . $localPaymentId." PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
         try {
             $payment_client = json_decode($paymentClientJson, true);
 
@@ -65,7 +65,7 @@ class PaymentController extends BaseController
             if ($payment->getState() != 'approved') {
                 $error = $this->getErrorObj(
                     "Thanh toán chưa được xác thực",
-                    "No exception");
+                    "No exception approve");
                 return response()->json($error);
             }
 
@@ -101,21 +101,21 @@ class PaymentController extends BaseController
             if ($amount_server != $amountClient) {
                 $error = $this->getErrorObj(
                     "Số tiền thanh toán không hợp lệ",
-                    "No exception");
+                    "No exception amount client");
                 return response()->json($error, 400);
             }
             // Verifying the currency
             if ($currency_server != $currency_client) {
                 $error = $this->getErrorObj(
                     "Tiền tệ không hợp lệ",
-                    "No exception");
+                    "No exception currency client");
                 return response()->json($error, 400);
             }
             // Verifying the sale state
             if ($sale_state != 'completed') {
                 $error = $this->getErrorObj(
                     "Giao dịch không thành công",
-                    "No exception");
+                    "No exception completed");
                 return response()->json($error, 400);
             }
             // storing the saled items
@@ -125,7 +125,8 @@ class PaymentController extends BaseController
             if($result){
                 return response()->json("SUCCESS",200);
             }else{
-                $error = $this->getErrorObj("Lỗi không thể lưu dữ liệu", "No exception");
+                $error = $this->getErrorObj("Lỗi không thể lưu dữ liệu",
+                    "No exception result null");
                 return response()->json($error, 400);
             }
         } catch (\PayPal\Exception\PayPalConnectionException $exc) {
@@ -133,12 +134,12 @@ class PaymentController extends BaseController
             if ($exc->getCode() == 404) {
                 $error = $this->getErrorObj(
                     "Không tìm thấy payment 404",
-                    "No exception");
+                    $exc);
                 return response()->json($error, 400);
             } else {
                 $error = $this->getErrorObj(
                     "Lỗi không xác định else",
-                    "No exception");
+                    $exc);
                 return response()->json($error, 400);
             }
         } catch (\Exception $exc) {
