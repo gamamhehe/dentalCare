@@ -165,14 +165,14 @@ trait UserBusinessFunction
     }
 
 
-    public function editAvatar($image, $id)
+    public function editAvatar($image, $profileId, $forWho = "user")
     {
         DB::beginTransaction();
         try {
-            $patient = Patient::where('id', $id)->first();
+            $patient = Patient::where('id', $profileId)->first();
             $avatarFolder = '/assets/images/avatar/';
             $path = public_path($avatarFolder);
-            $filename = 'user_avatar_' . $id . '.' . $image->getClientOriginalExtension();
+            $filename = $forWho.'_avatar_' . $profileId . '.' . $image->getClientOriginalExtension();
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
