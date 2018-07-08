@@ -47,22 +47,33 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function initStep(){
-
-            Step::create([
-                'name' => 'Khám và tư vấn',
-                'description' => 'Bác sĩ sẽ khám tổng quát để đánh giá tình hình sức khỏe răng miệng cũng như tình hình trạng răng miệng của bệnh nhân.Sau đó, tư vấn phương pháp điều trị cụ thể.',
-
-            ]);
-
-    }
     public function initData()
     {
         DB::beginTransaction();
         try {
             User::create([
+                'phone' => '01279011091',
+                'password' => Hash::make('123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '01279011091',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '01279011092',
+                'password' => Hash::make('123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '01279011092',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
                 'phone' => '01279011096',
-                'password' => Hash::make('#2017#'),
+                'password' => Hash::make('123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011096',
@@ -77,7 +88,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011099',
-                'password' => Hash::make('#2017#'),
+                'password' => Hash::make('123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011099',
@@ -92,7 +103,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011097',
-                'password' => Hash::make('#2017#'),
+                'password' => Hash::make('123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011097',
@@ -107,7 +118,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011098',
-                'password' => Hash::make('#2017#'),
+                'password' => Hash::make('123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011098',
@@ -446,7 +457,23 @@ class AdminController extends Controller
                 'estimate_time' => '3'
             ]);
 
+            Tooth::create([
+                'tooth_number' => '1',
+                'tooth_name' => 'Nguyên hàm'
+            ]);
 
+            Tooth::create([
+                'tooth_number' => '2',
+                'tooth_name' => 'Hàm trên'
+            ]);
+            Tooth::create([
+                'tooth_number' => '3',
+                'tooth_name' => 'Hàm dưới'
+            ]);
+            Tooth::create([
+                'tooth_number' => '4',
+                'tooth_name' => 'Nhiều răng'
+            ]);
             Tooth::create([
                 'tooth_number' => '11',
                 'tooth_name' => 'Răng số 1 hàm trên phải - Răng cửa'
@@ -766,6 +793,33 @@ class AdminController extends Controller
                 'gender' => 'FEMALE',
                 'district_id' => 1,
             ]);
+            Patient::create([
+                'name' => 'Bệnh Nhân 1',
+                'address' => '188 Cầu Đường',
+                'phone' => '01279011099',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'FEMALE',
+                'avatar' => 'assets/images/icon/user.jpg',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Bệnh Nhân 2',
+                'address' => '188 Cầu Đường',
+                'phone' => '01279011099',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'FEMALE',
+                'avatar' => 'assets/images/icon/user1.jpg',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Bệnh Nhân 3',
+                'address' => '188 Cầu Đường',
+                'phone' => '01279011099',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'FEMALE',
+                'avatar' => 'assets/images/icon/user2.jpg',
+                'district_id' => 1,
+            ]);
             TreatmentHistory::create([
                 'treatment_id' => 1,
                 'patient_id' => 1,
@@ -835,13 +889,39 @@ class AdminController extends Controller
                 'step_id' => 2,
                 'description' => 'cho phuc'
             ]);
-
+            Staff::create([
+                'name' => 'Paypal',
+                'degree' => 'Paypal',
+                'address' => 'Paypal',
+                'district_id' => '0',
+                'phone' => '0000000000',
+                'date_of_birth' => '1900-01-01',
+                'gender' => 'MALE',
+            ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Dentist',
                 'degree' => 'Chịch',
                 'address' => '188 Nguyễn xí',
                 'district_id' => 1,
                 'phone' => '01279011097',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'MALE',
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Huỳnh Tài Dentist2',
+                'degree' => 'Chịch',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
+                'phone' => '01279011091',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'MALE',
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Huỳnh Tài Dentist 3',
+                'degree' => 'Chịch',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
+                'phone' => '01279011092',
                 'date_of_birth' => '1996-10-01',
                 'gender' => 'MALE',
             ]);
@@ -2415,56 +2495,6 @@ class AdminController extends Controller
         }
     }
 
-    public function index()
-    {
-        return view('admin.CalendarUser.ManageCalendar');
-    }
-
-    public function action(Request $request)
-    {
-        if($request->ajax())
-        {
-            $output = '';
-            $query = $request->get('query');
-            if($query != '')
-            {
-                $data = DB::table('tbl_patients')
-                    ->where('phone', 'like', '%'.$query.'%')
-                    ->orderBy('phone', 'desc')
-                    ->get();
-
-            }
-
-            $total_row = $data->count();
-            if($total_row > 0)
-            {
-                foreach($data as $row)
-                {
-                    $output .= '
-        <tr>
-         <td>'.$row->name.'</td>
-         <td>'.$row->address.'</td>
-         <td>'.$row->phone.'</td>
-        </tr>
-        ';
-                }
-            }
-            else
-            {
-                $output = '
-       <tr>
-        <td align="center" colspan="5">No Data Found</td>
-       </tr>
-       ';
-            }
-            $data = array(
-                'table_data'  => $output,
-                'total_data'  => $total_row
-            );
-
-            echo json_encode($data);
-        }
-    }
-
+    
 
 }

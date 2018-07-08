@@ -52,29 +52,7 @@ trait PatientBusinessFunction
         }
     }
 
-    public function updatePatient($request, $idPatient)
-    {
-        DB::beginTransaction();
-        try {
-            $patient = Patient::find($idPatient);
-            $patient->name = $request->name;
-            $patient->address = $request->address;
-            $patient->phone = $request->phone;
-            $patient->date_of_birth = $request->date_of_birth;
-            $patient->gender = $request->gender;
-            $patient->avatar = $request->avatar;
-            $patient->district_id = $request->district_id;
-            $patient->is_parent = $request->is_parent;
-            $patient->save();
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            throw new Exception($e->getMessage());
-        }
-    }
-
-    public function updatePatientWithModel($patient)
+    public function updatePatient($patient)
     {
         DB::beginTransaction();
         try {
@@ -90,5 +68,9 @@ trait PatientBusinessFunction
     public function getListPatient()
     {
         return Patient::all();
+    }
+
+    public function getPhoneOfPatient($id){
+        return Patient::find($id)->phone;
     }
 }

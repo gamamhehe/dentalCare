@@ -21,17 +21,17 @@ use Illuminate\Support\Facades\DB;
 
 trait TreatmentHistoryBusinessFunction
 {
-//    use PaymentBusinessFunction;
-//    use EventBusinessFunction;
+   use PaymentBusinessFunction;
+   use EventBusinessFunction;
     public function getTreatmentHistory($id)
     {
         $listResult = [];
         $patient = Patient::where('id', $id)->first();
         if ($patient == null) {
-            return null;
+            return [];
         }
         $treatmentHistoryList = $patient->hasTreatmentHistory() == null ?
-            null : $patient->hasTreatmentHistory()->get();
+            [] : $patient->hasTreatmentHistory()->get();
 
         foreach ($treatmentHistoryList as $treatmentHistory) {
             $treatmentHistoryDetailList = $treatmentHistory->hasTreatmentDetail()->get();
@@ -62,6 +62,7 @@ trait TreatmentHistoryBusinessFunction
     public function getTreatmentHistoryByPatientId($id)
     {
         $patient = Patient::where('id', $id)->first();
+        
         if ($patient != null) {
             $treatmentHistories = $patient->hasTreatmentHistory()->get();
             return $treatmentHistories;
@@ -77,12 +78,12 @@ trait TreatmentHistoryBusinessFunction
 
     public function saveTreatmentHistory($treatmentHistory)
     {
+
         DB::beginTransaction();
         try {
             $treatmentHistory->save();
             DB::commit();
             return true;
-
         } catch (\Exception $e) {
             DB::rollback();
             return false;
@@ -95,6 +96,7 @@ trait TreatmentHistoryBusinessFunction
         DB::beginTransaction();
         try {
             $patient = Patient::find($idPatient);
+
             $phone = $patient->belongsToUser()->first()->phone;
             $payment = $this->checkPaymentIsDone($phone);
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
@@ -116,6 +118,7 @@ trait TreatmentHistoryBusinessFunction
                 'payment_id' => $idPayment,
             ])->id;
             DB::commit();
+
             return $idTreatmentHistory;
 
         } catch (\Exception $e) {

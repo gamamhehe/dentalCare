@@ -30,10 +30,10 @@ Route::get('/event/{id}','Admin\HomeController@eventLoadByID');
 Route::get('/myProfile/{id}','Admin\HomeController@myProfile');
 Route::get('/gioithieu','Admin\HomeController@aboutUs');
 Route::get('/danhsachchitra','Admin\PaymentController@getOfUser');
-Route::get('/lichsubenhan','Admin\TreatmentController@showTreatmentHistory');
+Route::get('/lichsubenhan','Admin\TreatmentHistoryController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
-
+Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 
 
 // end webuser
@@ -86,6 +86,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/editMedicines/{id}', 'Admin\MedicineController@loadedit');
     Route::post('/editMedicines/{id}', 'Admin\MedicineController@edit')->name('admin.edit.medicines');
     //TreatmentController
+    Route::get('/getTreatment/{id}','Admin\TreatmentController@getTreatmentByID');//ajax
+    Route::get('/getTreatmentByCate/{id}','Admin\TreatmentController@getTreatmentByCategoryId');//ajax
     Route::get('/getListTreatment','Admin\TreatmentController@getListTreatment');
     Route::get('/list-Treatment', 'Admin\TreatmentController@loadListTreatment')->name('admin.list.treatment');
     Route::get('/deleteTreatment/{id}', 'Admin\TreatmentController@delete');
@@ -94,22 +96,49 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/editTreatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
     Route::post('/editTreatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
     //Nurse
-    Route::get('/manageUserCalendar','Admin\AdminController@getManageUserCalendar');
+    Route::get('/live_search', 'Admin\PatientController@index')->name('admin.AppointmentPatient.index');
+    Route::get('/live_search/{searchValue}', 'Admin\PatientController@action1')->name('admin.AppointmentPatient.search');
+    Route::get('/list-Appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
+    //TreatmentCategory
 
-    Route::get('/live_search', 'Admin\AdminController@index');
-    Route::get('/live_search/action', 'Admin\AdminController@action')->name('live_search.action');
+    Route::get('/createPrescription', 'Admin\MedicineController@createPrescription')->name('admin.AppointmentPatient.index');
+    Route::get('/medicine_search/{id}', 'Admin\MedicineController@ajaxSearch') ;
+
+    Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
+
+    //Patient
+    Route::get('/create-Patient', 'Admin\PatientController@create');
+    //Dentist  
+    Route::get('/list-Appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
+    Route::get('/getAppointment', 'Admin\StaffController@getListAppointmentForStaff');
+    Route::get('/create-Dentist', 'Admin\StaffController@create');
+    Route::get('/addPost','Admin\StaffController@addPost');
+    Route::post('/editPost','Admin\StaffController@editPost');
+    Route::get('/deletePost','Admin\StaffController@deletePost');
+    Route::get('/createAppointment','Admin\StaffController@createAppointmentByStaff');
+    Route::get('/createTreatment/{id}','Admin\StaffController@createTreatmentByStaff');
+    Route::post('/createTreatmentHistoryPatient','Admin\TreatmentHistoryController@createTreatmentHistory')->name('admin.createTreatmentHistoryPatient.dentist');
+    Route::get('/getTreatmentHistoryPatient/{id}','Admin\TreatmentHistoryController@getTreatmentHistoryByPatient');
+
+    //Step
+    Route::get('/stepTreatment','Admin\StepController@create')->name('admin.stepTreatment'); //view
+    Route::post('/create-Step','Admin\StepController@add');
+    //Absent
+    Route::get('/createAbsent','Admin\AbsentController@loadcreate');
+
+
 
 });
 
+Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
 Route::get('/getDB','HomeController@getDB');
 Route::get('/generateKey', 'BlockchainController@GenerateKey');
 Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
 
 
 Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
-Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
 
-    Route::get('/getTreatmentHistory', 'Admin\TreatmentController@showTreatmentHistory');
+    Route::get('/getTreatmentHistory', 'Admin\TreatmentHistoryController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
 
@@ -119,3 +148,9 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 //end CRUD new
 Route::get('/testFunction','Admin\StaffController@viewAppointment')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
+
+//Route::get('paywithpaypal','Admin\PaypalController@payWithPaypal');
+// route for post request
+Route::post('paypal','Admin\PaypalController@postPaymentWithpaypal')->name('paypal');
+// route for check status responce
+Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');

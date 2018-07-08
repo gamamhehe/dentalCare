@@ -8,21 +8,12 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
-use App\Model\Patient;
 use App\Model\Treatment;
-use App\Model\TreatmentDetail;
-use App\Model\TreatmentDetailStep;
-use App\Model\Payment;
-use App\Model\TreatmentHistory;
-use App\Model\TreatmentImage;
-use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 trait TreatmentBusinessFunction
 {
-    use PaymentBusinessFunction;
-    use EventBusinessFunction;
     public function getAllTreatment(){
         $listTreat = Treatment::all();
         return $listTreat;
@@ -39,6 +30,10 @@ trait TreatmentBusinessFunction
             return false;
 
         }
+    }
+    public function getTreatmentByCategori($id){
+        $listTreat = Treatment::where('treatment_category_id','=',$id)->get();
+        return $listTreat;
     }
     public function createTreatment($input){
         DB::beginTransaction();

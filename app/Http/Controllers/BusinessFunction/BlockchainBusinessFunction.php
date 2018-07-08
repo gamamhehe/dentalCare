@@ -14,6 +14,6 @@ use App\Model\Role;
 use App\RequestAbsent;
 use Carbon\Carbon;
 
-trait KeyBusinessFunction
+trait BlockchainBusinessFunction
 {
 }

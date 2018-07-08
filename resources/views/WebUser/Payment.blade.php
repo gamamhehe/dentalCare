@@ -194,14 +194,21 @@
                    <div class="container">
                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$Payment->id}}"><div class="container">
                                <div class="col-sm-4">Ngày tạo: {{$Payment->created_at}}</div>
-                               <div class="col-sm-4">Tổng tiền : {{$Payment->total_price}} VNĐ</div>
-                               <div class="col-sm-4">Đã tiền : {{$Payment->prepaid}} VNĐ</div>
+                               <div class="col-sm-4">Chi phí : {{$Payment->total_price}} VNĐ</div>
+                               <div class="col-sm-4">Đã thu : {{$Payment->prepaid}} VNĐ</div>
                                <div class="col-sm-4">Trạng Thái :
                                @if($Payment->is_done == 0)
                                    hoàn thành
                                @else
                                    chưa hoàn thành
                                    @endif
+                               </div>
+                               <div>
+                                   <form id="payment-form" role="form" action="{!! route('paypal') !!}" method="POST">
+                                       <input type="hidden" name="amount" value="{{ $Payment->total_price - $Payment->prepaid }}">
+                                       <input type="hidden" name="payment_id" value="{{ $Payment->id}}">
+                                   <button type="submit">Paypal Payment</button>
+                                   </form>
                                </div>
                            </div></a>
                    </div>
@@ -219,9 +226,9 @@
                     </tr>
                     @foreach($Payment->payment_details as $paymentDetail)
                     <tr>
-                        <th>{{$paymentDetail->payment_id}}</th>
+                        <th>{{$paymentDetail->date_create}}</th>
                         <th>{{$paymentDetail->received_money}} VNĐ</th>
-                        <th>{{$paymentDetail->receptionist->name}}</th>
+                        <th>{{$paymentDetail->staff->name}}</th>
                     </tr>
                     @endforeach
 

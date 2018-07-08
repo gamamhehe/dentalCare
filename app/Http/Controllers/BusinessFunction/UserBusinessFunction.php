@@ -12,6 +12,7 @@ use App\Model\Patient;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -138,6 +139,14 @@ trait UserBusinessFunction
             DB::rollback();
             return false;
         }
+    }
+
+    public function getUserPhones($keyword)
+    {
+        $phones = User::where('phone', 'like', '%'.$keyword.'%')
+            ->pluck('phone')
+            ->toArray();
+        return $phones;
     }
 
     public function deleteRole($id)

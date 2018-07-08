@@ -90,8 +90,8 @@ class BlockchainController extends Controller
 
         //
 
-        openssl_private_decrypt($encrypted, $decrypted, $priKey);
-        var_dump($decrypted); 
+//        openssl_private_decrypt($encrypted, $decrypted, $priKey);
+//        var_dump($decrypted);
     }
 
     //

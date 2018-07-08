@@ -21,8 +21,8 @@ use Carbon\Carbon;
 
 trait TreatmentCategoriesBusinessFunction
 {
-    use PaymentBusinessFunction;
-    use EventBusinessFunction;
+    // use PaymentBusinessFunction;
+    // use EventBusinessFunction;
     public function getAllTreatmentCategories(){
         $listTreatmentCategory = TreatmentCategory::all();
         return $listTreatmentCategory;

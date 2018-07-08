@@ -15,6 +15,7 @@ use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Jobs\SendSmsJob;
 use App\Model\Appointment;
 use App\Model\Patient;
 use App\Model\UserHasRole;
@@ -74,15 +75,33 @@ class AppointmentController extends Controller
 
     public function bookAppointment(Request $request)
     {
-        $phone = $request->input('phone');
-        $note = $request->input('note');
+        try {
+            $phone = $request->input('phone');
+            $note = $request->input('note');
+            $bookingDate = $request->input('booking_date');
+            $dentistId = $request->input('dentist_id');
+            $patientId = $request->input('patient_id');
+            $estimatedTime = $request->input('estimated_time');
+            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime);
+            if ($result != null) {
+                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
+                $startDateTime = new DateTime($result->start_time);
+                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+                $this->dispatch(new SendSmsJob($phone, $smsMessage));
+                return response()->json($listAppointment, 200);
+            } else {
+                $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                    "Result is null, No exception");
+                return response()->json($error, 400);
+            }
 
-        $bookingDate = $request->input('booking_date');
-        if ($this->getAppointmentByDate($phone, $bookingDate) && $this->checkExistUser($phone)) {
-            $error = Utilities::getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
-                "No exception");
+        } catch (ApiException $e) {
+            $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
             return response()->json($error, 400);
-        } else {
+        } catch (\Exception $ex) {
+            $error = Utilities::getErrorObj("Lỗi server", $ex->getMessage());
+            return response()->json($error, 400);
+        }
             $result = $this->createAppointment($bookingDate, $phone, $note, null, null);
             try {
                 $phone = $request->input('phone');
@@ -114,18 +133,22 @@ class AppointmentController extends Controller
                 return response()->json($error, 400);
             }
         }
-    }ss
+
     public function editAppointment(Request $request)
     {
         $phone = $request->input('phone');
         $note = $request->input('note');
+        $bookingDate = $request->input('booking_date');
+        $result = $this->createAppointment($bookingDate, $phone, $note);
+        if ($result != null) {
+            return response()->json($result, 200);
         $oldBookingDate = $request->input('booking_date');
         if ($this->getAppointmentByDate($phone, $oldBookingDate) && $this->checkExistUser($phone)) {
             $error = Utilities::getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
                 "No exception");
             return response()->json($error, 400);
         } else {
-            $result = $this->createAppointment($bookingDate, $phone, $note, null, null);
+            $result = $this->createAppointment($oldBookingDate, $phone, $note, null, null);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $smsSendingResult = Utilities::sendSMS($phone, "Cam on ban da dat lich kham, so kham cua ban la " . $result->numerical_order);
@@ -140,6 +163,7 @@ class AppointmentController extends Controller
                 return response()->json($error, 400);
             }
         }
+    }
     }
 
     public function quickBookAppointment(Request $request)
