@@ -8,5 +8,5 @@ class Blockchain extends Model
 {
     //
     protected $table = 'tbl_blockchains';
-    protected $fillable = ['id', 'dataEncrypt', 'previousHash', 'Hash'];
+    protected $fillable = ['id', 'data_encrypt', 'previous_hash', 'hash'];
 }

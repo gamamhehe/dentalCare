@@ -8,7 +8,7 @@ class Queue extends Model
 {
     //
     protected $table = 'tbl_queues';
-    protected $fillable = ['id', 'dataEncrypt', 'status', 'ip'];
+    protected $fillable = ['id', 'data_encrypt', 'status', 'ip'];
 
     public function belongsToNodeInfo(){
         return $this->belongsTo('App\Model\NodeInfo', 'ip', 'ip');

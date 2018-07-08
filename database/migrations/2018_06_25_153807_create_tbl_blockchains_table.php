@@ -15,9 +15,9 @@ class CreateTblBlockchainsTable extends Migration
     {
         Schema::create('tbl_blockchains', function (Blueprint $table) {
             $table->increments('id');
-            $table->longText('dataEncrypt');
-            $table->string('previousHash');
-            $table->string('Hash');
+            $table->longText('data_encrypt');
+            $table->string('previous_hash');
+            $table->string('hash');
             $table->timestamps();
         });
     }
