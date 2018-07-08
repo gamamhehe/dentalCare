@@ -12,6 +12,7 @@ use App\Model\Patient;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
