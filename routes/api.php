@@ -30,6 +30,7 @@ Route::get("firebase/notify", "Mobile\FirebaseController@sendNotification");
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::get("testpassport", "Mobile\UserController@testPassport");
 Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPayment");
+Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
 
 Route::post("test", "Mobile\MobileController@testPOST");
 ///ADMIN
@@ -65,7 +66,6 @@ Route::middleware('auth:api')->group(function () {
     //patient
     Route::post("user/updatePatient", "Mobile\PatientController@updatePatientInfo");
     //treatment category
-    Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
 
     //History Treatment
     Route::get("treatmentHistory/all", "Mobile\HistoryTreatmentController@getAll");
