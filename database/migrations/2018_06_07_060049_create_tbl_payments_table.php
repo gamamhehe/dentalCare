@@ -15,7 +15,7 @@ class CreateTblPaymentsTable extends Migration
     {
         Schema::create('tbl_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('prepaid')->default(0);
+            $table->bigInteger('paid')->default(0);
             $table->bigInteger('total_price');
             $table->integer('phone');
             $table->boolean('is_done')->default(false);

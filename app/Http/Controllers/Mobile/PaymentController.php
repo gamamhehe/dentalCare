@@ -70,7 +70,7 @@ class PaymentController extends BaseController
             }
 
             // Amount on client side
-            $amount_client = $payment_client["amount"];
+            $amountClient = $payment_client["amount"];
 
             // Currency on client side
             $currency_client = $payment_client["currency_code"];
@@ -98,7 +98,7 @@ class PaymentController extends BaseController
 //                    $amount_server,
 //                    $amount_server);
             // Verifying the amount
-            if ($amount_server != $amount_client) {
+            if ($amount_server != $amountClient) {
                 $error = $this->getErrorObj(
                     "Số tiền thanh toán không hợp lệ",
                     "No exception");
@@ -121,7 +121,7 @@ class PaymentController extends BaseController
             // storing the saled items
 //            insertItemSales($payment_id_in_db, $transaction, $sale_state);
 //            return response()->json($response);
-            $result = $this->updatePaymentNotePayable($amount_client, $localPaymentId);
+            $result = $this->updatePaymentPaid($amountClient, $localPaymentId);
             if($result){
                 return response()->json("SUCCESS",200);
             }else{
