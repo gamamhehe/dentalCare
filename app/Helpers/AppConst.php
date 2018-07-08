@@ -28,6 +28,11 @@ class AppConst
 
     const PASSWORD_CLIENT_ID = 'PASSWORD_CLIENT_ID';
     const PASSWORD_CLIENT_SECRET = 'PASSWORD_CLIENT_SECRET';
+
+    const ROLE_ADMIN = 1;
+    const ROLE_DENTIST = 2;
+    const ROLE_RECEPTIONIST = 3;
+    const ROLE_PATIENT = 4;
 //0 vua tao
 //1 dang kham
 //2 xong

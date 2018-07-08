@@ -27,6 +27,14 @@ Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppo
 Route::post('feedback/create', "Mobile\FeedbackController@create");
 //firebase
 Route::get("firebase/notify", "Mobile\FirebaseController@sendNotification");
+Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
+Route::get("testpassport", "Mobile\UserController@testPassport");
+Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPayment");
+
+Route::post("test", "Mobile\MobileController@testPOST");
+///ADMIN
+Route::get('user/searchListPhone', 'Mobile\UserController@searchListPhone');
+
 
 ///backdddd //////////////TESTING FUNCTIONNNNNNNNNNNNNNNNNNNN/////////////////
 Route::get("rsPW/{phone}/{pass}", "Mobile\UserController@resetpassword");
@@ -37,10 +45,19 @@ Route::get("test4", "Mobile\MobileController@test4");
 Route::get("test5", "Mobile\MobileController@test5");
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
-//input topappt?date=value
+//input bacsiranh?date=value
 Route::get("bacsiranh", "Mobile\TestController@getDentist");
 
+
+/*Begin staff section without token*/
+Route::post("staff/login", "Mobile\StaffController@loginStaff");
+Route::post("staff/register", "Mobile\StaffController@createStaffAcccount");
+
+/*End staff section without token*/
 Route::middleware('auth:api')->group(function () {
+/*************************************-----------------------------*****************************************************/
+/*************************************-----Begin section for user----*****************************************************/
+/*************************************-----------------------------*****************************************************/
     Route::post("user/changeAvatar", "Mobile\UserController@changeAvatar");
     Route::post("user/changePassword", "Mobile\UserController@changePassword");
     Route::get("user/logout", "Mobile\UserController@logout");
@@ -68,11 +85,20 @@ Route::middleware('auth:api')->group(function () {
 
     //test in token
     Route::get("getUser", "Mobile\UserController@getUser");
+/*************************************-----------------------------*****************************************************/
+/*************************************-----End section for staff with token----*****************************************************/
+/*************************************-----------------------------*****************************************************/
+/*************************************-----------------------------*****************************************************/
+/*************************************-----Begin section for staff with token----*****************************************************/
+/*************************************-----------------------------*****************************************************/
+
+
+
+
+
+
+/*************************************-----------------------------*****************************************************/
+/*************************************-----End section for staff----*****************************************************/
+/*************************************-----------------------------*****************************************************/
+
 });
-Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
-Route::get("testpassport", "Mobile\UserController@testPassport");
-
-
-Route::post("test", "Mobile\MobileController@testPOST");
-///ADMIN
-Route::get('user/searchListPhone', 'Mobile\UserController@searchListPhone');
