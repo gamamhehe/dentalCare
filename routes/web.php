@@ -126,7 +126,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/getTreatmentHistoryPatient/{id}','Admin\TreatmentHistoryController@getTreatmentHistoryByPatient');
 
     //Step
-    Route::get('/stepTreatment','Admin\StepController@create'); //view
+    Route::get('/stepTreatment','Admin\StepController@create')->name('admin.stepTreatment'); //view
     Route::post('/create-Step','Admin\StepController@add');
     //Absent
     Route::get('/createAbsent','Admin\AbsentController@loadcreate');

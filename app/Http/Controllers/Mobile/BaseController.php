@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Helpers\AppConst;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class BaseController extends Controller
 {
@@ -35,11 +36,15 @@ class BaseController extends Controller
     public function getExceptionMsg($exceptionObj)
     {
         $message = "No exception";
-        if ($exceptionObj != null) {
-            $message = 'Message: ' . $exceptionObj->getMessage()
+        if ($exceptionObj != null && is_object($exceptionObj)) {
+            $message = 'Message: ' . ($exceptionObj->getMessage())
                 . ' File: ' . $exceptionObj->getFile()
                 . ' Line: ' . $exceptionObj->getLine();
         }
         return $message;
+    }
+
+    public function logInfo($message){
+        Log::info("MyLOG: " . $message);
     }
 }

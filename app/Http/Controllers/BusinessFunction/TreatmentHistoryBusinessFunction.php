@@ -98,7 +98,6 @@ trait TreatmentHistoryBusinessFunction
             $patient = Patient::find($idPatient);
 
             $phone = $patient->belongsToUser()->first()->phone;
-            $payment=1;
             $payment = $this->checkPaymentIsDone($phone);
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;

@@ -18,11 +18,11 @@ use Illuminate\Http\Request;
 
 class HistoryTreatmentController extends Controller
 {
-    use TreatmentBusinessFunction;
+//    use TreatmentBusinessFunction;
     use UserBusinessFunction;
     use TreatmentHistoryBusinessFunction;
 
-    public function getByPhone($phone)
+    public function getTreatmentHistoryByPhone($phone)
     {
         try {
             $historyTreatments = $this->getTreatmentHistories($phone);
