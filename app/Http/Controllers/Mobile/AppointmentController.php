@@ -21,11 +21,14 @@ use App\Model\Patient;
 use App\Model\UserHasRole;
 use App\User;
 use DateTime;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
+use SMSGatewayMe\Client\ApiException;
+
 //use SMSGatewayMe\Client\ApiException;
 
-class AppointmentController extends Controller
+class AppointmentController extends BaseController
 {
     use AppointmentBussinessFunction;
     use UserBusinessFunction;
@@ -82,6 +85,13 @@ class AppointmentController extends Controller
             $dentistId = $request->input('dentist_id');
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
+            $currentDay = new DateTime();
+//            $appdateObj = new DateTime($bookingDate);
+            if ($this->isEndOfTheDay($currentDay)) {
+                $error = $this->getErrorObj("Dã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                    "No Excepton");
+                return response()->json($error, 400);
+            }
             $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);

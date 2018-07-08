@@ -279,9 +279,9 @@ trait AppointmentBussinessFunction
         return false;
     }
 
-    public function isEndOfTheDay($appointmentEndDateTime)
+    public function isEndOfTheDay($apptFinishTimeObj)
     {
-        $time = $appointmentEndDateTime->format('H:i:s');
+        $time = $apptFinishTimeObj->format('H:i:s');
         if ((strtotime($time) > strtotime('19:00:00'))) {
             return true;
         }
