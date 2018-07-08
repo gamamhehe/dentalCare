@@ -7,6 +7,7 @@
                 <div class="box-body">
                     <label>Image</label>
                     <img id="holder" style="max-height:100px" name="holder" src="{{old('image')}}">
+                    
                     <div class="input-group">
                         <input id="thumbnail" class="form-control" type="text" name="image"
                                value="{{old('image')}}">

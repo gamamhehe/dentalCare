@@ -41,6 +41,14 @@
         });
          $(function() {
         $('#dup-table').DataTable({
+        language: {
+            "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
+            "zeroRecords": "Không tìm thấy kết quả ",
+            "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",
+            "infoEmpty": "Không có kết quả .",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search" : "Tìm kiếm ",
+        },
         processing: true,
         serverSide: true,
         order: [[ 0, "desc" ]],
@@ -76,6 +84,7 @@
 
         });
          }
+       
     </script>
 
 @endsection

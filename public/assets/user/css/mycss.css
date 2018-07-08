@@ -897,6 +897,13 @@ h3.tdbanner1 {
     background-size: cover;
     background-position: center;
 }
+/*.nav>li>a:focus, .nav>li>a:hover{
+    background-color: red !important; 
+
+}
+.thanhmenu ul.navbar-nav li.nav-item a.nav-link :hover{
+background-color: red;
+}*/
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link {
     padding: 20px 9px;
@@ -920,6 +927,7 @@ a.nav-link.biendoichumenu {
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link:hover {
     color: #336600;
+    background-color: red;
 }
 
 .thanhmenu ul.navbar-nav li.nav-item.active

@@ -7,6 +7,7 @@ use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
 use App\Model\User;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\EventBusinessFunction;
+use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
@@ -23,7 +24,7 @@ class HomeController extends Controller
     use UserBusinessFunction;
     use StaffBusinessFunction;
     use NewsBussinessFunction;
-
+    use AnamnesisBusinessFunction;
     public function homepage(Request $request){
     	 return view('WebUser.HomePage');
     }
@@ -45,9 +46,9 @@ class HomeController extends Controller
         echo "string";
         exit();
     }
-    public function Profile(Request $request){
-        return view('WebUser.User.Profile');
-    }
+    // public function Profile(Request $request){
+    //     return view('WebUser.User.Profile');
+    // }
     public function getNewsWebUser($id){
 
        $News = $this->getNews($id);
@@ -71,8 +72,12 @@ class HomeController extends Controller
         return view('WebUser.Events',['listNews'=>$listNews,'NewEventNews'=>$NewEventNews]);
     }
 
-    public function myProfile($id){
-        return view("WebUser.User.MyProfile");
+    public function myProfile(Request $request){
+        $value = $request->session()->get('currentPatient');
+        $id = $value->id;
+        $list = $this->getListAnamnesisByPatient($id);
+        
+        return view("WebUser.User.Profile",['patient'=>$value,'anamnesis'=>$list]);
     }
     public function aboutUs(Request $request){
         return view("WebUser.User.AboutUs");

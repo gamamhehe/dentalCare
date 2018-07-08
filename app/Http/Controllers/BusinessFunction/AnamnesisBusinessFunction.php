@@ -70,4 +70,12 @@ trait AnamnesisBusinessFunction
         $AnamnesisCatalog = AnamnesisCatalog::find($id);
         return $AnamnesisCatalog;
     }
+
+    public function getListAnamnesisByPatient($id){
+        $AnamnesisPatient = AnamnesisPatient::where('patient_id',$id)->get();
+        foreach ($AnamnesisPatient as $key) {
+            $key->name = $key->belongsToAnamnesisCatalog()->first();
+        }
+        return $AnamnesisPatient;
+    }
 }

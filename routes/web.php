@@ -17,8 +17,11 @@ Route::get('logoutAdmin', 'Admin\StaffController@logout')->name('admin.logout');
 Route::post('loginAdmin', 'Admin\StaffController@login')->name('admin.login.post');
 Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
 
-
+Route::get('/cc', function () {
+    return view('WebUser.User.Profile');
+});
 // webuser phuc
+Route::get('/gioithieu','Admin\HomeController@aboutUs');
 Route::get('/', 'Admin\HomeController@HomePage')->name('homepage');
 Route::get('/doctorList', 'Admin\HomeController@DoctorInformation');
 Route::get('/profile', 'Admin\HomeController@Profile');
@@ -27,14 +30,14 @@ Route::get('/banggia','Admin\HomeController@BangGiaDichVu');
 Route::get('/tintuc/{id}','Admin\HomeController@getNewsWebUser');
 Route::get('/event','Admin\HomeController@eventLoad');
 Route::get('/event/{id}','Admin\HomeController@eventLoadByID');
-Route::get('/myProfile/{id}','Admin\HomeController@myProfile');
+Route::get('/myProfile','Admin\HomeController@myProfile');
 Route::get('/gioithieu','Admin\HomeController@aboutUs');
 Route::get('/danhsachchitra','Admin\PaymentController@getOfUser');
 Route::get('/lichsubenhan','Admin\TreatmentHistoryController@showTreatmentHistory');
 Route::get('/signOut','Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
-
+Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
 
 // end webuser
 
@@ -46,6 +49,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     //UserController
     Route::get('/register', 'Admin\Usercontroller@registerGet');
     Route::post('/register', 'Admin\Usercontroller@registerPost');
+
     //NewsController
     Route::get('/create-News', 'Mobile\NewsController@loadcreateNews')->name('admin.create.news');
     Route::get('/getListNews','Admin\NewsController@getList');
@@ -107,7 +111,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
 
     //Patient
-    Route::get('/create-Patient', 'Admin\PatientController@create');
+    // Route::get('/create-Patient', 'Admin\PatientController@create');
+    Route::post('/create-Patient','Admin\PatientController@add');
     //Dentist  
     Route::get('/list-Appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
     Route::get('/getAppointment', 'Admin\StaffController@getListAppointmentForStaff');
@@ -121,18 +126,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/getTreatmentHistoryPatient/{id}','Admin\TreatmentHistoryController@getTreatmentHistoryByPatient');
 
     //Step
-    Route::get('/stepTreatment','Admin\StepController@create'); //view
+    Route::get('/stepTreatment','Admin\StepController@create')->name('admin.stepTreatment'); //view
     Route::post('/create-Step','Admin\StepController@add');
     //Absent
     Route::get('/createAbsent','Admin\AbsentController@loadcreate');
 
+    //appointment
+    Route::post('/create-Appointment','Admin\AppointmentController@add');
 
 
 });
 
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
-Route::get('/getDB','HomeController@getDB');
-Route::get('/banggia','HomeController@BangGiaDichVu');
 Route::get('/generateKey', 'BlockchainController@GenerateKey');
 Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
 
