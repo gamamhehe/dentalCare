@@ -8,23 +8,15 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
-use App\Model\MedicinesQuantity;
-use App\Model\Patient;
-use App\Model\Treatment;
 use App\Model\TreatmentDetail;
 use App\Model\TreatmentDetailStep;
-use App\Model\Payment;
 use App\Model\TreatmentHistory;
-use App\Model\TreatmentImage;
 use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 trait TreatmentDetailBusinessFunction
 {
-    use PaymentBusinessFunction;
-    use EventBusinessFunction;
-
     public function createTreatmentDetail($idTreatmentHistory, $note, $dentist_id)
     {
         DB::beginTransaction();

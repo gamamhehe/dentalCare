@@ -10,20 +10,12 @@
                 <div class="col-xs-6">
                       <div class="box"  style="border-top:green 3px solid">
                         <div>
-                          <h3 class="box-title">Tạo Đơn Thuốc</h3>
+                          <h3 class="box-title">Tìm Đơn Thuốc</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                            <div class="form-group">
                                     <input type="text" name="search" id="search" class="form-control" placeholder="Tên thuốc"/>
-                                    <div class="row" style="margin-bottom: 1em;">
-                                        <div class="" style="margin-top: 1em;">
-                                            <button type="button" class="col-xs-3 btn btn-default btn-success"
-                                                    style="margin-right: 10px;float: right;" onclick="search()">Tìm
-                                            </button>
-                                        </div>
-                                    </div>
-
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered">
@@ -42,7 +34,7 @@
                         </div>
                       </div>
                 </div>
-                <div class="panel-body col-xs-6" style="background-color: white;border-top:green 3px solid"">
+                <div class="panel-body col-xs-6" style="background-color: white;border-top:green 3px solid">
                     <label><h1 style="text-align: center;font-family: 'Italianno', cursive;
     font-size: 48px;">Đơn Thuốc</h1></label>
                     <form action="{{ route('prescription') }}" class="form-horizontal" enctype="multipart/form-data">
@@ -75,11 +67,13 @@
 @section('js')
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-        function search() {
+        $('#search').on('keyup',function(){
 
-            var searchValue = document.getElementById('search').value;
+            // $value=$(this).val();
+            var searchValue = $(this).val();
             if (!searchValue) {
-                swal("Nhập tên thuốc", "", "error");
+            //     swal("Nhập tên thuốc", "", "error");
+                $('tbody').html('')
                 return;
             }
             $.ajax({
@@ -98,13 +92,14 @@
                     swal("Check connnection", "", "error");
                 }
             });
-        }
+        })
 
         function addToPrescription(name, id) {
             var prescription = document.getElementById('prescription').innerHTML;
             if (prescription != null) {
                 prescription = prescription.toString()
-                if (prescription.indexOf('value="' + id + '"') != -1) {
+                alert(prescription);
+                if (prescription.indexOf('value="' + id + '">') != -1) {
                     swal("Thuốc này đã tồn tại trong đơn thuốc", "", "error")
                     return
                 }
