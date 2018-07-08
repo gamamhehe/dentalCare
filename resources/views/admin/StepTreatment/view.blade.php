@@ -1,5 +1,6 @@
 @extends('admin.master')
 @section('content')
+  <link rel="stylesheet" href="{{asset("/plugins/datepicker/datepicker3.css")}}">
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content">
@@ -46,13 +47,20 @@
 
                         <div class="row"></div>
                             <div class="input-group">
-                            <input id="thumbnail" class="form-control" type="text" name="image"
+                            <div class="box-body">
+                    <label>Image</label>
+                    <img id="holder" style="max-height:100px" name="holder" src="{{old('image')}}">
+                    
+                    <div class="input-group">
+                        <input id="thumbnail" class="form-control" type="text" name="image"
                                value="{{old('image')}}">
-                            <span class="input-group-btn">
-                                <a id="lfm" data-input="thumbnail"
-                                data-input="image1" data-preview="holder" class="btn btn-primary ">
-                                <i class="fa fa-picture-o"></i> Chọn ảnh</a>
+                        <span class="input-group-btn">
+                             <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary ">
+                               <i class="fa fa-picture-o"></i> Choose</a>
+
                            </span>
+                    </div>
+                </div>
                             </div>
                         </div>
                     </div>
@@ -69,6 +77,7 @@
                                   placeholder="Write your message..">{!!old('description')!!}</textarea>
                             </div>
                            </div>
+                           
 
                     </div>
                     <div class="row">
@@ -114,8 +123,14 @@
 @section('js')
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
+<script src="{{asset("/plugins/datepicker/bootstrap-datepicker.js")}}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+ $(function () {
+      $('#datepicker').datepicker({
+      autoclose: true
+    });
+  });
         $(document).ready(function() {
                    $('.thumbnail').click(function(){
       $('.modal-body').empty();

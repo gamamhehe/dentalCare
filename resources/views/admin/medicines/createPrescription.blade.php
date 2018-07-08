@@ -104,7 +104,7 @@
             var prescription = document.getElementById('prescription').innerHTML;
             if (prescription != null) {
                 prescription = prescription.toString()
-                if (prescription.indexOf('value="' + id + '"') != -1) {
+                if (prescription.indexOf('value="' + id + '">') != -1) {
                     swal("Thuốc này đã tồn tại trong đơn thuốc", "", "error")
                     return
                 }
