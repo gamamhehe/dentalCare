@@ -38,12 +38,11 @@ trait PatientBusinessFunction
         return null;
     }
 
-    public function createPatient($patient, $userHasRole)
+    public function createPatient($patient)
     {
         DB::beginTransaction();
         try {
             $patient->save();
-            $userHasRole->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
