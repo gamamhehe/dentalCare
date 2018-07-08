@@ -13,6 +13,7 @@ use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Http\Controllers\Mobile\BaseController;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use PayPal\Api\Payment;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
@@ -22,7 +23,7 @@ class PaymentController extends BaseController
 {
     use PaymentBusinessFunction;
 
-    public function getByPhone(Request $request,$phone)
+    public function getByPhone(Request $request, $phone)
     {
         try {
             $payments = $this->getPaymentByPhone($phone);
@@ -37,15 +38,16 @@ class PaymentController extends BaseController
 
     public function verifyPayment(Request $request)
     {
-        $response["error"] = false;
-        $response["message"] = "Payment verified successfully";
+//        $response["error"] = false;
+//        $response["message"] = "Payment verified successfully";
         global $userId;
 
 
 //        require_once '../include/Config.php';
         $paymentId = $request->input('payment_id');
+        $localPaymentId = $request->input('local_payment_id');
         $paymentClientJson = $request->input('payment_client_json');
-
+        Log::info("PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
         try {
             $payment_client = json_decode($paymentClientJson, true);
 
@@ -58,14 +60,13 @@ class PaymentController extends BaseController
 
             // Gettin payment details by making call to paypal rest api
             $payment = Payment::get($paymentId, $apiContext);
-
+            Log::info("Payment State: " . $payment->getState());
             // Verifying the state approved
             if ($payment->getState() != 'approved') {
-                $response["error"] = true;
-                $response["message"] = "Payment has not been verified. Status is " . $payment->getState();
-//                echoResponse(200, $response);
-                $error = $this->getErrorObj("Thanh toán chưa được xác thực", "No exception");
-                return $response()->json($error);
+                $error = $this->getErrorObj(
+                    "Thanh toán chưa được xác thực",
+                    "No exception");
+                return response()->json($error);
             }
 
             // Amount on client side
@@ -86,68 +87,66 @@ class PaymentController extends BaseController
 //            $db = new DbHandler();
 
             //
-//            $payment_id_in_db = $db->storePayment($payment->getId(), $userId, $payment->getCreateTime(), $payment->getUpdateTime(), $payment->getState(), $amount_server, $amount_server);
+//            $paymentRecord = $this->getPaymentById($localPaymentId);
 
+//            $payment_id_in_db =
+//                $db->storePayment(
+//                    $payment->getId(),
+//                    $userId, $payment->getCreateTime(),
+//                    $payment->getUpdateTime(),
+//                    $payment->getState(),
+//                    $amount_server,
+//                    $amount_server);
             // Verifying the amount
             if ($amount_server != $amount_client) {
-                $response["error"] = true;
-                $response["message"] = "Payment amount doesn't matched.";
-//                echoResponse(200, $response);
-                $error = $this->getErrorObj("Số tiền thanh toán không hợp lệ", "No exception");
-
-                return $response()->json($error);
+                $error = $this->getErrorObj(
+                    "Số tiền thanh toán không hợp lệ",
+                    "No exception");
+                return response()->json($error, 400);
             }
-
             // Verifying the currency
             if ($currency_server != $currency_client) {
-                $response["error"] = true;
-                $response["message"] = "Tiền tệ không hợp lệ";
-//                echoResponse(200, $response);
-$error = $this->getErrorObj("Tiền tệ không hợp lệ", "No exception");
-
-                return $response()->json($response);
+                $error = $this->getErrorObj(
+                    "Tiền tệ không hợp lệ",
+                    "No exception");
+                return response()->json($error, 400);
             }
-
             // Verifying the sale state
             if ($sale_state != 'completed') {
-                $response["error"] = true;
-                $response["message"] = "";
-//                echoResponse(200, $response);
-                $error = $this->getErrorObj("Giao dịch không thành công", "No exception");
-
-                return $response()->json($response);
+                $error = $this->getErrorObj(
+                    "Giao dịch không thành công",
+                    "No exception");
+                return response()->json($error, 400);
             }
-
             // storing the saled items
 //            insertItemSales($payment_id_in_db, $transaction, $sale_state);
-
-//            echoResponse(200, $response);
-                return $response()->json("SUCCESS");
+//            return response()->json($response);
+            $result = $this->updatePaymentNotePayable($amount_client, $localPaymentId);
+            if($result){
+                return response()->json("SUCCESS",200);
+            }else{
+                $error = $this->getErrorObj("Lỗi không thể lưu dữ liệu", "No exception");
+                return response()->json($error, 400);
+            }
         } catch (\PayPal\Exception\PayPalConnectionException $exc) {
+            $this->logInfo("EXCEPTION: " . $exc->getMessage());
             if ($exc->getCode() == 404) {
-                $response["error"] = true;
-                $response["message"] = "Payment not found!";
                 $error = $this->getErrorObj(
-                    "Không tìm thấy payment",
-                    "No exception"
-                );
+                    "Không tìm thấy payment 404",
+                    "No exception");
                 return response()->json($error, 400);
             } else {
-                $response["error"] = true;
-                $response["message"] = "Unknown error occurred!" . $exc->getMessage();
                 $error = $this->getErrorObj(
-                    "Lỗi không xác định",
-                    "No exception"
-                );
+                    "Lỗi không xác định else",
+                    "No exception");
                 return response()->json($error, 400);
             }
         } catch (\Exception $exc) {
-            $response["error"] = true;
-            $response["message"] = "Unknown error occurred!" . $exc->getMessage();
             $error = $this->getErrorObj(
                 "Unknown error occurred!",
                 $this->getExceptionMsg($exc)
             );
+            $this->logInfo("EXCEPTION: " . $exc->getMessage());
             return response()->json($error, 400);
         }
 

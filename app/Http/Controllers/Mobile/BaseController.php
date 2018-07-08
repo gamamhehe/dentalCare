@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Helpers\AppConst;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class BaseController extends Controller
 {
@@ -41,5 +42,9 @@ class BaseController extends Controller
                 . ' Line: ' . $exceptionObj->getLine();
         }
         return $message;
+    }
+
+    public function logInfo($message){
+        Log::info("MyLOG: " . $message);
     }
 }
