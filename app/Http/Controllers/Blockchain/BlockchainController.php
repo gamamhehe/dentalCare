@@ -21,7 +21,7 @@ class BlockchainController extends Controller
 
     public function getDataBlockchainJson(){
         $dataBlockchainJson = $this -> convertDataToJson();
-        return response() -> json($dataBlockchainJson, 400);
+        return $dataBlockchainJson;
     }
 
     public function callAPI_GetData() {
