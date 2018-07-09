@@ -63,7 +63,7 @@ class UserController extends BaseController
                 ////HASH
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
-                $userHasRole->role_id = 4;
+                $userHasRole->role_id = AppConst::ROLE_PATIENT;
                 $userHasRole->start_time = Carbon::now();
                 $this->createUserWithRole($user, $patient, $userHasRole);
 

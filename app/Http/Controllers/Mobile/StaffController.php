@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Helpers\AppConst;
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
@@ -26,6 +27,7 @@ class StaffController extends BaseController
 {
     use UserBusinessFunction;
     use StaffBusinessFunction;
+    use PatientBusinessFunction;
 
     public function loginStaff(Request $request)
     {
@@ -123,31 +125,42 @@ class StaffController extends BaseController
         try {
             $phone = $request->input('phone');
             $user = $this->getUserByPhone($phone);
-            if ($user != null) {
-                $name = $request->input('name');
-                $gender = $request->input('gender');
-                $birthday = $request->input('birthday');
-                $districtId = $request->input('districtId');
-                $address = $request->input('address');
-                $patient = new Patient();
-                $patient->phone = $phone;
-                $patient->date_of_birth = $birthday;
-                $patient->gender = $gender;
-                $patient->district_id = $districtId;
-                $patient->name = $name;
-                $patient->address = $address;
-                $result = $this->updateUser($patient);
-                if ($result) {
-                    return response()->json($patient, 200);
-                } else {
-                    $error = $this->getErrorObj("Không thễ tạo hồ sơ bệnh nhân, vui lòng thử lại",
-                        "result false, no exception");
-                    return response()->json($error, 400);
-                }
+            $newAccount = false;
+            if ($user == null) {
+                $user = new User();
+                $user->phone = $phone;
+                $user->password = Hash::make($phone);
+                $newAccount = true;
+            }
+            $name = $request->input('name');
+            $gender = $request->input('gender');
+            $birthday = $request->input('birthday');
+            $districtId = $request->input('districtId');
+            $address = $request->input('address');
+            $patient = new Patient();
+            $patient->phone = $phone;
+            $patient->date_of_birth = $birthday;
+            $patient->gender = $gender;
+            $patient->district_id = $districtId;
+            $patient->name = $name;
+            $patient->address = $address;
+
+
+            $userHasRole = new UserHasRole();
+            $userHasRole->phone = $phone;
+            $userHasRole->role_id = AppConst::ROLE_PATIENT;
+            $userHasRole->start_time = Carbon::now();
+            $result = null;
+            if ($newAccount) {
+                $result = $this->createUserWithRole($user, $patient, $userHasRole);
             } else {
-                $error = $this->getErrorObj(
-                    "Số diện thoại chưa được đăng kí",
-                    "No Exception");
+                $result = $this->updatePatient($patient);
+            }
+            if ($result) {
+                return response()->json($patient, 200);
+            } else {
+                $error = $this->getErrorObj("Không thễ tạo hồ sơ bệnh nhân, vui lòng thử lại",
+                    "result false, no exception");
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
