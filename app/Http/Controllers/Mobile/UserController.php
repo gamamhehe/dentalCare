@@ -152,7 +152,7 @@ class UserController extends BaseController
         $user->noti_token = "null";
         $this->updateUser($user);
         $request->user('api')->token()->revoke();
-        Auth::guard()->logout();
+//        Auth::guard('api')->logout();
 
 //        Session::flush();
 //        Session::regenerate();

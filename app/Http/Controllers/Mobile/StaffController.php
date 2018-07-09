@@ -33,16 +33,20 @@ class StaffController extends BaseController
             $phone = $request->input('phone');
             $password = $request->input('password');
             $notifToken = $request->input('noti_token');
+            $staff = $this->getUserByPhone($phone);
+            if ($staff == null) {
+                $error = $this->getErrorObj("Không thể tìm thấy số điện thoại", "No exception");
+                return response()->json($error, 400);
+            }
+            if (!$this->isRoleStaff($phone)) {
+                $error = $this->getErrorObj("Tài khoản của bạn không có quyền truy cập!", "No exception");
+                return response()->json($error, 400);
+            }
             $result = $this->checkLogin($phone, $password);
             if ($result != null) {
                 $result->noti_token = $notifToken;
                 $this->updateUser($result);//update notification token
-                $staffProfile = $this->getStaffProfileByPhone($phone);
-                $result->name = $staffProfile->name;
-                $result->degree = $staffProfile->degree;
-                $result->date_of_birth = $staffProfile->date_of_birth;
-                $result->gender = $staffProfile->gender;
-                $result->avatar = $staffProfile->avatar;
+                $staffProfile = $result->belongToStaff()->first();
                 $clientSecret = env(AppConst::PASSWORD_CLIENT_SECRET, false);
                 $clientId = env(AppConst::PASSWORD_CLIENT_ID, false);
                 $request->request->add([
@@ -56,12 +60,12 @@ class StaffController extends BaseController
                 $tokenResponse = (Route::dispatch($tokenRequest));
                 $tokenResponseBody = json_decode($tokenResponse->getContent());
                 if ($tokenResponseBody != null) {
-                    $result->access_token = $tokenResponseBody->access_token;
-                    $result->refresh_token = $tokenResponseBody->refresh_token;
-                    $result->token_type = $tokenResponseBody->token_type;
-                    $result->expires_in = $tokenResponseBody->expires_in;
+                    $staffProfile->access_token = $tokenResponseBody->access_token;
+                    $staffProfile->refresh_token = $tokenResponseBody->refresh_token;
+                    $staffProfile->token_type = $tokenResponseBody->token_type;
+                    $staffProfile->expires_in = $tokenResponseBody->expires_in;
                 }
-                return response()->json($result, 200);
+                return response()->json($staffProfile, 200);
             } else {
                 $error = $this->getErrorObj(
                     "Số điện thoại hoặc mật khẩu không chính xác"
@@ -114,39 +118,6 @@ class StaffController extends BaseController
         }
     }
 
-    public function createPatientProfile(Request $request)
-    {
-        try {
-            $phone = $request->input('phone');
-            $user = $this->getUserByPhone($phone);
-            if ($user != null) {
-                $name = $request->input('name');
-                $gender = $request->input('gender');
-                $birthday = $request->input('birthday');
-                $districtId = $request->input('districtId');
-                $address = $request->input('address');
-                $patient = new Patient();
-                $patient->phone = $phone;
-                $patient->date_of_birth = $birthday;
-                $patient->gender = $gender;
-                $patient->district_id = $districtId;
-                $patient->name = $name;
-                $patient->avatar = "";
-                $patient->address = $address;
-                $this->createPatient($patient);
-                return response()->json($patient, 200);
-            } else {
-                $error = $this->getErrorObj(
-                    "Số diện thoại chưa được đăng kí",
-                    "No Exception");
-                return response()->json($error, 400);
-            }
-        } catch (\Exception $ex) {
-            $error = $this->getErrorObj(
-                "Không thể đăng kí thông tin người dùng", $ex);
-            return response()->json($error, 400);
-        }
-    }
 
     public function createUser(Request $request)
     {

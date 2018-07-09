@@ -44,6 +44,7 @@ Route::get("test2", "Mobile\MobileController@test2");
 Route::get("test3", "Mobile\MobileController@test3");
 Route::get("test4", "Mobile\MobileController@test4");
 Route::get("test5", "Mobile\MobileController@test5");
+Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
@@ -93,7 +94,7 @@ Route::middleware('auth:api')->group(function () {
 /*************************************-----Begin section for staff with token----*****************************************************/
 /*************************************-----------------------------*****************************************************/
 
-
+    Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
 
 
 
