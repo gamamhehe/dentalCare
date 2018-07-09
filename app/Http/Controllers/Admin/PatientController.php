@@ -215,7 +215,17 @@ class PatientController extends Controller
             'table_data' => $output,
             'total_data' => $total_row
         );
-
         echo json_encode($data);
+    }
+    public function changeAvatar(Request $request){
+        $value = $request->session()->get('listPatient'); 
+        $phone = $value[0]->phone;
+        $listPatient = Patient::where('phone',$phone)->get();
+        $request->session()->remove('listPatient');
+        session(['listPatient' => $listPatient]);
+        $image = $request['avatar'];
+        $id = $request['patientID'];
+        $result = $this->editAvatar($image,$id );
+        return redirect('/myProfile');
     }
 }

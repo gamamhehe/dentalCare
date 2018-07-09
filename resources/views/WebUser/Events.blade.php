@@ -37,16 +37,13 @@
                     <a class="nav-link  " href="/doctorList">Chuyên Gia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/event">Event</a>
+                    <a class="nav-link  " href="/event">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="#contact">dịch vụ</a>
+                    <a class="nav-link  " href="/banggia">Bảng giá</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/banggia">bản giá</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  " href="/gioithieu">contact us</a>
+                    <a class="nav-link  " href="/gioithieu">Liên hệ</a>
                 </li>
                 <li class="nav-item">
 
@@ -95,6 +92,7 @@
                                     @endforeach
                                 </p>
                             </li>
+                                 <hr>
 
                             <li class="a-hover">
                                 <a href="/lichsubenhan">Lịch sử khám bệnh</a>
@@ -107,9 +105,9 @@
                             <li class=" a-hover">
                                 <a href="#"><span>Lịch hẹn</span></a>
                             </li>
+                              <li class="gachngang"></li>
 
                             <!-- Menu Body -->
-
                             <!-- Menu Footer-->
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
@@ -174,7 +172,9 @@
                                                 @endif
                                                 <div class="row">
                                                     <!-- /.col -->
-                                                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                                    <div class="col-xs-12">
+                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                                    </div>
                                                     <!-- /.col -->
 
                                                 </div>

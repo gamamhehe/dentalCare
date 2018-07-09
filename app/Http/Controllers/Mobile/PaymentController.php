@@ -11,6 +11,8 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Http\Controllers\Mobile\BaseController;
+use App\Model\PaymentDetail;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -47,7 +49,7 @@ class PaymentController extends BaseController
         $paymentId = $request->input('payment_id');
         $localPaymentId = $request->input('local_payment_id');
         $paymentClientJson = $request->input('payment_client_json');
-        Log::info("PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
+        Log::info("PaymentId: " . $localPaymentId . " PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
         try {
             $payment_client = json_decode($paymentClientJson, true);
 
@@ -65,12 +67,12 @@ class PaymentController extends BaseController
             if ($payment->getState() != 'approved') {
                 $error = $this->getErrorObj(
                     "Thanh toán chưa được xác thực",
-                    "No exception");
+                    "No exception approve");
                 return response()->json($error);
             }
 
             // Amount on client side
-            $amount_client = $payment_client["amount"];
+            $amountClient = $payment_client["amount"];
 
             // Currency on client side
             $currency_client = $payment_client["currency_code"];
@@ -98,34 +100,49 @@ class PaymentController extends BaseController
 //                    $amount_server,
 //                    $amount_server);
             // Verifying the amount
-            if ($amount_server != $amount_client) {
+            if ($amount_server != $amountClient) {
                 $error = $this->getErrorObj(
                     "Số tiền thanh toán không hợp lệ",
-                    "No exception");
+                    "No exception amount client");
                 return response()->json($error, 400);
             }
             // Verifying the currency
             if ($currency_server != $currency_client) {
                 $error = $this->getErrorObj(
                     "Tiền tệ không hợp lệ",
-                    "No exception");
+                    "No exception currency client");
                 return response()->json($error, 400);
             }
             // Verifying the sale state
             if ($sale_state != 'completed') {
                 $error = $this->getErrorObj(
                     "Giao dịch không thành công",
-                    "No exception");
+                    "No exception completed");
                 return response()->json($error, 400);
             }
-            // storing the saled items
-//            insertItemSales($payment_id_in_db, $transaction, $sale_state);
-//            return response()->json($response);
-            $result = $this->updatePaymentNotePayable($amount_client, $localPaymentId);
-            if($result){
-                return response()->json("SUCCESS",200);
-            }else{
-                $error = $this->getErrorObj("Lỗi không thể lưu dữ liệu", "No exception");
+
+            $payment = $this->getPaymentById($localPaymentId);
+            if ($payment == null) {
+                $error = $this->getErrorObj("Không tìm thấy thông tin thanh toán",
+                    "No exception in payment == null");
+                return response()->json($error, 400);
+            }
+            $user = $payment->bebeLongsToUser()->first();
+            $staff = $user == null ? null : $user->belongToStaff()->first();
+            $payment->paid = $payment->total_price;
+            $payment->is_done = 1;
+            $paymentDetail = new PaymentDetail();
+            $paymentDetail->payment_id = $localPaymentId;
+            $paymentDetail->received_money = $payment->total_price - $payment->paid;
+            $paymentDetail->date_create = Carbon::now();
+            $paymentDetail->staff_id = $staff->id;
+            $result = $this->updatePaymentModel($payment, $paymentDetail);
+            if ($result) {
+                $listPayments = $this->getPaymentByPhone($payment->phone);
+                return response()->json($listPayments, 200);
+            } else {
+                $error = $this->getErrorObj("Lỗi không thể lưu dữ liệu",
+                    "No exception result null");
                 return response()->json($error, 400);
             }
         } catch (\PayPal\Exception\PayPalConnectionException $exc) {
@@ -133,12 +150,12 @@ class PaymentController extends BaseController
             if ($exc->getCode() == 404) {
                 $error = $this->getErrorObj(
                     "Không tìm thấy payment 404",
-                    "No exception");
+                    $exc);
                 return response()->json($error, 400);
             } else {
                 $error = $this->getErrorObj(
                     "Lỗi không xác định else",
-                    "No exception");
+                    $exc);
                 return response()->json($error, 400);
             }
         } catch (\Exception $exc) {

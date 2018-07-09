@@ -148,6 +148,9 @@ class UserController extends BaseController
             $error = $this->getErrorObj(AppConst::MSG_LOGOUT_ERROR, null);
             return response()->json($error, 404);
         }
+        $user= Auth::user();
+        $user->noti_token = "null";
+        $this->updateUser($user);
         $request->user('api')->token()->revoke();
         Auth::guard()->logout();
 

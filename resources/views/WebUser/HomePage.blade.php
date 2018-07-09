@@ -38,24 +38,21 @@
                     <a class="nav-link  " href="/doctorList">Chuyên Gia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/event">Event</a>
+                    <a class="nav-link  " href="/event">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="#contact">dịch vụ</a>
+                    <a class="nav-link  " href="/banggia">Bảng giá</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/banggia">bản giá</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  " href="/gioithieu">contact us</a>
+                    <a class="nav-link  " href="/gioithieu">Liên hệ</a>
                 </li>
                 <li class="nav-item">
 
                 @if(Session::has('currentUser'))
                     <li class="nav-item dropdown ">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                           <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
-                                class="img-fluid img-responsive" style="max-height: 25px;">
+                            <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
+                                 class="img-fluid img-responsive" style="max-height: 25px;">
 
                         </a>
                         <ul class="dropdown-menu"
@@ -67,17 +64,15 @@
                                     <div class="row">
                                         <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
                                             <img src="{{Session::get('currentPatient')->avatar}}"
-                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="70px;">
+                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
                                         </div>
-                                        <div class="col-sm-7 " style="float: left ;padding-left: 0;padding-right: 0;">
+                                        @foreach(\Session::get('listPatient') as $key => $value)
+                                        <div class="col-sm-2"  >
 
-                                            @foreach(\Session::get('listPatient') as $key => $value)
-                                            <img src="{{ $value->avatar }}" style="margin: 0.3em;"
-                                            class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="40px;" onclick="changeInfo(this.id)">
-                                            @endforeach
+                                            <img src="{{ $value->avatar }}"
+                                                 class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
                                         </div>
-
-                                      
+                                        @endforeach
                                     </div>
                                 </div>
 
@@ -85,22 +80,23 @@
                             <li class="user-header" id="acc1" style="display: block">
                                 <p>
 
-                                    {{--{{Session::get('currentPatient')->name}}--}}
+                                   {{Session::get('currentPatient')->name}}
                                 </p>
                             </li>
                             <li class="user-header" id="acc2" style="display: none">
                                 <p>
-                                @foreach(\Session::get('listPatient') as $key)
-                                    @if($key->id != Session::get('currentPatient')->id )
+                                    @foreach(\Session::get('listPatient') as $key)
+                                        @if($key->id != Session::get('currentPatient')->id )
                                         <h1>{{$key->name}}</h1>
                                         @endif
 
-                                        @endforeach
-                                        </p>
+                                    @endforeach
+                                </p>
                             </li>
+                                 <hr>
 
                             <li class="a-hover">
-                                <a href="#">Lịch sử khám bệnh</a>
+                                <a href="/lichsubenhan">Lịch sử khám bệnh</a>
                             </li>
                             <li class="gachngang"></li>
                             <li class="  a-hover">
@@ -108,11 +104,11 @@
                             </li>
                             <li class="gachngang"></li>
                             <li class=" a-hover">
-                                <a href="#/lichsubenhan/1"><span>Lịch hẹn</span></a>
+                                <a href="#"><span>Lịch hẹn</span></a>
                             </li>
+                              <li class="gachngang"></li>
 
                             <!-- Menu Body -->
-
                             <!-- Menu Footer-->
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
@@ -177,7 +173,9 @@
                                                 @endif
                                                 <div class="row">
                                                     <!-- /.col -->
-                                                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                                    <div class="col-xs-12">
+                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                                    </div>
                                                     <!-- /.col -->
 
                                                 </div>

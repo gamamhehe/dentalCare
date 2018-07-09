@@ -1,5 +1,6 @@
 @extends('admin.master')
 @section('content')
+  <link rel="stylesheet" href="{{asset("/plugins/datepicker/datepicker3.css")}}">
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content">
@@ -47,6 +48,7 @@
                                 </div>
 
 
+
                                 <div class="row"></div>
                                 {{--<img id="holder" style="max-height:100px" id="basicImage" name="holder" src="{{old('image')}}" onchange="test()">--}}
                                 <div class="input-group">
@@ -62,8 +64,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="row" style="margin-bottom: 1em;">
                         <div class="col-sm-12">
                             <div class="col-sm-2"><label>Miêu tả bệnh </label></div>
@@ -74,7 +74,6 @@
                                       placeholder="Write your message..">{!!old('description')!!}</textarea>
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
