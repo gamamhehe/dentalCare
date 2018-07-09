@@ -118,6 +118,44 @@ class StaffController extends BaseController
         }
     }
 
+    public function createPatient(Request $request)
+    {
+        try {
+            $phone = $request->input('phone');
+            $user = $this->getUserByPhone($phone);
+            if ($user != null) {
+                $name = $request->input('name');
+                $gender = $request->input('gender');
+                $birthday = $request->input('birthday');
+                $districtId = $request->input('districtId');
+                $address = $request->input('address');
+                $patient = new Patient();
+                $patient->phone = $phone;
+                $patient->date_of_birth = $birthday;
+                $patient->gender = $gender;
+                $patient->district_id = $districtId;
+                $patient->name = $name;
+                $patient->address = $address;
+                $result = $this->updateUser($patient);
+                if ($result) {
+                    return response()->json($patient, 200);
+                } else {
+                    $error = $this->getErrorObj("Không thễ tạo hồ sơ bệnh nhân, vui lòng thử lại",
+                        "result false, no exception");
+                    return response()->json($error, 400);
+                }
+            } else {
+                $error = $this->getErrorObj(
+                    "Số diện thoại chưa được đăng kí",
+                    "No Exception");
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj(
+                "Không thể đăng kí thông tin người dùng", $ex);
+            return response()->json($error, 400);
+        }
+    }
 
     public function createUser(Request $request)
     {

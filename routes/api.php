@@ -55,6 +55,7 @@ Route::get("bacsiranh", "Mobile\TestController@getDentist");
 /*Begin staff section without token*/
 Route::post("staff/login", "Mobile\StaffController@loginStaff");
 Route::post("staff/register", "Mobile\StaffController@createStaffAcccount");
+Route::post("staff/createPatient", "Mobile\StaffController@createPatient");
 
 /*End staff section without token*/
 Route::middleware('auth:api')->group(function () {
