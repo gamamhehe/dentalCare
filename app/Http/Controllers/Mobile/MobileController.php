@@ -137,6 +137,12 @@ class MobileController extends Controller
         return $data;
     }
 
+    public function testSMS($phone, $content)
+    {
+        $result = Utilities::sendSMS($phone, $content);
+        return response()->json($result, 200);
+    }
+
     public function getApptTemplate($appointment, $numDentist)
     {
         $standardDate = new DateTime($appointment->start_time);

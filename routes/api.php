@@ -30,7 +30,7 @@ Route::get("firebase/notify", "Mobile\FirebaseController@sendNotification");
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::get("testpassport", "Mobile\UserController@testPassport");
 Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPayment");
-Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
+Route::get("treatmentMobicategory/all", "Mobile\TreatmentCategoryController@getAll");
 
 Route::post("test", "Mobile\MobileController@testPOST");
 ///ADMIN
@@ -44,6 +44,7 @@ Route::get("test2", "Mobile\MobileController@test2");
 Route::get("test3", "Mobile\MobileController@test3");
 Route::get("test4", "Mobile\MobileController@test4");
 Route::get("test5", "Mobile\MobileController@test5");
+Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
 //input bacsiranh?date=value
