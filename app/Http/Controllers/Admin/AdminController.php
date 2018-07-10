@@ -840,7 +840,6 @@ class AdminController extends Controller
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 1,
                 'step_id' => 1,
-                'description' => 'cho phuc'
             ]);
 
             TreatmentDetail::create([
@@ -852,7 +851,6 @@ class AdminController extends Controller
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 2,
                 'step_id' => 2,
-                'description' => 'cho phuc'
             ]);
 
             TreatmentHistory::create([
@@ -875,7 +873,6 @@ class AdminController extends Controller
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 3,
                 'step_id' => 1,
-                'description' => 'cho phuc'
             ]);
 
             TreatmentDetail::create([
@@ -887,7 +884,6 @@ class AdminController extends Controller
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 4,
                 'step_id' => 2,
-                'description' => 'cho phuc'
             ]);
             Staff::create([
                 'name' => 'Paypal',
@@ -1475,27 +1471,27 @@ class AdminController extends Controller
                 'create_date' => '2018-06-19 04:31:27',
             ]);
             Payment::create([
-                'prepaid' => '100000',
+                'paid' => '100000',
                 'total_price' => '300000',
-                'phone' => '1279011097',
+                'phone' => '01279011097',
                 'is_done' => false,
             ]);
             Payment::create([
-                'prepaid' => '200000',
+                'paid' => '200000',
                 'total_price' => '600000',
-                'phone' => '1279011096',
+                'phone' => '01279011096',
                 'is_done' => false,
             ]);
             Payment::create([
-                'prepaid' => '150000',
+                'paid' => '150000',
                 'total_price' => '600000',
-                'phone' => '1279011098',
+                'phone' => '01279011098',
                 'is_done' => false,
             ]);
             Payment::create([
-                'prepaid' => '250000',
+                'paid' => '250000',
                 'total_price' => '500000',
-                'phone' => '1279011099',
+                'phone' => '01279011099',
                 'is_done' => false,
             ]);
             PaymentDetail::create([
@@ -2491,7 +2487,6 @@ class AdminController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
         }
     }
 

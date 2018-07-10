@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Jobs\SendSmsJob;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Appointment;
 use Carbon\Carbon;
+use DateTime;
 use DB;
 use Response;
+use App\Helpers\AppConst;
 class AppointmentController extends Controller
 {
     //
@@ -19,23 +22,33 @@ class AppointmentController extends Controller
         $this->createAppointment($request->bookingDate,$request->phone,$request->note);
     }
     public function add(Request $request){
+        $phone = $request['phone'];
+        $estimateTimeReal=$request['estimateTimeReal'];
+        $patientId = $request['patientID'];
+        $dateBooking= $request['datepicker'];
+        $startTime = strtotime($dateBooking);
+//        $time = date('Y-m-d H:i:s', $startTime);
+        $dentist = $request->session()->get('currentAdmin', null);
+        $dentist_id = $dentist->belongToStaff()->first()->id;
     	 DB::beginTransaction();
         try {
            	$newApp = new Appointment;
-    	$newApp->start_time = Carbon::now();
+    	$newApp->start_time = date('Y-m-d H:i:s', $startTime);
     	$newApp->note = "NONO";
-    	$newApp->estimated_time =Carbon::now();
+    	$newApp->estimated_time =$estimateTimeReal;
     	$newApp->numerical_order = 12;
-        $newApp->phone = "019";
-    	$newApp->staff_id =1;
-    	$newApp->patient_id=1;
+        $newApp->phone = $phone;
+    	$newApp->staff_id =$dentist_id;
+    	$newApp->patient_id=$patientId;
         $newApp->save();
         DB::commit();
+        $dateTime = new DateTime($newApp->start_time);
+        $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
+        $this->dispatch(new SendSmsJob($phone, $smsMessage));
             return response()->json($newApp);
 
         } catch (\Exception $e) {
             DB::rollback();
-            
              return "no";
 
         }

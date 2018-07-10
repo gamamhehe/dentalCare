@@ -6,6 +6,12 @@
 .dkm{
     color :red;
 }
+hr.type_4 {
+border: 0;
+height: 55px;
+background-image: url(/assets/images/icon/type_4.png);
+background-repeat: no-repeat;
+}
 /*//img*/
 #ninja-slider .caption {
     position:absolute;

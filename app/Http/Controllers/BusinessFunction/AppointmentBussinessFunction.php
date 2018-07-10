@@ -476,12 +476,21 @@ trait AppointmentBussinessFunction
     public function checkAppointmentForPatient($phone, $idPatient)
     {
 
+        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
+        $appointment = Appointment::where('phone', $phone)
+            ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
+            ->where('status', 0)
+            ->where('patient_id', $idPatient)
+            ->whereIn('staff_id', $listCurrentFreeDentist)
+            ->first();
+        if ($appointment){
+            return $appointment;
+        }
         $appointment = Appointment::where('phone', $phone)
             ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
             ->where('status', 0)
             ->where('patient_id', $idPatient)
             ->first();
-        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
         if ($appointment) {
             if (in_array($appointment->staff_id, $listCurrentFreeDentist))
                 return $appointment;
@@ -493,13 +502,13 @@ trait AppointmentBussinessFunction
             ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
             ->where('status', 0)
             ->first();
-        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
         if ($appointment) {
             if (in_array($appointment->staff_id, $listCurrentFreeDentist))
                 return $appointment;
             else
                 return false;
         }
+        return null;
     }
 
     public function viewAppointmentForDentist($dentist_id)

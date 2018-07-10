@@ -105,14 +105,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/list-Appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
     //TreatmentCategory
 
-    Route::get('/createPrescription', 'Admin\MedicineController@createPrescription')->name('admin.AppointmentPatient.index');
+    // Route::get('/createPrescription', 'Admin\MedicineController@createPrescription')->name('admin.AppointmentPatient.index');
     Route::get('/medicine_search/{id}', 'Admin\MedicineController@ajaxSearch') ;
 
     Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
 
     //Patient
+    Route::get('/getListPatient/{id}', 'Admin\PatientController@getListPatientById');//ajax
     // Route::get('/create-Patient', 'Admin\PatientController@create');
-    Route::post('/create-Patient','Admin\PatientController@add');
+    Route::post('/create-Patient','Admin\PatientController@create');
     //Dentist  
     Route::get('/list-Appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
     Route::get('/getAppointment', 'Admin\StaffController@getListAppointmentForStaff');
@@ -130,10 +131,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/create-Step','Admin\StepController@add');
     //Absent
     Route::get('/createAbsent','Admin\AbsentController@loadcreate');
-
+    //TreatmentDetail
+    Route::post('/createTreatmentDetail','Admin\TreatmentDetailController@createTreatmentDetailController');//add
+    Route::get('/treatmentDetail/{id}','Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment
     Route::post('/create-Appointment','Admin\AppointmentController@add');
 
+    //payment
+    Route::get('/adminPayment', 'Admin\PaymentController@getList');
+    Route::get('/createPayment', 'Admin\PaymentController@viewCreate');
+    Route::post('/createPayment', 'Admin\PaymentController@create')->name('create.payment');
+    Route::get('/getPaymentDetail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
+    Route::get('/searchPayment/{searchValue}', 'Admin\PaymentController@search');
+    
 
 });
 
@@ -152,7 +162,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','Admin\StaffController@viewAppointment')->name('testFunction');
+Route::get('/testFunction','Admin\TreatmentController@testFunction')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
 
 //Route::get('paywithpaypal','Admin\PaypalController@payWithPaypal');

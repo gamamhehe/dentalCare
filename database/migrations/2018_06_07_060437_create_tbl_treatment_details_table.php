@@ -16,7 +16,7 @@ class CreateTblTreatmentDetailsTable extends Migration
         Schema::create('tbl_treatment_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('treatment_history_id');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->integer('staff_id');
             $table->dateTime('create_date');
             $table->timestamps();

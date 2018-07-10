@@ -17,7 +17,7 @@ class CreateTblPaymentsTable extends Migration
             $table->increments('id');
             $table->bigInteger('paid')->default(0);
             $table->bigInteger('total_price');
-            $table->integer('phone');
+            $table->string('phone');
             $table->boolean('is_done')->default(false);
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentCategoriesBusinessFunction;
@@ -17,7 +18,7 @@ class TreatmentController extends Controller
 {
     use TreatmentBusinessFunction;
     //
-
+    use AppointmentBussinessFunction;
     public function getListTreatment(Request $request){
         $listTreatment = $this->getAllTreatment();
         return Datatables::of($listTreatment)
@@ -73,6 +74,7 @@ class TreatmentController extends Controller
        return $treat;
     }
     public function testFunction(){
-        dd($this->createTreatmentProcess(1, 1,11, 50000, 'abc'));
+        dd($this->checkAppointmentForPatient('1231231231', 7));
+
     }
 }

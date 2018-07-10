@@ -10,6 +10,7 @@ use App\Model\Payment;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Session;
 use DB;
@@ -72,9 +73,7 @@ class PatientController extends Controller
             $patient->gender = $request->gender;
             $patient->avatar = $request->avatar;
             $patient->district_id = $request->district_id;
-            $patient->is_parent = $request->is_parent;
             $result = $this->createPatient($patient);
-
         } else {
             $patient = new Patient();
             $userHasRole = new UserHasRole();
@@ -89,15 +88,14 @@ class PatientController extends Controller
             $patient->gender = $request->gender;
             $patient->avatar = $request->avatar;
             $patient->district_id = $request->district_id;
-            $patient->is_parent = $request->is_parent;
-            $user->phone = $user->phone;
+            $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
         }
         if ($result) {
-            return redirect()->route("admin.Patient.create")->withSuccess("Sự kiện đã được tạo");
+            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Sự kiện đã được tạo");
         } else {
-            return redirect('admin/list-Event')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/live_seach')->withSuccess("Sự kiện chưa được tạo");
         }
     }
 
@@ -127,12 +125,12 @@ class PatientController extends Controller
     }
 
 
-    public function receive($id)
+        public function receive($id)
     {
         $phone = $this->getPhoneOfPatient($id);
         $appointment = $this->checkAppointmentForPatient($phone, $id);
-        if ($appointment === false) {
-            $status = 0;
+        if ($appointment === null) {
+            $status = 2;
         } else
             if ($appointment) {
                 $appointment->patient_id = $id;
@@ -140,8 +138,8 @@ class PatientController extends Controller
                 $this->saveAppointment($appointment);
                 $status = 1;
             } else {
-                $status = 2;
-
+                $status = 0 ;
+//
             }
         $data = array(
             'statusOfReceive' => $status
@@ -194,7 +192,7 @@ class PatientController extends Controller
          <td style="width: 20%">' . $row->date_of_birth . '</td>
          <td align="center" style="width: 20%">
          <button type="button" class="btn btn-default btn-success"
-                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button>
+                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button></td>
         </tr>
         ';
                 }
@@ -227,5 +225,11 @@ class PatientController extends Controller
         $id = $request['patientID'];
         $result = $this->editAvatar($image,$id );
         return redirect('/myProfile');
+    }
+    public function getListPatientById($id){
+        $list = $this->getPatient($id);
+            return response()->json($list);
+         
+       
     }
 }
