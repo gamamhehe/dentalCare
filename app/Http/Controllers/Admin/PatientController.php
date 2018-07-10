@@ -10,6 +10,7 @@ use App\Model\Payment;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Session;
 use DB;
@@ -72,9 +73,8 @@ class PatientController extends Controller
             $patient->gender = $request->gender;
             $patient->avatar = $request->avatar;
             $patient->district_id = $request->district_id;
-            $patient->is_parent = $request->is_parent;
             $result = $this->createPatient($patient);
-
+            dd($result);
         } else {
             $patient = new Patient();
             $userHasRole = new UserHasRole();
@@ -89,15 +89,15 @@ class PatientController extends Controller
             $patient->gender = $request->gender;
             $patient->avatar = $request->avatar;
             $patient->district_id = $request->district_id;
-            $patient->is_parent = $request->is_parent;
-            $user->phone = $user->phone;
+            $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
+            dd($result);
         }
         if ($result) {
-            return redirect()->route("admin.Patient.create")->withSuccess("Sự kiện đã được tạo");
+            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Sự kiện đã được tạo");
         } else {
-            return redirect('admin/list-Event')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/live_seach')->withSuccess("Sự kiện chưa được tạo");
         }
     }
 

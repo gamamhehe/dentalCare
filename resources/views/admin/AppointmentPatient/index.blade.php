@@ -273,7 +273,7 @@
             if ((data.errors)) {
              alert(data.errors.body);
             } else {
-               alert("DONE");
+                  swal("Đặt lịch hẹn thành công", "", "success");
             }
           },
             });
@@ -294,16 +294,16 @@
             'name' : nameCreate,
             'address' : addressCreate,
             'phone': phoneCreate,
-            'birthdateCreate':birthdateCreate,
-            'genderCreate':genderCreate,
-            'districtCreate':districtCreate,
+            'date_of_birth':birthdateCreate,
+            'gender':genderCreate,
+            'district_id':districtCreate,
            
           },
           success: function(data){
             if ((data.errors)) {
              alert(data.errors.body);
             } else {
-               alert("DONE");
+             swal("Khởi tạo bệnh nhân thành công", "", "success");
             }
           },
             });
