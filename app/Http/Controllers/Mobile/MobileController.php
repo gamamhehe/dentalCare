@@ -158,7 +158,7 @@ class MobileController extends Controller
     public function getApptTemplate($appointment, $numDentist)
     {
         $standardDate = new DateTime($appointment->start_time);
-        $standardDate->setTime(7, 0);
+        $standardDate->setTime(0, 0);
         $bookingDate = new DateTime($appointment->start_time);
         $estimatedTimeObj = new DateTime($appointment->estimated_time);
         $diff = $bookingDate->diff($standardDate);
@@ -204,14 +204,14 @@ class MobileController extends Controller
         $date = new DateTime();
 
         $template = '<div style="float:left;width:100px">';
-        for ($i = 0; $i < 840; $i += 30) {
+        for ($i = 0; $i < 1440; $i += 30) {
             $bgColor = '#20d8b3';
-            if ($i >= 300 && $i < 360) {
+            if (($i >= 720 && $i < 780) ||(  $i < 420) ||($i>=1140)) {
                 $bgColor = '#333300';
             }
             $topPos = $i * 5;
             $heightPx = 30 * 5;
-            $date->setTime(7 + intval(($i / 60)), $i % 60);
+            $date->setTime(intval(($i / 60)), $i % 60);
 //            $this->logDebug("I " .(7 + intval(($i / 60))));
 //            $this->logDebug(($date->format('H:i')));
             $template .= '<div style="border:1px solid white;position:absolute;top:'

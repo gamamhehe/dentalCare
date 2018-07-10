@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
+use Exception;
 use Illuminate\Http\Request;
 
 class PatientController extends BaseController
@@ -59,6 +60,18 @@ class PatientController extends BaseController
             $error->error = "Lỗi máy chủ";
             $error->exception = $ex->getMessage();
             return response()->json($error, 400);
+        }
+    }
+
+    public function getByPhone(Request $request)
+    {
+        try {
+            $phone = $request->input("phone");
+            $patients = $this->getPatientByPhone($phone);
+            return $patients;
+        }catch (Exception $ex){
+            $error = $this->getErrorObj("Lỗi server", $ex);
+            return response()->json($error, 500);
         }
     }
 

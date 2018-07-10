@@ -96,7 +96,7 @@ class UserController extends BaseController
             if ($result != null) {
                 $result->noti_token = $notifToken;
                 $this->updateUser($result);
-                $patients = $this->getPatient($phone);
+                $patients = $this->getPatientByPhone($phone);
                 $userResponse = new \stdClass();
                 $userResponse->phone = $phone;
                 $userResponse->noti_token = $notifToken;

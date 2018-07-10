@@ -101,7 +101,7 @@ class PatientController extends Controller
 
     public function get($phone)
     {
-        return $this->getPatient($phone);
+        return $this->getPatientByPhone($phone);
     }
 
     public function update(Request $request)
@@ -227,7 +227,7 @@ class PatientController extends Controller
         return redirect('/myProfile');
     }
     public function getListPatientById($id){
-        $list = $this->getPatient($id);
+        $list = $this->getPatientByPhone($id);
             return response()->json($list);
          
        

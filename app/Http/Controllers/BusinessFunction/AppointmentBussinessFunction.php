@@ -125,7 +125,6 @@ trait AppointmentBussinessFunction
                         $predictAppointmentDate = $this->getNextStartTime($appointment);
                         $suitableDentistId = $appointment['staff_id'];
                     } else {
-                        $this->logDebug("INTO COUNT EQUALLY == 1");
                         $maxdate = new \DateTime("2035-12-12");
                         $minTimeStamp = $maxdate->getTimestamp() + $maxdate->getTimestamp();
                         $minAppointment = array();
@@ -137,7 +136,8 @@ trait AppointmentBussinessFunction
                             }
                         }
                         $minAppId = $minAppointment->id;
-                        $this->logDebug("Min ApptID: " . $minAppId);
+                        $this->logDebug("INTO COUNT EQUALLY == 1"."Min ApptID: " . $minAppId." MinApp startTime: ".$minAppointment['start_time']);
+
                         // $predictAppointmentDate= the finish datetime of the previous patient;
                         $minAppointmentStartDateTime = new \DateTime($minAppointment['start_time']);
                         $predictAppointmentDate = $this->addTimeToDate($minAppointmentStartDateTime,
