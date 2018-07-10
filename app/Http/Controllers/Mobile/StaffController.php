@@ -10,24 +10,29 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Helpers\AppConst;
+use App\Helpers\Utilities;
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Jobs\SendSmsJob;
 use App\Model\Patient;
 use App\Model\Staff;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use SMSGatewayMe\Client\ApiException;
 
 class StaffController extends BaseController
 {
     use UserBusinessFunction;
-    use StaffBusinessFunction;
     use PatientBusinessFunction;
+    use AppointmentBussinessFunction;
 
     public function loginStaff(Request $request)
     {
@@ -216,5 +221,72 @@ class StaffController extends BaseController
             return response()->json($error, 400);
         }
 
+    }
+
+    public function bookAppointment(Request $request)
+    {
+        try {
+            $phone = $request->input('phone');
+            $note = $request->input('note');
+            $bookingDate = $request->input('booking_date');
+            $dentistId = $request->input('dentist_id');
+            $patientId = $request->input('patient_id');
+            $estimatedTime = $request->input('estimated_time');
+            $appdateObj = new DateTime($bookingDate);
+            $dentist = $this->getStaffById($dentistId);
+            if ($dentist == null) {
+                $error = $this->getErrorObj("Không thể tìm thấy số điện thoại nha sĩ",
+                    "No exception");
+                return response()->json($error, 400);
+            }
+            $patient = $this->getPatientById($patientId);
+            if ($patient == null) {
+                $error = $this->getErrorObj("Không thể tìm thấy bệnh nhân",
+                    "No exception");
+                return response()->json($error, 400);
+            }
+            if ($this->isEndOfTheDay($appdateObj)) {
+                $error = $this->getErrorObj("Dã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                    "No Excepton");
+                return response()->json($error, 400);
+            }
+            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime);
+            if ($result != null) {
+                $startDateTime = new DateTime($result->start_time);
+                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+                $this->dispatch(new SendSmsJob($phone, $smsMessage));
+                return response()->json($result, 200);
+            } else {
+                $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                    "Result is null, No exception");
+                return response()->json($error, 400);
+            }
+
+        } catch (ApiException $e) {
+            $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
+            return response()->json($error, 400);
+        } catch (\Exception $ex) {
+            $error = Utilities::getErrorObj("Lỗi server", $ex->getMessage());
+            return response()->json($error, 400);
+        }
+    }
+
+    public function getStaffAppointmentByMonth(Request $request)
+    {
+        try {
+            $dentistId = $request->input('dentist_id');
+            $month = $request->input('month');
+            $year = $request->input('year');
+            if($dentistId == null || $month == null){
+                $error = $this->getErrorObj("Vui lòng điền đầy đủ id nha sĩ và tháng", "No exception");
+                return response()->json($error, 400);
+            }
+            $appointments = $this->getAppointmentsInMonth($dentistId, $year,$month);
+
+            return $appointments;
+        }catch (Exception $ex){
+            $error = $this->getErrorObj("Lỗi server", $ex);
+            return response()->json($error, 500);
+        }
     }
 }
