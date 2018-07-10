@@ -227,4 +227,10 @@ class PatientController extends Controller
         $result = $this->editAvatar($image,$id );
         return redirect('/myProfile');
     }
+    public function getListPatientById($id){
+        $list = $this->getPatient($id);
+            return response()->json($list);
+         
+       
+    }
 }

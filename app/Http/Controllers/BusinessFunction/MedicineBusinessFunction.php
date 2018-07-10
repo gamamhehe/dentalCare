@@ -95,7 +95,11 @@ trait MedicineBusinessFunction
     }
 
     public function loadMedicineOfTreatmentDetail($treatment_detail_id){
-        MedicinesQuantity::where('treatment_detail_id', $treatment_detail_id)->get();
+        $listMedicines =MedicinesQuantity::where('treatment_detail_id', $treatment_detail_id)->get();
+        foreach ($listMedicines as $key ) {
+            $key->medicineName = $key->belongsToMedicine()->first();
+        }
+        return $listMedicines;
     }
 
     public function getMedicineByName($medicine){

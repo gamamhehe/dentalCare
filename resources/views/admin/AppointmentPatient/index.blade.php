@@ -8,7 +8,6 @@
                     <div class="row">
                         <div class="col-sm-5" style="text-align: left">Tìm bệnh nhân  </div>
                         <div class="col-sm-7" style="text-align: right">
-                            <button class="btn btn-success" id="User" >Tạo tài khoản</button>
                             <button class="btn btn-success create-patient" id="Patient" >Tạo bệnh nhân</button>
                              <button class="btn btn-success create-modal" id="Appoint" >Tạo lịch hẹn</button>
                         </div>
@@ -57,24 +56,28 @@
                                 <form method ="post" class="form-horizontal" action="create-Appointment" enctype="multipart/form-data" id="createAppoint">
                                         {{ csrf_field() }}
                                     <div class="form-group row add">
-                                        <label class="control-label col-xs-2" for="title">Số điện thoại:</label>
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                   placeholder="Your name Here" required>
+                                        <label class="control-label col-xs-3" for="title">Số điện thoại:</label>
+                                        <div class="col-xs-8">
+                                            <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
+                                                   placeholder="Your name Here" required="required">
                                             <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <button class="btn btn-success" type="button" onclick="checkValid()">Check</button>
                                         </div>
                                     </div>
                                         <div class="form-group row add">
-                                        <label class="control-label col-xs-2" for="title">List patient theo ở tr:</label>
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                   placeholder="Your name Here" required>
-                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        <label class="control-label col-xs-3" for="title">Danh sách bệnh nhân</label>
+                                        <div class="col-xs-8">
+                                            <select name="treatment_id" style="height: 2em;min-width: 25em;"
+                                             id="PatientSelect">
+                             
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-2" for="title">Ngày đặt :</label>
-                                        <div class="col-xs-10">
+                                        <label class="control-label col-xs-3" for="title">Ngày đặt :</label>
+                                        <div class="col-xs-8">
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -84,21 +87,24 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                 <!--    <div class="form-group">
                                         <label class="control-label col-xs-2" for="body">Bác sĩ :</label>
                                         <div class="col-xs-10">
                                             <input type="text" class="form-control" id="district" name="address"
                                                    placeholder="Your Body Here" required>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
-                                        <label class="control-label col-xs-2" for="body">Estimate time</label>
-                                        <div class="col-xs-10">
-                                   <select class="hour " style="width: auto;"><option value="">hour</option><option value="0">00</option><option value="1">01</option><option value="2">02</option>
+                                        <label class="control-label col-xs-3" for="body">Estimate time</label>
+                                        <div class="col-xs-8">
+                                   <select class="hour" name="estimateTime" id="estimateTime" style="width: auto;">
+                                    @for ($i = 0; $i < 10; $i++)
+                                          <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                                                                
                                    </select>&nbsp                               
-                                   <select class="minute " style="width: auto;"><option value="">minute</option><option value="0">00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="46">46</option><option value="47">47</option><option value="48">48</option><option value="49">49</option><option value="50">50</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="54">54</option><option value="55">55</option><option value="56">56</option><option value="57">57</option><option value="58">58</option><option value="59">59</option>
-                                   </select>
+                                    
                                         </div>
                                     </div>
                                 </form>
@@ -213,7 +219,13 @@
       autoclose: true
     });
   });
-
+    var x = 0;
+    // function changePhone(){
+    //     x = x +1;
+    //     if( x>1){
+    //         alert(x);
+    //     }
+    // }
     $(document).ready(function(){
         $('#sandbox-container input').datepicker({
     startDate: "07/02/2018"
@@ -240,13 +252,22 @@
         $('.modal-title').text('Khởi tạo thông tin người bệnh');
     });
 
-       $("#add").click(function() {
+    $("#add").click(function() {
+        
+        var phone = document.getElementById("phoneXXX").value;
+        var estimateTimeReal = document.getElementById("estimateTime").value;
+        var patientID = document.getElementById("PatientSelect").value;
+        var datepicker = document.getElementById("datepicker").value;
         $.ajax({
           type: 'POST',
           url: '/admin/create-Appointment',
-          data: {
-            '_token': $('input[name=_token]').val(),
-            'id': $('.id').text()
+          data:{
+             "_token": "{{ csrf_token() }}",
+            'phone': phone,
+            'estimateTimeReal':estimateTimeReal,
+            'patientID':patientID,
+            'datepicker':datepicker,
+           
           },
           success: function(data){
             if ((data.errors)) {
@@ -257,22 +278,26 @@
           },
             });
     });
+
         $("#addPatient").click(function() {
-        var x = document.getElementById("bdayxx").value;
-        var district = document.getElementById("districtsPatient").value;
-        if($.trim(x)){
-            alert("NULL");
-        }
+        var nameCreate =document.getElementById("namePatient").value; 
+        var addressCreate =document.getElementById("addressPatient").value; 
+        var phoneCreate =document.getElementById("phonePatient").value; 
+        var birthdateCreate = document.getElementById("bdayxx").value;
+        var genderCreate = document.getElementById("genderPatient").value;
+        var districtCreate = document.getElementById("districtsPatient").value;
         $.ajax({
           type: 'POST',
           url: '/admin/create-Patient',
-          data: {
-            '_token': $('input[name=_token]').val(),
-            'name':  $('#namePatient').val(),
-            'address':  $('#addressPatient').val(),
-            'phone':  $('#phonePatient').val(),
-                'date_of_birth' : x,
-                'district_id' : district
+           data:{
+             "_token": "{{ csrf_token() }}",
+            'name' : nameCreate,
+            'address' : addressCreate,
+            'phone': phoneCreate,
+            'birthdateCreate':birthdateCreate,
+            'genderCreate':genderCreate,
+            'districtCreate':districtCreate,
+           
           },
           success: function(data){
             if ((data.errors)) {
@@ -301,7 +326,6 @@
     function search(){
         
         var user = document.getElementById('User');
-       
         var patient = document.getElementById('Patient');
         var appoint = document.getElementById('Appoint');
         var searchValue = document.getElementById('search').value;
@@ -316,14 +340,12 @@
             dataType: 'json',
             success: function(data){
                 $('tbody').html(data.table_data);
-                $('#User').prop('disabled', false);
                 $('#Patient').prop('disabled', false)
                 $('#Appoint').prop('disabled', false)
                 if(data.total_data == -1){
                     swal("Hãy tạo tài khoản", "", "error");
                     $('#xxx').text(" ");
-                    $('#User').prop('disabled', false);
-                    $('#Patient').prop('disabled', true)
+                    $('#Patient').prop('disabled', false)
                     $('#Appoint').prop('disabled', true)
                     
                     
@@ -338,6 +360,39 @@
             }
         });
     }
+     
+ 
+
+    function checkValid(){
+       
+        var xxx = document.getElementById('phoneXXX').value;
+        $('#phoneXXX').prop('onchange', true);
+         $.ajax({
+            url: '/admin/getListPatient/'+ xxx, //this is your uri
+            type: 'GET', //this is your method
+
+            dataType: 'json',
+            success: function(data){
+                 $('#PatientSelect')
+                    .find('option')
+                    .remove()
+                    .end()
+                    
+                ;
+               if(data.length==0){
+                  swal("Số điện thoại không tồn tại", "", "error");
+               }else{
+                swal("Số điện thoại hợp lệ.Hãy chọn bệnh nhân", "", "success");
+                for (var i = 0; i < data.length; i++) {
+                    $('#PatientSelect').append("<option value="+data[i].id+">"+data[i].name+"</option>");
+                }
+               }
+            },error: function (data) {
+                swal("Vui lòng điền số điện thoại", "", "error");
+            }
+        });
+    }
+
     function receive(id){
         $.ajax({
             url: '/admin/list-Appointment/'+ id, //this is your uri
