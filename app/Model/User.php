@@ -17,7 +17,7 @@ class User extends Authenticatable
         return $this->where('phone', $phone)->first();
     }
 
-    public function AauthAcessToken()
+    public function hasToken()
     {
         return $this->hasMany('\App\Model\OauthAccessToken', 'user_id', 'phone');
     }

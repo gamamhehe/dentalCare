@@ -136,8 +136,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/treatmentDetail/{id}','Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment
     Route::post('/create-Appointment','Admin\AppointmentController@add');
-    // Route::get('/create-Appointment','Admin\AppointmentController@add');
 
+    //payment
+    Route::get('/adminPayment', 'Admin\PaymentController@getList');
+    Route::get('/getPaymentDetail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
+    Route::get('/searchPayment/{searchValue}', 'Admin\PaymentController@search');
 
 });
 

@@ -25,7 +25,7 @@ class PaymentController extends Controller
     public function getList()
     {
         $paymentList = $this->getListPayment();
-        return view('admin.news.list', ['paymentList' => $paymentList]);
+        return view('admin.payment.list', ['paymentList' => $paymentList]);
     }
 
     public function searchCurrent(Request $request)
@@ -49,5 +49,79 @@ class PaymentController extends Controller
         $this->createPaymentDetail($paymentDetail);
         $this->updatePaymentPrepaid($request->received_money, $request->payment_id);
         return true;
+    }
+
+    public function search($searchValue)
+    {
+        $output = '';
+        $data = $this->searchPayment($searchValue);
+
+        $total_row = $data->count();
+
+
+        if ($total_row > 0) {
+            foreach ($data as $row) {
+                if ($row->is_done) {
+                    $output .= '
+         <tr class="even gradeC" align="left">
+            <td style="text-align: center">{{$row->phone}}</td>
+            <td style="text-align: center">{{$row->total_price}}</td>
+            <td style="text-align: center">{!! $row->paid !!}</td>
+            <td style="text-align: center">Đã Hoàn Thành</td>
+            <td align="center" style="width: 20%">
+            <form action="/admin/getPaymentDetail">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <input type="hidden" name="idPayment" value="'. $row->id .'">
+                <button type="submit" class="btn btn-default btn-success">Xem Chi Tiết Chi Trả</button>
+            </form>
+
+            </td>
+         </tr>
+        ';
+                }else{
+                    $output .= '
+         <tr class="even gradeC" align="left">
+            <td style="text-align: center">'.$row->phone.'</td>
+            <td style="text-align: center">'.$row->total_price.'</td>
+            <td style="text-align: center">'. $row->paid .'</td>
+            <td style="text-align: center">Chưa Hoàn Thành</td>
+            <td align="center" style="width: 20%">
+            <form action="/admin/getPaymentDetail">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <input type="hidden" name="idPayment" value="'. $row->id .'">
+                <button type="submit" class="btn btn-default btn-success">Xem Chi Tiết Chi Trả</button>
+            </form>
+            </td>
+         </tr>
+        ';
+                }
+            }
+        }
+        if ($total_row == 0) {
+            $output = '
+       <tr>
+        <td align="center" colspan="5">Không Có Chi Trả Nào</td>
+       </tr>
+       ';
+        }
+
+
+        $data = array(
+            'table_data' => $output,
+            'total_data' => $total_row
+        );
+        echo json_encode($data);
+    }
+
+    public function getDetail(Request $request){
+        $listDetail = $this->getDetailListPaymentById($request->idPayment);
+        $payment = $this->getPaymentById($request->idPayment);
+        $listTreatmentHistory = $payment->hasManyTreatmentHistory()->get();
+        $listTreatment = [];
+        foreach ($listTreatmentHistory as $treatmentHistory){
+            $listTreatment[] = $treatmentHistory->belongsToTreatment()->first()->name;
+        }
+        $payment->listTreatment = $listTreatment;
+        return view('admin.payment.detail', ['listDetail' => $listDetail, 'payment' => $payment]);
     }
 }

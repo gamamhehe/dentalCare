@@ -144,7 +144,7 @@ class PaypalController extends Controller
 
             /** it's all right **/
             /** Here Write your database logic like that insert record or value in database if you want **/
-            $this->updatePaymentPrepaid($request->session()->get('amount', 0) * 20000, $request->session()->get('payment_id'));
+            $this->updatePaymentPaid($request->session()->get('amount', 0) * 20000, $request->session()->get('payment_id'));
             $paymentDetail = new PaymentDetail();
             $paymentDetail->payment_id = $request->session()->get('payment_id');
             $paymentDetail->received_money = $request->session()->get('amount', 0) * 20000;

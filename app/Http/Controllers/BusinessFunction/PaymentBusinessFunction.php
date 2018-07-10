@@ -96,12 +96,27 @@ trait PaymentBusinessFunction
         }
     }
 
-    public function updatePaymentPrepaid($price, $idPayment)
+    public function updatePaymentModel($payment, $paymentDetail)
+    {
+        DB::beginTransaction();
+        try {
+            $payment->save();
+            $paymentDetail->save();
+            return true;
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollback();
+            throw  new Exception($exception->getMessage());
+        }
+
+    }
+
+    public function updatePaymentPaid($price, $idPayment)
     {
         DB::beginTransaction();
         try {
             $payment = Payment::find($idPayment);
-            $payment->prepaid = $payment->prepaid + $price;
+            $payment->paid = $payment->paid + $price;
             if ($payment->total_price == $payment->prepaid) {
                 $payment->is_done = true;
             }
@@ -110,33 +125,7 @@ trait PaymentBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return false;
-        }
-    }
-    public function updatePaymentNotePayable($amount, $idPayment)
-    {
-        DB::beginTransaction();
-        try {
-            $payment = Payment::find($idPayment);
-            $payment->note_payable = $payment->note_payable - $amount;
-            if ($payment->total_price == $payment->note_payable) {
-                $payment->is_done = true;
-
-            }
-            $Staff = $payment->beLongsToUser()->first()->belongToStaff()->first();
-            $paymentDetail = new PaymentDetail();
-            $paymentDetail->payment_id =$idPayment;
-            $paymentDetail->received_money = $amount;
-            $paymentDetail->date_create = Carbon::now();
-            $paymentDetail->staff_id = $Staff->id;
-
-            $payment->save();
-            $paymentDetail->save();
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            throw new Exception($e);
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -152,5 +141,17 @@ trait PaymentBusinessFunction
             dd($e);
             return false;
         }
+    }
+
+    public function searchPayment($phone){
+        return Payment::where('phone', $phone)->get();
+    }
+
+    public function getDetailListPaymentById($idPayment){
+        $result = PaymentDetail::where('payment_id', $idPayment)->get();
+        foreach ($result as $detail){
+            $detail->staff = $detail->beLongsToStaff()->first()->name;
+        }
+        return $result;
     }
 }

@@ -137,6 +137,24 @@ class MobileController extends Controller
         return $data;
     }
 
+    public function sendReminder(Request $request)
+    {
+        $appID = $request->input('id');
+        $appointment = $this->getAppointmentById($appID);
+        if ($appointment == null) {
+            return response()->json(['error' => "Khong tim thay " . $appID], 200);
+        }
+        $this->dispatch(new SendReminderJob($appointment));
+        return response()->json(['success' => "Gui thanh cong " . $appID], 200);
+
+    }
+
+    public function testSMS($phone, $content)
+    {
+        $result = Utilities::sendSMS($phone, $content);
+        return response()->json($result, 200);
+    }
+
     public function getApptTemplate($appointment, $numDentist)
     {
         $standardDate = new DateTime($appointment->start_time);

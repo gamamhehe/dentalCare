@@ -12,16 +12,16 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class SendReminderJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $phone;
+    protected $appointment;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($phone)
+    public function __construct($appointment)
     {
-        $this->phone = $phone;
+        $this->appointment = $appointment;
     }
 
     /**
@@ -31,6 +31,6 @@ class SendReminderJob implements ShouldQueue
      */
     public function handle()
     {
-        Utilities::sendRemindingAppointment($this->phone);
+        Utilities::sendRemindingAppointment($this->appointment);
     }
 }
