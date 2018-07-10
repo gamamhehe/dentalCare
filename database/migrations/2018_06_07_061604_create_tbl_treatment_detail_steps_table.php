@@ -16,7 +16,6 @@ class CreateTblTreatmentDetailStepsTable extends Migration
         Schema::create('tbl_treatment_detail_steps', function (Blueprint $table) {
             $table->integer('treatment_detail_id');
             $table->integer('step_id');
-            $table->string('description');
             $table->primary(array('treatment_detail_id', 'step_id'), 'detail_of_step');
             $table->timestamps();
         });

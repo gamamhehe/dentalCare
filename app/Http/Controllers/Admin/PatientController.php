@@ -194,7 +194,7 @@ class PatientController extends Controller
          <td style="width: 20%">' . $row->date_of_birth . '</td>
          <td align="center" style="width: 20%">
          <button type="button" class="btn btn-default btn-success"
-                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button>
+                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button></td>
         </tr>
         ';
                 }

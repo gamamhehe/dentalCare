@@ -142,4 +142,16 @@ trait PaymentBusinessFunction
             return false;
         }
     }
+
+    public function searchPayment($phone){
+        return Payment::where('phone', $phone)->get();
+    }
+
+    public function getDetailListPaymentById($idPayment){
+        $result = PaymentDetail::where('payment_id', $idPayment)->get();
+        foreach ($result as $detail){
+            $detail->staff = $detail->beLongsToStaff()->first()->name;
+        }
+        return $result;
+    }
 }
