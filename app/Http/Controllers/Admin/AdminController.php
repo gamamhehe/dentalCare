@@ -840,7 +840,6 @@ class AdminController extends Controller
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 1,
                 'step_id' => 1,
-                'description' => 'cho phuc'
             ]);
 
             TreatmentDetail::create([
@@ -852,7 +851,6 @@ class AdminController extends Controller
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 2,
                 'step_id' => 2,
-                'description' => 'cho phuc'
             ]);
 
             TreatmentHistory::create([
@@ -875,7 +873,6 @@ class AdminController extends Controller
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 3,
                 'step_id' => 1,
-                'description' => 'cho phuc'
             ]);
 
             TreatmentDetail::create([
@@ -887,7 +884,6 @@ class AdminController extends Controller
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 4,
                 'step_id' => 2,
-                'description' => 'cho phuc'
             ]);
             Staff::create([
                 'name' => 'Paypal',
