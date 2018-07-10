@@ -164,6 +164,20 @@ trait UserBusinessFunction
         }
     }
 
+    public function isRoleStaff($phone){
+        $staff = User::where('phone',$phone)->first();
+        if($staff == null){
+            return false;
+        }
+        $hasRoles = $staff->hasUserHasRole()->get();
+        foreach($hasRoles as $role){
+            if($role->role_id == 4){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public function editAvatar($image, $profileId, $forWho = "user")
     {

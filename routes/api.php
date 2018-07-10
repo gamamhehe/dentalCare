@@ -30,7 +30,7 @@ Route::get("firebase/notify", "Mobile\FirebaseController@sendNotification");
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::get("testpassport", "Mobile\UserController@testPassport");
 Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPayment");
-Route::get("treatmentMobicategory/all", "Mobile\TreatmentCategoryController@getAll");
+Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
 
 Route::post("test", "Mobile\MobileController@testPOST");
 ///ADMIN
@@ -44,11 +44,13 @@ Route::get("test2", "Mobile\MobileController@test2");
 Route::get("test3", "Mobile\MobileController@test3");
 Route::get("test4", "Mobile\MobileController@test4");
 Route::get("test5", "Mobile\MobileController@test5");
+Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
 //input bacsiranh?date=value
 Route::get("bacsiranh", "Mobile\TestController@getDentist");
+Route::get("reminder", "Mobile\MobileController@sendReminder");
 
 
 /*Begin staff section without token*/
@@ -57,9 +59,9 @@ Route::post("staff/register", "Mobile\StaffController@createStaffAcccount");
 
 /*End staff section without token*/
 Route::middleware('auth:api')->group(function () {
-/*************************************-----------------------------*****************************************************/
-/*************************************-----Begin section for user----*****************************************************/
-/*************************************-----------------------------*****************************************************/
+    /*************************************-----------------------------*****************************************************/
+    /*************************************-----Begin section for user----*****************************************************/
+    /*************************************-----------------------------*****************************************************/
     Route::post("user/changeAvatar", "Mobile\UserController@changeAvatar");
     Route::post("user/changePassword", "Mobile\UserController@changePassword");
     Route::get("user/logout", "Mobile\UserController@logout");
@@ -83,23 +85,25 @@ Route::middleware('auth:api')->group(function () {
     Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
     //payment
     Route::get('payment/getByPhone/{phone}', 'Mobile\PaymentController@getByPhone');
+    //staff
 
+    Route::post("staff/createPatient", "Mobile\StaffController@createPatient");
+    Route::get("staff/getAppointmentByMonth", "Mobile\StaffController@getStaffAppointmentByMonth");
+    Route::post("staff/bookAppointment", "Mobile\StaffController@bookAppointment");
     //test in token
     Route::get("getUser", "Mobile\UserController@getUser");
-/*************************************-----------------------------*****************************************************/
-/*************************************-----End section for staff with token----*****************************************************/
-/*************************************-----------------------------*****************************************************/
-/*************************************-----------------------------*****************************************************/
-/*************************************-----Begin section for staff with token----*****************************************************/
-/*************************************-----------------------------*****************************************************/
+    /*************************************-----------------------------*****************************************************/
+    /*************************************-----End section for staff with token----*****************************************************/
+    /*************************************-----------------------------*****************************************************/
+    /*************************************-----------------------------*****************************************************/
+    /*************************************-----Begin section for staff with token----*****************************************************/
+    /*************************************-----------------------------*****************************************************/
+
+    Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
 
 
-
-
-
-
-/*************************************-----------------------------*****************************************************/
-/*************************************-----End section for staff----*****************************************************/
-/*************************************-----------------------------*****************************************************/
+    /*************************************-----------------------------*****************************************************/
+    /*************************************-----End section for staff----*****************************************************/
+    /*************************************-----------------------------*****************************************************/
 
 });

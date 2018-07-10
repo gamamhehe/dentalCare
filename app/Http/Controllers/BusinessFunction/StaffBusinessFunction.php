@@ -65,6 +65,7 @@ trait StaffBusinessFunction{
         return $staff;
 
     }
+
     public function getStaffById($id){
         $staff = Staff::where('id', $id)->first();
     return $staff;

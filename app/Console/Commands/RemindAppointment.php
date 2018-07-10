@@ -55,7 +55,7 @@ class RemindAppointment extends Command
                     $appointment->phone .
                     ' with appointment id: ' .
                     $appointment->id);
-                $this->dispatch(new SendReminderJob($appointment->phone));
+                $this->dispatch(new SendReminderJob($appointment));
             }
         }
 //        Utilities::logDebug("Remind: " . $numOfReminder . " appointments");

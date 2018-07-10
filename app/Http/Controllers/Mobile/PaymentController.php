@@ -127,7 +127,7 @@ class PaymentController extends BaseController
                     "No exception in payment == null");
                 return response()->json($error, 400);
             }
-            $user = $payment->bebeLongsToUser()->first();
+            $user = $payment->beLongsToUser()->first();
             $staff = $user == null ? null : $user->belongToStaff()->first();
             $payment->paid = $payment->total_price;
             $payment->is_done = 1;

@@ -10,10 +10,13 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Model\Patient;
 use Illuminate\Http\Request;
 
-class PatientController
+class PatientController extends BaseController
 {
+    use UserBusinessFunction;
     use PatientBusinessFunction;
     public function updatePatientInfo(Request $request)
     {
@@ -58,4 +61,7 @@ class PatientController
             return response()->json($error, 400);
         }
     }
+
+
+
 }
