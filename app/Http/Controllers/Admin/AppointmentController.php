@@ -39,6 +39,8 @@ class AppointmentController extends Controller
     	$newApp->patient_id=$patientId;
         $newApp->save();
         DB::commit();
+        $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+        $this->dispatch(new SendSmsJob($phone, $smsMessage));
             return response()->json($newApp);
 
         } catch (\Exception $e) {
