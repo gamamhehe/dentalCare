@@ -10,6 +10,7 @@ namespace App\Helpers;
 
 
 use App\Model\User;
+use DateTime;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -54,13 +55,16 @@ class Utilities
      * @param $phone
      * @return mixed|string
      */
-    public static function sendRemindingAppointment($phone)
+    public static function sendRemindingAppointment($appointment)
     {
         try {
+            $phone = $appointment->phone;
+            $startTime = (new DateTime($appointment->start_time))->format('H:i:s');
+
             $type = AppConst::RESPONSE_REMINDER;
             $body = AppConst::MSG_REMINDER_APPOINTMENT;
-            $title = "Nhắc nhở";
-            $message = "Bạn có lịch hẹn";
+            $title = "Nhắc nhở cuộc hẹn";
+            $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc ".$startTime;
             $user = User::where('phone', $phone)->first();
             if ($user == null) {
                 self::logDebug('Firebase Appointment: Cannot find user with phone: ' . $phone);
