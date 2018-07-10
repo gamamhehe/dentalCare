@@ -50,6 +50,7 @@ Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
 Route::get("topappt", "Mobile\MobileController@topappt");
 //input bacsiranh?date=value
 Route::get("bacsiranh", "Mobile\TestController@getDentist");
+Route::get("reminder", "Mobile\MobileController@sendReminder");
 
 
 /*Begin staff section without token*/
