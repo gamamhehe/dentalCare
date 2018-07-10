@@ -2487,7 +2487,6 @@ class AdminController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
         }
     }
 

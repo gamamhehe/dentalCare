@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Jobs\SendSmsJob;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Appointment;
 use Carbon\Carbon;
+use DateTime;
 use DB;
 use Response;
+use App\Helpers\AppConst;
 class AppointmentController extends Controller
 {
     //
@@ -24,13 +27,13 @@ class AppointmentController extends Controller
         $patientId = $request['patientID'];
         $dateBooking= $request['datepicker'];
         $startTime = strtotime($dateBooking);
-        $xxx = date('Y-m-d H:i:s', $startTime);
+//        $time = date('Y-m-d H:i:s', $startTime);
         $dentist = $request->session()->get('currentAdmin', null);
         $dentist_id = $dentist->belongToStaff()->first()->id;
     	 DB::beginTransaction();
         try {
            	$newApp = new Appointment;
-    	$newApp->start_time = $xxx;
+    	$newApp->start_time = date('Y-m-d H:i:s', $startTime);
     	$newApp->note = "NONO";
     	$newApp->estimated_time =$estimateTimeReal;
     	$newApp->numerical_order = 12;
@@ -39,6 +42,9 @@ class AppointmentController extends Controller
     	$newApp->patient_id=$patientId;
         $newApp->save();
         DB::commit();
+        $dateTime = new DateTime($newApp->start_time);
+        $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
+        $this->dispatch(new SendSmsJob($phone, $smsMessage));
             return response()->json($newApp);
 
         } catch (\Exception $e) {

@@ -18,7 +18,7 @@ class TreatmentDetailController extends Controller
   		 // $idTreatmentHistory=$request['idTreatmentHistory'];
 
       //details
-  		$idTreatmentHistory=1;
+  		$idTreatmentHistory=$request->idTreatmentHistory;
   		$description =$request['description'];
   		$dentist = $request->session()->get('currentAdmin');
   		$staffId= $dentist->belongToStaff()->first()->id;
@@ -48,14 +48,15 @@ class TreatmentDetailController extends Controller
   		}
       //done image
   		//medicine
+
       $medicine =$request['medicine'];
       $quantity =$request['quantity'];
-      $resultMedicine = $this->createMedicineForTreatmentDetail($medicine,$TreatmentDetailId,$quantity);
+
+        $resultMedicine = $this->createMedicineForTreatmentDetail($medicine,$TreatmentDetailId,$quantity);
       if($resultMedicine){
           $message = 'success';
         }else{
            $message = 'error';
-
            return redirect()->back()->withInput()->with('message', $message);
         }
       //done medicine
@@ -63,16 +64,15 @@ class TreatmentDetailController extends Controller
         $steps =$request['step'];
         if(count($steps) != 0 ){
         $resultTreatmentStep = $this->createTreatmentDetailStep($steps,$TreatmentDetailId);
-        if($resultTreatmentStep ==TRUE){
+        if($resultTreatmentStep == TRUE){
          $message = 'success';
         }else{
           $message = 'error';
            return redirect()->back()->withInput()->with('message', $message);
-        }  
+        }
       }
-        
       //end step
-  		return redirect('admin/treatmentDetail/'.$TreatmentDetailId);
+        return redirect('admin/treatmentDetail/'.$TreatmentDetailId);
  
 
   	}
@@ -81,7 +81,6 @@ class TreatmentDetailController extends Controller
       $listMedicine = $this->loadMedicineOfTreatmentDetail($id);
       $listImg = $this->getImageByTreatmentDetail($id);
       $listStep = $this->getTreatmentDetailStep($id);
-      // dd($listStep[0]->stepname->name);
       return view('admin.StepTreatment.review',['listMedicine'=>$listMedicine,'listImg'=>$listImg,'listStep'=>$listStep,'treatmentDetail'=>$treatmentDetail]);
     }
 }

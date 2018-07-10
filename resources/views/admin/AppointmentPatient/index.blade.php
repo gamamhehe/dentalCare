@@ -56,18 +56,18 @@
                                 <form method ="post" class="form-horizontal" action="create-Appointment" enctype="multipart/form-data" id="createAppoint">
                                         {{ csrf_field() }}
                                     <div class="form-group row add">
-                                        <label class="control-label col-xs-3" for="title">Số điện thoại:</label>
-                                        <div class="col-xs-8">
+                                        <label class="control-label col-xs-4" for="title">Số điện thoại:</label>
+                                        <div class="col-xs-6">
                                             <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
                                                    placeholder="Your name Here" required="required">
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
-                                        <div class="col-xs-2">
+                                        <div class="col-xs-2" style="padding-left:0px;">
                                             <button class="btn btn-success" type="button" onclick="checkValid()">Check</button>
                                         </div>
                                     </div>
                                         <div class="form-group row add">
-                                        <label class="control-label col-xs-3" for="title">Danh sách bệnh nhân</label>
+                                        <label class="control-label col-xs-4" for="title">Danh sách bệnh nhân:</label>
                                         <div class="col-xs-8">
                                             <select name="treatment_id" style="height: 2em;min-width: 25em;"
                                              id="PatientSelect">
@@ -76,27 +76,17 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3" for="title">Ngày đặt :</label>
-                                        <div class="col-xs-8">
-                                            <div class="input-group date">
+                                        <label class="control-label col-xs-4" for="title">Ngày đặt:</label>
+                                            <div class="input-group date col-xs-5 " style="    padding-left: 15px">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                                 <input type="text" placeholder="yyyy-mm-dd" class="form-control pull-right"
                                                        id="datepicker"/>
                                             </div>
-                                        </div>
                                     </div>
-                                 <!--    <div class="form-group">
-                                        <label class="control-label col-xs-2" for="body">Bác sĩ :</label>
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" id="district" name="address"
-                                                   placeholder="Your Body Here" required>
-                                            <p class="error text-center alert alert-danger hidden"></p>
-                                        </div>
-                                    </div> -->
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3" for="body">Estimate time</label>
+                                        <label class="control-label col-xs-4" for="body">Estimate time:</label>
                                         <div class="col-xs-8">
                                    <select class="hour" name="estimateTime" id="estimateTime" style="width: auto;">
                                     @for ($i = 0; $i < 10; $i++)
@@ -273,7 +263,7 @@
             if ((data.errors)) {
              alert(data.errors.body);
             } else {
-               alert("DONE");
+                  swal("Đặt lịch hẹn thành công", "", "success");
             }
           },
             });
@@ -294,16 +284,16 @@
             'name' : nameCreate,
             'address' : addressCreate,
             'phone': phoneCreate,
-            'birthdateCreate':birthdateCreate,
-            'genderCreate':genderCreate,
-            'districtCreate':districtCreate,
+            'date_of_birth':birthdateCreate,
+            'gender':genderCreate,
+            'district_id':districtCreate,
            
           },
           success: function(data){
             if ((data.errors)) {
              alert(data.errors.body);
             } else {
-               alert("DONE");
+             swal("Khởi tạo bệnh nhân thành công", "", "success");
             }
           },
             });

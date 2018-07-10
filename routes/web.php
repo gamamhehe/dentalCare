@@ -113,7 +113,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     //Patient
     Route::get('/getListPatient/{id}', 'Admin\PatientController@getListPatientById');//ajax
     // Route::get('/create-Patient', 'Admin\PatientController@create');
-    Route::post('/create-Patient','Admin\PatientController@add');
+    Route::post('/create-Patient','Admin\PatientController@create');
     //Dentist  
     Route::get('/list-Appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
     Route::get('/getAppointment', 'Admin\StaffController@getListAppointmentForStaff');
@@ -162,7 +162,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','Admin\StaffController@viewAppointment')->name('testFunction');
+Route::get('/testFunction','Admin\TreatmentController@testFunction')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
 
 //Route::get('paywithpaypal','Admin\PaypalController@payWithPaypal');

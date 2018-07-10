@@ -86,7 +86,6 @@ class HomeController extends Controller
 
 
     public function testFunction(Request $request){
-        dd($request->Absent);
     }
 
     public function registerPost(Request $request){
