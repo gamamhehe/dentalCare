@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Payment;
 use App\Model\PaymentDetail;
 use Carbon\Carbon;
@@ -13,7 +14,16 @@ class PaymentController extends Controller
 {
     //
     use PaymentBusinessFunction;
+    use UserBusinessFunction;
+    public function create(Request $request){
+        $checkExist = $this->checkExistUser($request->phone);
+        if ($checkExist) {
 
+        }else{
+            return redirect()->back()->with('error', '')->withInput($request->only('phone'));
+        }
+
+    }
     public function getOfUser(Request $request)
     {
         $currentUser = $request->session()->get('currentUser', null);
@@ -123,5 +133,9 @@ class PaymentController extends Controller
         }
         $payment->listTreatment = $listTreatment;
         return view('admin.payment.detail', ['listDetail' => $listDetail, 'payment' => $payment]);
+    }
+
+    public function viewCreate(){
+        return view('admin.payment.create');
     }
 }

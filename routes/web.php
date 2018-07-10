@@ -139,8 +139,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
     //payment
     Route::get('/adminPayment', 'Admin\PaymentController@getList');
+    Route::get('/createPayment', 'Admin\PaymentController@viewCreate');
+    Route::post('/createPayment', 'Admin\PaymentController@create')->name('create.payment');
     Route::get('/getPaymentDetail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
     Route::get('/searchPayment/{searchValue}', 'Admin\PaymentController@search');
+    
 
 });
 
