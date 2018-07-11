@@ -85,13 +85,6 @@ class AppointmentController extends BaseController
             $dentistId = $request->input('dentist_id');
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
-            $currentDay = new DateTime();
-//            $appdateObj = new DateTime($bookingDate);
-            if ($this->isEndOfTheDay($currentDay)) {
-                $error = $this->getErrorObj("Dã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
-                    "No Excepton");
-                return response()->json($error, 400);
-            }
             $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
