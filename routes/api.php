@@ -102,7 +102,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
     Route::get('patient/getByPhone', "Mobile\PatientController@getByPhone");
     ////////Anamesis
-    Route::get('anamnesis/all','Mobile\AnamnesisController@getAll');
+    Route::get('anamnesisCatalog/all','Mobile\AnamnesisController@getAll');
 
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff----*****************************************************/
