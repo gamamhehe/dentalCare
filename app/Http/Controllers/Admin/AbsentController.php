@@ -11,7 +11,9 @@ class AbsentController extends Controller
 {
     //
     use AbsentBusinessFunction;
-
+    public function loadcreate(){
+        return view ("admin.Absent.create");
+    }
     public function create(Request $request)
     {
         $check = $this->checkExistAbsentStaff($request->staff_id, $request->start_date, $request->end_date);

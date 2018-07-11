@@ -16,14 +16,13 @@ class CreateTblAppointmentsTable extends Migration
         Schema::create('tbl_appointments', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('start_time');
-            $table->string('note');
+            $table->string('name')->nullable();
+            $table->string('note')->nullable();
             $table->time('estimated_time');
             $table->integer('numerical_order');
             $table->integer('staff_id');
-            $table->integer('patient_id')->nullable();
             $table->string('phone');
-            $table->boolean('is_delete')->default(0);
-            $table->boolean('is_coming')->default(0);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

@@ -10,7 +10,10 @@ use App\Model\Payment;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Session;
+use DB;
 use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
@@ -27,14 +30,17 @@ class PatientController extends Controller
             'password' => 'required|min:6'
         ]);
         $user = $this->checkLogin($request->phone, $request->password);
+
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID == 4) {
+
                 session(['currentUser' => $user]);
+
                 $listPatient = $user->hasPatient()->get();
                 session(['listPatient' => $listPatient]);
-                session(['currentPatient' => $listPatient[0]]);
 
+                session(['currentPatient' => $listPatient[0]]);
                 return redirect()->intended(route('homepage'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
@@ -42,38 +48,65 @@ class PatientController extends Controller
         return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
     }
 
-    public function createBoth(Request $request)
+    public function changeCurrentPatient(Request $requet, $id)
     {
-        $checkExist = $this->checkExistUser($request->phone);
-        if ($checkExist) {
-            return false;
-        }
-        $patient = new Patient();
-        $userHasRole = new UserHasRole();
-        $user = new User();
-        $userHasRole->phone = $request->phone;
-        $userHasRole->role_id = 4;
-        $userHasRole->start_time = Carbon::now();
-        $patient->name = $request->name;
-        $patient->address = $request->address;
-        $patient->phone = $request->phone;
-        $patient->date_of_birth = $request->date_of_birth;
-        $patient->gender = $request->gender;
-        $patient->avatar = $request->avatar;
-        $patient->district_id = $request->district_id;
-        $patient->is_parent = $request->is_parent;
-        $user->phone = $user->phone;
-        $user->password = Hash::make($user->phone);
-        $this->createUserWithRole($user, $patient, $userHasRole);
+        $requet->session()->remove('currentPatient');
+        $patient = $this->getPatientById($id);
+        session(['currentPatient' => $patient]);
+
+        return redirect()->intended(route('homepage'));
     }
 
     public function create(Request $request)
     {
-        $patient = new Patient();
-        $userHasRole = new UserHasRole();
-        $userHasRole->phone = $request->phone;
-        $userHasRole->role_id = 4;
-        $userHasRole->start_time = Carbon::now();
+        $checkExist = $this->checkExistUser($request->phone);
+        if ($checkExist) {
+            $patient = new Patient();
+            $userHasRole = new UserHasRole();
+            $userHasRole->phone = $request->phone;
+            $userHasRole->role_id = 4;
+            $userHasRole->start_time = Carbon::now();
+            $patient->name = $request->name;
+            $patient->address = $request->address;
+            $patient->phone = $request->phone;
+            $patient->date_of_birth = $request->date_of_birth;
+            $patient->gender = $request->gender;
+            $patient->avatar = $request->avatar;
+            $patient->district_id = $request->district_id;
+            $result = $this->createPatient($patient);
+        } else {
+            $patient = new Patient();
+            $userHasRole = new UserHasRole();
+            $user = new User();
+            $userHasRole->phone = $request->phone;
+            $userHasRole->role_id = 4;
+            $userHasRole->start_time = Carbon::now();
+            $patient->name = $request->name;
+            $patient->address = $request->address;
+            $patient->phone = $request->phone;
+            $patient->date_of_birth = $request->date_of_birth;
+            $patient->gender = $request->gender;
+            $patient->avatar = $request->avatar;
+            $patient->district_id = $request->district_id;
+            $user->phone = $request->phone;
+            $user->password = Hash::make($user->phone);
+            $result = $this->createUserWithRole($user, $patient, $userHasRole);
+        }
+        if ($result) {
+            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Sự kiện đã được tạo");
+        } else {
+            return redirect('admin/live_seach')->withSuccess("Sự kiện chưa được tạo");
+        }
+    }
+
+    public function get($phone)
+    {
+        return $this->getPatientByPhone($phone);
+    }
+
+    public function update(Request $request)
+    {
+        $patient = $this->getPatientById($request->patient_id);
         $patient->name = $request->name;
         $patient->address = $request->address;
         $patient->phone = $request->phone;
@@ -82,19 +115,7 @@ class PatientController extends Controller
         $patient->avatar = $request->avatar;
         $patient->district_id = $request->district_id;
         $patient->is_parent = $request->is_parent;
-        $this->createPatient($patient, $userHasRole);
-
-    }
-
-    public function get($phone)
-    {
-        return $this->getPatient($phone);
-    }
-
-    public function update(Request $request)
-    {
-        $idPatient = $request->patient_id;
-        $this->updatePatient($request, $idPatient);
+        $this->updatePatient($patient);
 
     }
 
@@ -103,15 +124,116 @@ class PatientController extends Controller
         return $this->getListPatient();
     }
 
-    public function receive(Request $request)
+
+        public function receive($id)
     {
-        $appointment = $this->checkAppointmentForPatient('01279011096');
-        if ($appointment) {
-            $appointment->patient_id = 5;
-            $appointment->is_coming = true;
-            $this->saveAppointment($appointment);
-        } else {
-            return false;
+        $phone = $this->getPhoneOfPatient($id);
+        $isExamination = $this->checkPatientIsExamination($id);
+        if($isExamination){
+            $status = -1;
+        }else {
+            $appointment = $this->checkAppointmentForPatient($phone, $id);
+            if ($appointment === null) {
+                $status = 2;
+            } else
+                if ($appointment) {
+                    $appointment->status = 1;
+                    $this->saveAppointment($appointment, $id);
+                    $status = 1;
+                } else {
+                    $status = 0;
+//
+                }
         }
+        $data = array(
+            'statusOfReceive' => $status
+        );
+
+        echo json_encode($data);
+    }
+
+    public function listAppointment($id)
+    {
+
+        return view('admin.AppointmentPatient.list');
+    }
+
+    public function index()
+    {
+
+        return view('admin.AppointmentPatient.index');
+    }
+
+    public function action1($phone)
+    {
+        $output = '';
+        $user = $this->getUserByPhone($phone);
+        if (!$user) {
+            $total_row = -1;
+            Session::flash('taikhoan', 'khongco');
+            $output = '
+       <tr>
+        <td align="center" colspan="5">Không có tài khoản </td>
+       </tr>
+       ';
+        } else {
+            $data = DB::table('tbl_patients')
+                ->where('phone', '=', $phone)
+                ->orderBy('phone', 'desc')
+                ->get();
+
+
+            $total_row = $data->count();
+
+
+            if ($total_row > 0) {
+                Session::flash('taikhoan', '456');
+                foreach ($data as $row) {
+                    $output .= '
+        <tr>
+         <td style="width: 30%">' . $row->name . '</td>
+         <td style="width: 30%">' . $row->address . '</td>
+         <td style="width: 20%">' . $row->date_of_birth . '</td>
+         <td align="center" style="width: 20%">
+         <button type="button" class="btn btn-default btn-success"
+                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button></td>
+        </tr>
+        ';
+                }
+
+            }
+            if ($total_row == 0) {
+                Session::flash('taikhoan', '123');
+                $output = '
+       <tr>
+        <td align="center" colspan="5">Không có bệnh nhân </td>
+       </tr>
+       ';
+            }
+
+        }
+
+        $data = array(
+            'table_data' => $output,
+            'total_data' => $total_row
+        );
+        echo json_encode($data);
+    }
+    public function changeAvatar(Request $request){
+        $value = $request->session()->get('listPatient'); 
+        $phone = $value[0]->phone;
+        $listPatient = Patient::where('phone',$phone)->get();
+        $request->session()->remove('listPatient');
+        session(['listPatient' => $listPatient]);
+        $image = $request['avatar'];
+        $id = $request['patientID'];
+        $result = $this->editAvatar($image,$id );
+        return redirect('/myProfile');
+    }
+    public function getListPatientById($id){
+        $list = $this->getPatientByPhone($id);
+            return response()->json($list);
+         
+       
     }
 }

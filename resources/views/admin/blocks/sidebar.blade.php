@@ -24,6 +24,14 @@
                     </span>
                 </a>
             </li>
+
+            <li class="treeview">
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Lịch hẹn</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.AppointmentPatient.index')}}">Tạo Lịch Hẹn</a></li>
+                    <li><a href="{{ route('admin.listAppointment.dentist')}}">Lịch hẹn của tôi !</a></li>
+                </ul>
+            </li>
              <li class="treeview">
                 <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Tin Tức</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                 <ul class="treeview-menu">
@@ -72,6 +80,7 @@
                     <li><a href="{{ route('admin.create.treatment')}}">Khởi tạo Liệu trình</a></li>
                 </ul>
             </li>
+
  
         </ul>
     </section>

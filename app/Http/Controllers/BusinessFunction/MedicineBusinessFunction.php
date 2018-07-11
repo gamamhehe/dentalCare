@@ -9,7 +9,9 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Medicine;
+use App\Model\MedicinesQuantity;
 use Illuminate\Support\Facades\DB;
+
 trait MedicineBusinessFunction
 {
     public function createMedicine($input)
@@ -30,14 +32,15 @@ trait MedicineBusinessFunction
         }
     }
 
-    public function deleteMedicines($id){
+    public function deleteMedicines($id)
+    {
         DB::beginTransaction();
-        try{
+        try {
             $Medicine = Medicine::where('id', $id)->first();
             $Medicine->delete();
             DB::commit();
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return false;
 
@@ -70,7 +73,44 @@ trait MedicineBusinessFunction
         return Medicine::find($id);
     }
 
-    public function getListMedicine(){
+    public function getListMedicine()
+    {
         return Medicine::all();
+    }
+
+    public function createMedicineForTreatmentDetail($listMedicine, $treatment_detail_id, $listQuantity)
+    {
+        DB::beginTransaction();
+        try {
+            if ($listMedicine) {
+                for ($i = 0; $i < count($listMedicine); $i++) {
+                    MedicinesQuantity::create([
+                        'medicine_id' => $listMedicine[$i],
+                        'treatment_detail_id' => $treatment_detail_id,
+                        'quantity' => $listQuantity[$i]
+                    ]);
+                }
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+
+        }
+    }
+
+    public function loadMedicineOfTreatmentDetail($treatment_detail_id)
+    {
+        $listMedicines = MedicinesQuantity::where('treatment_detail_id', $treatment_detail_id)->get();
+        foreach ($listMedicines as $key) {
+            $key->medicineName = $key->belongsToMedicine()->first();
+        }
+        return $listMedicines;
+    }
+
+    public function getMedicineByName($medicine)
+    {
+        return Medicine::where('name', 'like', '%' . $medicine . '%')->get();
     }
 }

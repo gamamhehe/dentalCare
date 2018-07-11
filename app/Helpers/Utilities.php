@@ -10,6 +10,8 @@ namespace App\Helpers;
 
 
 use App\Model\User;
+use DateTime;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
@@ -20,6 +22,12 @@ use SMSGatewayMe\Client\Model\SendMessageRequest;
 
 class Utilities
 {
+    /**
+     * @param $phone
+     * @param $message
+     * @return mixed
+     * @throws \SMSGatewayMe\Client\ApiException
+     */
     public static function sendSMS($phone, $message)
     {
         $config = Configuration::getDefaultConfiguration();
@@ -42,48 +50,37 @@ class Utilities
         $result = json_decode($sendMessages[0]);
         return $result;
     }
-    public static function sendRemindingAppointment($phone)
+
+    /**
+     * @param $phone
+     * @return mixed|string
+     */
+    public static function sendRemindingAppointment($appointment)
     {
         try {
-            $type = "RESPONSE_REMINDER";
-            $body = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";
-            $title = "Nhắc nhở";
-            $message = "Bạn có lịch hẹn";
-            $requestObj = new \stdClass();
-            $user = User::where ('phone', $phone)->first();
+            $phone = $appointment->phone;
+            $startTime = (new DateTime($appointment->start_time))->format('H:i:s');
+
+            $type = AppConst::RESPONSE_REMINDER;
+            $body = AppConst::MSG_REMINDER_APPOINTMENT;
+            $title = "Nhắc nhở cuộc hẹn";
+            $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc ".$startTime;
+            $user = User::where('phone', $phone)->first();
             if ($user == null) {
                 self::logDebug('Firebase Appointment: Cannot find user with phone: ' . $phone);
                 return "'Firebase Appointment: Cannot find user with phone: ' . $phone";
-            } else if($user->noti_token == "NO_TOKEN") {
-                self::logDebug("Firebase Appointment: user with phone ".$phone." Has NO_TOKEN");
-                return "Firebase Appointment: user with phone ".$phone." Has NO_TOKEN";
-            }else{
+            } else if ($user->noti_token == "NO_TOKEN") {
+                self::logDebug("Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN");
+                return "Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN";
+            } else {
                 $token = $user->noti_token;
-                $data = new \stdClass();
-                $data->type = $type;
-                $data->body = $body;
-                $data->title = $title;
-                $data->message = $message;
-
-                $requestObj->data = $data;
-                $requestObj->to = $token;
-                $firebaseServerToken = env('API_FIREBASE_SERVER_TOKEN', false);
-                $client = new Client();
-                $request = $client->request('POST', 'https://fcm.googleapis.com/fcm/send',
-                    [
-                        'body' => json_encode($requestObj),
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                            'authorization' => $firebaseServerToken
-                        ]
-                    ]
-                );
-                $response = $request->getBody()->getContents();
+                $requestObj = self::getFirebaseRequestObj($type, $title, $message, $body, $token);
+                $response =self::sendFirebase($requestObj);
                 $responseObj = json_decode($response);
                 self::logDebug("Firebase Appointment:  Response is " . $response);
                 return $responseObj;
             }
-        } catch (GuzzleException $ex) {
+        } catch (Exception $ex) {
             self::logDebug("Firebase Appointment: Exception when sending firebase reminding appointment: " . $ex->getMessage());
             return $ex->getMessage();
         }
@@ -92,6 +89,53 @@ class Utilities
     public static function logDebug($message)
     {
         Log::info($message);
+    }
+
+    /**
+     * @param $type: get from AppConst
+     * @param $title
+     * @param $message
+     * @param $body
+     * @param $token: id token of mobile, get from database with field 'noti_token'
+     * @return \stdClass
+     */
+    public static function getFirebaseRequestObj($type, $title, $message, $body, $token)
+    {
+        $reminderObj = new \stdClass();
+        $data = new \stdClass();
+        $data->type = $type;
+        $data->body = $body;
+        $data->title = $title;
+        $data->message = $message;
+        $reminderObj->data = $data;
+        $reminderObj->to = $token;
+        return $reminderObj;
+    }
+
+    /**
+     * @param $requestObject
+     * @return string
+     * @throws Exception
+     */
+    public static function sendFirebase($requestObject)
+    {
+        try {
+            $firebaseServerToken = env('API_FIREBASE_SERVER_TOKEN', false);
+            $client = new Client();
+            $request = $client->request('POST', 'https://fcm.googleapis.com/fcm/send',
+                [
+                    'body' => json_encode($requestObject),
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'authorization' => $firebaseServerToken
+                    ]
+                ]
+            );
+            $response = $request->getBody()->getContents();
+            return $response;
+        } catch (GuzzleException $ex) {
+            throw new Exception($ex);
+        }
     }
 
     public static function getErrorObj($message, $exception)

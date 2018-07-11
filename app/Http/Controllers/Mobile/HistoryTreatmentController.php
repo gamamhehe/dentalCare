@@ -11,19 +11,21 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\BusinessFunction\HistoryTreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HistoryTreatmentController extends Controller
 {
-    use TreatmentBusinessFunction;
+//    use TreatmentBusinessFunction;
     use UserBusinessFunction;
+    use TreatmentHistoryBusinessFunction;
 
-    public function getByPhone($phone)
+    public function getTreatmentHistoryByPhone($phone)
     {
         try {
-            $historyTreatments = $this->getByPhone($phone);
+            $historyTreatments = $this->getTreatmentHistories($phone);
             return response()->json($historyTreatments, 200);
         } catch (\Exception $ex) {
             $error = new \stdClass();

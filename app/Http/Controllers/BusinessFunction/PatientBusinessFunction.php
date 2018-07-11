@@ -24,7 +24,7 @@ trait PatientBusinessFunction
         return null;
     }
 
-    public function getPatient($phone)
+    public function getPatientByPhone($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
@@ -38,12 +38,11 @@ trait PatientBusinessFunction
         return null;
     }
 
-    public function createPatient($patient, $userHasRole)
+    public function createPatient($patient)
     {
         DB::beginTransaction();
         try {
             $patient->save();
-            $userHasRole->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -52,19 +51,10 @@ trait PatientBusinessFunction
         }
     }
 
-    public function updatePatient($request, $idPatient)
+    public function updatePatient($patient)
     {
         DB::beginTransaction();
         try {
-            $patient = Patient::find($idPatient);
-            $patient->name = $request->name;
-            $patient->address = $request->address;
-            $patient->phone = $request->phone;
-            $patient->date_of_birth = $request->date_of_birth;
-            $patient->gender = $request->gender;
-            $patient->avatar = $request->avatar;
-            $patient->district_id = $request->district_id;
-            $patient->is_parent = $request->is_parent;
             $patient->save();
             DB::commit();
             return true;
@@ -77,5 +67,9 @@ trait PatientBusinessFunction
     public function getListPatient()
     {
         return Patient::all();
+    }
+
+    public function getPhoneOfPatient($id){
+        return Patient::find($id)->phone;
     }
 }

@@ -22,15 +22,15 @@ class Staff extends Model
         return $this->hasMany('App\Model\Event', 'staff_id', 'id');
     }
     public function hasPaymentDetail(){
-        return $this->hasMany('App\Model\PaymentDetail', 'receptionist_id', 'id');
+        return $this->hasMany('App\Model\PaymentDetail', 'staff_id', 'id');
     }
     public function hasNews(){
         return $this->hasMany('App\Model\News', 'staff_id', 'id');
     }
     public function hasTreatmentDetail(){
-        return $this->hasMany('App\Model\TreatmentDetail', 'dentist_id', 'id');
+        return $this->hasMany('App\Model\TreatmentDetail', 'staff_id', 'id');
     }
     public function hasAppointment(){
-        return $this->hasMany('App\Model\Appointment', 'dentist_id', 'id');
+        return $this->hasMany('App\Model\Appointment', 'staff_id', 'id');
     }
 }

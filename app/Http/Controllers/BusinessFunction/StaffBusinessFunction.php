@@ -13,6 +13,7 @@ use App\Model\Staff;
 use App\Model\UserHasRole;
 use App\RequestAbsent;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 trait StaffBusinessFunction{
 
@@ -59,8 +60,19 @@ trait StaffBusinessFunction{
             return false;
         }
     }
+    public function getStaffProfileByPhone($phone){
+        $staff = Staff::where('phone', $phone)->first();
+        return $staff;
 
+    }
+
+    public function getStaffById($id){
+        $staff = Staff::where('id', $id)->first();
+    return $staff;
+    }
     public function getListStaff(){
         return Staff::all();
     }
+
+
 }

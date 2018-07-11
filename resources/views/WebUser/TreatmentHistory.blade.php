@@ -38,23 +38,20 @@
                     <a class="nav-link  " href="/doctorList">Chuyên Gia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/event">Event</a>
+                    <a class="nav-link  " href="/event">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="#contact">dịch vụ</a>
+                    <a class="nav-link  " href="/banggia">Bảng giá</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/banggia">bản giá</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  " href="/gioithieu">contact us</a>
+                    <a class="nav-link  " href="/gioithieu">Liên hệ</a>
                 </li>
                 <li class="nav-item">
 
                 @if(Session::has('currentUser'))
                     <li class="nav-item dropdown ">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                            <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
+                            <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
                                  class="img-fluid img-responsive" style="max-height: 25px;">
 
                         </a>
@@ -63,38 +60,43 @@
                             <!-- User image -->
 
                             <li class="user-header">
-                                <div class="container" style=";padding:10px 0px;">
+                                <div class="container" style=";padding:10px 0px; ">
                                     <div class="row">
-                                        <div class="col-sm-6 hoverImg" style="float: left;padding-left: 20px;">
-                                            <img src="assets/images/icon/user.jpg"
-                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image" onclick="changeInfo()" width="50px;">
+                                        <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
+                                            <img src="{{Session::get('currentPatient')->avatar}}"
+                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
                                         </div>
-                                        <div class="col-sm-6"  >
-                                            <img src="assets/images/icon/user.jpg"
-                                                 class="img-circle img-responsive img-fluid" alt="User Image"  id="divAcc2" width="50px;" onclick="changeInfo2()">
-                                        </div>
+                                        @foreach(\Session::get('listPatient') as $key => $value)
+                                        <div class="col-sm-2"  >
 
+                                            <img src="{{ $value->avatar }}"
+                                                 class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
+                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                                {{--<p>--}}
-                                {{--Alexander Pierce - Web Developer--}}
-                                {{--<small>Member since Nov. 2012</small>--}}
-                                {{--</p>--}}
+
                             </li>
                             <li class="user-header" id="acc1" style="display: block">
                                 <p>
-                                    Phúc Huỳnh
-                                    <small>Member since Nov. 2012</small>
+
+                                   {{Session::get('currentPatient')->name}}
                                 </p>
                             </li>
                             <li class="user-header" id="acc2" style="display: none">
                                 <p>
-                                    Lực
-                                    <small>Member since Nov. 2012</small>
+                                    @foreach(\Session::get('listPatient') as $key)
+                                        @if($key->id != Session::get('currentPatient')->id )
+                                        <h1>{{$key->name}}</h1>
+                                        @endif
+
+                                    @endforeach
                                 </p>
                             </li>
+                                 <hr>
+
                             <li class="a-hover">
-                                <a href="#">Lịch sử khám bệnh</a>
+                                <a href="/lichsubenhan">Lịch sử khám bệnh</a>
                             </li>
                             <li class="gachngang"></li>
                             <li class="  a-hover">
@@ -102,11 +104,11 @@
                             </li>
                             <li class="gachngang"></li>
                             <li class=" a-hover">
-                                <a href="#/lichsubenhan/1"><span>Lịch hẹn</span></a>
+                                <a href="#"><span>Lịch hẹn</span></a>
                             </li>
+                              <li class="gachngang"></li>
 
                             <!-- Menu Body -->
-
                             <!-- Menu Footer-->
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
@@ -123,16 +125,17 @@
 
                 @else
                     <li class="nav-item dropdown ">
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" id="buttonLogin">
                             {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
                             {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
                             Đăng Nhập
                         </a>
-                        <ul class="dropdown-menu"
+                        <ul class="dropdown-menu" id="drop"
                             style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
                             <!-- User image -->
                             <li class="user-header">
                                 Đăng nhập
+
                             </li>
                             <!-- Menu Body -->
 
@@ -141,20 +144,41 @@
                                 <div class="col-ms-12 col-md-offset-12">
                                     <div class="panel panel-default">
                                         <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
-                                            <form method ="post" class="form-horizontal" action="/loginUser" enctype="multipart/form-data"  >
+
+                                            <form action="{!! url('/loginUser') !!}" method="Post">
                                                 {{ csrf_field() }}
-                                                <fieldset>
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="Phone" name="phone" id="phone"
-                                                               type="text">
+                                                <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                           required autofocus>
+                                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                                    @if ($errors->has('phone'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('phone') }} </strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group has-feedback">
+                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                                    @if ($errors->has('password'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('password') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                @if (\Session::has('fail'))
+                                                    <span class="help-block has-error" style="color: #dd4b39">
+                                                       <strong>{!! \Session::get('fail') !!} </strong>
+                                                </span>
+                                                @endif
+                                                <div class="row">
+                                                    <!-- /.col -->
+                                                    <div class="col-xs-12">
+                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="Password" name="password" id="password"
-                                                               type="password" value="">
-                                                    </div>
-                                                    <input class="btn btn-lg btn-success btn-block" type="submit"
-                                                           value="Login">
-                                                </fieldset>
+                                                    <!-- /.col -->
+
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -163,8 +187,6 @@
                         </ul>
                     </li>
                     @endif
-
-
                     </li>
 
 
@@ -191,7 +213,7 @@
 
     <div class="panel-group" id="accordion">
 
-        @if( $listTreatmentHistory)
+        @if($listTreatmentHistory)
             @foreach($listTreatmentHistory as $treatmentHistory)
             <div class="panel panel-default">
             <div class="panel-heading">
@@ -211,64 +233,47 @@
             </div>
             <div id="collapse{{$treatmentHistory->treatment->id}}" class="panel-collapse collapse in">
             <div class="panel-body">
-            @foreach($treatmentHistory->detailList as $a)
+                @foreach($treatmentHistory->details as $a)
 
-            <div class="container" style="border: solid 1px grey;">
-            <div class="row">
-            <div class="col-sm-2">BÁC SĨ : </div>
-            <div class="col-sm-8">{{$a->dentist_id->name}} </div>
-            </div>
-            <div class="row">
-            <div class="col-sm-2">Ngày điều trị</div>
-            <div class="col-sm-8">{{$a->dentist_id->created_at}} </div>
-            </div>
-            <div class="row">
-            <div class="col-sm-2">Các bước đã thực hiện</div>
-            <div class="col-sm-8">- {{$a->step->name}}</div>
-            </div>
-            <div class="row">
-            <div class="col-sm-2">Toa thuốc</div>
-            <div class="col-sm-8">
-            giảm đau--------------------------30 viên <br>
-            chóng sưng------------------------40 viên <br>
-            aprical analink 500gram-----------40 viên <br>
-            </div>
-            </div>
-            <div class="row" style="margin-top: 10px;">
-            <div class="col-sm-4">
-            <img src="/photos/shares/implant-2.png" alt="" class="img-responsive img-fluid">
-            </div>
-            <div class="col-sm-4">
-            <img src="/photos/shares/implant-1.png" alt="" class="img-responsive img-fluid">
-            </div>
-            <div class="col-sm-4">
-            <img src="/photos/shares/nieng-rang-00-1.jpg" alt="" class="img-responsive img-fluid">
-            </div>
-            </div>
-            </div>
-            @endforeach
-            <div class="container" style="border: solid 1px grey;margin-top: 10px;">
-            <div class="row">
-            <div class="col-sm-2">BÁC SĨ</div>
-            <div class="col-sm-8">Nhiêu Sĩ Lực</div>
-            </div>
-            <div class="row">
-            <div class="col-sm-2">Ngày điều trị</div>
-            <div class="col-sm-8">12/4/2017</div>
-            </div>
-            <div class="row">
-            <div class="col-sm-2">Các bước đã thực hiện</div>
-            <div class="col-sm-8">- Khám sơ bộ <br>- Nha chu</div>
-            </div>
-            <div class="row">
-            <div class="col-sm-2">Toa thuốc</div>
-            <div class="col-sm-8">
-            giảm đau--------------------------30 viên <br>
-            aprical analink 500gram-----------40 viên <br>
-            chỉ nha khoa----------------------2 cuộn
-            </div>
-            </div>
-            </div>
+                <div class="container" style="border: solid 1px grey;">
+                <div class="row">
+                <div class="col-sm-2">BÁC SĨ : </div>
+                <div class="col-sm-8">{{$a->dentist->name}} </div>
+                </div>
+                <div class="row">
+                <div class="col-sm-2">Ngày điều trị</div>
+                <div class="col-sm-8">{{$a->create_date}} </div>
+                </div>
+                <div class="row">
+                <div class="col-sm-2">Các bước đã thực hiện:</div>
+                <div class="col-sm-8">
+                    @foreach($a->treatment_detail_steps as $step)
+                        <div class="row">
+                            <div class="col-sm-8">+{{$step->step->name}} </div>
+                        </div>
+                    @endforeach
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-sm-2">Toa thuốc</div>
+                <div class="col-sm-8">
+                giảm đau--------------------------30 viên <br>
+                chóng sưng------------------------40 viên <br>
+                aprical analink 500gram-----------40 viên <br>
+                </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    @foreach($a->treatment_images as $b)
+                        <div class="col-sm-4">
+                            <img src="{{$b->image_link}}" alt="" class="img-responsive img-fluid">
+                        </div>
+                    @endforeach
+
+                </div>
+                </div>
+                @endforeach
+
+
             </div>
             </div>
 
@@ -276,7 +281,7 @@
             @endforeach
         @else
             <div class="container" style="background-color: whitesmoke;width: 100%;height: 200px;">
-                    <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân từng điều trị</h1>
+                    <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân chưa từng điều trị</h1>
             </div>
         @endif
 
@@ -338,5 +343,18 @@
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
 <script type="text/javascript">
+function changeInfo(id) {
+        var Chooseid = id;
 
+
+        $.ajax({
+            url: 'changeCP/' + Chooseid,
+            type:'GET',
+            success: function(result){
+                location.reload();
+            } ,error: function (data) {
+                alert(data);
+            }
+        });
+    }
 </script>

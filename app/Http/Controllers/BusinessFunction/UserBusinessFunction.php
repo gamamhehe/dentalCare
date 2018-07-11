@@ -12,6 +12,7 @@ use App\Model\Patient;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -142,6 +143,14 @@ trait UserBusinessFunction
         }
     }
 
+    public function getUserPhones($keyword)
+    {
+        $phones = User::where('phone', 'like', '%'.$keyword.'%')
+            ->pluck('phone')
+            ->toArray();
+        return $phones;
+    }
+
     public function deleteRole($id)
     {
         DB::beginTransaction();
@@ -155,15 +164,29 @@ trait UserBusinessFunction
         }
     }
 
+    public function isRoleStaff($phone){
+        $staff = User::where('phone',$phone)->first();
+        if($staff == null){
+            return false;
+        }
+        $hasRoles = $staff->hasUserHasRole()->get();
+        foreach($hasRoles as $role){
+            if($role->role_id == 4){
+                return false;
+            }
+        }
+        return true;
+    }
 
-    public function editAvatar($image, $id)
+
+    public function editAvatar($image, $profileId, $forWho = "user")
     {
         DB::beginTransaction();
         try {
-            $patient = Patient::where('id', $id)->first();
+            $patient = Patient::where('id', $profileId)->first();
             $avatarFolder = '/assets/images/avatar/';
             $path = public_path($avatarFolder);
-            $filename = 'user_avatar_' . $id . '.' . $image->getClientOriginalExtension();
+            $filename = $forWho.'_avatar_' . $profileId . '.' . $image->getClientOriginalExtension();
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
