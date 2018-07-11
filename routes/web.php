@@ -122,7 +122,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/editPost','Admin\StaffController@editPost');
     Route::get('/deletePost','Admin\StaffController@deletePost');
     Route::get('/createAppointment','Admin\StaffController@createAppointmentByStaff');
-    Route::get('/createTreatment/{id}','Admin\StaffController@createTreatmentByStaff');
+    Route::get('/createTreatment/{id}','Admin\StaffController@createTreatmentByStaff')->name('create.treatmentHistory');
+    Route::get('/checkComing/{id}','Admin\StaffController@checkComingPatient');
     Route::post('/createTreatmentHistoryPatient','Admin\TreatmentHistoryController@createTreatmentHistory')->name('admin.createTreatmentHistoryPatient.dentist');
     Route::get('/getTreatmentHistoryPatient/{id}','Admin\TreatmentHistoryController@getTreatmentHistoryByPatient');
 

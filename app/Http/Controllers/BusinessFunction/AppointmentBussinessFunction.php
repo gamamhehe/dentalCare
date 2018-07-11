@@ -571,4 +571,13 @@ trait AppointmentBussinessFunction
         }
         return $listCurrentFreeDentist;
     }
+
+    public function checkAppointmentComing($appointmentId){
+        $appointment = Appointment::where('id', $appointmentId)->first();
+        if ($appointment->status == 1){
+            $patient_id = PatientOfAppointment::where('appointment_id', $appointment->id)->first()->patient_id;
+            return $patient_id;
+        }
+        return false;
+    }
 }

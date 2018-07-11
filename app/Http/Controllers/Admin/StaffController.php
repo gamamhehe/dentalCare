@@ -14,6 +14,7 @@ use App\Model\Tooth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
+
 class StaffController extends Controller
 {
     //
@@ -21,6 +22,7 @@ class StaffController extends Controller
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
     use TreatmentCategoriesBusinessFunction;
+
     public function loginGet(Request $request)
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
@@ -39,7 +41,7 @@ class StaffController extends Controller
     public function create(Request $request)
     {
         $post = Staff::all();
-        return view('admin.dentist.list',['post'=>$post]);
+        return view('admin.dentist.list', ['post' => $post]);
         $checkExist = $this->checkExistUser($request->phone);
         if ($checkExist) {
             return false;
@@ -88,7 +90,9 @@ class StaffController extends Controller
         $this->updateStaff($request, $idStaff);
 
     }
-    public function getListAppointmentForStaff(Request $request){
+
+    public function getListAppointmentForStaff(Request $request)
+    {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
         if ($role == 2) {
@@ -98,27 +102,45 @@ class StaffController extends Controller
         }
 
         return Datatables::of($listAppointment)
-            ->addColumn('action', function($appoint) {
+            ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                    <button style="width: 30%" value="'.$appoint->patient_id.'" class="btn btn-primary btn-xs btn-sm btn-dell"> Skip</button>
-                    <form onsubmit="return checkHidden('.$appoint->status.');" action="createTreatment/'.$appoint->patient_id.'" style="width: 50%; float:right">
-                        <button type="submit" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Create Treatment</button>
-                    </form>
+                    <button style="width: 30%" value="' . $appoint->patient_id . '" class="btn btn-primary btn-xs btn-sm btn-dell"> Skip</button>
+                    <button type="button" class="btn btn-default btn-success" onclick="checkComing(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Create Treatment</button>
                 </div>
                 ';
             })->make(true);
-        
+
     }
+
+    public function checkComingPatient($appointmentId)
+    {
+        $checkComingAppointment = $this->checkAppointmentComing($appointmentId);
+        $status = 0;
+        if ($checkComingAppointment) {
+            $status = 1;
+        }
+
+        $data = array(
+            'idPatient' => $checkComingAppointment,
+            'statusComing' => $status,
+            'url' => request()->getHttpHost()
+        );
+        echo json_encode($data);
+
+    }
+
     public function getList()
     {
         return $this->getListStaff();
     }
-    public function createTreatmentByStaff(Request $request,$id){
-        $patient_id=$id;
+
+    public function createTreatmentByStaff($id)
+    {
+        $patient_id = $id;
         $listTreatment = $this->getAllTreatmentCategories();
         $listTooth = Tooth::all();
-        return view ('admin.dentist.createTreatment',['listTreatmentCategories'=>$listTreatment,'listTooth'=>$listTooth,'patient_id'=>$patient_id]);
+        return view('admin.dentist.createTreatment', ['listTreatmentCategories' => $listTreatment, 'listTooth' => $listTooth, 'patient_id' => $patient_id]);
     }
 
     public function viewAppointment(Request $request)
@@ -126,12 +148,14 @@ class StaffController extends Controller
         return view('admin.dentist.listAppointment');
     }
 
-    public function receiveAppointment(Request $request){
+    public function receiveAppointment(Request $request)
+    {
         $listTreatmentHistory = $this->checkCurrentTreatmentHistoryForPatient($request->patient_id);
         return true;
     }
 
-    public function addPost(Request $request){
+    public function addPost(Request $request)
+    {
 
         $post = new Staff;
         $post->name = $request->name;
@@ -140,25 +164,27 @@ class StaffController extends Controller
         return response()->json($post);
     }
 
-    public function editPost(request $request){
-        $post = Staff::find ($request->id);
+    public function editPost(request $request)
+    {
+        $post = Staff::find($request->id);
         $post->name = $request->name;
         $post->address = $request->address;
         $post->save();
         return response()->json($post);
     }
-    public function deletePost(Request $request){
+
+    public function deletePost(Request $request)
+    {
         $id = $request->id;
-        if($id){
-             $data = array(
-            'id'  => $id,
+        if ($id) {
+            $data = array(
+                'id' => $id,
             );
-        $post = Staff::find ($request->id)->delete();
-        return response()->json($data);
-        }        
+            $post = Staff::find($request->id)->delete();
+            return response()->json($data);
+        }
 
 
-       
     }
 
 }

@@ -245,7 +245,7 @@
           },
           success: function(data){
             if ((data.errors)) {
-                swal("Đặt lịch hẹn thành công", "", "error");
+                swal("Đặt lịch hẹn thất bại", "", "error");
             } else {
                   swal("Đặt lịch hẹn thành công", "", "success");
             }
@@ -282,20 +282,6 @@
           },
             });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     function search(){
         
