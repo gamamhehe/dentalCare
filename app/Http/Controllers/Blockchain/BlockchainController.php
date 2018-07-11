@@ -21,13 +21,13 @@ class BlockchainController extends Controller
 
     public function getDataBlockchainJson(){
         $dataBlockchainJson = $this -> convertDataToJson();
-        return $dataBlockchainJson;
+        return response($dataBlockchainJson);
     }
 
     public function callAPI_GetData() {
         $client = new \Guzzle\Service\Client('http://163.44.193.228/');
         $response = $client->get('datajson')->send();
-        dd($response);
+        return $response;
     }
 
 }
