@@ -28,8 +28,9 @@
                                 <th style="text-align: center; width: 30%">Số Điện Thoại</th>
                                 <th style="text-align: center; width: 30%">Tổng Tiền</th>
                                 <th style="text-align: center; width: 20%">Đã Trả</th>
-                                <th style="text-align: center; width: 20%">Hoàn Thành</th>
+                                <th style="text-align: center; width: 20%">Trạng Thái</th>
                                 <th style="text-align: center; width: 20%">Xem Chi Tiết</th>
+                                <th style="text-align: center; width: 20%">Tạo Chi Trả</th>
 
                             </tr>
                             </thead>
