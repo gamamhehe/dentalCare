@@ -162,7 +162,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'
 
 // Route::post('/createNews', 'HomeController@createNews');
 //end CRUD new
-Route::get('/testFunction','Admin\AppointmentController@add')->name('testFunction');
+Route::get('/testFunction','Admin\AppointmentController@testFunction')->name('testFunction');
 Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name('start.treatment');
 
 //Route::get('paywithpaypal','Admin\PaypalController@payWithPaypal');

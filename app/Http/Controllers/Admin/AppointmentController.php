@@ -17,16 +17,16 @@ class AppointmentController extends Controller
     //
     use AppointmentBussinessFunction;
 
-    public function create(Request $request){
-
-        $this->createAppointment($request->bookingDate,$request->phone,$request->note);
+    public function testFunction(Request $request){
+        dd($this->checkAppointmentForPatient('01279011096', 2));
     }
     public function add(Request $request){
         $phone = $request['phone'];
         $estimateTimeReal=$request['estimateTimeReal'];
         $patientId = $request['patientID'];
         $dateBooking= $request['datepicker'];
-        $newApp = $this->createAppointment($dateBooking, $phone, $request->note, $request->dentist_id,
+        $formatDate = (new \DateTime($dateBooking))->format('Y-m-d');
+        $newApp = $this->createAppointment($formatDate, $request->phone, $request->note, $request->dentist_id,
             $patientId, date('H:i:s', mktime(0,$estimateTimeReal, 0)));
         $dateTime = new DateTime($newApp->start_time);
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
