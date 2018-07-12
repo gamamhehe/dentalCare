@@ -75,7 +75,9 @@
             <?php if (Session::has('success')): ?>
             swal("Good job!", "", "success");
             <?php endif ?>
+            <?php if (Session::has('error')): ?>
 
+            <?php endif ?>
         });
         $('#lfm').filemanager('image');
         $(window).on('load', function () {
@@ -125,16 +127,24 @@
                 },
             });
     });
-    function checkHidden(id) {
-        if(id != 1){
-            swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error")
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
+        function checkComing(id){
+            $.ajax({
+                url: '/admin/checkComing/'+ id, //this is your uri
+                type: 'GET', //this is your method
 
+                dataType: 'json',
+                success: function(data){
+                    if(data.statusComing == 0){
+                        swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error");
+                    }
+                    if(data.statusComing == 1){
+                        window.location.replace('http://' + data.url + "/admin/createTreatment/" + data.idPatient);
+                    }
+                },error: function (data) {
+                    swal("Check connnection", "", "error");
+                }
+            });
+        }
     </script>
 
 @endsection

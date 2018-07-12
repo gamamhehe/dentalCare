@@ -216,18 +216,6 @@
     //         alert(x);
     //     }
     // }
-    $(document).ready(function(){
-        <?php if (Session::has('success')): ?>
-        swal("Nhận bệnh nhân thành công", "", "success");
-        <?php endif ?>
-
-        <?php if ($errors->first('notHaveAppointment')): ?>
-        swal("Không có lịch hẹn cho bệnh nhân này", "", "error");
-        <?php endif ?>
-        <?php if ($errors->first('dentistBusy')): ?>
-        swal("Bác sĩ đang bận", "", "error");
-        <?php endif ?>
-    });
      $(document).on('click','.create-modal', function() {
         $('#create').modal('show');
         $('.form-horizontal').show();
@@ -254,11 +242,10 @@
             'estimateTimeReal':estimateTimeReal,
             'patientID':patientID,
             'datepicker':datepicker,
-           
           },
           success: function(data){
             if ((data.errors)) {
-                swal("Đặt lịch hẹn thành công", "", "error");
+                swal("Đặt lịch hẹn thất bại", "", "error");
             } else {
                   swal("Đặt lịch hẹn thành công", "", "success");
             }
@@ -295,20 +282,6 @@
           },
             });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     function search(){
         
@@ -387,6 +360,9 @@
 
             dataType: 'json',
             success: function(data){
+                if(data.statusOfReceive == -1){
+                    swal("Bệnh nhân này đang khám", "", "error");
+                }
                 if(data.statusOfReceive == 0){
                     swal("Bác sĩ đang bận", "", "error");
                 }

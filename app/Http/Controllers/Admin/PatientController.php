@@ -128,19 +128,23 @@ class PatientController extends Controller
         public function receive($id)
     {
         $phone = $this->getPhoneOfPatient($id);
-        $appointment = $this->checkAppointmentForPatient($phone, $id);
-        if ($appointment === null) {
-            $status = 2;
-        } else
-            if ($appointment) {
-                $appointment->patient_id = $id;
-                $appointment->status = 1;
-                $this->saveAppointment($appointment);
-                $status = 1;
-            } else {
-                $status = 0 ;
+        $isExamination = $this->checkPatientIsExamination($id);
+        if($isExamination){
+            $status = -1;
+        }else {
+            $appointment = $this->checkAppointmentForPatient($phone, $id);
+            if ($appointment === null) {
+                $status = 2;
+            } else
+                if ($appointment) {
+                    $appointment->status = 1;
+                    $this->saveAppointment($appointment, $id);
+                    $status = 1;
+                } else {
+                    $status = 0;
 //
-            }
+                }
+        }
         $data = array(
             'statusOfReceive' => $status
         );

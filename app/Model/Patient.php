@@ -31,7 +31,7 @@ class Patient extends Model
         return $this->hasMany('App\Model\Payment', 'patient_id', 'id');
     }
     public function hasAppointment(){
-        return $this->hasMany('App\Model\Appointment', 'patient_id', 'id');
+        return $this->hasMany('App\Model\PatientOfAppointment', 'patient_id', 'id');
     }
     public function hasTreatmentHistory(){
         return $this->hasMany('App\Model\TreatmentHistory', 'patient_id', 'id');

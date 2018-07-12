@@ -10,6 +10,7 @@ use App\Model\District;
 use App\Model\Event;
 use App\Model\NewsType;
 use App\Model\Patient;
+use App\Model\PatientOfAppointment;
 use App\Model\Role;
 use App\Model\Absent;
 use App\Model\Staff;
@@ -718,7 +719,7 @@ class AdminController extends Controller
                 'numerical_order' => '12',
                 'phone' => '0915469963',
                 'staff_id' => 2,
-                'start_time' => '2018-06-22 10:05:42',
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
@@ -726,7 +727,7 @@ class AdminController extends Controller
                 'numerical_order' => '12',
                 'phone' => '0915469963',
                 'staff_id' => 3,
-                'start_time' => '2018-06-24 12:05:42',
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
@@ -734,7 +735,7 @@ class AdminController extends Controller
                 'numerical_order' => '12',
                 'phone' => '0915469963',
                 'staff_id' => 2,
-                'start_time' => '2018-06-28 10:05:42',
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
@@ -742,7 +743,7 @@ class AdminController extends Controller
                 'numerical_order' => '12',
                 'phone' => '0915469963',
                 'staff_id' => 3,
-                'start_time' => '2018-06-27 10:05:42',
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
@@ -750,7 +751,7 @@ class AdminController extends Controller
                 'numerical_order' => '12',
                 'phone' => '0915469963',
                 'staff_id' => 4,
-                'start_time' => '2018-06-26 11:05:42',
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
@@ -758,7 +759,7 @@ class AdminController extends Controller
                 'numerical_order' => '12',
                 'phone' => '0915469963',
                 'staff_id' => 2,
-                'start_time' => '2018-06-22 19:05:42',
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
@@ -766,9 +767,18 @@ class AdminController extends Controller
                 'numerical_order' => '12',
                 'phone' => '0915469963',
                 'staff_id' => 3,
-                'start_time' => '2018-06-27 16:05:42',
+                'start_time' => Carbon::now(),
             ]);
 
+            PatientOfAppointment::create([
+                'appointment_id' => 1,
+                'patient_id' => 1
+            ]);
+
+            PatientOfAppointment::create([
+                'appointment_id' => 2,
+                'patient_id' => 3
+            ]);
 
 
             Patient::create([
@@ -951,7 +961,7 @@ class AdminController extends Controller
                 'phone' => '01279011096',
                 'staff_id' => 2,
                 'numerical_order' => '1',
-                'estimated_time' => '30'
+                'estimated_time' => '00:30:00'
             ]);
 
             Absent::create([
