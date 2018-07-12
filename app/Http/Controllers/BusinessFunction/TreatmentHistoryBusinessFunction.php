@@ -25,7 +25,6 @@ trait TreatmentHistoryBusinessFunction
    use EventBusinessFunction;
     public function getTreatmentHistory($id)
     {
-        $listResult = [];
         $patient = Patient::where('id', $id)->first();
         if ($patient == null) {
             return [];
@@ -131,5 +130,33 @@ trait TreatmentHistoryBusinessFunction
     public function checkCurrentTreatmentHistoryForPatient($idPatient){
        return TreatmentHistory::where('patient_id', $idPatient)
             ->whereNull('finish_date')->get();
+    }
+
+    public function getListTreatmentHistory(){
+        $treatmentHistoryList = TreatmentHistory::all();
+        foreach ($treatmentHistoryList as $treatmentHistory){
+            $treatmentHistory->patient = $treatmentHistory->belongsToPatient()->first();
+            $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
+        }
+        return $treatmentHistoryList;
+    }
+
+    public function getTreatmentHistoryDetail($id){
+        $treatmentHistory = TreatmentHistory::where('id', $id)->first();
+        $treatmentHistory->patient = $treatmentHistory->belongsToPatient()->first();
+        $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
+        $listDetail = $treatmentHistory->hasTreatmentDetail()->get();
+
+        foreach ($listDetail as $detail){
+            $detail->staff = $detail->belongsToStaff()->first();
+            $listTreatmentDetailStep = $detail->hasTreatmentDetailStep()->get();
+            $result = [];
+            foreach ($listTreatmentDetailStep as $treatmentDetailStep) {
+                $result[] = $treatmentDetailStep->belongsToStep()->first()->name;
+            }
+            $detail->listStepDone = $result;
+        }
+        $treatmentHistory->listDetail = $listDetail;
+        return $treatmentHistory;
     }
 }

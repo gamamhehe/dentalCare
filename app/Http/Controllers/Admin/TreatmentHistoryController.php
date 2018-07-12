@@ -51,5 +51,14 @@ class TreatmentHistoryController extends Controller
         
     }
 
+    public function getList(){
+        $treatmentHistoryList = $this->getListTreatmentHistory();
+        return view('admin.treatmentHistory.list',['treatmentHistoryList' => $treatmentHistoryList]);
+    }
+
+    public function getDetail(Request $request){
+        $treatmentHistory = $this->getTreatmentHistoryDetail($request->idTreatmentHistory);
+        return view('admin.treatmentHistory.detail', ['treatmentHistory' => $treatmentHistory]);
+    }
 
 }
