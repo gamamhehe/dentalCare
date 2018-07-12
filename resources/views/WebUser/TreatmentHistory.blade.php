@@ -113,7 +113,7 @@
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
-                                    <a href="/myProfile/1" class="btn btn-success btn-flat">Profile</a>
+                                    <a href="/myProfile" class="btn btn-success btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right" style="padding-right: 1em;">
                                     <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>

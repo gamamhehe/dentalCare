@@ -52,16 +52,21 @@ class TreatmentDetailController extends Controller
       $medicine =$request['medicine'];
       $quantity =$request['quantity'];
 
+
         $resultMedicine = $this->createMedicineForTreatmentDetail($medicine,$TreatmentDetailId,$quantity);
       if($resultMedicine){
           $message = 'success';
         }else{
+           
            $message = 'error';
            return redirect()->back()->withInput()->with('message', $message);
         }
       //done medicine
       //stepDo
+        
         $steps =$request['step'];
+       
+
         if(count($steps) != 0 ){
         $resultTreatmentStep = $this->createTreatmentDetailStep($steps,$TreatmentDetailId);
         if($resultTreatmentStep == TRUE){

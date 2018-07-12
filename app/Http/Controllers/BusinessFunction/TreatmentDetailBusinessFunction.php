@@ -73,7 +73,7 @@ trait TreatmentDetailBusinessFunction
         foreach ($listTreatmentDetail as $treatmentDetail) {
             $listTreatmentDetailStep = $treatmentDetail->hasTreatmentDetailStep()->get();
             foreach ($listTreatmentDetailStep as $treatmentDetailStep) {
-                $result[] = $treatmentDetailStep->treatment_step_id;
+                $result[] = $treatmentDetailStep->step_id;
             }
         }
         return $result;

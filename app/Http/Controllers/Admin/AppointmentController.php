@@ -25,13 +25,43 @@ class AppointmentController extends Controller
         $estimateTimeReal=$request['estimateTimeReal'];
         $patientId = $request['patientID'];
         $dateBooking= $request['datepicker'];
-        $formatDate = (new \DateTime($dateBooking))->format('Y-m-d');
-        $newApp = $this->createAppointment($formatDate, $request->phone, $request->note, $request->dentist_id,
-            $patientId, date('H:i:s', mktime(0,$estimateTimeReal, 0)));
-        $dateTime = new DateTime($newApp->start_time);
-        $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
-        $this->dispatch(new SendSmsJob($phone, $smsMessage));
-        return response()->json($newApp);
+        $startTime = strtotime($dateBooking);
+        $xxx = date('Y-m-d H:i:s', $startTime);
+        $dentist = $request->session()->get('currentAdmin', null);
+        $dentist_id = $dentist->belongToStaff()->first()->id;
+    	 DB::beginTransaction();
+        try {
+           	$newApp = new Appointment;
+    	$newApp->start_time = $xxx;
+    	$newApp->note = "NONO";
+    	$newApp->estimated_time =$estimateTimeReal;
+    	$newApp->numerical_order = 12;
+        $newApp->phone = $phone;
+    	$newApp->staff_id =$dentist_id;
+    	$newApp->patient_id=$patientId;
+        $newApp->save();
+        DB::commit();
+        // $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+        // $this->dispatch(new SendSmsJob($phone, $smsMessage));
+            return response()->json($newApp);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+             return "no";
+
+        }
+
+    
+//
+//=======
+//        $formatDate = (new \DateTime($dateBooking))->format('Y-m-d');
+//        $newApp = $this->createAppointment($formatDate, $request->phone, $request->note, $request->dentist_id,
+//            $patientId, date('H:i:s', mktime(0,$estimateTimeReal, 0)));
+//        $dateTime = new DateTime($newApp->start_time);
+//        $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
+//        $this->dispatch(new SendSmsJob($phone, $smsMessage));
+//        return response()->json($newApp);
+//>>>>>>> 4b8681fe961cb19a89fa36a0283f996dcaaaf368
     }
 
 }
