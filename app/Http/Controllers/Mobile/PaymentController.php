@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\Mobile\BaseController;
 use App\Model\PaymentDetail;
 use Carbon\Carbon;
@@ -24,7 +25,7 @@ use PayPal\Rest\ApiContext;
 class PaymentController extends BaseController
 {
     use PaymentBusinessFunction;
-
+use StaffBusinessFunction;
     public function getByPhone(Request $request, $phone)
     {
         try {
@@ -38,7 +39,7 @@ class PaymentController extends BaseController
         }
     }
 
-    public function verifyPayment(Request $request)
+    public function verifyPaymentPaypal(Request $request)
     {
 //        $response["error"] = false;
 //        $response["message"] = "Payment verified successfully";
@@ -133,10 +134,11 @@ class PaymentController extends BaseController
             $payment->paid = $payment->total_price;
             $payment->is_done = 1;
             $paymentDetail = new PaymentDetail();
+            $paypalStaff = $this->getStaffByName('paypal');
             $paymentDetail->payment_id = $localPaymentId;
             $paymentDetail->received_money = $received_money;
             $paymentDetail->date_create = Carbon::now();
-            $paymentDetail->staff_id = $staff->id;
+            $paymentDetail->staff_id = $paypalStaff->id;
             $result = $this->updatePaymentModel($payment, $paymentDetail);
 //            $this->logInfo('userid: '.$user->id);
 //            $this->logInfo('paymentdetail id:'.$paymentDetail->id);

@@ -29,7 +29,7 @@ Route::post('feedback/create', "Mobile\FeedbackController@create");
 Route::get("firebase/notify", "Mobile\FirebaseController@sendNotification");
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::get("testpassport", "Mobile\UserController@testPassport");
-Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPayment");
+Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPaymentPaypal");
 Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
 
 Route::post("test", "Mobile\MobileController@testPOST");
