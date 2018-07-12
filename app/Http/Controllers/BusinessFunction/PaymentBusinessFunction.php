@@ -105,7 +105,7 @@ trait PaymentBusinessFunction
             return true;
         } catch (Exception $exception) {
             DB::rollback();
-            throw  new Exception($exception->getMessage());
+            throw  new \Exception($exception->getMessage());
         }
 
     }
