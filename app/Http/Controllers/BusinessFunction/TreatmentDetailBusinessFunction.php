@@ -47,7 +47,6 @@ trait TreatmentDetailBusinessFunction
                 TreatmentDetailStep::create([
                     'treatment_detail_id' => $idTreatmentDetail,
                     'step_id' => $step,
-                    'description'=>'huhu',
                 ]);
             }
  

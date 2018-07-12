@@ -50,17 +50,22 @@ class TreatmentDetailController extends Controller
   		//medicine
       $medicine =$request['medicine'];
       $quantity =$request['quantity'];
+
       $resultMedicine = $this->createMedicineForTreatmentDetail($medicine,$TreatmentDetailId,$quantity);
       if($resultMedicine){
           $message = 'success';
         }else{
+           
            $message = 'error';
 
            return redirect()->back()->withInput()->with('message', $message);
         }
       //done medicine
       //stepDo
+        
         $steps =$request['step'];
+       
+
         if(count($steps) != 0 ){
         $resultTreatmentStep = $this->createTreatmentDetailStep($steps,$TreatmentDetailId);
         if($resultTreatmentStep ==TRUE){
@@ -70,7 +75,6 @@ class TreatmentDetailController extends Controller
            return redirect()->back()->withInput()->with('message', $message);
         }  
       }
-        
       //end step
   		return redirect('admin/treatmentDetail/'.$TreatmentDetailId);
  
@@ -81,7 +85,7 @@ class TreatmentDetailController extends Controller
       $listMedicine = $this->loadMedicineOfTreatmentDetail($id);
       $listImg = $this->getImageByTreatmentDetail($id);
       $listStep = $this->getTreatmentDetailStep($id);
-      // dd($listStep[0]->stepname->name);
+
       return view('admin.StepTreatment.review',['listMedicine'=>$listMedicine,'listImg'=>$listImg,'listStep'=>$listStep,'treatmentDetail'=>$treatmentDetail]);
     }
 }

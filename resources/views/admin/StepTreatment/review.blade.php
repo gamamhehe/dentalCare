@@ -21,7 +21,7 @@ background-repeat: no-repeat;"></div>
                                    @foreach($listStep as $one)
                                     <div class="row" style="margin-bottom: 1em;border-bottom: 1px; ">
                                         <div class="col-sm-5" id="content">
-                                         {{$one->stepname->name}}
+                                         {{$one->stepName->name}}
                                          
                                         </div>
                                         <div class="col-sm-4" style="padding-right: 0;">

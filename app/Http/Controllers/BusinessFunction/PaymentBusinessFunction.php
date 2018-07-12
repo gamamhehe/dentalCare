@@ -74,7 +74,6 @@ trait PaymentBusinessFunction
                 return $payment;
             }
         }
-        dd("Null");
         return null;
     }
 

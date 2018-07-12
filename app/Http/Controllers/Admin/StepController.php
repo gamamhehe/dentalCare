@@ -17,6 +17,7 @@ class StepController extends Controller
         // $listStepTreatmentDone =$request['listStepTreatmentDone'];
         $list = Treatment::where('treatment_category_id', 1)->get();
         $countList =count($list);
+
         return view("admin.StepTreatment.view", ['list' => $list,'count'=>$countList,'listStepTreatment'=>$listStepTreatment]);
     }
     public function edit(Request $request)
