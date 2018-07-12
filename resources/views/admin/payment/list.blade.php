@@ -1,20 +1,23 @@
 @extends('admin.master')
 @section('content')
-    <div class="content-wrapper" >
+    <div class="content-wrapper">
         <div class="box">
 
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả  </div>
+                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả</div>
                     </div>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <input type="text" name="search" id="search" class="form-control" placeholder="Số điên thoại bệnh nhân" value="{{old('search')}}" />
-                        <div class="row" style="margin-bottom: 1em;" >
-                            <div class=""  style="margin-top: 1em;">
-                                <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="search()" >Tìm</button>
+                        <input type="text" name="search" id="search" class="form-control"
+                               placeholder="Số điên thoại bệnh nhân" value="{{old('search')}}"/>
+                        <div class="row" style="margin-bottom: 1em;">
+                            <div class="" style="margin-top: 1em;">
+                                <button type="button" class="col-md-3 btn btn-default btn-success"
+                                        style="margin-right: 10px;float: right;" onclick="search()">Tìm
+                                </button>
                             </div>
                         </div>
 
@@ -25,12 +28,11 @@
                         <table class="table table-striped table-bordered" style="text-align: center">
                             <thead>
                             <tr>
-                                <th style="text-align: center; width: 30%">Số Điện Thoại</th>
-                                <th style="text-align: center; width: 30%">Tổng Tiền</th>
-                                <th style="text-align: center; width: 20%">Đã Trả</th>
-                                <th style="text-align: center; width: 20%">Hoàn Thành</th>
-                                <th style="text-align: center; width: 20%">Xem Chi Tiết</th>
-
+                                <th style="text-align: center; width: 20%">Số Điện Thoại</th>
+                                <th style="text-align: center; width: 15%">Tổng Tiền</th>
+                                <th style="text-align: center; width: 15%">Còn Thiếu</th>
+                                <th style="text-align: center; width: 20%">Trạng Thái</th>
+                                <th style="text-align: center; width: 40%">Tuỳ Chọn</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -38,20 +40,32 @@
                                 @foreach($paymentList as $payment)
                                     <tr class="even gradeC" align="left">
                                         <td style="text-align: center">{{$payment->phone}}</td>
-                                        <td style="text-align: center">{{$payment->total_price}}</td>
-                                        <td style="text-align: center">{{$payment->paid }}</td>
+                                        <td style="text-align: center">{{number_format($payment->total_price)}}</td>
+                                        <td style="text-align: center">{{number_format($payment->total_price - $payment->paid) }}</td>
                                         @if($payment->is_done == true)
-
                                             <td style="text-align: center">Đã Hoàn Thành</td>
                                         @else
                                             <td style="text-align: center">Chưa Hoàn Thành</td>
                                         @endif
-                                        <td align="center" style="width: 20%">
-                                            <form action="{{route('getPaymentDetail')}}">
-                                                {{ csrf_field() }}
-                                                <input type="hidden" name="idPayment" value="{{$payment->id}}">
-                                                <button type="submit" class="btn btn-default btn-success">Xem Chi Tiết Chi Trả</button>
-                                            </form>
+                                        <td align="center">
+                                            <div>
+                                                <form action="{{route('getPaymentDetail')}}">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="idPayment" value="{{$payment->id}}">
+                                                    <button type="submit" class="btn btn-default btn-success">Xem Chi
+                                                        Tiết Chi Trả
+                                                    </button>
+                                                </form>
+                                                @if($payment->is_done == false)
+                                                    <form action="{{route('getPaymentDetail')}}">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" name="idPayment" value="{{$payment->id}}">
+                                                        <button type="submit" class="btn btn-default btn-success">Tạo
+                                                            Chỉ Trả
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -75,21 +89,21 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
 
-        function search(){
+        function search() {
 
             var searchValue = document.getElementById('search').value;
-            if(!searchValue){
+            if (!searchValue) {
                 swal("Nhập số điên thoại", "", "error");
                 return;
             }
             $.ajax({
-                url: '/admin/searchPayment/'+ searchValue, //this is your uri
+                url: '/admin/searchPayment/' + searchValue, //this is your uri
                 type: 'GET', //this is your method
                 dataType: 'json',
-                success: function(data){
+                success: function (data) {
                     $('tbody').html(data.table_data);
-                },error: function (data) {
-                    swal('Error:',"", "error");
+                }, error: function (data) {
+                    swal('Error:', "", "error");
                 }
             });
         }

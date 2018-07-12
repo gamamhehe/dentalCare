@@ -26,10 +26,9 @@ class TreatmentHistoryController extends Controller
         // $treatmentHistory->payment_id = $request->payment_id;
         // $treatmentHistory->total_price = $total_price;
          $idTreatmentHistory = $this->createTreatmentProcess($request->treatment_id,$request->patient_id,$request->tooth_number,$request->price,$request->description);
-         $listStepTreatment = $this->showTreatmentStepForTreatment($request->treatment_id);
          if($idTreatmentHistory){
             return redirect()->route("admin.stepTreatment", ['idTreatmentHistory' => $idTreatmentHistory,
-                'listStepTreatment' => $listStepTreatment,
+                'idTreatment' => $request->treatment_id,
               ]);
 
         }else{

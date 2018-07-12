@@ -16,11 +16,11 @@
                     </div>
                     <div class="form-group">
                         <label>Số tổng số tiền: </label>
-                        <span>{{$payment->total_price}}</span>
+                        <span>{{number_format($payment->total_price)}}</span>
                     </div>
                     <div class="form-group">
                         <label>Số tiền đã trả: </label>
-                        <span>{{$payment->paid}}</span>
+                        <span>{{number_format($payment->paid)}}</span>
                     </div>
                     <div class="form-group">
                         <label>Trạng thái thanh toán: </label>
@@ -58,7 +58,7 @@
                                 @foreach($listDetail as $paymentDetail)
                                     <tr class="even gradeC" align="left">
                                         <td style="text-align: center">{{$paymentDetail->staff}}</td>
-                                        <td style="text-align: center">{{$paymentDetail->received_money}}</td>
+                                        <td style="text-align: center">{{number_format($paymentDetail->received_money)}}</td>
                                         <td style="text-align: center">{{$paymentDetail->date_create }}</td>
                                     </tr>
                                 @endforeach

@@ -125,6 +125,7 @@ trait PaymentBusinessFunction
         } catch (\Exception $e) {
             DB::rollback();
             throw new Exception($e->getMessage());
+            return false;
         }
     }
 
@@ -137,7 +138,6 @@ trait PaymentBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
             return false;
         }
     }

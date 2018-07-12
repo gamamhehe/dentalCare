@@ -74,7 +74,6 @@ class PatientController extends Controller
             $patient->avatar = $request->avatar;
             $patient->district_id = $request->district_id;
             $result = $this->createPatient($patient);
-            dd($result);
         } else {
             $patient = new Patient();
             $userHasRole = new UserHasRole();
@@ -92,7 +91,6 @@ class PatientController extends Controller
             $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
-            dd($result);
         }
         if ($result) {
             return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Sự kiện đã được tạo");
@@ -103,7 +101,7 @@ class PatientController extends Controller
 
     public function get($phone)
     {
-        return $this->getPatient($phone);
+        return $this->getPatientByPhone($phone);
     }
 
     public function update(Request $request)
@@ -127,22 +125,26 @@ class PatientController extends Controller
     }
 
 
-    public function receive($id)
+        public function receive($id)
     {
         $phone = $this->getPhoneOfPatient($id);
-        $appointment = $this->checkAppointmentForPatient($phone, $id);
-        if ($appointment === false) {
-            $status = 0;
-        } else
-            if ($appointment) {
-                $appointment->patient_id = $id;
-                $appointment->status = 1;
-                $this->saveAppointment($appointment);
-                $status = 1;
-            } else {
+        $isExamination = $this->checkPatientIsExamination($id);
+        if($isExamination){
+            $status = -1;
+        }else {
+            $appointment = $this->checkAppointmentForPatient($phone, $id);
+            if ($appointment === null) {
                 $status = 2;
-
-            }
+            } else
+                if ($appointment) {
+                    $appointment->status = 1;
+                    $this->saveAppointment($appointment, $id);
+                    $status = 1;
+                } else {
+                    $status = 0;
+//
+                }
+        }
         $data = array(
             'statusOfReceive' => $status
         );
@@ -229,7 +231,7 @@ class PatientController extends Controller
         return redirect('/myProfile');
     }
     public function getListPatientById($id){
-        $list = $this->getPatient($id);
+        $list = $this->getPatientByPhone($id);
             return response()->json($list);
          
        

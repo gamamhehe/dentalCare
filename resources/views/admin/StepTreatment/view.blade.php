@@ -1,16 +1,18 @@
 @extends('admin.master')
 @section('content')
-  <link rel="stylesheet" href="{{asset("/plugins/datepicker/datepicker3.css")}}">
+    <link rel="stylesheet" href="{{asset("/plugins/datepicker/datepicker3.css")}}">
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content">
             <div class="">
-                    <div class="row" style="text-align: center;">
-                    <label><h1>Khởi tạo chi tiết lần khám  </h1></label>
-                   <div class="row" style="margin-left: 35em;"> <hr style="
+                <div class="row" style="text-align: center;">
+                    <label><h1>Khởi tạo chi tiết lần khám </h1></label>
+                    <div class="row" style="margin-left: 35em;">
+                        <hr style="
 height: 55px;
 background-image: url(/assets/images/icon/type_4.png);
-background-repeat: no-repeat;"></div>
+background-repeat: no-repeat;">
+                    </div>
                 </div>
 
                 <form method="post" class="form-horizontal" action="createTreatmentDetail" enctype="multipart/form-data"
@@ -26,7 +28,8 @@ background-repeat: no-repeat;"></div>
                                             {{$one->name}}
                                         </div>
                                         <div class="col-sm-4" style="padding-right: 0;">
-                                            <input type="checkbox" name="step[]" value="{{$one->id}}" data-toggle="toggle"
+                                            <input type="checkbox" name="step[]" value="{{$one->id}}"
+                                                   data-toggle="toggle"
                                                    data-size="mini" data-style="slow" data-onstyle="success"
                                                    data-offstyle="danger" data-on="" data-off="">
                                         </div>
@@ -34,8 +37,8 @@ background-repeat: no-repeat;"></div>
                                 @endforeach
                             </div>
                             <div class="col-sm-6">
-                             <input type="hidden" id="totalImg" name="totalImg">
-                                <div class="row" id="divImage" style="min-height: 200px;border: 1px green solid;" >
+                                <input type="hidden" id="totalImg" name="totalImg">
+                                <div class="row" id="divImage" style="min-height: 200px;border: 1px green solid;">
                                 </div>
                                 <div class="row input-group" style="margin-top:1em;">
                                     <input id="thumbnail" class="form-control" type="hidden" name="image"
@@ -77,77 +80,80 @@ background-repeat: no-repeat;"></div>
                     <div>
                     </div>
                     <!-- popup -->
-                     <div id="create" class="modal fade" role="dialog">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title"></h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row" style="text-align: center;">
-                        <div class="col-xs-6">
-                      <div class="box"  style="border-top:green 3px solid">
-                        <div>
-                          <h3 class="box-title">Tìm Đơn Thuốc</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                           <div class="form-group">
-                                    <input type="text" name="search" id="search" class="form-control" placeholder="Tên thuốc"/>
+                    <div id="create" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title"></h4>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>Tên thuốc</th>
-                                            <th>Công dụng</th>
-                                            <th>Thêm vào đơn thuốc</th>
+                                <div class="modal-body">
+                                    <div class="row" style="text-align: center;">
+                                        <div class="col-xs-6">
+                                            <div class="box" style="border-top:green 3px solid">
+                                                <div>
+                                                    <h3 class="box-title">Tìm Đơn Thuốc</h3>
+                                                </div>
+                                                <!-- /.box-header -->
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <input type="text" name="search" id="search"
+                                                               class="form-control" placeholder="Tên thuốc"/>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Tên thuốc</th>
+                                                                <th>Công dụng</th>
+                                                                <th>Thêm vào đơn thuốc</th>
 
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                        </div>
-                      </div>
-                </div>
-                <div class="panel-body col-xs-6" style="background-color: white;border-top:green 3px solid">
-                    <label><h1 style="text-align: center;font-family: 'Italianno', cursive;
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body col-xs-6"
+                                             style="background-color: white;border-top:green 3px solid">
+                                            <label><h1 style="text-align: center;font-family: 'Italianno', cursive;
     font-size: 48px;">Đơn Thuốc</h1></label>
-                    <div style="background-color: white;border-top: green 2px solid;text-align: left;">
-                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                        <div class="row">
-                                <div class="col-xs-7">Tên thuốc</div>
-                                <div class="col-xs-2">Số lượng</div>
-                        </div>
-                        <div id="prescription" style="">
+                                            <div style="background-color: white;border-top: green 2px solid;text-align: left;">
+                                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                                <div class="row">
+                                                    <div class="col-xs-7">Tên thuốc</div>
+                                                    <div class="col-xs-2">Số lượng</div>
+                                                </div>
+                                                <div id="prescription" style="">
 
-                          
-                        </div>
-                        <hr>
-                        </div>
-                      
-                                    
+
+                                                </div>
+                                                <hr>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            </div>
-                            </div>
-                            
                         </div>
                     </div>
-                </div>
-                </div>
-                    <!-- end popup -->
-                    <input type="hidden" name="idTreatmentHistory" value="{{Request::get('idTreatmentHistory')}}">
-                </form><!-- form tong -->
             </div>
-            <!-- popup -->
-           
-            <!-- endpopup -->
-
-
+            <!-- end popup -->
+            <input type="hidden" name="idTreatmentHistory" value="{{Request::get('idTreatmentHistory')}}">
+            <input type="hidden" name="listStepTreatment" value="{{Request::get('listStepTreatment')}}">
+            </form><!-- form tong -->
         </section>
+    </div>
+    <!-- popup -->
+
+    <!-- endpopup -->
+
+
 
 
     </div>
@@ -160,12 +166,12 @@ background-repeat: no-repeat;"></div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function () {
-        <?php if (session('message')=="success"): ?>
-          swal("Tạo thành công!", "", "success");  
-        <?php endif ?>
-         <?php if (session('message')=="error"): ?>
-          swal( "Lỗi ! Liệu trình chưa được tạo" , "", "error");  
-        <?php endif ?>
+            <?php if (session('message') == "success"): ?>
+            swal("Tạo thành công!", "", "success");
+            <?php endif ?>
+            <?php if (session('message') == "error"): ?>
+            swal("Lỗi ! Liệu trình chưa được tạo", "", "error");
+            <?php endif ?>
 
 
 
@@ -203,9 +209,11 @@ background-repeat: no-repeat;"></div>
                 document.getElementById('createAnamnesis').submit();
             }
         }
+
         var x = 0;
+
         function addImage() {
-            x=x+1;
+            x = x + 1;
             document.getElementById("totalImg").value = x;
             var src = document.getElementById('thumbnail').value;
             var tmpId = src.substring(src.length - 10)
@@ -215,21 +223,22 @@ background-repeat: no-repeat;"></div>
 
         function removeDiv(id) {
             var div = document.getElementById(id).remove();
-            x=x-1;
+            x = x - 1;
             document.getElementById("totalImg").value = x;
             return
         }
-         $(document).on('click','.btn-medicine', function() {
-        $('#create').modal('show');
-        $('.form-horizontal').show();
-        $('.modal-title').text('Đơn thuốc');
-    });
-         //don thuoc
- $('#search').on('keyup',function(){
+
+        $(document).on('click', '.btn-medicine', function () {
+            $('#create').modal('show');
+            $('.form-horizontal').show();
+            $('.modal-title').text('Đơn thuốc');
+        });
+        //don thuoc
+        $('#search').on('keyup', function () {
             // $value=$(this).val();
             var searchValue = $(this).val();
             if (!searchValue) {
-            //     swal("Nhập tên thuốc", "", "error");
+                //     swal("Nhập tên thuốc", "", "error");
                 $('tbody').html('')
                 return;
             }
@@ -261,10 +270,11 @@ background-repeat: no-repeat;"></div>
                     return
                 }
             }
-            document.getElementById('prescription').insertAdjacentHTML('beforeend', 
+            document.getElementById('prescription').insertAdjacentHTML('beforeend',
                 " <div class='row' name='medicine'> <div class='col-xs-7'> <input type='hidden' name='medicine[]' value='" + id +
                 "'><span>" + name + "</span></div> <div class='col-xs-3'> <input type='number' name='quantity[]' value='1' style='width:40px;border-radius:5px;border:1px green solid;'> vien</div></div>");
         }
-         //end don thuoc
+
+        //end don thuoc
     </script>
 @endsection

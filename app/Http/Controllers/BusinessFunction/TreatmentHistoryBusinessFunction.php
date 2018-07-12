@@ -96,7 +96,6 @@ trait TreatmentHistoryBusinessFunction
         DB::beginTransaction();
         try {
             $patient = Patient::find($idPatient);
-
             $phone = $patient->belongsToUser()->first()->phone;
             $payment = $this->checkPaymentIsDone($phone);
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);

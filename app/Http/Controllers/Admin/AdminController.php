@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Model\Appointment;
+use App\Model\City;
+use App\Model\District;
 use App\Model\Event;
+use App\Model\NewsType;
 use App\Model\Patient;
+use App\Model\PatientOfAppointment;
 use App\Model\Role;
 use App\Model\Absent;
 use App\Model\Staff;
@@ -15,6 +19,7 @@ use App\Model\TreatmentDetail;
 use App\Model\TreatmentDetailStep;
 use App\Model\TreatmentHistory;
 use App\Model\TreatmentStep;
+use App\Model\Type;
 use App\Model\User;
 use App\Model\UserHasRole;
 use App\Model\Treatment;
@@ -30,6 +35,7 @@ use Carbon\Carbon;
 use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class AdminController extends Controller
@@ -704,7 +710,7 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'staff_id' => 1,
+                'staff_id' => 4,
                 'start_time' => '2018-07-21 10:05:42',
             ]);
             Appointment::create([
@@ -712,58 +718,67 @@ class AdminController extends Controller
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'staff_id' => 1,
-                'start_time' => '2018-06-22 10:05:42',
+                'staff_id' => 2,
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'staff_id' => 1,
-                'start_time' => '2018-06-24 12:05:42',
+                'staff_id' => 3,
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'staff_id' => 1,
-                'start_time' => '2018-06-28 10:05:42',
+                'staff_id' => 2,
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'staff_id' => 1,
-                'start_time' => '2018-06-27 10:05:42',
+                'staff_id' => 3,
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'staff_id' => 1,
-                'start_time' => '2018-06-26 11:05:42',
+                'staff_id' => 4,
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'staff_id' => 1,
-                'start_time' => '2018-06-22 19:05:42',
+                'staff_id' => 2,
+                'start_time' => Carbon::now(),
             ]);
             Appointment::create([
                 'note' => 'demo data',
                 'estimated_time' => '00:00:30',
                 'numerical_order' => '12',
                 'phone' => '0915469963',
-                'staff_id' => 1,
-                'start_time' => '2018-06-27 16:05:42',
+                'staff_id' => 3,
+                'start_time' => Carbon::now(),
             ]);
 
+            PatientOfAppointment::create([
+                'appointment_id' => 1,
+                'patient_id' => 1
+            ]);
+
+            PatientOfAppointment::create([
+                'appointment_id' => 2,
+                'patient_id' => 3
+            ]);
 
 
             Patient::create([
@@ -942,11 +957,11 @@ class AdminController extends Controller
 
             Appointment::create([
                 'start_time' => Carbon::now(),
-                'note' => 'dume lo di kham di',
+                'note' => 'lo di kham di',
                 'phone' => '01279011096',
-                'staff_id' => 1,
+                'staff_id' => 2,
                 'numerical_order' => '1',
-                'estimated_time' => '30'
+                'estimated_time' => '00:30:00'
             ]);
 
             Absent::create([
@@ -1469,6 +1484,42 @@ class AdminController extends Controller
                 'title' => 'Nạo tủy công nghệ Mỹ - gây tê nhanh chóng',
                 'staff_id' => '1',
                 'create_date' => '2018-06-19 04:31:27',
+            ]);
+
+            Type::create([
+                'id'=>'1',
+                'type'=>'Tin tức'
+            ]);
+            NewsType::create([
+                'type_id'=>'1',
+                'news_id'=>'1'
+            ]);  NewsType::create([
+                'type_id'=>'1',
+                'news_id'=>'2'
+            ]);  NewsType::create([
+                'type_id'=>'1',
+                'news_id'=>'3'
+            ]);  NewsType::create([
+                'type_id'=>'1',
+                'news_id'=>'4'
+            ]);  NewsType::create([
+                'type_id'=>'2',
+                'news_id'=>'5'
+            ]);  NewsType::create([
+                'type_id'=>'2',
+                'news_id'=>'6'
+            ]);  NewsType::create([
+                'type_id'=>'2',
+                'news_id'=>'7'
+            ]);  NewsType::create([
+                'type_id'=>'2',
+                'news_id'=>'8'
+            ]);  NewsType::create([
+                'type_id'=>'2',
+                'news_id'=>'1'
+            ]);  NewsType::create([
+                'type_id'=>'2',
+                'news_id'=>'3'
             ]);
             Payment::create([
                 'paid' => '100000',
@@ -2483,14 +2534,3764 @@ class AdminController extends Controller
                 'treatment_id' => 2,
             ]);
 
+            $this->initAddress();
+            $this->initClientToken();
 
-            DB::commit();
+            DB::commit(); 
         } catch (\Exception $e) {
+            Log::info("INIT ERROR: " . $e->getMessage());
             DB::rollback();
-            dd($e);
+            return response()->json($e->getMessage());
         }
     }
 
-    
+
+    public function initAddress(){
+
+        City::create([
+            'id' => 1,
+            'name' => 'Thành Phố Hà Nội'
+        ]);
+        City::create([
+            'id' => 2,
+            'name' => 'Tỉnh Hà Giang'
+        ]);
+        City::create([
+            'id' => 4,
+            'name' => 'Tỉnh Cao Bằng'
+        ]);
+        City::create([
+            'id' => 6,
+            'name' => 'Tỉnh Bắc Kạn'
+        ]);
+        City::create([
+            'id' => 8,
+            'name' => 'Tỉnh Tuyên Quang'
+        ]);
+        City::create([
+            'id' => 10,
+            'name' => 'Tỉnh Lào Cai'
+        ]);
+        City::create([
+            'id' => 11,
+            'name' => 'Tỉnh Điện Biên'
+        ]);
+        City::create([
+            'id' => 12,
+            'name' => 'Tỉnh Lai Châu'
+        ]);
+        City::create([
+            'id' => 14,
+            'name' => 'Tỉnh Sơn La'
+        ]);
+        City::create([
+            'id' => 15,
+            'name' => 'Tỉnh Yên Bái'
+        ]);
+        City::create([
+            'id' => 17,
+            'name' => 'Tỉnh Hòa Bình'
+        ]);
+        City::create([
+            'id' => 19,
+            'name' => 'Tỉnh Thái Nguyên'
+        ]);
+        City::create([
+            'id' => 20,
+            'name' => 'Tỉnh Lạng Sơn'
+        ]);
+        City::create([
+            'id' => 22,
+            'name' => 'Tỉnh Quảng Ninh'
+        ]);
+        City::create([
+            'id' => 24,
+            'name' => 'Tỉnh Bắc Giang'
+        ]);
+        City::create([
+            'id' => 25,
+            'name' => 'Tỉnh Phú Thọ'
+        ]);
+        City::create([
+            'id' => 26,
+            'name' => 'Tỉnh Vĩnh Phúc'
+        ]);
+        City::create([
+            'id' => 27,
+            'name' => 'Tỉnh Bắc Ninh'
+        ]);
+        City::create([
+            'id' => 30,
+            'name' => 'Tỉnh Hải Dương'
+        ]);
+        City::create([
+            'id' => 31,
+            'name' => 'Thành Phố Hải Phòng'
+        ]);
+        City::create([
+            'id' => 33,
+            'name' => 'Tỉnh Hưng Yên'
+        ]);
+        City::create([
+            'id' => 34,
+            'name' => 'Tỉnh Thái Bình'
+        ]);
+        City::create([
+            'id' => 35,
+            'name' => 'Tỉnh Hà Nam'
+        ]);
+        City::create([
+            'id' => 36,
+            'name' => 'Tỉnh Nam Định'
+        ]);
+        City::create([
+            'id' => 37,
+            'name' => 'Tỉnh Ninh Bình'
+        ]);
+        City::create([
+            'id' => 38,
+            'name' => 'Tỉnh Thanh Hóa'
+        ]);
+        City::create([
+            'id' => 40,
+            'name' => 'Tỉnh Nghệ An'
+        ]);
+        City::create([
+            'id' => 42,
+            'name' => 'Tỉnh Hà Tĩnh'
+        ]);
+        City::create([
+            'id' => 44,
+            'name' => 'Tỉnh Quảng Bình'
+        ]);
+        City::create([
+            'id' => 45,
+            'name' => 'Tỉnh Quảng Trị'
+        ]);
+        City::create([
+            'id' => 46,
+            'name' => 'Tỉnh Thừa Thiên Huế'
+        ]);
+        City::create([
+            'id' => 48,
+            'name' => 'Thành Phố Đà Nẵng'
+        ]);
+        City::create([
+            'id' => 49,
+            'name' => 'Tỉnh Quảng Nam'
+        ]);
+        City::create([
+            'id' => 51,
+            'name' => 'Tỉnh Quảng Ngãi'
+        ]);
+        City::create([
+            'id' => 52,
+            'name' => 'Tỉnh Bình Định'
+        ]);
+        City::create([
+            'id' => 54,
+            'name' => 'Tỉnh Phú Yên'
+        ]);
+        City::create([
+            'id' => 56,
+            'name' => 'Tỉnh Khánh Hòa'
+        ]);
+        City::create([
+            'id' => 58,
+            'name' => 'Tỉnh Ninh Thuận'
+        ]);
+        City::create([
+            'id' => 60,
+            'name' => 'Tỉnh Bình Thuận'
+        ]);
+        City::create([
+            'id' => 62,
+            'name' => 'Tỉnh Kon Tum'
+        ]);
+        City::create([
+            'id' => 64,
+            'name' => 'Tỉnh Gia Lai'
+        ]);
+        City::create([
+            'id' => 66,
+            'name' => 'Tỉnh Đắk Lắk'
+        ]);
+        City::create([
+            'id' => 67,
+            'name' => 'Tỉnh Đắk Nông'
+        ]);
+        City::create([
+            'id' => 68,
+            'name' => 'Tỉnh Lâm Đồng'
+        ]);
+        City::create([
+            'id' => 70,
+            'name' => 'Tỉnh Bình Phước'
+        ]);
+        City::create([
+            'id' => 72,
+            'name' => 'Tỉnh Tây Ninh'
+        ]);
+        City::create([
+            'id' => 74,
+            'name' => 'Tỉnh Bình Dương'
+        ]);
+        City::create([
+            'id' => 75,
+            'name' => 'Tỉnh Đồng Nai'
+        ]);
+        City::create([
+            'id' => 77,
+            'name' => 'Tỉnh Bà Rịa - Vũng Tàu'
+        ]);
+        City::create([
+            'id' => 79,
+            'name' => 'Thành Phố Hồ Chí Minh'
+        ]);
+        City::create([
+            'id' => 80,
+            'name' => 'Tỉnh Long An'
+        ]);
+        City::create([
+            'id' => 82,
+            'name' => 'Tỉnh Tiền Giang'
+        ]);
+        City::create([
+            'id' => 83,
+            'name' => 'Tỉnh Bến Tre'
+        ]);
+        City::create([
+            'id' => 84,
+            'name' => 'Tỉnh Trà Vinh'
+        ]);
+        City::create([
+            'id' => 86,
+            'name' => 'Tỉnh Vĩnh Long'
+        ]);
+        City::create([
+            'id' => 87,
+            'name' => 'Tỉnh Đồng Tháp'
+        ]);
+        City::create([
+            'id' => 89,
+            'name' => 'Tỉnh An Giang'
+        ]);
+        City::create([
+            'id' => 91,
+            'name' => 'Tỉnh Kiên Giang'
+        ]);
+        City::create([
+            'id' => 92,
+            'name' => 'Thành Phố Cần Thơ'
+        ]);
+        City::create([
+            'id' => 93,
+            'name' => 'Tỉnh Hậu Giang'
+        ]);
+        City::create([
+            'id' => 94,
+            'name' => 'Tỉnh Sóc Trăng'
+        ]);
+        City::create([
+            'id' => 95,
+            'name' => 'Tỉnh Bạc Liêu'
+        ]);
+        City::create([
+            'id' => 96,
+            'name' => 'Tỉnh; Cà Mau'
+        ]);
+        District::create([
+            'id' => 1,
+            'name' => 'Quận Ba Đình',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 2,
+            'name' => 'Quận Hoàn Kiếm',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 3,
+            'name' => 'Quận Tây Hồ',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 4,
+            'name' => 'Quận Long Biên',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 5,
+            'name' => 'Quận Cầu Giấy',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 6,
+            'name' => 'Quận Đống Đa',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 7,
+            'name' => 'Quận Hai Bà Trưng',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 8,
+            'name' => 'Quận Hoàng Mai',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 9,
+            'name' => 'Quận Thanh Xuân',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 16,
+            'name' => 'Huyện Sóc Sơn',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 17,
+            'name' => 'Huyện Đông Anh',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 18,
+            'name' => 'Huyện Gia Lâm',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 19,
+            'name' => 'Huyện Từ Liêm',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 20,
+            'name' => 'Huyện Thanh Trì',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 24,
+            'name' => 'Thị Xã Hà Giang',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 26,
+            'name' => 'Huyện Đồng Văn',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 27,
+            'name' => 'Huyện Mèo Vạc',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 28,
+            'name' => 'Huyện Yên Minh',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 29,
+            'name' => 'Huyện Quản Bạ',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 30,
+            'name' => 'Huyện Vị Xuyên',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 31,
+            'name' => 'Huyện Bắc Mê',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 32,
+            'name' => 'Huyện Hoàng Su Phì',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 33,
+            'name' => 'Huyện Xín Mần',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 34,
+            'name' => 'Huyện Bắc Quang',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 35,
+            'name' => 'Huyện Quang Bình',
+            'city_id' => 2
+        ]);
+        District::create([
+            'id' => 40,
+            'name' => 'Thị Xã Cao Bằng',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 42,
+            'name' => 'Huyện Bảo Lâm',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 43,
+            'name' => 'Huyện Bảo Lạc',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 44,
+            'name' => 'Huyện Thông Nông',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 45,
+            'name' => 'Huyện Hà Quảng',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 46,
+            'name' => 'Huyện Trà Lĩnh',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 47,
+            'name' => 'Huyện Trùng Khánh',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 48,
+            'name' => 'Huyện Hạ Lang',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 49,
+            'name' => 'Huyện Quảng Uyên',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 50,
+            'name' => 'Huyện Phục Hoà',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 51,
+            'name' => 'Huyện Hoà An',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 52,
+            'name' => 'Huyện Nguyên Bình',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 53,
+            'name' => 'Huyện Thạch An',
+            'city_id' => 4
+        ]);
+        District::create([
+            'id' => 58,
+            'name' => 'Thị Xã Bắc Kạn',
+            'city_id' => 6
+        ]);
+        District::create([
+            'id' => 60,
+            'name' => 'Huyện Pác Nặm',
+            'city_id' => 6
+        ]);
+        District::create([
+            'id' => 61,
+            'name' => 'Huyện Ba Bể',
+            'city_id' => 6
+        ]);
+        District::create([
+            'id' => 62,
+            'name' => 'Huyện Ngân Sơn',
+            'city_id' => 6
+        ]);
+        District::create([
+            'id' => 63,
+            'name' => 'Huyện Bạch Thông',
+            'city_id' => 6
+        ]);
+        District::create([
+            'id' => 64,
+            'name' => 'Huyện Chợ Đồn',
+            'city_id' => 6
+        ]);
+        District::create([
+            'id' => 65,
+            'name' => 'Huyện Chợ Mới',
+            'city_id' => 6
+        ]);
+        District::create([
+            'id' => 66,
+            'name' => 'Huyện Na Rì',
+            'city_id' => 6
+        ]);
+        District::create([
+            'id' => 70,
+            'name' => 'Thị Xã Tuyên Quang',
+            'city_id' => 8
+        ]);
+        District::create([
+            'id' => 72,
+            'name' => 'Huyện Nà Hang',
+            'city_id' => 8
+        ]);
+        District::create([
+            'id' => 73,
+            'name' => 'Huyện Chiêm Hóa',
+            'city_id' => 8
+        ]);
+        District::create([
+            'id' => 74,
+            'name' => 'Huyện Hàm Yên',
+            'city_id' => 8
+        ]);
+        District::create([
+            'id' => 75,
+            'name' => 'Huyện Yên Sơn',
+            'city_id' => 8
+        ]);
+        District::create([
+            'id' => 76,
+            'name' => 'Huyện Sơn Dương',
+            'city_id' => 8
+        ]);
+        District::create([
+            'id' => 80,
+            'name' => 'Thành Phố Lào Cai',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 82,
+            'name' => 'Huyện Bát Xát',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 83,
+            'name' => 'Huyện Mường Khương',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 84,
+            'name' => 'Huyện Si Ma Cai',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 85,
+            'name' => 'Huyện Bắc Hà',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 86,
+            'name' => 'Huyện Bảo Thắng',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 87,
+            'name' => 'Huyện Bảo Yên',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 88,
+            'name' => 'Huyện Sa Pa',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 89,
+            'name' => 'Huyện Văn Bàn',
+            'city_id' => 10
+        ]);
+        District::create([
+            'id' => 94,
+            'name' => 'Thành Phố Điện Biên Phủ',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 95,
+            'name' => 'Thị Xã Mường Lay',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 96,
+            'name' => 'Huyện Mường Nhé',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 97,
+            'name' => 'Huyện Mường Chà',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 98,
+            'name' => 'Huyện Tủa Chùa',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 99,
+            'name' => 'Huyện Tuần Giáo',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 100,
+            'name' => 'Huyện Điện Biên',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 101,
+            'name' => 'Huyện Điện Biên Đông',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 102,
+            'name' => 'Huyện Mường Ảng',
+            'city_id' => 11
+        ]);
+        District::create([
+            'id' => 104,
+            'name' => 'Thị Xã Lai Châu',
+            'city_id' => 12
+        ]);
+        District::create([
+            'id' => 106,
+            'name' => 'Huyện Tam Đường',
+            'city_id' => 12
+        ]);
+        District::create([
+            'id' => 107,
+            'name' => 'Huyện Mường Tè',
+            'city_id' => 12
+        ]);
+        District::create([
+            'id' => 108,
+            'name' => 'Huyện Sìn Hồ',
+            'city_id' => 12
+        ]);
+        District::create([
+            'id' => 109,
+            'name' => 'Huyện Phong Thổ',
+            'city_id' => 12
+        ]);
+        District::create([
+            'id' => 110,
+            'name' => 'Huyện Than Uyên',
+            'city_id' => 12
+        ]);
+        District::create([
+            'id' => 111,
+            'name' => 'Huyện Tân Uyên',
+            'city_id' => 12
+        ]);
+        District::create([
+            'id' => 116,
+            'name' => 'Thành Phố Sơn La',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 118,
+            'name' => 'Huyện Quỳnh Nhai',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 119,
+            'name' => 'Huyện Thuận Châu',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 120,
+            'name' => 'Huyện Mường La',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 121,
+            'name' => 'Huyện Bắc Yên',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 122,
+            'name' => 'Huyện Phù Yên',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 123,
+            'name' => 'Huyện Mộc Châu',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 124,
+            'name' => 'Huyện Yên Châu',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 125,
+            'name' => 'Huyện Mai Sơn',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 126,
+            'name' => 'Huyện Sông Mã',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 127,
+            'name' => 'Huyện Sốp Cộp',
+            'city_id' => 14
+        ]);
+        District::create([
+            'id' => 132,
+            'name' => 'Thành Phố Yên Bái',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 133,
+            'name' => 'Thị Xã Nghĩa Lộ',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 135,
+            'name' => 'Huyện Lục Yên',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 136,
+            'name' => 'Huyện Văn Yên',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 137,
+            'name' => 'Huyện Mù Cang Chải',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 138,
+            'name' => 'Huyện Trấn Yên',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 139,
+            'name' => 'Huyện Trạm Tấu',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 140,
+            'name' => 'Huyện Văn Chấn',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 141,
+            'name' => 'Huyện Yên Bình',
+            'city_id' => 15
+        ]);
+        District::create([
+            'id' => 148,
+            'name' => 'Thành Phố Hòa Bình',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 150,
+            'name' => 'Huyện Đà Bắc',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 151,
+            'name' => 'Huyện Kỳ Sơn',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 152,
+            'name' => 'Huyện Lương Sơn',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 153,
+            'name' => 'Huyện Kim Bôi',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 154,
+            'name' => 'Huyện Cao Phong',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 155,
+            'name' => 'Huyện Tân Lạc',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 156,
+            'name' => 'Huyện Mai Châu',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 157,
+            'name' => 'Huyện Lạc Sơn',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 158,
+            'name' => 'Huyện Yên Thủy',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 159,
+            'name' => 'Huyện Lạc Thủy',
+            'city_id' => 17
+        ]);
+        District::create([
+            'id' => 164,
+            'name' => 'Thành Phố Thái Nguyên',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 165,
+            'name' => 'Thị Xã Sông Công',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 167,
+            'name' => 'Huyện Định Hóa',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 168,
+            'name' => 'Huyện Phú Lương',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 169,
+            'name' => 'Huyện Đồng Hỷ',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 170,
+            'name' => 'Huyện Võ Nhai',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 171,
+            'name' => 'Huyện Đại Từ',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 172,
+            'name' => 'Huyện Phổ Yên',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 173,
+            'name' => 'Huyện Phú Bình',
+            'city_id' => 19
+        ]);
+        District::create([
+            'id' => 178,
+            'name' => 'Thành Phố Lạng Sơn',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 180,
+            'name' => 'Huyện Tràng Định',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 181,
+            'name' => 'Huyện Bình Gia',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 182,
+            'name' => 'Huyện Văn Lãng',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 183,
+            'name' => 'Huyện Cao Lộc',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 184,
+            'name' => 'Huyện Văn Quan',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 185,
+            'name' => 'Huyện Bắc Sơn',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 186,
+            'name' => 'Huyện Hữu Lũng',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 187,
+            'name' => 'Huyện Chi Lăng',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 188,
+            'name' => 'Huyện Lộc Bình',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 189,
+            'name' => 'Huyện Đình Lập',
+            'city_id' => 20
+        ]);
+        District::create([
+            'id' => 193,
+            'name' => 'Thành Phố Hạ Long',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 194,
+            'name' => 'Thành Phố Móng Cái',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 195,
+            'name' => 'Thị Xã Cẩm Phả',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 196,
+            'name' => 'Thị Xã Uông Bí',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 198,
+            'name' => 'Huyện Bình Liêu',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 199,
+            'name' => 'Huyện Tiên Yên',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 200,
+            'name' => 'Huyện Đầm Hà',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 201,
+            'name' => 'Huyện Hải Hà',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 202,
+            'name' => 'Huyện Ba Chẽ',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 203,
+            'name' => 'Huyện Vân Đồn',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 204,
+            'name' => 'Huyện Hoành Bồ',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 205,
+            'name' => 'Huyện Đông Triều',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 206,
+            'name' => 'Huyện Yên Hưng',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 207,
+            'name' => 'Huyện Cô Tô',
+            'city_id' => 22
+        ]);
+        District::create([
+            'id' => 213,
+            'name' => 'Thành Phố Bắc Giang',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 215,
+            'name' => 'Huyện Yên Thế',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 216,
+            'name' => 'Huyện Tân Yên',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 217,
+            'name' => 'Huyện Lạng Giang',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 218,
+            'name' => 'Huyện Lục Nam',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 219,
+            'name' => 'Huyện Lục Ngạn',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 220,
+            'name' => 'Huyện Sơn Động',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 221,
+            'name' => 'Huyện Yên Dũng',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 222,
+            'name' => 'Huyện Việt Yên',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 223,
+            'name' => 'Huyện Hiệp Hòa',
+            'city_id' => 24
+        ]);
+        District::create([
+            'id' => 227,
+            'name' => 'Thành Phố Việt Trì',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 228,
+            'name' => 'Thị Xã Phú Thọ',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 230,
+            'name' => 'Huyện Đoan Hùng',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 231,
+            'name' => 'Huyện Hạ Hoà',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 232,
+            'name' => 'Huyện Thanh Ba',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 233,
+            'name' => 'Huyện Phù Ninh',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 234,
+            'name' => 'Huyện Yên Lập',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 235,
+            'name' => 'Huyện Cẩm Khê',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 236,
+            'name' => 'Huyện Tam Nông',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 237,
+            'name' => 'Huyện Lâm Thao',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 238,
+            'name' => 'Huyện Thanh Sơn',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 239,
+            'name' => 'Huyện Thanh Thuỷ',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 240,
+            'name' => 'Huyện Tân Sơn',
+            'city_id' => 25
+        ]);
+        District::create([
+            'id' => 243,
+            'name' => 'Thành Phố Vĩnh Yên',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 244,
+            'name' => 'Thị Xã Phúc Yên',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 246,
+            'name' => 'Huyện Lập Thạch',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 247,
+            'name' => 'Huyện Tam Dương',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 248,
+            'name' => 'Huyện Tam Đảo',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 249,
+            'name' => 'Huyện Bình Xuyên',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 250,
+            'name' => 'Huyện Mê Linh',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 251,
+            'name' => 'Huyện Yên Lạc',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 252,
+            'name' => 'Huyện Vĩnh Tường',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 253,
+            'name' => 'Huyện Sông Lô',
+            'city_id' => 26
+        ]);
+        District::create([
+            'id' => 256,
+            'name' => 'Thành Phố Bắc Ninh',
+            'city_id' => 27
+        ]);
+        District::create([
+            'id' => 258,
+            'name' => 'Huyện Yên Phong',
+            'city_id' => 27
+        ]);
+        District::create([
+            'id' => 259,
+            'name' => 'Huyện Quế Võ',
+            'city_id' => 27
+        ]);
+        District::create([
+            'id' => 260,
+            'name' => 'Huyện Tiên Du',
+            'city_id' => 27
+        ]);
+        District::create([
+            'id' => 261,
+            'name' => 'Thị Xã Từ Sơn',
+            'city_id' => 27
+        ]);
+        District::create([
+            'id' => 262,
+            'name' => 'Huyện Thuận Thành',
+            'city_id' => 27
+        ]);
+        District::create([
+            'id' => 263,
+            'name' => 'Huyện Gia Bình',
+            'city_id' => 27
+        ]);
+        District::create([
+            'id' => 264,
+            'name' => 'Huyện Lương Tài',
+            'city_id' => 27
+        ]);
+        District::create([
+            'id' => 268,
+            'name' => 'Quận Hà Đông',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 269,
+            'name' => 'Thị Xã Sơn Tây',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 271,
+            'name' => 'Huyện Ba Vì',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 272,
+            'name' => 'Huyện Phúc Thọ',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 273,
+            'name' => 'Huyện Đan Phượng',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 274,
+            'name' => 'Huyện Hoài Đức',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 275,
+            'name' => 'Huyện Quốc Oai',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 276,
+            'name' => 'Huyện Thạch Thất',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 277,
+            'name' => 'Huyện Chương Mỹ',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 278,
+            'name' => 'Huyện Thanh Oai',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 279,
+            'name' => 'Huyện Thường Tín',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 280,
+            'name' => 'Huyện Phú Xuyên',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 281,
+            'name' => 'Huyện Ứng Hòa',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 282,
+            'name' => 'Huyện Mỹ Đức',
+            'city_id' => 1
+        ]);
+        District::create([
+            'id' => 288,
+            'name' => 'Thành Phố Hải Dương',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 290,
+            'name' => 'Huyện Chí Linh',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 291,
+            'name' => 'Huyện Nam Sách',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 292,
+            'name' => 'Huyện Kinh Môn',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 293,
+            'name' => 'Huyện Kim Thành',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 294,
+            'name' => 'Huyện Thanh Hà',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 295,
+            'name' => 'Huyện Cẩm Giàng',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 296,
+            'name' => 'Huyện Bình Giang',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 297,
+            'name' => 'Huyện Gia Lộc',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 298,
+            'name' => 'Huyện Tứ Kỳ',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 299,
+            'name' => 'Huyện Ninh Giang',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 300,
+            'name' => 'Huyện Thanh Miện',
+            'city_id' => 30
+        ]);
+        District::create([
+            'id' => 303,
+            'name' => 'Quận Hồng Bàng',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 304,
+            'name' => 'Quận Ngô Quyền',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 305,
+            'name' => 'Quận Lê Chân',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 306,
+            'name' => 'Quận Hải An',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 307,
+            'name' => 'Quận Kiến An',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 308,
+            'name' => 'Quận Đồ Sơn',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 309,
+            'name' => 'Quận Kinh Dương',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 311,
+            'name' => 'Huyện Thuỷ Nguyên',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 312,
+            'name' => 'Huyện An Dương',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 313,
+            'name' => 'Huyện An Lão',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 314,
+            'name' => 'Huyện Kiến Thụy',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 315,
+            'name' => 'Huyện Tiên Lãng',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 316,
+            'name' => 'Huyện Vĩnh Bảo',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 317,
+            'name' => 'Huyện Cát Hải',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 318,
+            'name' => 'Huyện Bạch Long Vĩ',
+            'city_id' => 31
+        ]);
+        District::create([
+            'id' => 323,
+            'name' => 'Thành Phố Hưng Yên',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 325,
+            'name' => 'Huyện Văn Lâm',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 326,
+            'name' => 'Huyện Văn Giang',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 327,
+            'name' => 'Huyện Yên Mỹ',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 328,
+            'name' => 'Huyện Mỹ Hào',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 329,
+            'name' => 'Huyện Ân Thi',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 330,
+            'name' => 'Huyện Khoái Châu',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 331,
+            'name' => 'Huyện Kim Động',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 332,
+            'name' => 'Huyện Tiên Lữ',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 333,
+            'name' => 'Huyện Phù Cừ',
+            'city_id' => 33
+        ]);
+        District::create([
+            'id' => 336,
+            'name' => 'Thành Phố Thái Bình',
+            'city_id' => 34
+        ]);
+        District::create([
+            'id' => 338,
+            'name' => 'Huyện Quỳnh Phụ',
+            'city_id' => 34
+        ]);
+        District::create([
+            'id' => 339,
+            'name' => 'Huyện Hưng Hà',
+            'city_id' => 34
+        ]);
+        District::create([
+            'id' => 340,
+            'name' => 'Huyện Đông Hưng',
+            'city_id' => 34
+        ]);
+        District::create([
+            'id' => 341,
+            'name' => 'Huyện Thái Thụy',
+            'city_id' => 34
+        ]);
+        District::create([
+            'id' => 342,
+            'name' => 'Huyện Tiền Hải',
+            'city_id' => 34
+        ]);
+        District::create([
+            'id' => 343,
+            'name' => 'Huyện Kiến Xương',
+            'city_id' => 34
+        ]);
+        District::create([
+            'id' => 344,
+            'name' => 'Huyện Vũ Thư',
+            'city_id' => 34
+        ]);
+        District::create([
+            'id' => 347,
+            'name' => 'Thành Phố Phủ Lý',
+            'city_id' => 35
+        ]);
+        District::create([
+            'id' => 349,
+            'name' => 'Huyện Duy Tiên',
+            'city_id' => 35
+        ]);
+        District::create([
+            'id' => 350,
+            'name' => 'Huyện Kim Bảng',
+            'city_id' => 35
+        ]);
+        District::create([
+            'id' => 351,
+            'name' => 'Huyện Thanh Liêm',
+            'city_id' => 35
+        ]);
+        District::create([
+            'id' => 352,
+            'name' => 'Huyện Bình Lục',
+            'city_id' => 35
+        ]);
+        District::create([
+            'id' => 353,
+            'name' => 'Huyện Lý Nhân',
+            'city_id' => 35
+        ]);
+        District::create([
+            'id' => 356,
+            'name' => 'Thành Phố Nam Định',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 358,
+            'name' => 'Huyện Mỹ Lộc',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 359,
+            'name' => 'Huyện Vụ Bản',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 360,
+            'name' => 'Huyện Ý Yên',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 361,
+            'name' => 'Huyện Nghĩa Hưng',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 362,
+            'name' => 'Huyện Nam Trực',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 363,
+            'name' => 'Huyện Trực Ninh',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 364,
+            'name' => 'Huyện Xuân Trường',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 365,
+            'name' => 'Huyện Giao Thủy',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 366,
+            'name' => 'Huyện Hải Hậu',
+            'city_id' => 36
+        ]);
+        District::create([
+            'id' => 369,
+            'name' => 'Thành Phố Ninh Bình',
+            'city_id' => 37
+        ]);
+        District::create([
+            'id' => 370,
+            'name' => 'Thị Xã Tam Điệp',
+            'city_id' => 37
+        ]);
+        District::create([
+            'id' => 372,
+            'name' => 'Huyện Nho Quan',
+            'city_id' => 37
+        ]);
+        District::create([
+            'id' => 373,
+            'name' => 'Huyện Gia Viễn',
+            'city_id' => 37
+        ]);
+        District::create([
+            'id' => 374,
+            'name' => 'Huyện Hoa Lư',
+            'city_id' => 37
+        ]);
+        District::create([
+            'id' => 375,
+            'name' => 'Huyện Yên Khánh',
+            'city_id' => 37
+        ]);
+        District::create([
+            'id' => 376,
+            'name' => 'Huyện Kim Sơn',
+            'city_id' => 37
+        ]);
+        District::create([
+            'id' => 377,
+            'name' => 'Huyện Yên Mô',
+            'city_id' => 37
+        ]);
+        District::create([
+            'id' => 380,
+            'name' => 'Thành Phố Thanh Hóa',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 381,
+            'name' => 'Thị Xã Bỉm Sơn',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 382,
+            'name' => 'Thị Xã Sầm Sơn',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 384,
+            'name' => 'Huyện Mường Lát',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 385,
+            'name' => 'Huyện Quan Hóa',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 386,
+            'name' => 'Huyện Bá Thước',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 387,
+            'name' => 'Huyện Quan Sơn',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 388,
+            'name' => 'Huyện Lang Chánh',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 389,
+            'name' => 'Huyện Ngọc Lặc',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 390,
+            'name' => 'Huyện Cẩm Thủy',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 391,
+            'name' => 'Huyện Thạch Thành',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 392,
+            'name' => 'Huyện Hà Trung',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 393,
+            'name' => 'Huyện Vĩnh Lộc',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 394,
+            'name' => 'Huyện Yên Định',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 395,
+            'name' => 'Huyện Thọ Xuân',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 396,
+            'name' => 'Huyện Thường Xuân',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 397,
+            'name' => 'Huyện Triệu Sơn',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 398,
+            'name' => 'Huyện Thiệu Hoá',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 399,
+            'name' => 'Huyện Hoằng Hóa',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 400,
+            'name' => 'Huyện Hậu Lộc',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 401,
+            'name' => 'Huyện Nga Sơn',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 402,
+            'name' => 'Huyện Như Xuân',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 403,
+            'name' => 'Huyện Như Thanh',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 404,
+            'name' => 'Huyện Nông Cống',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 405,
+            'name' => 'Huyện Đông Sơn',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 406,
+            'name' => 'Huyện Quảng Xương',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 407,
+            'name' => 'Huyện Tĩnh Gia',
+            'city_id' => 38
+        ]);
+        District::create([
+            'id' => 412,
+            'name' => 'Thành Phố Vinh',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 413,
+            'name' => 'Thị Xã Cửa Lò',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 414,
+            'name' => 'Thị Xã Thái Hoà',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 415,
+            'name' => 'Huyện Quế Phong',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 416,
+            'name' => 'Huyện Quỳ Châu',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 417,
+            'name' => 'Huyện Kỳ Sơn',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 418,
+            'name' => 'Huyện Tương Dương',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 419,
+            'name' => 'Huyện Nghĩa Đàn',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 420,
+            'name' => 'Huyện Quỳ Hợp',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 421,
+            'name' => 'Huyện Quỳnh Lưu',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 422,
+            'name' => 'Huyện Con Cuông',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 423,
+            'name' => 'Huyện Tân Kỳ',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 424,
+            'name' => 'Huyện Anh Sơn',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 425,
+            'name' => 'Huyện Diễn Châu',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 426,
+            'name' => 'Huyện Yên Thành',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 427,
+            'name' => 'Huyện Đô Lương',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 428,
+            'name' => 'Huyện Thanh Chương',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 429,
+            'name' => 'Huyện Nghi Lộc',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 430,
+            'name' => 'Huyện Nam Đàn',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 431,
+            'name' => 'Huyện Hưng Nguyên',
+            'city_id' => 40
+        ]);
+        District::create([
+            'id' => 436,
+            'name' => 'Thành Phố Hà Tĩnh',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 437,
+            'name' => 'Thị Xã Hồng Lĩnh',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 439,
+            'name' => 'Huyện Hương Sơn',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 440,
+            'name' => 'Huyện Đức Thọ',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 441,
+            'name' => 'Huyện Vũ Quang',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 442,
+            'name' => 'Huyện Nghi Xuân',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 443,
+            'name' => 'Huyện Can Lộc',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 444,
+            'name' => 'Huyện Hương Khê',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 445,
+            'name' => 'Huyện Thạch Hà',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 446,
+            'name' => 'Huyện Cẩm Xuyên',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 447,
+            'name' => 'Huyện Kỳ Anh',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 448,
+            'name' => 'Huyện Lộc Hà',
+            'city_id' => 42
+        ]);
+        District::create([
+            'id' => 450,
+            'name' => 'Thành Phố Đồng Hới',
+            'city_id' => 44
+        ]);
+        District::create([
+            'id' => 452,
+            'name' => 'Huyện Minh Hóa',
+            'city_id' => 44
+        ]);
+        District::create([
+            'id' => 453,
+            'name' => 'Huyện Tuyên Hóa',
+            'city_id' => 44
+        ]);
+        District::create([
+            'id' => 454,
+            'name' => 'Huyện Quảng Trạch',
+            'city_id' => 44
+        ]);
+        District::create([
+            'id' => 455,
+            'name' => 'Huyện Bố Trạch',
+            'city_id' => 44
+        ]);
+        District::create([
+            'id' => 456,
+            'name' => 'Huyện Quảng Ninh',
+            'city_id' => 44
+        ]);
+        District::create([
+            'id' => 457,
+            'name' => 'Huyện Lệ Thủy',
+            'city_id' => 44
+        ]);
+        District::create([
+            'id' => 461,
+            'name' => 'Thành Phố Đông Hà',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 462,
+            'name' => 'Thị Xã Quảng Trị',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 464,
+            'name' => 'Huyện Vĩnh Linh',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 465,
+            'name' => 'Huyện Hướng Hóa',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 466,
+            'name' => 'Huyện Gio Linh',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 467,
+            'name' => 'Huyện Đa Krông',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 468,
+            'name' => 'Huyện Cam Lộ',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 469,
+            'name' => 'Huyện Triệu Phong',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 470,
+            'name' => 'Huyện Hải Lăng',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 471,
+            'name' => 'Huyện Cồn Cỏ',
+            'city_id' => 45
+        ]);
+        District::create([
+            'id' => 474,
+            'name' => 'Thành Phố Huế',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 476,
+            'name' => 'Huyện Phong Điền',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 477,
+            'name' => 'Huyện Quảng Điền',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 478,
+            'name' => 'Huyện Phú Vang',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 479,
+            'name' => 'Huyện Hương Thủy',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 480,
+            'name' => 'Huyện Hương Trà',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 481,
+            'name' => 'Huyện A Lưới',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 482,
+            'name' => 'Huyện Phú Lộc',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 483,
+            'name' => 'Huyện Nam Đông',
+            'city_id' => 46
+        ]);
+        District::create([
+            'id' => 490,
+            'name' => 'Quận Liên Chiểu',
+            'city_id' => 48
+        ]);
+        District::create([
+            'id' => 491,
+            'name' => 'Quận Thanh Khê',
+            'city_id' => 48
+        ]);
+        District::create([
+            'id' => 492,
+            'name' => 'Quận Hải Châu',
+            'city_id' => 48
+        ]);
+        District::create([
+            'id' => 493,
+            'name' => 'Quận Sơn Trà',
+            'city_id' => 48
+        ]);
+        District::create([
+            'id' => 494,
+            'name' => 'Quận Ngũ Hành Sơn',
+            'city_id' => 48
+        ]);
+        District::create([
+            'id' => 495,
+            'name' => 'Quận Cẩm Lệ',
+            'city_id' => 48
+        ]);
+        District::create([
+            'id' => 497,
+            'name' => 'Huyện Hoà Vang',
+            'city_id' => 48
+        ]);
+        District::create([
+            'id' => 498,
+            'name' => 'Huyện Hoàng Sa',
+            'city_id' => 48
+        ]);
+        District::create([
+            'id' => 502,
+            'name' => 'Thành Phố Tam Kỳ',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 503,
+            'name' => 'Thành Phố Hội An',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 504,
+            'name' => 'Huyện Tây Giang',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 505,
+            'name' => 'Huyện Đông Giang',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 506,
+            'name' => 'Huyện Đại Lộc',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 507,
+            'name' => 'Huyện Điện Bàn',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 508,
+            'name' => 'Huyện Duy Xuyên',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 509,
+            'name' => 'Huyện Quế Sơn',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 510,
+            'name' => 'Huyện Nam Giang',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 511,
+            'name' => 'Huyện Phước Sơn',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 512,
+            'name' => 'Huyện Hiệp Đức',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 513,
+            'name' => 'Huyện Thăng Bình',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 514,
+            'name' => 'Huyện Tiên Phước',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 515,
+            'name' => 'Huyện Bắc Trà My',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 516,
+            'name' => 'Huyện Nam Trà My',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 517,
+            'name' => 'Huyện Núi Thành',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 518,
+            'name' => 'Huyện Phú Ninh',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 519,
+            'name' => 'Huyện Nông Sơn',
+            'city_id' => 49
+        ]);
+        District::create([
+            'id' => 522,
+            'name' => 'Thành Phố Quảng Ngãi',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 524,
+            'name' => 'Huyện Bình Sơn',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 525,
+            'name' => 'Huyện Trà Bồng',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 526,
+            'name' => 'Huyện Tây Trà',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 527,
+            'name' => 'Huyện Sơn Tịnh',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 528,
+            'name' => 'Huyện Tư Nghĩa',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 529,
+            'name' => 'Huyện Sơn Hà',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 530,
+            'name' => 'Huyện Sơn Tây',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 531,
+            'name' => 'Huyện Minh Long',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 532,
+            'name' => 'Huyện Nghĩa Hành',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 533,
+            'name' => 'Huyện Mộ Đức',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 534,
+            'name' => 'Huyện Đức Phổ',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 535,
+            'name' => 'Huyện Ba Tơ',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 536,
+            'name' => 'Huyện Lý Sơn',
+            'city_id' => 51
+        ]);
+        District::create([
+            'id' => 540,
+            'name' => 'Thành Phố Qui Nhơn',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 542,
+            'name' => 'Huyện An Lão',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 543,
+            'name' => 'Huyện Hoài Nhơn',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 544,
+            'name' => 'Huyện Hoài Ân',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 545,
+            'name' => 'Huyện Phù Mỹ',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 546,
+            'name' => 'Huyện Vĩnh Thạnh',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 547,
+            'name' => 'Huyện Tây Sơn',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 548,
+            'name' => 'Huyện Phù Cát',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 549,
+            'name' => 'Huyện An Nhơn',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 550,
+            'name' => 'Huyện Tuy Phước',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 551,
+            'name' => 'Huyện Vân Canh',
+            'city_id' => 52
+        ]);
+        District::create([
+            'id' => 555,
+            'name' => 'Thành Phố Tuy Hòa',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 557,
+            'name' => 'Thị Xã Sông Cầu',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 558,
+            'name' => 'Huyện Đồng Xuân',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 559,
+            'name' => 'Huyện Tuy An',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 560,
+            'name' => 'Huyện Sơn Hòa',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 561,
+            'name' => 'Huyện Sông Hinh',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 562,
+            'name' => 'Huyện Tây Hoà',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 563,
+            'name' => 'Huyện Phú Hoà',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 564,
+            'name' => 'Huyện Đông Hoà',
+            'city_id' => 54
+        ]);
+        District::create([
+            'id' => 568,
+            'name' => 'Thành Phố Nha Trang',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 569,
+            'name' => 'Thị Xã Cam Ranh',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 570,
+            'name' => 'Huyện Cam Lâm',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 571,
+            'name' => 'Huyện Vạn Ninh',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 572,
+            'name' => 'Huyện Ninh Hòa',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 573,
+            'name' => 'Huyện Khánh Vĩnh',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 574,
+            'name' => 'Huyện Diên Khánh',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 575,
+            'name' => 'Huyện Khánh Sơn',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 576,
+            'name' => 'Huyện Trường Sa',
+            'city_id' => 56
+        ]);
+        District::create([
+            'id' => 582,
+            'name' => 'Thành Phố Phan Rang-Tháp Chàm',
+            'city_id' => 58
+        ]);
+        District::create([
+            'id' => 584,
+            'name' => 'Huyện Bác Ái',
+            'city_id' => 58
+        ]);
+        District::create([
+            'id' => 585,
+            'name' => 'Huyện Ninh Sơn',
+            'city_id' => 58
+        ]);
+        District::create([
+            'id' => 586,
+            'name' => 'Huyện Ninh Hải',
+            'city_id' => 58
+        ]);
+        District::create([
+            'id' => 587,
+            'name' => 'Huyện Ninh Phước',
+            'city_id' => 58
+        ]);
+        District::create([
+            'id' => 588,
+            'name' => 'Huyện Thuận Bắc',
+            'city_id' => 58
+        ]);
+        District::create([
+            'id' => 589,
+            'name' => 'Huyện Thuận Nam',
+            'city_id' => 58
+        ]);
+        District::create([
+            'id' => 593,
+            'name' => 'Thành Phố Phan Thiết',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 594,
+            'name' => 'Thị Xã La Gi',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 595,
+            'name' => 'Huyện Tuy Phong',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 596,
+            'name' => 'Huyện Bắc Bình',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 597,
+            'name' => 'Huyện Hàm Thuận Bắc',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 598,
+            'name' => 'Huyện Hàm Thuận Nam',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 599,
+            'name' => 'Huyện Tánh Linh',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 600,
+            'name' => 'Huyện Đức Linh',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 601,
+            'name' => 'Huyện Hàm Tân',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 602,
+            'name' => 'Huyện Phú Quí',
+            'city_id' => 60
+        ]);
+        District::create([
+            'id' => 608,
+            'name' => 'Thành Phố Kon Tum',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 610,
+            'name' => 'Huyện Đắk Glei',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 611,
+            'name' => 'Huyện Ngọc Hồi',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 612,
+            'name' => 'Huyện Đắk Tô',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 613,
+            'name' => 'Huyện Kon Plông',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 614,
+            'name' => 'Huyện Kon Rẫy',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 615,
+            'name' => 'Huyện Đắk Hà',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 616,
+            'name' => 'Huyện Sa Thầy',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 617,
+            'name' => 'Huyện Tu Mơ Rông',
+            'city_id' => 62
+        ]);
+        District::create([
+            'id' => 622,
+            'name' => 'Thành Phố Pleiku',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 623,
+            'name' => 'Thị Xã An Khê',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 624,
+            'name' => 'Thị Xã Ayun Pa',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 625,
+            'name' => 'Huyện Kbang',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 626,
+            'name' => 'Huyện Đăk Đoa',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 627,
+            'name' => 'Huyện Chư Păh',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 628,
+            'name' => 'Huyện Ia Grai',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 629,
+            'name' => 'Huyện Mang Yang',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 630,
+            'name' => 'Huyện Kông Chro',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 631,
+            'name' => 'Huyện Đức Cơ',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 632,
+            'name' => 'Huyện Chư Prông',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 633,
+            'name' => 'Huyện Chư Sê',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 634,
+            'name' => 'Huyện Đăk Pơ',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 635,
+            'name' => 'Huyện Ia Pa',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 637,
+            'name' => 'Huyện Krông Pa',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 638,
+            'name' => 'Huyện Phú Thiện',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 639,
+            'name' => 'Huyện Chư Pưh',
+            'city_id' => 64
+        ]);
+        District::create([
+            'id' => 643,
+            'name' => 'Thành Phố Buôn Ma Thuột',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 644,
+            'name' => 'Thị Xã Buôn Hồ',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 645,
+            'name' => 'Huyện Ea Hleo',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 646,
+            'name' => 'Huyện Ea Súp',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 647,
+            'name' => 'Huyện Buôn Đôn',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 648,
+            'name' => 'Huyện Cư Mgar',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 649,
+            'name' => 'Huyện Krông Búk',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 650,
+            'name' => 'Huyện Krông Năng',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 651,
+            'name' => 'Huyện Ea Kar',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 652,
+            'name' => 'Huyện Mđrắk',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 653,
+            'name' => 'Huyện Krông Bông',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 654,
+            'name' => 'Huyện Krông Pắc',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 655,
+            'name' => 'Huyện Krông A Na',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 656,
+            'name' => 'Huyện Lắk',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 657,
+            'name' => 'Huyện Cư Kuin',
+            'city_id' => 66
+        ]);
+        District::create([
+            'id' => 660,
+            'name' => 'Thị Xã Gia Nghĩa',
+            'city_id' => 67
+        ]);
+        District::create([
+            'id' => 661,
+            'name' => 'Huyện Đắk Glong',
+            'city_id' => 67
+        ]);
+        District::create([
+            'id' => 662,
+            'name' => 'Huyện Cư Jút',
+            'city_id' => 67
+        ]);
+        District::create([
+            'id' => 663,
+            'name' => 'Huyện Đắk Mil',
+            'city_id' => 67
+        ]);
+        District::create([
+            'id' => 664,
+            'name' => 'Huyện Krông Nô',
+            'city_id' => 67
+        ]);
+        District::create([
+            'id' => 665,
+            'name' => 'Huyện Đắk Song',
+            'city_id' => 67
+        ]);
+        District::create([
+            'id' => 666,
+            'name' => 'Huyện Đắk Rlấp',
+            'city_id' => 67
+        ]);
+        District::create([
+            'id' => 667,
+            'name' => 'Huyện Tuy Đức',
+            'city_id' => 67
+        ]);
+        District::create([
+            'id' => 672,
+            'name' => 'Thành Phố Đà Lạt',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 673,
+            'name' => 'Thị Xã Bảo Lộc',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 674,
+            'name' => 'Huyện Đam Rông',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 675,
+            'name' => 'Huyện Lạc Dương',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 676,
+            'name' => 'Huyện Lâm Hà',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 677,
+            'name' => 'Huyện Đơn Dương',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 678,
+            'name' => 'Huyện Đức Trọng',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 679,
+            'name' => 'Huyện Di Linh',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 680,
+            'name' => 'Huyện Bảo Lâm',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 681,
+            'name' => 'Huyện Đạ Huoai',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 682,
+            'name' => 'Huyện Đạ Tẻh',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 683,
+            'name' => 'Huyện Cát Tiên',
+            'city_id' => 68
+        ]);
+        District::create([
+            'id' => 688,
+            'name' => 'Thị Xã Phước Long',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 689,
+            'name' => 'Thị Xã Đồng Xoài',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 690,
+            'name' => 'Thị Xã Bình Long',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 691,
+            'name' => 'Huyện Bù Gia Mập',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 692,
+            'name' => 'Huyện Lộc Ninh',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 693,
+            'name' => 'Huyện Bù Đốp',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 694,
+            'name' => 'Huyện Hớn Quản',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 695,
+            'name' => 'Huyện Đồng Phù',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 696,
+            'name' => 'Huyện Bù Đăng',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 697,
+            'name' => 'Huyện Chơn Thành',
+            'city_id' => 70
+        ]);
+        District::create([
+            'id' => 703,
+            'name' => 'Thị Xã Tây Ninh',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 705,
+            'name' => 'Huyện Tân Biên',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 706,
+            'name' => 'Huyện Tân Châu',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 707,
+            'name' => 'Huyện Dương Minh Châu',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 708,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 709,
+            'name' => 'Huyện Hòa Thành',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 710,
+            'name' => 'Huyện Gò Dầu',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 711,
+            'name' => 'Huyện Bến Cầu',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 712,
+            'name' => 'Huyện Trảng Bàng',
+            'city_id' => 72
+        ]);
+        District::create([
+            'id' => 718,
+            'name' => 'Thị Xã Thủ Dầu Một',
+            'city_id' => 74
+        ]);
+        District::create([
+            'id' => 720,
+            'name' => 'Huyện Dầu Tiếng',
+            'city_id' => 74
+        ]);
+        District::create([
+            'id' => 721,
+            'name' => 'Huyện Bến Cát',
+            'city_id' => 74
+        ]);
+        District::create([
+            'id' => 722,
+            'name' => 'Huyện Phú Giáo',
+            'city_id' => 74
+        ]);
+        District::create([
+            'id' => 723,
+            'name' => 'Huyện Tân Uyên',
+            'city_id' => 74
+        ]);
+        District::create([
+            'id' => 724,
+            'name' => 'Huyện Dĩ An',
+            'city_id' => 74
+        ]);
+        District::create([
+            'id' => 725,
+            'name' => 'Huyện Thuận An',
+            'city_id' => 74
+        ]);
+        District::create([
+            'id' => 731,
+            'name' => 'Thành Phố Biên Hòa',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 732,
+            'name' => 'Thị Xã Long Khánh',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 734,
+            'name' => 'Huyện Tân Phú',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 735,
+            'name' => 'Huyện Vĩnh Cửu',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 736,
+            'name' => 'Huyện Định Quán',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 737,
+            'name' => 'Huyện Trảng Bom',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 738,
+            'name' => 'Huyện Thống Nhất',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 739,
+            'name' => 'Huyện Cẩm Mỹ',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 740,
+            'name' => 'Huyện Long Thành',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 741,
+            'name' => 'Huyện Xuân Lộc',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 742,
+            'name' => 'Huyện Nhơn Trạch',
+            'city_id' => 75
+        ]);
+        District::create([
+            'id' => 747,
+            'name' => 'Thành Phố Vũng Tầu',
+            'city_id' => 77
+        ]);
+        District::create([
+            'id' => 748,
+            'name' => 'Thị Xã Bà Rịa',
+            'city_id' => 77
+        ]);
+        District::create([
+            'id' => 750,
+            'name' => 'Huyện Châu Đức',
+            'city_id' => 77
+        ]);
+        District::create([
+            'id' => 751,
+            'name' => 'Huyện Xuyên Mộc',
+            'city_id' => 77
+        ]);
+        District::create([
+            'id' => 752,
+            'name' => 'Huyện Long Điền',
+            'city_id' => 77
+        ]);
+        District::create([
+            'id' => 753,
+            'name' => 'Huyện Đất Đỏ',
+            'city_id' => 77
+        ]);
+        District::create([
+            'id' => 754,
+            'name' => 'Huyện Tân Thành',
+            'city_id' => 77
+        ]);
+        District::create([
+            'id' => 755,
+            'name' => 'Huyện Côn Đảo',
+            'city_id' => 77
+        ]);
+        District::create([
+            'id' => 760,
+            'name' => 'Quận 1',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 761,
+            'name' => 'Quận 12',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 762,
+            'name' => 'Quận Thủ Đức',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 763,
+            'name' => 'Quận 9',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 764,
+            'name' => 'Quận Gò Vấp',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 765,
+            'name' => 'Quận Bình Thạnh',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 766,
+            'name' => 'Quận Tân Bình',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 767,
+            'name' => 'Quận Tân Phú',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 768,
+            'name' => 'Quận Phú Nhuận',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 769,
+            'name' => 'Quận 2',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 770,
+            'name' => 'Quận 3',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 771,
+            'name' => 'Quận 10',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 772,
+            'name' => 'Quận 11',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 773,
+            'name' => 'Quận 4',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 774,
+            'name' => 'Quận 5',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 775,
+            'name' => 'Quận 6',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 776,
+            'name' => 'Quận 8',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 777,
+            'name' => 'Quận Bình Tân',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 778,
+            'name' => 'Quận 7',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 783,
+            'name' => 'Huyện Củ Chi',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 784,
+            'name' => 'Huyện Hóc Môn',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 785,
+            'name' => 'Huyện Bình Chánh',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 786,
+            'name' => 'Huyện Nhà Bè',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 787,
+            'name' => 'Huyện Cần Giờ',
+            'city_id' => 79
+        ]);
+        District::create([
+            'id' => 794,
+            'name' => 'Thành Phố Tân An',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 796,
+            'name' => 'Huyện Tân Hưng',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 797,
+            'name' => 'Huyện Vĩnh Hưng',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 798,
+            'name' => 'Huyện Mộc Hóa',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 799,
+            'name' => 'Huyện Tân Thạnh',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 800,
+            'name' => 'Huyện Thạnh Hóa',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 801,
+            'name' => 'Huyện Đức Huệ',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 802,
+            'name' => 'Huyện Đức Hòa',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 803,
+            'name' => 'Huyện Bến Lức',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 804,
+            'name' => 'Huyện Thủ Thừa',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 805,
+            'name' => 'Huyện Tân Trụ',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 806,
+            'name' => 'Huyện Cần Đước',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 807,
+            'name' => 'Huyện Cần Giuộc',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 808,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 80
+        ]);
+        District::create([
+            'id' => 815,
+            'name' => 'Thành Phố Mỹ Tho',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 816,
+            'name' => 'Thị Xã Gò Công',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 818,
+            'name' => 'Huyện Tân Phước',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 819,
+            'name' => 'Huyện Cái Bè',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 820,
+            'name' => 'Huyện Cai Lậy',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 821,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 822,
+            'name' => 'Huyện Chợ Gạo',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 823,
+            'name' => 'Huyện Gò Công Tây',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 824,
+            'name' => 'Huyện Gò Công Đông',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 825,
+            'name' => 'Huyện Tân Phú Đông',
+            'city_id' => 82
+        ]);
+        District::create([
+            'id' => 829,
+            'name' => 'Thành Phố Bến Tre',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 831,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 832,
+            'name' => 'Huyện Chợ Lách',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 833,
+            'name' => 'Huyện Mỏ Cày Nam',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 834,
+            'name' => 'Huyện Giồng Trôm',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 835,
+            'name' => 'Huyện Bình Đại',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 836,
+            'name' => 'Huyện Ba Tri',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 837,
+            'name' => 'Huyện Thạnh Phú',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 838,
+            'name' => 'Huyện Mỏ Cày Bắc',
+            'city_id' => 83
+        ]);
+        District::create([
+            'id' => 842,
+            'name' => 'Thị Xã Trà Vinh',
+            'city_id' => 84
+        ]);
+        District::create([
+            'id' => 844,
+            'name' => 'Huyện Càng Long',
+            'city_id' => 84
+        ]);
+        District::create([
+            'id' => 845,
+            'name' => 'Huyện Cầu Kè',
+            'city_id' => 84
+        ]);
+        District::create([
+            'id' => 846,
+            'name' => 'Huyện Tiểu Cần',
+            'city_id' => 84
+        ]);
+        District::create([
+            'id' => 847,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 84
+        ]);
+        District::create([
+            'id' => 848,
+            'name' => 'Huyện Cầu Ngang',
+            'city_id' => 84
+        ]);
+        District::create([
+            'id' => 849,
+            'name' => 'Huyện Trà Cú',
+            'city_id' => 84
+        ]);
+        District::create([
+            'id' => 850,
+            'name' => 'Huyện Duyên Hải',
+            'city_id' => 84
+        ]);
+        District::create([
+            'id' => 855,
+            'name' => 'Thành Phố Vĩnh Long',
+            'city_id' => 86
+        ]);
+        District::create([
+            'id' => 857,
+            'name' => 'Huyện Long Hồ',
+            'city_id' => 86
+        ]);
+        District::create([
+            'id' => 858,
+            'name' => 'Huyện Mang Thít',
+            'city_id' => 86
+        ]);
+        District::create([
+            'id' => 859,
+            'name' => 'Huyện Vũng Liêm',
+            'city_id' => 86
+        ]);
+        District::create([
+            'id' => 860,
+            'name' => 'Huyện Tam Bình',
+            'city_id' => 86
+        ]);
+        District::create([
+            'id' => 861,
+            'name' => 'Huyện Bình Minh',
+            'city_id' => 86
+        ]);
+        District::create([
+            'id' => 862,
+            'name' => 'Huyện Trà Ôn',
+            'city_id' => 86
+        ]);
+        District::create([
+            'id' => 863,
+            'name' => 'Huyện Bình Tân',
+            'city_id' => 86
+        ]);
+        District::create([
+            'id' => 866,
+            'name' => 'Thành Phố Cao Lãnh',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 867,
+            'name' => 'Thị Xã Sa Đéc',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 868,
+            'name' => 'Thị Xã Hồng Ngự',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 869,
+            'name' => 'Huyện Tân Hồng',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 870,
+            'name' => 'Huyện Hồng Ngự',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 871,
+            'name' => 'Huyện Tam Nông',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 872,
+            'name' => 'Huyện Tháp Mười',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 873,
+            'name' => 'Huyện Cao Lãnh',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 874,
+            'name' => 'Huyện Thanh Bình',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 875,
+            'name' => 'Huyện Lấp Vò',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 876,
+            'name' => 'Huyện Lai Vung',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 877,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 87
+        ]);
+        District::create([
+            'id' => 883,
+            'name' => 'Thành Phố Long Xuyên',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 884,
+            'name' => 'Thị Xã Châu Đốc',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 886,
+            'name' => 'Huyện An Phú',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 887,
+            'name' => 'Thị Xã Tân Châu',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 888,
+            'name' => 'Huyện Phú Tân',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 889,
+            'name' => 'Huyện Châu Phú',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 890,
+            'name' => 'Huyện Tịnh Biên',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 891,
+            'name' => 'Huyện Tri Tôn',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 892,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 893,
+            'name' => 'Huyện Chợ Mới',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 894,
+            'name' => 'Huyện Thoại Sơn',
+            'city_id' => 89
+        ]);
+        District::create([
+            'id' => 899,
+            'name' => 'Thành Phố Rạch Giá',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 900,
+            'name' => 'Thị Xã Hà Tiên',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 902,
+            'name' => 'Huyện Kiên Lương',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 903,
+            'name' => 'Huyện Hòn Đất',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 904,
+            'name' => 'Huyện Tân Hiệp',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 905,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 906,
+            'name' => 'Huyện Giồng Giềng',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 907,
+            'name' => 'Huyện Gò Quao',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 908,
+            'name' => 'Huyện An Biên',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 909,
+            'name' => 'Huyện An Minh',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 910,
+            'name' => 'Huyện Vĩnh Thuận',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 911,
+            'name' => 'Huyện Phú Quốc',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 912,
+            'name' => 'Huyện Kiên Hải',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 913,
+            'name' => 'Huyện U Minh Thượng',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 914,
+            'name' => 'Huyện Giang Thành',
+            'city_id' => 91
+        ]);
+        District::create([
+            'id' => 916,
+            'name' => 'Quận Ninh Kiều',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 917,
+            'name' => 'Quận Ô Môn',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 918,
+            'name' => 'Quận Bình Thuỷ',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 919,
+            'name' => 'Quận Cái Răng',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 923,
+            'name' => 'Quận Thốt Nốt',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 924,
+            'name' => 'Huyện Vĩnh Thạnh',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 925,
+            'name' => 'Huyện Cờ Đỏ',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 926,
+            'name' => 'Huyện Phong Điền',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 927,
+            'name' => 'Huyện Thới Lai',
+            'city_id' => 92
+        ]);
+        District::create([
+            'id' => 930,
+            'name' => 'Thị Xã Vị Thanh',
+            'city_id' => 93
+        ]);
+        District::create([
+            'id' => 931,
+            'name' => 'Thị Xã Ngã Bảy',
+            'city_id' => 93
+        ]);
+        District::create([
+            'id' => 932,
+            'name' => 'Huyện Châu Thành A',
+            'city_id' => 93
+        ]);
+        District::create([
+            'id' => 933,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 93
+        ]);
+        District::create([
+            'id' => 934,
+            'name' => 'Huyện Phụng Hiệp',
+            'city_id' => 93
+        ]);
+        District::create([
+            'id' => 935,
+            'name' => 'Huyện Vị Thuỷ',
+            'city_id' => 93
+        ]);
+        District::create([
+            'id' => 936,
+            'name' => 'Huyện Long Mỹ',
+            'city_id' => 93
+        ]);
+        District::create([
+            'id' => 941,
+            'name' => 'Thành Phố Sóc Trăng',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 942,
+            'name' => 'Huyện Châu Thành',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 943,
+            'name' => 'Huyện Kế Sách',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 944,
+            'name' => 'Huyện Mỹ Tú',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 945,
+            'name' => 'Huyện Cù Lao Dung',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 946,
+            'name' => 'Huyện Long Phú',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 947,
+            'name' => 'Huyện Mỹ Xuyên',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 948,
+            'name' => 'Huyện Ngã Năm',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 949,
+            'name' => 'Huyện Thạnh Trị',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 950,
+            'name' => 'Huyện Vĩnh Châu',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 951,
+            'name' => 'Huyện Trần Đề',
+            'city_id' => 94
+        ]);
+        District::create([
+            'id' => 954,
+            'name' => 'Thị Xã Bạc Liêu',
+            'city_id' => 95
+        ]);
+        District::create([
+            'id' => 956,
+            'name' => 'Huyện Hồng Dân',
+            'city_id' => 95
+        ]);
+        District::create([
+            'id' => 957,
+            'name' => 'Huyện Phước Long',
+            'city_id' => 95
+        ]);
+        District::create([
+            'id' => 958,
+            'name' => 'Huyện Vĩnh Lợi',
+            'city_id' => 95
+        ]);
+        District::create([
+            'id' => 959,
+            'name' => 'Huyện Giá Rai',
+            'city_id' => 95
+        ]);
+        District::create([
+            'id' => 960,
+            'name' => 'Huyện Đông Hải',
+            'city_id' => 95
+        ]);
+        District::create([
+            'id' => 961,
+            'name' => 'Huyện Hoà Bình',
+            'city_id' => 95
+        ]);
+        District::create([
+            'id' => 964,
+            'name' => 'Thành Phố Cà Mau',
+            'city_id' => 96
+        ]);
+        District::create([
+            'id' => 966,
+            'name' => 'Huyện U Minh',
+            'city_id' => 96
+        ]);
+        District::create([
+            'id' => 967,
+            'name' => 'Huyện Thới Bình',
+            'city_id' => 96
+        ]);
+        District::create([
+            'id' => 968,
+            'name' => 'Huyện Trần Văn Thời',
+            'city_id' => 96
+        ]);
+        District::create([
+            'id' => 969,
+            'name' => 'Huyện Cái Nước',
+            'city_id' => 96
+        ]);
+        District::create([
+            'id' => 970,
+            'name' => 'Huyện Đầm Dơi',
+            'city_id' => 96
+        ]);
+        District::create([
+            'id' => 971,
+            'name' => 'Huyện Năm Căn',
+            'city_id' => 96
+        ]);
+        District::create([
+            'id' => 972,
+            'name' => 'Huyện Phú Tân',
+            'city_id' => 96
+        ]);
+        District::create([
+            'id' => 973,
+            'name' => 'Huyện Ngọc Hiển',
+            'city_id' => 96
+        ]);
+    }
+
+    public function initClientToken(){
+        //ko co model nen insert raw
+        DB::insert("INSERT INTO oauth_clients (id, user_id, name, secret, redirect, personal_access_client, password_client, revoked, created_at, updated_at) VALUES
+(1, NULL, 'Laravel Personal Access Client', '70ZQNcZU1hBP45hRKBVHUpeUQ5GGEgUPN4NQhSLR', 'http://localhost', 1, 0, 0, '2018-07-10 16:07:11', '2018-07-10 16:07:11'),
+(2, NULL, 'Laravel Password Grant Client', 'GaR9EznJvZ7TboFs1af1zfJGVDueHTXr5FWSpb1i', 'http://localhost', 0, 1, 0, '2018-07-10 16:07:11', '2018-07-10 16:07:11');");
+    }
 
 }

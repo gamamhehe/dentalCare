@@ -10,6 +10,7 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Appointment;
+use App\Model\PatientOfAppointment;
 use App\Model\Staff;
 use App\Model\UserHasRole;
 use App\User;
@@ -125,7 +126,6 @@ trait AppointmentBussinessFunction
                         $predictAppointmentDate = $this->getNextStartTime($appointment);
                         $suitableDentistId = $appointment['staff_id'];
                     } else {
-                        $this->logDebug("INTO COUNT EQUALLY == 1");
                         $maxdate = new \DateTime("2035-12-12");
                         $minTimeStamp = $maxdate->getTimestamp() + $maxdate->getTimestamp();
                         $minAppointment = array();
@@ -137,7 +137,8 @@ trait AppointmentBussinessFunction
                             }
                         }
                         $minAppId = $minAppointment->id;
-                        $this->logDebug("Min ApptID: " . $minAppId);
+                        $this->logDebug("INTO COUNT EQUALLY == 1" . "Min ApptID: " . $minAppId . " MinApp startTime: " . $minAppointment['start_time']);
+
                         // $predictAppointmentDate= the finish datetime of the previous patient;
                         $minAppointmentStartDateTime = new \DateTime($minAppointment['start_time']);
                         $predictAppointmentDate = $this->addTimeToDate($minAppointmentStartDateTime,
@@ -222,11 +223,11 @@ trait AppointmentBussinessFunction
         return $appointment;
     }
 
-    public function getAppointmentsInMonth($dentistId,$yearInNumber, $monthInNumber)
+    public function getAppointmentsInMonth($dentistId, $yearInNumber, $monthInNumber)
     {
         $appointments = Appointment::where('staff_id', $dentistId)
             ->whereMonth('start_time', $monthInNumber)
-            ->whereYear('start_time',$yearInNumber)
+            ->whereYear('start_time', $yearInNumber)
             ->get();
         return $appointments;
     }
@@ -460,11 +461,18 @@ trait AppointmentBussinessFunction
         return $appointments;
     }
 
-    public function saveAppointment($appointment)
+    public function saveAppointment($appointment, $patientId)
     {
         DB::beginTransaction();
         try {
             $appointment->save();
+            $patientOfAppointment = PatientOfAppointment::where('appointment_id', $appointment->id)->first();
+            if(!$patientOfAppointment){
+                PatientOfAppointment::create([
+                    'appointment_id' => $appointment->id,
+                    'patient_id' => $patientId
+                    ]);
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -473,32 +481,62 @@ trait AppointmentBussinessFunction
         }
     }
 
+    public function checkPatientIsExamination($idPatient){
+        $listAppointmentComing = Appointment::where('status', 1)->get();
+        $listPatientIsExamination = [];
+        foreach ($listAppointmentComing as $appointment){
+            $patientOfAppointment = PatientOfAppointment::where('appointment_id', $appointment->id)->first();
+            $listPatientIsExamination[] = $patientOfAppointment->patient_id;
+        }
+        if(in_array($idPatient, $listPatientIsExamination)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function checkAppointmentForPatient($phone, $idPatient)
     {
-
-        $appointment = Appointment::where('phone', $phone)
+        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
+        $listIdAppointmentOfPhone = Appointment::where('phone', $phone)
             ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
             ->where('status', 0)
-            ->where('patient_id', $idPatient)
-            ->first();
-        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
-        if ($appointment) {
-            if (in_array($appointment->staff_id, $listCurrentFreeDentist))
-                return $appointment;
-            else
+            ->pluck('id');
+        if (count($listIdAppointmentOfPhone) == 0) {
+            return null;
+        } else {
+            $AppointmentOfPatient = PatientOfAppointment::
+                where('patient_id', $idPatient)
+                ->whereIn('appointment_id', $listIdAppointmentOfPhone)
+                ->first();
+            if ($AppointmentOfPatient) {
+                $appointment = Appointment::where('id', $AppointmentOfPatient->appointment_id)->first();
+                if (in_array($appointment->staff_id, $listCurrentFreeDentist)) {
+                    return $appointment;
+                } else {
+                    return false;
+                }
+            }
+            $listIdAppointmentNullPatient = [];
+            foreach ($listIdAppointmentOfPhone as $idAppointmentOfPhone) {
+                $appointment_id = PatientOfAppointment::
+                    where('appointment_id', $idAppointmentOfPhone)
+                    ->first();
+                if (!$appointment_id) {
+                    $listIdAppointmentNullPatient[] = $idAppointmentOfPhone;
+                }
+            }
+            if (count($listIdAppointmentNullPatient) == 0) {
+                return null;
+            } else {
+                foreach ($listIdAppointmentNullPatient as $appointmentNullPatient) {
+                    $appointment = Appointment::where('id', $appointmentNullPatient)->first();
+                    if (in_array($appointment->staff_id, $listCurrentFreeDentist)) {
+                        return $appointment;
+                    }
+                }
                 return false;
-        }
-
-        $appointment = Appointment::where('phone', $phone)
-            ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
-            ->where('status', 0)
-            ->first();
-        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
-        if ($appointment) {
-            if (in_array($appointment->staff_id, $listCurrentFreeDentist))
-                return $appointment;
-            else
-                return false;
+            }
         }
     }
 
@@ -509,13 +547,15 @@ trait AppointmentBussinessFunction
             ->get();
     }
 
-    public function viewAppointmentForReception()
+    public
+    function viewAppointmentForReception()
     {
         return Appointment::where('start_time', '>=', Carbon::now()->format('Y-m-d'))
             ->get();
     }
 
-    public function getCurrentFreeDentist()
+    public
+    function getCurrentFreeDentist()
     {
         $listAvailableDentist = $this->getAvailableDentist(Carbon::now());
         $listCurrentBusyAppointment = Appointment::where('status', 1)->get();
@@ -530,5 +570,14 @@ trait AppointmentBussinessFunction
             }
         }
         return $listCurrentFreeDentist;
+    }
+
+    public function checkAppointmentComing($appointmentId){
+        $appointment = Appointment::where('id', $appointmentId)->first();
+        if ($appointment->status == 1){
+            $patient_id = PatientOfAppointment::where('appointment_id', $appointment->id)->first()->patient_id;
+            return $patient_id;
+        }
+        return false;
     }
 }

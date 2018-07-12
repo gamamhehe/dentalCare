@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Payment;
 use App\Model\PaymentDetail;
 use Carbon\Carbon;
@@ -13,7 +14,29 @@ class PaymentController extends Controller
 {
     //
     use PaymentBusinessFunction;
+    use UserBusinessFunction;
+    public function create(Request $request){
+        $checkExist = $this->checkExistUser($request->phone);
+        if ($checkExist) {
+            $idPayment = $request->payment_id;
+            $received_money = $request->received_money;
+            $paymentDetail = new PaymentDetail();
+            $paymentDetail->payment_id = $idPayment;
+            $paymentDetail->create_date = Carbon::now();
+            $paymentDetail->received_money = $received_money;
+            $paymentDetail->staff_id = $request->session()->get('currentAdmin', null)->belongToStaff()->first()->id;
+            $this->createPaymentDetail($paymentDetail);
+            $result = $this->updatePaymentPaid($received_money, $idPayment);
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return redirect()->back()->with('error', '')->withInput($request->only('phone'));
+        }
 
+    }
     public function getOfUser(Request $request)
     {
         $currentUser = $request->session()->get('currentUser', null);
@@ -38,7 +61,7 @@ class PaymentController extends Controller
         $paymentDetail = new PaymentDetail();
         $sessionUser = $request->session()->get('currentAdmin', null);
         if ($sessionUser) {
-            $idStaff = $sessionUser->belongToStaff()->first()->id;;
+            $idStaff = $sessionUser->belongToStaff()->first()->id;
         } else {
             return route('admin.login');
         }
@@ -124,4 +147,5 @@ class PaymentController extends Controller
         $payment->listTreatment = $listTreatment;
         return view('admin.payment.detail', ['listDetail' => $listDetail, 'payment' => $payment]);
     }
+
 }

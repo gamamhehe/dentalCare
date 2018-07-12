@@ -59,7 +59,7 @@
                                         <label class="control-label col-xs-4" for="title">Số điện thoại:</label>
                                         <div class="col-xs-6">
                                             <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
-                                                   placeholder="Your name Here" required="required">
+                                                   required="required">
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
                                         <div class="col-xs-2" style="padding-left:0px;">
@@ -69,7 +69,7 @@
                                         <div class="form-group row add">
                                         <label class="control-label col-xs-4" for="title">Danh sách bệnh nhân:</label>
                                         <div class="col-xs-8">
-                                            <select name="treatment_id" style="height: 2em;min-width: 25em;"
+                                            <select style="height: 2em;min-width: 25em;"
                                              id="PatientSelect">
                              
                                             </select>
@@ -89,8 +89,8 @@
                                         <label class="control-label col-xs-4" for="body">Estimate time:</label>
                                         <div class="col-xs-8">
                                    <select class="hour" name="estimateTime" id="estimateTime" style="width: auto;">
-                                    @for ($i = 0; $i < 10; $i++)
-                                          <option value="{{$i}}">{{$i}}</option>
+                                    @for ($i = 1; $i < 19; $i++)
+                                          <option value="{{$i * 5}}">{{$i * 5}}</option>
                                     @endfor
                                                                 
                                    </select>&nbsp                               
@@ -216,21 +216,6 @@
     //         alert(x);
     //     }
     // }
-    $(document).ready(function(){
-        $('#sandbox-container input').datepicker({
-    startDate: "07/02/2018"
-});
-        <?php if (Session::has('success')): ?>
-        swal("Nhận bệnh nhân thành công", "", "success");
-        <?php endif ?>
-
-        <?php if ($errors->first('notHaveAppointment')): ?>
-        swal("Không có lịch hẹn cho bệnh nhân này", "", "error");
-        <?php endif ?>
-        <?php if ($errors->first('dentistBusy')): ?>
-        swal("Bác sĩ đang bận", "", "error");
-        <?php endif ?>
-    });
      $(document).on('click','.create-modal', function() {
         $('#create').modal('show');
         $('.form-horizontal').show();
@@ -257,11 +242,10 @@
             'estimateTimeReal':estimateTimeReal,
             'patientID':patientID,
             'datepicker':datepicker,
-           
           },
           success: function(data){
             if ((data.errors)) {
-             alert(data.errors.body);
+                swal("Đặt lịch hẹn thất bại", "", "error");
             } else {
                   swal("Đặt lịch hẹn thành công", "", "success");
             }
@@ -298,20 +282,6 @@
           },
             });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     function search(){
         
@@ -390,6 +360,9 @@
 
             dataType: 'json',
             success: function(data){
+                if(data.statusOfReceive == -1){
+                    swal("Bệnh nhân này đang khám", "", "error");
+                }
                 if(data.statusOfReceive == 0){
                     swal("Bác sĩ đang bận", "", "error");
                 }

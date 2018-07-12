@@ -49,7 +49,6 @@ trait TreatmentDetailBusinessFunction
                     'step_id' => $step,
                 ]);
             }
- 
             DB::commit();
             return true;
         } catch (\Exception $e) {
