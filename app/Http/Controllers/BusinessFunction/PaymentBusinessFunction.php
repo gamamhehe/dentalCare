@@ -101,8 +101,8 @@ trait PaymentBusinessFunction
         try {
             $payment->save();
             $paymentDetail->save();
-            return true;
             DB::commit();
+            return true;
         } catch (Exception $exception) {
             DB::rollback();
             throw  new Exception($exception->getMessage());
