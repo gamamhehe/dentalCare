@@ -32,6 +32,24 @@
                     <li><a href="{{ route('admin.listAppointment.dentist')}}">Lịch hẹn của tôi !</a></li>
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí lịch sử bệnh án</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.treatmentHistory')}}">Danh sách lịch sử bệnh án</a></li>
+                    {{--<li><a href="{{ route('admin.create.news')}}">Khởi tạo bảng tin</a></li>--}}
+                    <!--  <li><a href="/ks107">Manage Question</a></li>
+                     <li><a href="/feedback">Manage Feedback</a></li> -->
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí chi trả</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.payment')}}">Danh sách chi trả</a></li>
+                    {{--<li><a href="{{ route('admin.create.news')}}">Khởi tạo bảng tin</a></li>--}}
+                    <!--  <li><a href="/ks107">Manage Question</a></li>
+                     <li><a href="/feedback">Manage Feedback</a></li> -->
+                </ul>
+            </li>
              <li class="treeview">
                 <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Tin Tức</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                 <ul class="treeview-menu">

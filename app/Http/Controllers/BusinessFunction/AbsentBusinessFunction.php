@@ -77,11 +77,9 @@ trait AbsentBusinessFunction
             ]);
             DB::commit();
             return true;
-
         } catch (\Exception $e) {
             DB::rollback();
             return false;
-
         }
     }
 
