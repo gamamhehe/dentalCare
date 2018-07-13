@@ -114,7 +114,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/getListPatient/{id}', 'Admin\PatientController@getListPatientById');//ajax
     // Route::get('/create-Patient', 'Admin\PatientController@create');
     Route::post('/create-Patient','Admin\PatientController@create');
-    //Dentist  
+    //Dentist
     Route::get('/list-Appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
     Route::get('/getAppointment', 'Admin\StaffController@getListAppointmentForStaff');
     Route::get('/create-Dentist', 'Admin\StaffController@create');
@@ -139,12 +139,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/create-Appointment','Admin\AppointmentController@add');
 
     //payment
-    Route::get('/adminPayment', 'Admin\PaymentController@getList');
+    Route::get('/adminPayment', 'Admin\PaymentController@getList')->name('admin.payment');
     Route::get('/createPayment', 'Admin\PaymentController@viewCreate');
     Route::post('/createPayment', 'Admin\PaymentController@create')->name('create.payment');
     Route::get('/getPaymentDetail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
     Route::get('/searchPayment/{searchValue}', 'Admin\PaymentController@search');
-    
+    //treatmentHistory
+    Route::get('/treatmentHistory', 'Admin\TreatmentHistoryController@getList')->name('admin.treatmentHistory');
+    Route::get('/getTreatmentHistoryDetail', 'Admin\TreatmentHistoryController@getDetail')->name('gettreatmentHistoryDetail');
+
 
 });
 

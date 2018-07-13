@@ -10,6 +10,7 @@ use App\Model\Appointment;
 use Carbon\Carbon;
 use DateTime;
 use DB;
+use function MongoDB\BSON\toJSON;
 use Response;
 use App\Helpers\AppConst;
 class AppointmentController extends Controller
@@ -18,7 +19,13 @@ class AppointmentController extends Controller
     use AppointmentBussinessFunction;
 
     public function testFunction(Request $request){
-        dd($this->checkAppointmentForPatient('01279011096', 2));
+        $client = new \GuzzleHttp\Client();
+
+// Create a request
+        $request = $client->get('http://163.44.193.228/datajson');
+// Get the actual response without headers
+        $response = $request->getBody()->getContents();
+        return $response;
     }
     public function add(Request $request){
         $phone = $request['phone'];
