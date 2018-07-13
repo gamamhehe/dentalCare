@@ -15,7 +15,7 @@ class Appointment extends Model
     public function belongsToStaff(){
         return $this->belongsTo('App\Model\Staff', 'staff_id', 'id');
     }
-    public function belongsToPatientOfAppointment(){
+    public function hasPatientOfAppointment(){
         return $this->hasOne('App\Model\PatientOfAppointment', 'appointment_id', 'id');
     }
 }

@@ -7,7 +7,10 @@ use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
 use App\Model\Payment;
+use App\Model\AnamnesisCatalog;
 use App\Model\User;
+use App\Model\District;
+use App\Model\city;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -69,6 +72,7 @@ class PatientController extends Controller
             $patient->name = $request->name;
             $patient->address = $request->address;
             $patient->phone = $request->phone;
+            $patient->avatar =  " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->date_of_birth = $request->date_of_birth;
             $patient->gender = $request->gender;
             $patient->avatar = $request->avatar;
@@ -86,7 +90,7 @@ class PatientController extends Controller
             $patient->phone = $request->phone;
             $patient->date_of_birth = $request->date_of_birth;
             $patient->gender = $request->gender;
-            $patient->avatar = $request->avatar;
+            $patient->avatar =  " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->district_id = $request->district_id;
             $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
@@ -160,8 +164,10 @@ class PatientController extends Controller
 
     public function index()
     {
-
-        return view('admin.AppointmentPatient.index');
+        $city = city::all();
+        $District = District::where('city_id',1)->get();
+        $listAnamnesis = AnamnesisCatalog::all();
+        return view('admin.AppointmentPatient.index',['AnamnesisCatalog'=>$listAnamnesis,'citys'=>$city,'District'=>$District]);
     }
 
     public function action1($phone)
@@ -235,5 +241,9 @@ class PatientController extends Controller
             return response()->json($list);
          
        
+    }
+    public function getDistrictbyCity($id){
+        $listDistrict = District::where('city_id',$id)->get();
+        return $listDistrict;
     }
 }

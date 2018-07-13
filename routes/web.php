@@ -129,11 +129,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
     //Step
     Route::get('/stepTreatment','Admin\StepController@create')->name('admin.stepTreatment'); //view
+    Route::get('/treatmentHistoryDetail/{id}','Admin\TreatmentDetailController@updateTreatmentDetail')->name('admin.stepTreatmentUpdate'); //view
+
     Route::post('/create-Step','Admin\StepController@add');
     //Absent
     Route::get('/createAbsent','Admin\AbsentController@loadcreate');
     //TreatmentDetail
     Route::post('/createTreatmentDetail','Admin\TreatmentDetailController@createTreatmentDetailController');//add
+    Route::post('/updateStep','Admin\TreatmentDetailController@update');//update
     Route::get('/treatmentDetail/{id}','Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment
     Route::post('/create-Appointment','Admin\AppointmentController@add');
@@ -145,6 +148,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/getPaymentDetail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
     Route::get('/searchPayment/{searchValue}', 'Admin\PaymentController@search');
     
+    //city
+    Route::get('/getDistrict/{id}', 'Admin\PatientController@getDistrictbyCity');
 
 });
 

@@ -132,4 +132,7 @@ trait TreatmentHistoryBusinessFunction
        return TreatmentHistory::where('patient_id', $idPatient)
             ->whereNull('finish_date')->get();
     }
+    public function getTreatmentHistoryById($id){
+    return (TreatmentHistory::where('id', $id)->first());
+    }
 }

@@ -236,9 +236,9 @@ select.form-control:not([size]):not([multiple]){
 
     height: 30px !important;
 }
-/*tr:hover {background-color:red;}*/
-tr:nth-child(even) {background: #CCC}
-tr:nth-child(odd) {background: #FFF}
+.myTable tr:hover {
+background-color: #FEFEFE;
+}
 .nut a.fa {
     font-size: 20px;
     color: white;

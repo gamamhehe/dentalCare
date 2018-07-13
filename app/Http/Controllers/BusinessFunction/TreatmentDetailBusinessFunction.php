@@ -72,8 +72,10 @@ trait TreatmentDetailBusinessFunction
         $result = [];
         foreach ($listTreatmentDetail as $treatmentDetail) {
             $listTreatmentDetailStep = $treatmentDetail->hasTreatmentDetailStep()->get();
+
             foreach ($listTreatmentDetailStep as $treatmentDetailStep) {
-                $result[] = $treatmentDetailStep->treatment_step_id;
+                
+                $result[] = $treatmentDetailStep->belongsToStep()->first();
             }
         }
         return $result;
@@ -87,5 +89,9 @@ trait TreatmentDetailBusinessFunction
 
     public function checkDoneTreatmentHistory($idTreatmnet, $idTreatmentHistory){
 
+    }
+    public function getTreatmentDetail($idTreatmentHistory){
+        $treatmentDetail = TreatmentDetail::where('treatment_history_id',$idTreatmentHistory)->first();
+        return $treatmentDetail;
     }
 }
