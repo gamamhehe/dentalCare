@@ -154,3 +154,12 @@ Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name(
 Route::post('paypal','Admin\PaypalController@postPaymentWithpaypal')->name('paypal');
 // route for check status responce
 Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');
+
+//testblockchain
+Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
+Route::get('/createNewLedger', 'Blockchain\BlockchainController@createNewLedger');
+Route::get('/checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
+Route::get('/test', 'Blockchain\BlockchainController@test');
+
+
+

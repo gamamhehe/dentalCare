@@ -10,10 +10,24 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Absent;
+use App\Model\NodeInfo;
 use App\Model\Role;
 use App\RequestAbsent;
 use Carbon\Carbon;
 
 trait NodeInfoBusinessFunction
 {
+    public function isExist($ip) //Nguyen Dinh Phu. Last edit: 12-Jul-18
+    {
+        $check = NodeInfo::where('ip','=',$ip);
+        if ($check != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getListNode(){
+        $listNode = NodeInfo::all();
+        return $listNode;
+    }
 }
