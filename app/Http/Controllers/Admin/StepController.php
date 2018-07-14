@@ -15,13 +15,13 @@ class StepController extends Controller
     use TreatmentBusinessFunction;
     public function create(Request $request)
     {
-//        $listStepTreatment = $request['listStepTreatment'];
-        // $listStepTreatmentDone =$request['listStepTreatmentDone'];
-        $list = Treatment::where('treatment_category_id', 1)->get();
+        $idTreatment=$request['idTreatment'];
+        $list = $this->showTreatmentStepForTreatment($idTreatment);
         $countList =count($list);
-
-        return view("admin.StepTreatment.view", ['list' => $list,'count'=>$countList,'listStepTreatment'=>$listStepTreatment]);
+        return view("admin.StepTreatment.view", ['list' => $list,'count'=>$countList]);
 //=======
+       //   $listStepTreatment = $request['listStepTreatment'];
+      
 ////        dd($request->idTreatment);
 //        $list = $this->showTreatmentStepForTreatment($request->idTreatment);
 //        $countList = count($list);

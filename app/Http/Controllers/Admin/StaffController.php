@@ -95,18 +95,19 @@ class StaffController extends Controller
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
+
         if ($role == 2) {
+
             $listAppointment = $this->viewAppointmentForDentist($sessionAdmin->belongToStaff()->first()->id);
         } else {
             $listAppointment = $this->viewAppointmentForReception();
         }
-
         return Datatables::of($listAppointment)
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                    <button style="width: 30%" value="' . $appoint->patient_id . '" class="btn btn-primary btn-xs btn-sm btn-dell"> Skip</button>
-                    <button type="button" class="btn btn-default btn-success" onclick="checkComing(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Create Treatment</button>
+                    <button style="width: 30%" value="'. $appoint->hasPatientOfAppointment()->first()->patient_id .'" class="btn btn-success btn-sm btn-dell"> Skip</button>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkComing(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Create Treatment</button>
                 </div>
                 ';
             })->make(true);

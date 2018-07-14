@@ -147,7 +147,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-xs-2" for="title">Năm sinh</label>
+                                        <label class="control-label col-xs-2" for="title">Năm sinh :</label>
                                         <div class="col-xs-10">
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
@@ -160,7 +160,7 @@
                                     <div class="form-group row add">
                                         <label class="control-label col-xs-2" for="title">Giới tính :</label>
                                         <div class="col-xs-10">
-                                            <select name="genderPatient" id="genderPatient">
+                                            <select name="genderPatient" id="genderPatient"  style="height: 30px;width: 5em;float: left;">
                                                 <option value="Male">Nam</option>
                                                 <option value="FeMale">Nữ</option>
                                                 <option value="Unknow">Khác</option>
@@ -168,14 +168,40 @@
                                         </div>
                                     </div>
                                       <div class="form-group row add">
-                                        <label class="control-label col-xs-3" for="title">Quận ajax nè :</label>
+                                        <label class="control-label col-xs-2" for="title">Thành Phố :</label>
                                         <div class="col-xs-3">
-                                            <select name="districtsPatient" id="districtsPatient">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
+                                            <select name="cityPatient" id="cityPatient" style="height: 30px;" onchange="disctrict(this)">
+                                            @foreach($citys as $city)
+                                                <option value="{{$city->id}}">{{$city->name}}</option>
+                                                
+                                            @endforeach 
                                             </select>
                                         </div>
+                                         <label class="control-label col-xs-1" for="title">Quận :</label>
+                                        <div class="col-xs-3">
+                                            <select name="districtsPatient" id="districtsPatient" style="height: 30px;">
+                                              @foreach($District as $one)
+                                                <option value="{{$one->id}}">{{$one->name}}</option>
+                                                
+                                            @endforeach 
+                                            </select>
+                                        </div>
+                                    </div>
+                                   <hr>
+                                       <div class="form-group row add">
+                                        <label class="control-label col-xs-2" for="title">Bệnh tiền sử :</label>
+                                        <div class=" row col-xs-10" style=" float: left;border: 2px gray solid;border-radius: 20px;">
+                                            <div class=" ">
+                                                 @foreach($AnamnesisCatalog as $one)
+                                        
+                                        <div class="col-xs-3" style="text-align: left;">
+                                        <input type="checkbox" id="myCheck"  onclick="myFunction()">   
+                                            {{$one->name}}    
+                                        </div>
+                                         @endforeach
+                                            </div>
+                                        </div>
+                                       
                                     </div>
                                   
                                 </form>
@@ -204,18 +230,12 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
- $(function () {
-      $('#datepicker').datepicker({
-      autoclose: true
-    });
-  });
+     $(function () {
+          $('#datepicker').datepicker({
+          autoclose: true
+        });
+      });
     var x = 0;
-    // function changePhone(){
-    //     x = x +1;
-    //     if( x>1){
-    //         alert(x);
-    //     }
-    // }
      $(document).on('click','.create-modal', function() {
         $('#create').modal('show');
         $('.form-horizontal').show();
@@ -282,7 +302,45 @@
           },
             });
     });
-
+    function disctrict(sel){
+    var treatCateID = sel.value;
+       $.ajax({
+             url: '/admin/getDistrict/'+treatCateID, //this is your uri
+            type: 'GET', //this is your method
+            dataType: 'json',
+            success: function(data){
+                if(data.length == 0){
+                    $('#districtsPatient')
+                    .find('option')
+                    .remove()
+                    .end()
+                    .append('<option value="whatever">Chưa có quận huyện</option>')
+                    .val('whatever')
+                ;
+            }else{
+                $('#districtsPatient')
+                    .find('option')
+                    .remove()
+                    .end()
+                ;
+                for (var i = 0; i < data.length; i++) {
+                   $('#districtsPatient').append("<option value="+data[i].id+">"+data[i].name+"</option>");
+                    
+                }
+            }
+            },error: function(obj,text,error) {
+                alert("NO");
+                 $('#districtsPatient')
+                    .find('option')
+                    .remove()
+                    .end()
+                    .append('<option value="whatever">Chưa có dịch vụ</option>')
+                    .val('whatever')
+                ;
+                  alert( showNotice("error",obj.responseText));
+                },
+            });
+    }
     function search(){
         
         var user = document.getElementById('User');

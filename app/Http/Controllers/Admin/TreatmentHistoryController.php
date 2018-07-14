@@ -47,6 +47,9 @@ class TreatmentHistoryController extends Controller
     }
     public function getTreatmentHistoryByPatient($id){
         $result = $this->getTreatmentHistoryByPatientId($id);
+        foreach ($result as $key ) {
+            $key->nameTreat = $key->belongsToTreatment()->first();
+        }
         echo json_encode($result);
         
     }
