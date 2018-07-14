@@ -32,7 +32,7 @@ trait QueueBusinessFunction
                 return json_encode($id);
             } catch (\Exception $e) {
                 DB::rollback();
-                return 'error';
+                return $e->getMessage();
             }
         }
         return '';
