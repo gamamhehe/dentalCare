@@ -159,4 +159,7 @@ trait TreatmentHistoryBusinessFunction
         $treatmentHistory->listDetail = $listDetail;
         return $treatmentHistory;
     }
+    public function getTreatmentHistoryById($id){
+    return (TreatmentHistory::where('id', $id)->first());
+    }
 }

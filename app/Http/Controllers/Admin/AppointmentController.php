@@ -54,7 +54,7 @@ class AppointmentController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback();
-             return "no";
+             return $e;
 
         }
 
