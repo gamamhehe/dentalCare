@@ -67,6 +67,7 @@ trait AppointmentBussinessFunction
 
     public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr)
     {
+        DB::beginTransaction();
         try {
             $suitableDentistId = -1;
             $defaultEstimatedTime = "00:30";
@@ -184,6 +185,7 @@ trait AppointmentBussinessFunction
                 $this->logDebug("isEndOfTheDay");
                 throw new \Exception ('isEndOfTheDay');
             }
+
             $numericalOrder = $listAppointment->count() + 1;
             $appointment = new Appointment();
             $appointment->phone = $phone;
@@ -192,12 +194,19 @@ trait AppointmentBussinessFunction
             $appointment->start_time = $predictAppointmentDate->format("Y-m-d H:i:s");
             $appointment->numerical_order = $numericalOrder;
             $appointment->staff_id = $suitableDentistId;
-            $appointment->patient_id = $patientId;
             $appointment->save();
+            if ($patientId != null) {
+                $patientAppointment = new PatientOfAppointment();
+                $patientAppointment->appointment_id = $appointment->id;
+                $patientAppointment->patient_id = $patientId;
+                $patientAppointment->save();
+            }
             $this->logDebug("Id new appointment: " . ($appointment->id));
+            DB::commit();
             return $appointment;
         } catch (Exception $exception) {
             $exception->getTrace();
+            DB::rollback();
             return null;
         }
     }
@@ -467,11 +476,11 @@ trait AppointmentBussinessFunction
         try {
             $appointment->save();
             $patientOfAppointment = PatientOfAppointment::where('appointment_id', $appointment->id)->first();
-            if(!$patientOfAppointment){
+            if (!$patientOfAppointment) {
                 PatientOfAppointment::create([
                     'appointment_id' => $appointment->id,
                     'patient_id' => $patientId
-                    ]);
+                ]);
             }
             DB::commit();
             return true;
@@ -481,16 +490,17 @@ trait AppointmentBussinessFunction
         }
     }
 
-    public function checkPatientIsExamination($idPatient){
+    public function checkPatientIsExamination($idPatient)
+    {
         $listAppointmentComing = Appointment::where('status', 1)->get();
         $listPatientIsExamination = [];
-        foreach ($listAppointmentComing as $appointment){
+        foreach ($listAppointmentComing as $appointment) {
             $patientOfAppointment = PatientOfAppointment::where('appointment_id', $appointment->id)->first();
             $listPatientIsExamination[] = $patientOfAppointment->patient_id;
         }
-        if(in_array($idPatient, $listPatientIsExamination)){
+        if (in_array($idPatient, $listPatientIsExamination)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -506,7 +516,7 @@ trait AppointmentBussinessFunction
             return null;
         } else {
             $AppointmentOfPatient = PatientOfAppointment::
-                where('patient_id', $idPatient)
+            where('patient_id', $idPatient)
                 ->whereIn('appointment_id', $listIdAppointmentOfPhone)
                 ->first();
             if ($AppointmentOfPatient) {
@@ -520,7 +530,7 @@ trait AppointmentBussinessFunction
             $listIdAppointmentNullPatient = [];
             foreach ($listIdAppointmentOfPhone as $idAppointmentOfPhone) {
                 $appointment_id = PatientOfAppointment::
-                    where('appointment_id', $idAppointmentOfPhone)
+                where('appointment_id', $idAppointmentOfPhone)
                     ->first();
                 if (!$appointment_id) {
                     $listIdAppointmentNullPatient[] = $idAppointmentOfPhone;
@@ -572,9 +582,10 @@ trait AppointmentBussinessFunction
         return $listCurrentFreeDentist;
     }
 
-    public function checkAppointmentComing($appointmentId){
+    public function checkAppointmentComing($appointmentId)
+    {
         $appointment = Appointment::where('id', $appointmentId)->first();
-        if ($appointment->status == 1){
+        if ($appointment->status == 1) {
             $patient_id = PatientOfAppointment::where('appointment_id', $appointment->id)->first()->patient_id;
             return $patient_id;
         }
