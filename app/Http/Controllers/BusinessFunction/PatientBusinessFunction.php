@@ -9,9 +9,11 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 
+use App\Model\AnamnesisPatient;
 use App\Model\Patient;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait PatientBusinessFunction
 {
@@ -60,7 +62,26 @@ trait PatientBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            throw new Exception($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    } public function updatePatientWithAnamnesis($patient,$listAnamnesisId)
+    {
+        DB::beginTransaction();
+        try {
+            $patient->save();
+            if ($listAnamnesisId != null) {
+                foreach ($listAnamnesisId as $id) {
+                    $anamnesis = new AnamnesisPatient();
+                    $anamnesis->anamnesis_id = $id;
+                    $anamnesis->patient_id = $patient->id;
+                    $anamnesis->save();
+                }
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new \Exception($e->getMessage());
         }
     }
 

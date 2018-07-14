@@ -16,6 +16,7 @@ use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Jobs\SendSmsJob;
+use App\Model\AnamnesisPatient;
 use App\Model\Patient;
 use App\Model\Staff;
 use App\Model\User;
@@ -127,6 +128,9 @@ class StaffController extends BaseController
 
     public function createPatient(Request $request)
     {
+//        var_dump($request->all());
+//        $this->logDebug(print_r($request->all(),true));
+//        return;
         try {
             $phone = $request->input('phone');
             $user = $this->getUserByPhone($phone);
@@ -142,6 +146,7 @@ class StaffController extends BaseController
             $birthday = $request->input('birthday');
             $districtId = $request->input('districtId');
             $address = $request->input('address');
+            $listAnamnesisId = $request->input('anamnesis[]');
             $patient = new Patient();
             $patient->phone = $phone;
             $patient->date_of_birth = $birthday;
@@ -157,9 +162,9 @@ class StaffController extends BaseController
             $userHasRole->start_time = Carbon::now();
             $result = null;
             if ($newAccount) {
-                $result = $this->createUserWithRole($user, $patient, $userHasRole);
+                $result = $this->createUserWithAnamnesis($user, $patient, $userHasRole, $listAnamnesisId);
             } else {
-                $result = $this->updatePatient($patient);
+                $result = $this->updatePatientWithAnamnesis($patient,$listAnamnesisId);
             }
             if ($result) {
                 return response()->json($patient, 200);
@@ -277,14 +282,14 @@ class StaffController extends BaseController
             $dentistId = $request->input('dentist_id');
             $month = $request->input('month');
             $year = $request->input('year');
-            if($dentistId == null || $month == null){
+            if ($dentistId == null || $month == null) {
                 $error = $this->getErrorObj("Vui lòng điền đầy đủ id nha sĩ và tháng", "No exception");
                 return response()->json($error, 400);
             }
-            $appointments = $this->getAppointmentsInMonth($dentistId, $year,$month);
+            $appointments = $this->getAppointmentsInMonth($dentistId, $year, $month);
 
             return $appointments;
-        }catch (Exception $ex){
+        } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 500);
         }
