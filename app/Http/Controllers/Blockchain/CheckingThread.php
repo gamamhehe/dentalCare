@@ -13,7 +13,7 @@ use App\Http\Controllers\BusinessFunction\BlockchainBusinessFunction;
 use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 
-class CheckingThread
+class CheckingThread extends \Thread
 {
     use QueueBusinessFunction,BlockchainBusinessFunction,NodeInfoBusinessFunction;
     private $data_encrypt;

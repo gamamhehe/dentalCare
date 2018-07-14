@@ -159,7 +159,7 @@ Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');
 Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
 Route::get('/createNewLedger', 'Blockchain\BlockchainController@createNewLedger');
 Route::get('/checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
-Route::get('/test', 'Blockchain\BlockchainController@test');
+//Route::get('/test', 'Blockchain\BlockchainController@test');
 
 
 

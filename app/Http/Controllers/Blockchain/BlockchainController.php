@@ -88,9 +88,6 @@ class BlockchainController extends Controller
         return $this->createNewAll($newestLedger);
     }
 
-    /* gets the data from a URL */
-    //Nguyen Dinh Phu. Last edit: 12-Jul-18
-
 
     public function test(){
         dd($_SERVER['REMOTE_ADDR']);
