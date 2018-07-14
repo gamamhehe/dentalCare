@@ -29,13 +29,13 @@ trait QueueBusinessFunction
             try {
                 $id = Queue::create(['data_encrypt' => $data_encrypt, 'status' => $status, 'ip' => $ip,])->id;
                 DB::commit();
-                return $id;
+                return json_encode($id);
             } catch (\Exception $e) {
                 DB::rollback();
                 return false;
             }
         }
-        return null;
+        return '';
     }
 
     public function addToAllNodeInNetWork($data_encrypt)
