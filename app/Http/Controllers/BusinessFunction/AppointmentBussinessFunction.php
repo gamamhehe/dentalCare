@@ -65,7 +65,7 @@ trait AppointmentBussinessFunction
         return $result;
     }
 
-    public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr)
+    public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name)
     {
         DB::beginTransaction();
         try {
@@ -194,6 +194,7 @@ trait AppointmentBussinessFunction
             $appointment->start_time = $predictAppointmentDate->format("Y-m-d H:i:s");
             $appointment->numerical_order = $numericalOrder;
             $appointment->staff_id = $suitableDentistId;
+            $appointment->name = $name;
             $appointment->save();
             if ($patientId != null) {
                 $patientAppointment = new PatientOfAppointment();

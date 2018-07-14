@@ -85,7 +85,8 @@ class AppointmentController extends BaseController
             $dentistId = $request->input('dentist_id');
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
-            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime);
+            $name = $request->input('name');
+            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $name);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
