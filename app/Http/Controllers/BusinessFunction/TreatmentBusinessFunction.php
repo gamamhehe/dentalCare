@@ -16,6 +16,9 @@ trait TreatmentBusinessFunction
 {
     public function getAllTreatment(){
         $listTreat = Treatment::all();
+        foreach ($listTreat as $treatment){
+            $treatment->treatment_steps = $treatment->hasTreatmentStep()->get();
+        }
         return $listTreat;
     }
     public function deleteTreatment($id){

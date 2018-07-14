@@ -23,6 +23,12 @@ Route::get("city/{id}/districts/", "Mobile\AddressController@getDistrictsByCity"
 Route::get("news/all", "Mobile\NewsController@getAllNews");
 Route::get("news/loadmore", "Mobile\NewsController@loadMore");
 Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
+//treatment
+Route::get("treatment/all", "Mobile\TreatmentController@getAll");
+Route::get("treatment/{id}", "Mobile\TreatmentController@getById");
+//medicine
+Route::get("medicine/all", "Mobile\MedicineController@getAll");
+
 ///feedback
 Route::post('feedback/create', "Mobile\FeedbackController@create");
 //firebase
@@ -48,6 +54,7 @@ Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
+
 //input bacsiranh?date=value
 Route::get("bacsiranh", "Mobile\TestController@getDentist");
 Route::get("reminder", "Mobile\MobileController@sendReminder");
@@ -76,9 +83,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get("treatmentHistory/getById/{id}", "Mobile\HistoryTreatmentController@getById");
     Route::get("treatmentHistory/getByPatientId/{id}", "Mobile\HistoryTreatmentController@getByPatientId");
     //treatment
-    Route::get("treatment/all", "Mobile\TreatmentController@getAll");
-    Route::get("treatment/{id}", "Mobile\TreatmentController@getById");
-
     //appointment
     Route::get("appointment/all", "Mobile\AppointmentController@getAll");
     Route::get("appointment/{id}", "Mobile\AppointmentController@getById");
