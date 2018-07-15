@@ -14,13 +14,56 @@ use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+use App\Model\TreatmentHistory;
 use Illuminate\Http\Request;
 
-class HistoryTreatmentController extends Controller
+class TreatmentHistoryController extends BaseController
 {
 //    use TreatmentBusinessFunction;
     use UserBusinessFunction;
     use TreatmentHistoryBusinessFunction;
+
+
+    public function create(Request $request)
+    {
+        try {
+            $treatmentId = $request->input('treatment_id');
+            $patientId = $request->input('patient_id');
+            $description = $request->input('description');
+            $createdDate = $request->input('create_date');
+            $finishedDate = $request->input('finish_date');
+            $toothNumber = $request->input('tooth_number');
+            $price = $request->input('price');
+            $paymentId = $request->input('payment_id');
+            $totalPrice = $request->input('total_price');
+
+            $treatmentHistory = new TreatmentHistory();
+            $treatmentHistory->treatment_id = $treatmentId;
+            $treatmentHistory->patient_id = $patientId;
+            $treatmentHistory->description = $description;
+            $treatmentHistory->create_date = $createdDate;
+            $treatmentHistory->finish_date = $finishedDate;
+            $treatmentHistory->tooth_number = $toothNumber;
+            $treatmentHistory->price = $price;
+            $treatmentHistory->payment_id = $paymentId;
+            $treatmentHistory->total_price = $totalPrice;
+            $result = $this->saveTreatmentHistory($treatmentHistory);
+            if ($result) {
+                return response()->json($treatmentHistory, 200);
+            } else {
+                $error = $this->getErrorObj("Không thể lưu thông tin điều trị", "No exception");
+                return response()->json($error, 400);
+            }
+        }catch (\Exception $ex){
+            $error = $this->getErrorObj("Lỗi server", $ex);
+            return response()->json($error, 500);
+        }
+
+
+
+
+
+    }
 
     public function getTreatmentHistoryByPhone($phone)
     {
@@ -65,7 +108,7 @@ class HistoryTreatmentController extends Controller
     public function getByPatientId(Request $request)
     {
         $id = $request->input('id');
-var_dump($id);
+        var_dump($id);
         try {
             $patient = $this->getPatientById($id);
             if ($patient == null) {

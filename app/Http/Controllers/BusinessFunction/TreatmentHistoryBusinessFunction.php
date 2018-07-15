@@ -85,8 +85,7 @@ trait TreatmentHistoryBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return false;
-
+            throw new \Exception($e->getMessage());
         }
     }
 

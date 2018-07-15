@@ -23,6 +23,12 @@ Route::get("city/{id}/districts/", "Mobile\AddressController@getDistrictsByCity"
 Route::get("news/all", "Mobile\NewsController@getAllNews");
 Route::get("news/loadmore", "Mobile\NewsController@loadMore");
 Route::post("appointment/quickbook", "Mobile\AppointmentController@quickBookAppointment");
+//treatment
+Route::get("treatment/all", "Mobile\TreatmentController@getAll");
+Route::get("treatment/{id}", "Mobile\TreatmentController@getById");
+//medicine
+Route::get("medicine/all", "Mobile\MedicineController@getAll");
+
 ///feedback
 Route::post('feedback/create', "Mobile\FeedbackController@create");
 //firebase
@@ -31,6 +37,7 @@ Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::get("testpassport", "Mobile\UserController@testPassport");
 Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPaymentPaypal");
 Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
+Route::get("tooth/all", "Mobile\ToothController@getAll");
 
 Route::post("test", "Mobile\MobileController@testPOST");
 ///ADMIN
@@ -48,6 +55,7 @@ Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
+
 //input bacsiranh?date=value
 Route::get("bacsiranh", "Mobile\TestController@getDentist");
 Route::get("reminder", "Mobile\MobileController@sendReminder");
@@ -71,14 +79,11 @@ Route::middleware('auth:api')->group(function () {
     //treatment category
 
     //History Treatment
-    Route::get("treatmentHistory/all", "Mobile\HistoryTreatmentController@getAll");
-    Route::get("treatmentHistory/getByPhone/{phone}", "Mobile\HistoryTreatmentController@getByPhone");
-    Route::get("treatmentHistory/getById/{id}", "Mobile\HistoryTreatmentController@getById");
-    Route::get("treatmentHistory/getByPatientId/{id}", "Mobile\HistoryTreatmentController@getByPatientId");
+    Route::get("treatmentHistory/all", "Mobile\TreatmentHistoryController@getAll");
+    Route::get("treatmentHistory/getByPhone/{phone}", "Mobile\TreatmentHistoryController@getByPhone");
+    Route::get("treatmentHistory/getById/{id}", "Mobile\TreatmentHistoryController@getById");
+    Route::get("treatmentHistory/getByPatientId/{id}", "Mobile\TreatmentHistoryController@getByPatientId");
     //treatment
-    Route::get("treatment/all", "Mobile\TreatmentController@getAll");
-    Route::get("treatment/{id}", "Mobile\TreatmentController@getById");
-
     //appointment
     Route::get("appointment/all", "Mobile\AppointmentController@getAll");
     Route::get("appointment/{id}", "Mobile\AppointmentController@getById");
