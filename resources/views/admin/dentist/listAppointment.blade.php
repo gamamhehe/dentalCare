@@ -116,10 +116,15 @@
           
             dataType: 'json',
             success: function(data){
+                if(data.statusComing == 0){
+                    swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error");
+                    return;
+                }
                $('#create').modal('show');
                 $('.form-horizontal').show();
                 $('.modal-title').text('Add Post');
                  document.getElementById('data').innerHTML = '';
+                 data = data.resultHis;
                 if(data.length == 0){
                    $('#data').append('<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>');
                 }else{
