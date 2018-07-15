@@ -37,6 +37,7 @@ Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::get("testpassport", "Mobile\UserController@testPassport");
 Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPaymentPaypal");
 Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
+Route::get("tooth/all", "Mobile\ToothController@getAll");
 
 Route::post("test", "Mobile\MobileController@testPOST");
 ///ADMIN
