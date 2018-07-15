@@ -78,10 +78,10 @@ Route::middleware('auth:api')->group(function () {
     //treatment category
 
     //History Treatment
-    Route::get("treatmentHistory/all", "Mobile\HistoryTreatmentController@getAll");
-    Route::get("treatmentHistory/getByPhone/{phone}", "Mobile\HistoryTreatmentController@getByPhone");
-    Route::get("treatmentHistory/getById/{id}", "Mobile\HistoryTreatmentController@getById");
-    Route::get("treatmentHistory/getByPatientId/{id}", "Mobile\HistoryTreatmentController@getByPatientId");
+    Route::get("treatmentHistory/all", "Mobile\TreatmentHistoryController@getAll");
+    Route::get("treatmentHistory/getByPhone/{phone}", "Mobile\TreatmentHistoryController@getByPhone");
+    Route::get("treatmentHistory/getById/{id}", "Mobile\TreatmentHistoryController@getById");
+    Route::get("treatmentHistory/getByPatientId/{id}", "Mobile\TreatmentHistoryController@getByPatientId");
     //treatment
     //appointment
     Route::get("appointment/all", "Mobile\AppointmentController@getAll");
