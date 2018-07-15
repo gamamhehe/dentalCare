@@ -97,7 +97,6 @@ class StaffController extends Controller
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
 
         if ($role == 2) {
-
             $listAppointment = $this->viewAppointmentForDentist($sessionAdmin->belongToStaff()->first()->id);
         } else {
             $listAppointment = $this->viewAppointmentForReception();
@@ -106,8 +105,8 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                    <button style="width: 30%" value="'. $appoint->hasPatientOfAppointment()->first()->patient_id .'" class="btn btn-success btn-sm btn-dell"> Skip</button>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkComing(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Create Treatment</button>
+                    <button style="width: 30%" value="'. $appoint->id .'" class="btn btn-success btn-sm btn-dell"> Tiếp tục liệu trình cũ</button>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkComing(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Tạo liệu trình mới</button>
                 </div>
                 ';
             })->make(true);
@@ -121,7 +120,6 @@ class StaffController extends Controller
         if ($checkComingAppointment) {
             $status = 1;
         }
-
         $data = array(
             'idPatient' => $checkComingAppointment,
             'statusComing' => $status,
@@ -130,7 +128,6 @@ class StaffController extends Controller
         echo json_encode($data);
 
     }
-
     public function getList()
     {
         return $this->getListStaff();

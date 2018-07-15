@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentDetailBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
@@ -15,6 +16,7 @@ class TreatmentHistoryController extends Controller
     use TreatmentHistoryBusinessFunction;
     use TreatmentDetailBusinessFunction;
     use TreatmentBusinessFunction;
+    use AppointmentBussinessFunction;
     public function createTreatmentHistory(Request $request){
         // $treatmentHistory = new TreatmentHistory();
         // $treatmentHistory->treatment_id = $request->treatment_id;
@@ -46,12 +48,21 @@ class TreatmentHistoryController extends Controller
         return view('WebUser.TreatmentHistory', ['listTreatmentHistory'=>$result]);
     }
     public function getTreatmentHistoryByPatient($id){
-        $result = $this->getTreatmentHistoryByPatientId($id);
-        foreach ($result as $key ) {
-            $key->nameTreat = $key->belongsToTreatment()->first();
+        $checkComingAppointment = $this->checkAppointmentComing($id);
+        $data = array(
+            'statusComing' => 0,
+        );
+        if ($checkComingAppointment) {
+            $result = $this->getTreatmentHistoryByPatientId($checkComingAppointment);
+            foreach ($result as $key ) {
+                $key->nameTreat = $key->belongsToTreatment()->first();
+            }
+            $data = array(
+                'statusComing' => 1,
+                'resultHis' => $result
+            );
         }
-        echo json_encode($result);
-        
+        echo json_encode($data);
     }
 
     public function getList(){
