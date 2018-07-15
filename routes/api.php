@@ -27,7 +27,6 @@ Route::post("user/changePassword","Mobile\UserController@changePassword");
 //patient
 Route::post("user/updatePatient","Mobile\PatientController@updatePatientInfo");
 
-
 Route::get("city/all", "Mobile\AddressController@getAllCitites");
 Route::get("city/{id}/districts/", "Mobile\AddressController@getDistrictsByCity");
 Route::get("news/all", "Mobile\NewsController@getAllNews");

@@ -18,7 +18,7 @@ Route::post('loginAdmin', 'Admin\StaffController@login')->name('admin.login.post
 Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
 
 Route::get('datajson', 'Blockchain\BlockchainController@getDataBlockchainJson');
-Route::get('datajsonFromSever', 'Blockchain\BlockchainController@callAPI_GetData');
+Route::get('datajsonFromSever', 'Blockchain\BlockchainController@checkLedger');
 
 
 // webuser phuc
