@@ -259,7 +259,7 @@
              "_token": "{{ csrf_token() }}",
             'phone': phone,
             'estimateTimeReal':estimateTimeReal,
-            'patientID':patientID,
+            'patientID':2,
             'datepicker':datepicker,
           },
           success: function(data){
@@ -351,7 +351,7 @@
              return;
         }
         $.ajax({
-            url: '/admin/liv-search/'+ searchValue, //this is your uri
+            url: '/admin/live-search/'+ searchValue, //this is your uri
             type: 'GET', //this is your method
 
             dataType: 'json',
