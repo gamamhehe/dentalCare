@@ -19,6 +19,12 @@ trait TreatmentBusinessFunction
         $listTreat = Treatment::all();
         foreach ($listTreat as $treatment) {
             $treatment->treatment_steps = $treatment->hasTreatmentStep()->get();
+            foreach($treatment->treatment_steps  as $t){
+               $step = $t->belongsToStep()->first();
+               if($step!=null){
+                   $t->name = $step->name;
+               }
+            }
             $treatment->category = $treatment->belongsToTreatmentCategory()->first();
         }
         return $listTreat;

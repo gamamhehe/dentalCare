@@ -60,7 +60,7 @@
 
     <script type="text/javascript" src="/assets/user/js/myjs.js"></script>
     <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
-    <link rel="stylesheet" href="/assets/user/css/mycss.css">
+   
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -76,6 +76,7 @@
     @yield('content')
     @include('admin.blocks.footerWeb')
 </div>
+ <link rel="stylesheet" href="/assets/user/css/mycss.css">
 <script src="/assets/admin/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/assets/admin/bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script>

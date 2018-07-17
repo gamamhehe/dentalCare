@@ -7,7 +7,6 @@ use App\Model\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Yajra\Datatables\Facades\Datatables;
 use DB;
 class NewsController extends Controller
 {
@@ -27,11 +26,12 @@ class NewsController extends Controller
 
         return Datatables::of($listNews)
             ->addColumn('action', function($listNews) {
-                return '<a href="editNews/'.$listNews->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="'.$listNews->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+                return '<a href="editNews/'.$listNews->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listNews->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
 
     }
     public function loadList(Request $request){
+
         return view('admin.News.list');
     }
     public function loadEdit($id){
@@ -54,9 +54,9 @@ class NewsController extends Controller
     }
     public function delete($id){
        if( $this->deleteNews($id)){
-           return redirect('/list-News')->withSuccess("Bài viết đã được xóa");
+           return redirect('/list-news')->withSuccess("Bài viết đã được xóa");
        }else{
-           return redirect('admin/list-News')->withSuccess("Bài viết chưa được xóa");
+           return redirect('admin/list-news')->withSuccess("Bài viết chưa được xóa");
        }
 
 

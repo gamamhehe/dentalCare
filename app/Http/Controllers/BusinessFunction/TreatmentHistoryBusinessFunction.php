@@ -161,4 +161,12 @@ trait TreatmentHistoryBusinessFunction
     public function getTreatmentHistoryById($id){
     return (TreatmentHistory::where('id', $id)->first());
     }
+    public function updateTreatmentHistoryDone($id){
+       
+        $date = Carbon::now();
+        TreatmentHistory::where('id', $id)->update(['finish_date' => $date]);
+        return $id;
+
+        
+    }
 }

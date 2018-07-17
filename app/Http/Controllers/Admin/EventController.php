@@ -31,7 +31,7 @@ class EventController extends Controller
         $listEvent = $this->getAllEvent();
         return Datatables::of($listEvent)
             ->addColumn('action', function($listEvent) {
-                return '<a href="editEvent/'.$listEvent->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="'.$listEvent->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+                return '<a href="editEvent/'.$listEvent->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listEvent->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm "><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
     }
     public function loadcreateEvent(Request $request){

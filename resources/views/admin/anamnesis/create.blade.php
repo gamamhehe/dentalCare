@@ -8,7 +8,7 @@
                     <label><h1>Tạo Bệnh tiền sử</h1></label>
                 </div>
 
-                <form method ="post" class="form-horizontal" action="create-Anamnesis" enctype="multipart/form-data" id="createAnamnesis">
+                <form method ="post" class="form-horizontal" action="create-anamnesis" enctype="multipart/form-data" id="createAnamnesis">
                     {{ csrf_field() }}
                     <div class="row" style="margin-bottom: 1em;">
                         <div class="col-sm-2"><label>Tên bệnh </label></div>

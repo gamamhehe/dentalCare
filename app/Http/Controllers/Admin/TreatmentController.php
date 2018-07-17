@@ -23,7 +23,7 @@ class TreatmentController extends Controller
         $listTreatment = $this->getAllTreatment();
         return Datatables::of($listTreatment)
             ->addColumn('action', function($listTreatment) {
-                return '<a href="editTreatment/'.$listTreatment->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="'.$listTreatment->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+                return '<a href="editTreatment/'.$listTreatment->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listTreatment->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
     }
     public function loadListTreatment(Request $request){
@@ -77,4 +77,5 @@ class TreatmentController extends Controller
         dd($this->checkAppointmentForPatient('1231231231', 7));
 
     }
+    
 }
