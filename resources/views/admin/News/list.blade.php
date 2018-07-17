@@ -8,7 +8,7 @@
           <label><h1>Danh sách Tin Tức</h1></label>
       </div>
       <div class="row layout" style=" margin-right: 4em"  >
-        <table id="dup-table" class="table myTable table-bordered  ">
+        <table id="dup-table" class="table myTable table-bordered">
           <thead>
           <tr style="height: 1.3em;">
             <td class="col-sm-1">id</td>
@@ -47,14 +47,14 @@
             "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",
             "infoEmpty": "Không có kết quả .",
             "infoFiltered": "(filtered from _MAX_ total records)",
-            "search" : "Tìm kiếm ",
+            "search" : "Tìm kiếm ","infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
         },
         processing: true,
         serverSide: true,
         order: [[ 0, "desc" ]],
         bLengthChange:true,
         pageLength: 5,
-        ajax: '/admin/getListNews',
+        ajax: '/admin/get-list-news',
         columns : [
           
               {data: 'id'},

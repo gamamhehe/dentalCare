@@ -13,6 +13,11 @@ class MedicineController extends Controller
 {
     use MedicineBusinessFunction;
 
+
+    public function create(Request $request){
+        $result = $this->createMedicine($request->all());
+          return redirect()->route("admin.list.medicines")->withSuccess("Thuốc đã được tạo");
+    }
     public function createForTreatmentDetail(Request $request)
     {
         $listMedicine = $request->medicine;
@@ -20,7 +25,22 @@ class MedicineController extends Controller
         $treatment_detail_id = $request->treatment_detail_id;
         $this->createMedicineForTreatmentDetail($listMedicine, $treatment_detail_id, $listQuantity);
     }
-
+        public function getList()
+    {
+         $listEvent = $this->getListMedicine();
+         return Datatables::of($listEvent)
+             ->addColumn('action', function ($listEvent) {
+                 return '<a href="editMedicines/' . $listEvent->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="' . $listEvent->id . '" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
+            })->make(true);
+     }
+    public function loadcreate(Request $request)
+    {
+        return view('admin.medicines.create');
+    }
+    public function loadList(Request $request)
+    {
+        return view('admin.medicines.list');
+    }
     public function loadOfTreatmentdetail(Request $request)
     {
         $treatment_detail_id = $request->treatment_detail_id;
@@ -82,6 +102,38 @@ class MedicineController extends Controller
 
     public function createPrescriptionForTreatmentDetail(Request $request){
         $this->createMedicineForTreatmentDetail($request->medicine, 1, $request->quantity);
+    }
+     public function loadedit($id)
+    {
+        return view("admin.medicines.edit", ['Medicines' => $this->loadeditMedicine($id)]);
+    }
+
+    public function edit(Request $request, $id)
+    {
+
+        $input = $request->all();
+        if ($this->editMedicines($input, $id)) {
+            return redirect()->route("admin.list.medicines")->withSuccess("Thuốc đã được chỉnh");
+        } else {
+            return redirect()->back()->withSuccess("Thuốc chưa được chỉnh");
+        }
+    }
+    public function delete($id)
+    {
+        if ($this->deleteMedicines($id)) {
+            return redirect('admin/list-Medicines')->withSuccess("Thuốc đã được xóa");
+        } else {
+            return redirect('admin/list-Medicines')->withSuccess("Thuốc chưa được xóa");
+        }
+    }
+     public function showListAbsentDatatable(){
+        $listAbsent = $this->getListAbsentByAdmin();
+          return Datatables::of($listAbsent)
+            ->addColumn('action', function($listAbsent) {
+                return '<a href="editNews/'.$listAbsent->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listAbsent->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
+            })->make(true);
+
+         
     }
 
 }

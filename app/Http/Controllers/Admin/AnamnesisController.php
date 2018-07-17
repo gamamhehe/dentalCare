@@ -30,7 +30,7 @@ class AnamnesisController extends Controller
 
         return Datatables::of($AnamnesisCatalog)
             ->addColumn('action', function($AnamnesisCatalog) {
-                return '<a href="editAnamnesis/'.$AnamnesisCatalog->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="'.$AnamnesisCatalog->id.'" onclick="deleteAnamnesis(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+                return '<a href="editAnamnesis/'.$AnamnesisCatalog->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$AnamnesisCatalog->id.'" onclick="deleteAnamnesis(this)" class="btn btn-success btn-sm "><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
 
     }

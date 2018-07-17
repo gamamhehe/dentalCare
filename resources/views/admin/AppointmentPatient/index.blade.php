@@ -2,7 +2,6 @@
 @section('content')
     <div class="content-wrapper" >
         <div class="box">
-            
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
@@ -232,7 +231,7 @@
 <script>
      $(function () {
           $('#datepicker').datepicker({
-          autoclose: true
+          autoclose: true,
         });
       });
     var x = 0;

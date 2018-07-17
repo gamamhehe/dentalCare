@@ -12,7 +12,7 @@
 
                 <div class="">
                     <div class="table table-responsive">
-                        <table class="table table-bordered" id="table">
+                        <table class="table myTable table-bordered" id="table">
                             <tr>
                                 <th width="150px">No</th>
                                 <th>Họ & Tên</th>
