@@ -27,7 +27,7 @@ class AbsentController extends Controller
         if ($check) {//ngày nghỉ hợp lệ
         $this->createAbsent($staff_id->id, (new Carbon($request->start_date))->format('Y-m-d H:i:s'), (new Carbon($request->end_date))->format('Y-m-d H:i:s'), $request->reason);
 
-             return redirect('/admin/createAbsent')->withSuccess("Đơn xin nghỉ được chấp nhận");
+             return redirect('/admin/create-absent')->withSuccess("Đơn xin nghỉ được chấp nhận");
         } else// do đã
             return redirect()->back()->withError("Đơn xin nghỉ chưa được chấp nhận");
     }
@@ -87,9 +87,9 @@ class AbsentController extends Controller
     }
     public function deleteAbsent(Request $request){
         if ($this->deleteAbsentById($request->id)) {
-            return redirect('admin/createAbsent')->withSuccess("Thuốc đã được xóa");
+            return redirect('admin/create-absent')->withSuccess("Thuốc đã được xóa");
         } else {
-            return redirect('admin/createAbsent')->withError("Thuốc chưa được xóa");
+            return redirect('admin/create-absent')->withError("Thuốc chưa được xóa");
         }
     }
     public function showListAbsentDatatableAdmin(Request $request){
@@ -99,7 +99,7 @@ class AbsentController extends Controller
             if($key->status != null){
                 $key->action = '<a class="btn btn-success btn-sm" disabled><i class="glyphicon glyphicon-edit"></i>Đã chấp nhận</a>';
             }else{
-                $key->action = ' <a id="' . $key->id . '" class="btn btn-warning btn-sm approve-Absent" data-id="' . $key->id . '"  data-start="'.$key->start_date.'" data-end="'.$key->end_date.'" data-name="'.$key->nameStaff.'"><i class="glyphicon glyphicon-edit"></i>Chấp Nhận</a> <a id="' . $key->id . '"class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-edit"></i>Hủy</a>';
+                $key->action = ' <a id="' . $key->id . '" class="btn btn-warning btn-sm approve-Absent" data-id="' . $key->id . '"  data-start="'.$key->start_date.'" data-end="'.$key->end_date.'" data-name="'.$key->nameStaff.'"><i class="glyphicon glyphicon-edit"></i>Chấp Nhận</a> <a id="' . $key->id . '"class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-edit"></i>Từ chối</a>';
             }
 
         }

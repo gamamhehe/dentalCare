@@ -52,7 +52,7 @@
             order: [[ 0, "desc" ]],
             bLengthChange:true,
             pageLength: 5,
-            ajax: '/admin/getListEvent',
+            ajax: '/admin/get-list-event',
             columns : [
 
                 {data: 'id'},
@@ -73,7 +73,7 @@
         var id = obj.getAttribute("id");
         $.ajax(
             {
-                url: "/admin/deleteEvent/"+id,
+                url: "/admin/delete-event/"+id,
                 method:"get",
                 data: {
                     id:id

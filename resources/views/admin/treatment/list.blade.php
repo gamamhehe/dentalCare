@@ -50,7 +50,7 @@
             order: [[ 0, "desc" ]],
             bLengthChange:true,
             pageLength: 5,
-            ajax: '/admin/getListTreatment',
+            ajax: '/admin/get-list-treatment',
             columns : [
 
                 {data: 'id'},
@@ -70,7 +70,7 @@
         var id = obj.getAttribute("id");
         $.ajax(
             {
-                url: "/admin/deleteTreatment/"+id,
+                url: "/admin/delete-treatment/"+id,
                 method:"get",
                 data: {
                     id:id

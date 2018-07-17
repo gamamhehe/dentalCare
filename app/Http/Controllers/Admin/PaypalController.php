@@ -88,13 +88,13 @@ class PaypalController extends Controller
         } catch (\PayPal\Exception\PPConnectionException $ex) {
             if (\Config::get('app.debug')) {
                 \Session::put('error','Connection timeout');
-                return Redirect::route('danhsachchitra');
+                return Redirect::route('danh-sach-chi-tra');
                 /** echo "Exception: " . $ex->getMessage() . PHP_EOL; **/
                 /** $err_data = json_decode($ex->getData(), true); **/
                 /** exit; **/
             } else {
                 \Session::put('error','Some error occur, sorry for inconvenient');
-                return Redirect::route('danhsachchitra');
+                return Redirect::route('danh-sach-chi-tra');
                 /** die('Some error occur, sorry for inconvenient'); **/
             }
         }
@@ -116,7 +116,7 @@ class PaypalController extends Controller
         }
 
         \Session::put('error','Unknown error occurred');
-        return Redirect::route('danhsachchitra');
+        return Redirect::route('danh-sach-chi-tra');
     }
 
     public function getPaymentStatus(Request $request)
@@ -128,7 +128,7 @@ class PaypalController extends Controller
 //        dd($request);
         if (empty($request->PayerID) || empty($request->token)) {
             \Session::put('error','Payment failed');
-            return Redirect::route('danhsachchitra');
+            return Redirect::route('danh-sach-chi-tra');
         }
         $payment = Payment::get($payment_id, $this->_api_context);
         /** PaymentExecution object includes information necessary **/
@@ -155,10 +155,10 @@ class PaypalController extends Controller
             $request->session()->remove('payment_id');
             $request->session()->remove('amount');
             \Session::put('success','Payment success');
-            return Redirect::route('danhsachchitra');
+            return Redirect::route('danh-sach-chi-tra');
         }
         \Session::put('error','Payment failed');
 
-        return Redirect::route('danhsachchitra');
+        return Redirect::route('danh-sach-chi-tra');
     }
 }

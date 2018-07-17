@@ -30,7 +30,7 @@ class AnamnesisController extends Controller
 
         return Datatables::of($AnamnesisCatalog)
             ->addColumn('action', function($AnamnesisCatalog) {
-                return '<a href="editAnamnesis/'.$AnamnesisCatalog->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$AnamnesisCatalog->id.'" onclick="deleteAnamnesis(this)" class="btn btn-success btn-sm "><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
+                return '<a href="edit-anamnesis/'.$AnamnesisCatalog->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$AnamnesisCatalog->id.'" onclick="deleteAnamnesis(this)" class="btn btn-success btn-sm "><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
 
     }
@@ -59,9 +59,9 @@ class AnamnesisController extends Controller
     }
     public function delete($id){
         if( $this->deletAnamnesis($id)){
-            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh đã được xóa");
+            return redirect('admin/list-anamnesis')->withSuccess("Loại bệnh đã được xóa");
         }else{
-            return redirect('admin/list-Anamnesis')->withSuccess("Loại bệnh chưa được xóa");
+            return redirect('admin/list-anamnesis')->withSuccess("Loại bệnh chưa được xóa");
         }
         DB::beginTransaction();
         try{

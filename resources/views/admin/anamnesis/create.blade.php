@@ -25,7 +25,7 @@
 
                     </div>
                     <div class=""  style="margin-top: 1em;">
-                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Tạo</button>
+                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)">Tạo</button>
                     </div>
 
                 </form>

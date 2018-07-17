@@ -79,7 +79,7 @@ class TreatmentDetailController extends Controller
         }
       }
       //end step
-        return redirect('admin/treatmentDetail/'.$TreatmentDetailId);
+        return redirect('admin/treatment-detail/'.$TreatmentDetailId);
  
 
   	}
@@ -188,7 +188,7 @@ class TreatmentDetailController extends Controller
                   }
           } 
       //done image
-        return redirect('admin/treatmentDetail/'.$TreatmentDetailId);
+        return redirect('admin/treatment-detail/'.$TreatmentDetailId);
        
        
     }

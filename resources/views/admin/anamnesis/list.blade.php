@@ -68,11 +68,10 @@
             });
         });
         function deleteAnamnesis(obj){
-            var linkDelete = "admin/deleteAnamnesis/";
             var id = obj.getAttribute("id");
             $.ajax(
                 {
-                    url: "/admin/deleteAnamnesis/"+id,
+                    url: "/admin/delete-anamnesis/"+id,
                     method:"get",
                     data: {
                         id:id

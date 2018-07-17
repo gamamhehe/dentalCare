@@ -52,7 +52,7 @@
                                 <h4 class="modal-title"></h4>
                             </div>
                             <div class="modal-body">
-                                <form method ="post" class="form-horizontal" action="create-Appointment" enctype="multipart/form-data" id="createAppoint">
+                                <form method ="post" class="form-horizontal" action="create-appointment" enctype="multipart/form-data" id="createAppoint">
                                         {{ csrf_field() }}
                                     <div class="form-group row add">
                                         <label class="control-label col-xs-4" for="title">Số điện thoại:</label>
@@ -118,7 +118,7 @@
                                 <h4 class="modal-title"></h4>
                             </div>
                             <div class="modal-body" >
-                                <form method ="post" class="form-horizontal" action="create-Patient" enctype="multipart/form-data" id="createAppoint">
+                                <form method ="post" class="form-horizontal" action="create-patient" enctype="multipart/form-data" id="createAppoint">
                                         {{ csrf_field() }}
                                     <div class="form-group row add">
                                         <label class="control-label col-xs-2" for="title">Họ & Tên :</label>
@@ -254,12 +254,12 @@
         var datepicker = document.getElementById("datepicker").value;
         $.ajax({
           type: 'POST',
-          url: '/admin/create-Appointment',
+          url: '/admin/create-appointment',
           data:{
              "_token": "{{ csrf_token() }}",
             'phone': phone,
             'estimateTimeReal':estimateTimeReal,
-            'patientID':patientID,
+            'patientID':2,
             'datepicker':datepicker,
           },
           success: function(data){
@@ -281,7 +281,7 @@
         var districtCreate = document.getElementById("districtsPatient").value;
         $.ajax({
           type: 'POST',
-          url: '/admin/create-Patient',
+          url: '/admin/create-patient',
            data:{
              "_token": "{{ csrf_token() }}",
             'name' : nameCreate,
@@ -304,7 +304,7 @@
     function disctrict(sel){
     var treatCateID = sel.value;
        $.ajax({
-             url: '/admin/getDistrict/'+treatCateID, //this is your uri
+             url: '/admin/get-district/'+treatCateID, //this is your uri
             type: 'GET', //this is your method
             dataType: 'json',
             success: function(data){
@@ -351,7 +351,7 @@
              return;
         }
         $.ajax({
-            url: '/admin/live_search/'+ searchValue, //this is your uri
+            url: '/admin/live-search/'+ searchValue, //this is your uri
             type: 'GET', //this is your method
 
             dataType: 'json',
@@ -385,7 +385,7 @@
         var xxx = document.getElementById('phoneXXX').value;
         $('#phoneXXX').prop('onchange', true);
          $.ajax({
-            url: '/admin/getListPatient/'+ xxx, //this is your uri
+            url: '/admin/get-list-patient/'+ xxx, //this is your uri
             type: 'GET', //this is your method
 
             dataType: 'json',
@@ -412,7 +412,7 @@
 
     function receive(id){
         $.ajax({
-            url: '/admin/list-Appointment/'+ id, //this is your uri
+            url: '/admin/list-appointment/'+ id, //this is your uri
             type: 'GET', //this is your method
 
             dataType: 'json',

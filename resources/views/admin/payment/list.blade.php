@@ -97,7 +97,7 @@
                 return;
             }
             $.ajax({
-                url: '/admin/searchPayment/' + searchValue, //this is your uri
+                url: '/admin/search-payment/' + searchValue, //this is your uri
                 type: 'GET', //this is your method
                 dataType: 'json',
                 success: function (data) {
