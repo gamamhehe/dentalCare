@@ -33,6 +33,8 @@ class AppConst
     const ROLE_DENTIST = 2;
     const ROLE_RECEPTIONIST = 3;
     const ROLE_PATIENT = 4;
+
+    const TREATMENT_HISTORY_PATH = '/assets/images/TreatmentHistory/';
 //0 vua tao
 //1 dang kham
 //2 xong

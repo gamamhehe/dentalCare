@@ -18,7 +18,7 @@ class CreateTblTreatmentDetailsTable extends Migration
             $table->integer('treatment_history_id');
             $table->string('note')->nullable();
             $table->integer('staff_id');
-            $table->dateTime('create_date');
+            $table->dateTime('created_date');
             $table->timestamps();
         });
     }

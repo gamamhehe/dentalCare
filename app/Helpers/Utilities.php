@@ -64,7 +64,7 @@ class Utilities
             $type = AppConst::RESPONSE_REMINDER;
             $body = AppConst::MSG_REMINDER_APPOINTMENT;
             $title = "Nhắc nhở cuộc hẹn";
-            $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc ".$startTime;
+            $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc " . $startTime;
             $user = User::where('phone', $phone)->first();
             if ($user == null) {
                 self::logDebug('Firebase Appointment: Cannot find user with phone: ' . $phone);
@@ -75,7 +75,7 @@ class Utilities
             } else {
                 $token = $user->noti_token;
                 $requestObj = self::getFirebaseRequestObj($type, $title, $message, $body, $token);
-                $response =self::sendFirebase($requestObj);
+                $response = self::sendFirebase($requestObj);
                 $responseObj = json_decode($response);
                 self::logDebug("Firebase Appointment:  Response is " . $response);
                 return $responseObj;
@@ -92,11 +92,11 @@ class Utilities
     }
 
     /**
-     * @param $type: get from AppConst
+     * @param $type : get from AppConst
      * @param $title
      * @param $message
      * @param $body
-     * @param $token: id token of mobile, get from database with field 'noti_token'
+     * @param $token : id token of mobile, get from database with field 'noti_token'
      * @return \stdClass
      */
     public static function getFirebaseRequestObj($type, $title, $message, $body, $token)
@@ -144,5 +144,28 @@ class Utilities
         $error->error = $message;
         $error->exception = $exception;
         return $error;
+    }
+
+    public static function saveFile($file,$publicPath, $saveName)
+    {
+        try {
+            $filename = $saveName . '.' . $file->getClientOriginalExtension();
+            $hostname = request()->getHttpHost();
+            //get time stamp
+            $path = public_path($publicPath);
+            $date = new \DateTime();
+            $timestamp = $date->getTimestamp();
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $fullPath = 'http://' . implode('/',
+                    array_filter(
+                        explode('/', $hostname.$publicPath .  $filename))
+                ) . '?time=' . $timestamp;
+            $file->move($path, $filename);
+            return $fullPath;
+        } catch (Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
     }
 }

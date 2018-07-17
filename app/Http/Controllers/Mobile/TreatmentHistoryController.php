@@ -14,8 +14,11 @@ use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+use App\Model\MedicinesQuantity;
 use App\Model\TreatmentHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TreatmentHistoryController extends BaseController
 {
@@ -26,41 +29,65 @@ class TreatmentHistoryController extends BaseController
 
     public function create(Request $request)
     {
+//        Log::info($request->all());
+//        return;
         try {
             $treatmentId = $request->input('treatment_id');
             $patientId = $request->input('patient_id');
+            $staffId = $request->input('staff_id');
             $description = $request->input('description');
-            $createdDate = $request->input('create_date');
-            $finishedDate = $request->input('finish_date');
+            $treatmentDetailNote = $request->input('detail_note');
+            $createdDate = Carbon::now();
+//            $finishedDate = $request->input('finish_date');
             $toothNumber = $request->input('tooth_number');
             $price = $request->input('price');
-            $paymentId = $request->input('payment_id');
-            $totalPrice = $request->input('total_price');
+            $images = $request->file('images');
+            $medicineIds = $request->input('medicine_id');
+            $medicineQuantitys = $request->input('medicine_quantity');
+            $detailStepIds = $request->input('step_id');
+            $medicines = [];
+            for ($i = 0; $i < count($medicineIds); $i++) {
+                $medicine = new MedicinesQuantity();
+                $medicine->medicine_id = $medicineIds[$i];
+                $medicine->quantity = $medicineQuantitys[$i];
+                $medicines[] = $medicine;
+            }
+//            $paymentId = $request->input('payment_id');
+//            $totalPrice = $request->input('total_price');
+//1. create treatment history
+//2. create treatment detail
+//3. create treatment detail step
+//4. create medicine quantity
+//5. create treatment image[]
 
             $treatmentHistory = new TreatmentHistory();
             $treatmentHistory->treatment_id = $treatmentId;
             $treatmentHistory->patient_id = $patientId;
+            $treatmentHistory->staff_id = $staffId;
             $treatmentHistory->description = $description;
             $treatmentHistory->create_date = $createdDate;
-            $treatmentHistory->finish_date = $finishedDate;
+//            $treatmentHistory->finish_date = $finishedDate;
             $treatmentHistory->tooth_number = $toothNumber;
             $treatmentHistory->price = $price;
-            $treatmentHistory->payment_id = $paymentId;
-            $treatmentHistory->total_price = $totalPrice;
-            $result = $this->saveTreatmentHistory($treatmentHistory);
+//            $treatmentHistory->payment_id = $paymentId;
+//            $treatmentHistory->total_price = $totalPrice;
+            $result = $this->createTreatmentHistory(
+                $treatmentHistory,
+                $treatmentDetailNote,
+                $detailStepIds,
+                $medicines,
+                $images);
             if ($result) {
-                return response()->json($treatmentHistory, 200);
+                $successResponse = $this->getSuccessObj(200, "OK", "Chỉnh sửa thành công", "No data");
+                return response()->json($successResponse, 200);
             } else {
                 $error = $this->getErrorObj("Không thể lưu thông tin điều trị", "No exception");
                 return response()->json($error, 400);
             }
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);
-            return response()->json($error, 500);
+            return response()->json($error, 400);
         }
-
-
-
 
 
     }
