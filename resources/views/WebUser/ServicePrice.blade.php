@@ -211,7 +211,7 @@
 	</div>
 		<div class="row" >
 			
-			<table id="dup-table" class="table text-center">
+			<table id="dup-table"  class="table myTable table-bordered">
       <thead>
       <tr style="background-color: #eee;">
       <td class="col-sm-1">ID</td>

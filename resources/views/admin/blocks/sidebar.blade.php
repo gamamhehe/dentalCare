@@ -32,6 +32,14 @@
                     <li><a href="{{ route('admin.listAppointment.dentist')}}">Lịch hẹn của tôi !</a></li>
                 </ul>
             </li>
+
+            <li class="treeview">
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Xin nghỉ</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('create.Absent')}}">Đơn xin nghỉ</a></li>
+                    <li><a href="{{ route('admin.Manage.Absent')}}">Quản lí bởi ADmin nghen</a></li>
+                </ul>
+            </li>
             <li class="treeview">
                 <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí lịch sử bệnh án</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                 <ul class="treeview-menu">

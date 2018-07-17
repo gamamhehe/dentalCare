@@ -18,7 +18,7 @@
                     <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
                         <div class="col-sm-2"><label>Bác Sĩ chịu trách nhiệm </label></div>
                         <div class="col-sm-10" style="padding-right: 0;">
-                            <input type="text" class="form-control input-width" id="dentist_name" name="dentist_name" placeholder="Input Title News" readonly="readonly" value="{{$Feedback->treatment_detail_id->name}}" />
+                            <input type="text" class="form-control input-width" id="dentist_name" name="dentist_name" placeholder="Input Title News" readonly="readonly" value="{{$Feedback->treatment_detail->name}}" />
                         </div>
                     </div>
                     <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
