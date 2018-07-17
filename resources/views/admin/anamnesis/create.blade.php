@@ -8,7 +8,7 @@
                     <label><h1>Tạo Bệnh tiền sử</h1></label>
                 </div>
 
-                <form method ="post" class="form-horizontal" action="create-Anamnesis" enctype="multipart/form-data" id="createAnamnesis">
+                <form method ="post" class="form-horizontal" action="create-anamnesis" enctype="multipart/form-data" id="createAnamnesis">
                     {{ csrf_field() }}
                     <div class="row" style="margin-bottom: 1em;">
                         <div class="col-sm-2"><label>Tên bệnh </label></div>
@@ -25,7 +25,7 @@
 
                     </div>
                     <div class=""  style="margin-top: 1em;">
-                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Tạo</button>
+                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)">Tạo</button>
                     </div>
 
                 </form>

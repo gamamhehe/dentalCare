@@ -8,7 +8,7 @@
                     <label><h1>Danh sách Đánh giá Bác sĩ</h1></label>
                 </div>
                 <div class="row layout" style=" margin-right: 4em"  >
-                    <table id="dup-table" class="table ">
+                    <table id="dup-table" class="table myTable table-bordered">
                         <thead>
                         <tr style="background-color: #eee;">
                             <td class="col-sm-1">id</td>
@@ -42,12 +42,21 @@
         });
         $(function() {
             $('#dup-table').DataTable({
+                language: {
+            "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
+            "zeroRecords": "Không tìm thấy kết quả ",
+            "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",
+            "infoEmpty": "Không có kết quả .",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search" : "Tìm kiếm ",
+            "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
+        },
                 processing: true,
                 serverSide: true,
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,
                 pageLength: 5,
-                ajax: '/admin/getListFeedback',
+                ajax: '/admin/get-list-feedback',
                 columns : [
 
                     {data: 'id'},
@@ -61,12 +70,10 @@
             });
         });
         function deleteFeedback(obj){
-            var linkDelete = "admin/deleteNews/";
             var id = obj.getAttribute("id");
-
             $.ajax(
                 {
-                    url: "/admin/deleteFeedback/"+id,
+                    url: "/admin/delete-feedback/"+id,
                     method:"get",
                     data: {
                         id:id

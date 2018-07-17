@@ -103,11 +103,11 @@
                                  <hr>
 
                             <li class="a-hover">
-                                <a href="/lichsubenhan">Lịch sử khám bệnh</a>
+                                <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
                             </li>
                             <li class="gachngang"></li>
                             <li class="  a-hover">
-                                <a href="/danhsachchitra"><span>Danh sách chi trả</span></a>
+                                <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                             </li>
                             <li class="gachngang"></li>
                             <li class=" a-hover">
@@ -211,7 +211,7 @@
 	</div>
 		<div class="row" >
 			
-			<table id="dup-table" class="table text-center">
+			<table id="dup-table"  class="table myTable table-bordered">
       <thead>
       <tr style="background-color: #eee;">
       <td class="col-sm-1">ID</td>

@@ -18,15 +18,6 @@ class TreatmentHistoryController extends Controller
     use TreatmentBusinessFunction;
     use AppointmentBussinessFunction;
     public function createTreatmentHistory(Request $request){
-        // $treatmentHistory = new TreatmentHistory();
-        // $treatmentHistory->treatment_id = $request->treatment_id;
-        // $treatmentHistory->patient_id = $request->patient_id;
-        // $treatmentHistory->description = $request->description;
-        // $treatmentHistory->create_date = Carbon::now();
-        // $treatmentHistory->tooth_number = $request->tooth_number;
-        // $treatmentHistory->price = $request->price;
-        // $treatmentHistory->payment_id = $request->payment_id;
-        // $treatmentHistory->total_price = $total_price;
          $idTreatmentHistory = $this->createTreatmentProcess($request->treatment_id,$request->patient_id,$request->tooth_number,$request->price,$request->description);
          if($idTreatmentHistory){
             return redirect()->route("admin.stepTreatment", ['idTreatmentHistory' => $idTreatmentHistory,

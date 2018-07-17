@@ -77,7 +77,7 @@
                 return;
             }
             $.ajax({
-                url: '/admin/medicine_search/' + searchValue, //this is your uri
+                url: '/admin/medicine-search/' + searchValue, //this is your uri
                 type: 'GET', //this is your method
 
                 dataType: 'json',

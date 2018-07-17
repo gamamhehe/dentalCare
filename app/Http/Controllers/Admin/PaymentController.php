@@ -92,7 +92,7 @@ class PaymentController extends Controller
             <td style="text-align: center">{!! $row->paid !!}</td>
             <td style="text-align: center">Đã Hoàn Thành</td>
             <td align="center" style="width: 20%">
-            <form action="/admin/getPaymentDetail">
+            <form action="/admin/get-payment-detail">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <input type="hidden" name="idPayment" value="'. $row->id .'">
                 <button type="submit" class="btn btn-default btn-success">Xem Chi Tiết Chi Trả</button>
@@ -109,7 +109,7 @@ class PaymentController extends Controller
             <td style="text-align: center">'. $row->paid .'</td>
             <td style="text-align: center">Chưa Hoàn Thành</td>
             <td align="center" style="width: 20%">
-            <form action="/admin/getPaymentDetail">
+            <form action="/admin/get-payment-detail">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <input type="hidden" name="idPayment" value="'. $row->id .'">
                 <button type="submit" class="btn btn-default btn-success">Xem Chi Tiết Chi Trả</button>

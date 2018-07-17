@@ -30,8 +30,6 @@ class HomeController extends Controller
     }
     public function DoctorInformation(Request $request){
     	$doctors = DB::table('tbl_staffs')->get();
-    	 
-
     	return view("WebUser.DoctorInformation",['doctors'=>$doctors]);
     }
      public function BangGiaDichVu(){
@@ -102,4 +100,7 @@ class HomeController extends Controller
         $request->session()->remove('listPatient');
         return redirect()->route('homepage');
     }
+    public function profile(Request $request){
+        return view('admin.Staff.profile');
+    } 
 }

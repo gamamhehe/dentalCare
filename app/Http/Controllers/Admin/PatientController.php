@@ -99,7 +99,7 @@ class PatientController extends Controller
         if ($result) {
             return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Sự kiện đã được tạo");
         } else {
-            return redirect('admin/live_seach')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/live-seach')->withSuccess("Sự kiện chưa được tạo");
         }
     }
 

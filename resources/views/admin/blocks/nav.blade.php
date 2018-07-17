@@ -11,14 +11,14 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="hidden-xs">{{ Session::get('nameUser') }}</span>
+                    <span class="hidden-xs">{{Session::get('currentAdmin')->belongToStaff()->first()->name}}</span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- User image -->
                     <li class="user-header">
 
                         <p>
-                            {{ Session::get('nameUser') }} - User Origin
+                            {{ Session::get('currentAdmin')->belongToStaff()->first()->name}}
                         </p>
                     </li>
                     <!-- Menu Body -->
@@ -39,7 +39,7 @@
                     <!-- Menu Footer-->
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            <a href="profileStaff" class="btn btn-default btn-flat">Profile</a>
                         </div>
                         <div class="pull-right">
                             <a href="{!! route('admin.logout') !!}" class="btn btn-default btn-flat">Sign out</a>

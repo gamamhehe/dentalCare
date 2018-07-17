@@ -15,7 +15,7 @@ background-repeat: no-repeat;">
                     </div>
                 </div>
 
-                <form method="post" class="form-horizontal" action="/admin/updateStep" enctype="multipart/form-data"
+                <form method="post" class="form-horizontal" action="/admin/update-step" enctype="multipart/form-data"
                       id="createAnamnesis">
                     {{ csrf_field() }}
                     <div class="row">
@@ -258,7 +258,7 @@ background-repeat: no-repeat;">
                 return;
             }
             $.ajax({
-                url: '/admin/medicine_search/' + searchValue, //this is your uri
+                url: '/admin/medicine-search/' + searchValue, //this is your uri
                 type: 'GET', //this is your method
 
                 dataType: 'json',

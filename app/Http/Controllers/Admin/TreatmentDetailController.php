@@ -79,7 +79,7 @@ class TreatmentDetailController extends Controller
         }
       }
       //end step
-        return redirect('admin/treatmentDetail/'.$TreatmentDetailId);
+        return redirect('admin/treatment-detail/'.$TreatmentDetailId);
  
 
   	}
@@ -130,10 +130,7 @@ class TreatmentDetailController extends Controller
            return redirect()->back()->withInput()->with('message', $message);
         }
       // end detail
-      if(count($request['step'])==0){
-           return redirect('admin/treatmentDetail/'.$TreatmentDetailId);
-      }else{
-
+      
      $steps=$request['step'];
         
     
@@ -146,8 +143,34 @@ class TreatmentDetailController extends Controller
                  return redirect()->back()->withInput()->with('message', $message);
               }
       }
+      $TreatmentDetail = $this->getTreatmentDetail($idTreatmentHistory);
+      $TreatmentHistory = $this->getTreatmentHistoryById($idTreatmentHistory);
+      $idTreatment = $TreatmentHistory->treatment_id;
+      $finish_date = $TreatmentHistory->finish_date;
+      $idTreatmentDetail = $TreatmentDetail->id;
+      $listStepDone =  $this->showTreatmentDetailStepDone($idTreatmentHistory);
+      $listStep = $this->showTreatmentStepForTreatment($idTreatment);
+      if(count($listStep) == count($listStepDone && $finish_date==null)){
+        $resultSetDate = $this->updateTreatmentHistoryDone($idTreatmentHistory);
+      }
+       
       //done step
+      //medicine
+      $medicine =$request['medicine'];
+      $quantity =$request['quantity'];
+      if($medicine != null){
+         $resultMedicine = $this->createMedicineForTreatmentDetail($medicine,$TreatmentDetailId,$quantity);
+      if($resultMedicine){
+          $message = 'success';
+        }else{
+           
+           $message = 'error';
+           return redirect()->back()->withInput()->with('message', $message);
+        }
+      } 
 
+     
+      //done medicine
       //image update
       $totalImg =$request['totalImg'];
           if($totalImg != null) {
@@ -165,8 +188,8 @@ class TreatmentDetailController extends Controller
                   }
           } 
       //done image
-        return redirect('admin/treatmentDetail/'.$TreatmentDetailId);
-      } 
+        return redirect('admin/treatment-detail/'.$TreatmentDetailId);
+       
        
     }
 }
