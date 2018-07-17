@@ -17,9 +17,9 @@ class FeedbackController extends Controller
     public function delete(Request $request, $id)
     {
         if ($this->deleteFeedback($id)) {
-            return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá đã được xóa");
+            return redirect('admin/list-feedback')->withSuccess("Bài đánh giá đã được xóa");
         } else {
-            return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá chưa được xóa");
+            return redirect('admin/list-feedback')->withSuccess("Bài đánh giá chưa được xóa");
         }
     }
     public function loadListFeedback(Request $request)
@@ -47,12 +47,12 @@ class FeedbackController extends Controller
         if ($roleID == 1) {
             return Datatables::of($feedbackList)
                 ->addColumn('action', function ($feedbackList) {
-                    return '<a href="detailsFeedback/' . $feedbackList->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xem chi tiết</a> <a id="' . $feedbackList->id . '" onclick="deleteFeedback(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
+                    return '<a href="details-feedback/' . $feedbackList->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xem chi tiết</a> <a id="' . $feedbackList->id . '" onclick="deleteFeedback(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
                 })->rawColumns(['demo','action'])->make(true);
         } else {
             return Datatables::of($feedbackList)
                 ->addColumn('action', function ($feedbackList) {
-                    return '<a href="viewsFeedback/' . $feedbackList->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xem chi tiết</a> ';
+                    return '<a href="views-feedback/' . $feedbackList->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xem chi tiết</a> ';
                 })->rawColumns(['demo','action'])->make(true);
         }
 

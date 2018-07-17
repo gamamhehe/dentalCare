@@ -8,7 +8,7 @@
                 <label><h1>Tạo Thuốc</h1></label>
             </div>
 
-            <form method ="post" class="form-horizontal" action="create-Medicines" enctype="multipart/form-data" id="createNews">
+            <form method ="post" class="form-horizontal" action="create-medicines" enctype="multipart/form-data" id="createNews">
                 {{ csrf_field() }}
                 <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Tên thuốc </label></div>

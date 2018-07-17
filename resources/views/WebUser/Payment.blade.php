@@ -98,11 +98,11 @@
                                  <hr>
 
                             <li class="a-hover">
-                                <a href="/lichsubenhan">Lịch sử khám bệnh</a>
+                                <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
                             </li>
                             <li class="gachngang"></li>
                             <li class="  a-hover">
-                                <a href="/danhsachchitra"><span>Danh sách chi trả</span></a>
+                                <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                             </li>
                             <li class="gachngang"></li>
                             <li class=" a-hover">

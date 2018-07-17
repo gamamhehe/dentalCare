@@ -12,8 +12,6 @@ use Yajra\Datatables\Facades\Datatables;
 class MedicineController extends Controller
 {
     use MedicineBusinessFunction;
-
-
     public function create(Request $request){
         $result = $this->createMedicine($request->all());
           return redirect()->route("admin.list.medicines")->withSuccess("Thuốc đã được tạo");
@@ -30,7 +28,7 @@ class MedicineController extends Controller
          $listEvent = $this->getListMedicine();
          return Datatables::of($listEvent)
              ->addColumn('action', function ($listEvent) {
-                 return '<a href="editMedicines/' . $listEvent->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="' . $listEvent->id . '" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
+                 return '<a href="edit-medicines/' . $listEvent->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="' . $listEvent->id . '" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
      }
     public function loadcreate(Request $request)
@@ -121,16 +119,16 @@ class MedicineController extends Controller
     public function delete($id)
     {
         if ($this->deleteMedicines($id)) {
-            return redirect('admin/list-Medicines')->withSuccess("Thuốc đã được xóa");
+            return redirect('admin/list-medicines')->withSuccess("Thuốc đã được xóa");
         } else {
-            return redirect('admin/list-Medicines')->withSuccess("Thuốc chưa được xóa");
+            return redirect('admin/list-medicines')->withSuccess("Thuốc chưa được xóa");
         }
     }
      public function showListAbsentDatatable(){
         $listAbsent = $this->getListAbsentByAdmin();
           return Datatables::of($listAbsent)
             ->addColumn('action', function($listAbsent) {
-                return '<a href="editNews/'.$listAbsent->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listAbsent->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
+                return '<a href="edit-news/'.$listAbsent->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listAbsent->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
 
          

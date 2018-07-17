@@ -56,7 +56,7 @@
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,
                 pageLength: 5,
-                ajax: '/admin/getListFeedback',
+                ajax: '/admin/get-list-feedback',
                 columns : [
 
                     {data: 'id'},
@@ -70,12 +70,10 @@
             });
         });
         function deleteFeedback(obj){
-            var linkDelete = "admin/deleteNews/";
             var id = obj.getAttribute("id");
-
             $.ajax(
                 {
-                    url: "/admin/deleteFeedback/"+id,
+                    url: "/admin/delete-feedback/"+id,
                     method:"get",
                     data: {
                         id:id

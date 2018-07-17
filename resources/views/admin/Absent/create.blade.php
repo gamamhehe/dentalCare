@@ -8,7 +8,7 @@
                 <div class="row" style="text-align: center;">
                     <label><h1>Đơn xin nghỉ</h1></label>
                 </div>
-                <form method ="post" class="form-horizontal" action="createAbsent" enctype="multipart/form-data" id="createAbsent">
+                <form method ="post" class="form-horizontal" action="create-absent" enctype="multipart/form-data" id="createAbsent">
                     {{ csrf_field() }}
                      <div class="box-body">
                         <div class="form-group">
@@ -121,7 +121,7 @@
             order: [[ 0, "desc" ]],
             bLengthChange:true,
             pageLength: 5,
-            ajax: '/admin/getListAbsent',
+            ajax: '/admin/get-list-absent',
             columns : [
 
                 {data: 'id'},
@@ -142,7 +142,7 @@
         var reason  =document.getElementById('reason').value
         $.ajax({
           type: 'GET',
-          url: '/admin/validAbsent',
+          url: '/admin/valid-absent',
           success: function(data){
            if(data<=3){
                if($.trim(startdate) == ''){
@@ -167,7 +167,7 @@
         var id = obj.getAttribute("id");
         $.ajax(
             {
-                url: "/admin/deleteAbsent",
+                url: "/admin/delete-absent",
                 method:"get",
                 data: {
                     id:id

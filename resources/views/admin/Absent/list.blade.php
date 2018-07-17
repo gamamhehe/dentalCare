@@ -103,7 +103,7 @@
         
         $.ajax({
           type: 'POST',
-          url: '/admin/approveAbsent',
+          url: '/admin/approve-absent',
           data:{
              "_token": "{{ csrf_token() }}",
             'Absent': $('#idAbsent').val(),
@@ -138,7 +138,7 @@
             order: [[ 0, "desc" ]],
             bLengthChange:true,
             pageLength: 10,
-            ajax: '/admin/getListAbsentAdmin',
+            ajax: '/admin/get-list-absent-admin',
             columns : [
                 {data: 'id'},
                 {data: 'nameStaff'},
@@ -151,24 +151,24 @@
             ],
         });
     });
-    function deleteNews(obj){
+//     function deleteNews(obj){
 
-//          var linkDelete = "admin/deleteNews/";
-        var id = obj.getAttribute("id");
-        $.ajax(
-            {
-                url: "/admin/deleteEvent/"+id,
-                method:"get",
-                data: {
-                    id:id
-                },
-                success: function ()
-                {
-                    $('#dup-table').DataTable().ajax.reload();
-                }
+// //          var linkDelete = "admin/deleteNews/";
+//         var id = obj.getAttribute("id");
+//         $.ajax(
+//             {
+//                 url: "/admin/delete-event/"+id,
+//                 method:"get",
+//                 data: {
+//                     id:id
+//                 },
+//                 success: function ()
+//                 {
+//                     $('#dup-table').DataTable().ajax.reload();
+//                 }
 
-            });
-    }
+//             });
+//     }
 </script>
 
 @endsection

@@ -8,7 +8,7 @@
                 <label><h1>Khởi tạo liệu trình</h1></label>
             </div>
 
-            <form method ="post" class="form-horizontal" action="create-Treatment" enctype="multipart/form-data" id="createNews">
+            <form method ="post" class="form-horizontal" action="create-treatment" enctype="multipart/form-data" id="createNews">
                 {{ csrf_field() }}
                 <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Tên liệu trình </label></div>

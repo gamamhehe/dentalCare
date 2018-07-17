@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use DB;
+use Yajra\Datatables\Facades\Datatables;
 class NewsController extends Controller
 {
     use NewsBussinessFunction;
@@ -17,16 +18,12 @@ class NewsController extends Controller
         }else{
             return redirect('admin/News/list')->withSuccess("Bài viết chưa được tạo");
         }
-
-
     }
 
     public function getList(Request $request){
         $listNews = $this->getAllNews();
-
-        return Datatables::of($listNews)
-            ->addColumn('action', function($listNews) {
-                return '<a href="editNews/'.$listNews->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listNews->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
+        return Datatables::of($listNews)->addColumn('action', function($listNews) {
+                return '<a href="edit-news/'.$listNews->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listNews->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
 
     }
@@ -58,8 +55,6 @@ class NewsController extends Controller
        }else{
            return redirect('admin/list-news')->withSuccess("Bài viết chưa được xóa");
        }
-
-
     }
 
 }

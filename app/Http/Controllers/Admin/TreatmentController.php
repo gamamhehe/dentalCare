@@ -23,7 +23,7 @@ class TreatmentController extends Controller
         $listTreatment = $this->getAllTreatment();
         return Datatables::of($listTreatment)
             ->addColumn('action', function($listTreatment) {
-                return '<a href="editTreatment/'.$listTreatment->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listTreatment->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
+                return '<a href="edit-treatment/'.$listTreatment->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listTreatment->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
     }
     public function loadListTreatment(Request $request){
@@ -32,10 +32,10 @@ class TreatmentController extends Controller
     public function delete($id){
 
         if($this->deleteTreatment($id)){
-            return redirect('admin/list-Treatment')->withSuccess("Liệu trình đã được xóa");
+            return redirect('admin/list-treatment')->withSuccess("Liệu trình đã được xóa");
 
         }else{
-            return redirect('admin/list-Treatment')->withSuccess("Liệu trình được xóa");
+            return redirect('admin/list-treatment')->withSuccess("Liệu trình được xóa");
 
         }
     }
@@ -48,7 +48,7 @@ class TreatmentController extends Controller
         if($this->createTreatment($request->all())){
             return redirect()->route("admin.list.treatment")->withSuccess("Sự kiện đã được tạo");
         }else{
-            return redirect('admin/list-Treatment')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/list-treatment')->withSuccess("Sự kiện chưa được tạo");
         }
     }
     public function loadeditTreatment($id){
@@ -61,7 +61,7 @@ class TreatmentController extends Controller
             return redirect()->route("admin.list.treatment")->withSuccess("Sự kiện đã được tạo");
 
         }else{
-            return redirect('admin/list-Treatment')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/list-treatment')->withSuccess("Sự kiện chưa được tạo");
 
         }
     }

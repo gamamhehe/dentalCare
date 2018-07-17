@@ -48,7 +48,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     //UserController
     Route::get('/register', 'Admin\Usercontroller@registerGet');
     Route::post('/register', 'Admin\Usercontroller@registerPost');
-    Route::get('/profileStaff', 'Admin\Homecontroller@profile');
+    Route::get('/profile-staff', 'Admin\Homecontroller@profile');
     //
 
 
@@ -102,13 +102,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/edit-treatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
     Route::post('/edit-treatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
     //Nurse
-    Route::get('/live_search', 'Admin\PatientController@index')->name('admin.AppointmentPatient.index');
-    Route::get('/live_search/{searchValue}', 'Admin\PatientController@action1')->name('admin.AppointmentPatient.search');
+    Route::get('/live-search', 'Admin\PatientController@index')->name('admin.AppointmentPatient.index');
+    Route::get('/live-search/{searchValue}', 'Admin\PatientController@action1')->name('admin.AppointmentPatient.search');
     Route::get('/list-appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
     //TreatmentCategory
 
     // Route::get('/createPrescription', 'Admin\MedicineController@createPrescription')->name('admin.AppointmentPatient.index');
-    Route::get('/medicine_search/{id}', 'Admin\MedicineController@ajaxSearch') ;
+    Route::get('/medicine-search/{id}', 'Admin\MedicineController@ajaxSearch') ;
 
     Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
 

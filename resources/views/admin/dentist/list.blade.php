@@ -262,7 +262,7 @@
             var id=$(this).val();
             alert(id);
             $.ajax({
-             url: '/admin/deletePost', //this is your uri
+             url: '/admin/delete-post', //this is your uri
             type: 'GET', //this is your method
             data:  { id :id},
             dataType: 'json',
