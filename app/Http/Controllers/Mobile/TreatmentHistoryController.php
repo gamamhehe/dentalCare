@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Http\Controllers\BusinessFunction\HistoryTreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
@@ -25,6 +26,8 @@ class TreatmentHistoryController extends BaseController
 //    use TreatmentBusinessFunction;
     use UserBusinessFunction;
     use TreatmentHistoryBusinessFunction;
+    use PatientBusinessFunction;
+
 
 
     public function create(Request $request)
@@ -132,19 +135,17 @@ class TreatmentHistoryController extends BaseController
         }
     }
 
-    public function getByPatientId(Request $request)
+    public function getByPatientId($patientId)
     {
-        $id = $request->input('id');
-        var_dump($id);
         try {
-            $patient = $this->getPatientById($id);
+            $patient = $this->getPatientById($patientId);
             if ($patient == null) {
                 $error = new \stdClass();
                 $error->error = "Không thể tìm thấy id bệnh nhân";
                 $error->exception = "";
                 return response()->json($error, 400);
             } else {
-                $historyTreatments = $this->getTreatmentHistory($id);
+                $historyTreatments = $this->getTreatmentHistory($patientId);
                 return response()->json($historyTreatments, 200);
             }
         } catch (\Exception $ex) {
@@ -154,6 +155,5 @@ class TreatmentHistoryController extends BaseController
             return response()->json($error, 400);
         }
     }
-
 
 }
