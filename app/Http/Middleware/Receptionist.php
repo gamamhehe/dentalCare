@@ -17,7 +17,7 @@ class Receptionist
     {
         $sessionUser = $request->session()->get('currentAdmin', null);
         $roleId = $sessionUser->hasUserHasRole()->first()->belongsToRole()->first()->id;
-        if ($roleId == 2 or $roleId == 1) {
+        if ($roleId == 3 or $roleId == 1) {
             return $next($request);
         }
         return redirect('/not-permission');

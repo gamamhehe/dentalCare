@@ -47,7 +47,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
     Route::group(['middleware' => 'superAdmin'], function () {
 
-
     });
     Route::group(['middleware' => 'dentist'], function () {
         //MedicineController
@@ -69,11 +68,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-treatment', 'Admin\TreatmentController@create');
         Route::get('/edit-treatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
         Route::post('/edit-treatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
-        //payment
-        Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
 
     });
-    Route::group(['middleware' => 'reception'], function () {
+    Route::group(['middleware' => 'receptionist'], function () {
         //NewsController
         Route::get('/create-news', 'Mobile\NewsController@loadcreateNews')->name('admin.create.news');
         Route::get('/get-list-news','Admin\NewsController@getList');
@@ -104,6 +101,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-patient','Admin\PatientController@create');
 
         //payment
+        Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
         Route::get('/admin-payment', 'Admin\PaymentController@getList')->name('admin.payment');
         Route::get('/create-payment', 'Admin\PaymentController@viewCreate');
         Route::post('/create-payment', 'Admin\PaymentController@create')->name('create.payment');
@@ -171,6 +169,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/get-list-absent-admin','Admin\AbsentController@showListAbsentDatatableAdmin');//for admin
     Route::post('/approve-absent','Admin\AbsentController@approve');
     Route::get('/valid-absent','Admin\AbsentController@count');
+    Route::get('/admin-absent','Admin\AbsentController@changeView')->name('admin.absent');
+
     //TreatmentDetail
     Route::post('/create-treatmentDetail','Admin\TreatmentDetailController@createTreatmentDetailController');//add
     Route::post('/update-step','Admin\TreatmentDetailController@update');//update
@@ -212,3 +212,7 @@ Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name(
 Route::post('paypal','Admin\PaypalController@postPaymentWithpaypal')->name('paypal');
 // route for check status responce
 Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');
+
+Route::get('not-permission', function () {
+    return view('notPermission');
+});

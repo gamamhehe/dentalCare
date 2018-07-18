@@ -101,7 +101,7 @@
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,
                 pageLength: 5,
-                ajax: '/admin/getAppointment',
+                ajax: '/admin/get-appointment',
                 columns : [
 
                     {data: 'id'},

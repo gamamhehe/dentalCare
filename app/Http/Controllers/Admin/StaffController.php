@@ -35,6 +35,7 @@ class StaffController extends Controller
     public function logout(Request $request)
     {
         $request->session()->remove('currentAdmin');
+        $request->session()->remove('roleAdmin');
         return redirect()->route('admin.login');
     }
 
@@ -77,6 +78,7 @@ class StaffController extends Controller
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID < 4 and $roleID > 0) {
                 session(['currentAdmin' => $user]);
+                session(['roleAdmin' => $roleID]);
                 return redirect()->intended(route('admin.dashboard'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
