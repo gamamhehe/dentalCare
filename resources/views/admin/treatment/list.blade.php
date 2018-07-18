@@ -30,7 +30,7 @@
 <script>
     $(document).ready(function() {
         <?php if (Session::has('success')): ?>
-        swal("Good job!", "", "success");
+        swal("{{$Session:get('message')}}", "", "success");
         <?php endif ?>
 
     });

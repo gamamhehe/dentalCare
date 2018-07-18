@@ -16,7 +16,7 @@ class NewsController extends Controller
         if( $this->createNews($request->all())){
             return redirect()->route("admin.list.news")->withSuccess("Bài viết đã được tạo");
         }else{
-            return redirect('admin/News/list')->withSuccess("Bài viết chưa được tạo");
+            return redirect('admin/News/list')->withSuccess("Có lỗi xảy ra khi khởi tạo");
         }
     }
 
@@ -42,7 +42,7 @@ class NewsController extends Controller
             return redirect()->route("admin.list.news")->withSuccess("Bài viết đã được chỉnh");
 
         }else{
-            return redirect()->back()->withSuccess("Bài viết chưa được chỉnh");
+            return redirect()->back()->withSuccess("Có lỗi xảy ra khi khởi tạo");
         }
 
 
@@ -53,7 +53,7 @@ class NewsController extends Controller
        if( $this->deleteNews($id)){
            return redirect('/list-news')->withSuccess("Bài viết đã được xóa");
        }else{
-           return redirect('admin/list-news')->withSuccess("Bài viết chưa được xóa");
+           return redirect('admin/list-news')->withSuccess("Có lỗi xảy ra khi khởi tạo");
        }
     }
 

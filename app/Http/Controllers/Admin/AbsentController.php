@@ -81,6 +81,8 @@ class AbsentController extends Controller
         if ($checkBeforeApprove) {//ngày nghỉ hợp lệ
              $result = $this->approveAbsent($id, $idCurrentAdmin->id, $request->message);
             if($result){
+                // $smsMessage = AppConst::getSmsMSGForAbsent( "Phuc Huynh", $absentCurrent->start_date,$absentCurrent->end_date);
+                // $this->dispatch(new SendSmsJob("0915469963", $smsMessage));
                 return 1;
             }else{
                 return "Ngày nghỉ đã chấp nhận từ trước!";

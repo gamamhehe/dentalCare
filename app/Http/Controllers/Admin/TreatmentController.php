@@ -48,7 +48,7 @@ class TreatmentController extends Controller
         if($this->createTreatment($request->all())){
             return redirect()->route("admin.list.treatment")->withSuccess("Sự kiện đã được tạo");
         }else{
-            return redirect('admin/list-treatment')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/list-treatment')->withSuccess("Có lỗi xảy ra khi khởi tạo");
         }
     }
     public function loadeditTreatment($id){
@@ -61,7 +61,7 @@ class TreatmentController extends Controller
             return redirect()->route("admin.list.treatment")->withSuccess("Sự kiện đã được tạo");
 
         }else{
-            return redirect('admin/list-treatment')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/list-treatment')->withSuccess("Có lỗi xảy ra khi khởi tạo");
 
         }
     }

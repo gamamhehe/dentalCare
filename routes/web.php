@@ -23,7 +23,7 @@ Route::get('/cc', function () {
 // webuser phuc
 Route::get('/gioi-thieu','Admin\HomeController@aboutUs');
 Route::get('/', 'Admin\HomeController@HomePage')->name('homepage');
-Route::get('/doctor-list', 'Admin\HomeController@DoctorInformation');
+Route::get('/danh-sach-bac-si', 'Admin\HomeController@DoctorInformation');
 Route::get('/profile', 'Admin\HomeController@Profile');
 Route::get('/getDB','Admin\HomeController@getDB');
 Route::get('/bang-gia','Admin\HomeController@BangGiaDichVu');
@@ -37,7 +37,7 @@ Route::get('/signOut','Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
-
+Route::get('/lien-he','Admin\HomeController@xxx');
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
@@ -107,6 +107,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-payment', 'Admin\PaymentController@create')->name('create.payment');
         Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
         Route::get('/search-payment/{searchValue}', 'Admin\PaymentController@search');
+
+        //EventController
+        Route::get('/get-list-event','Admin\EventController@getListEvent');
+        Route::get('/list-event', 'Admin\EventController@loadListEvent')->name('admin.list.event');
+        Route::get('/create-event', 'Admin\EventController@loadcreateEvent')->name('admin.create.event');
+        Route::post('/create-event', 'Admin\EventController@create');
+        Route::get('/delete-event/{id}', 'Admin\EventController@deleteEvent');
+        Route::get('/edit-event/{id}', 'Admin\EventController@loadeditEvent');
+        Route::post('/edit-event/{id}', 'Admin\EventController@edit')->name('admin.edit.event');
     });
 
     //UserController
@@ -126,8 +135,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/get-list-feedback','Admin\FeedbackController@getListFeedback');
     Route::get('/list-feedback', 'Admin\FeedbackController@loadListFeedback')->name('admin.list.feedback');
 
-
-
+    //MedicineController
+    Route::get('/get-list-medicines','Admin\MedicineController@getList');
+    Route::get('/list-medicines', 'Admin\MedicineController@loadList')->name('admin.list.medicines');
+    Route::get('/delete-medicines/{id}', 'Admin\MedicineController@delete');
+    Route::get('/create-medicines', 'Admin\MedicineController@loadcreate')->name('admin.create.medicines');
+    Route::post('/create-medicines', 'Admin\MedicineController@create');
+    Route::get('/edit-medicines/{id}', 'Admin\MedicineController@loadedit');
+    Route::post('/edit-medicines/{id}', 'Admin\MedicineController@edit')->name('admin.edit.medicines');
+    //TreatmentController
+    Route::get('/get-treatment/{id}','Admin\TreatmentController@getTreatmentByID');//ajax
+    Route::get('/get-treatment-by-cate/{id}','Admin\TreatmentController@getTreatmentByCategoryId');//ajax
+    Route::get('/get-list-treatment','Admin\TreatmentController@getListTreatment');
+    Route::get('/list-treatment', 'Admin\TreatmentController@loadListTreatment')->name('admin.list.treatment');
+    Route::get('/delete-treatment/{id}', 'Admin\TreatmentController@delete');
+    Route::get('/create-treatment', 'Admin\TreatmentController@loadcreate')->name('admin.create.treatment');
+    Route::post('/create-treatment', 'Admin\TreatmentController@create');
+    Route::get('/edit-treatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
+    Route::post('/edit-treatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
     //Nurse
     Route::get('/live-search', 'Admin\PatientController@index')->name('admin.AppointmentPatient.index');
     Route::get('/live-search/{searchValue}', 'Admin\PatientController@action1')->name('admin.AppointmentPatient.search');
@@ -172,7 +197,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/admin-absent','Admin\AbsentController@changeView')->name('admin.absent');
 
     //TreatmentDetail
-    Route::post('/create-treatmentDetail','Admin\TreatmentDetailController@createTreatmentDetailController');//add
+    Route::post('/create-treatment-detail','Admin\TreatmentDetailController@createTreatmentDetailController');//add
     Route::post('/update-step','Admin\TreatmentDetailController@update');//update
     Route::get('/treatment-detail/{id}','Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment

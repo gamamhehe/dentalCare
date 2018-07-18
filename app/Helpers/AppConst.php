@@ -33,6 +33,8 @@ class AppConst
     const ROLE_DENTIST = 2;
     const ROLE_RECEPTIONIST = 3;
     const ROLE_PATIENT = 4;
+
+    const TREATMENT_HISTORY_PATH = '/assets/images/TreatmentHistory/';
 //0 vua tao
 //1 dang kham
 //2 xong
@@ -47,5 +49,14 @@ class AppConst
         $startDate = $date->format("d-m-Y");
         return "Cam on ban da dat lich kham, so thu tu cua ban la "
             . $order . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate;
+    }
+
+    public static function getSmsMSGForAbsent($name, $startDate,$endDate)
+    {
+         
+        $startDate = $date->format("d-m-Y");
+        $endDate = $date->format("d-m-Y");
+        return "Đon xin nghi cua ".$name." da duoc chap nhan.Bat dau tu ngay "
+            . $startDate . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate;
     }
 }

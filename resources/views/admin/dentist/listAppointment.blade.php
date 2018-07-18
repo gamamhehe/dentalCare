@@ -5,7 +5,7 @@
         <section class="content" >
             <div class="container"  >
                 <div class="row " style="text-align: center; margin-right: 4em">
-                    <label><h1>Danh sách Lịch hẹn của Bác Sĩx </h1></label>
+                    <label><h1>Danh sách Lịch hẹn của Bác Sĩ </h1></label>
                 </div>
                 <div class="panel panel-default" style="">
                    <div class="panel-body">
@@ -72,10 +72,10 @@
     <script>
         $(document).ready(function() {
             <?php if (Session::has('success')): ?>
-            swal("Good job!", "", "success");
+         swal("{{ Session::get('success')}}", "", "success");
             <?php endif ?>
             <?php if (Session::has('error')): ?>
-
+ swal("{{ Session::get('error')}}", "", "success");
             <?php endif ?>
         });
         $('#lfm').filemanager('image');
@@ -120,7 +120,7 @@
             var id=$(this).val();
            
             $.ajax({
-             url: 'getTreatmentHistoryPatient/'+id, //this is your uri
+             url: 'get-treatment-history-patient/'+id, //this is your uri
             type: 'GET', //this is your method
           
             dataType: 'json',
@@ -139,7 +139,7 @@
                 }else{
 
                     for (var i = 0; i < data.length; i++) {  
-                $('#data').append('<tr><td>' + data[i].id + '</td><td>' + data[i].nameTreat.name + '</td><td>' + data[i].tooth_number +'</td><td>' + data[i].description +'</td><td><a href="treatmentHistoryDetail/'+data[i].id+'" class="btn btn-success" role="button">Skip</a></td></tr>');
+                $('#data').append('<tr><td>' + data[i].id + '</td><td>' + data[i].nameTreat.name + '</td><td>' + data[i].tooth_number +'</td><td>' + data[i].description +'</td><td><a href="treatment-history-detail/'+data[i].id+'" class="btn btn-success" role="button">Skip</a></td></tr>');
                  }
                 }
                 // alert(data[0].id);
@@ -151,7 +151,7 @@
     });
         function checkComing(id){
             $.ajax({
-                url: '/admin/checkComing/'+ id, //this is your uri
+                url: '/admin/check-coming/'+ id, //this is your uri
                 type: 'GET', //this is your method
 
                 dataType: 'json',
@@ -160,7 +160,7 @@
                         swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error");
                     }
                     if(data.statusComing == 1){
-                        window.location.replace('http://' + data.url + "/admin/createTreatment/" + data.idPatient);
+                        window.location.replace('http://' + data.url + "/admin/create-treatment/" + data.idPatient);
                     }
                 },error: function (data) {
                     swal("Check connnection", "", "error");

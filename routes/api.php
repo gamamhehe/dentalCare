@@ -47,10 +47,15 @@ Route::get('user/searchListPhone', 'Mobile\UserController@searchListPhone');
 ///backdddd //////////////TESTING FUNCTIONNNNNNNNNNNNNNNNNNNN/////////////////
 Route::get("rsPW/{phone}/{pass}", "Mobile\UserController@resetpassword");
 Route::get("test", "Mobile\MobileController@test");
+Route::post("test", "Mobile\MobileController@test");
 Route::get("test2", "Mobile\MobileController@test2");
+Route::post("test2", "Mobile\MobileController@test2");
 Route::get("test3", "Mobile\MobileController@test3");
+Route::post("test3", "Mobile\MobileController@test3");
 Route::get("test4", "Mobile\MobileController@test4");
+Route::post("test4", "Mobile\MobileController@test4");
 Route::get("test5", "Mobile\MobileController@test5");
+Route::post("test5", "Mobile\MobileController@test5");
 Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
 //input topappt?date=value
@@ -76,13 +81,14 @@ Route::middleware('auth:api')->group(function () {
     Route::post("user/updateNotifToken", "Mobile\UserController@updateNotifToken");
     //patient
     Route::post("user/updatePatient", "Mobile\PatientController@updatePatientInfo");
-    //treatment category
+    //nt category
 
     //History Treatment
     Route::get("treatmentHistory/all", "Mobile\TreatmentHistoryController@getAll");
     Route::get("treatmentHistory/getByPhone/{phone}", "Mobile\TreatmentHistoryController@getByPhone");
     Route::get("treatmentHistory/getById/{id}", "Mobile\TreatmentHistoryController@getById");
     Route::get("treatmentHistory/getByPatientId/{id}", "Mobile\TreatmentHistoryController@getByPatientId");
+    Route::post("treatmentHistory/create", "Mobile\TreatmentHistoryController@create");
     //treatment
     //appointment
     Route::get("appointment/all", "Mobile\AppointmentController@getAll");

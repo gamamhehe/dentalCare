@@ -17,10 +17,9 @@
             </div>
         </div>
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
             <li>
                 <a href="{!! route('admin.dashboard') !!}">
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    <i class="fa fa-dashboard"></i> <span>Trang chủ</span>
                     </span>
                 </a>
             </li>
