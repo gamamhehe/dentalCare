@@ -1,42 +1,62 @@
 @extends('admin.master')
 @section('content')
-    <div class="content-wrapper" >
+    <div class="content-wrapper">
         <div class="box">
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Tìm bệnh nhân  </div>
+                        <div class="col-sm-5" style="text-align: left">Tìm bệnh nhân</div>
                         <div class="col-sm-7" style="text-align: right">
-                            <button class="btn btn-success create-patient" id="Patient" >Tạo bệnh nhân</button>
-                             <button class="btn btn-success create-modal" id="Appoint" >Tạo lịch hẹn</button>
+                            @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                                <button class="btn btn-success create-patient" id="Patient">Tạo bệnh nhân</button>
+                            @endif
+                            <button class="btn btn-success create-modal" id="Appoint">Tạo lịch hẹn</button>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <input type="text" name="search" id="search" class="form-control" placeholder="Số điên thoại bệnh nhân" value="{{old('search')}}" />
-                        <div class="row" style="margin-bottom: 1em;" >
-                            <div class=""  style="margin-top: 1em;">
-                                <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="search()" >Tìm</button>
+                        <input type="text" name="search" id="search" class="form-control"
+                               placeholder="Số điên thoại bệnh nhân" value="{{old('search')}}"/>
+                        <div class="row" style="margin-bottom: 1em;">
+                            <div class="" style="margin-top: 1em;">
+                                <button type="button" class="col-md-3 btn btn-default btn-success"
+                                        style="margin-right: 10px;float: right;" onclick="search()">Tìm
+                                </button>
                             </div>
                         </div>
 
                     </div>
-                  
- 
+
+
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" style="text-align: center">
                             <thead>
                             <tr>
-                                <th style="text-align: center; width: 30%">Họ Tên</th>
+                                <th style="text-align: center; width: 20%">Họ Tên</th>
+                                <th style="text-align: center; width: 15%">Số điện thoại</th>
                                 <th style="text-align: center; width: 30%">Địa Chỉ</th>
-                                <th style="text-align: center; width: 20%">Ngày Sinh</th>
+                                <th style="text-align: center; width: 15%">Ngày Sinh</th>
                                 <th style="text-align: center; width: 20%">Tùy chọn</th>
 
                             </tr>
                             </thead>
                             <tbody>
-
+                            @if($patientList != null)
+                                @foreach($patientList as $patient)
+                                    <tr>
+                                        <td style="width: 20%">{{$patient->name}}</td>
+                                        <td style="width: 15%">{{$patient->phone}}</td>
+                                        <td style="width: 30%">{{$patient->address}}</td>
+                                        <td style="width: 15%">{{$patient->date_of_birth}}</td>
+                                        <td align="center" style="width: 20%">
+                                            <button type="button" class="btn btn-default btn-success"
+                                                    onclick="receive('{{$patient->id}}')">Nhận bệnh nhân
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -44,395 +64,403 @@
             </div>
         </div>
         <!-- tao lich hen -->
-          <div id="create" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title"></h4>
-                            </div>
-                            <div class="modal-body">
-                                <form method ="post" class="form-horizontal" action="create-appointment" enctype="multipart/form-data" id="createAppoint">
-                                        {{ csrf_field() }}
-                                    <div class="form-group row add">
-                                        <label class="control-label col-xs-4" for="title">Số điện thoại:</label>
-                                        <div class="col-xs-6">
-                                            <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
-                                                   required="required">
-                                            <p class="error text-center alert alert-danger hidden"></p>
-                                        </div>
-                                        <div class="col-xs-2" style="padding-left:0px;">
-                                            <button class="btn btn-success" type="button" onclick="checkValid()">Check</button>
-                                        </div>
-                                    </div>
-                                        <div class="form-group row add">
-                                        <label class="control-label col-xs-4" for="title">Danh sách bệnh nhân:</label>
-                                        <div class="col-xs-8">
-                                            <select style="height: 2em;min-width: 25em;"
-                                             id="PatientSelect">
-                             
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-4" for="title">Ngày đặt:</label>
-                                            <div class="input-group date col-xs-5 " style="    padding-left: 15px">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
-                                                <input type="text" placeholder="yyyy-mm-dd" class="form-control pull-right"
-                                                       id="datepicker"/>
-                                            </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-4" for="body">Estimate time:</label>
-                                        <div class="col-xs-8">
-                                   <select class="hour" name="estimateTime" id="estimateTime" style="width: auto;">
-                                    @for ($i = 1; $i < 19; $i++)
-                                          <option value="{{$i * 5}}">{{$i * 5}}</option>
-                                    @endfor
-                                                                
-                                   </select>&nbsp                               
-                                    
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-warning" type="button" id="add" >
-                                    <span class="glyphicon glyphicon-plus"></span>Save Post
-                                </button>
-                                <button class="btn btn-warning" type="button" data-dismiss="modal">
-                                    <span class="glyphicon glyphicon-remobe"></span>Close
-                                </button>
-                            </div>
-                        </div>
+        <div id="create" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"></h4>
                     </div>
-                </div>
-        <!-- tao nguoi benh -->
-         <div id="createPatient" class="modal fade" role="dialog">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content" style="width: 900px;text-align: center;">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title"></h4>
+                    <div class="modal-body">
+                        <form method="post" class="form-horizontal" action="create-appointment"
+                              enctype="multipart/form-data" id="createAppoint">
+                            {{ csrf_field() }}
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-4" for="title">Số điện thoại:</label>
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
+                                           required="required">
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                                <div class="col-xs-2" style="padding-left:0px;">
+                                    <button class="btn btn-success" type="button" onclick="checkValid()">Check</button>
+                                </div>
                             </div>
-                            <div class="modal-body" >
-                                <form method ="post" class="form-horizontal" action="create-patient" enctype="multipart/form-data" id="createAppoint">
-                                        {{ csrf_field() }}
-                                    <div class="form-group row add">
-                                        <label class="control-label col-xs-2" for="title">Họ & Tên :</label>
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" id="namePatient" name="namePatient"
-                                                   placeholder="Họ và tên bệnh nhân" required>
-                                            <p class="error text-center alert alert-danger hidden"></p>
-                                        </div>
-                                    </div>
-                                     <div class="form-group row add">
-                                        <label class="control-label col-xs-2" for="title">Địa chỉ :</label>
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" id="addressPatient" name="addressPatient"
-                                                   placeholder="Địa chỉ cư trú" required>
-                                            <p class="error text-center alert alert-danger hidden"></p>
-                                        </div>
-                                    </div>
-                                     <div class="form-group row add">
-                                        <label class="control-label col-xs-2" for="title">Số Di động :</label>
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" id="phonePatient" name="phonePatient"
-                                                   placeholder="Số điện thoại di động" required>
-                                            <p class="error text-center alert alert-danger hidden"></p>
-                                        </div>
-                                    </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-4" for="title">Danh sách bệnh nhân:</label>
+                                <div class="col-xs-8">
+                                    <select style="height: 2em;min-width: 25em;"
+                                            id="PatientSelect">
 
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-2" for="title">Năm sinh :</label>
-                                        <div class="col-xs-10">
-                                            <div class="input-group date">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>  <input type="date" id="bdayxx" name="bday" required="required">
-                                                </div>
-                                              
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row add">
-                                        <label class="control-label col-xs-2" for="title">Giới tính :</label>
-                                        <div class="col-xs-10">
-                                            <select name="genderPatient" id="genderPatient"  style="height: 30px;width: 5em;float: left;">
-                                                <option value="Male">Nam</option>
-                                                <option value="FeMale">Nữ</option>
-                                                <option value="Unknow">Khác</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                      <div class="form-group row add">
-                                        <label class="control-label col-xs-2" for="title">Thành Phố :</label>
-                                        <div class="col-xs-3">
-                                            <select name="cityPatient" id="cityPatient" style="height: 30px;" onchange="disctrict(this)">
-                                            @foreach($citys as $city)
-                                                <option value="{{$city->id}}">{{$city->name}}</option>
-                                                
-                                            @endforeach 
-                                            </select>
-                                        </div>
-                                         <label class="control-label col-xs-1" for="title">Quận :</label>
-                                        <div class="col-xs-3">
-                                            <select name="districtsPatient" id="districtsPatient" style="height: 30px;">
-                                              @foreach($District as $one)
-                                                <option value="{{$one->id}}">{{$one->name}}</option>
-                                                
-                                            @endforeach 
-                                            </select>
-                                        </div>
-                                    </div>
-                                   <hr>
-                                       <div class="form-group row add">
-                                        <label class="control-label col-xs-2" for="title">Bệnh tiền sử :</label>
-                                        <div class=" row col-xs-10" style=" float: left;border: 2px gray solid;border-radius: 20px;">
-                                            <div class=" ">
-                                                 @foreach($AnamnesisCatalog as $one)
-                                        
-                                        <div class="col-xs-3" style="text-align: left;">
-                                        <input type="checkbox" id="myCheck"  onclick="myFunction()">   
-                                            {{$one->name}}    
-                                        </div>
-                                         @endforeach
-                                            </div>
-                                        </div>
-                                       
-                                    </div>
-                                  
-                                </form>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-warning" type="button" id="addPatient" >
-                                    <span class="glyphicon glyphicon-plus"></span>Tạo bệnh nhân
-                                </button>
-                                <button class="btn btn-warning" type="button" data-dismiss="modal">
-                                    <span class="glyphicon glyphicon-remobe"></span>Close
-                                </button>
+                            <div class="form-group">
+                                <label class="control-label col-xs-4" for="title">Ngày đặt:</label>
+                                <div class="input-group date col-xs-5 " style="    padding-left: 15px">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" placeholder="yyyy-mm-dd" class="form-control pull-right"
+                                           id="datepicker"/>
+                                </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-4" for="body">Estimate time:</label>
+                                <div class="col-xs-8">
+                                    <select class="hour" name="estimateTime" id="estimateTime" style="width: auto;">
+                                        @for ($i = 1; $i < 19; $i++)
+                                            <option value="{{$i * 5}}">{{$i * 5}}</option>
+                                        @endfor
+
+                                    </select>&nbsp
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" type="button" id="add">
+                            <span class="glyphicon glyphicon-plus"></span>Save Post
+                        </button>
+                        <button class="btn btn-warning" type="button" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remobe"></span>Close
+                        </button>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- tao nguoi benh -->
+        <div id="createPatient" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="width: 900px;text-align: center;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" class="form-horizontal" action="create-patient"
+                              enctype="multipart/form-data" id="createAppoint">
+                            {{ csrf_field() }}
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Họ & Tên :</label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="namePatient" name="namePatient"
+                                           placeholder="Họ và tên bệnh nhân" required>
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Địa chỉ :</label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="addressPatient" name="addressPatient"
+                                           placeholder="Địa chỉ cư trú" required>
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Số Di động :</label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="phonePatient" name="phonePatient"
+                                           placeholder="Số điện thoại di động" required>
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-2" for="title">Năm sinh :</label>
+                                <div class="col-xs-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i> <input type="date" id="bdayxx" name="bday"
+                                                                                  required="required">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Giới tính :</label>
+                                <div class="col-xs-10">
+                                    <select name="genderPatient" id="genderPatient"
+                                            style="height: 30px;width: 5em;float: left;">
+                                        <option value="Male">Nam</option>
+                                        <option value="FeMale">Nữ</option>
+                                        <option value="Unknow">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Thành Phố :</label>
+                                <div class="col-xs-3">
+                                    <select name="cityPatient" id="cityPatient" style="height: 30px;"
+                                            onchange="disctrict(this)">
+                                        @foreach($citys as $city)
+                                            <option value="{{$city->id}}">{{$city->name}}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <label class="control-label col-xs-1" for="title">Quận :</label>
+                                <div class="col-xs-3">
+                                    <select name="districtsPatient" id="districtsPatient" style="height: 30px;">
+                                        @foreach($District as $one)
+                                            <option value="{{$one->id}}">{{$one->name}}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Bệnh tiền sử :</label>
+                                <div class=" row col-xs-10"
+                                     style=" float: left;border: 2px gray solid;border-radius: 20px;">
+                                    <div class=" ">
+                                        @foreach($AnamnesisCatalog as $one)
+
+                                            <div class="col-xs-3" style="text-align: left;">
+                                                <input type="checkbox" id="myCheck" onclick="myFunction()">
+                                                {{$one->name}}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" type="button" id="addPatient">
+                            <span class="glyphicon glyphicon-plus"></span>Tạo bệnh nhân
+                        </button>
+                        <button class="btn btn-warning" type="button" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remobe"></span>Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- end tao nguoi benh -->
 
     </div>
 
-<!-- </body>
-</html> -->
+    <!-- </body>
+    </html> -->
 @endsection
 @section('js')
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-     $(function () {
-          $('#datepicker').datepicker({
-          autoclose: true,
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(function () {
+            $('#datepicker').datepicker({
+                autoclose: true,
+            });
         });
-      });
-    var x = 0;
-     $(document).on('click','.create-modal', function() {
-        $('#create').modal('show');
-        $('.form-horizontal').show();
-        $('.modal-title').text('Khởi tạo lịch hẹn');
-    });
-     $(document).on('click','.create-patient', function() {
-        $('#createPatient').modal('show');
-        $('.form-horizontal').show();
-        $('.modal-title').text('Khởi tạo thông tin người bệnh');
-    });
+        var x = 0;
+        $(document).on('click', '.create-modal', function () {
+            $('#create').modal('show');
+            $('.form-horizontal').show();
+            $('.modal-title').text('Khởi tạo lịch hẹn');
+        });
+        $(document).on('click', '.create-patient', function () {
+            $('#createPatient').modal('show');
+            $('.form-horizontal').show();
+            $('.modal-title').text('Khởi tạo thông tin người bệnh');
+        });
 
-    $("#add").click(function() {
-        
-        var phone = document.getElementById("phoneXXX").value;
-        var estimateTimeReal = document.getElementById("estimateTime").value;
-        var patientID = document.getElementById("PatientSelect").value;
-        var datepicker = document.getElementById("datepicker").value;
-        $.ajax({
-          type: 'POST',
-          url: '/admin/create-appointment',
-          data:{
-             "_token": "{{ csrf_token() }}",
-            'phone': phone,
-            'estimateTimeReal':estimateTimeReal,
-            'patientID':2,
-            'datepicker':datepicker,
-          },
-          success: function(data){
-            if ((data.errors)) {
-                swal("Đặt lịch hẹn thất bại", "", "error");
-            } else {
-                  swal("Đặt lịch hẹn thành công", "", "success");
-            }
-          },
-            });
-    });
+        $("#add").click(function () {
 
-        $("#addPatient").click(function() {
-        var nameCreate =document.getElementById("namePatient").value; 
-        var addressCreate =document.getElementById("addressPatient").value; 
-        var phoneCreate =document.getElementById("phonePatient").value; 
-        var birthdateCreate = document.getElementById("bdayxx").value;
-        var genderCreate = document.getElementById("genderPatient").value;
-        var districtCreate = document.getElementById("districtsPatient").value;
-        $.ajax({
-          type: 'POST',
-          url: '/admin/create-patient',
-           data:{
-             "_token": "{{ csrf_token() }}",
-            'name' : nameCreate,
-            'address' : addressCreate,
-            'phone': phoneCreate,
-            'date_of_birth':birthdateCreate,
-            'gender':genderCreate,
-            'district_id':districtCreate,
-           
-          },
-          success: function(data){
-            if ((data.errors)) {
-             alert(data.errors.body);
-            } else {
-             swal("Khởi tạo bệnh nhân thành công", "", "success");
-            }
-          },
-            });
-    });
-    function disctrict(sel){
-    var treatCateID = sel.value;
-       $.ajax({
-             url: '/admin/get-district/'+treatCateID, //this is your uri
-            type: 'GET', //this is your method
-            dataType: 'json',
-            success: function(data){
-                if(data.length == 0){
-                    $('#districtsPatient')
-                    .find('option')
-                    .remove()
-                    .end()
-                    .append('<option value="whatever">Chưa có quận huyện</option>')
-                    .val('whatever')
-                ;
-            }else{
-                $('#districtsPatient')
-                    .find('option')
-                    .remove()
-                    .end()
-                ;
-                for (var i = 0; i < data.length; i++) {
-                   $('#districtsPatient').append("<option value="+data[i].id+">"+data[i].name+"</option>");
-                    
-                }
-            }
-            },error: function(obj,text,error) {
-                alert("NO");
-                 $('#districtsPatient')
-                    .find('option')
-                    .remove()
-                    .end()
-                    .append('<option value="whatever">Chưa có dịch vụ</option>')
-                    .val('whatever')
-                ;
-                  alert( showNotice("error",obj.responseText));
+            var phone = document.getElementById("phoneXXX").value;
+            var estimateTimeReal = document.getElementById("estimateTime").value;
+            var patientID = document.getElementById("PatientSelect").value;
+            var datepicker = document.getElementById("datepicker").value;
+            $.ajax({
+                type: 'POST',
+                url: '/admin/create-appointment',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'phone': phone,
+                    'estimateTimeReal': estimateTimeReal,
+                    'patientID': 2,
+                    'datepicker': datepicker,
+                },
+                success: function (data) {
+                    if ((data.errors)) {
+                        swal("Đặt lịch hẹn thất bại", "", "error");
+                    } else {
+                        swal("Đặt lịch hẹn thành công", "", "success");
+                    }
                 },
             });
-    }
-    function search(){
-        
-        var user = document.getElementById('User');
-        var patient = document.getElementById('Patient');
-        var appoint = document.getElementById('Appoint');
-        var searchValue = document.getElementById('search').value;
-        if(!searchValue){
-             swal("Nhập số điên thoại", "", "error");
-             return;
+        });
+
+        $("#addPatient").click(function () {
+            var nameCreate = document.getElementById("namePatient").value;
+            var addressCreate = document.getElementById("addressPatient").value;
+            var phoneCreate = document.getElementById("phonePatient").value;
+            var birthdateCreate = document.getElementById("bdayxx").value;
+            var genderCreate = document.getElementById("genderPatient").value;
+            var districtCreate = document.getElementById("districtsPatient").value;
+            $.ajax({
+                type: 'POST',
+                url: '/admin/create-patient',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'name': nameCreate,
+                    'address': addressCreate,
+                    'phone': phoneCreate,
+                    'date_of_birth': birthdateCreate,
+                    'gender': genderCreate,
+                    'district_id': districtCreate,
+
+                },
+                success: function (data) {
+                    if ((data.errors)) {
+                        alert(data.errors.body);
+                    } else {
+                        swal("Khởi tạo bệnh nhân thành công", "", "success");
+                    }
+                },
+            });
+        });
+
+        function disctrict(sel) {
+            var treatCateID = sel.value;
+            $.ajax({
+                url: '/admin/get-district/' + treatCateID, //this is your uri
+                type: 'GET', //this is your method
+                dataType: 'json',
+                success: function (data) {
+                    if (data.length == 0) {
+                        $('#districtsPatient')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append('<option value="whatever">Chưa có quận huyện</option>')
+                            .val('whatever')
+                        ;
+                    } else {
+                        $('#districtsPatient')
+                            .find('option')
+                            .remove()
+                            .end()
+                        ;
+                        for (var i = 0; i < data.length; i++) {
+                            $('#districtsPatient').append("<option value=" + data[i].id + ">" + data[i].name + "</option>");
+
+                        }
+                    }
+                }, error: function (obj, text, error) {
+                    alert("NO");
+                    $('#districtsPatient')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append('<option value="whatever">Chưa có dịch vụ</option>')
+                        .val('whatever')
+                    ;
+                    alert(showNotice("error", obj.responseText));
+                },
+            });
         }
-        $.ajax({
-            url: '/admin/live-search/'+ searchValue, //this is your uri
-            type: 'GET', //this is your method
 
-            dataType: 'json',
-            success: function(data){
-                $('tbody').html(data.table_data);
-                $('#Patient').prop('disabled', false)
-                $('#Appoint').prop('disabled', false)
-                if(data.total_data == -1){
-                    swal("Hãy tạo tài khoản", "", "error");
-                    $('#xxx').text(" ");
-                    $('#Patient').prop('disabled', false)
-                    $('#Appoint').prop('disabled', true)
-                    
-                    
-                }
-                if(data.total_data == 0){
-                    swal("Chưa có hồ sơ bệnh nhân", "", "error");
-                    $('#total_records').text(data.total_data);
-                    $('#Appoint').prop('disabled', true)
-                }
-            },error: function (data) {
-               swal('Error:',"", data);
+        $('#search').on('keyup',function(){
+
+            var user = document.getElementById('User');
+            var patient = document.getElementById('Patient');
+            var appoint = document.getElementById('Appoint');
+            var searchValue = document.getElementById('search').value;
+            if (!searchValue) {
+                searchValue = 'all'
+                // swal("Nhập số điên thoại", "", "error");
+                // return;
             }
-        });
-    }
-     
- 
+            $.ajax({
+                url: '/admin/live-search/' + searchValue, //this is your uri
+                type: 'GET', //this is your method
 
-    function checkValid(){
-       
-        var xxx = document.getElementById('phoneXXX').value;
-        $('#phoneXXX').prop('onchange', true);
-         $.ajax({
-            url: '/admin/get-list-patient/'+ xxx, //this is your uri
-            type: 'GET', //this is your method
+                dataType: 'json',
+                success: function (data) {
+                    $('tbody').html(data.table_data);
+                    // $('#Patient').prop('disabled', false)
+                    // $('#Appoint').prop('disabled', false)
+                    // if (data.total_data == -1) {
+                        // swal("Hãy tạo tài khoản", "", "error");
+                        // $('#xxx').text(" ");
+                        // $('#Patient').prop('disabled', false)
+                        // $('#Appoint').prop('disabled', true)
 
-            dataType: 'json',
-            success: function(data){
-                 $('#PatientSelect')
-                    .find('option')
-                    .remove()
-                    .end()
-                    
-                ;
-               if(data.length==0){
-                  swal("Số điện thoại không tồn tại", "", "error");
-               }else{
-                swal("Số điện thoại hợp lệ.Hãy chọn bệnh nhân", "", "success");
-                for (var i = 0; i < data.length; i++) {
-                    $('#PatientSelect').append("<option value="+data[i].id+">"+data[i].name+"</option>");
-                }
-               }
-            },error: function (data) {
-                swal("Vui lòng điền số điện thoại", "", "error");
-            }
-        });
-    }
 
-    function receive(id){
-        $.ajax({
-            url: '/admin/list-appointment/'+ id, //this is your uri
-            type: 'GET', //this is your method
+                    // }
+                    // if (data.total_data == 0) {
+                    //     swal("Chưa có hồ sơ bệnh nhân", "", "error");
+                        $('#total_records').text(data.total_data);
+                        // $('#Appoint').prop('disabled', true)
+                    // }
+                }, error: function (data) {
+                    // swal('Error:', "", data);
+                }
+            });
+        })
 
-            dataType: 'json',
-            success: function(data){
-                if(data.statusOfReceive == -1){
-                    swal("Bệnh nhân này đang khám", "", "error");
+
+        function checkValid() {
+
+            var xxx = document.getElementById('phoneXXX').value;
+            $('#phoneXXX').prop('onchange', true);
+            $.ajax({
+                url: '/admin/get-list-patient/' + xxx, //this is your uri
+                type: 'GET', //this is your method
+
+                dataType: 'json',
+                success: function (data) {
+                    $('#PatientSelect')
+                        .find('option')
+                        .remove()
+                        .end()
+
+                    ;
+                    if (data.length == 0) {
+                        swal("Số điện thoại không tồn tại", "", "error");
+                    } else {
+                        swal("Số điện thoại hợp lệ.Hãy chọn bệnh nhân", "", "success");
+                        for (var i = 0; i < data.length; i++) {
+                            $('#PatientSelect').append("<option value=" + data[i].id + ">" + data[i].name + "</option>");
+                        }
+                    }
+                }, error: function (data) {
+                    swal("Vui lòng điền số điện thoại", "", "error");
                 }
-                if(data.statusOfReceive == 0){
-                    swal("Bác sĩ đang bận", "", "error");
+            });
+        }
+
+        function receive(id) {
+            $.ajax({
+                url: '/admin/list-appointment/' + id, //this is your uri
+                type: 'GET', //this is your method
+
+                dataType: 'json',
+                success: function (data) {
+                    if (data.statusOfReceive == -1) {
+                        swal("Bệnh nhân này đang khám", "", "error");
+                    }
+                    if (data.statusOfReceive == 0) {
+                        swal("Bác sĩ đang bận", "", "error");
+                    }
+                    if (data.statusOfReceive == 1) {
+                        swal("Nhận bệnh nhân thành công", "", "success");
+                    }
+                    if (data.statusOfReceive == 2) {
+                        swal("Không có lịch hẹn cho bệnh nhân này", "", "error");
+                    }
+                }, error: function (data) {
+                    swal("Check connnection", "", "error");
                 }
-                if(data.statusOfReceive == 1){
-                    swal("Nhận bệnh nhân thành công", "", "success");
-                }
-                if(data.statusOfReceive == 2){
-                    swal("Không có lịch hẹn cho bệnh nhân này", "", "error");
-                }
-            },error: function (data) {
-                swal("Check connnection", "", "error");
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 @endsection

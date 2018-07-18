@@ -47,7 +47,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
     Route::group(['middleware' => 'superAdmin'], function () {
 
-
     });
     Route::group(['middleware' => 'dentist'], function () {
         //MedicineController
@@ -69,8 +68,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-treatment', 'Admin\TreatmentController@create');
         Route::get('/edit-treatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
         Route::post('/edit-treatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
-        //payment
-        Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
 
     });
     Route::group(['middleware' => 'receptionist'], function () {
@@ -104,11 +101,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-patient','Admin\PatientController@create');
 
         //payment
+        Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
         Route::get('/admin-payment', 'Admin\PaymentController@getList')->name('admin.payment');
         Route::get('/create-payment', 'Admin\PaymentController@viewCreate');
         Route::post('/create-payment', 'Admin\PaymentController@create')->name('create.payment');
         Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
         Route::get('/search-payment/{searchValue}', 'Admin\PaymentController@search');
+
+        //EventController
+        Route::get('/get-list-event','Admin\EventController@getListEvent');
+        Route::get('/list-event', 'Admin\EventController@loadListEvent')->name('admin.list.event');
+        Route::get('/create-event', 'Admin\EventController@loadcreateEvent')->name('admin.create.event');
+        Route::post('/create-event', 'Admin\EventController@create');
+        Route::get('/delete-event/{id}', 'Admin\EventController@deleteEvent');
+        Route::get('/edit-event/{id}', 'Admin\EventController@loadeditEvent');
+        Route::post('/edit-event/{id}', 'Admin\EventController@edit')->name('admin.edit.event');
     });
 
     //UserController
@@ -127,14 +134,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/details-feedback/{id}','Admin\FeedbackController@edit')->name('admin.edit.feedback');
     Route::get('/get-list-feedback','Admin\FeedbackController@getListFeedback');
     Route::get('/list-feedback', 'Admin\FeedbackController@loadListFeedback')->name('admin.list.feedback');
-    //EventController
-    Route::get('/get-list-event','Admin\EventController@getListEvent');
-    Route::get('/list-event', 'Admin\EventController@loadListEvent')->name('admin.list.event');
-    Route::get('/create-event', 'Admin\EventController@loadcreateEvent')->name('admin.create.event');
-    Route::post('/create-event', 'Admin\EventController@create');
-    Route::get('/delete-event/{id}', 'Admin\EventController@deleteEvent');
-    Route::get('/edit-event/{id}', 'Admin\EventController@loadeditEvent');
-    Route::post('/edit-event/{id}', 'Admin\EventController@edit')->name('admin.edit.event');
+
     //MedicineController
     Route::get('/get-list-medicines','Admin\MedicineController@getList');
     Route::get('/list-medicines', 'Admin\MedicineController@loadList')->name('admin.list.medicines');
@@ -194,6 +194,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/get-list-absent-admin','Admin\AbsentController@showListAbsentDatatableAdmin');//for admin
     Route::post('/approve-absent','Admin\AbsentController@approve');
     Route::get('/valid-absent','Admin\AbsentController@count');
+    Route::get('/admin-absent','Admin\AbsentController@changeView')->name('admin.absent');
+
     //TreatmentDetail
     Route::post('/create-treatment-detail','Admin\TreatmentDetailController@createTreatmentDetailController');//add
     Route::post('/update-step','Admin\TreatmentDetailController@update');//update
@@ -235,3 +237,7 @@ Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name(
 Route::post('paypal','Admin\PaypalController@postPaymentWithpaypal')->name('paypal');
 // route for check status responce
 Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');
+
+Route::get('not-permission', function () {
+    return view('notPermission');
+});

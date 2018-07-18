@@ -15,8 +15,15 @@ class AbsentController extends Controller
 {
     //
     use AbsentBusinessFunction;
+    public function changeView(Request $request){
+        $role = $request->session()->get("roleAdmin");
+        if($role == 1){
+            return redirect()->route("admin.Manage.Absent");
+        }
+        return redirect()->route("create.Absent");
+    }
     public function loadcreate(Request $request){
-       
+
         return view ("admin.Absent.create");
     }
     
