@@ -17,7 +17,7 @@ class CreateTblTreatmentImagesTable extends Migration
             $table->increments('id');
             $table->integer('treatment_detail_id');
             $table->string('image_link');
-            $table->dateTime('create_date');
+            $table->dateTime('created_date');
             $table->timestamps();
         });
     }
