@@ -59,8 +59,11 @@ class HomeController extends Controller
 
     }
     public function eventLoad(Request $request){
+
         $listNews = $this->getListNewsOfEvent();
+
         $NewEventNews = $this->getNewestNews();
+  
        return view('WebUser.Events',['listNews'=>$listNews,'NewEventNews'=>$NewEventNews]);
     }
     public function eventLoadByID(Request $request,$id){

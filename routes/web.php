@@ -23,7 +23,7 @@ Route::get('/cc', function () {
 // webuser phuc
 Route::get('/gioi-thieu','Admin\HomeController@aboutUs');
 Route::get('/', 'Admin\HomeController@HomePage')->name('homepage');
-Route::get('/doctor-list', 'Admin\HomeController@DoctorInformation');
+Route::get('/danh-sach-bac-si', 'Admin\HomeController@DoctorInformation');
 Route::get('/profile', 'Admin\HomeController@Profile');
 Route::get('/getDB','Admin\HomeController@getDB');
 Route::get('/bang-gia','Admin\HomeController@BangGiaDichVu');
@@ -37,7 +37,7 @@ Route::get('/signOut','Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
-
+Route::get('/lien-he','Admin\HomeController@xxx');
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
@@ -93,7 +93,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/edit-medicines/{id}', 'Admin\MedicineController@edit')->name('admin.edit.medicines');
     //TreatmentController
     Route::get('/get-treatment/{id}','Admin\TreatmentController@getTreatmentByID');//ajax
-    Route::get('/get-treatmentByCate/{id}','Admin\TreatmentController@getTreatmentByCategoryId');//ajax
+    Route::get('/get-treatment-by-cate/{id}','Admin\TreatmentController@getTreatmentByCategoryId');//ajax
     Route::get('/get-list-treatment','Admin\TreatmentController@getListTreatment');
     Route::get('/list-treatment', 'Admin\TreatmentController@loadListTreatment')->name('admin.list.treatment');
     Route::get('/delete-treatment/{id}', 'Admin\TreatmentController@delete');
@@ -144,7 +144,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/approve-absent','Admin\AbsentController@approve');
     Route::get('/valid-absent','Admin\AbsentController@count');
     //TreatmentDetail
-    Route::post('/create-treatmentDetail','Admin\TreatmentDetailController@createTreatmentDetailController');//add
+    Route::post('/create-treatment-detail','Admin\TreatmentDetailController@createTreatmentDetailController');//add
     Route::post('/update-step','Admin\TreatmentDetailController@update');//update
     Route::get('/treatment-detail/{id}','Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment

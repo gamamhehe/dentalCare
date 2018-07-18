@@ -30,10 +30,10 @@ class PatientController extends Controller
 
         $this->validate($request, [
             'phone' => 'required|min:10|max:11',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6|max:11',
         ]);
         $user = $this->checkLogin($request->phone, $request->password);
-
+        
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID == 4) {

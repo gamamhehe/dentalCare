@@ -13,8 +13,11 @@ class MedicineController extends Controller
 {
     use MedicineBusinessFunction;
     public function create(Request $request){
-        $result = $this->createMedicine($request->all());
-          return redirect()->route("admin.list.medicines")->withSuccess("Thuốc đã được tạo");
+           if($this->createMedicine($request->all())){
+           return redirect()->route("admin.list.medicines")->withSuccess("Thuốc đã được tạo");
+        }else{
+            return redirect()->route("admin.list.medicines")->withSuccess("Có lỗi xảy ra khi khởi tạo");
+        }
     }
     public function createForTreatmentDetail(Request $request)
     {

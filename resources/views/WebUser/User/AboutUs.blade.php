@@ -30,19 +30,19 @@
             <ul class="nav navbar-nav float-sm-right">
 
                 <li class="nav-item active">
-                    <a class="nav-link " href="/gioithieu">Giới Thiệu</a>
+                    <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/doctorList">Chuyên Gia</a>
+                    <a class="nav-link  " href="/danh-sach-bac-si">Chuyên Gia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/event">Sự kiện</a>
+                    <a class="nav-link  " href="/su-kien">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/banggia">Bảng giá</a>
+                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/gioithieu">Liên hệ</a>
+                    <a class="nav-link  " href="/lien-he">Liên hệ</a>
                 </li>
                 <li class="nav-item">
 
@@ -149,26 +149,18 @@
                                                     <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
                                                            required autofocus>
                                                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-                                                    @if ($errors->has('phone'))
-                                                        <span class="help-block">
-                                                            <strong>{{ $errors->first('phone') }} </strong>
-                                                        </span>
-                                                    @endif
+                                                     
                                                 </div>
                                                 <div class="form-group has-feedback">
                                                     <input type="password" class="form-control" placeholder="Password" name="password" required>
                                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                                                    @if ($errors->has('password'))
-                                                        <span class="help-block">
-                                                            <strong>{{ $errors->first('password') }}</strong>
-                                                        </span>
-                                                    @endif
+                                                     
                                                 </div>
-                                                @if (\Session::has('fail'))
+                                             <!--    @if (\Session::has('fail'))
                                                     <span class="help-block has-error" style="color: #dd4b39">
                                                        <strong>{!! \Session::get('fail') !!} </strong>
                                                 </span>
-                                                @endif
+                                                @endif -->
                                                 <div class="row">
                                                     <!-- /.col -->
                                                     <div class="col-xs-12">
