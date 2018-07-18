@@ -30,7 +30,7 @@
 <script>
     $(document).ready(function() {
         <?php if (Session::has('success')): ?>
-        swal("Good job!", "", "success");
+        swal("{{ Session::get('success')}}", "", "success");
         <?php endif ?>
 
     });
@@ -46,7 +46,7 @@
             "search" : "Tìm kiếm ",
               "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
         },
-            processing: true,
+            processing: false,
             serverSide: true,
             order: [[ 0, "desc" ]],
             bLengthChange:true,
@@ -78,6 +78,7 @@
                 },
                 success: function ()
                 {
+                      swal("Xóa thành công", "", "success");
                     $('#dup-table').DataTable().ajax.reload();
                 }
 

@@ -50,4 +50,13 @@ class AppConst
         return "Cam on ban da dat lich kham, so thu tu cua ban la "
             . $order . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate;
     }
+
+    public static function getSmsMSGForAbsent($name, $startDate,$endDate)
+    {
+         
+        $startDate = $date->format("d-m-Y");
+        $endDate = $date->format("d-m-Y");
+        return "Đon xin nghi cua ".$name." da duoc chap nhan.Bat dau tu ngay "
+            . $startDate . 'den het ngay  ' . $startTime .'  .';
+    }
 }

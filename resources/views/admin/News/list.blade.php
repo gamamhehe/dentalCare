@@ -28,7 +28,7 @@
     <script>
         $(document).ready(function() {
           <?php if (Session::has('success')): ?>
-          swal("Good job!", "", "success");  
+       swal("{{ Session::get('success')}}", "", "success");
         <?php endif ?>
          
         });

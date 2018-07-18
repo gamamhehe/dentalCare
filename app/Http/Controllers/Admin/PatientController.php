@@ -30,10 +30,10 @@ class PatientController extends Controller
 
         $this->validate($request, [
             'phone' => 'required|min:10|max:11',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6|max:11',
         ]);
         $user = $this->checkLogin($request->phone, $request->password);
-
+        
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID == 4) {
@@ -72,7 +72,7 @@ class PatientController extends Controller
             $patient->name = $request->name;
             $patient->address = $request->address;
             $patient->phone = $request->phone;
-            $patient->avatar =  " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
+            $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->date_of_birth = $request->date_of_birth;
             $patient->gender = $request->gender;
             $patient->avatar = $request->avatar;
@@ -90,7 +90,7 @@ class PatientController extends Controller
             $patient->phone = $request->phone;
             $patient->date_of_birth = $request->date_of_birth;
             $patient->gender = $request->gender;
-            $patient->avatar =  " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
+            $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->district_id = $request->district_id;
             $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
@@ -129,13 +129,13 @@ class PatientController extends Controller
     }
 
 
-        public function receive($id)
+    public function receive($id)
     {
         $phone = $this->getPhoneOfPatient($id);
         $isExamination = $this->checkPatientIsExamination($id);
-        if($isExamination){
+        if ($isExamination) {
             $status = -1;
-        }else {
+        } else {
             $appointment = $this->checkAppointmentForPatient($phone, $id);
             if ($appointment === null) {
                 $status = 2;
@@ -165,59 +165,54 @@ class PatientController extends Controller
     public function index()
     {
         $city = city::all();
-        $District = District::where('city_id',1)->get();
+        $District = District::where('city_id', 1)->get();
+        $patientList = Patient::all();
         $listAnamnesis = AnamnesisCatalog::all();
-        return view('admin.AppointmentPatient.index',['AnamnesisCatalog'=>$listAnamnesis,'citys'=>$city,'District'=>$District]);
+        return view('admin.AppointmentPatient.index', ['AnamnesisCatalog' => $listAnamnesis, 'citys' => $city, 'District' => $District, 'patientList' => $patientList]);
     }
 
-    public function action1($phone)
+    public function action1($valueSearch)
     {
         $output = '';
-        $user = $this->getUserByPhone($phone);
-        if (!$user) {
-            $total_row = -1;
-            Session::flash('taikhoan', 'khongco');
-            $output = '
-       <tr>
-        <td align="center" colspan="5">Không có tài khoản </td>
-       </tr>
-       ';
+
+        if ($valueSearch == 'all'){
+            $data = Patient::all();
         } else {
             $data = DB::table('tbl_patients')
-                ->where('phone', '=', $phone)
-                ->orderBy('phone', 'desc')
+                ->where('phone', 'like', $valueSearch.'%')
+                ->orWhere('name', 'like', '%' . $valueSearch . '%')
+                ->orderBy('name', 'desc')
                 ->get();
+        }
+
+        $total_row = $data->count();
 
 
-            $total_row = $data->count();
-
-
-            if ($total_row > 0) {
-                Session::flash('taikhoan', '456');
-                foreach ($data as $row) {
-                    $output .= '
+        if ($total_row > 0) {
+            Session::flash('taikhoan', '456');
+            foreach ($data as $row) {
+                $output .= '
         <tr>
-         <td style="width: 30%">' . $row->name . '</td>
+         <td style="width: 20%">' . $row->name . '</td>
+         <td style="width: 15%">' . $row->phone . '</td>
          <td style="width: 30%">' . $row->address . '</td>
-         <td style="width: 20%">' . $row->date_of_birth . '</td>
+         <td style="width: 15%">' . $row->date_of_birth . '</td>
          <td align="center" style="width: 20%">
          <button type="button" class="btn btn-default btn-success"
                                  onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button></td>
         </tr>
         ';
-                }
-
             }
-            if ($total_row == 0) {
-                Session::flash('taikhoan', '123');
-                $output = '
+
+        }
+        if ($total_row == 0) {
+            $output = '
        <tr>
         <td align="center" colspan="5">Không có bệnh nhân </td>
        </tr>
        ';
-            }
-
         }
+
 
         $data = array(
             'table_data' => $output,
@@ -225,25 +220,31 @@ class PatientController extends Controller
         );
         echo json_encode($data);
     }
-    public function changeAvatar(Request $request){
-        $value = $request->session()->get('listPatient'); 
+
+    public function changeAvatar(Request $request)
+    {
+        $value = $request->session()->get('listPatient');
         $phone = $value[0]->phone;
-        $listPatient = Patient::where('phone',$phone)->get();
+        $listPatient = Patient::where('phone', $phone)->get();
         $request->session()->remove('listPatient');
         session(['listPatient' => $listPatient]);
         $image = $request['avatar'];
         $id = $request['patientID'];
-        $result = $this->editAvatar($image,$id );
+        $result = $this->editAvatar($image, $id);
         return redirect('/myProfile');
     }
-    public function getListPatientById($id){
+
+    public function getListPatientById($id)
+    {
         $list = $this->getPatientByPhone($id);
-            return response()->json($list);
-         
-       
+        return response()->json($list);
+
+
     }
-    public function getDistrictbyCity($id){
-        $listDistrict = District::where('city_id',$id)->get();
+
+    public function getDistrictbyCity($id)
+    {
+        $listDistrict = District::where('city_id', $id)->get();
         return $listDistrict;
     }
 }

@@ -28,7 +28,7 @@
     <script>
         $(document).ready(function() {
             <?php if (Session::has('success')): ?>
-            swal("Good job!", "", "success");
+            swal("{{ Session::get('success')}}", "", "success");
             <?php endif ?>
 
         });
@@ -78,6 +78,7 @@
                     },
                     success: function ()
                     {
+                         swal("Xóa thành công", "", "success");
                         $('#dup-table').DataTable().ajax.reload();
                     }
 

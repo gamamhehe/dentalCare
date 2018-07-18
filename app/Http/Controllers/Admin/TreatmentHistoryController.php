@@ -21,11 +21,10 @@ class TreatmentHistoryController extends Controller
          $idTreatmentHistory = $this->createTreatmentProcess($request->treatment_id,$request->patient_id,$request->tooth_number,$request->price,$request->description);
          if($idTreatmentHistory){
             return redirect()->route("admin.stepTreatment", ['idTreatmentHistory' => $idTreatmentHistory,
-                'idTreatment' => $request->treatment_id,
-              ]);
+                'idTreatment' => $request->treatment_id]);
 
         }else{
-            return redirect()->back()->withSuccess("Bài viết chưa được chỉnh");
+            return redirect()->back()->withSuccess("Chưa");
         }
     }
 
