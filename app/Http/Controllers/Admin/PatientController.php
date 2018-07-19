@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ReceiveAppointment;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
@@ -143,6 +144,7 @@ class PatientController extends Controller
                 if ($appointment) {
                     $appointment->status = 1;
                     $this->saveAppointment($appointment, $id);
+                    event(new ReceiveAppointment($appointment));
                     $status = 1;
                 } else {
                     $status = 0;
