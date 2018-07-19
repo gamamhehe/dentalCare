@@ -57,6 +57,9 @@ trait TreatmentHistoryBusinessFunction
             $treatment = $treatmentHistory->belongsToTreatment()->first();
             if ($treatment != null) {
                 $treatment->treatment_steps = $treatment->hasTreatmentStep()->get();
+                foreach ($treatment->treatment_steps as $step) {
+                    $step->name = $step->belongsToStep()->first()->name;
+                }
             }
             $treatmentHistory->treatment = $treatment;
             $treatmentHistory->patient = $patient;
