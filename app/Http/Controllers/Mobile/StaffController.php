@@ -164,7 +164,7 @@ class StaffController extends BaseController
             if ($newAccount) {
                 $result = $this->createUserWithAnamnesis($user, $patient, $userHasRole, $listAnamnesisId);
             } else {
-                $result = $this->updatePatientWithAnamnesis($patient,$listAnamnesisId);
+                $result = $this->updatePatientWithAnamnesis($patient, $listAnamnesisId);
             }
             if ($result) {
                 return response()->json($patient, 200);
@@ -293,5 +293,18 @@ class StaffController extends BaseController
             $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 500);
         }
+    }
+
+    public function getAvailableDentist(Request $request)
+    {
+        $date = $request->input('date');
+        try {
+            $dentists = $this->getAvailableDentistAtDate($date);
+            return response()->json($dentists, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+
     }
 }

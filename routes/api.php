@@ -115,7 +115,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('patient/getByPhone', "Mobile\PatientController@getByPhone");
     ////////Anamesis
     Route::get('anamnesisCatalog/all','Mobile\AnamnesisController@getAll');
-
+    Route::get('staff/getAvailableDentist', 'Mobile\StaffController@getAvailableDentist');
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff----*****************************************************/
     /*************************************-----------------------------*****************************************************/

@@ -378,7 +378,7 @@ trait AppointmentBussinessFunction
         return $randomAppointment;
     }
 
-    public function getAvailableDentist($date)
+    public function getAvailableDentistAtDate($date)
     {
         $roleDentist = 2;
         $dentists = UserHasRole::where('role_id', $roleDentist)->get();
