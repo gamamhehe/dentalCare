@@ -221,7 +221,7 @@ Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
 
 Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
 
-    Route::get('/getTreatmentHistory', 'Admin\TreatmentHistoryController@showTreatmentHistory');
+Route::get('/getTreatmentHistory', 'Admin\TreatmentHistoryController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
 
