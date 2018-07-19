@@ -8,19 +8,33 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
+use App\Helpers\AppConst;
+use App\Helpers\Utilities;
 use App\Model\TreatmentDetail;
 use App\Model\TreatmentDetailStep;
 use App\Model\TreatmentHistory;
+use App\Model\TreatmentImage;
 use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 trait TreatmentDetailBusinessFunction
 {
+
+    public function getAllTreatmentDetail()
+    {
+        return TreatmentDetail::all();
+    }
+
+    public function getTreatmentDetailById($id)
+    {
+        return TreatmentDetail::where('id', $id)->first();
+    }
+
     public function createTreatmentDetail($idTreatmentHistory, $note, $dentist_id)
     {
-        if($note == null){
-            $note="&nsbp";
+        if ($note == null) {
+            $note = "&nsbp";
         }
         DB::beginTransaction();
         try {
@@ -36,6 +50,55 @@ trait TreatmentDetailBusinessFunction
             DB::rollback();
             return false;
 
+        }
+    }
+
+    public function createTreatmentDetailWithModel($tmHistoryId, $staffId, $detailNote, $detailStepIds, $medicines, $images)
+    {
+        DB::beginTransaction();
+        try {
+            Utilities::logDebug("tmHistoryId save id: " . $tmHistoryId);
+            $tmDetail = new TreatmentDetail();
+            $tmDetail->treatment_history_id = $tmHistoryId;
+            $tmDetail->staff_id = $staffId;
+            $tmDetail->note = $detailNote;
+            $tmDetail->created_date = Carbon::now();
+            $tmDetail->save();
+            Utilities::logDebug("tmDetail save");
+            $tmDetailId = $tmDetail->id;
+            if ($detailStepIds != null) {
+                foreach ($detailStepIds as $stepId) {
+                    $tmDetailSteps = new TreatmentDetailStep();
+                    $tmDetailSteps->treatment_detail_id = $tmDetailId;
+                    $tmDetailSteps->step_id = $stepId;
+                    $tmDetailSteps->save();
+                }
+            }
+            Utilities::logDebug("detailStepIds save");
+            if ($medicines != null) {
+                foreach ($medicines as $medicine) {
+                    $medicine->treatment_detail_id = $tmDetailId;
+                    $medicine->save();
+                }
+            }
+            Utilities::logDebug("tmDetail save");
+            if ($images != null) {
+                foreach ($images as $image) {
+                    $timestmp = (new \DateTime())->getTimestamp();
+                    $path = Utilities::saveFile($image, AppConst::TREATMENT_HISTORY_PATH, $timestmp);
+                    $treatmentImage = new TreatmentImage();
+                    $treatmentImage->treatment_detail_id = $tmDetailId;
+                    $treatmentImage->image_link = $path;
+                    $treatmentImage->created_date = Carbon::now();
+                    $treatmentImage->save();
+                }
+            }
+            Utilities::logDebug("images save");
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -57,9 +120,11 @@ trait TreatmentDetailBusinessFunction
 
         }
     }
-    public function getTreatmentDetailStep($idTreatmentDetail){
-        $listStep = TreatmentDetailStep::where('treatment_detail_id',$idTreatmentDetail)->get();
-        foreach ($listStep as $key ) {
+
+    public function getTreatmentDetailStep($idTreatmentDetail)
+    {
+        $listStep = TreatmentDetailStep::where('treatment_detail_id', $idTreatmentDetail)->get();
+        foreach ($listStep as $key) {
             $key->stepName = $key->belongsToStep()->first();
         }
         return $listStep;
@@ -80,17 +145,21 @@ trait TreatmentDetailBusinessFunction
         return $result;
     }
 
-    public function viewTreatmentDetail($treatmentDetailId){
+    public function viewTreatmentDetail($treatmentDetailId)
+    {
         $treatmentDetail = TreatmentDetail::find($treatmentDetailId);
         return $treatmentDetail;
 
     }
 
-    public function checkDoneTreatmentHistory($idTreatmnet, $idTreatmentHistory){
+    public function checkDoneTreatmentHistory($idTreatmnet, $idTreatmentHistory)
+    {
 
     }
-    public function getTreatmentDetail($idTreatmentHistory){
-        $treatmentDetail = TreatmentDetail::where('treatment_history_id',$idTreatmentHistory)->first();
+
+    public function getTreatmentDetail($idTreatmentHistory)
+    {
+        $treatmentDetail = TreatmentDetail::where('treatment_history_id', $idTreatmentHistory)->first();
         return $treatmentDetail;
     }
 }

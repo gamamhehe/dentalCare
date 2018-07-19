@@ -57,6 +57,6 @@ class AppConst
         $startDate = $date->format("d-m-Y");
         $endDate = $date->format("d-m-Y");
         return "Đon xin nghi cua ".$name." da duoc chap nhan.Bat dau tu ngay "
-            . $startDate . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate;
+            . $startDate . 'den het ngay  ' . $startTime .'  .';
     }
 }

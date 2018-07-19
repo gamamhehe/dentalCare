@@ -54,7 +54,14 @@ trait TreatmentHistoryBusinessFunction
                 $treatmentHistoryDetail->treatment_detail_steps = $treatmentDetailSteps;
             }
             $treatmentHistory->details = $treatmentHistoryDetailList;
-            $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
+            $treatment = $treatmentHistory->belongsToTreatment()->first();
+            if ($treatment != null) {
+                $treatment->treatment_steps = $treatment->hasTreatmentStep()->get();
+                foreach ($treatment->treatment_steps as $step) {
+                    $step->name = $step->belongsToStep()->first()->name;
+                }
+            }
+            $treatmentHistory->treatment = $treatment;
             $treatmentHistory->patient = $patient;
             $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
@@ -79,7 +86,7 @@ trait TreatmentHistoryBusinessFunction
         return $treatmentHistories;
     }
 
-    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines,$images)
+    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines, $images)
     {
 
         DB::beginTransaction();
@@ -91,7 +98,7 @@ trait TreatmentHistoryBusinessFunction
                 $treatmentHistory->price,
                 $treatmentHistory->description);
 
-            Utilities::logDebug("tmHistoryId save id: " .$tmHistoryId);
+            Utilities::logDebug("tmHistoryId save id: " . $tmHistoryId);
             $tmDetail = new TreatmentDetail();
             $tmDetail->treatment_history_id = $tmHistoryId;
             $tmDetail->staff_id = $treatmentHistory->staff_id;
@@ -100,26 +107,32 @@ trait TreatmentHistoryBusinessFunction
             $tmDetail->save();
             Utilities::logDebug("tmDetail save");
             $tmDetailId = $tmDetail->id;
-            foreach ($detailStepIds as $stepId) {
-                $tmDetailSteps = new TreatmentDetailStep();
-                $tmDetailSteps->treatment_detail_id = $tmDetailId;
-                $tmDetailSteps->step_id = $stepId;
-                $tmDetailSteps->save();
+            if ($detailStepIds != null) {
+                foreach ($detailStepIds as $stepId) {
+                    $tmDetailSteps = new TreatmentDetailStep();
+                    $tmDetailSteps->treatment_detail_id = $tmDetailId;
+                    $tmDetailSteps->step_id = $stepId;
+                    $tmDetailSteps->save();
+                }
             }
             Utilities::logDebug("detailStepIds save");
-            foreach ($medicines as $medicine) {
-                $medicine->treatment_detail_id = $tmDetailId;
-                $medicine->save();
+            if ($medicines != null) {
+                foreach ($medicines as $medicine) {
+                    $medicine->treatment_detail_id = $tmDetailId;
+                    $medicine->save();
+                }
             }
             Utilities::logDebug("tmDetail save");
-            foreach ($images as $image) {
-                $timestmp = (new \DateTime())->getTimestamp();
-               $path = Utilities::saveFile($image, AppConst::TREATMENT_HISTORY_PATH, $timestmp);
-                $treatmentImage = new TreatmentImage();
-                $treatmentImage->treatment_detail_id = $tmDetailId;
-                $treatmentImage->image_link = $path;
-                $treatmentImage->created_date = Carbon::now();
-                $treatmentImage->save();
+            if ($images != null) {
+                foreach ($images as $image) {
+                    $timestmp = (new \DateTime())->getTimestamp();
+                    $path = Utilities::saveFile($image, AppConst::TREATMENT_HISTORY_PATH, $timestmp);
+                    $treatmentImage = new TreatmentImage();
+                    $treatmentImage->treatment_detail_id = $tmDetailId;
+                    $treatmentImage->image_link = $path;
+                    $treatmentImage->created_date = Carbon::now();
+                    $treatmentImage->save();
+                }
             }
             Utilities::logDebug("images save");
 
@@ -209,12 +222,14 @@ trait TreatmentHistoryBusinessFunction
     {
         return (TreatmentHistory::where('id', $id)->first());
     }
-    public function updateTreatmentHistoryDone($id){
-       
+
+    public function updateTreatmentHistoryDone($id)
+    {
+
         $date = Carbon::now();
         TreatmentHistory::where('id', $id)->update(['finish_date' => $date]);
         return $id;
 
-        
+
     }
 }
