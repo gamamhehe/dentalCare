@@ -13,11 +13,13 @@ use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
+use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
 use App\Model\Patient;
+use App\Model\RequestAbsent;
 use App\Model\Staff;
 use App\Model\User;
 use App\Model\UserHasRole;
@@ -34,6 +36,7 @@ class StaffController extends BaseController
     use UserBusinessFunction;
     use PatientBusinessFunction;
     use AppointmentBussinessFunction;
+    use RequestAbsentBusinessFunction;
 
     public function loginStaff(Request $request)
     {
@@ -266,7 +269,6 @@ class StaffController extends BaseController
                     "Result is null, No exception");
                 return response()->json($error, 400);
             }
-
         } catch (ApiException $e) {
             $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
             return response()->json($error, 400);
@@ -316,6 +318,30 @@ class StaffController extends BaseController
             return response()->json($listRequestAbsents, 200);
         } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
+    public function requestAbsent(Request $request)
+    {
+        try {
+            $staffId = $request->input('staff_id');
+            $listStartDate = $request->input('start_dates');
+            $listEndDate = $request->input('end_dates');
+            $listRequestAbsents = [];
+            for ($i = 0; $i < count($listStartDate); $i++) {
+                $requestAbsentObj = new RequestAbsent();
+                $requestAbsentObj->staff_id = $staffId;
+                $requestAbsentObj->reason = $reason;
+                $requestAbsentObj->start_date = $listStartDate[$i];
+                $requestAbsentObj->end_date = $listEndDate[$i];
+                $listRequestAbsents[] = $requestAbsentObj;
+            }
+            $this->createListRequestAbsent($listRequestAbsents);
+            $response = $this->getSuccessObj(200, "OK", "Tạo thành công", "No data");
+            return response()->json($response, 200);
+        }catch (Exception $ex){
+            $error  = $this->getErrorObj("Lỗi máy chủ", $ex);
             return response()->json($error, 500);
         }
     }
