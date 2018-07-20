@@ -91,7 +91,7 @@ trait AppointmentBussinessFunction
             //'if statement' return the $predictAppointmentDate and $suitableDentistId for the code below it
             if (count($appointmentArray) < $NUM_OF_DENTIST) {
                 // kieu j cung co loi
-                if ($dentistId == null) {
+                if ($dentistId == null || $dentistId == 0) {
                     $this->logDebug("INTO COUNT< NUMMOF DENTIST ___dentistId = null");
                     $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, $defaultStartOfDay);
                     $listFreeDentists = $this->getFreeDentistsAtDate($listDentist, $bookingDateNewFormat);
@@ -116,7 +116,7 @@ trait AppointmentBussinessFunction
                     }
                 }
             } else {
-                if ($dentistId == null || $dentistObj == null) {
+                if ($dentistId == null || $dentistObj == null ||  $dentistId == 0) {
                     $this->logDebug("INTO COUNT >= NUMMOF DENTIST ___ Dentistt id == null");
                     $equallyAppointment = [];
                     $equallyAppointment[] = $appointmentArray[0];
