@@ -96,7 +96,11 @@ class AppointmentController extends BaseController
             $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 400);
         } catch (\Exception $ex) {
-            $error = $this->getErrorObj("Lỗi server", $ex);
+            if ($ex->getMessage() == "isEndOfTheDay") {
+                $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
+            } else {
+                $error = $this->getErrorObj("Lỗi server", $ex);
+            }
             return response()->json($error, 400);
         }
     }
@@ -113,7 +117,7 @@ class AppointmentController extends BaseController
             $currentDay = new DateTime();
 //            $appdateObj = new DateTime($bookingDate);
             $dentistObj = $this->getStaffById($dentistId);
-            if($dentistObj==null){
+            if ($dentistObj == null) {
                 $error = $this->getErrorObj("Không tìm thấy id nha sĩ",
                     "No exception");
                 return response()->json($error, 400);
@@ -153,28 +157,28 @@ class AppointmentController extends BaseController
         $result = $this->createAppointment($bookingDate, $phone, $note);
         if ($result != null) {
             return response()->json($result, 200);
-        $oldBookingDate = $request->input('booking_date');
-        if ($this->getAppointmentByDate($phone, $oldBookingDate) && $this->checkExistUser($phone)) {
-            $error = $this->getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
-                "No exception");
-            return response()->json($error, 400);
-        } else {
-            $result = $this->createAppointment($oldBookingDate, $phone, $note, null, null);
-            if ($result != null) {
-                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
-                $smsSendingResult = Utilities::sendSMS($phone, "Cam on ban da dat lich kham, so kham cua ban la " . $result->numerical_order);
-                $smsDecode = json_encode($smsSendingResult);
-                Utilities::logDebug($smsDecode);
-                return response()->json($listAppointment, 200);
-            } else {
-
-                $error = new \stdClass();
-                $error->error = "Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác";
-                $error->exception = "Result is null, No exception";
+            $oldBookingDate = $request->input('booking_date');
+            if ($this->getAppointmentByDate($phone, $oldBookingDate) && $this->checkExistUser($phone)) {
+                $error = $this->getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
+                    "No exception");
                 return response()->json($error, 400);
+            } else {
+                $result = $this->createAppointment($oldBookingDate, $phone, $note, null, null);
+                if ($result != null) {
+                    $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
+                    $smsSendingResult = Utilities::sendSMS($phone, "Cam on ban da dat lich kham, so kham cua ban la " . $result->numerical_order);
+                    $smsDecode = json_encode($smsSendingResult);
+                    Utilities::logDebug($smsDecode);
+                    return response()->json($listAppointment, 200);
+                } else {
+
+                    $error = new \stdClass();
+                    $error->error = "Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác";
+                    $error->exception = "Result is null, No exception";
+                    return response()->json($error, 400);
+                }
             }
         }
-    }
     }
 
     public function quickBookAppointment(Request $request)
