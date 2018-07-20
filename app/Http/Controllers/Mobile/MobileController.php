@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Mobile;
 
+use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Jobs\SendReminderJob;
@@ -17,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use SMSGatewayMe\Client\Api\MessageApi;
 use SMSGatewayMe\Client\ApiClient;
 use SMSGatewayMe\Client\Configuration;
@@ -78,59 +80,29 @@ class MobileController extends Controller
 
     }
 
+    public function sendFirebase($topic, $content)
+    {
+        $requestObject = Utilities::getFirebaseRequestObj(
+            AppConst::RESPONSE_PROMOTION,
+            "test",
+            $content, $content,'/topics/'.
+            AppConst::TOPIC_PROMOTION);
+
+        try {
+            $response = Utilities::sendFirebase($requestObject);
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+        return response()->json("SUCCESS");
+    }
+
+
     public function test2(Request $request)
     {
-//        $listAnamnesisObj = [];
-//        $anamnesis = new AnamnesisPatient();
-//        $anamnesis->anamnesis_id = 1;
-//        $listAnamnesisObj[] = $anamnesis;
-//        $anamnesis = new AnamnesisPatient();
-//        $anamnesis->anamnesis_id = 2;
-//        $listAnamnesisObj[] = $anamnesis;
-//        $anamnesis->anamnesis_id = 3;
-//        $listAnamnesisObj[] = $anamnesis;
-//
-//        $patient = Patient::where('phone', $request->phone)->first();
-//        $patient->hasAnamnesisPatient()->createMany($listAnamnesisObj);
-//        $patient->save();
-//        return response()->json($patient);
-//        $name = 'l';
-//        $count=0;
-//
-////        $files = $request->allFiles();
-//        $files = Input::file('image');
-////        var_dump($files);return;
-//        foreach ($files as $f){
-////            var_dump($f);
-////            return;
-//            $name .= $f->getClientOriginalName().'           ';
-//        }
-//            $count = count($files);
-////        $this->logDebug($files);
-//            return $name;
-//        if (Input::hasFile('image[]')) {
-//            $this->logDebug("input 2");
-//            $files = $request->allFiles();
-//            $this->logDebug("count" . $count);
-//            foreach (Input::allFiles() as $file) {
-//                $name .= $file->getClientOriginalName();
-//                $this->logDebug("aaasdf");
-//            }
-//        }
-//        $file = '/assets/images/avatar';
-//        try {
-////         $p =   $files->store( "c");
-//            $aaa = Utilities::saveFile($files[0], $file, "/anh1");
-//        } catch (Exception $e) {
-//            return $e->getMessage();
-//        }
-//        return count($files);
-//        return $file.'/anh1';
-
-        $objs = $request->input('proid');
-        $req = $request->all();
-//        var_dump($objs);
-        var_dump($objs);
+        for ($i = 0; $i < 100; $i++) {
+            Log::info("RUN " . $i);
+            $this->dispatch(new SendSmsJob($i, "ss"));
+        }
 //        return response()->json($objs);
 
     }
@@ -172,7 +144,7 @@ class MobileController extends Controller
     {
         $date = $request->query('date');
         $data = '' . $this->getColumnTime();
-        $listDentists = $this->getAvailableDentist($date);
+        $listDentists = $this->getAvailableDentistAtDate($date);
         $numDentist = 1;
         foreach ($listDentists as $dentist) {
             $appointments = $this->getDentistApptAtDate($dentist->id, $date);
@@ -315,7 +287,7 @@ class MobileController extends Controller
     public function topappt(Request $request)
     {
         $date = $request->query('date');
-        $listDentsit = $this->getAvailableDentist($date);
+        $listDentsit = $this->getAvailableDentistAtDate($date);
         $listApps = $this->getListTopAppointment($listDentsit, $date);
         $response = new \stdClass();
         $response->numDentist = count($listDentsit);
