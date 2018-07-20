@@ -307,4 +307,16 @@ class StaffController extends BaseController
         }
 
     }
+
+    public function getListRequestAbsent(Request $request)
+    {
+        try {
+            $staffId = $request->input('staff_id');
+            $listRequestAbsents = $this->getListStaffRequestAbsent($staffId);
+            return response()->json($listRequestAbsents, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
 }

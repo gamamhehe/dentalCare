@@ -84,7 +84,6 @@ trait AppointmentBussinessFunction
                 "DENTIST OBJ NOT NULL");
             $predictAppointmentDate = new \DateTime();
             $bookingDateObj = new \DateTime($bookingDate);
-//            $appointmentArray = $listAppointment->toArray();
             $appointmentArray = $this->getListTopAppointment($listDentist, $bookingDate);
             //sort descendent
             usort($appointmentArray, array($this, "sortByTimeStamp"));
@@ -185,7 +184,7 @@ trait AppointmentBussinessFunction
                 $this->logDebug("isEndOfTheDay");
                 throw new \Exception ('isEndOfTheDay');
             }
-
+$this->logDebug("Num : " . $listAppointment->count());
             $numericalOrder = $listAppointment->count() + 1;
             $appointment = new Appointment();
             $appointment->phone = $phone;
