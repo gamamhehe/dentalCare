@@ -73,7 +73,7 @@ trait AppointmentBussinessFunction
             $defaultEstimatedTime = "00:30";
             $defaultStartOfDay = "07:00:00";
             $defaultStartAfternoon = ' 13:00:00';
-            $listDentist = $this->getAvailableDentist((new \DateTime())->format('Y-m-d'));
+            $listDentist = $this->getAvailableDentistAtDate((new \DateTime())->format('Y-m-d'));
             $NUM_OF_DENTIST = count($listDentist);
             $this->logDebug('NUM_DENTIST' . $NUM_OF_DENTIST);
             $bookingDateNewFormat = (new \DateTime($bookingDate))->format("Y-m-d");
@@ -339,7 +339,7 @@ trait AppointmentBussinessFunction
     private function getFreeDentistsAtDate($listAvailableDentists, $date)
     {
         //get all dentist that works at that day
-//        $listAvailableDentists = $this->getAvailableDentist($date);
+//        $listAvailableDentists = $this->getAvailableDentistAtDate($date);
         $listFreeDentists = [];
         $appointments = $this->getAppointmentsByStartTime($date);
         //find dentist that doesn't treat for patient at the first of the day
@@ -568,7 +568,7 @@ trait AppointmentBussinessFunction
     public
     function getCurrentFreeDentist()
     {
-        $listAvailableDentist = $this->getAvailableDentist(Carbon::now());
+        $listAvailableDentist = $this->getAvailableDentistAtDate(Carbon::now());
         $listCurrentBusyAppointment = Appointment::where('status', 1)->get();
         $listCurrentBusyDentist = [];
         foreach ($listCurrentBusyAppointment as $appointment) {

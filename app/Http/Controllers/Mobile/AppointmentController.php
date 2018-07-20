@@ -40,9 +40,7 @@ class AppointmentController extends BaseController
             $appointment = $this->getAllAppointment();
             return $appointment;
         } catch (Exception $exception) {
-            $error = new \stdClass();
-            $error->error = "Có lỗi xảy ra";
-            $error->exception = $exception;
+            $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
             return response()->json($error, 400);
         }
     }
@@ -50,13 +48,10 @@ class AppointmentController extends BaseController
     public function getById($id)
     {
         try {
-            Log::info("IDDDDDDDDDD " . $id);
             $appointment = $this->getAppointmentById($id);
             return response()->json($appointment, 200);
         } catch (Exception $exception) {
-            $error = new \stdClass();
-            $error->error = "Có lỗi xảy ra";
-            $error->exception = $exception;
+            $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
             return response()->json($error, 400);
 
         }
@@ -68,9 +63,7 @@ class AppointmentController extends BaseController
             $appointments = $this->getAppointmentByPhone($phone);
             return response()->json($appointments, 200);
         } catch (Exception $exception) {
-            $error = new \stdClass();
-            $error->error = "Có lỗi xảy ra";
-            $error->exception = $exception;
+            $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
             return response()->json($error, 400);
 
         }
@@ -99,11 +92,11 @@ class AppointmentController extends BaseController
                 return response()->json($error, 400);
             }
 
-        } catch (ApiException $e) {
-            $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
+        } catch (ApiException $ex) {
+            $error = Utilities::getErrorObj("Lỗi server", $ex);
             return response()->json($error, 400);
         } catch (\Exception $ex) {
-            $error = Utilities::getErrorObj("Lỗi server", $ex->getMessage());
+            $error = Utilities::getErrorObj("Lỗi server", $ex);
             return response()->json($error, 400);
         }
     }
