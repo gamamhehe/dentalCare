@@ -75,7 +75,7 @@ class AppointmentController extends BaseController
             $phone = $request->input('phone');
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
-            $dentistId = $request->input('dentist_id');
+            $dentistId = $request->input('staff_id');
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
             $name = $request->input('name');
