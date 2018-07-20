@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\Mobile;
 
+use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Jobs\SendReminderJob;
+use App\Jobs\SendSmsJob;
+use App\Model\AnamnesisPatient;
 use App\Model\Appointment;
 use App\Model\Patient;
+use App\Model\Staff;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use SMSGatewayMe\Client\Api\MessageApi;
 use SMSGatewayMe\Client\ApiClient;
 use SMSGatewayMe\Client\Configuration;
@@ -19,6 +26,7 @@ use SMSGatewayMe\Client\Model\SendMessageRequest;
 use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Thread;
 
 class MobileController extends Controller
 {
@@ -32,59 +40,223 @@ class MobileController extends Controller
      */
     public function test(Request $request)
     {
-//call firebase notify patient
+        $id = $request->query('id');
+        $appointment = $this->getAppointmentById($id);
+        if ($appointment != null) {
+            $crrDate = new DateTime();
+            $appDate = new DateTime($appointment->start_time);
+            if ($this->isUpCommingAppointment($crrDate, $appDate)) {
+                return response()->json($appDate->format("Y-m-d H:i:s"));
+            }
+        }
+        return response()->json('-__-');
+    }
+
+    public function handle()
+    {
+//        //call firebase notify patient
 //        $currentDateTime = new \DateTime();
 //        $appointments = $this->getAppointmentsByStartTime($currentDateTime->format('Y-m-d'));
 //        $currentTimeStamp = $currentDateTime->getTimestamp();
-//        foreach ($appointments as $appointment){
-//            $tmpDateTime = (new \DateTime($appointment->start_time));
-//            $tmpTimeStamp =$tmpDateTime->getTimestamp();
-//            if($tmpTimeStamp > $currentTimeStamp){
-//                $minute = $tmpDateTime->diff($currentDateTime)->i;
-//                $this->logDebug("MINUTE ".$minute);
-//                if($minute<=30 && $minute>=26){
-//                    Utilities::logDebug("FIND ONCE".$minute." date in db: " . $tmpDateTime->format('Y-m-d H:i:s'));
+//        foreach ($appointments as $appointment) {
+//            $apptDateTime = (new \DateTime($appointment->start_time));
+//            $apptTimeStamp = $apptDateTime->getTimestamp();
+//            if ($apptTimeStamp > $currentTimeStamp) {
+//                if ($this->isUpCommingAppointment($currentDateTime, $apptDateTime)) {
+//                    Utilities::logDebug("FIND ONCE" . $minute . " date in db: " . $tmpDateTime->format('Y-m-d H:i:s'));
 //                    Utilities::sendRemindingAppointment($appointment->phone);
-//
-//                    return response()->json("SEND SUCCESS");
-//
-//
 //                }
 //            }
 //        }
-//        $date = Carbon::now()->format('Y-m-d H:i:s');
-//        $appointment = new Appointment();
-//        $appointments = $appointment
-//            ->whereDate(
-//            'start_time', '=', Carbon::now()->format("Y-m-d"))
-//            ->where (
-//                'start_time', '>=', Carbon::now()->format("Y-m-d H:i:s")
-//            )
-//            ->get();
-////        $appointments->dateNow = Carbon::now()->format("Y-m-d H:i:s");
-////        $listDentist = $this->getFreeDentistsFromTime(Carbon::now(),new \DateTime('2018-07-03 13:00:00'));
-//        $predictAppointmentDate = new \DateTime("2018-07-03 12:20:20");
-//        $currentDateTime = new \DateTime();
-//        $diffDate = ($currentDateTime->diff($predictAppointmentDate)) ;
-////        var_dump($appointments);
-//        $app = $this->getLastestAppointment('2018-07-03', 1);
-        try {
-            $app = $this->createAppointment(
-                '2018-07-03',
-                '10968574849',
-                'no',
-                4,
-                '00:59:00');
-//        $listDentist = $this->getAvailableDentist((new \DateTime())->format('Y-m-d'));
-//       $app= $this->getListTopAppointment($listDentist,(new \DateTime())->format('Y-m-d'));
-            return response()->json($app);
-        }catch (\Exception $exception){
-            return response()->json(['ex' =>$exception->getMessage()]);
-        }
+    }
+
+    public function getSastifyAppointmentDate()
+    {
+        $currentDate = new DateTime();
+        $currentDate2 = new DateTime();
+        $this->addTimeToDate($currentDate, '00:26:00');
+        $this->addTimeToDate($currentDate2, '00:30:00');
+        return "Time 1: " . $currentDate->format('Y-m-d H:i:s') . '<br> Date 2: ' . $currentDate2->format('Y-m-d H:i:s');
 
     }
 
-    public function tests2(Request $request)
+    public function sendFirebase($topic, $content)
+    {
+        $requestObject = Utilities::getFirebaseRequestObj(
+            AppConst::RESPONSE_PROMOTION,
+            "test",
+            $content, $content,'/topics/'.
+            AppConst::TOPIC_PROMOTION);
+
+        try {
+            $response = Utilities::sendFirebase($requestObject);
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+        return response()->json("SUCCESS");
+    }
+
+
+    public function test2(Request $request)
+    {
+        for ($i = 0; $i < 100; $i++) {
+            Log::info("RUN " . $i);
+            $this->dispatch(new SendSmsJob($i, "ss"));
+        }
+//        return response()->json($objs);
+
+    }
+
+    public function test3(Request $request)
+    {
+        $id = $request->query('id');
+        $appointment = $this->getAppointmentById($id);
+        if ($appointment != null) {
+            $crrDate = new DateTime();
+            $appDate = new DateTime($appointment->start_time);
+            if ($this->isUpCommingAppointment($crrDate, $appDate)) {
+                return response()->json($appDate->format("Y-m-d H:i:s"));
+            }
+        }
+        return response()->json('-__-');
+    }
+
+    public function test4()
+    {
+        //call firebase notify patient
+        $currentDateTime = new \DateTime();
+        $appointments = $this->getAppointmentsByStartTime($currentDateTime->format('Y-m-d'));
+        $numOfReminder = 0;
+        $apss = [];
+        foreach ($appointments as $appointment) {
+            $apptDateTime = (new \DateTime($appointment->start_time));
+            if ($this->isUpCommingAppointment($currentDateTime, $apptDateTime)) {
+                $numOfReminder++;
+                Utilities::logDebug('Send for appointment id: ' . $appointment->id);
+                $this->dispatch(new SendReminderJob($appointment->phone));
+                $apss[] = $appointment;
+            }
+        }
+        return response()->json($apss);
+    }
+
+    public function test5(Request $request)
+    {
+        $date = $request->query('date');
+        $data = '' . $this->getColumnTime();
+        $listDentists = $this->getAvailableDentistAtDate($date);
+        $numDentist = 1;
+        foreach ($listDentists as $dentist) {
+            $appointments = $this->getDentistApptAtDate($dentist->id, $date);
+            $dentistTemplate = '<div style="float:left;width:100px">';
+            foreach ($appointments as $appointment) {
+                $templateAppointment =
+                    $this->getApptTemplate(
+                        $appointment,
+                        $numDentist);
+                $dentistTemplate .= $templateAppointment;
+            }
+            $dentistTemplate .= '</div>';
+            $data .= $dentistTemplate . '</div>';
+            $numDentist++;
+        }
+        $data .= '</div>';
+        return $data;
+    }
+
+    public function sendReminder(Request $request)
+    {
+        $appID = $request->input('id');
+        $appointment = $this->getAppointmentById($appID);
+        if ($appointment == null) {
+            return response()->json(['error' => "Khong tim thay " . $appID], 200);
+        }
+        $this->dispatch(new SendReminderJob($appointment));
+        return response()->json(['success' => "Gui thanh cong " . $appID], 200);
+
+    }
+
+    public function testSMS($phone, $content)
+    {
+        $result = Utilities::sendSMS($phone, $content);
+        return response()->json($result, 200);
+    }
+
+    public function getApptTemplate($appointment, $numDentist)
+    {
+        $standardDate = new DateTime($appointment->start_time);
+        $standardDate->setTime(0, 0);
+        $bookingDate = new DateTime($appointment->start_time);
+        $estimatedTimeObj = new DateTime($appointment->estimated_time);
+        $diff = $bookingDate->diff($standardDate);
+        $hour = $diff->h;
+        $minute = $diff->i;
+        $startMinute = $hour * 60;
+        $startMinute += $minute;
+
+        $topPixel = $startMinute * 5;//1 minute = 5pixel;
+        $leftPosition = $numDentist * 170;
+        $heightPixel = (intval($estimatedTimeObj->format('i'))
+                + intval($estimatedTimeObj->format('H') * 60)) * 5;
+        $phone = intval($appointment->phone);
+        $width = 150;
+        $colorCodeR = ($phone) % 200 + 50;
+        $colorCodeG = ($phone * 10) % 255;
+        $colorCodeB = ($phone * 100) % 255;
+        $textColor = '#000000';
+//        $colorCodeR =  255;
+//        $colorCodeG = 255;
+//        $colorCodeB =   255;
+        $bgcolor = 'rgb(' . $colorCodeR . ', ' . $colorCodeG . ', ' . $colorCodeB . ')';
+//        $bgcolor = 'white';
+
+        ///get column apointment
+        $template = '<div style="position:absolute;top:' . $topPixel .
+            'px;left:' . $leftPosition . 'px' .//background:' . $color .
+            ';width:' . $width . 'px;height:' . $heightPixel . 'px;border:1px solid black;">' .
+            ' <span style=" ;color:' . $textColor . '">' . $appointment->id . '</span>' .
+            ' <span style=" ;color:' . $textColor . '">DentistID:' . $appointment->staff_id . '</span><br>' .
+            '  <span style="background:' . $bgcolor . ';color:white">' . $appointment->phone . '</span><br>' .
+            ' <span style=" ;color:' . $textColor . '">StartTime: ' . $bookingDate->format('H:i') . '</span> ' .
+            '<span style=" ;color:' . $textColor . '">Estimate: ' . $appointment->estimated_time . '</span> ' .
+            ' <span style=" ;color:' . $textColor . '">Order: ' . $appointment->numerical_order . '</span> ' .
+            '</div>';
+
+        return $template;
+
+    }
+
+    public function getColumnTime()
+    {
+        $date = new DateTime();
+
+        $template = '<div style="float:left;width:100px">';
+        for ($i = 0; $i < 1440; $i += 30) {
+            $bgColor = '#20d8b3';
+            if (($i >= 720 && $i < 780) || ($i < 420) || ($i >= 1140)) {
+                $bgColor = '#333300';
+            }
+            $topPos = $i * 5;
+            $heightPx = 30 * 5;
+            $date->setTime(intval(($i / 60)), $i % 60);
+//            $this->logDebug("I " .(7 + intval(($i / 60))));
+//            $this->logDebug(($date->format('H:i')));
+            $template .= '<div style="border:1px solid white;position:absolute;top:'
+                . $topPos .
+                'px;background:'
+                . $bgColor .
+                ';width:100px;height:'
+                . $heightPx .
+                'px"><span style="color:#ffffff">StartAt:'
+                . ($date->format('H:i')) .
+                '</span> 
+    </div>';
+        }
+        return ($template .= '</div>');
+    }
+
+    public
+    function tests22(Request $request)
     {// Configure client
         $config = Configuration::getDefaultConfiguration();
         $smsApiToken = env('SMS_API_TOKEN', false);
@@ -112,12 +284,21 @@ class MobileController extends Controller
         return response()->json($result);
     }
 
-    /**
-     *Dummy code to test laravel function
-     * @POST
-     * @param Request $request
-     */
-    public function testPOST(Request $request)
+    public function topappt(Request $request)
+    {
+        $date = $request->query('date');
+        $listDentsit = $this->getAvailableDentistAtDate($date);
+        $listApps = $this->getListTopAppointment($listDentsit, $date);
+        $response = new \stdClass();
+        $response->numDentist = count($listDentsit);
+        $response->numAppts = count($listApps);
+        $response->appointments = $listApps;
+        return response()->json($response);
+    }
+
+
+    public
+    function testPOST(Request $request)
     {
         return response()->json("Success", 200);
     }

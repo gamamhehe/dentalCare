@@ -14,10 +14,10 @@
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/assets/admin/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="/assets/admin/bower_components/font-awesome/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <!-- Ionicons -->
     <link rel="stylesheet" href="/assets/admin/bower_components/Ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="/assets/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/assets/admin/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="/assets/admin/app_css_custom.css">
     <link rel="stylesheet" href="/assets/admin/input_file/fileinput.css">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
+    <link href="/assets/user/datatable/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -85,7 +85,6 @@
 <!-- FastClick -->
 <script src="/assets/admin/bower_components/fastclick/lib/fastclick.js"></script>
 <script src="/assets/admin/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="/assets/admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/assets/admin/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

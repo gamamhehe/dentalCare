@@ -2,38 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentDetailBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use Illuminate\Http\Request;
+use \Carbon\Carbon;
 use App\Http\Controllers\Controller;
 
 class TreatmentHistoryController extends Controller
 {
     //
     use TreatmentHistoryBusinessFunction;
+    use TreatmentDetailBusinessFunction;
+    use TreatmentBusinessFunction;
+    use AppointmentBussinessFunction;
     public function createTreatmentHistory(Request $request){
-        $treatmentHistory = new TreatmentHistory();
-        $treatmentHistory->treatment_id = $request->treatment_id;
-        $treatmentHistory->patient_id = $request->patient_id;
-        $treatmentHistory->descripttion = $request->descripttion;
-        $treatmentHistory->create_date = Carbon::now();
-        $treatmentHistory->tooth_number = $request->tooth_number;
-        $treatmentHistory->price = $request->price;
-        $treatmentHistory->payment_id = $request->payment_id;
-        $treatmentHistory->total_price = $request->total_price;
-        $this->saveTreatmentHistory($treatmentHistory);
-    }
+         $idTreatmentHistory = $this->createTreatmentProcess($request->treatment_id,$request->patient_id,$request->tooth_number,$request->price,$request->description);
+         if($idTreatmentHistory){
+            return redirect()->route("admin.stepTreatment", ['idTreatmentHistory' => $idTreatmentHistory,
+                'idTreatment' => $request->treatment_id]);
 
-
-    public function startTreatment(Request $request){
-        $idTreatment = $request->treatment_id;
-        $idPatient = $request->patient_id;
-        $toothNumber = $request->tooth_number;
-        $price = $request->price;
-        $description = $request->description;
-        $listTreatmentStep = $request->listTreatmentStep;
-        $note = $request->note;
-        $idTreatmentHistory = $this->createTreatmentProcess($idTreatment, $idPatient, $toothNumber, $price, $description);
-        $this->creatTreatmentDetail($listTreatmentStep, $idTreatmentHistory, $note);
+        }else{
+            return redirect()->back()->withSuccess("Chưa");
+        }
     }
 
     public function showTreatmentHistory(Request $request){
@@ -44,6 +36,33 @@ class TreatmentHistoryController extends Controller
             $result = $this->getTreatmentHistory($idPatient);
         }
         return view('WebUser.TreatmentHistory', ['listTreatmentHistory'=>$result]);
+    }
+    public function getTreatmentHistoryByPatient($id){
+        $checkComingAppointment = $this->checkAppointmentComing($id);
+        $data = array(
+            'statusComing' => 0,
+        );
+        if ($checkComingAppointment) {
+            $result = $this->getTreatmentHistoryByPatientId($checkComingAppointment);
+            foreach ($result as $key ) {
+                $key->nameTreat = $key->belongsToTreatment()->first();
+            }
+            $data = array(
+                'statusComing' => 1,
+                'resultHis' => $result
+            );
+        }
+        echo json_encode($data);
+    }
+
+    public function getList(){
+        $treatmentHistoryList = $this->getListTreatmentHistory();
+        return view('admin.treatmentHistory.list',['treatmentHistoryList' => $treatmentHistoryList]);
+    }
+
+    public function getDetail(Request $request){
+        $treatmentHistory = $this->getTreatmentHistoryDetail($request->idTreatmentHistory);
+        return view('admin.treatmentHistory.detail', ['treatmentHistory' => $treatmentHistory]);
     }
 
 }

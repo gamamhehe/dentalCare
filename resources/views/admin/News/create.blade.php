@@ -8,7 +8,7 @@
                  <label><h1>Tạo Tin Tức</h1></label>
              </div>
 
-             <form method ="post" class="form-horizontal" action="create-News" enctype="multipart/form-data" id="createNews">
+             <form method ="post" class="form-horizontal" action="create-news" enctype="multipart/form-data" id="createNews">
                   {{ csrf_field() }}
                    <div class="row" style="margin-bottom: 1em;">
                         

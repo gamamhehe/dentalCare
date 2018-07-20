@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentCategoriesBusinessFunction;
@@ -17,12 +18,12 @@ class TreatmentController extends Controller
 {
     use TreatmentBusinessFunction;
     //
-
+    use AppointmentBussinessFunction;
     public function getListTreatment(Request $request){
         $listTreatment = $this->getAllTreatment();
         return Datatables::of($listTreatment)
             ->addColumn('action', function($listTreatment) {
-                return '<a href="editTreatment/'.$listTreatment->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="'.$listTreatment->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+                return '<a href="edit-treatment/'.$listTreatment->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listTreatment->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
     }
     public function loadListTreatment(Request $request){
@@ -31,10 +32,10 @@ class TreatmentController extends Controller
     public function delete($id){
 
         if($this->deleteTreatment($id)){
-            return redirect('admin/list-Treatment')->withSuccess("Liệu trình đã được xóa");
+            return redirect('admin/list-treatment')->withSuccess("Liệu trình đã được xóa");
 
         }else{
-            return redirect('admin/list-Treatment')->withSuccess("Liệu trình được xóa");
+            return redirect('admin/list-treatment')->withSuccess("Liệu trình được xóa");
 
         }
     }
@@ -47,7 +48,7 @@ class TreatmentController extends Controller
         if($this->createTreatment($request->all())){
             return redirect()->route("admin.list.treatment")->withSuccess("Sự kiện đã được tạo");
         }else{
-            return redirect('admin/list-Treatment')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/list-treatment')->withSuccess("Có lỗi xảy ra khi khởi tạo");
         }
     }
     public function loadeditTreatment($id){
@@ -60,12 +61,21 @@ class TreatmentController extends Controller
             return redirect()->route("admin.list.treatment")->withSuccess("Sự kiện đã được tạo");
 
         }else{
-            return redirect('admin/list-Treatment')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/list-treatment')->withSuccess("Có lỗi xảy ra khi khởi tạo");
 
         }
     }
-
-    public function testFunction(){
-        dd($this->createTreatmentProcess(1, 1,11, 50000, 'abc'));
+    public function getTreatment($id){
+        $treatment = $this->getTreatmentByID($id);
+        return $treatment;
     }
+    public function getTreatmentByCategoryId($id){
+        $treat =$this->getTreatmentByCategori($id);
+       return $treat;
+    }
+    public function testFunction(){
+        dd($this->checkAppointmentForPatient('1231231231', 7));
+
+    }
+    
 }

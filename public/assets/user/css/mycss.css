@@ -3,7 +3,146 @@
     font-size: 27px;
     margin: 20px;
 }
+.dkm{
+    color :red;
+}
+/*input with icon*/
+  input[type=text]{
+    width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+  }
+  
+  input[type=text]:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
+  }
+  
+  .inputWithIcon input[type=text]{
+    padding-left:40px;
+  }
+  
+  .inputWithIcon{
+    position:relative;
+  }
+  
+  .inputWithIcon i{
+    position:absolute;
+    left:0;
+    top:8px;
+    padding:0.1em 0.5em;
+    color:#aaa;
+    transition:.3s;
+  }
+  
+  .inputWithIcon input[type=text]:focus + i{
+    color:dodgerBlue;
+  }
+  
+  .inputWithIcon.inputIconBg i{
+    background-color:#aaa;
+    color:#fff;
+    padding:9px 4px;
+    border-radius:4px 0 0 4px;
+  }
+  
+  .inputWithIcon.inputIconBg input[type=text]:focus + i{
+    color:#fff;
+    background-color:dodgerBlue;
+  }
+/*end input with icon*/
+hr.type_4 {
+border: 0;
+height: 55px;
+background-image: url(/assets/images/icon/type_4.png);
+background-repeat: no-repeat;
+}
+/*//img*/
+#ninja-slider .caption {
+    position:absolute;
+    top:100%;
+}
+#dup-table thead>tr {
+background-color: green;
+}
+/*img popup*/
+.modal-dialog {width:600px;}
+.thumbnail {margin-bottom:6px;}
+/*eng img*/
+/*flip*/
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+  .toggle.ios .toggle-handle { border-radius: 20px; }
+/*flip on off*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
 
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+    content: "ON";
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+   content: "ON";
+  background-color: red;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+ 
+/*end flip on off*/
+/*start star*/
+
+
+
+
+/*end star*/
 .panel-heading [data-toggle="collapse"]:after {
     font-family: 'Glyphicons Halflings';
     content: "."; /* "play" icon */
@@ -35,13 +174,15 @@
 .borderImg{
     border: solid 3px red;
 }
-hoverImg{
+.hoverImg{
     border-color: green;
 }
 .firstleftmenu{
     margin-top: 20px;
 }
-
+.text-yellow {
+    color: #f39c12 !important;
+}
 .more-content li {
     list-style: none;
     display: block;
@@ -145,9 +286,9 @@ select.form-control:not([size]):not([multiple]){
 
     height: 30px !important;
 }
-/*tr:hover {background-color:red;}*/
-tr:nth-child(even) {background: #CCC}
-tr:nth-child(odd) {background: #FFF}
+.myTable tr:hover {
+background-color: #FEFEFE;
+}
 .nut a.fa {
     font-size: 20px;
     color: white;
@@ -812,6 +953,13 @@ h3.tdbanner1 {
     background-size: cover;
     background-position: center;
 }
+/*.nav>li>a:focus, .nav>li>a:hover{
+    background-color: red !important; 
+
+}
+.thanhmenu ul.navbar-nav li.nav-item a.nav-link :hover{
+background-color: red;
+}*/
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link {
     padding: 20px 9px;
@@ -835,6 +983,7 @@ a.nav-link.biendoichumenu {
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link:hover {
     color: #336600;
+    background-color: red;
 }
 
 .thanhmenu ul.navbar-nav li.nav-item.active

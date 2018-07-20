@@ -134,20 +134,22 @@ trait NewsBussinessFunction
         {
             $event[]= $x->belongsToNews()->first();
         }
+
         $largestID=0;
         if($event){
                 foreach ($event as $key ) {
                 $term = $key->id;
-                $largestID = max($largestID,$term);
+                if($term > 0){
+                    $largestID = $term;
+                }
+
                 }
             $newestEvent = News::where('id', $largestID)->first(); 
-
             return $newestEvent;    
         }else{
              $newestEvent = News::where('id',1)->first(); 
             return $newestEvent;
         }
-
 
        
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
 use App\Model\User;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\EventBusinessFunction;
+use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
@@ -23,14 +24,12 @@ class HomeController extends Controller
     use UserBusinessFunction;
     use StaffBusinessFunction;
     use NewsBussinessFunction;
-
+    use AnamnesisBusinessFunction;
     public function homepage(Request $request){
     	 return view('WebUser.HomePage');
     }
     public function DoctorInformation(Request $request){
     	$doctors = DB::table('tbl_staffs')->get();
-    	 
-
     	return view("WebUser.DoctorInformation",['doctors'=>$doctors]);
     }
      public function BangGiaDichVu(){
@@ -45,9 +44,9 @@ class HomeController extends Controller
         echo "string";
         exit();
     }
-    public function Profile(Request $request){
-        return view('WebUser.User.Profile');
-    }
+    // public function Profile(Request $request){
+    //     return view('WebUser.User.Profile');
+    // }
     public function getNewsWebUser($id){
 
        $News = $this->getNews($id);
@@ -60,8 +59,11 @@ class HomeController extends Controller
 
     }
     public function eventLoad(Request $request){
+
         $listNews = $this->getListNewsOfEvent();
+
         $NewEventNews = $this->getNewestNews();
+  
        return view('WebUser.Events',['listNews'=>$listNews,'NewEventNews'=>$NewEventNews]);
     }
     public function eventLoadByID(Request $request,$id){
@@ -71,8 +73,12 @@ class HomeController extends Controller
         return view('WebUser.Events',['listNews'=>$listNews,'NewEventNews'=>$NewEventNews]);
     }
 
-    public function myProfile($id){
-        return view("WebUser.User.MyProfile");
+    public function myProfile(Request $request){
+        $value = $request->session()->get('currentPatient');
+        $id = $value->id;
+        $list = $this->getListAnamnesisByPatient($id);
+        
+        return view("WebUser.User.Profile",['patient'=>$value,'anamnesis'=>$list]);
     }
     public function aboutUs(Request $request){
         return view("WebUser.User.AboutUs");
@@ -81,7 +87,6 @@ class HomeController extends Controller
 
 
     public function testFunction(Request $request){
-        dd($request->Absent);
     }
 
     public function registerPost(Request $request){
@@ -98,4 +103,7 @@ class HomeController extends Controller
         $request->session()->remove('listPatient');
         return redirect()->route('homepage');
     }
+    public function profile(Request $request){
+        return view('admin.Staff.profile');
+    } 
 }

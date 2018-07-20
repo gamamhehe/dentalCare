@@ -4,8 +4,8 @@
     height: 40px;
     width: 100%;">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.0
+        <b>Version</b> 1.4
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Make by Phúc </a>.</strong> All rights
     reserved.
 </footer>

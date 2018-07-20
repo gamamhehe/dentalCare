@@ -8,7 +8,7 @@
                     <label><h1>Danh sách Bệnh Tiền Sử cho bệnh nhân</h1></label>
                 </div>
                 <div class="row layout" style=" margin-right: 4em"  >
-                    <table id="dup-table" class="table ">
+                    <table id="dup-table" class="table myTable table-bordered">
                         <thead>
                         <tr style="background-color: #eee;">
                             <td class="col-sm-1">id</td>
@@ -28,7 +28,7 @@
     <script>
         $(document).ready(function() {
             <?php if (Session::has('success')): ?>
-            swal("Good job!", "", "success");
+            swal("{{ Session::get('success')}}", "", "success");
             <?php endif ?>
 
         });
@@ -41,12 +41,21 @@
         });
         $(function() {
             $('#dup-table').DataTable({
+                language: {
+            "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
+            "zeroRecords": "Không tìm thấy kết quả ",
+            "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",
+            "infoEmpty": "Không có kết quả .",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search" : "Tìm kiếm ",
+              "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
+        },
                 processing: true,
                 serverSide: true,
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,
                 pageLength: 5,
-                ajax: '/admin/getListAnamnesis',
+                ajax: '/admin/get-list-anamnesis',
                 columns : [
 
                     {data: 'id'},
@@ -59,17 +68,17 @@
             });
         });
         function deleteAnamnesis(obj){
-            var linkDelete = "admin/deleteAnamnesis/";
             var id = obj.getAttribute("id");
             $.ajax(
                 {
-                    url: "/admin/deleteAnamnesis/"+id,
+                    url: "/admin/delete-anamnesis/"+id,
                     method:"get",
                     data: {
                         id:id
                     },
                     success: function ()
                     {
+                         swal("Xóa thành công", "", "success");
                         $('#dup-table').DataTable().ajax.reload();
                     }
 

@@ -8,10 +8,12 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
+use App\Model\AnamnesisPatient;
 use App\Model\Patient;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -67,7 +69,33 @@ trait UserBusinessFunction
             DB::rollback();
             throw new Exception($e->getMessage());
         }
-    } public function updateUser($user)
+
+    }
+
+    public function createUserWithAnamnesis($user, $patient, $userHasRole, $listAnamnesisId)
+    {
+        DB::beginTransaction();
+        try {
+            $user->save();
+            $patient->save();
+            $userHasRole->save();
+            if ($listAnamnesisId != null) {
+                foreach ($listAnamnesisId as $id) {
+                    $anamnesis = new AnamnesisPatient();
+                    $anamnesis->anamnesis_id = $id;
+                    $anamnesis->patient_id = $patient->id;
+                    $anamnesis->save();
+                }
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function updateUser($user)
     {
         DB::beginTransaction();
         try {
@@ -140,6 +168,14 @@ trait UserBusinessFunction
         }
     }
 
+    public function getUserPhones($keyword)
+    {
+        $phones = User::where('phone', 'like', '%' . $keyword . '%')
+            ->pluck('phone')
+            ->toArray();
+        return $phones;
+    }
+
     public function deleteRole($id)
     {
         DB::beginTransaction();
@@ -153,15 +189,30 @@ trait UserBusinessFunction
         }
     }
 
+    public function isRoleStaff($phone)
+    {
+        $staff = User::where('phone', $phone)->first();
+        if ($staff == null) {
+            return false;
+        }
+        $hasRoles = $staff->hasUserHasRole()->get();
+        foreach ($hasRoles as $role) {
+            if ($role->role_id == 4) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-    public function editAvatar($image, $id)
+
+    public function editAvatar($image, $profileId, $forWho = "user")
     {
         DB::beginTransaction();
         try {
-            $patient = Patient::where('id', $id)->first();
+            $patient = Patient::where('id', $profileId)->first();
             $avatarFolder = '/assets/images/avatar/';
             $path = public_path($avatarFolder);
-            $filename = 'user_avatar_' . $id . '.' . $image->getClientOriginalExtension();
+            $filename = $forWho . '_avatar_' . $profileId . '.' . $image->getClientOriginalExtension();
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }

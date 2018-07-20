@@ -11,7 +11,7 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\AnamnesisCatalog;
 use App\Model\AnamnesisPatient;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 trait AnamnesisBusinessFunction
 {
@@ -21,7 +21,6 @@ trait AnamnesisBusinessFunction
             $AnamnesisCatalog = new AnamnesisCatalog;
             $AnamnesisCatalog->name = $input['name'];
             $AnamnesisCatalog->description =  $input['description'];
-            $AnamnesisCatalog->save();
             $AnamnesisCatalog->save();
             DB::commit();
             return true;
@@ -69,5 +68,13 @@ trait AnamnesisBusinessFunction
     public function getAnamnesis($id){
         $AnamnesisCatalog = AnamnesisCatalog::find($id);
         return $AnamnesisCatalog;
+    }
+
+    public function getListAnamnesisByPatient($id){
+        $AnamnesisPatient = AnamnesisPatient::where('patient_id',$id)->get();
+        foreach ($AnamnesisPatient as $key) {
+            $key->name = $key->belongsToAnamnesisCatalog()->first();
+        }
+        return $AnamnesisPatient;
     }
 }

@@ -8,72 +8,88 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
-use App\Model\Patient;
 use App\Model\Treatment;
-use App\Model\TreatmentDetail;
-use App\Model\TreatmentDetailStep;
-use App\Model\Payment;
-use App\Model\TreatmentHistory;
-use App\Model\TreatmentImage;
-use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 trait TreatmentBusinessFunction
 {
-    use PaymentBusinessFunction;
-    use EventBusinessFunction;
-    public function getAllTreatment(){
+    public function getAllTreatment()
+    {
         $listTreat = Treatment::all();
+        foreach ($listTreat as $treatment) {
+            $treatment->treatment_steps = $treatment->hasTreatmentStep()->get();
+            foreach($treatment->treatment_steps  as $t){
+               $step = $t->belongsToStep()->first();
+               if($step!=null){
+                   $t->name = $step->name;
+               }
+            }
+            $treatment->category = $treatment->belongsToTreatmentCategory()->first();
+        }
         return $listTreat;
     }
-    public function deleteTreatment($id){
+
+    public function deleteTreatment($id)
+    {
         DB::beginTransaction();
-        try{
+        try {
             $Treatment = Treatment::where('id', $id)->first();
             $Treatment->delete();
             DB::commit();
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return false;
 
         }
     }
-    public function createTreatment($input){
+
+    public function getTreatmentByCategori($id)
+    {
+        $listTreat = Treatment::where('treatment_category_id', '=', $id)->get();
+        return $listTreat;
+    }
+
+    public function createTreatment($input)
+    {
         DB::beginTransaction();
-        try{
+        try {
             $Treatment = new Treatment();
-            $Treatment->name =  $input['name'];
+            $Treatment->name = $input['name'];
             $Treatment->treatment_category_id = $input['TreatmentCate'];
-            $Treatment->description =$input['description'];
-            $Treatment->max_price =(int)$input['max_price'];
-            $Treatment->min_price =(int)$input['min_price'];
+            $Treatment->description = $input['description'];
+            $Treatment->max_price = (int)$input['max_price'];
+            $Treatment->min_price = (int)$input['min_price'];
             $Treatment->save();
             DB::commit();
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
-            return  false;
+            return false;
         }
     }
-    public function getTreatmentByID($id){
+
+    public function getTreatmentByID($id)
+    {
         $Treatment = Treatment::find($id);
         return $Treatment;
     }
-    public function editTreatment($input,$id){
+
+    public function editTreatment($input, $id)
+    {
         DB::beginTransaction();
-        try{
+        try {
             $Treatment = Treatment::find($id);
-            $Treatment->name =  $input['name'];
+            $Treatment->name = $input['name'];
             $Treatment->treatment_category_id = $input['TreatmentCate'];
-            $Treatment->description =$input['description'];
-            $Treatment->max_price =(int)$input['max_price'];
-            $Treatment->min_price =(int)$input['min_price'];
+            $Treatment->description = $input['description'];
+            $Treatment->max_price = (int)$input['max_price'];
+            $Treatment->min_price = (int)$input['min_price'];
             $Treatment->save();
             DB::commit();
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return false;
         }

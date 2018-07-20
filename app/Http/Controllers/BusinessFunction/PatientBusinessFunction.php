@@ -9,9 +9,11 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 
+use App\Model\AnamnesisPatient;
 use App\Model\Patient;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait PatientBusinessFunction
 {
@@ -24,7 +26,7 @@ trait PatientBusinessFunction
         return null;
     }
 
-    public function getPatient($phone)
+    public function getPatientByPhone($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
@@ -38,12 +40,11 @@ trait PatientBusinessFunction
         return null;
     }
 
-    public function createPatient($patient, $userHasRole)
+    public function createPatient($patient)
     {
         DB::beginTransaction();
         try {
             $patient->save();
-            $userHasRole->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -52,43 +53,44 @@ trait PatientBusinessFunction
         }
     }
 
-    public function updatePatient($request, $idPatient)
+    public function updatePatient($patient)
     {
         DB::beginTransaction();
         try {
-            $patient = Patient::find($idPatient);
-            $patient->name = $request->name;
-            $patient->address = $request->address;
-            $patient->phone = $request->phone;
-            $patient->date_of_birth = $request->date_of_birth;
-            $patient->gender = $request->gender;
-            $patient->avatar = $request->avatar;
-            $patient->district_id = $request->district_id;
-            $patient->is_parent = $request->is_parent;
             $patient->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            throw new Exception($e->getMessage());
+            throw new \Exception($e->getMessage());
         }
-    }
-
-    public function updatePatientWithModel($patient)
+    } public function updatePatientWithAnamnesis($patient,$listAnamnesisId)
     {
         DB::beginTransaction();
         try {
             $patient->save();
+            if ($listAnamnesisId != null) {
+                foreach ($listAnamnesisId as $id) {
+                    $anamnesis = new AnamnesisPatient();
+                    $anamnesis->anamnesis_id = $id;
+                    $anamnesis->patient_id = $patient->id;
+                    $anamnesis->save();
+                }
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            throw new Exception($e->getMessage());
+            throw new \Exception($e->getMessage());
         }
     }
 
     public function getListPatient()
     {
         return Patient::all();
+    }
+
+    public function getPhoneOfPatient($id){
+        return Patient::find($id)->phone;
     }
 }

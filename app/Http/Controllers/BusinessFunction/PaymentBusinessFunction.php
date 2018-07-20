@@ -10,7 +10,11 @@ namespace App\Http\Controllers\BusinessFunction;
 
 
 use App\Model\Payment;
+use App\Model\PaymentDetail;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\DB;
+
 trait PaymentBusinessFunction
 {
     public function getPaymentByPhone($phone)
@@ -24,7 +28,7 @@ trait PaymentBusinessFunction
             $treatmentNames = [];
             $listTreatmentHistories = $item->hasManyTreatmentHistory()->get();
             foreach ($listTreatmentHistories as $treatmentHistory) {
-                if( $treatmentHistory->belongsToTreatment()!=null) {
+                if ($treatmentHistory->belongsToTreatment() != null) {
                     $treatmentNames[] = $treatmentHistory->belongsToTreatment()->first()->name;
                 }
             }
@@ -40,11 +44,17 @@ trait PaymentBusinessFunction
         return $payments;
     }
 
+    public function getPaymentById($id)
+    {
+        $payment = Payment::where('id', $id)->first();
+        return $payment;
+    }
+
     public function createPayment($total_price, $phone)
     {
         DB::beginTransaction();
         try {
-            $id= Payment::create([
+            $id = Payment::create([
                 'total_price' => $total_price,
                 'phone' => $phone,
             ])->id;
@@ -56,38 +66,24 @@ trait PaymentBusinessFunction
         }
     }
 
-    public function checkPaymentIsDone($phone){
+    public function checkPaymentIsDone($phone)
+    {
         $listPayment = Payment::where('phone', $phone)->get();
-        foreach ($listPayment as $payment){
-            if($payment->is_done == false){
+        foreach ($listPayment as $payment) {
+            if ($payment->is_done == false) {
                 return $payment;
             }
         }
         return null;
     }
 
-    public function updatePayment($price, $idPayment){
-    DB::beginTransaction();
-    try {
-        $payment = Payment::find($idPayment);
-        $payment->total_price = $payment->total_price + $price;
-        if($payment->total_price == 0){
-            $payment->is_done = true;
-        }
-        $payment->save();
-        DB::commit();
-        return true;
-    } catch (\Exception $e) {
-        DB::rollback();
-        return false;
-    }
-}
-    public function updatePaymentPrepaid($price, $idPayment){
+    public function updatePayment($price, $idPayment)
+    {
         DB::beginTransaction();
         try {
             $payment = Payment::find($idPayment);
-            $payment->prepaid = $payment->prepaid + $price;
-            if($payment->total_price == $payment->prepaid){
+            $payment->total_price = $payment->total_price + $price;
+            if ($payment->total_price == 0) {
                 $payment->is_done = true;
             }
             $payment->save();
@@ -99,7 +95,42 @@ trait PaymentBusinessFunction
         }
     }
 
-    public function createPaymentDetail($paymentDetail){
+    public function updatePaymentModel($payment, $paymentDetail)
+    {
+        DB::beginTransaction();
+        try {
+            $payment->save();
+            $paymentDetail->save();
+            DB::commit();
+            return true;
+        } catch (Exception $exception) {
+            DB::rollback();
+            throw  new \Exception($exception->getMessage());
+        }
+
+    }
+
+    public function updatePaymentPaid($price, $idPayment)
+    {
+        DB::beginTransaction();
+        try {
+            $payment = Payment::find($idPayment);
+            $payment->paid = $payment->paid + $price;
+            if ($payment->total_price == $payment->prepaid) {
+                $payment->is_done = true;
+            }
+            $payment->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
+            return false;
+        }
+    }
+
+    public function createPaymentDetail($paymentDetail)
+    {
         DB::beginTransaction();
         try {
             $paymentDetail->save();
@@ -107,8 +138,19 @@ trait PaymentBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
             return false;
         }
+    }
+
+    public function searchPayment($phone){
+        return Payment::where('phone', $phone)->get();
+    }
+
+    public function getDetailListPaymentById($idPayment){
+        $result = PaymentDetail::where('payment_id', $idPayment)->get();
+        foreach ($result as $detail){
+            $detail->staff = $detail->beLongsToStaff()->first()->name;
+        }
+        return $result;
     }
 }

@@ -10,6 +10,7 @@ namespace App\Helpers;
 
 
 use App\Model\User;
+use DateTime;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -54,13 +55,16 @@ class Utilities
      * @param $phone
      * @return mixed|string
      */
-    public static function sendRemindingAppointment($phone)
+    public static function sendRemindingAppointment($appointment)
     {
         try {
+            $phone = $appointment->phone;
+            $startTime = (new DateTime($appointment->start_time))->format('H:i:s');
+
             $type = AppConst::RESPONSE_REMINDER;
             $body = AppConst::MSG_REMINDER_APPOINTMENT;
-            $title = "Nhắc nhở";
-            $message = "Bạn có lịch hẹn";
+            $title = "Nhắc nhở cuộc hẹn";
+            $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc " . $startTime;
             $user = User::where('phone', $phone)->first();
             if ($user == null) {
                 self::logDebug('Firebase Appointment: Cannot find user with phone: ' . $phone);
@@ -71,7 +75,7 @@ class Utilities
             } else {
                 $token = $user->noti_token;
                 $requestObj = self::getFirebaseRequestObj($type, $title, $message, $body, $token);
-                $response =self::sendFirebase($requestObj);
+                $response = self::sendFirebase($requestObj);
                 $responseObj = json_decode($response);
                 self::logDebug("Firebase Appointment:  Response is " . $response);
                 return $responseObj;
@@ -88,11 +92,11 @@ class Utilities
     }
 
     /**
-     * @param $type: get from AppConst
+     * @param $type : get from AppConst
      * @param $title
      * @param $message
      * @param $body
-     * @param $token: id token of mobile, get from database with field 'noti_token'
+     * @param $token : id token of mobile, get from database with field 'noti_token'
      * @return \stdClass
      */
     public static function getFirebaseRequestObj($type, $title, $message, $body, $token)
@@ -106,6 +110,12 @@ class Utilities
         $reminderObj->data = $data;
         $reminderObj->to = $token;
         return $reminderObj;
+    }
+
+    public static function getFeedbackObject()
+    {
+        $fbObject = new \stdClass();
+        return $fbObject;
     }
 
     /**
@@ -138,7 +148,40 @@ class Utilities
     {
         $error = new \stdClass();
         $error->error = $message;
-        $error->exception = $exception;
+        $error->exception = self::getExceptionMsg($exception);
         return $error;
+    }
+
+    public static function getExceptionMsg($exceptionObj)
+    {
+        $message = "No exception";
+        if ($exceptionObj != null && is_object($exceptionObj)) {
+            $message = 'Message: ' . ($exceptionObj->getMessage())
+                . ' File: ' . $exceptionObj->getFile()
+                . ' Line: ' . $exceptionObj->getLine();
+        }
+        return $message;
+    }
+    public static function saveFile($file, $publicPath, $saveName)
+    {
+        try {
+            $filename = $saveName . '.' . $file->getClientOriginalExtension();
+            $hostname = request()->getHttpHost();
+            //get time stamp
+            $path = public_path($publicPath);
+            $date = new \DateTime();
+            $timestamp = $date->getTimestamp();
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $fullPath = 'http://' . implode('/',
+                    array_filter(
+                        explode('/', $hostname . $publicPath . $filename))
+                ) . '?time=' . $timestamp;
+            $file->move($path, $filename);
+            return $fullPath;
+        } catch (Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
     }
 }

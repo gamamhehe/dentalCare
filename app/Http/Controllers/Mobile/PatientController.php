@@ -10,10 +10,14 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
+use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Model\Patient;
+use Exception;
 use Illuminate\Http\Request;
 
-class PatientController
+class PatientController extends BaseController
 {
+    use UserBusinessFunction;
     use PatientBusinessFunction;
     public function updatePatientInfo(Request $request)
     {
@@ -31,7 +35,7 @@ class PatientController
                 $patient->date_of_birth = $birthday;
                 $patient->address = $address;
                 $patient->district_id = $districtId;
-                $result = $this->updatePatientWithModel($patient);
+                $result = $this->updatePatient($patient);
                 if ($result == true) {
                     $successResponse = new \stdClass();
                     $successResponse->status = "OK";
@@ -58,4 +62,24 @@ class PatientController
             return response()->json($error, 400);
         }
     }
+
+    public function getByPhone(Request $request)
+    {
+        try {
+            $phone = $request->input("phone");
+            $user = $this->getUserByPhone($phone);
+            if($user==null){
+                $error = $this->getErrorObj("Số điện thoại chưa được đăng kí", "No exception");
+                return response()->json($error, 400);
+            }
+            $patients = $this->getPatientByPhone($phone);
+            return $patients;
+        }catch (Exception $ex){
+            $error = $this->getErrorObj("Lỗi server", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
+
+
 }
