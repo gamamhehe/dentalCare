@@ -112,6 +112,12 @@ class Utilities
         return $reminderObj;
     }
 
+    public static function getFeedbackObject()
+    {
+        $fbObject = new \stdClass();
+        return $fbObject;
+    }
+
     /**
      * @param $requestObject
      * @return string
@@ -142,11 +148,21 @@ class Utilities
     {
         $error = new \stdClass();
         $error->error = $message;
-        $error->exception = $exception;
+        $error->exception = self::getExceptionMsg($exception);
         return $error;
     }
 
-    public static function saveFile($file,$publicPath, $saveName)
+    public static function getExceptionMsg($exceptionObj)
+    {
+        $message = "No exception";
+        if ($exceptionObj != null && is_object($exceptionObj)) {
+            $message = 'Message: ' . ($exceptionObj->getMessage())
+                . ' File: ' . $exceptionObj->getFile()
+                . ' Line: ' . $exceptionObj->getLine();
+        }
+        return $message;
+    }
+    public static function saveFile($file, $publicPath, $saveName)
     {
         try {
             $filename = $saveName . '.' . $file->getClientOriginalExtension();
@@ -160,7 +176,7 @@ class Utilities
             }
             $fullPath = 'http://' . implode('/',
                     array_filter(
-                        explode('/', $hostname.$publicPath .  $filename))
+                        explode('/', $hostname . $publicPath . $filename))
                 ) . '?time=' . $timestamp;
             $file->move($path, $filename);
             return $fullPath;

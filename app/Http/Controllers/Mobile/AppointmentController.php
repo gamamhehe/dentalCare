@@ -87,16 +87,16 @@ class AppointmentController extends BaseController
                 $this->dispatch(new SendSmsJob($phone, $smsMessage));
                 return response()->json($listAppointment, 200);
             } else {
-                $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
                     "Result is null, No exception");
                 return response()->json($error, 400);
             }
 
         } catch (ApiException $ex) {
-            $error = Utilities::getErrorObj("Lỗi server", $ex);
+            $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 400);
         } catch (\Exception $ex) {
-            $error = Utilities::getErrorObj("Lỗi server", $ex);
+            $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 400);
         }
     }
@@ -131,16 +131,16 @@ class AppointmentController extends BaseController
                 $this->dispatch(new SendSmsJob($phone, $smsMessage));
                 return response()->json($listAppointment, 200);
             } else {
-                $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
                     "Result is null, No exception");
                 return response()->json($error, 400);
             }
 
         } catch (ApiException $e) {
-            $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
+            $error = $this->getErrorObj("Lỗi server", $e->getMessage());
             return response()->json($error, 400);
         } catch (\Exception $ex) {
-            $error = Utilities::getErrorObj("Lỗi server", $ex->getMessage());
+            $error = $this->getErrorObj("Lỗi server", $ex->getMessage());
             return response()->json($error, 400);
         }
     }
@@ -155,7 +155,7 @@ class AppointmentController extends BaseController
             return response()->json($result, 200);
         $oldBookingDate = $request->input('booking_date');
         if ($this->getAppointmentByDate($phone, $oldBookingDate) && $this->checkExistUser($phone)) {
-            $error = Utilities::getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
+            $error = $this->getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
                 "No exception");
             return response()->json($error, 400);
         } else {
