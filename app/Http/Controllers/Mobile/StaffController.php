@@ -328,6 +328,7 @@ class StaffController extends BaseController
             $staffId = $request->input('staff_id');
             $listStartDate = $request->input('start_dates');
             $listEndDate = $request->input('end_dates');
+            $reason = $request->input('reason');
             $listRequestAbsents = [];
             for ($i = 0; $i < count($listStartDate); $i++) {
                 $requestAbsentObj = new RequestAbsent();

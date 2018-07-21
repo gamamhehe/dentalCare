@@ -15,6 +15,9 @@ class AppConst
 {
     const RESPONSE_REMINDER = 'RESPONSE_REMINDER';
     const RESPONSE_FEEDBACK = 'RESPONSE_FEEDBACK';
+    const RESPONSE_PROMOTION = 'RESPONSE_PROMOTION';
+
+    const TOPIC_PROMOTION = "PROMOTION";
 
     const MSG_SMS_APPOINTMENT = "";
     const MSG_REMINDER_APPOINTMENT = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";

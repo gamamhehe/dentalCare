@@ -58,6 +58,7 @@ Route::get("test5", "Mobile\MobileController@test5");
 Route::post("test5", "Mobile\MobileController@test5");
 Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
+Route::get("firebase/{topic}/{content}", "Mobile\MobileController@sendFirebase");
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
 
@@ -116,6 +117,8 @@ Route::middleware('auth:api')->group(function () {
     ////////Anamesis
     Route::get('anamnesisCatalog/all','Mobile\AnamnesisController@getAll');
     Route::get('staff/getAvailableDentist', 'Mobile\StaffController@getAvailableDentist');
+    Route::get('staff/getListRequestAbsent', 'Mobile\StaffController@getListRequestAbsent');
+    Route::post('staff/requestAbsent', 'Mobile\StaffController@requestAbsent');
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff----*****************************************************/
     /*************************************-----------------------------*****************************************************/
