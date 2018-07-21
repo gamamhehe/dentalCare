@@ -119,6 +119,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('staff/getAvailableDentist', 'Mobile\StaffController@getAvailableDentist');
     Route::get('staff/getListRequestAbsent', 'Mobile\StaffController@getListRequestAbsent');
     Route::post('staff/requestAbsent', 'Mobile\StaffController@requestAbsent');
+    Route::post('staff/updateStaffInfo', 'Mobile\StaffController@updateStaffInfo');
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff----*****************************************************/
     /*************************************-----------------------------*****************************************************/

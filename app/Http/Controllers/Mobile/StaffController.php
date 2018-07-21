@@ -322,6 +322,72 @@ class StaffController extends BaseController
         }
     }
 
+    public function updateStaffInfo(Request $request)
+    {
+        try {
+            $staffId = $request->input('id');
+            $name = $request->input('name');
+            $gender = $request->input('gender');
+            $email = $request->input('email');
+            $birthday = $request->input('date_of_birth');
+            $address = $request->input('address');
+            $districtId = $request->input('district_id');
+            $staff = $this->getStaffById($staffId);
+            if ($staff != null) {
+                $staff->id = $staffId;
+                $staff->name = $name;
+                $staff->email = $email;
+                $staff->gender = $gender;
+                $staff->date_of_birth = $birthday;
+                $staff->address = $address;
+                $staff->district_id = $districtId;
+                $result = $this->updateStaffProfile($staff);
+                if ($result == true) {
+                    $successResponse = new \stdClass();
+                    $successResponse->status = "OK";
+                    $successResponse->code = 200;
+                    $successResponse->message = "Sửa tài khoản thành công";
+                    $successResponse->data = $staff;
+                    return response()->json($successResponse, 200);
+                } else {
+                    $error = $this->getErrorObj("Không thể sửa đổi thông tin người dùng", "No exception");
+                    return response()->json($error, 400);
+                }
+            } else {
+                $error = $this->getErrorObj("Không thể tìm thấy id bệnh nhân", "No exception");
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 400);
+        }
+    }
+    public function changePassword(Request $request)
+    {
+        $phone = $request->input('phone');
+        $newPassword = $request->input('password');
+        $currentPassword = $request->input('current_password');
+        $user = $this->checkLogin($phone, $currentPassword);
+        $errorResponse = new \stdClass();
+        if ($user != null) {
+            if ($this->changeUserPassword($phone, $newPassword)) {
+                $successResponse = new \stdClass();
+                $successResponse->status = "OK";
+                $successResponse->code = 200;
+                $successResponse->message = "Sửa mật khẩu thành công";
+                $successResponse->data = null;
+                return response()->json($successResponse, 200);
+            } else {
+                $errorResponse->error = "Không thể sửa mật khẩu";
+                $errorResponse->exception = null;
+                return response()->json($errorResponse, 400);
+            }
+        } else {
+            $errorResponse->error = "Mật khẩu hiện tại không hợp lệ";
+            $errorResponse->exception = null;
+            return response()->json($errorResponse, 400);
+        }
+    }
     public function requestAbsent(Request $request)
     {
         try {
@@ -341,8 +407,8 @@ class StaffController extends BaseController
             $this->createListRequestAbsent($listRequestAbsents);
             $response = $this->getSuccessObj(200, "OK", "Tạo thành công", "No data");
             return response()->json($response, 200);
-        }catch (Exception $ex){
-            $error  = $this->getErrorObj("Lỗi máy chủ", $ex);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
             return response()->json($error, 500);
         }
     }

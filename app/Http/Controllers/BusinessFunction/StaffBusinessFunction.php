@@ -63,7 +63,18 @@ trait StaffBusinessFunction
             return false;
         }
     }
-
+    public function updateStaffProfile($staff)
+    {
+        DB::beginTransaction();
+        try {
+            $staff->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new \Exception($e->getMessage());
+        }
+    }
     public function getStaffProfileByPhone($phone)
     {
         $staff = Staff::where('phone', $phone)->first();
