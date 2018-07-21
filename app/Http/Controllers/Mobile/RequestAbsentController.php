@@ -11,5 +11,7 @@ namespace App\Http\Controllers\Mobile;
 
 class RequestAbsentController extends  BaseController
 {
-//        public function delete($re)
+        public function delete($requestAbsentId){
+
+        }
 }

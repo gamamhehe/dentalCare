@@ -437,20 +437,17 @@ class StaffController extends BaseController
     {
         try {
             $staffId = $request->input('staff_id');
-            $listStartDate = $request->input('start_dates');
-            $listEndDate = $request->input('end_dates');
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
             $reason = $request->input('reason');
-            $listRequestAbsents = [];
-            for ($i = 0; $i < count($listStartDate); $i++) {
-                $requestAbsentObj = new RequestAbsent();
-                $requestAbsentObj->staff_id = $staffId;
-                $requestAbsentObj->reason = $reason;
-                $requestAbsentObj->start_date = $listStartDate[$i];
-                $requestAbsentObj->end_date = $listEndDate[$i];
-                $listRequestAbsents[] = $requestAbsentObj;
-            }
-            $this->createListRequestAbsent($listRequestAbsents);
-            $response = $this->getSuccessObj(200, "OK", "Tạo thành công", "No data");
+            $requestAbsentObj = new RequestAbsent();
+            $requestAbsentObj->staff_id = $staffId;
+            $requestAbsentObj->reason = $reason;
+            $requestAbsentObj->start_date = $startDate;
+            $requestAbsentObj->end_date = $endDate;
+            $this->createRequestAbsent($requestAbsentObj);
+            $response = $this->getAbsentObject($requestAbsentObj);
+//            $response = $this->getSuccessObj(200, "OK", "Tạo thành công", "No data");
             return response()->json($response, 200);
         } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi máy chủ", $ex);

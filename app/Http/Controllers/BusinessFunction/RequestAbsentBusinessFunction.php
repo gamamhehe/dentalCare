@@ -51,4 +51,16 @@ trait RequestAbsentBusinessFunction
             throw new \Exception($ex->getMessage());
         }
     }
+
+    public function getAbsentObject($reqAbsentObj){
+        $absent = $reqAbsentObj->hasAbsent()->first();
+        if ($absent != null) {
+            $reqAbsentObj->staff_approve = $absent->belongsToStaff() == null ?
+                null : $absent->belongsToStaff()->first();
+            $reqAbsentObj->message_from_staff = $absent->message_from_staff;
+            $reqAbsentObj->created_time = $absent->created_time;
+            $reqAbsentObj->status = $absent->status;
+        }
+        return $absent;
+    }
 }

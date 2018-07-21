@@ -107,7 +107,18 @@ trait StaffBusinessFunction
         $absentObjs = $staff->hasAbsent()
             ->where('is_deleted', 0);;
         if ($absentObjs != null) {
-            return $absentObjs->get();
+            $listReqAbsent = $absentObjs->get();
+            foreach ($listReqAbsent as $reqAbsent) {
+                $absent = $reqAbsent->hasAbsent()->first();
+                if ($absent != null) {
+                    $reqAbsent->staff_approve = $absent->belongsToStaff() == null ?
+                        null : $absent->belongsToStaff()->first();
+                    $reqAbsent->message_from_staff = $absent->message_from_staff;
+                    $reqAbsent->created_time = $absent->created_time;
+                    $reqAbsent->status = $absent->status;
+                }
+            }
+            return $listReqAbsent;
         } else {
             return null;
         }
@@ -121,7 +132,18 @@ trait StaffBusinessFunction
             ->whereYear('start_date', $yearInNumber)
             ->where('is_deleted', 0);
         if ($absentObjs != null) {
-            return $absentObjs->get();
+            $listReqAbsent = $absentObjs->get();
+            foreach ($listReqAbsent as $reqAbsent) {
+                $absent = $reqAbsent->hasAbsent()->first();
+                if ($absent != null) {
+                    $reqAbsent->staff_approve = $absent->belongsToStaff() == null ?
+                        null : $absent->belongsToStaff()->first();
+                    $reqAbsent->message_from_staff = $absent->message_from_staff;
+                    $reqAbsent->created_time = $absent->created_time;
+                    $reqAbsent->status = $absent->status;
+                }
+            }
+            return $listReqAbsent;
         } else {
             return null;
         }

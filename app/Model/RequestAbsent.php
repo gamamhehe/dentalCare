@@ -8,7 +8,7 @@ class RequestAbsent extends Model
 {
     //
     protected $table = 'tbl_request_absent';
-    protected $fillable = ['id','staff_id', 'start_date', 'end_date', 'reason'];
+    protected $fillable = ['id','staff_id', 'start_date', 'end_date', 'reason','is_deleted'];
     public function hasAbsent(){
         return $this->hasOne('App\Model\Absent','request_absent_id', 'id');
     }

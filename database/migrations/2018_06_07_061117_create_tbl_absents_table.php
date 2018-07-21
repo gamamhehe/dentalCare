@@ -18,6 +18,8 @@ class CreateTblAbsentsTable extends Migration
             $table->integer('request_absent_id');
             $table->longText('message_from_staff')->nullabe();
             $table->primary(array('staff_approve_id', 'request_absent_id'), 'staff_approve');
+            $table->dateTime('created_time');
+            $table->boolean('is_approved')->default(true);
             $table->timestamps();
         });
     }
