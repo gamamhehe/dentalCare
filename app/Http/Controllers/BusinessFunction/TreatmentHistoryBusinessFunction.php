@@ -164,7 +164,7 @@ trait TreatmentHistoryBusinessFunction
                 'treatment_id' => $idTreatment,
                 'patient_id' => $idPatient,
                 'description' => $description,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'tooth_number' => $toothNumber,
                 'price' => $price,
                 'total_price' => $total_price,

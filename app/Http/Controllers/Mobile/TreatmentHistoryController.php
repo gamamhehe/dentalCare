@@ -68,7 +68,7 @@ class TreatmentHistoryController extends BaseController
             $treatmentHistory->patient_id = $patientId;
             $treatmentHistory->staff_id = $staffId;
             $treatmentHistory->description = $description;
-            $treatmentHistory->create_date = $createdDate;
+            $treatmentHistory->created_date = $createdDate;
 //            $treatmentHistory->finish_date = $finishedDate;
             $treatmentHistory->tooth_number = $toothNumber;
             $treatmentHistory->price = $price;

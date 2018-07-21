@@ -241,3 +241,10 @@ Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');
 Route::get('not-permission', function () {
     return view('notPermission');
 });
+
+Route::get('/broadcastDentist', function (){
+    return view('eventLis');
+});
+
+use App\Events\ReceiveAppointment;
+Route::get('/broadcastReception','Admin\HomeController@testFunction');

@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ReceiveAppointment
+class ReceiveAppointment implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $appointment;
@@ -31,8 +31,14 @@ class ReceiveAppointment
      *
      * @return Channel|array
      */
-//    public function broadcastOn()
-//    {
-//        return new PrivateChannel('channel-name');
-//    }
+    public function broadcastOn()
+    {
+            return new Channel('receivePatient');
+    }
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return array
+     */
+
 }

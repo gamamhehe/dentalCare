@@ -22,7 +22,7 @@ trait TreatmentImagesBusinessFunction
             $TreatmentImage = TreatmentImage::create([
                 'treatment_detail_id' => $treatmentDetailId,
                 'image_link' => $image,
-                'create_date' => Carbon::now()
+                'created_date' => Carbon::now()
             ])->id;
             DB::commit();
             return $TreatmentImage;

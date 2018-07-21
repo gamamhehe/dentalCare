@@ -42,7 +42,7 @@ trait TreatmentDetailBusinessFunction
                 'treatment_history_id' => $idTreatmentHistory,
                 'staff_id' => $dentist_id,
                 'note' => $note,
-                'create_date' => Carbon::now()
+                'created_date' => Carbon::now()
             ])->id;
             DB::commit();
             return $idTreatmentDetail;

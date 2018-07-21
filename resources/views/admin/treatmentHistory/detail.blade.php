@@ -53,7 +53,7 @@
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td style="text-align: center">{{$treatmentHistoryDetail->create_date}}</td>
+                                        <td style="text-align: center">{{$treatmentHistoryDetail->created_date}}</td>
                                         <td style="text-align: center">{{$treatmentHistoryDetail->note }}</td>
                                     </tr>
                                 @endforeach

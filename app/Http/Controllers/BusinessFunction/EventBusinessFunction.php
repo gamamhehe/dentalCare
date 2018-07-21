@@ -60,7 +60,7 @@ trait EventBusinessFunction
             $Event->discount =(int) $input['discount'];
             $Event->staff_id=1;
             $Event->treatment_id =$input['listTreatment'];
-            $Event->create_date=Carbon::now();
+            $Event->created_date=Carbon::now();
 
 
             $Event->save();
