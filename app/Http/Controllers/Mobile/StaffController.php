@@ -322,6 +322,21 @@ class StaffController extends BaseController
         }
     }
 
+    public function getListRequestAbsentByTime(Request $request)
+    {
+        try {
+            $staffId = $request->input('staff_id');
+            $month = $request->input('month');
+            $year = $request->input('year');
+
+            $listRequestAbsents = $this->getListStaffRequestAbsentByTime($staffId, $month, $year);
+            return response()->json($listRequestAbsents, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
     public function updateStaffInfo(Request $request)
     {
         try {
@@ -362,6 +377,7 @@ class StaffController extends BaseController
             return response()->json($error, 400);
         }
     }
+
     public function changePassword(Request $request)
     {
         $phone = $request->input('phone');
@@ -388,6 +404,35 @@ class StaffController extends BaseController
             return response()->json($errorResponse, 400);
         }
     }
+
+    public function changeAvatar(Request $request)
+    {
+        try {
+            $id = $request->input('id');
+            $image = $request->file('image');
+            $tmpPatient = $this->getPatientById($id);
+            if ($tmpPatient != null) {
+                if ($this->editAvatar($image, $id)) {
+                    $patient = $this->getPatientById($id);
+                    $response = new \stdClass();
+                    $response->status = "OK";
+                    $response->message = "Chỉnh sửa avatar thành côngs";
+                    $response->data = $patient->avatar;
+                    return response()->json($response, 200);
+                } else {
+                    $error = $this->getErrorObj("Có lỗi xảy ra, không thể chỉnh sửa avatar", "Nothing");
+                    return response()->json($error, 400);
+                }
+            } else {
+                $error = $this->getErrorObj("Không thể tìm thấy bệnh nhân ", "Nothing");
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 400);
+        }
+    }
+
     public function requestAbsent(Request $request)
     {
         try {

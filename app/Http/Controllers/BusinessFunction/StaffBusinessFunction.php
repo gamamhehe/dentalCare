@@ -63,6 +63,7 @@ trait StaffBusinessFunction
             return false;
         }
     }
+
     public function updateStaffProfile($staff)
     {
         DB::beginTransaction();
@@ -75,6 +76,7 @@ trait StaffBusinessFunction
             throw new \Exception($e->getMessage());
         }
     }
+
     public function getStaffProfileByPhone($phone)
     {
         $staff = Staff::where('phone', $phone)->first();
@@ -103,6 +105,19 @@ trait StaffBusinessFunction
     {
         $staff = Staff::where('id', $staffId)->first();
         $absentObjs = $staff->hasAbsent();
+        if ($absentObjs != null) {
+            return $staff->hasAbsent()->get();
+        } else {
+            return null;
+        }
+    }
+
+    public function getListStaffRequestAbsentByTime($staffId, $monthInNumber, $yearInNumber)
+    {
+        $staff = Staff::where('id', $staffId)->first();
+        $absentObjs = $staff->hasAbsent()
+            ->whereMonth('start_time', $monthInNumber)
+            ->whereYear('start_time', $yearInNumber);
         if ($absentObjs != null) {
             return $staff->hasAbsent()->get();
         } else {
