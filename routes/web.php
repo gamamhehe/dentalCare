@@ -223,7 +223,7 @@ Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
 
 Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
 
-    Route::get('/getTreatmentHistory', 'Admin\TreatmentHistoryController@showTreatmentHistory');
+Route::get('/getTreatmentHistory', 'Admin\TreatmentHistoryController@showTreatmentHistory');
 Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => 'users'], function () {
 });
 
@@ -243,3 +243,10 @@ Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');
 Route::get('not-permission', function () {
     return view('notPermission');
 });
+
+Route::get('/broadcastDentist', function (){
+    return view('eventLis');
+});
+
+use App\Events\ReceiveAppointment;
+Route::get('/broadcastReception','Admin\HomeController@testFunction');

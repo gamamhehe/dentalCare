@@ -14,6 +14,7 @@ use App\Model\User;
 use App\Model\Tooth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
 use Yajra\Datatables\Facades\Datatables;
 
 class StaffController extends Controller
@@ -37,6 +38,7 @@ class StaffController extends Controller
     {
         $request->session()->remove('currentAdmin');
         $request->session()->remove('roleAdmin');
+        Auth::guard('web')->logout();
         return redirect()->route('admin.login');
     }
 
@@ -74,6 +76,8 @@ class StaffController extends Controller
             'phone' => 'required|min:10|max:11',
             'password' => 'required|min:6'
         ]);
+        if (Auth::guard('web')->attempt(['phone' => $request->phone, 'password' => $request->password])) {
+        }
         $user = $this->checkLogin($request->phone, $request->password);
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;

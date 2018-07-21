@@ -110,7 +110,7 @@ class UserController extends BaseController
                     'scope' => '',
                     'username' => $phone
                 ]);
-                $tokenRequest = Request::create('/oauth/token', 'post');
+                    $tokenRequest = Request::create('/oauth/token', 'post');
                 $tokenResponse = (Route::dispatch($tokenRequest));
                 $tokenResponseBody = json_decode($tokenResponse->getContent());
                 if ($tokenResponseBody != null) {

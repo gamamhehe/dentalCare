@@ -8,11 +8,11 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
+use App\Model\RequestAbsent;
 use App\Model\Role;
 use App\Model\Absent;
 use App\Model\Staff;
 use App\Model\UserHasRole;
-use App\RequestAbsent;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -64,6 +64,19 @@ trait StaffBusinessFunction
         }
     }
 
+    public function updateStaffProfile($staff)
+    {
+        DB::beginTransaction();
+        try {
+            $staff->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     public function getStaffProfileByPhone($phone)
     {
         $staff = Staff::where('phone', $phone)->first();
@@ -88,5 +101,29 @@ trait StaffBusinessFunction
         return Staff::all();
     }
 
+    public function getListStaffRequestAbsent($staffId)
+    {
+        $staff = Staff::where('id', $staffId)->first();
+        $absentObjs = $staff->hasAbsent()
+            ->where('is_deleted', 0);;
+        if ($absentObjs != null) {
+            return $absentObjs->get();
+        } else {
+            return null;
+        }
+    }
 
+    public function getListStaffRequestAbsentByTime($staffId, $monthInNumber, $yearInNumber)
+    {
+        $staff = Staff::where('id', $staffId)->first();
+        $absentObjs = $staff->hasAbsent()
+            ->whereMonth('start_date', $monthInNumber)
+            ->whereYear('start_date', $yearInNumber)
+            ->where('is_deleted', 0);
+        if ($absentObjs != null) {
+            return $absentObjs->get();
+        } else {
+            return null;
+        }
+    }
 }

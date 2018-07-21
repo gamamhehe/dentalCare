@@ -226,7 +226,7 @@
             <div class="col-sm-4">Khuyến mãi    : 0%</div>
             <div class="col-sm-4">Còn lại       : {{$treatmentHistory->treatment->max_price}} VNĐ</div>
             <div class="col-sm-4">Răng          : {{$treatmentHistory->tooth->tooth_name}}</div>
-            <div class="col-sm-4">Ngày bắt đầu  : {{$treatmentHistory->create_date}}</div>
+            <div class="col-sm-4">Ngày bắt đầu  : {{$treatmentHistory->created_date}}</div>
             <div class="col-sm-4">Ngày kết thúc : {{$treatmentHistory->finish_date}}</div>
             </div>
             </h4>
@@ -242,7 +242,7 @@
                 </div>
                 <div class="row">
                 <div class="col-sm-2">Ngày điều trị</div>
-                <div class="col-sm-8">{{$a->create_date}} </div>
+                <div class="col-sm-8">{{$a->created_date}} </div>
                 </div>
                 <div class="row">
                 <div class="col-sm-2">Các bước đã thực hiện:</div>

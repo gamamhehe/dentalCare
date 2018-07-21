@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ReceiveAppointment;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
+use App\Model\Appointment;
 use App\Model\User;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\EventBusinessFunction;
@@ -18,6 +20,7 @@ use App\TreatmentCategory;
 use Config;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use Illuminate\Support\Facades\Session;
+use Pusher\Pusher;
 use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {
@@ -107,11 +110,6 @@ class HomeController extends Controller
         return view("WebUser.User.AboutUs");
     }
 
-
-
-    public function testFunction(Request $request){
-    }
-
     public function registerPost(Request $request){
         $this->validate($request, [
             'phone' => 'required|min:10|max:11',
@@ -126,5 +124,24 @@ class HomeController extends Controller
         $request->session()->remove('listPatient');
         return redirect()->route('homepage');
     }
-    
+
+    public function profile(Request $request){
+        return view('admin.Staff.profile');
+    }
+
+    public function testFunction(){
+        $appointment = Appointment::where('id', '>', '1')->first();
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+        $pusher = new Pusher(
+            'e3c057cd172dfd888756',
+            '993a258c11b7d6fde229',
+            '562929',
+            $options
+        );
+
+        $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
+    }
 }
