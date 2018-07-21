@@ -73,7 +73,7 @@ trait AppointmentBussinessFunction
             $defaultEstimatedTime = "00:30";
             $defaultStartOfDay = "07:00:00";
             $defaultStartAfternoon = ' 13:00:00';
-            $listDentist = $this->getAvailableDentist((new \DateTime())->format('Y-m-d'));
+            $listDentist = $this->getAvailableDentistAtDate((new \DateTime())->format('Y-m-d'));
             $NUM_OF_DENTIST = count($listDentist);
             $this->logDebug('NUM_DENTIST' . $NUM_OF_DENTIST);
             $bookingDateNewFormat = (new \DateTime($bookingDate))->format("Y-m-d");
@@ -84,14 +84,13 @@ trait AppointmentBussinessFunction
                 "DENTIST OBJ NOT NULL");
             $predictAppointmentDate = new \DateTime();
             $bookingDateObj = new \DateTime($bookingDate);
-//            $appointmentArray = $listAppointment->toArray();
             $appointmentArray = $this->getListTopAppointment($listDentist, $bookingDate);
             //sort descendent
             usort($appointmentArray, array($this, "sortByTimeStamp"));
             //'if statement' return the $predictAppointmentDate and $suitableDentistId for the code below it
             if (count($appointmentArray) < $NUM_OF_DENTIST) {
                 // kieu j cung co loi
-                if ($dentistId == null) {
+                if ($dentistId == null || $dentistId == 0) {
                     $this->logDebug("INTO COUNT< NUMMOF DENTIST ___dentistId = null");
                     $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, $defaultStartOfDay);
                     $listFreeDentists = $this->getFreeDentistsAtDate($listDentist, $bookingDateNewFormat);
@@ -116,7 +115,7 @@ trait AppointmentBussinessFunction
                     }
                 }
             } else {
-                if ($dentistId == null || $dentistObj == null) {
+                if ($dentistId == null || $dentistObj == null ||  $dentistId == 0) {
                     $this->logDebug("INTO COUNT >= NUMMOF DENTIST ___ Dentistt id == null");
                     $equallyAppointment = [];
                     $equallyAppointment[] = $appointmentArray[0];
@@ -185,7 +184,7 @@ trait AppointmentBussinessFunction
                 $this->logDebug("isEndOfTheDay");
                 throw new \Exception ('isEndOfTheDay');
             }
-
+$this->logDebug("Num : " . $listAppointment->count());
             $numericalOrder = $listAppointment->count() + 1;
             $appointment = new Appointment();
             $appointment->phone = $phone;
@@ -339,7 +338,7 @@ trait AppointmentBussinessFunction
     private function getFreeDentistsAtDate($listAvailableDentists, $date)
     {
         //get all dentist that works at that day
-//        $listAvailableDentists = $this->getAvailableDentist($date);
+//        $listAvailableDentists = $this->getAvailableDentistAtDate($date);
         $listFreeDentists = [];
         $appointments = $this->getAppointmentsByStartTime($date);
         //find dentist that doesn't treat for patient at the first of the day
@@ -378,7 +377,7 @@ trait AppointmentBussinessFunction
         return $randomAppointment;
     }
 
-    public function getAvailableDentist($date)
+    public function getAvailableDentistAtDate($date)
     {
         $roleDentist = 2;
         $dentists = UserHasRole::where('role_id', $roleDentist)->get();
@@ -568,7 +567,7 @@ trait AppointmentBussinessFunction
     public
     function getCurrentFreeDentist()
     {
-        $listAvailableDentist = $this->getAvailableDentist(Carbon::now());
+        $listAvailableDentist = $this->getAvailableDentistAtDate(Carbon::now());
         $listCurrentBusyAppointment = Appointment::where('status', 1)->get();
         $listCurrentBusyDentist = [];
         foreach ($listCurrentBusyAppointment as $appointment) {
