@@ -104,9 +104,10 @@ trait StaffBusinessFunction
     public function getListStaffRequestAbsent($staffId)
     {
         $staff = Staff::where('id', $staffId)->first();
-        $absentObjs = $staff->hasAbsent();
+        $absentObjs = $staff->hasAbsent()
+            ->where('is_deleted', 0);;
         if ($absentObjs != null) {
-            return $staff->hasAbsent()->get();
+            return $absentObjs->get();
         } else {
             return null;
         }
@@ -116,10 +117,11 @@ trait StaffBusinessFunction
     {
         $staff = Staff::where('id', $staffId)->first();
         $absentObjs = $staff->hasAbsent()
-            ->whereMonth('start_time', $monthInNumber)
-            ->whereYear('start_time', $yearInNumber);
+            ->whereMonth('start_date', $monthInNumber)
+            ->whereYear('start_date', $yearInNumber)
+            ->where('is_deleted', 0);
         if ($absentObjs != null) {
-            return $staff->hasAbsent()->get();
+            return $absentObjs->get();
         } else {
             return null;
         }
