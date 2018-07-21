@@ -13,6 +13,8 @@ use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Carbon\Carbon;
+use DateTime;
 use App\Staff;
 use App\TreatmentCategory;
 use Config;
@@ -80,8 +82,29 @@ class HomeController extends Controller
         $value = $request->session()->get('currentPatient');
         $id = $value->id;
         $list = $this->getListAnamnesisByPatient($id);
-        
-        return view("WebUser.User.Profile",['patient'=>$value,'anamnesis'=>$list]);
+        $listAppointment = $value->hasAppointment()->get();
+        $listReal =[];
+        $today = Carbon::now();
+        foreach ($listAppointment as $Appointment) {
+            $Appointment->detail = $Appointment->belongsToAppointment()->first();
+
+            $timeFormat  =$Appointment->detail->estimated_time;
+            $dateFormat  =$Appointment->detail->start_time;
+            $newDatetime = new DateTime($dateFormat);
+            $result = $this->addTimeToDate($newDatetime,$timeFormat);
+             $Appointment->detail->dateComming = $result->format('Y-m-d');
+            $Appointment->detail->timeComming = $result->format('H:i');
+            if( $Appointment->detail->start_time > $today){
+                    $listReal[] = $Appointment;
+            }
+        }
+        return view("WebUser.User.Profile",['patient'=>$value,'anamnesis'=>$list,'listAppointment'=>$listReal]);
+    }
+    private function addTimeToDate($date, $timeStr)
+    {
+        $intervalTime = new \DateInterval('P0000-00-00T' . $timeStr);
+        $date->add($intervalTime);
+        return $date;
     }
     public function aboutUs(Request $request){
         return view("WebUser.User.AboutUs");
@@ -101,6 +124,7 @@ class HomeController extends Controller
         $request->session()->remove('listPatient');
         return redirect()->route('homepage');
     }
+
     public function profile(Request $request){
         return view('admin.Staff.profile');
     }

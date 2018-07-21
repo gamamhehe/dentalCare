@@ -18,6 +18,7 @@ namespace App\Http\Controllers\BusinessFunction;
 use App\Model\Absent;
 use App\Model\Feedback;
 use App\Model\Role;
+use App\Model\TreatmentDetail;
 use Illuminate\Http\Request;
 use DB;
 
@@ -88,13 +89,32 @@ trait FeedbackBusinessFunction
             $Feedback->save();
             DB::commit();
             return true;
-
         }catch(\Exception $e){
             DB::rollback();
             return false;
-
         }
-
-
     }
+    public function getNumberStart($id){
+        $treatmentDetails = TreatmentDetail::where('staff_id',$id)->get();
+
+        $treatFeed = [];
+        $numberStart = 0;
+        foreach ($treatmentDetails as $treatmentDetail) {
+            $treatmentDetail->xxx = $treatmentDetail->hasFeedback()->first();
+            if( $treatmentDetail->xxx != null){
+                $treatFeed[] = $treatmentDetail;
+                $numberStart = $numberStart +  $treatmentDetail->xxx->num_of_stars;
+            }
+        }
+        $totalFeedback = count($treatFeed);
+        if($totalFeedback == 0){
+           $finalStar =0;
+            return $finalStar;
+        }else{
+            $finalStar = ($numberStart/($totalFeedback*5))*10;
+            return $finalStar;
+        }
+        
+    }
+
 }

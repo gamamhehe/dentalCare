@@ -901,13 +901,14 @@ class AdminController extends Controller
                 'step_id' => 2,
             ]);
             Staff::create([
-                'name' => 'Paypal',
+                'name' => 'Paypal test',
                 'degree' => 'Paypal',
                 'address' => 'Paypal',
                 'district_id' => '0',
                 'phone' => '0000000000',
                 'date_of_birth' => '1900-01-01',
-                'gender' => 'MALE',
+                'gender' => 'Nam',
+                'email' =>'abc@gmail.com'
             ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Dentist',
@@ -916,7 +917,8 @@ class AdminController extends Controller
                 'district_id' => 1,
                 'phone' => '01279011097',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
+                'gender' => 'Nam',
+                'email' =>'abc@gmail.com'
             ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Dentist2',
@@ -925,7 +927,8 @@ class AdminController extends Controller
                 'district_id' => 1,
                 'phone' => '01279011091',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
+                'gender' => 'Nam',
+                'email' =>'abc@gmail.com'
             ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Dentist 3',
@@ -934,7 +937,8 @@ class AdminController extends Controller
                 'district_id' => 1,
                 'phone' => '01279011092',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
+                'gender' => 'Nam',
+                'email' =>'abc@gmail.com'
             ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Administrator',
@@ -943,7 +947,8 @@ class AdminController extends Controller
                 'district_id' => 1,
                 'phone' => '01279011096',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
+                'gender' => 'Nữ',
+                'email' =>'abc@gmail.com'
             ]);
             Staff::create([
                 'name' => 'Nguyễn Huỳnh Tài Reception',
@@ -952,7 +957,8 @@ class AdminController extends Controller
                 'district_id' => 1,
                 'phone' => '01279011098',
                 'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
+                'gender' => 'Nữ',
+                'email' =>'abc@gmail.com'
             ]);
 
             Appointment::create([
@@ -6170,6 +6176,173 @@ class AdminController extends Controller
             'name' => 'Huyện Ngọc Hiển',
             'city_id' => 96
         ]);
+        Medicine::create([
+            'name' => 'Paracetamol',
+            'use' =>'giảm đau',
+            'description'=> 'giảm đau'
+        ]);
+        Medicine::create([
+            'name' => 'Aspirin',
+            'use' =>'giảm đau',
+            'description'=> 'giảm đau'
+        ]);
+         Medicine::create([
+            'name' => 'Ibuprofen',
+            'use' =>'giảm đau',
+            'description'=> 'giảm đau'
+        ]);
+        Medicine::create([
+            'name' => 'Corticoid',
+            'use' =>'Chống viêm mạnh',
+            'description'=> 'Chống viêm mạnh'
+        ]);
+         Medicine::create([
+            'name' => 'Cimetidin',
+            'use' =>'thuốc giảm tiết dịch dạ dày',
+            'description'=> 'thuốc giảm tiết dịch dạ dày'
+        ]);
+          Medicine::create([
+            'name' => 'Omeprazol',
+            'use' =>'thuốc giảm tiết dịch dạ dày',
+            'description'=> 'thuốc giảm tiết dịch dạ dày'
+        ]);
+           Medicine::create([
+            'name' => 'Penicillin ',
+            'use' =>'Kháng sinh',
+            'description'=> 'Kháng sinh'
+        ]);
+            Medicine::create([
+            'name' => 'Phenoxymethylpenicillin',
+            'use' =>'Kháng sinh',
+            'description'=> 'Kháng sinh'
+        ]);
+        Medicine::create([
+            'name' => 'Phenoxymethylpenicillin',
+            'use' =>'Kháng sinh',
+            'description'=> 'Kháng sinh'
+        ]);
+        Medicine::create([
+            'name' => 'Cefixim',
+            'use' =>'Kháng sinh',
+            'description'=> 'Kháng sinh dòng cephalosporin '
+        ]);
+        Medicine::create([
+            'name' => 'Acyclovir',
+            'use' =>'Chống nhiễm nấm ở khoang miệng',
+            'description'=> 'Chống nhiễm nấm ở khoang miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Penciclovir',
+            'use' =>'Chống nhiễm nấm ở khoang miệng',
+            'description'=> 'Chống nhiễm nấm ở khoang miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Nước súc miệng Chlorhexidin 0,2% ',
+            'use' =>'Nước súc miệng',
+            'description'=> 'Nước súc miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Nước súc miệng Hydrogen peroxid 6%.',
+            'use' =>'Nước súc miệng',
+            'description'=> 'Nước súc miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Pilocarpin',
+            'use' =>'Thuốc chống khô miệng',
+            'description'=> ' tác dụng kích thích vào tuyến nước bọt gây tăng tiết, kích thích vào cơ trơn thành ống tuyến co bóp để đẩy nước bọt vào miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Acmegel 100mg',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Aldezol-0.5g/100ml',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Dophargyl',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Dorogyne',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> 'Merynal'
+        ]);
+        Medicine::create([
+            'name' => 'Menystin',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Mediginal',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Flagyl 250mg',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Cebemyxine',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Emla',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Emla 5%',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Lidocain 2%',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Lidocain 100mg/5ml',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Izac',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Framykoin 5g',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => '',
+            'use' =>'',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => '',
+            'use' =>'',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => '',
+            'use' =>'',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => '',
+            'use' =>'',
+            'description'=> ''
+        ]);
+
+
     }
 
     public function initClientToken(){

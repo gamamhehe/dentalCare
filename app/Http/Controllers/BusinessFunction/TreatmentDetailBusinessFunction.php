@@ -17,7 +17,7 @@ use App\Model\TreatmentImage;
 use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-
+use DateTime;
 trait TreatmentDetailBusinessFunction
 {
 

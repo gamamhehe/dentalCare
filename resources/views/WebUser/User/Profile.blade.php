@@ -113,7 +113,7 @@
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
-                                    <a href="/myProfile" class="btn btn-success btn-flat">Profile</a>
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right" style="padding-right: 1em;">
                                     <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
@@ -166,7 +166,7 @@
                                                 <div class="row">
                                                     <!-- /.col -->
                                                     <div class="col-xs-12">
-                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
                                                     </div>
                                                     <!-- /.col -->
 
@@ -284,40 +284,24 @@
                 <li data-target="#carousel" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
-                <div class="carousel-item active lichhen1">
-
+             @foreach($listAppointment as $key => $appointment)
+                @if($key == 0)
+                 <div class="carousel-item active lichhen1">
+                @else
+               <div class="carousel-item  lichhen2">
+                @endif
                     <div class="carousel-caption textbanner" style="left:0%">
                         <div class="goi">
-                            <h3 class="tdbanner1">Kiểm tra răng định kì lần 3</h3>
-                            <h4 class="tdbanner2">Ngày 21/7/2018</h4>
+                            <h3 class="tdbanner1">{{$appointment->detail->name}}</h3>
+                            <h4 class="tdbanner2">Ngày {{$appointment->detail->dateComming}}</h4>
                             <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số 12 - Khung giờ 9:00~9.30 AM</a>
+                                <a href="" class="btn btn-outline-secondary">Số thứ tự {{$appointment->detail->numerical_order}} - Vào lúc {{$appointment->detail->timeComming}}</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item  lichhen2">
-                    <div class="carousel-caption textbanner" style="left:0%">
-                           <div class="goi">
-                            <h3 class="tdbanner1">Tái khám Trám răng</h3>
-                            <h4 class="tdbanner2">Ngày 28/6/2018</h4>
-                            <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số 7 - Khung giờ 12:30~14.00 AM</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item  lichhen3">
-                    <div class="carousel-caption textbanner" style="left:0%">
-                           <div class="goi">
-                            <h3 class="tdbanner1">Tẩy trắng răng lần 2</h3>
-                            <h4 class="tdbanner2">Ngày 17/6/2018</h4>
-                            <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số 9 - Khung giờ 10:00~11.00 AM</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               @endforeach
+               
 
             </div>
             <div class="nutchuyen">
