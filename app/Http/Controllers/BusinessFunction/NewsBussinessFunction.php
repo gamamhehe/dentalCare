@@ -37,7 +37,7 @@ trait NewsBussinessFunction
             $News->content =  $input['content'];
             $News->title = $input['title'];
             $News->staff_id = 1;
-            $News->create_date=Carbon::now();
+            $News->created_date=Carbon::now();
             $News->save();
             DB::commit();
             return true;

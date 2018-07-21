@@ -839,7 +839,7 @@ class AdminController extends Controller
                 'treatment_id' => 1,
                 'patient_id' => 1,
                 'description' => 'ABC',
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'finish_date' => Carbon::now(),
                 'tooth_number' => '11',
                 'price' => 1000000,
@@ -849,7 +849,7 @@ class AdminController extends Controller
             TreatmentDetail::create([
                 'treatment_history_id' => 1,
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
             TreatmentDetailStep::create([
@@ -860,7 +860,7 @@ class AdminController extends Controller
             TreatmentDetail::create([
                 'treatment_history_id' => 1,
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
             TreatmentDetailStep::create([
@@ -872,7 +872,7 @@ class AdminController extends Controller
                 'treatment_id' => 1,
                 'patient_id' => 2,
                 'description' => 'ABC',
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'finish_date' => Carbon::now(),
                 'tooth_number' => '11',
                 'price' => 1000000,
@@ -882,7 +882,7 @@ class AdminController extends Controller
             TreatmentDetail::create([
                 'treatment_history_id' => 2,
                 'staff_id' => 2,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
             TreatmentDetailStep::create([
@@ -893,7 +893,7 @@ class AdminController extends Controller
             TreatmentDetail::create([
                 'treatment_history_id' => 2,
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
             TreatmentDetailStep::create([
@@ -1063,7 +1063,7 @@ class AdminController extends Controller
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
                 'title' => 'TRỒNG RĂNG IMPLANT – GIẢI PHÁP PHỤC HÌNH RĂNG BỊ MẤT HOÀN HẢO',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
@@ -1142,7 +1142,7 @@ class AdminController extends Controller
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
                 'title' => 'Trám răng đẹp như thủy tiên',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/veneer-su-gia-bao-nhieu-1.jpg',
@@ -1167,7 +1167,7 @@ class AdminController extends Controller
 <p>Tuổi thọ của mặt d&aacute;n sứ Veneer c&oacute; thể k&eacute;o d&agrave;i từ 10 &ndash; 15 năm nếu được chăm s&oacute;c v&agrave; bảo vệ đ&uacute;ng c&aacute;ch.&nbsp; B&ecirc;n cạnh đ&oacute;, mặt d&aacute;n sứ c&ograve;n b&aacute;m&nbsp;chắc tr&ecirc;n th&acirc;n răng, kh&ocirc;ng bị k&ecirc;nh hở, kh&ocirc;ng dễ bị bong, bật khi nhai gắn, chải răng nhờ chất liệu kết d&iacute;nh đặc biệt, kh&ocirc;ng dễ bị h&oacute;a lỏng l&agrave;m rơi miếng d&aacute;n n&ecirc;n bạn c&oacute; thể y&ecirc;n t&acirc;m khi sử dụng.</p>',
                 'title' => 'LÀM RĂNG SỨ MẶT DÁN SỨ VENEER – ĐẢM BẢO TÍNH THẨM MỸ CAO',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/TrongImplent.jpg',
@@ -1246,7 +1246,7 @@ class AdminController extends Controller
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
                 'title' => 'Nghệ thuật tẩy trắng răng công nghệ Úc',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/TayTrangRang.jpg',
@@ -1325,7 +1325,7 @@ class AdminController extends Controller
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
                 'title' => 'Bảo vệ hàm răng chắc khỏe cho trẻ',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/RangSuVEENER.png',
@@ -1404,7 +1404,7 @@ class AdminController extends Controller
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
                 'title' => 'Trồng răng sứ tặng tặng thẻ',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/NiengRang.jpg',
@@ -1483,7 +1483,7 @@ class AdminController extends Controller
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
                 'title' => 'Nạo tủy công nghệ Mỹ - gây tê nhanh chóng',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
 
             Type::create([
@@ -1913,596 +1913,481 @@ class AdminController extends Controller
             TreatmentStep::create([
                 'treatment_id'=>'1',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'1',
                 'step_id' =>'4',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'1',
                 'step_id' =>'5',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'2',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'2',
                 'step_id' =>'6',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'2',
                 'step_id' =>'5',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'3',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'3',
                 'step_id' =>'5',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'3',
                 'step_id' =>'8',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'4',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'4',
                 'step_id' =>'4',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'4',
                 'step_id' =>'6',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'5',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'5',
                 'step_id' =>'9',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'6',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'7',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'6',
                 'step_id' =>'10',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'7',
                 'step_id' =>'10',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'6',
                 'step_id' =>'11',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'7',
                 'step_id' =>'11',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'12',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'13',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'14',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'15',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'9',
                 'step_id' =>'16',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'9',
                 'step_id' =>'17',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'10',
                 'step_id' =>'18',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'11',
                 'step_id' =>'19',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'12',
                 'step_id' =>'20',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'13',
                 'step_id' =>'20',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'14',
                 'step_id' =>'20',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'15',
                 'step_id' =>'21',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'16',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'16',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'16',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'16',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'2',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'2',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'2',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'2',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'24',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
 //            --------------
             TreatmentStep::create([
                 'treatment_id'=>'21',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'21',
                 'step_id' =>'25',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'21',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'22',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'22',
                 'step_id' =>'26',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'22',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'23',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'23',
                 'step_id' =>'27',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'23',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'24',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'24',
                 'step_id' =>'28',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'24',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'25',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'25',
                 'step_id' =>'29',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'25',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'26',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'26',
                 'step_id' =>'30',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'26',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'29',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'29',
                 'step_id' =>'37',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'29',
                 'step_id' =>'36',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'30',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'30',
                 'step_id' =>'38',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'30',
                 'step_id' =>'36',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'31',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'31',
                 'step_id' =>'39',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'31',
                 'step_id' =>'36',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'40',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'42',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'45',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'46',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'40',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'41',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'45',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'46',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'40',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'43',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'45',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'46',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'35',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'35',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'35',
                 'step_id' =>'43',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'36',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'36',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'36',
                 'step_id' =>'44',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'37',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'37',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'37',
                 'step_id' =>'45',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'38',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'38',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'38',
                 'step_id' =>'46',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'39',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'39',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'39',
                 'step_id' =>'47',
-                'description' =>'Chưa có',
             ]);
 
             //end
@@ -2512,7 +2397,7 @@ class AdminController extends Controller
                 'end_date' => '2018-07-15 20:08:18',
                 'discount' => '20',
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'treatment_id' => 1,
             ]);
             Event::create([
@@ -2521,7 +2406,7 @@ class AdminController extends Controller
                 'end_date' => '2018-06-17 20:08:18',
                 'discount' => '30',
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'treatment_id' => 1,
             ]);
             Event::create([
@@ -2530,7 +2415,7 @@ class AdminController extends Controller
                 'end_date' => '2018-07-15 20:08:18',
                 'discount' => '20',
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'treatment_id' => 2,
             ]);
 

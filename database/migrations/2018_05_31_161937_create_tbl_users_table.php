@@ -18,6 +18,7 @@ class CreateTblUsersTable extends Migration
             $table->string("password");
             $table->string("noti_token",500)->nullable();
             $table->boolean("is_deleted")->default(0);
+            $table->rememberToken();
             $table->timestamps();
             $table->primary('phone');
         });
