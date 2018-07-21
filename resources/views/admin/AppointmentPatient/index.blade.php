@@ -30,14 +30,14 @@
 
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" style="text-align: center">
+                        <table class="table table-striped table-bordered" style="text-align: center;overflow-x:auto;">
                             <thead>
                             <tr>
-                                <th style="text-align: center; width: 20%">Họ Tên</th>
-                                <th style="text-align: center; width: 15%">Số điện thoại</th>
-                                <th style="text-align: center; width: 30%">Địa Chỉ</th>
-                                <th style="text-align: center; width: 15%">Ngày Sinh</th>
-                                <th style="text-align: center; width: 20%">Tùy chọn</th>
+                                <th style="text-align: center; " class="col-xs-2">Họ Tên</th>
+                                <th style="text-align: center; " class="col-xs-1">Số điện thoại</th>
+                                <th style="text-align: center; " class="col-xs-3">Địa Chỉ</th>
+                                <th style="text-align: center; " class="col-xs-1">Ngày Sinh</th>
+                                <th style="text-align: center; " class="col-xs-3">Tùy chọn</th>
 
                             </tr>
                             </thead>
@@ -45,14 +45,18 @@
                             @if($patientList != null)
                                 @foreach($patientList as $patient)
                                     <tr>
-                                        <td style="width: 20%">{{$patient->name}}</td>
-                                        <td style="width: 15%">{{$patient->phone}}</td>
-                                        <td style="width: 30%">{{$patient->address}}</td>
-                                        <td style="width: 15%">{{$patient->date_of_birth}}</td>
-                                        <td align="center" style="width: 20%">
-                                            <button type="button" class="btn btn-default btn-success"
-                                                    onclick="receive('{{$patient->id}}')">Nhận bệnh nhân
+                                        <td>{{$patient->name}}</td>
+                                        <td>{{$patient->phone}}</td>
+                                        <td>{{$patient->address}}</td>
+                                        <td>{{$patient->date_of_birth}}</td>
+                                        <td>
+                                            <div class=" col-xs-12">
+                                            <a href="thong-tin-benh-nhan/{{$patient->id}}" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                    onclick="receive('{{$patient->id}}')">Nhận bệnh
                                             </button>
+                                            </div>
+                                           
                                         </td>
                                     </tr>
                                 @endforeach
@@ -285,7 +289,7 @@
                     "_token": "{{ csrf_token() }}",
                     'phone': phone,
                     'estimateTimeReal': estimateTimeReal,
-                    'patientID': 2,
+                    'patientID': patientID,
                     'datepicker': datepicker,
                 },
                 success: function (data) {

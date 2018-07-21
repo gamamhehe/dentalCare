@@ -3,7 +3,7 @@
     <div class="content-wrapper" >
         <!-- Content Header (Page header) -->
         <section class="content" >
-            <div class="container"  >
+            <div class=""  >
                 <div class="row " style="text-align: center; margin-right: 4em">
                     <label><h1>Danh sách Lịch hẹn của Bác Sĩ </h1></label>
                 </div>
@@ -16,8 +16,8 @@
                             <td class="col-sm-1">id</td>
                             <td class="col-sm-2" style="text-align: left;">Ngày bắt đầu</td>
                             <td class="col-sm-2">Thời gian khám </td>
-                            <td class="col-sm-4" style="text-align: left;">Note</td>
-                            <td class="col-sm-3">xx </td>
+                            <td class="col-sm-3" style="text-align: left;">Note</td>
+                            <td class="col-sm-3">Tùy chọn </td>
                         </tr>
                         </thead>
                     </table>

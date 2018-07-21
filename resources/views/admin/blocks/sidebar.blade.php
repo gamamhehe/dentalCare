@@ -27,14 +27,11 @@
                 <a href="{{ route('admin.AppointmentPatient.index')}}"><i
                             class="fa fa-list-alt"></i><span>Bệnh nhân</span></a>
             </li>
-            <li class="treeview">
-                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Lịch hẹn</span><span
-                            class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.AppointmentPatient.index')}}">Tạo Lịch Hẹn</a></li>
-                    <li><a href="{{ route('admin.listAppointment.dentist')}}">Danh sách Lịch hẹn</a></li>
-                </ul>
+            <li>
+                <a href="{{ route('admin.listAppointment.dentist')}}"><i
+                            class="fa fa-list-alt"></i><span>Danh sách Lịch hẹn</span></a>
             </li>
+            
             <li>
                 <a href="{{ route('admin.absent')}}"><i class="fa fa-list-alt"></i><span>Xin nghỉ</span></a>
             </li>

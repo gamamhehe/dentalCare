@@ -14,7 +14,7 @@ use App\Model\TreatmentHistory;
 use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-
+use DateTime;
 trait TreatmentDetailBusinessFunction
 {
     public function createTreatmentDetail($idTreatmentHistory, $note, $dentist_id)
@@ -28,7 +28,7 @@ trait TreatmentDetailBusinessFunction
                 'treatment_history_id' => $idTreatmentHistory,
                 'staff_id' => $dentist_id,
                 'note' => $note,
-                'create_date' => Carbon::now()
+               'create_date' =>Carbon::now()
             ])->id;
             DB::commit();
             return $idTreatmentDetail;
