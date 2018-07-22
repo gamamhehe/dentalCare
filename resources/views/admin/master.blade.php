@@ -51,6 +51,7 @@
     @yield('css')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+<input type="hidden" value="{{Session::get('currentAdmin')->belongToStaff()->first()->id}}" id="staff_id">
 <div class="wrapper">
     @include('admin.blocks.header')
     @include('admin.blocks.sidebar')
@@ -96,6 +97,39 @@
 <script src="/assets/admin/dist/js/demo.js"></script>
 <script src="{{URL::to('assets/admin/tinymce/js/tinymce/tinymce.min.js')}}"></script>
 <script src="{{URL::to('assets/admin/main.js')}}"></script>
+
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+
+    var pusher = new Pusher('e3c057cd172dfd888756', {
+        cluster: 'ap1',
+        encrypted: true
+    });
+
+    var channel = pusher.subscribe('receivePatient');
+    channel.bind('ReceivePatient', function(data) {
+        var staff_id = $('#staff_id').val();
+        if (data.staff_id == staff_id){
+            // viet code trong nay
+            var num = $('#notiNumber').text();
+            $('#notiNumber').html(Number(num) + 1);
+            document.getElementById("notiNumber").style.visibility = "visible";
+
+        $.ajax({
+            url: '/admin/change-session', //this is your uri
+            type: 'GET', //this is your method
+
+            dataType: 'json',
+            success: function (data) {
+            },
+            error: function (data) {
+            }
+        });
+        }
+    });
+</script>
 @yield('js')
 </body>
 </html>
