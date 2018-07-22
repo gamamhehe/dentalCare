@@ -12,63 +12,59 @@
             </div>
         <div class="box box-info">
             <div class="box-header with-border box-info">
-              <h3 class="box-title">Thông tin cá nhân</h3>
+              <h3 class="box-title" style="float: left;">Thông tin bệnh nhân</h3>
+            <button class="btn btn-success btn-sm" style="float: right;"> Tạo mới liệu trình</button>
             </div>
             <div class="panel-body">
                 <div class="form-group row add">
                         <div class="col-sm-2"><label>Họ Tên</label></div> 
                         <div class="col-sm-6" style="padding-left: 0px;" >
-                           <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
+                          <a href="/thong-tin-benh-nhan/{{$patient->id}}">{[$patient->name}}</a>
                         </div>
-                </div> 
-                 <div class="form-group row add">
-                        <div class="col-sm-2"><label>Địa chỉ</label></div> 
-                        <div class="col-sm-6" style="padding-left: 0px;" >
-                           <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
-                        </div>
-                        <div class="col-sm-1"><label>Giới tính</label></div> 
-                        <div class="col-sm-3" style="padding-left: 0px;" >
-                           <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
-                        </div>
-                        
                 </div> 
                   <div class="form-group row add">
                         <div class="col-sm-2"><label>Điện thoại</label></div> 
                         <div class="col-sm-4" style="padding-left: 0px;" >
-                           <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
-                        </div>
-                         <div class="col-sm-2"><label>Ngày sinh</label></div> 
-                        <div class="col-sm-4" style="padding-left: 0px;" >
-                           <input type="text" placeholder="14/2/2018" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
+                           <input type="text" value="{{$patient->phone}}" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
                         </div>
                 </div> 
                 <div class="form-group row add">
                         <div class="col-sm-2"><label>Bệnh tiền sử</label></div> 
                         <div class="col-sm-4" style="padding-left: 0px;" >
-                           <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
+                           @foreach($patient->Anamnesis as $key)
+                           <h5>{{$key->name->name}}</h5>
+                           @endforeach
                         </div>
-                         <div class="col-sm-2"><label>Bệnh tiền sử</label></div> 
-                        <div class="col-sm-4" style="padding-left: 0px;" >
-                           <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
-                        </div>
+                       
                 </div> 
-                <div class="form-group row add">
-                        <div class="col-sm-2"><label>Tài chính</label></div> 
-                        <div class="col-sm-4" style="padding-left: 0px;" >
-                           <input type="text" placeholder="Hết thiếu hay thiếu nói 1 lời" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
-                        </div>
-                         <div class="col-sm-2"><label>Lịch hẹn tiếp theo</label></div> 
-                        <div class="col-sm-4" style="padding-left: 0px;" >
-                           <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
-                        </div>
-                </div> 
+                
 
             </div>
         </div>
-
-        <div class="box box-info">
+       <!--  <div class="box box-info">
             <div class="box-header with-border box-info">
               <h3 class="box-title">Tiền sử bệnh án</h3>
+            </div>
+            <div class="panel-body">
+                <div class="container">
+                    <div class="row layout" style=" margin-right: 4em"  >
+                    <table id="dup-table" class="table myTable table-bordered">
+                        <thead>
+                        <tr style="background-color: #eee;">
+                            <td class="col-sm-1">id</td>
+                            <td class="col-sm-6" style="text-align: left;">Tên Bệnh</td>
+                            <td class="col-sm-3">Triệu chứng</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div> 
+                </div>
+            </div>
+            
+        </div> -->
+        <div class="box box-info">
+            <div class="box-header with-border box-info">
+              <h3 class="box-title">Lịch sử bệnh án</h3>
             </div>
             <div class="panel-body">
                 <!-- start -->
@@ -95,7 +91,13 @@
             <div class="col-sm-4">Còn lại       : {{$treatmentHistory->treatment->max_price}} VNĐ</div>
             <div class="col-sm-4">Răng          : {{$treatmentHistory->tooth->tooth_name}}</div>
             <div class="col-sm-4">Ngày bắt đầu  : {{$treatmentHistory->create_date}}</div>
-            <div class="col-sm-4">Ngày kết thúc : {{$treatmentHistory->finish_date}}</div>
+            <div class="col-sm-4">Ngày kết thúc : 
+            @if($treatmentHistory->finish_date)
+            {{$treatmentHistory->finish_date}}
+            @else
+            <button class="btn btn-success btn-sm">SKIP</button>
+            @endif
+            </div>
             </div>
             </h4>
             </div>
@@ -172,13 +174,14 @@
 </div>
 @endsection
 @section('js')
+  <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     $(document).ready(function() {
         <?php if (Session::has('success')): ?>
         swal("Sự kiện đa được tạo!", "", "error");
         <?php endif ?>
-
+     $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
         function xxx(evt,sel){
             var check  = document.getElementById('thumbnail').value;
             if(check.length!= 0){
@@ -186,7 +189,37 @@
             }
         }
     });
+    
+    $(function() {
+            $('#dup-table').DataTable({
+              "dom": '<"toolbar">frtip',
+                language: {
+            "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
+            "zeroRecords": "Không tìm thấy kết quả ",
+            "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",
+            "infoEmpty": "Không có kết quả .",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search" : "Tìm kiếm ",
+              "infoFiltered": "(Đã tìm từ _MAX_ kết quả)",
 
+        },
+                processing: true,
+                serverSide: true,
+                order: [[ 0, "desc" ]],
+                bLengthChange:true,
+                pageLength: 5,
+                ajax: '/admin/get-list-anamnesis',
+                columns : [
+
+                    {data: 'id'},
+                    {data: 'name'},
+                    {
+
+                        data: 'action'
+                    },
+                ],
+            });
+        });
     function validateQuestionBeforeCreate(evt,sel){
         // swal("Bài viết chưa được tạo!", "", "error");
 

@@ -58,7 +58,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::get('/edit-medicines/{id}', 'Admin\MedicineController@loadedit');
         Route::post('/edit-medicines/{id}', 'Admin\MedicineController@edit')->name('admin.edit.medicines');
         //Patient
-        Route::get('/patient-detail/{id}', 'Admin\PatientController@detailPatient');
+        Route::get('/appointment-detail/{id}', 'Admin\PatientController@detailPatient');
         //TreatmentController
         Route::get('/get-treatment/{id}','Admin\TreatmentController@getTreatmentByID');//ajax
         Route::get('/get-treatmentByCate/{id}','Admin\TreatmentController@getTreatmentByCategoryId');//ajax

@@ -87,6 +87,7 @@
         });
         $(function() {
             $('#dup-table').DataTable({
+            "dom": 'frtip',
                 language: {
             "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
             "zeroRecords": "Không tìm thấy kết quả ",
@@ -96,7 +97,7 @@
             "search" : "Tìm kiếm ",
             "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
         },
-                processing: true,
+                processing: false,
                 serverSide: true,
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,

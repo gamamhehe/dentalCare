@@ -7,6 +7,7 @@ use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
+use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
 use App\Model\Patient;
 use App\Model\Payment;
 use App\Model\AnamnesisCatalog;
@@ -27,6 +28,7 @@ class PatientController extends Controller
     use PatientBusinessFunction;
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
+    use AnamnesisBusinessFunction;
     public function login(Request $request)
     {
 
@@ -264,6 +266,13 @@ class PatientController extends Controller
          
     }
     public function detailPatient($id){
-        dd("x");
+        $patient = Patient::where('id',$id)->first();
+        $result =[];
+        if($patient){
+            $idPatient = $patient->id;
+            $result = $this->getTreatmentHistory($idPatient);
+        }
+        $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
+         return view('admin.Patient.Treat',['patient'=>$patient,'listTreatmentHistory'=>$result]);
     }
 }

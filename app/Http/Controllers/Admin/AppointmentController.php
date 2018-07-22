@@ -39,5 +39,8 @@ class AppointmentController extends Controller
         $this->dispatch(new SendSmsJob($phone, $smsMessage));
         return response()->json($newApp);
     }
+    public function getListAppoinmentByPatient($id){
+
+    }
 
 }

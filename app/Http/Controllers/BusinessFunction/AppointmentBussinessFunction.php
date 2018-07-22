@@ -67,6 +67,8 @@ trait AppointmentBussinessFunction
 
     public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name)
     {
+        print_r('bookingDate--'.$bookingDate."-phone-".$phone."-note-".$note."-dentistId-".$dentistId."-patientId-".$patientId."-estimatedTimeStr-".$estimatedTimeStr."-name-".$name."--");
+        exit();
         DB::beginTransaction();
         try {
             $suitableDentistId = -1;
@@ -205,6 +207,7 @@ $this->logDebug("Num : " . $listAppointment->count());
             DB::commit();
             return $appointment;
         } catch (Exception $exception) {
+
             $exception->getTrace();
             DB::rollback();
             return null;
