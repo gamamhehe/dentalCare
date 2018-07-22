@@ -35,4 +35,7 @@ class Staff extends Model
     public function hasAppointment(){
         return $this->hasMany('App\Model\Appointment', 'staff_id', 'id');
     }
+    public function belongsToDistrict(){
+    return $this->belongsTo('App\Model\District', 'district_id', 'id');
+}
 }

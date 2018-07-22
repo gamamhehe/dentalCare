@@ -18,7 +18,7 @@ class CreateTblRequestAbsentTable extends Migration
             $table->integer('staff_id');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->string('reason');
+            $table->string('reason')->nullable();
             $table->boolean('is_deleted')->default(false);
             $table->timestamps();
         });
