@@ -9,7 +9,9 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
+use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
 use Exception;
@@ -19,6 +21,7 @@ class PatientController extends BaseController
 {
     use UserBusinessFunction;
     use PatientBusinessFunction;
+    use AppointmentBussinessFunction;
     public function updatePatientInfo(Request $request)
     {
         try {
@@ -80,6 +83,20 @@ class PatientController extends BaseController
         }
     }
 
-
+    public function getPatientAppointmentByDate(Request $request)
+    {
+        $dateStr = $request->input('date');
+        $phone = $request->input('phone');
+        try {
+            $appointments = $this->getAppointmentByDate($phone, $dateStr, 0);
+            foreach ($appointments as $appointment) {
+                $appointment->patient = $appointment->hasPatientOfAppointment()->first();
+            }
+            return response()->json($appointments);
+        }catch (Exception $ex){
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
 
 }

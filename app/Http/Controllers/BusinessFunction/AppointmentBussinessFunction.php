@@ -56,12 +56,21 @@ trait AppointmentBussinessFunction
     /**
      * @param $phone
      * @param $date
-     * @return List Appointment
+     * @param null $status
+     * @return Appointment[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection|null
      */
-    public function getAppointmentByDate($phone, $date)
+    public function getAppointmentByDate($phone, $date, $status = null)
     {
-        $result = Appointment::where('phone', $phone)
-            ->whereDate('start_time', $date)->get();
+        $result = null;
+        if($status == null) {
+            $result = Appointment::where('phone', $phone)
+                ->whereDate('start_time', $date)->get();
+        }else{
+            $result = Appointment::where('phone', $phone)
+                ->whereDate('start_time', $date)
+                ->whereDate('status', $status)
+                ->get();
+        }
         return $result;
     }
 
