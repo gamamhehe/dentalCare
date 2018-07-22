@@ -208,10 +208,10 @@ class PatientController extends Controller
             foreach ($data as $row) {
                 $output .= '
         <tr>
-         <td  ' . $row->name . '</td>
-         <td ' . $row->phone . '</td>
-         <td  ' . $row->address . '</td>
-         <td ' . $row->date_of_birth . '</td>
+         <td>' . $row->name . '</td>
+         <td>' . $row->phone . '</td>
+         <td>' . $row->address . '</td>
+         <td>' . $row->date_of_birth . '</td>
          <td>
             <a href="thong-tin-benh-nhan/'.$row->id.'" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
             <button type="button" class="btn btn-default btn-success"
