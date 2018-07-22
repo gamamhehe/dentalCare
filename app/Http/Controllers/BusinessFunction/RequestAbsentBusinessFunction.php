@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\DB;
 
 trait RequestAbsentBusinessFunction
 {
-    public function getAll()
+    public function getAllReqAbsent()
     {
         $listRequestAbsent = RequestAbsent::all();
         return $listRequestAbsent;
     }
 
-    public function getById($id)
+    public function getReqAbsentById($id)
     {
         $requestAbsent = RequestAbsent::where('id', $id)->first();
         return $requestAbsent;
@@ -52,7 +52,18 @@ trait RequestAbsentBusinessFunction
         }
     }
 
-    public function getAbsentObject($reqAbsentObj){
+    public function updateRequestAbsent($requestAbsent)
+    {
+        try {
+            $requestAbsent->save();
+            return true;
+        } catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
+    }
+
+    public function getAbsentObject($reqAbsentObj)
+    {
         $absent = $reqAbsentObj->hasAbsent()->first();
         if ($absent != null) {
             $reqAbsentObj->staff_approve = $absent->belongsToStaff() == null ?

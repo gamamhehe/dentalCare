@@ -9,9 +9,27 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
+use App\Model\RequestAbsent;
+
 class RequestAbsentController extends  BaseController
 {
-        public function delete($requestAbsentId){
-
+    use RequestAbsentBusinessFunction;
+        public function changeStatusDelete($requestAbsentId){
+            $requestAbsent = $this->getReqAbsentById($requestAbsentId);
+            try {
+                if ($requestAbsent != null) {
+                    $requestAbsent->is_deleted = 1;
+                    $this->updateRequestAbsent($requestAbsent);
+                    $successResponse = $this->getSuccessObj(200, "OK", "Xóa thành công", "Null");
+                    return response($successResponse, 200);
+                } else {
+                    $error = $this->getErrorObj("Không tìm thấy đơn xin nghỉ", 400);
+                    return response()->json($error, 400);
+                }
+            }catch (\Exception $ex){
+                $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+                return response()->json($error, 500);
+            }
         }
 }
