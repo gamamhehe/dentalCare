@@ -15,6 +15,7 @@ use App\Model\Tooth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Facades\Datatables;
 
 class StaffController extends Controller
@@ -82,8 +83,10 @@ class StaffController extends Controller
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID < 4 and $roleID > 0) {
+
                 session(['currentAdmin' => $user]);
                 session(['roleAdmin' => $roleID]);
+                session(['currentAppointmentComming' => $this->getCurrentAppointmentComming($user->belongToStaff()->first()->id)]);
                 return redirect()->intended(route('admin.dashboard'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
@@ -190,6 +193,11 @@ class StaffController extends Controller
         }
 
 
+    }
+    public function changeSession(){
+        session(['currentAppointmentComming' => Session::get('currentAppointmentComming') + 1]);
+
+        echo '';
     }
     public function profile(Request $request){
         $staff= $request->session()->get('currentAdmin');

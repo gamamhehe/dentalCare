@@ -213,6 +213,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     
     //city
     Route::get('/get-district/{id}', 'Admin\PatientController@getDistrictbyCity');
+    Route::get('/change-session', 'Admin\StaffController@changeSession');
 
 });
 

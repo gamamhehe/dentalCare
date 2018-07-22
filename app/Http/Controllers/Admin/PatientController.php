@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Session;
 use DB;
+use Pusher\Pusher;
 use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
@@ -145,7 +146,18 @@ class PatientController extends Controller
                 if ($appointment) {
                     $appointment->status = 1;
                     $this->saveAppointment($appointment, $id);
-                    event(new ReceiveAppointment($appointment));
+                    $options = array(
+                        'cluster' => 'ap1',
+                        'encrypted' => true
+                    );
+                    $pusher = new Pusher(
+                        'e3c057cd172dfd888756',
+                        '993a258c11b7d6fde229',
+                        '562929',
+                        $options
+                    );
+
+                    $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
                     $status = 1;
                 } else {
                     $status = 0;
