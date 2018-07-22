@@ -453,7 +453,7 @@ class StaffController extends BaseController
                     null : $absentObj->belongsToStaff()->first();
                 $requestAbsentObj->message_from_staff = $absentObj->message_from_staff;
                 $requestAbsentObj->created_time = $absentObj->created_time;
-                $requestAbsentObj->is_approved = $absentObj->is_approved;
+                $requestAbsentObj->is_approved = $absentObj->is_approved ==null ? 0 : $absentObj->is_approved;
             }else{
                 $requestAbsentObj->staff_approve =null;
                 $requestAbsentObj->message_from_staff = null;
