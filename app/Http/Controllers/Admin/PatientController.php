@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Session;
 use DB;
+use Pusher\Pusher;
 use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
@@ -147,7 +148,18 @@ class PatientController extends Controller
                 if ($appointment) {
                     $appointment->status = 1;
                     $this->saveAppointment($appointment, $id);
-                    event(new ReceiveAppointment($appointment));
+                    $options = array(
+                        'cluster' => 'ap1',
+                        'encrypted' => true
+                    );
+                    $pusher = new Pusher(
+                        'e3c057cd172dfd888756',
+                        '993a258c11b7d6fde229',
+                        '562929',
+                        $options
+                    );
+
+                    $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
                     $status = 1;
                 } else {
                     $status = 0;
@@ -198,10 +210,10 @@ class PatientController extends Controller
             foreach ($data as $row) {
                 $output .= '
         <tr>
-         <td  ' . $row->name . '</td>
-         <td ' . $row->phone . '</td>
-         <td  ' . $row->address . '</td>
-         <td ' . $row->date_of_birth . '</td>
+         <td>' . $row->name . '</td>
+         <td>' . $row->phone . '</td>
+         <td>' . $row->address . '</td>
+         <td>' . $row->date_of_birth . '</td>
          <td>
             <a href="thong-tin-benh-nhan/'.$row->id.'" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
             <button type="button" class="btn btn-default btn-success"
@@ -265,14 +277,42 @@ class PatientController extends Controller
         return view('admin.Patient.detail',['patient'=>$patient,'listTreatmentHistory'=>$result]);
          
     }
-    public function detailPatient($id){
-        $patient = Patient::where('id',$id)->first();
-        $result =[];
-        if($patient){
-            $idPatient = $patient->id;
-            $result = $this->getTreatmentHistory($idPatient);
+    public function detailPatientByAppoinmentId($appointId){
+        $appointment = $this->getAppointmentById($appointId);
+        // $statusString = $appointment->status;
+        if($appointment->status == 0){
+            $appointment->statusString = "Vừa tạo";
+        }else if ($appointment->status == 1){
+            $appointment->statusString = "Đã tạo";
+        }else if ($appointment->status == 2){
+            $appointment->statusString = "Đang khám";
+        }else if ($appointment->status == 3){
+            $appointment->statusString = "Đã khám xong";
+        }else{
+            $appointment->statusString = "Đã xóa";
+        }
+        $checkAppoint = $this->checkAppointmentExistPatient($appointId);
+        $patientFinal = [];
+        $result = [];
+        if($checkAppoint == 0){
+            $patient = null;
+        }else{
+            $patient = Patient::where('id',$checkAppoint)->first();
+            // $result =[];
+            if($patient){
+                $idPatient = $patient->id;
+                $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
+                foreach ($listTreatmentHistory as $treatmentHistory) {
+                        if($treatmentHistory->finish_date == null){
+                          $result[] = $treatmentHistory;
+                        }
+                }
+               
+            }else{
+            }
+       
         }
         $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
-         return view('admin.Patient.Treat',['patient'=>$patient,'listTreatmentHistory'=>$result]);
+         return view('admin.Patient.Treat',['appointment'=>$appointment,'patient'=>$patient,'listTreatmentHistory'=>$result]);
     }
 }

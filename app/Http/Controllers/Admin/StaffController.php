@@ -15,6 +15,7 @@ use App\Model\Tooth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Facades\Datatables;
 
 class StaffController extends Controller
@@ -82,8 +83,10 @@ class StaffController extends Controller
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID < 4 and $roleID > 0) {
+
                 session(['currentAdmin' => $user]);
                 session(['roleAdmin' => $roleID]);
+                session(['currentAppointmentComming' => $this->getCurrentAppointmentComming($user->belongToStaff()->first()->id)]);
                 return redirect()->intended(route('admin.dashboard'));
             }
             return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
@@ -114,6 +117,7 @@ class StaffController extends Controller
                 <div>
                     <button style="" value="'. $appoint->id .'" class="btn btn-success btn-sm btn-dell"> Tiếp tục liệu trình cũ</button>
                     <button type="button" class="btn btn-sm  btn-success" onclick="checkComing(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Tạo liệu trình mới</button>
+                         <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">View</a>
                 </div>
                 ';
             })->make(true);
@@ -190,6 +194,11 @@ class StaffController extends Controller
         }
 
 
+    }
+    public function changeSession(){
+        session(['currentAppointmentComming' => Session::get('currentAppointmentComming') + 1]);
+
+        echo '';
     }
     public function profile(Request $request){
         $staff= $request->session()->get('currentAdmin');

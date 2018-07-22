@@ -571,7 +571,7 @@ $this->logDebug("Num : " . $listAppointment->count());
     function getCurrentFreeDentist()
     {
         $listAvailableDentist = $this->getAvailableDentistAtDate(Carbon::now());
-        $listCurrentBusyAppointment = Appointment::where('status', 1)->get();
+        $listCurrentBusyAppointment = Appointment::where('status', 2)->get();
         $listCurrentBusyDentist = [];
         foreach ($listCurrentBusyAppointment as $appointment) {
             $listCurrentBusyDentist[] = $appointment->staff_id;
@@ -593,5 +593,19 @@ $this->logDebug("Num : " . $listAppointment->count());
             return $patient_id;
         }
         return false;
+    }
+
+    public function getCurrentAppointmentComming($staff_id){
+        return count(Appointment::where('staff_id', $staff_id)->where('status', 1)->get());
+    }
+    public function checkAppointmentExistPatient($appointmentId){
+        $appointment = Appointment::where('id', $appointmentId)->first();
+        $existPatient= PatientOfAppointment::where('appointment_id',$appointmentId)->first();
+        if($existPatient){
+            return ($existPatient->patient_id);
+        }else{
+            return 0;
+        }
+
     }
 }

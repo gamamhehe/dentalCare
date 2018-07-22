@@ -9,60 +9,82 @@
                         
                     </div>
                 </div>
-            </div>
-        <div class="box box-info">
-            <div class="box-header with-border box-info">
-              <h3 class="box-title" style="float: left;">Thông tin bệnh nhân</h3>
-            <button class="btn btn-success btn-sm" style="float: right;"> Tạo mới liệu trình</button>
-            </div>
-            <div class="panel-body">
-                <div class="form-group row add">
-                        <div class="col-sm-2"><label>Họ Tên</label></div> 
-                        <div class="col-sm-6" style="padding-left: 0px;" >
-                          <a href="admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
-                        </div>
-                </div> 
-                  <div class="form-group row add">
-                        <div class="col-sm-2"><label>Điện thoại</label></div> 
-                        <div class="col-sm-4" style="padding-left: 0px;" >
-                           <input type="text" value="{{$patient->phone}}" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
-                        </div>
-                </div> 
-                <div class="form-group row add">
-                        <div class="col-sm-2"><label>Bệnh tiền sử</label></div> 
-                        <div class="col-sm-4" style="padding-left: 0px;" >
-                           @foreach($patient->Anamnesis as $key)
-                           <h5>{{$key->name->name}}</h5>
-                           @endforeach
-                        </div>
-                       
-                </div> 
-                
-
-            </div>
         </div>
-       <!--  <div class="box box-info">
-            <div class="box-header with-border box-info">
-              <h3 class="box-title">Tiền sử bệnh án</h3>
-            </div>
-            <div class="panel-body">
-                <div class="container">
-                    <div class="row layout" style=" margin-right: 4em"  >
-                    <table id="dup-table" class="table myTable table-bordered">
-                        <thead>
-                        <tr style="background-color: #eee;">
-                            <td class="col-sm-1">id</td>
-                            <td class="col-sm-6" style="text-align: left;">Tên Bệnh</td>
-                            <td class="col-sm-3">Triệu chứng</td>
-                        </tr>
-                        </thead>
-                    </table>
+        <div class="row" style="background-color: white;">
+            <div class="col-xs-6">
+                <div class="container" style="padding: 0px;margin: 0px;">
+                    <div class="box box-warning">
+                        <div class="col-xs-6">
+                            <div class="box-header with-border box-warning">
+                              <h3 class="box-title" style="float: left;">Thông tin lịch hẹn</h3>
+                           
+                            </div>
+                            <div class="panel-body">
+                            <div class="form-group row add">
+                                    <div class="col-sm-4"><label>Thời gian bắt đầu</label></div> 
+                                    <div class="col-sm-6" style="padding-left: 0px;" >
+                                         <input type="text" value="{{$appointment->start_time}}" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
+                                    </div>
+                            </div> 
+                              <div class="form-group row add">
+                                    <div class="col-sm-4"><label>Thời gian cuộc hẹn</label></div> 
+                                    <div class="col-sm-6" style="padding-left: 0px;" >
+                                       <input type="text" value="{{$appointment->estimated_time}}" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
+                                    </div>
+                            </div> 
+                            <div class="form-group row add">
+                                    <div class="col-sm-4"><label>Trạng thái</label></div> 
+                                    <div class="col-sm-6" style="padding-left: 0px;" >
+                                       <input type="text" value="{{$appointment->statusString}}" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
+                                    </div>
+                            </div> 
+                            </div>
+                        </div>
+                    </div>
                 </div> 
+            </div>
+            <div class="col-xs-6">
+                <div class="container">
+                    <div class="box box-info">
+                        <div class="col-xs-6">
+                            <div class="box-header with-border box-info">
+                              <h3 class="box-title" style="float: left;">Thông tin bệnh nhân</h3>
+                            <button class="btn btn-success btn-sm" style="float: right;"> Tạo mới liệu trình</button>
+                            </div>
+                            <div class="panel-body">
+                            <div class="form-group row add">
+                                    <div class="col-sm-4"><label>Họ Tên</label></div> 
+                                    <div class="col-sm-6" style="padding-left: 0px;" >
+                                      <a href="admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
+                                    </div>
+                            </div> 
+                              <div class="form-group row add">
+                                    <div class="col-sm-4"><label>Điện thoại</label></div> 
+                                    <div class="col-sm-6"  style="padding: 0px;margin: 0px;" >
+                                       <input type="text" value="{{$patient->phone}}" name="name" class="form-control pull-right" id="startdate" style="margin:0px;" disabled />
+                                    </div>
+                            </div> 
+                            <div class="form-group row add">
+                                    <div class="col-sm-4"><label>Bệnh tiền sử</label></div> 
+                                    <div class="col-sm-6" style="padding-left: 0px;" >
+                                    <ul style="padding: 0px;margin: 0px;">
+                                       @foreach($patient->Anamnesis as $key)
+                                        <li>{{$key->name->name}}</li>
+                                       
+                                       @endforeach
+                                    </ul> 
+                                    </div>
+                            </div> 
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-        </div> -->
-        <div class="box box-info">
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-12">
+            <div class="box box-info">
             <div class="box-header with-border box-info">
               <h3 class="box-title">Lịch sử bệnh án</h3>
             </div>
@@ -70,11 +92,7 @@
                 <!-- start -->
                 <div class="container">
     <br />
-
-
-
     <br />
-
     <div class="panel-group" id="accordion">
 
         @if($listTreatmentHistory)
@@ -138,15 +156,11 @@
                             <img src="{{$b->image_link}}" alt="" class="img-responsive img-fluid">
                         </div>
                     @endforeach
-
                 </div>
                 </div>
                 @endforeach
-
-
             </div>
             </div>
-
             </div>
             @endforeach
         @else
@@ -154,20 +168,12 @@
                     <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân chưa từng điều trị</h1>
             </div>
         @endif
-
-
-
-
-
-
-
-
     </div>
 </div>
-                 <!-- end   -->
-                
             </div>
+        </div></div>
         </div>
+        
     </section>
 
 
@@ -189,7 +195,24 @@
             }
         }
     });
-    
+    function checkComing(id){
+            $.ajax({
+                url: '/admin/check-coming/'+ id, //this is your uri
+                type: 'GET', //this is your method
+
+                dataType: 'json',
+                success: function(data){
+                    if(data.statusComing == 0){
+                        swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error");
+                    }
+                    if(data.statusComing == 1){
+                        window.location.replace('http://' + data.url + "/admin/create-treatment/" + data.idPatient);
+                    }
+                },error: function (data) {
+                    swal("Check connnection", "", "error");
+                }
+            });
+        }
     $(function() {
             $('#dup-table').DataTable({
               "dom": '<"toolbar">frtip',
