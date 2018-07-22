@@ -88,7 +88,7 @@ class PatientController extends BaseController
         $dateStr = $request->input('date');
         $phone = $request->input('phone');
         try {
-            $appointments = $this->getAppointmentByDate($phone, $dateStr, 0);
+            $appointments = $this->getAppointmentByDate($phone, $dateStr);
             foreach ($appointments as $appointment) {
                 $appointment->patient = $appointment->hasPatientOfAppointment()->first();
             }
