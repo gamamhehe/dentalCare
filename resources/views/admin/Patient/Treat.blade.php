@@ -19,7 +19,7 @@
                 <div class="form-group row add">
                         <div class="col-sm-2"><label>Họ Tên</label></div> 
                         <div class="col-sm-6" style="padding-left: 0px;" >
-                          <a href="/thong-tin-benh-nhan/{{$patient->id}}">{[$patient->name}}</a>
+                          <a href="admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
                         </div>
                 </div> 
                   <div class="form-group row add">
