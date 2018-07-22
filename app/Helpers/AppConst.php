@@ -43,11 +43,12 @@ class AppConst
 //2 dang kham
 //3 xong
 //4 xoa
-const APPT_STATUS_CREATED = 0;
-const APPT_STATUS_ISCOMMING = 1;
-const APPT_STATUS_TREATING = 2;
-const APPT_STATUS_DONE = 3;
-const APPT_STATUS_DELETED = 4;
+    const APPT_STATUS_CREATED = 0;
+    const APPT_STATUS_ISCOMMING = 1;
+    const APPT_STATUS_TREATING = 2;
+    const APPT_STATUS_DONE = 3;
+    const APPT_STATUS_DELETED = 4;
+
     /**
      * @param $order numerical_order of appointment
      * @param $date DateTime Object
@@ -61,12 +62,12 @@ const APPT_STATUS_DELETED = 4;
             . $order . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate;
     }
 
-    public static function getSmsMSGForAbsent($name, $startDate,$endDate)
+    public static function getSmsMSGForAbsent($name, $startDate, $endDate)
     {
-         
-        $startDate = $date->format("d-m-Y");
-        $endDate = $date->format("d-m-Y");
-        return "Đon xin nghi cua ".$name." da duoc chap nhan.Bat dau tu ngay "
-            . $startDate . 'den het ngay  ' . $startTime .'  .';
+//
+//        $startDate = $date->format("d-m-Y");
+//        $endDate = $date->format("d-m-Y");
+//        return "Đon xin nghi cua " . $name . " da duoc chap nhan.Bat dau tu ngay "
+//            . $startDate . 'den het ngay  ' . $startTime . '  .';
     }
 }
