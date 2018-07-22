@@ -120,7 +120,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('anamnesisCatalog/all','Mobile\AnamnesisController@getAll');
     Route::get('staff/getAvailableDentist', 'Mobile\StaffController@getAvailableDentist');
     Route::get('staff/getListRequestAbsent', 'Mobile\StaffController@getListRequestAbsent');
-    Route::post('staff/changeStatusDelete/{req_id}', 'Mobile\StaffController@changeStatusDelete');
+    Route::post('staff/changeStatusDelete/{req_id}', 'Mobile\RequestAbsentController@changeStatusDelete');
     Route::get('staff/getListRequestAbsentByTime', 'Mobile\StaffController@getListRequestAbsentByTime');
     Route::post('staff/requestAbsent', 'Mobile\StaffController@requestAbsent');
     Route::post('staff/updateStaffInfo', 'Mobile\StaffController@updateStaffInfo');
