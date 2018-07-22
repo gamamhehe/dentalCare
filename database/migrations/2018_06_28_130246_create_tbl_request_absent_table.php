@@ -19,6 +19,7 @@ class CreateTblRequestAbsentTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->string('reason');
+            $table->boolean('is_deleted')->default(false);
             $table->timestamps();
         });
     }

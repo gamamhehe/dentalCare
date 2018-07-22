@@ -7,6 +7,7 @@ use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentCategoriesBusinessFunction;
+use App\Http\Controllers\BusinessFunction\FeedbackBusinessFunction;
 use App\Model\Staff;
 use App\Model\TreatmentCategory;
 use App\Model\User;
@@ -24,7 +25,7 @@ class StaffController extends Controller
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
     use TreatmentCategoriesBusinessFunction;
-
+    use FeedbackBusinessFunction;
     public function loginGet(Request $request)
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
@@ -114,7 +115,7 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                    <button style="width: 30%" value="'. $appoint->id .'" class="btn btn-success btn-sm btn-dell"> Tiếp tục liệu trình cũ</button>
+                    <button style="" value="'. $appoint->id .'" class="btn btn-success btn-sm btn-dell"> Tiếp tục liệu trình cũ</button>
                     <button type="button" class="btn btn-sm  btn-success" onclick="checkComing(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Tạo liệu trình mới</button>
                 </div>
                 ';
@@ -198,5 +199,13 @@ class StaffController extends Controller
 
         echo '';
     }
+    public function profile(Request $request){
+        $staff= $request->session()->get('currentAdmin');
+        $staff->staffDetail = $staff->belongToStaff()->first();
+        $staff->Role = $staff->hasUserHasRole()->first()->belongsToRole()->first();
+        $start= $this->getNumberStart($staff->staffDetail->id); 
+        
+        return view('admin.Staff.profile',['staff'=>$staff,'start'=>$start]);
+    } 
 
 }

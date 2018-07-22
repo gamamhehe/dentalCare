@@ -39,8 +39,15 @@ class AppConst
 
     const TREATMENT_HISTORY_PATH = '/assets/images/TreatmentHistory/';
 //0 vua tao
-//1 dang kham
-//2 xong
+//1 da toi
+//2 dang kham
+//3 xong
+//4 xoa
+const APPT_STATUS_CREATED = 0;
+const APPT_STATUS_ISCOMMING = 1;
+const APPT_STATUS_TREATING = 2;
+const APPT_STATUS_DONE = 3;
+const APPT_STATUS_DELETED = 4;
     /**
      * @param $order numerical_order of appointment
      * @param $date DateTime Object

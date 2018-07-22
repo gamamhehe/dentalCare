@@ -63,6 +63,7 @@ trait StaffBusinessFunction
             return false;
         }
     }
+
     public function updateStaffProfile($staff)
     {
         DB::beginTransaction();
@@ -75,6 +76,7 @@ trait StaffBusinessFunction
             throw new \Exception($e->getMessage());
         }
     }
+
     public function getStaffProfileByPhone($phone)
     {
         $staff = Staff::where('phone', $phone)->first();
@@ -102,9 +104,46 @@ trait StaffBusinessFunction
     public function getListStaffRequestAbsent($staffId)
     {
         $staff = Staff::where('id', $staffId)->first();
-        $absentObjs = $staff->hasAbsent();
+        $absentObjs = $staff->hasAbsent()
+            ->where('is_deleted', 0);;
         if ($absentObjs != null) {
-            return $staff->hasAbsent()->get();
+            $listReqAbsent = $absentObjs->get();
+            foreach ($listReqAbsent as $reqAbsent) {
+                $absent = $reqAbsent->hasAbsent()->first();
+                if ($absent != null) {
+                    $reqAbsent->staff_approve = $absent->belongsToStaff() == null ?
+                        null : $absent->belongsToStaff()->first();
+                    $reqAbsent->message_from_staff = $absent->message_from_staff;
+                    $reqAbsent->created_time = $absent->created_time;
+                    $reqAbsent->status = $absent->status;
+                }
+            }
+            return $listReqAbsent;
+        } else {
+            return null;
+        }
+    }
+
+    public function getListStaffRequestAbsentByTime($staffId, $monthInNumber, $yearInNumber)
+    {
+        $staff = Staff::where('id', $staffId)->first();
+        $absentObjs = $staff->hasAbsent()
+            ->whereMonth('start_date', $monthInNumber)
+            ->whereYear('start_date', $yearInNumber)
+            ->where('is_deleted', 0);
+        if ($absentObjs != null) {
+            $listReqAbsent = $absentObjs->get();
+            foreach ($listReqAbsent as $reqAbsent) {
+                $absent = $reqAbsent->hasAbsent()->first();
+                if ($absent != null) {
+                    $reqAbsent->staff_approve = $absent->belongsToStaff() == null ?
+                        null : $absent->belongsToStaff()->first();
+                    $reqAbsent->message_from_staff = $absent->message_from_staff;
+                    $reqAbsent->created_time = $absent->created_time;
+                    $reqAbsent->status = $absent->status;
+                }
+            }
+            return $listReqAbsent;
         } else {
             return null;
         }

@@ -48,6 +48,7 @@
                     <li><a href="{{ route('admin.listAppointment.dentist')}}">Danh sách Lịch hẹn</a></li>
                 </ul>
             </li>
+            
             <li>
                 <a href="{{ route('admin.absent')}}"><i class="fa fa-list-alt"></i><span>Xin nghỉ</span></a>
             </li>

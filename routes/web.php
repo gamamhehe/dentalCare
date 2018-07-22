@@ -57,7 +57,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-medicines', 'Admin\MedicineController@create');
         Route::get('/edit-medicines/{id}', 'Admin\MedicineController@loadedit');
         Route::post('/edit-medicines/{id}', 'Admin\MedicineController@edit')->name('admin.edit.medicines');
-
+        //Patient
+        Route::get('/patient-detail/{id}', 'Admin\PatientController@detailPatient');
         //TreatmentController
         Route::get('/get-treatment/{id}','Admin\TreatmentController@getTreatmentByID');//ajax
         Route::get('/get-treatmentByCate/{id}','Admin\TreatmentController@getTreatmentByCategoryId');//ajax
@@ -121,7 +122,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     //UserController
 //    Route::get('/register', 'Admin\Usercontroller@registerGet');
 //    Route::post('/register', 'Admin\Usercontroller@registerPost');
-    Route::get('/profile-staff', 'Admin\Homecontroller@profile');
+    Route::get('/profile-staff', 'Admin\Staffcontroller@profile');
     //
 
 
@@ -159,12 +160,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/list-appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
     //TreatmentCategory
 
-    // Route::get('/createPrescription', 'Admin\MedicineController@createPrescription')->name('admin.AppointmentPatient.index');
+   
     Route::get('/medicine-search/{id}', 'Admin\MedicineController@ajaxSearch') ;
 
     Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
 
     //Patient
+    Route::get('/thong-tin-benh-nhan/{id}', 'Admin\PatientController@getInfoPatientById');//ajax
     Route::get('/get-list-patient/{id}', 'Admin\PatientController@getListPatientById');//ajax
     // Route::get('/create-Patient', 'Admin\PatientController@create');
     //Dentist

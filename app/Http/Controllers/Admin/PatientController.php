@@ -6,6 +6,7 @@ use App\Events\ReceiveAppointment;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Model\Patient;
 use App\Model\Payment;
 use App\Model\AnamnesisCatalog;
@@ -26,7 +27,7 @@ class PatientController extends Controller
     use UserBusinessFunction;
     use PatientBusinessFunction;
     use AppointmentBussinessFunction;
-
+    use TreatmentHistoryBusinessFunction;
     public function login(Request $request)
     {
 
@@ -48,9 +49,9 @@ class PatientController extends Controller
                 session(['currentPatient' => $listPatient[0]]);
                 return redirect()->intended(route('homepage'));
             }
-            return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
+            return redirect()->back()->with('fail', 'Bạn không được phép truy cập ')->withInput($request->only('phone'));
         }
-        return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
+        return redirect()->back()->with('fail', 'Tài khoản sai thông tin')->withInput($request->only('phone'));
     }
 
     public function changeCurrentPatient(Request $requet, $id)
@@ -207,13 +208,16 @@ class PatientController extends Controller
             foreach ($data as $row) {
                 $output .= '
         <tr>
-         <td style="width: 20%">' . $row->name . '</td>
-         <td style="width: 15%">' . $row->phone . '</td>
-         <td style="width: 30%">' . $row->address . '</td>
-         <td style="width: 15%">' . $row->date_of_birth . '</td>
-         <td align="center" style="width: 20%">
-         <button type="button" class="btn btn-default btn-success"
-                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button></td>
+         <td  ' . $row->name . '</td>
+         <td ' . $row->phone . '</td>
+         <td  ' . $row->address . '</td>
+         <td ' . $row->date_of_birth . '</td>
+         <td>
+            <a href="thong-tin-benh-nhan/'.$row->id.'" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
+            <button type="button" class="btn btn-default btn-success"
+                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button>
+           
+                                 </td>
         </tr>
         ';
             }
@@ -260,5 +264,18 @@ class PatientController extends Controller
     {
         $listDistrict = District::where('city_id', $id)->get();
         return $listDistrict;
+    }
+    public function getInfoPatientById($id){
+        $patient = Patient::where('id',$id)->first();
+        $result =[];
+        if($patient){
+            $idPatient = $patient->id;
+            $result = $this->getTreatmentHistory($idPatient);
+        }
+        return view('admin.Patient.detail',['patient'=>$patient,'listTreatmentHistory'=>$result]);
+         
+    }
+    public function detailPatient($id){
+        dd("x");
     }
 }

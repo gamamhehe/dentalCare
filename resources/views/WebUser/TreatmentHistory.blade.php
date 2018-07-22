@@ -113,7 +113,7 @@
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
-                                    <a href="/myProfile" class="btn btn-success btn-flat">Profile</a>
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right" style="padding-right: 1em;">
                                     <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
@@ -174,7 +174,7 @@
                                                 <div class="row">
                                                     <!-- /.col -->
                                                     <div class="col-xs-12">
-                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
                                                     </div>
                                                     <!-- /.col -->
 
