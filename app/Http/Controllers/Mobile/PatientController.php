@@ -22,6 +22,7 @@ class PatientController extends BaseController
     use UserBusinessFunction;
     use PatientBusinessFunction;
     use AppointmentBussinessFunction;
+
     public function updatePatientInfo(Request $request)
     {
         try {
@@ -71,13 +72,13 @@ class PatientController extends BaseController
         try {
             $phone = $request->input("phone");
             $user = $this->getUserByPhone($phone);
-            if($user==null){
+            if ($user == null) {
                 $error = $this->getErrorObj("Số điện thoại chưa được đăng kí", "No exception");
                 return response()->json($error, 400);
             }
             $patients = $this->getPatientByPhone($phone);
             return $patients;
-        }catch (Exception $ex){
+        } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 500);
         }
@@ -90,10 +91,15 @@ class PatientController extends BaseController
         try {
             $appointments = $this->getAppointmentByDate($phone, $dateStr);
             foreach ($appointments as $appointment) {
-                $appointment->patient = $appointment->hasPatientOfAppointment()->first();
+                $patientAppointment = $appointment->hasPatientOfAppointment()->first();
+                if ($patientAppointment != null) {
+                    $appointment->patient = $patientAppointment->belongsToPatient()->first();
+                }else{
+                    $appointment->patient = null;
+                }
             }
             return response()->json($appointments);
-        }catch (Exception $ex){
+        } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi máy chủ", $ex);
             return response()->json($error, 500);
         }
