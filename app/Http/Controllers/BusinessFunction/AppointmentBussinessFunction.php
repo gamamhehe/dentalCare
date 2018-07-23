@@ -331,6 +331,16 @@ trait AppointmentBussinessFunction
         return false;
     }
 
+    public function updateAppointment($appointment)
+    {
+        try{
+            $appointment->save();
+            return true;
+        }catch (\Exception $ex){
+            throw new \Exception($ex->getMessage());
+        }
+    }
+
     /**
      * @param $time
      * @return array dentist id int[]
