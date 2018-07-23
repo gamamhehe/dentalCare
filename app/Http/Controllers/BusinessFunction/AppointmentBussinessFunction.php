@@ -528,11 +528,13 @@ trait AppointmentBussinessFunction
 
     public function checkPatientIsExamination($idPatient)
     {
-        $listAppointmentComing = Appointment::where('status', 1)->get();
+        $listAppointmentComing = Appointment::where('status', 2)->get();
         $listPatientIsExamination = [];
         foreach ($listAppointmentComing as $appointment) {
             $patientOfAppointment = PatientOfAppointment::where('appointment_id', $appointment->id)->first();
-            $listPatientIsExamination[] = $patientOfAppointment->patient_id;
+            if($patientOfAppointment!=null) {
+                $listPatientIsExamination[] = $patientOfAppointment->patient_id;
+            }
         }
         if (in_array($idPatient, $listPatientIsExamination)) {
             return true;

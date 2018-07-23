@@ -118,7 +118,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
     Route::get('patient/getByPhone', "Mobile\PatientController@getByPhone");
-    Route::get('patient/getPatientAppointmentByDate', "Mobile\PatientController@getPatientAppointmentByDate");
+    Route::get('staff/getPatientAppointmentByDate', "Mobile\StaffController@getPatientAppointmentByDate");
+    Route::post("patient/receive", "Mobile\PatientController@receive");
     ////////Anamesis
     Route::get('anamnesisCatalog/all','Mobile\AnamnesisController@getAll');
     Route::get('staff/getAvailableDentist', 'Mobile\StaffController@getAvailableDentist');

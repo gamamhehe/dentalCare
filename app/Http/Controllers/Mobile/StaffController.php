@@ -406,6 +406,27 @@ class StaffController extends BaseController
         }
     }
 
+    public function getPatientAppointmentByDate(Request $request)
+    {
+        $dateStr = $request->input('date');
+        $dentistId = $request->input('staff_id');
+        try {
+            $appointments = $this->getDentistApptAtDate($dentistId, $dateStr);
+            foreach ($appointments as $appointment) {
+                $patientAppointment = $appointment->hasPatientOfAppointment()->first();
+                if ($patientAppointment != null) {
+                    $appointment->patient = $patientAppointment->belongsToPatient()->first();
+                }else{
+                    $appointment->patient = null;
+                }
+            }
+            return response()->json($appointments);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
     public function changeAvatar(Request $request)
     {
         try {
