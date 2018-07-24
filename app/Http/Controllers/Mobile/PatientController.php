@@ -102,17 +102,17 @@ class PatientController extends BaseController
             } else if ($appointment) {
                 $appointment->status = 1;
                 $this->saveAppointment($appointment, $patientId);
-                $options = array(
-                    'cluster' => 'ap1',
-                    'encrypted' => true
-                );
-                $pusher = new Pusher(
-                    'e3c057cd172dfd888756',
-                    '993a258c11b7d6fde229',
-                    '562929',
-                    $options
-                );
-                $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
+//                $options = array(
+//                    'cluster' => 'ap1',
+//                    'encrypted' => true
+//                );
+//                $pusher = new Pusher(
+//                    'e3c057cd172dfd888756',
+//                    '993a258c11b7d6fde229',
+//                    '562929',
+//                    $options
+//                );
+//                $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
                 $successResponse = $this->getSuccessObj(200, "OK","Nhận bệnh thành công", "No Exception");
                 return response()->json($successResponse, 200);
             } else {
