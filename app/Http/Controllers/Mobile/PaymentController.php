@@ -182,6 +182,7 @@ class PaymentController extends BaseController
     public function updatePaymentPrice(Request $request)
     {
         $paymentId = $request->input('payment_id');
+        $patientPhone = $request->input('patient_phone');
         $staffId = $request->input('staff_id');
         $payment = $this->getPaymentById($paymentId);
         try {
@@ -206,8 +207,9 @@ class PaymentController extends BaseController
                 $paymentDetail->received_money = $amount;
                 $paymentDetail->date_create = Carbon::now();
                 $this->updatePaymentModel($payment, $paymentDetail);
-                $successReponse = $this->getSuccessObj(200, "OK", "Thanh toán thành công", "No data");
-                return response()->json($successReponse);
+                $listPayment = $this->getPaymentByPhone($patientPhone);
+//                $successReponse = $this->getSuccessObj(200, "OK", "Thanh toán thành công", "No data");
+                return response()->json($listPayment);
             } else {
                 $error = $this->getErrorObj("Không tìm thấy id của thanh toán", "No exception");
                 return response()->json($error, 400);

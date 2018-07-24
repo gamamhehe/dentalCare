@@ -92,7 +92,7 @@ class PatientController extends BaseController
         $phone = $this->getPhoneOfPatient($patientId);
         $isExamination = $this->checkPatientIsExamination($patientId);
         if ($isExamination) {
-            $error = $this->getErrorObj("Bệnh nhân đang khám theo lịch hẹn này", 400);
+            $error = $this->getErrorObj("Bệnh nhân đã được nhận khám", 400);
             return response()->json($error, 400);
         } else {
             $appointment = $this->checkAppointmentForPatient($phone, $patientId);
