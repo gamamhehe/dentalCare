@@ -98,7 +98,7 @@ class PatientController extends BaseController
             $appointment = $this->checkAppointmentForPatient($phone, $patientId);
             if ($appointment === null) {
                 $error = $this->getErrorObj("Bệnh nhân chưa có lịch hẹn", "No Exception");
-                return response()->json($error, 400);
+                return response()->json($error, 417);
             } else if ($appointment) {
                 $appointment->status = 1;
                 $this->saveAppointment($appointment, $patientId);
