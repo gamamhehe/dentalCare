@@ -75,7 +75,7 @@ class AppointmentController extends BaseController
             $phone = $request->input('phone');
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
-            $dentistId = $request->input('staff_id');
+            $dentistId = $request->input('dentist_id');
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
             $name = $request->input('name');
@@ -128,6 +128,7 @@ class AppointmentController extends BaseController
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
             $dentistId = $request->input('dentist_id');
+            $this->logBugAppointment("DEN: " .$dentistId);
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
             $currentDay = new DateTime();
