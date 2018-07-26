@@ -95,9 +95,7 @@
                             </div>
                         </h4>
                     </div>
-
                 </div>
-
                 <div class="accordion-content">
                      @foreach($treatmentHistory->details as $a)
                         @if($a)

@@ -111,13 +111,25 @@ class StaffController extends Controller
         } else {
             $listAppointment = $this->viewAppointmentForReception();
         }
+        foreach ($listAppointment as $appointment){
+            if ($appointment->status == 0){
+                $appointment->status = 'Bệnh nhân chưa đến';
+            }else if ($appointment->status == 1){
+                $appointment->status = 'Bệnh nhân đã đến';
+            }else if ($appointment->status == 2){
+                $appointment->status = 'Đang khám';
+            }else if ($appointment->status == 3){
+                $appointment->status = 'Đã khám';
+            }else if ($appointment->status == 4){
+                $appointment->status = 'Hủy';
+            }
+        }
         return Datatables::of($listAppointment)
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                    <button style="" value="'. $appoint->id .'" class="btn btn-success btn-sm btn-dell"> Tiếp tục liệu trình cũ</button>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkComing(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Tạo liệu trình mới</button>
                          <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">View</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Hoàn Tất</button>
                 </div>
                 ';
             })->make(true);

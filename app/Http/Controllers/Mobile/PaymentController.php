@@ -25,7 +25,8 @@ use PayPal\Rest\ApiContext;
 class PaymentController extends BaseController
 {
     use PaymentBusinessFunction;
-use StaffBusinessFunction;
+    use StaffBusinessFunction;
+
     public function getByPhone(Request $request, $phone)
     {
         try {
@@ -174,6 +175,48 @@ use StaffBusinessFunction;
             );
             $this->logInfo("EXCEPTION: " . $exc->getMessage());
             return response()->json($error, 400);
+        }
+
+    }
+
+    public function updatePaymentPrice(Request $request)
+    {
+        $paymentId = $request->input('payment_id');
+        $patientPhone = $request->input('patient_phone');
+        $staffId = $request->input('staff_id');
+        $payment = $this->getPaymentById($paymentId);
+        try {
+            if ($payment != null) {
+                if ($payment->is_done == 1) {
+                    $error = $this->getErrorObj("Bạn đã thanh toán cho điều trị", "No exception");
+                    return response()->json($error, 400);
+                }
+                $payRequired = $payment->total_price - $payment->paid;
+                $amount = $request->input('amount');
+                if ($amount > $payRequired) {
+                    $error = $this->getErrorObj("Số tiền phải trả vượt quá số tiền cần trả", "No exception");
+                    return response()->json($error, 400);
+                }
+                $payment->paid = $payment->paid + $amount;
+                if ($payment->paid == $payment->total_price) {
+                    $payment->is_done = 1;
+                }
+                $paymentDetail = new PaymentDetail();
+                $paymentDetail->payment_id = $payment->id;
+                $paymentDetail->staff_id = $staffId;
+                $paymentDetail->received_money = $amount;
+                $paymentDetail->date_create = Carbon::now();
+                $this->updatePaymentModel($payment, $paymentDetail);
+                $listPayment = $this->getPaymentByPhone($patientPhone);
+//                $successReponse = $this->getSuccessObj(200, "OK", "Thanh toán thành công", "No data");
+                return response()->json($listPayment);
+            } else {
+                $error = $this->getErrorObj("Không tìm thấy id của thanh toán", "No exception");
+                return response()->json($error, 400);
+            }
+        }catch (Exception $ex){
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
         }
 
     }

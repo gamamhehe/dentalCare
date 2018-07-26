@@ -61,7 +61,7 @@ class AdminController extends Controller
         try {
             User::create([
                 'phone' => '01279011091',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011091',
@@ -71,7 +71,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011092',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011092',
@@ -81,7 +81,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011096',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011096',
@@ -96,7 +96,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011099',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011099',
@@ -111,7 +111,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011097',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011097',
@@ -126,7 +126,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011098',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011098',

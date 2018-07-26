@@ -9,16 +9,21 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
+use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Model\Patient;
 use Exception;
 use Illuminate\Http\Request;
+use Pusher\Pusher;
 
 class PatientController extends BaseController
 {
     use UserBusinessFunction;
     use PatientBusinessFunction;
+    use AppointmentBussinessFunction;
+
     public function updatePatientInfo(Request $request)
     {
         try {
@@ -68,18 +73,53 @@ class PatientController extends BaseController
         try {
             $phone = $request->input("phone");
             $user = $this->getUserByPhone($phone);
-            if($user==null){
+            if ($user == null) {
                 $error = $this->getErrorObj("Số điện thoại chưa được đăng kí", "No exception");
                 return response()->json($error, 400);
             }
             $patients = $this->getPatientByPhone($phone);
             return $patients;
-        }catch (Exception $ex){
+        } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 500);
         }
     }
 
+    public function receive(Request $request)
+    {
 
+        $patientId = $request->input('patient_id');
+        $phone = $this->getPhoneOfPatient($patientId);
+        $isExamination = $this->checkPatientIsExamination($patientId);
+        if ($isExamination) {
+            $error = $this->getErrorObj("Bệnh nhân đã được nhận khám", 400);
+            return response()->json($error, 400);
+        } else {
+            $appointment = $this->checkAppointmentForPatient($phone, $patientId);
+            if ($appointment === null) {
+                $error = $this->getErrorObj("Bệnh nhân chưa có lịch hẹn", "No Exception");
+                return response()->json($error, 417);
+            } else if ($appointment) {
+                $appointment->status = 1;
+                $this->saveAppointment($appointment, $patientId);
+//                $options = array(
+//                    'cluster' => 'ap1',
+//                    'encrypted' => true
+//                );
+//                $pusher = new Pusher(
+//                    'e3c057cd172dfd888756',
+//                    '993a258c11b7d6fde229',
+//                    '562929',
+//                    $options
+//                );
+//                $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
+                $successResponse = $this->getSuccessObj(200, "OK","Nhận bệnh thành công", "No Exception");
+                return response()->json($successResponse, 200);
+            } else {
+                $error = $this->getErrorObj("Lỗi không xác dịnh", "No Exception");
+                return response()->json($error, 400);
+            }
+        }
+    }
 
 }

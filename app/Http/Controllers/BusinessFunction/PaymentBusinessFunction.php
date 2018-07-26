@@ -116,7 +116,7 @@ trait PaymentBusinessFunction
         try {
             $payment = Payment::find($idPayment);
             $payment->paid = $payment->paid + $price;
-            if ($payment->total_price == $payment->prepaid) {
+            if ($payment->total_price == $payment->paid) {
                 $payment->is_done = true;
             }
             $payment->save();
