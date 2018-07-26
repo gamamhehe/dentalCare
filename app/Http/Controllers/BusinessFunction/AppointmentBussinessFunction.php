@@ -87,8 +87,6 @@ trait AppointmentBussinessFunction
      */
     public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name)
     {
-        print_r('bookingDate--' . $bookingDate . "-phone-" . $phone . "-note-" . $note . "-dentistId-" . $dentistId . "-patientId-" . $patientId . "-estimatedTimeStr-" . $estimatedTimeStr . "-name-" . $name . "--");
-        exit();
         DB::beginTransaction();
         try {
             $suitableDentistId = -1;
@@ -111,7 +109,6 @@ trait AppointmentBussinessFunction
             usort($appointmentArray, array($this, "sortByTimeStamp"));
             //'if statement' return the $predictAppointmentDate and $suitableDentistId for the code below it
             if (count($appointmentArray) < $NUM_OF_DENTIST) {
-                // kieu j cung co loi
                 if ($dentistId == null || $dentistId == 0) {
                     $this->logBugAppointment("INTO COUNT< NUMMOF DENTIST ___dentistId = null");
                     $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, $defaultStartOfDay);
