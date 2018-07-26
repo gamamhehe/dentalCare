@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Model\Appointment;
+use App\Model\AnamnesisCatalog;
 use App\Model\City;
 use App\Model\District;
 use App\Model\Event;
@@ -6328,6 +6329,64 @@ class AdminController extends Controller
             'use' =>'Thuốc điều trị viêm ổ răng',
             'description'=> ''
         ]);
+        AnamnesisCatalog::create([
+             'name' => 'Máu loãng',
+             'description'=> 'Máu loãng'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Tiểu đường',
+             'description'=> 'Tiểu đường'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Thần kinh',
+             'description'=> 'Thần kinh'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Đột quy',
+             'description'=> 'Đột quy'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Huyết áp thấp',
+             'description'=> 'Huyết áp thấp'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Huyết áp cao',
+             'description'=> 'Huyết áp cao'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Ung thư',
+             'description'=> 'Ung thư'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Hen suyễn',
+             'description'=> 'Hen suyễn'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh thận',
+             'description'=> 'Bệnh thận'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh tâm thần',
+             'description'=> 'Bệnh tâm thần'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Dị tật bẩm sinh',
+             'description'=> 'Dị tật bẩm sinh'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh truyền nhiễm qua máu',
+             'description'=> 'Bệnh truyền nhiễm qua máu'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'AIDS',
+             'description'=> 'AIDS'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'AIDS',
+             'description'=> 'AIDS'
+        ]);
+
+
     }
 
     public function initClientToken(){

@@ -36,7 +36,7 @@
                             <div class="modal-body">
                                 <form class="form-horizontal" role="form">
                                    <div class="table-responsive">
-                                       <table class="table table-striped table-bordered" id="sss">
+                                       <table class="table table-striped table-bordered Mytable-hover" id="sss">
                                       <thead>
                                           <tr>
                                         <th style="text-align: center; width: 10%">Mã</th>
@@ -67,6 +67,7 @@
     </div>
 @endsection
 @section('js')
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
     <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>

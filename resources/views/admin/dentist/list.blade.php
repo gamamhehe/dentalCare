@@ -12,7 +12,7 @@
 
                 <div class="">
                     <div class="table table-responsive">
-                        <table class="table myTable table-bordered" id="table">
+                        <table class="table myTable table-bordered Mytable-hover" id="table">
                             <tr>
                                 <th width="150px">No</th>
                                 <th>Họ & Tên</th>
@@ -236,6 +236,7 @@
     </div>
 
 @endsection
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript">

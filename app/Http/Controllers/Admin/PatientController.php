@@ -70,6 +70,7 @@ class PatientController extends Controller
         $checkExist = $this->checkExistUser($request->phone);
         if ($checkExist) {
             $patient = new Patient();
+            $listAnamnesis = $request->anam;
             $userHasRole = new UserHasRole();
             $userHasRole->phone = $request->phone;
             $userHasRole->role_id = 4;
@@ -80,9 +81,12 @@ class PatientController extends Controller
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->date_of_birth = $request->date_of_birth;
             $patient->gender = $request->gender;
-            $patient->avatar = $request->avatar;
             $patient->district_id = $request->district_id;
-            $result = $this->createPatient($patient);
+            $patientID = $this->createPatient($patient);
+            if($patientID ==false){
+                  return redirect('admin/live-seach')->withSuccess("Bệnh nhân chưa được tạo");
+            }
+            $result = $this->createAnamnesisForPatient($listAnamnesis,$patientID);
         } else {
             $patient = new Patient();
             $userHasRole = new UserHasRole();
@@ -102,9 +106,9 @@ class PatientController extends Controller
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
         }
         if ($result) {
-            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Sự kiện đã được tạo");
+            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Bệnh nhân đã được tạo");
         } else {
-            return redirect('admin/live-seach')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/live-seach')->withSuccess("Bệnh nhân chưa được tạo");
         }
     }
 
@@ -274,7 +278,11 @@ class PatientController extends Controller
             $idPatient = $patient->id;
             $result = $this->getTreatmentHistory($idPatient);
         }
-        return view('admin.Patient.detail',['patient'=>$patient,'listTreatmentHistory'=>$result]);
+        $anam= $this->getListAnamnesisByPatient($id);
+        if($anam == null){
+            $anam ="Không có";
+        }
+        return view('admin.Patient.detail',['Anamnesis'=>$anam,'patient'=>$patient,'listTreatmentHistory'=>$result]);
          
     }
     public function detailPatientByAppoinmentId($appointId){

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\AbsentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Model\Absent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,6 +16,7 @@ class AbsentController extends Controller
 {
     //
     use AbsentBusinessFunction;
+    use StaffBusinessFunction;
     public function changeView(Request $request){
         $role = $request->session()->get("roleAdmin");
         if($role == 1){
@@ -92,7 +94,27 @@ class AbsentController extends Controller
         //      
     }
     public function loadView(Request $request){
-         return view('admin.absent.list');
+        $listStaff= $this->getListStaff();
+        $listDate = [];
+        $x = [];
+        $string ="";
+        for($i = 2018; $i <= 2020;$i ++){
+            for($y = 1; $y<= 12;$y++){
+                if($y<10){
+                    $string ="Thang "."0".$y." Năm ".$i;
+                }else{
+                    $string ="Thang ".$y." Năm ".$i;
+                }
+                $object = (object) [
+                    'string' => $string ,
+                    'value' => $y."-".$i,
+                ];
+                     
+                    $listDate[]=$object;
+                }
+        }
+        
+        return view('admin.absent.list',['staffs'=>$listStaff,'dates'=>$listDate]);
     }
     public function deleteAbsent(Request $request){
         if ($this->deleteAbsentById($request->id)) {
@@ -119,5 +141,25 @@ class AbsentController extends Controller
         $idCurrentAdmin = $request->session()->get('currentAdmin', null)->belongToStaff()->first()->id;
         $total = count($this->getListAbsentByStaffNotApprove($idCurrentAdmin));
         return $total;
+    }
+    public function searchAbsent(Request $request){
+        $status = $request['statusApp'];//never null
+        $dateTime = $request['date'];
+        $staffId = $request['staff'];
+        if($dateTime == null && $staffId == null){
+             $listAbsent = RequestAbsent::where('is_deleted',$status)->get();
+        }else if($dateTime == null && $staffId !=null){
+            $listAbsent = RequestAbsent::where('is_deleted',$status)
+                                        ->where('staff_id',$staffId)
+                                        ->get();
+        }else if($dateTime !=null && $staffId == null){
+            $listAbsent = RequestAbsent::where('is_deleted',$status)
+                                        ->where('start_date','<',$dateTime)
+                                        ->get();
+        }else{
+            dd("FUll");
+        }
+        dd($listAbsent);
+       
     }
 }
