@@ -67,8 +67,7 @@ trait AppointmentBussinessFunction
 
     public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name)
     {
-        print_r('bookingDate--'.$bookingDate."-phone-".$phone."-note-".$note."-dentistId-".$dentistId."-patientId-".$patientId."-estimatedTimeStr-".$estimatedTimeStr."-name-".$name."--");
-        exit();
+       
         DB::beginTransaction();
         try {
             $suitableDentistId = -1;

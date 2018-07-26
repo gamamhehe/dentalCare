@@ -187,7 +187,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/treatment-history-detail/{id}','Admin\TreatmentDetailController@updateTreatmentDetail')->name('admin.stepTreatmentUpdate'); //view
 
     Route::post('/create-step','Admin\StepController@add');
-    //Absent
+    //Absent searchAbsent
+    Route::get('/searchAbsent','Admin\AbsentController@searchAbsent'); //ajax search
     Route::get('/create-absent','Admin\AbsentController@loadcreate')->name('create.Absent');
     Route::post('/create-absent','Admin\AbsentController@create');
     Route::get('/manage-absent','Admin\AbsentController@loadView')->name('admin.Manage.Absent');
