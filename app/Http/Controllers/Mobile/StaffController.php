@@ -58,6 +58,7 @@ class StaffController extends BaseController
                 $result->noti_token = $notifToken;
                 $this->updateUser($result);//update notification token
                 $staffProfile = $result->belongToStaff()->first();
+                $staffProfile->district = $staffProfile->belongsToDistrict()->first();
                 $clientSecret = env(AppConst::PASSWORD_CLIENT_SECRET, false);
                 $clientId = env(AppConst::PASSWORD_CLIENT_ID, false);
                 $request->request->add([
@@ -446,9 +447,20 @@ class StaffController extends BaseController
             $requestAbsentObj->start_date = $startDate;
             $requestAbsentObj->end_date = $endDate;
             $this->createRequestAbsent($requestAbsentObj);
-            $response = $this->getAbsentObject($requestAbsentObj);
-//            $response = $this->getSuccessObj(200, "OK", "Tạo thành công", "No data");
-            return response()->json($response, 200);
+            $absentObj = $this->getAbsentObject($requestAbsentObj);
+            if ($absentObj != null) {
+                $requestAbsentObj->staff_approve = $absentObj->belongsToStaff() == null ?
+                    null : $absentObj->belongsToStaff()->first();
+                $requestAbsentObj->message_from_staff = $absentObj->message_from_staff;
+                $requestAbsentObj->created_time = $absentObj->created_time;
+                $requestAbsentObj->status = $absentObj->status;
+            }else{
+                $requestAbsentObj->staff_approve =null;
+                $requestAbsentObj->message_from_staff = null;
+                $requestAbsentObj->created_time = null;
+                $requestAbsentObj->is_approved = 0;
+            }
+            return response()->json($requestAbsentObj, 200);
         } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi máy chủ", $ex);
             return response()->json($error, 500);

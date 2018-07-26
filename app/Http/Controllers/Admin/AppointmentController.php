@@ -40,18 +40,22 @@ class AppointmentController extends Controller
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
         $patientName = Patient::where('id', $patientId)->first()->name;
+        $newformat = date('Y-m-d',$dateBooking);
         if ($role == 2) {
             $staff_id = $sessionAdmin->belongToStaff()->first()->id;
-            $newApp = $this->createAppointment($dateBooking, $phone, $request->note, $staff_id,
+            $newApp = $this->createAppointment($newformat, $phone, $request->note, $staff_id,
                 $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName);
         } else {
-            $newApp = $this->createAppointment($dateBooking, $phone, $request->note, null,
+            $newApp = $this->createAppointment($newformat, $phone, $request->note, null,
                 $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName);
         }
         $dateTime = new DateTime($newApp->start_time);
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
         $this->dispatch(new SendSmsJob($phone, $smsMessage));
         return response()->json($newApp);
+    }
+    public function getListAppoinmentByPatient($id){
+
     }
 
 }

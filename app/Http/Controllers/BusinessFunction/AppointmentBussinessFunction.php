@@ -67,6 +67,8 @@ trait AppointmentBussinessFunction
 
     public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name)
     {
+        print_r('bookingDate--' . $bookingDate . "-phone-" . $phone . "-note-" . $note . "-dentistId-" . $dentistId . "-patientId-" . $patientId . "-estimatedTimeStr-" . $estimatedTimeStr . "-name-" . $name . "--");
+        exit();
         DB::beginTransaction();
         try {
             $suitableDentistId = -1;
@@ -115,7 +117,7 @@ trait AppointmentBussinessFunction
                     }
                 }
             } else {
-                if ($dentistId == null || $dentistObj == null ||  $dentistId == 0) {
+                if ($dentistId == null || $dentistObj == null || $dentistId == 0) {
                     $this->logDebug("INTO COUNT >= NUMMOF DENTIST ___ Dentistt id == null");
                     $equallyAppointment = [];
                     $equallyAppointment[] = $appointmentArray[0];
@@ -184,7 +186,7 @@ trait AppointmentBussinessFunction
                 $this->logDebug("isEndOfTheDay");
                 throw new \Exception ('isEndOfTheDay');
             }
-$this->logDebug("Num : " . $listAppointment->count());
+            $this->logDebug("Num : " . $listAppointment->count());
             $numericalOrder = $listAppointment->count() + 1;
             $appointment = new Appointment();
             $appointment->phone = $phone;
@@ -205,6 +207,7 @@ $this->logDebug("Num : " . $listAppointment->count());
             DB::commit();
             return $appointment;
         } catch (Exception $exception) {
+
             $exception->getTrace();
             DB::rollback();
             return null;
@@ -492,11 +495,13 @@ $this->logDebug("Num : " . $listAppointment->count());
 
     public function checkPatientIsExamination($idPatient)
     {
-        $listAppointmentComing = Appointment::where('status', 1)->get();
+        $listAppointmentComing = Appointment::where('status', 2)->get();
         $listPatientIsExamination = [];
         foreach ($listAppointmentComing as $appointment) {
             $patientOfAppointment = PatientOfAppointment::where('appointment_id', $appointment->id)->first();
-            $listPatientIsExamination[] = $patientOfAppointment->patient_id;
+            if ($patientOfAppointment != null) {
+                $listPatientIsExamination[] = $patientOfAppointment->patient_id;
+            }
         }
         if (in_array($idPatient, $listPatientIsExamination)) {
             return true;
@@ -592,7 +597,20 @@ $this->logDebug("Num : " . $listAppointment->count());
         return false;
     }
 
-    public function getCurrentAppointmentComming($staff_id){
+    public function getCurrentAppointmentComming($staff_id)
+    {
         return count(Appointment::where('staff_id', $staff_id)->where('status', 1)->get());
+    }
+
+    public function checkAppointmentExistPatient($appointmentId)
+    {
+        $appointment = Appointment::where('id', $appointmentId)->first();
+        $existPatient = PatientOfAppointment::where('appointment_id', $appointmentId)->first();
+        if ($existPatient) {
+            return ($existPatient->patient_id);
+        } else {
+            return 0;
+        }
+
     }
 }

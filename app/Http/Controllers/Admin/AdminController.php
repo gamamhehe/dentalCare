@@ -27,6 +27,7 @@ use App\Model\RequestAbsent;
 use App\Model\TreatmentCategory;
 use App\Model\Tooth;
 use App\Model\News;
+use App\Model\Medicine;
 use App\Model\Payment;
 use App\Model\PaymentDetail;
 use Illuminate\Http\Request;
@@ -59,7 +60,7 @@ class AdminController extends Controller
         try {
             User::create([
                 'phone' => '01279011091',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011091',
@@ -69,7 +70,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011092',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011092',
@@ -79,7 +80,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011096',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011096',
@@ -94,7 +95,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011099',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011099',
@@ -109,7 +110,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011097',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011097',
@@ -124,7 +125,7 @@ class AdminController extends Controller
             ]);
             User::create([
                 'phone' => '01279011098',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011098',
@@ -974,23 +975,29 @@ class AdminController extends Controller
                'staff_approve_id' => 2,
                'request_absent_id' =>  1,
                 'message_from_staff' => 'deoo cho',
+                'created_time'=> Carbon::now(),
+                'is_approved' => 1,
             ]);
             Absent::create([
                 'staff_approve_id' => 2,
                 'request_absent_id' =>  2,
                 'message_from_staff' => 'okie cho',
+                'created_time'=> Carbon::now(),
+                'is_approved' => 1,
             ]);
             RequestAbsent::create([
                 'staff_id' => 2,
                 'start_date' => '2018-06-26',
                 'end_date' => '2018-06-28',
                 'reason' =>  'tao thich',
+                'is_delete'=>'0',
             ]);
             RequestAbsent::create([
                 'staff_id' => 1,
                 'start_date' => '2018-06-25',
                 'end_date' => '2018-07-01',
                 'reason' =>  'tao thich',
+                'is_delete'=>'0',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
@@ -6321,28 +6328,6 @@ class AdminController extends Controller
             'use' =>'Thuốc điều trị viêm ổ răng',
             'description'=> ''
         ]);
-        Medicine::create([
-            'name' => '',
-            'use' =>'',
-            'description'=> ''
-        ]);
-        Medicine::create([
-            'name' => '',
-            'use' =>'',
-            'description'=> ''
-        ]);
-        Medicine::create([
-            'name' => '',
-            'use' =>'',
-            'description'=> ''
-        ]);
-        Medicine::create([
-            'name' => '',
-            'use' =>'',
-            'description'=> ''
-        ]);
-
-
     }
 
     public function initClientToken(){

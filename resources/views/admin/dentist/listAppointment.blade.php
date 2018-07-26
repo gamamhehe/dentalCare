@@ -13,10 +13,10 @@
                     <table id="dup-table" class="table table-striped table-bordered">
                         <thead>
                         <tr style="background-color: #eee;">
-                            <td class="col-sm-1">id</td>
                             <td class="col-sm-2" style="text-align: left;">Ngày bắt đầu</td>
                             <td class="col-sm-2">Thời gian khám </td>
-                            <td class="col-sm-3" style="text-align: left;">Note</td>
+                            <td class="col-sm-3" style="text-align: left;">Ghi Chú</td>
+                            <td class="col-sm-3" style="text-align: left;">Trạng thái</td>
                             <td class="col-sm-3">Tùy chọn </td>
                         </tr>
                         </thead>
@@ -87,6 +87,7 @@
         });
         $(function() {
             $('#dup-table').DataTable({
+            "dom": 'frtip',
                 language: {
             "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
             "zeroRecords": "Không tìm thấy kết quả ",
@@ -96,18 +97,17 @@
             "search" : "Tìm kiếm ",
             "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
         },
-                processing: true,
+                processing: false,
                 serverSide: true,
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,
                 pageLength: 5,
                 ajax: '/admin/get-appointment',
                 columns : [
-
-                    {data: 'id'},
                     {data: 'start_time'},
                     {data: 'estimated_time'},
                     {data: 'note'},
+                    {data: 'status'},
                     {
 
                         data: 'action'

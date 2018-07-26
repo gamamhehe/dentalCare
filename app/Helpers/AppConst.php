@@ -38,8 +38,8 @@ class AppConst
     const ROLE_PATIENT = 4;
 
     const TREATMENT_HISTORY_PATH = '/assets/images/TreatmentHistory/';
-//0 vua tao
-//1 da toi
+//0 vua tao =>Chua tới
+//1 da toi 
 //2 dang kham
 //3 xong
 //4 xoa
