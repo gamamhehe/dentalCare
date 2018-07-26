@@ -76,6 +76,7 @@ class StaffController extends BaseController
                     $staffProfile->refresh_token = $tokenResponseBody->refresh_token;
                     $staffProfile->token_type = $tokenResponseBody->token_type;
                     $staffProfile->expires_in = $tokenResponseBody->expires_in;
+                    $staffProfile->token_created_date = $result->tokens()->first()->created_at;
                 }
                 return response()->json($staffProfile, 200);
             } else {

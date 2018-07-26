@@ -117,6 +117,7 @@ class UserController extends BaseController
                     $userResponse->refresh_token = $tokenResponseBody->refresh_token;
                     $userResponse->token_type = $tokenResponseBody->token_type;
                     $userResponse->expires_in = $tokenResponseBody->expires_in;
+                    $userResponse->token_created_date = $result->tokens()->first()->created_date;
                 }
                 return response()->json($userResponse, 200);
             } else {
