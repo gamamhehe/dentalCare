@@ -406,6 +406,27 @@ class StaffController extends BaseController
         }
     }
 
+    public function getPatientAppointmentByDate(Request $request)
+    {
+        $dateStr = $request->input('date');
+        $dentistId = $request->input('staff_id');
+        try {
+            $appointments = $this->getDentistApptAtDate($dentistId, $dateStr);
+            foreach ($appointments as $appointment) {
+                $patientAppointment = $appointment->hasPatientOfAppointment()->first();
+                if ($patientAppointment != null) {
+                    $appointment->patient = $patientAppointment->belongsToPatient()->first();
+                }else{
+                    $appointment->patient = null;
+                }
+            }
+            return response()->json($appointments);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
     public function changeAvatar(Request $request)
     {
         try {
@@ -453,7 +474,7 @@ class StaffController extends BaseController
                     null : $absentObj->belongsToStaff()->first();
                 $requestAbsentObj->message_from_staff = $absentObj->message_from_staff;
                 $requestAbsentObj->created_time = $absentObj->created_time;
-                $requestAbsentObj->status = $absentObj->status;
+                $requestAbsentObj->is_approved = $absentObj->is_approved ==null ? 0 : $absentObj->is_approved;
             }else{
                 $requestAbsentObj->staff_approve =null;
                 $requestAbsentObj->message_from_staff = null;

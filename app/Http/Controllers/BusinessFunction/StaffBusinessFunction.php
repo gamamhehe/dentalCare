@@ -15,6 +15,7 @@ use App\Model\Staff;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait StaffBusinessFunction
 {
@@ -115,7 +116,12 @@ trait StaffBusinessFunction
                         null : $absent->belongsToStaff()->first();
                     $reqAbsent->message_from_staff = $absent->message_from_staff;
                     $reqAbsent->created_time = $absent->created_time;
-                    $reqAbsent->status = $absent->status;
+                    $reqAbsent->is_approved = $absent->is_approved==null? 0: $absent->is_approved;
+                } else {
+                    $reqAbsent->staff_approve = null;
+                    $reqAbsent->message_from_staff = null;
+                    $reqAbsent->created_time = null;
+                    $reqAbsent->is_approved = 0;
                 }
             }
             return $listReqAbsent;
@@ -133,6 +139,7 @@ trait StaffBusinessFunction
             ->where('is_deleted', 0);
         if ($absentObjs != null) {
             $listReqAbsent = $absentObjs->get();
+            Log::info("COUNT: >>>>" . (count($listReqAbsent)));
             foreach ($listReqAbsent as $reqAbsent) {
                 $absent = $reqAbsent->hasAbsent()->first();
                 if ($absent != null) {
@@ -140,7 +147,12 @@ trait StaffBusinessFunction
                         null : $absent->belongsToStaff()->first();
                     $reqAbsent->message_from_staff = $absent->message_from_staff;
                     $reqAbsent->created_time = $absent->created_time;
-                    $reqAbsent->status = $absent->status;
+                    $reqAbsent->is_approved = ($absent->is_approved == null? 0 : $absent->is_approved);
+                } else {
+                    $reqAbsent->staff_approve = null;
+                    $reqAbsent->message_from_staff = null;
+                    $reqAbsent->created_time = null;
+                    $reqAbsent->is_approved = 0;
                 }
             }
             return $listReqAbsent;

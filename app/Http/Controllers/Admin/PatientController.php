@@ -13,7 +13,7 @@ use App\Model\Payment;
 use App\Model\AnamnesisCatalog;
 use App\Model\User;
 use App\Model\District;
-use App\Model\city;
+use App\Model\City;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;

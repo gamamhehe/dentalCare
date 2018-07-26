@@ -105,6 +105,22 @@ class AppointmentController extends BaseController
         }
     }
 
+    public function updateStatus(Request $request)
+    {
+        try {
+            $status = $request->input('status');
+            $appointmentId = $request->input('appointment_id');
+            $appointment = $this->getAppointmentById($appointmentId);
+            $appointment->status = $status;
+            $this->updateAppointment($appointment);
+            $successResponse = $this->getSuccessObj(200, "OK", "Sửa lịch thành công", "No data");
+            return response()->json($successResponse);
+        }catch (\Exception $ex){
+            $error = $this->getErrorObj('Lỗi máy chủ', $ex);
+            return response()->json($error, 500);
+        }
+    }
+
     public function bookAppointmentStaff(Request $request)
     {
         try {

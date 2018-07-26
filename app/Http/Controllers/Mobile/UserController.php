@@ -57,8 +57,7 @@ class UserController extends BaseController
                 $patient->date_of_birth = $birthday;
                 $patient->gender = $gender;
                 $patient->district_id = $districtId;
-                $patient->name = $name;
-                $patient->avatar = "";
+                $patient->name = $name; 
                 $patient->address = $address;
                 ////HASH
                 $userHasRole = new UserHasRole();
