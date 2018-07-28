@@ -48,13 +48,14 @@ class TreatmentHistoryController extends BaseController
             $medicineQuantitys = $request->input('medicine_quantity');
             $detailStepIds = $request->input('step_id');
             $medicines = [];
-            if ($medicineIds != null && count($medicineIds) > 0)
+            if ($medicineIds != null && count($medicineIds) > 0) {
                 for ($i = 0; $i < count($medicineIds); $i++) {
                     $medicine = new MedicinesQuantity();
                     $medicine->medicine_id = $medicineIds[$i];
                     $medicine->quantity = $medicineQuantitys[$i];
                     $medicines[] = $medicine;
                 }
+            }
 //            $paymentId = $request->input('payment_id');
 //            $totalPrice = $request->input('total_price');
 //1. create treatment history
