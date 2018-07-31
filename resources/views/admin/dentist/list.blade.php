@@ -5,11 +5,17 @@
         <section class="content" >
             <div class=""  >
                 <div class="">
-                    <div class="col-md-12">
-                        <h1>Tạo Nhân viên</h1>
+                    <div class="col-xs-12">
+                        <h1>Danh sách nhân viên</h1>
                     </div>
+                   
                 </div>
-
+                <div class="col-xs-12" style="padding-bottom :1em;padding-right: 5em;" >
+                        <a href="#" class="col-md-1 create-modal btn btn-success btn-sm" class="block" style="float: right;">
+                                        Thêm mới
+                                    </a>
+                                     
+                </div>
                 <div class="">
                     <div class="table table-responsive">
                         <table class="table myTable table-bordered Mytable-hover" id="table">
@@ -18,10 +24,8 @@
                                 <th>Họ & Tên</th>
                                 <th>Địa chỉ</th>
                                 <th>Phone</th>
-                                <th class="text-center" width="150px">
-                                    <a href="#" class="create-modal btn btn-success btn-sm">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                    </a>
+                                <th>
+                                   Tùy chọn 
                                 </th>
                             </tr>
                             {{ csrf_field() }}
@@ -60,55 +64,55 @@
                             <div class="modal-body">
                                 <form class="form-horizontal" role="form">
                                     <div class="form-group row add">
-                                        <label class="control-label col-sm-2" for="title">Tên :</label>
-                                        <div class="col-sm-10">
+                                        <label class="control-label col-sm-3" for="title">Tên</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" id="name" name="name"
-                                                   placeholder="Your name Here" required>
+                                                   placeholder="Họ và tên" required>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="body">Address :</label>
-                                        <div class="col-sm-10">
+                                        <label class="control-label col-sm-3" for="body">Địa chỉ</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" id="address" name="address"
-                                                   placeholder="Your Body Here" required>
+                                                   placeholder="Địa  chỉ" required>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="body">Quận :</label>
-                                        <div class="col-sm-10">
+                                        <label class="control-label col-sm-3" for="body">Quận</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" id="district" name="address"
-                                                   placeholder="Your Body Here" required>
+                                                   placeholder="Quận" required>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="body">Bằng cấp :</label>
-                                        <div class="col-sm-10">
+                                        <label class="control-label col-sm-3" for="body">Bằng cấp</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" id="degree" name="degree"
+                                                   placeholder="Bằng cấp" >
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3" for="body">Ghi chú</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="description" name="Ghi chú"
                                                    placeholder="Your Body Here" required>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="body">Mô tả :</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="description" name="description"
-                                                   placeholder="Your Body Here" required>
-                                            <p class="error text-center alert alert-danger hidden"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2" for="body">Phone:</label>
-                                        <div class="col-sm-10">
+                                        <label class="control-label col-sm-3" for="body">Số điện thoại</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" id="phone" name="phone"
-                                                   placeholder="Your Body Here" required>
+                                                   placeholder="Số điện thoại" required>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="body">Giới tính :</label>
+                                        <label class="control-label col-sm-3" for="body">Giới tính</label>
                                         <div class="col-sm-4">
                                             <select name="gender">
                                                 <option value="Male">Nam</option>
@@ -117,12 +121,12 @@
                                             </select>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
-                                        <label class="control-label col-sm-2" for="body">Chức vụ :</label>
+                                        <label class="control-label col-sm-3" for="body">Vai trò</label>
                                         <div class="col-sm-4">
                                             <select name="role">
-                                                <option value="1">Bác Sĩ</option>
-                                                <option value="2">Y Tá</option>
-                                                <option value="3">Ai biết</option>
+                                            @foreach($roles as $role)
+                                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                            @endforeach
                                             </select>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
@@ -131,10 +135,10 @@
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-warning" type="submit" id="add" onclick="save()" >
-                                    <span class="glyphicon glyphicon-plus"></span>Save Post
+                                    <span class="glyphicon glyphicon-plus"></span>Khởi tạo
                                 </button>
                                 <button class="btn btn-warning" type="button" data-dismiss="modal">
-                                    <span class="glyphicon glyphicon-remobe"></span>Close
+                                    <span class="glyphicon glyphicon-remobe"></span>Đóng
                                 </button>
                             </div>
                         </div>
@@ -190,22 +194,22 @@
                             <form class="form-horizontal" role="modal">
 
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2"for="id">ID</label>
-                                    <div class="col-sm-10">
+                                    <label class="control-label col-sm-3"for="id">ID</label>
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control" id="fid" disabled>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2"for="title">Title</label>
-                                    <div class="col-sm-10">
+                                    <label class="control-label col-sm-3"for="title">Title</label>
+                                    <div class="col-sm-8">
                                         <input type="name" class="form-control" id="t">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="body">Body</label>
-                                    <div class="col-sm-10">
+                                    <label class="control-label col-sm-3" for="body">Body</label>
+                                    <div class="col-sm-8">
                                         <textarea type="name" class="form-control" id="b"></textarea>
                                     </div>
                                 </div>
@@ -243,7 +247,7 @@
     $(document).on('click','.create-modal', function() {
         $('#create').modal('show');
         $('.form-horizontal').show();
-        $('.modal-title').text('Add Post');
+        $('.modal-title').text('Khởi tạo nhân viên');
     });
     $(document).on('click', '.show-modal', function() {
         $('#show').modal('show');
@@ -257,7 +261,7 @@
     $(document).on('click','.edit-modal', function() {
         $('#create').modal('show');
         $('.form-horizontal').show();
-        $('.modal-title').text('Add Post');
+        $('.modal-title').text('Chỉnh sửa nhân viên');
     });
     $(document).on('click', '.btn-dell', function(e) {
             var id=$(this).val();

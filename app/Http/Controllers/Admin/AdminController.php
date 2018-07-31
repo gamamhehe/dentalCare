@@ -91,8 +91,8 @@ class AdminController extends Controller
             ]);
             Role::create([
                 'id' => '1',
-                'name' => 'Administrator',
-                'description' => 'Administrator of all system',
+                'name' => 'Quản trị viên',
+                'description' => 'Quản lí toàn bộ hệ thống',
             ]);
             User::create([
                 'phone' => '01279011099',
@@ -106,8 +106,8 @@ class AdminController extends Controller
             ]);
             Role::create([
                 'id' => '4',
-                'name' => 'Patient',
-                'description' => 'Patient',
+                'name' => 'Bệnh nhân',
+                'description' => 'Bệnh nhân',
             ]);
             User::create([
                 'phone' => '01279011097',
@@ -121,8 +121,8 @@ class AdminController extends Controller
             ]);
             Role::create([
                 'id' => '2',
-                'name' => 'Doctor',
-                'description' => 'Doctor of dental Clinic',
+                'name' => 'Nha Sĩ',
+                'description' => 'Nha sĩ là người khám bệnh trực tiếp cho bệnh nhân',
             ]);
             User::create([
                 'phone' => '01279011098',
@@ -136,8 +136,8 @@ class AdminController extends Controller
             ]);
             Role::create([
                 'id' => '3',
-                'name' => 'Receptionist',
-                'description' => 'Receptionist of dental Clinic',
+                'name' => 'Tiếp tân',
+                'description' => 'Tiếp tân của phòng khám',
             ]);
 
             Treatment::create([
