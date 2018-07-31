@@ -49,46 +49,48 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-6">
-                <div class="container">
-                    <div class="box box-info">
-                        <div class="col-xs-6">
-                            <div class="box-header with-border box-info">
-                                <h3 class="box-title" style="float: left;">Thông tin bệnh nhân</h3>
-                                <button class="btn btn-success btn-sm" style="float: right;"> Tạo mới liệu trình
-                                </button>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group row add">
-                                    <div class="col-sm-4"><label>Họ Tên</label></div>
-                                    <div class="col-sm-6" style="padding-left: 0px;">
-                                        <a href="admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
-                                    </div>
+            @if($patient != null)
+                <div class="col-xs-6">
+                    <div class="container">
+                        <div class="box box-info">
+                            <div class="col-xs-6">
+                                <div class="box-header with-border box-info">
+                                    <h3 class="box-title" style="float: left;">Thông tin bệnh nhân</h3>
+                                    <button class="btn btn-success btn-sm" style="float: right;"> Tạo mới liệu trình
+                                    </button>
                                 </div>
-                                <div class="form-group row add">
-                                    <div class="col-sm-4"><label>Điện thoại</label></div>
-                                    <div class="col-sm-6" style="padding: 0px;margin: 0px;">
-                                        <input type="text" value="{{$patient->phone}}" name="name"
-                                               class="form-control pull-right" id="startdate" style="margin:0px;"
-                                               disabled/>
+                                <div class="panel-body">
+                                    <div class="form-group row add">
+                                        <div class="col-sm-4"><label>Họ Tên</label></div>
+                                        <div class="col-sm-6" style="padding-left: 0px;">
+                                            <a href="admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group row add">
-                                    <div class="col-sm-4"><label>Bệnh tiền sử</label></div>
-                                    <div class="col-sm-6" style="padding-left: 0px;">
-                                        <ul style="padding: 0px;margin: 0px;">
-                                            @foreach($patient->Anamnesis as $key)
-                                                <li>{{$key->name->name}}</li>
+                                    <div class="form-group row add">
+                                        <div class="col-sm-4"><label>Điện thoại</label></div>
+                                        <div class="col-sm-6" style="padding: 0px;margin: 0px;">
+                                            <input type="text" value="{{$patient->phone}}" name="name"
+                                                   class="form-control pull-right" id="startdate" style="margin:0px;"
+                                                   disabled/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row add">
+                                        <div class="col-sm-4"><label>Bệnh tiền sử</label></div>
+                                        <div class="col-sm-6" style="padding-left: 0px;">
+                                            <ul style="padding: 0px;margin: 0px;">
+                                                @foreach($patient->Anamnesis as $key)
+                                                    <li>{{$key->name->name}}</li>
 
-                                            @endforeach
-                                        </ul>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
 
         <div class="row">

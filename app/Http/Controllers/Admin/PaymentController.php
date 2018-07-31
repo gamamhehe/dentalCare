@@ -139,6 +139,7 @@ class PaymentController extends Controller
     public function getDetail(Request $request){
         $listDetail = $this->getDetailListPaymentById($request->idPayment);
         $payment = $this->getPaymentById($request->idPayment);
+        $payment->updateList = $payment->hasPaymentUpdateDetail()->get();
         $listTreatmentHistory = $payment->hasManyTreatmentHistory()->get();
         $listTreatment = [];
         foreach ($listTreatmentHistory as $treatmentHistory){

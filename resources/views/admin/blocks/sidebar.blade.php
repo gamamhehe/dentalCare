@@ -46,6 +46,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.AppointmentPatient.index')}}">Tạo Lịch Hẹn</a></li>
                     <li><a href="{{ route('admin.listAppointment.dentist')}}">Danh sách Lịch hẹn</a></li>
+                    <li><a href="{{ route('admin.listAppointmentInDate.dentist')}}">Danh sách Lịch hẹn trong ngày</a></li>
                 </ul>
             </li>
             

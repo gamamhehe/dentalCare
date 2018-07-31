@@ -40,7 +40,7 @@ class AppointmentController extends Controller
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
         $patientName = Patient::where('id', $patientId)->first()->name;
-        $newformat = date('Y-m-d',$dateBooking);
+        $newformat = date('Y-m-d',strtotime($dateBooking));
         if ($role == 2) {
             $staff_id = $sessionAdmin->belongToStaff()->first()->id;
             $newApp = $this->createAppointment($newformat, $phone, $request->note, $staff_id,
@@ -58,4 +58,12 @@ class AppointmentController extends Controller
 
     }
 
+
+    public function checkDone($appointmentId){
+        $status = $this->checkDoneAppointment($appointmentId);
+        $data = array(
+            'statusDone' => $status,
+        );
+        echo json_encode($data);
+    }
 }

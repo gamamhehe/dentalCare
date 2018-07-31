@@ -222,11 +222,9 @@
                                    @endif
                                </div>
                                <div>
-                                   <form id="payment-form" action="{!! route('paypal') !!}" method="POST">
                                        <input type="hidden" name="amount" value="{{ $Payment->total_price - $Payment->paid }}">
                                        <input type="hidden" name="payment_id" value="{{ $Payment->id}}">
-                                   <button type="submit">Paypal Payment</button>
-                                   </form>
+                                   <a href="paypal/{{ $Payment->total_price - $Payment->paid }}/{{ $Payment->id}}" class="btn btn-success">View</a>
                                </div>
                            </div></a>
                    </div>

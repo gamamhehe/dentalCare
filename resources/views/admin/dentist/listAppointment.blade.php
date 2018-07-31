@@ -109,7 +109,6 @@
                     {data: 'note'},
                     {data: 'status'},
                     {
-
                         data: 'action'
                     },
                 ],
@@ -149,18 +148,18 @@
                 },
             });
     });
-        function checkComing(id){
+        function checkDone(id){
             $.ajax({
-                url: '/admin/check-coming/'+ id, //this is your uri
+                url: '/admin/check-done/'+ id, //this is your uri
                 type: 'GET', //this is your method
 
                 dataType: 'json',
                 success: function(data){
-                    if(data.statusComing == 0){
-                        swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error");
+                    if(data.statusDone == 0){
+                        swal("Cuộc hẹn này chưa được bắt đầu", "", "error");
                     }
-                    if(data.statusComing == 1){
-                        window.location.replace('http://' + data.url + "/admin/create-treatment/" + data.idPatient);
+                    if(data.statusDone == 1){
+                        swal("Hoàn tất cuộc hẹn", "success");
                     }
                 },error: function (data) {
                     swal("Check connnection", "", "error");
