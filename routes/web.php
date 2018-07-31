@@ -172,11 +172,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     //Dentist
     Route::get('/list-appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
     Route::get('/get-appointment', 'Admin\StaffController@getListAppointmentForStaff');
-    Route::get('/create-dentist', 'Admin\StaffController@create');
+    Route::get('/create-dentist', 'Admin\StaffController@create')->name('admin.create.staff');
     Route::get('/add-post','Admin\StaffController@addPost');
     Route::post('/edit-post','Admin\StaffController@editPost');
     Route::get('/delete-post','Admin\StaffController@deletePost');
-    // Route::get('/create-appointment','Admin\StaffController@createAppointmentByStaff');
+    
     Route::get('/create-treatment/{id}','Admin\StaffController@createTreatmentByStaff')->name('create.treatmentHistory');
     Route::get('/check-coming/{id}','Admin\StaffController@checkComingPatient');
     Route::post('/create-treatment-history-patient','Admin\TreatmentHistoryController@createTreatmentHistory')->name('admin.createTreatmentHistoryPatient.dentist');
@@ -205,6 +205,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/treatment-detail/{id}','Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment
     Route::post('/create-appointment','Admin\AppointmentController@add');
+    Route::get('/create-appointment','Admin\StaffController@createAppointmentByStaff');//new Page
 
 
     //treatmentHistory

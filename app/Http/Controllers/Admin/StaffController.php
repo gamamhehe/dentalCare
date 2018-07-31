@@ -70,6 +70,9 @@ class StaffController extends Controller
 
         $this->createUserWithRole($user, $staff, $userHasRole);
     }
+    public function createStaff(Request $request){
+       return view('admin.dentist.list');
+    }
 
     public function login(Request $request)
     {

@@ -37,7 +37,7 @@
                                 <th style="text-align: center; " class="col-xs-1">Số điện thoại</th>
                                 <th style="text-align: center; " class="col-xs-3">Địa Chỉ</th>
                                 <th style="text-align: center; " class="col-xs-1">Ngày Sinh</th>
-                                <th style="text-align: center; " class="col-xs-3">Tùy chọn</th>
+                                <th style="text-align: center; " class="col-xs-2">Tùy chọn</th>
 
                             </tr>
                             </thead>
@@ -50,8 +50,8 @@
                                         <td>{{$patient->address}}</td>
                                         <td>{{$patient->date_of_birth}}</td>
                                         <td>
-                                            <div class=" col-xs-12">
-                                            <a href="thong-tin-benh-nhan/{{$patient->id}}" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
+                                            <div style="padding-left: 1.8em;">
+                                            <a href="thong-tin-benh-nhan/{{$patient->id}}" class="btn btn-sm btn-default btn-info">Thông tin bệnh nhân</a>
                                             <button type="button" class="btn btn-sm btn-success"
                                                     onclick="receive('{{$patient->id}}')">Nhận bệnh
                                             </button>
@@ -260,6 +260,14 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+    $(document).ready(function() {
+            <?php if (Session::has('success')): ?>
+            swal("{{ Session::get('success')}}", "", "success");
+            <?php endif ?>
+            <?php if (Session::has('error')): ?>
+            swal("{{ Session::get('error')}}", "", "success");
+            <?php endif ?>
+        });
         $(function () {
             $('#datepicker').datepicker({
                 autoclose: true,
@@ -294,10 +302,11 @@
                     'datepicker': datepicker,
                 },
                 success: function (data) {
-                    if ((data.errors)) {
-                        swal("Đặt lịch hẹn thất bại", "", "error");
+                    if (data!= 0) {
+
+                        swal("Đặt lịch thành công", "", "success");
                     } else {
-                        swal("Đặt lịch hẹn thành công", "", "success");
+                        swal("Dặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
                     }
                 },
             });
