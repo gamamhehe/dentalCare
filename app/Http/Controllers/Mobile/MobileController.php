@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mobile;
 use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Jobs\SendReminderJob;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
@@ -85,7 +86,7 @@ class MobileController extends Controller
         $requestObject = Utilities::getFirebaseRequestObj(
             AppConst::RESPONSE_PROMOTION,
             "test",
-            $content, $content,'/topics/'.
+            $content, $content, '/topics/' .
             AppConst::TOPIC_PROMOTION);
 
         try {
@@ -99,12 +100,30 @@ class MobileController extends Controller
 
     public function test2(Request $request)
     {
-        for ($i = 0; $i < 100; $i++) {
-            Log::info("RUN " . $i);
-            $this->dispatch(new SendSmsJob($i, "ss"));
+        $staff = Staff::where('id', 5)->first();
+        $result = $this->isDentistAbsent($staff, '2018-07-23');
+        if ($result) {
+            return "TRUE";
+        } else {
+            return "FALSE";
         }
-//        return response()->json($objs);
 
+    }
+
+    public function testAppointment(Request $request)
+
+    {
+
+    }
+
+    public function getDentistAppointment(Request $request)
+
+    {
+        $dentistId = $request->input('dentist_id');
+        $dentist = Staff::where('id', $dentistId)->first();
+        $list = $dentist->hasAppointment()->get();
+        $count = $list->count();
+        return response()->json(['count'=>$count,'list'=>$list], 200);
     }
 
     public function test3(Request $request)

@@ -29,7 +29,6 @@ class TreatmentHistoryController extends BaseController
     use PatientBusinessFunction;
 
 
-
     public function create(Request $request)
     {
 //        Log::info($request->all());
@@ -49,11 +48,13 @@ class TreatmentHistoryController extends BaseController
             $medicineQuantitys = $request->input('medicine_quantity');
             $detailStepIds = $request->input('step_id');
             $medicines = [];
-            for ($i = 0; $i < count($medicineIds); $i++) {
-                $medicine = new MedicinesQuantity();
-                $medicine->medicine_id = $medicineIds[$i];
-                $medicine->quantity = $medicineQuantitys[$i];
-                $medicines[] = $medicine;
+            if ($medicineIds != null && count($medicineIds) > 0) {
+                for ($i = 0; $i < count($medicineIds); $i++) {
+                    $medicine = new MedicinesQuantity();
+                    $medicine->medicine_id = $medicineIds[$i];
+                    $medicine->quantity = $medicineQuantitys[$i];
+                    $medicines[] = $medicine;
+                }
             }
 //            $paymentId = $request->input('payment_id');
 //            $totalPrice = $request->input('total_price');
