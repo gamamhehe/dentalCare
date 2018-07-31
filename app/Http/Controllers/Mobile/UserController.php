@@ -10,9 +10,11 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Helpers\AppConst;
+use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Jobs\SendSmsJob;
 use App\Model\Patient;
 use App\Model\User;
 use App\Model\UserHasRole;
@@ -207,7 +209,7 @@ class UserController extends BaseController
 
 
 //get function to change password quickly
-    public function resetpassword($phone, $password)
+    public function resetpasswordTest($phone, $password)
     {
 //        $phone = $request->get('phone');
 //        $password = $request->get('password');
@@ -221,6 +223,27 @@ class UserController extends BaseController
             return response()->json("Update Phone: " . $phone . " and password: " . $password . " Successful!");
         } else {
             return response()->json("Không tìm thấy số điện thoại " . $phone);
+        }
+    }
+
+    public function resetPassword($phone)
+    {
+        try {
+            $user = User::where('phone', $phone)->first();
+            if ($user != null) {
+                $password = Utilities::generateRandomString("0123456789abcdefghijklmnopqrstuvwxyz");
+                $user->password = Hash::make($password);
+                $this->dispatch(new SendSmsJob($phone, "Mat khau moi cua ban la " . $password));
+                $this->updateUser($user);
+                $successResponse = $this->getSuccessObj(200, "OK", "Đổi mật khẩu thành công", "No data");
+                return response()->json($successResponse);
+            } else {
+                $error = $this->getErrorObj("Không tìm thấy tài khoản này ", "No exception");
+            return response()->json($error, 400);
+        }
+        }catch (\Exception $ex){
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
         }
     }
 

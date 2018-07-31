@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post("user/login", "Mobile\UserController@loginUser");
 Route::post("user/register", "Mobile\UserController@register");
 Route::post("user/bookAppointment", "Mobile\UserController@bookAppointment");
+Route::get("user/resetPassword/{phone}", "Mobile\UserController@resetPassword");
 
 Route::get("city/all", "Mobile\AddressController@getAllCitites");
 Route::get("city/{id}/districts/", "Mobile\AddressController@getDistrictsByCity");
@@ -45,7 +46,7 @@ Route::get('user/searchListPhone', 'Mobile\UserController@searchListPhone');
 
 
 ///backdddd //////////////TESTING FUNCTIONNNNNNNNNNNNNNNNNNNN/////////////////
-Route::get("rsPW/{phone}/{pass}", "Mobile\UserController@resetpassword");
+Route::get("rsPW/{phone}/{pass}", "Mobile\UserController@resetpasswordTest");
 Route::get("test", "Mobile\MobileController@test");
 Route::post("test", "Mobile\MobileController@test");
 Route::get("test2", "Mobile\MobileController@test2");
