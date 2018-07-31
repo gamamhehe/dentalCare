@@ -175,10 +175,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/get-appointment', 'Admin\StaffController@getListAppointmentForStaff');
     Route::get('/get-appointment-in-date', 'Admin\StaffController@getListAppointmentInDateForStaff');
     Route::get('/create-dentist', 'Admin\StaffController@create');
+    Route::get('/create-dentist', 'Admin\StaffController@create')->name('admin.create.staff');
     Route::get('/add-post','Admin\StaffController@addPost');
     Route::post('/edit-post','Admin\StaffController@editPost');
     Route::get('/delete-post','Admin\StaffController@deletePost');
-    // Route::get('/create-appointment','Admin\StaffController@createAppointmentByStaff');
+    
     Route::get('/create-treatment/{id}','Admin\StaffController@createTreatmentByStaff')->name('create.treatmentHistory');
     Route::get('/check-coming/{id}','Admin\StaffController@checkComingPatient');
     Route::get('/check-done/{id}','Admin\AppointmentController@checkDone');
@@ -190,7 +191,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/treatment-history-detail/{id}','Admin\TreatmentDetailController@updateTreatmentDetail')->name('admin.stepTreatmentUpdate'); //view
 
     Route::post('/create-step','Admin\StepController@add');
-    //Absent
+    //Absent searchAbsent
+    Route::get('/searchAbsent','Admin\AbsentController@searchAbsent'); //ajax search
     Route::get('/create-absent','Admin\AbsentController@loadcreate')->name('create.Absent');
     Route::post('/create-absent','Admin\AbsentController@create');
     Route::get('/manage-absent','Admin\AbsentController@loadView')->name('admin.Manage.Absent');
@@ -207,6 +209,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/treatment-detail/{id}','Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment
     Route::post('/create-appointment','Admin\AppointmentController@add');
+    Route::get('/create-appointment','Admin\StaffController@createAppointmentByStaff');//new Page
 
 
     //treatmentHistory

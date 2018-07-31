@@ -175,6 +175,19 @@ trait UserBusinessFunction
         return $phones;
     }
 
+
+    public function getUserApptByDate($phone, $dateStr,$staffId,$orderBy = 'asc')
+    {
+        $user = User::where('phone', $phone)->first();
+        $appointments = $user->hasAppointment()
+            ->where('staff_id', $staffId)
+            ->whereDate('start_time', $dateStr)
+            ->orderBy('numerical_order', $orderBy)
+            ->get();
+        return $appointments;
+    }
+
+
     public function deleteRole($id)
     {
         DB::beginTransaction();

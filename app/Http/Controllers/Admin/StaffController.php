@@ -70,6 +70,9 @@ class StaffController extends Controller
 
         $this->createUserWithRole($user, $staff, $userHasRole);
     }
+    public function createStaff(Request $request){
+       return view('admin.dentist.list');
+    }
 
     public function login(Request $request)
     {
@@ -89,9 +92,9 @@ class StaffController extends Controller
                 session(['currentAppointmentComming' => $this->getCurrentAppointmentComming($user->belongToStaff()->first()->id)]);
                 return redirect()->intended(route('admin.dashboard'));
             }
-            return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
+            return redirect()->back()->with('fail', '* Bạn không được phép truy cập')->withInput($request->only('phone'));
         }
-        return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
+        return redirect()->back()->with('fail', '* Tài khoản hoặc mật khẩu sai')->withInput($request->only('phone'));
     }
 
     public function update(Request $request)

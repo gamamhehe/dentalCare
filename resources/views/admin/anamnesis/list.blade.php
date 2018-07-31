@@ -7,13 +7,14 @@
                 <div class="row " style="text-align: center; margin-right: 4em">
                     <label><h1>Danh sách Bệnh Tiền Sử cho bệnh nhân</h1></label>
                 </div>
+              
                 <div class="row layout" style=" margin-right: 4em"  >
-                    <table id="dup-table" class="table myTable table-bordered">
+                    <table id="dup-table" class="table myTable table-bordered Mytable-hover">
                         <thead>
                         <tr style="background-color: #eee;">
-                            <td class="col-sm-1">id</td>
-                            <td class="col-sm-6" style="text-align: left;">Tên Bệnh</td>
-                            <td class="col-sm-3">Triệu chứng</td>
+                            <th class="col-sm-2" >Tên Bệnh</th>
+                            <td class="col-sm-7">Triệu chứng</td>
+                            <td class="col-sm-2">Tùy chọn</td>
                         </tr>
                         </thead>
                     </table>
@@ -23,6 +24,7 @@
     </div>
 @endsection
 @section('js')
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
     <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
@@ -58,8 +60,9 @@
                 ajax: '/admin/get-list-anamnesis',
                 columns : [
 
-                    {data: 'id'},
+                   
                     {data: 'name'},
+                     {data: 'description'},
                     {
 
                         data: 'action'

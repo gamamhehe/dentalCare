@@ -11,12 +11,9 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
-use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
-use App\Model\Patient;
 use Exception;
 use Illuminate\Http\Request;
-use Pusher\Pusher;
 
 class PatientController extends BaseController
 {
@@ -72,13 +69,16 @@ class PatientController extends BaseController
     {
         try {
             $phone = $request->input("phone");
+            $staffId = $request->input("dentist_id");
             $user = $this->getUserByPhone($phone);
             if ($user == null) {
                 $error = $this->getErrorObj("Số điện thoại chưa được đăng kí", "No exception");
                 return response()->json($error, 400);
             }
             $patients = $this->getPatientByPhone($phone);
-            return $patients;
+            $user->patients = $patients;
+            $user->appointments = $this->getUserApptByDate($phone, (new \DateTime())->format('Y-m-d'),$staffId);
+            return $user;
         } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 500);

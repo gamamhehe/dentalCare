@@ -33,7 +33,8 @@ class AppointmentController extends Controller
 
     public function add(Request $request)
     {
-        $phone = $request['phone'];
+       try {
+            $phone = $request['phone'];
         $estimateTimeReal = $request['estimateTimeReal'];
         $patientId = $request['patientID'];
         $dateBooking = $request['datepicker'];
@@ -53,6 +54,9 @@ class AppointmentController extends Controller
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
         $this->dispatch(new SendSmsJob($phone, $smsMessage));
         return response()->json($newApp);
+       } catch (\Exception $e) {
+            return 0;
+       }
     }
     public function getListAppoinmentByPatient($id){
 

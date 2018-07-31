@@ -25,7 +25,7 @@
 
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" style="text-align: center">
+                        <table class="table table-striped table-bordered Mytable-hover" style="text-align: center">
                             <thead>
                             <tr>
                                 <th style="text-align: center; width: 20%">Số Điện Thoại</th>
@@ -83,6 +83,7 @@
     </html> -->
 @endsection
 @section('js')
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 

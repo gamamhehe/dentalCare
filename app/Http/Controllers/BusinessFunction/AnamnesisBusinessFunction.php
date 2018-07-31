@@ -75,6 +75,32 @@ trait AnamnesisBusinessFunction
         foreach ($AnamnesisPatient as $key) {
             $key->name = $key->belongsToAnamnesisCatalog()->first();
         }
-        return $AnamnesisPatient;
+        return null;
+    }
+    public function createAnamnesisForPatient($array,$patientId){
+        foreach ($array as $key => $value) {
+            $result = $this->createAnamnesisPatient($value,$patientId);
+            if($result==false){
+                return false;
+            }
+        }
+        return true;
+    }
+    public function createAnamnesisPatient($anamId,$patientId){
+        DB::beginTransaction();
+        try{
+
+            $AnamnesisPatient = new AnamnesisPatient;
+            $AnamnesisPatient->patient_id = $patientId;
+            $AnamnesisPatient->anamnesis_id =  $anamId;
+            $AnamnesisPatient->description =  "";
+            $AnamnesisPatient->save();
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            return false;
+        }
     }
 }

@@ -103,6 +103,7 @@
 
                 </ul>
             </li>
+              
             @if(Session::get('roleAdmin') == 2 or Session::get('roleAdmin') == 1)
                 <li class="treeview">
                     <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Tủ Thuốc </span><span
@@ -123,6 +124,15 @@
                     </ul>
                 </li>
             @endif
+              <li class="treeview">
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Nhân sự </span><span
+                            class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.create.staff')}}">Danh sách Nhân viên</a></li>
+                    <!-- <li><a href="#"></a></li> -->
+
+                </ul>
+            </li>
         </ul>
     </section>
 </aside>

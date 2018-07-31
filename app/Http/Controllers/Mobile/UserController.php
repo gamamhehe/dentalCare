@@ -57,7 +57,7 @@ class UserController extends BaseController
                 $patient->date_of_birth = $birthday;
                 $patient->gender = $gender;
                 $patient->district_id = $districtId;
-                $patient->name = $name; 
+                $patient->name = $name;
                 $patient->address = $address;
                 ////HASH
                 $userHasRole = new UserHasRole();
@@ -109,7 +109,7 @@ class UserController extends BaseController
                     'scope' => '',
                     'username' => $phone
                 ]);
-                    $tokenRequest = Request::create('/oauth/token', 'post');
+                $tokenRequest = Request::create('/oauth/token', 'post');
                 $tokenResponse = (Route::dispatch($tokenRequest));
                 $tokenResponseBody = json_decode($tokenResponse->getContent());
                 if ($tokenResponseBody != null) {
@@ -117,6 +117,7 @@ class UserController extends BaseController
                     $userResponse->refresh_token = $tokenResponseBody->refresh_token;
                     $userResponse->token_type = $tokenResponseBody->token_type;
                     $userResponse->expires_in = $tokenResponseBody->expires_in;
+                    $userResponse->token_created_date = $result->tokens()->first()->created_date;
                 }
                 return response()->json($userResponse, 200);
             } else {
@@ -147,7 +148,7 @@ class UserController extends BaseController
             $error = $this->getErrorObj(AppConst::MSG_LOGOUT_ERROR, null);
             return response()->json($error, 404);
         }
-        $user= Auth::user();
+        $user = Auth::user();
         $user->noti_token = "null";
         $this->updateUser($user);
         $request->user('api')->token()->revoke();

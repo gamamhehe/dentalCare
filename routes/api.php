@@ -56,6 +56,8 @@ Route::get("test4", "Mobile\MobileController@test4");
 Route::post("test4", "Mobile\MobileController@test4");
 Route::get("test5", "Mobile\MobileController@test5");
 Route::post("test5", "Mobile\MobileController@test5");
+Route::post("test5", "Mobile\MobileController@test5");
+Route::get("dentistAppointment", "Mobile\MobileController@getDentistAppointment");
 Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
 Route::get("firebase/{topic}/{content}", "Mobile\MobileController@sendFirebase");

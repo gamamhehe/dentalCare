@@ -26,6 +26,7 @@ trait PatientBusinessFunction
         return null;
     }
 
+
     public function getPatientByPhone($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
@@ -44,9 +45,17 @@ trait PatientBusinessFunction
     {
         DB::beginTransaction();
         try {
-            $patient->save();
+            $PatientId = Patient::create([
+                'name' => $patient->name,
+                'address' => $patient->address,
+                'phone' => $patient->phone,
+                'avatar' => $patient->avatar,
+                'date_of_birth' => $patient->date_of_birth,
+                'gender' => $patient->gender,
+                'district_id' => $patient->district_id,
+            ])->id;
             DB::commit();
-            return true;
+            return $PatientId;
         } catch (\Exception $e) {
             DB::rollback();
             return false;

@@ -109,7 +109,6 @@ trait AppointmentBussinessFunction
             usort($appointmentArray, array($this, "sortByTimeStamp"));
             //'if statement' return the $predictAppointmentDate and $suitableDentistId for the code below it
             if (count($appointmentArray) < $NUM_OF_DENTIST) {
-                // kieu j cung co loi
                 if ($dentistId == null || $dentistId == 0) {
                     $this->logBugAppointment("INTO COUNT< NUMMOF DENTIST ___dentistId = null");
                     $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, $defaultStartOfDay);

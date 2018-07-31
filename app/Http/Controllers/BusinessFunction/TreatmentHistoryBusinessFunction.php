@@ -44,6 +44,7 @@ trait TreatmentHistoryBusinessFunction
                 $treatmentMedicines = $treatmentHistoryDetail->hasMedicinesQuantity()->get();
                 foreach ($treatmentMedicines as $treatmentMedicine) {
                     $treatmentMedicine->medicine = $treatmentMedicine->belongsToMedicine()->first();
+                    
                 }
                 $treatmentDetailSteps = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
                 foreach ($treatmentDetailSteps as $treatmentDetailStep) {

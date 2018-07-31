@@ -6,12 +6,98 @@
 .dkm{
     color :red;
 }
+/*layoutlogin*/
+html.login {
+ height: 100%;
+    margin: 0;
+}
+
+body.login {
+   height: 100%;
+    margin: 0;
+    background-image: url("/assets/images/bgLogin.jpg");
+    float: left; 
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+ /*end layoutlogin*/
+ /*accordion*/
+ .accordion-container {
+        position: relative;
+        width: 100%;
+        border: 1px solid #0079c1;
+        border-top: none;
+        outline: 0;
+        cursor: pointer
+}
+
+.accordion-container .article-title {
+        display: block;
+        position: relative;
+        margin: 0;
+        padding: 0.625em 0.625em 0.625em 2em;
+        border-top: 1px solid #0079c1;
+        font-size: 1.25em;
+        font-weight: normal;
+        color: #0079c1;
+        cursor: pointer;
+}
+
+.accordion-container .article-title:hover,
+.accordion-container .article-title:active,
+.accordion-container .content-entry.open .article-title {
+        background-color: #00aaa7;
+        color: white;
+}
+
+.accordion-container .article-title:hover i:before,
+.accordion-container .article-title:hover i:active,
+.accordion-container .content-entry.open i {
+        color: white;
+}
+
+.accordion-container .content-entry i {
+        position: absolute;
+        top: 3px;
+        left: 12px;
+        font-style: normal;
+        font-size: 1.625em;
+        sans-serif;
+        color: #0079c1;
+}
+
+.accordion-container .content-entry i:before {
+        content: "+ ";
+}
+
+.accordion-container .content-entry.open i:before {
+        content: "- ";
+}
+
+.accordion-content {
+        display: none;
+        padding-left: 2.3125em;
+}
+
+
+
+@media all and (min-width: 860px) {
+        #content {
+                width: 70%;
+                margin: 0 auto;
+        }
+}
+ /*end accordion*/
 /*choose avatar*/
 
 /*end choose avatar*/
 /*profile*/
 *{margin: 0; padding: 0;}
-
+.Mytable-hover>tbody>tr:hover{
+    background-color:#b3d9ff;
+}
 .body-profile .nav-tabs li.active a,.body-profile .nav-tabs li.active a:hover {
     border: none;
     border-bottom: 2px solid #3494DF;
@@ -270,13 +356,29 @@ h5.list:after {
     box-sizing:border-box;
     transition:.3s;
   }
-  
+  input[type=password]{
+    width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+  }
   input[type=text]:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
+  }
+  input[type=password]:focus{
     border-color:dodgerBlue;
     box-shadow:0 0 8px 0 dodgerBlue;
   }
   
   .inputWithIcon input[type=text]{
+    padding-left:40px;
+  }
+  .inputWithIcon input[type=password]{
     padding-left:40px;
   }
   
@@ -296,6 +398,9 @@ h5.list:after {
   .inputWithIcon input[type=text]:focus + i{
     color:dodgerBlue;
   }
+  .inputWithIcon input[type=password]:focus + i{
+    color:dodgerBlue;
+  }
   
   .inputWithIcon.inputIconBg i{
     background-color:#aaa;
@@ -303,8 +408,12 @@ h5.list:after {
     padding:9px 4px;
     border-radius:4px 0 0 4px;
   }
-  
+
   .inputWithIcon.inputIconBg input[type=text]:focus + i{
+    color:#fff;
+    background-color:dodgerBlue;
+  }
+  .inputWithIcon.inputIconBg input[type=password]:focus + i{
     color:#fff;
     background-color:dodgerBlue;
   }

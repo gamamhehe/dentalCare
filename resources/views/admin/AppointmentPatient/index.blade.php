@@ -5,7 +5,7 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Tìm bệnh nhân</div>
+                        <div class="col-sm-5" style="text-align: left"><h1>Tìm kiếm bệnh nhân</h1></div>
                         <div class="col-sm-7" style="text-align: right">
                             @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
                                 <button class="btn btn-success create-patient" id="Patient">Tạo bệnh nhân</button>
@@ -30,14 +30,14 @@
 
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" style="text-align: center;overflow-x:auto;">
+                        <table class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;">
                             <thead>
                             <tr>
                                 <th style="text-align: center; " class="col-xs-2">Họ Tên</th>
                                 <th style="text-align: center; " class="col-xs-1">Số điện thoại</th>
                                 <th style="text-align: center; " class="col-xs-3">Địa Chỉ</th>
                                 <th style="text-align: center; " class="col-xs-1">Ngày Sinh</th>
-                                <th style="text-align: center; " class="col-xs-3">Tùy chọn</th>
+                                <th style="text-align: center; " class="col-xs-2">Tùy chọn</th>
 
                             </tr>
                             </thead>
@@ -50,8 +50,8 @@
                                         <td>{{$patient->address}}</td>
                                         <td>{{$patient->date_of_birth}}</td>
                                         <td>
-                                            <div class=" col-xs-12">
-                                            <a href="thong-tin-benh-nhan/{{$patient->id}}" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
+                                            <div style="padding-left: 1.8em;">
+                                            <a href="thong-tin-benh-nhan/{{$patient->id}}" class="btn btn-sm btn-default btn-info">Thông tin bệnh nhân</a>
                                             <button type="button" class="btn btn-sm btn-success"
                                                     onclick="receive('{{$patient->id}}')">Nhận bệnh
                                             </button>
@@ -224,7 +224,7 @@
                                         @foreach($AnamnesisCatalog as $one)
 
                                             <div class="col-xs-3" style="text-align: left;">
-                                                <input type="checkbox" id="myCheck" onclick="myFunction()">
+                                                <input type="checkbox" class="anam" name="anam[]" value="{{$one->id}}" id="myCheck" onclick="myFunction()">
                                                 {{$one->name}}
                                             </div>
                                         @endforeach
@@ -254,11 +254,20 @@
     </html> -->
 @endsection
 @section('js')
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+    $(document).ready(function() {
+            <?php if (Session::has('success')): ?>
+            swal("{{ Session::get('success')}}", "", "success");
+            <?php endif ?>
+            <?php if (Session::has('error')): ?>
+            swal("{{ Session::get('error')}}", "", "success");
+            <?php endif ?>
+        });
         $(function () {
             $('#datepicker').datepicker({
                 autoclose: true,
@@ -293,16 +302,21 @@
                     'datepicker': datepicker,
                 },
                 success: function (data) {
-                    if ((data.errors)) {
-                        swal("Đặt lịch hẹn thất bại", "", "error");
+                    if (data!= 0) {
+
+                        swal("Đặt lịch thành công", "", "success");
                     } else {
-                        swal("Đặt lịch hẹn thành công", "", "success");
+                        swal("Dặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
                     }
                 },
             });
         });
 
         $("#addPatient").click(function () {
+            var data=[];
+             $('.anam:checked').each(function(){
+                data.push($(this).val());
+             })
             var nameCreate = document.getElementById("namePatient").value;
             var addressCreate = document.getElementById("addressPatient").value;
             var phoneCreate = document.getElementById("phonePatient").value;
@@ -320,6 +334,7 @@
                     'date_of_birth': birthdateCreate,
                     'gender': genderCreate,
                     'district_id': districtCreate,
+                    'anam' : data,
 
                 },
                 success: function (data) {

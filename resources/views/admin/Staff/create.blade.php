@@ -204,7 +204,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="body">Body</label>
+                                    <label class="control-label col-sm-2"for="body">Body</label>
                                     <div class="col-sm-10">
                                         <textarea type="name" class="form-control" id="b"></textarea>
                                     </div>
