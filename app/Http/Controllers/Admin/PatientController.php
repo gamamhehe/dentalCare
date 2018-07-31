@@ -321,9 +321,9 @@ class PatientController extends Controller
                     }
                 }
 
-                $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
             } else {
             }
+            $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
         return view('admin.Patient.Treat', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
