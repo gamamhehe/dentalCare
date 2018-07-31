@@ -26,6 +26,7 @@ trait PatientBusinessFunction
         return null;
     }
 
+
     public function getPatientByPhone($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
