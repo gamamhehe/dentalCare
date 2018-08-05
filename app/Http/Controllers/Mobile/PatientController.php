@@ -69,7 +69,7 @@ class PatientController extends BaseController
     {
         try {
             $phone = $request->input("phone");
-            $staffId = $request->input("dentist_id");
+//            $staffId = $request->input("dentist_id");
             $user = $this->getUserByPhone($phone);
             if ($user == null) {
                 $error = $this->getErrorObj("Số điện thoại chưa được đăng kí", "No exception");
@@ -77,7 +77,7 @@ class PatientController extends BaseController
             }
             $patients = $this->getPatientByPhone($phone);
             $user->patients = $patients;
-            $user->appointments = $this->getUserApptByDate($phone, (new \DateTime())->format('Y-m-d'),$staffId);
+            $user->appointments = $this->getUserApptByDate($phone, (new \DateTime())->format('Y-m-d'));
             return $user;
         } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);

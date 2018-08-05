@@ -195,11 +195,10 @@ trait UserBusinessFunction
     }
 
 
-    public function getUserApptByDate($phone, $dateStr, $staffId, $orderBy = 'asc')
+    public function getUserApptByDate($phone, $dateStr, $orderBy = 'asc')
     {
         $user = User::where('phone', $phone)->first();
         $appointments = $user->hasAppointment()
-            ->where('staff_id', $staffId)
             ->whereDate('start_time', $dateStr)
             ->orderBy('numerical_order', $orderBy)
             ->get();
