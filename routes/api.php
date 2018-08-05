@@ -121,6 +121,7 @@ Route::middleware('auth:api')->group(function () {
     /*************************************-----------------------------*****************************************************/
 
     Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
+    Route::post("patient/updatePatient", "Mobile\PatientController@updatePatientInfo");
     Route::get('patient/getByPhone', "Mobile\PatientController@getByPhone");
     Route::get('staff/getPatientAppointmentByDate', "Mobile\StaffController@getPatientAppointmentByDate");
     Route::post("patient/receive", "Mobile\PatientController@receive");

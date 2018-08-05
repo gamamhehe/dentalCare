@@ -148,8 +148,8 @@ class StaffController extends BaseController
             }
             $name = $request->input('name');
             $gender = $request->input('gender');
-            $birthday = $request->input('birthday');
-            $districtId = $request->input('districtId');
+            $birthday = $request->input('date_of_birth');
+            $districtId = $request->input('district_id');
             $address = $request->input('address');
             $listAnamnesisId = $request->input('anamnesis[]');
             $patient = new Patient();

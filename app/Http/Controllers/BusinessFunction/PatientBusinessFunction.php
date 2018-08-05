@@ -35,6 +35,12 @@ trait PatientBusinessFunction
                 $district = $item->belongsToDistrict()->first();
                 $item->district = $district;
                 $item->city = $district == null ? null : $district->belongsToCity()->first();
+                $patientAnamnesis = $item->hasAnamnesisPatient()->get();
+                $anamnesis = [];
+                foreach ($patientAnamnesis as $ans){
+                    $anamnesis[]= $ans->belongsToAnamnesisCatalog()->first();
+                }
+                $item->anamnesis  = $anamnesis;
             }
             return $patients;
         }

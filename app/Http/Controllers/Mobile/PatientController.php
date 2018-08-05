@@ -30,6 +30,7 @@ class PatientController extends BaseController
             $birthday = $request->input('date_of_birth');
             $address = $request->input('address');
             $districtId = $request->input('district_id');
+            $listAnamnesisId = $request->input('anamnesis[]');
             $patient = $this->getPatientById($patientId);
             if ($patient != null) {
                 $patient->name = $name;
@@ -37,7 +38,7 @@ class PatientController extends BaseController
                 $patient->date_of_birth = $birthday;
                 $patient->address = $address;
                 $patient->district_id = $districtId;
-                $result = $this->updatePatient($patient);
+                $result = $this->updatePatientWithAnamnesis($patient,$listAnamnesisId);
                 if ($result == true) {
                     $successResponse = new \stdClass();
                     $successResponse->status = "OK";
