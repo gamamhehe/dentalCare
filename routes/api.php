@@ -61,6 +61,7 @@ Route::post("test5", "Mobile\MobileController@test5");
 Route::get("dentistAppointment", "Mobile\MobileController@getDentistAppointment");
 Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
+Route::get("firebase/send/{phone}/{content}", "Mobile\MobileController@sendFirebaseToPhone");
 Route::get("firebase/{topic}/{content}", "Mobile\MobileController@sendFirebase");
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
