@@ -312,6 +312,27 @@ class StaffController extends BaseController
 
     }
 
+    public function getCurrentFreeDentist(Request $request)
+    {
+        $date = $request->input('date');
+        try {
+            $availableDentists = $this->getAvailableDentistAtDate($date);
+            $freeDentists = $this->getCurrentFreeDentist();
+            foreach ($availableDentists as $dentist) {
+                if (in_array($dentist->id, $freeDentists)) {
+                    $dentist->status = 'Đang rãnh';
+                }else{
+                    $dentist->status = 'Đang bận';
+                }
+            }
+            return response()->json($availableDentists, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+
+    }
+
     public function getListRequestAbsent(Request $request)
     {
         try {

@@ -43,7 +43,14 @@ trait AppointmentBussinessFunction
     public function getAppointmentById($id)
     {
         $appointment = Appointment::where('id', $id)->first();
-        return $appointment;
+        $response = $this->attachFieldAppointment($appointment);
+        return $response;
+    }
+
+    public function attachFieldAppointment($appointment){
+            $appointment->dentist = $appointment->belongsToStaff()->first();
+            $appointment->patient = $appointment->hasPatientOfAppointment()->first();
+            return $appointment;
     }
 
     public function getAppointmentsByStartTime($startTime)
@@ -636,6 +643,8 @@ trait AppointmentBussinessFunction
         }
         return $listCurrentFreeDentist;
     }
+
+
 
     public function checkAppointmentComing($appointmentId)
     {
