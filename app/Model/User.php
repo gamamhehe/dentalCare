@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
+    protected $table = 'tbl_users';
+    protected $primaryKey = "phone";
+    protected $casts = ['phone' => 'string'];
+    protected $fillable = ['phone', 'password', 'is_deleted'];
+
     public function findForPassport($phone)
     {
         return $this->where('phone', $phone)->first();
@@ -22,10 +27,9 @@ class User extends Authenticatable
         return $this->hasMany('\App\Model\OauthAccessToken', 'user_id', 'phone');
     }
 
-    protected $table = 'tbl_users';
-    protected $primaryKey = "phone";
-    protected $casts = ['phone' => 'string'];
-    protected $fillable = ['phone', 'password', 'noti_token', 'is_deleted'];
+    public function hasFirebaseToken(){
+        return $this->hasMany('App\Model\FirebaseToken','phone', 'phone');
+    }
 
     public function hasUserHasRole()
     {

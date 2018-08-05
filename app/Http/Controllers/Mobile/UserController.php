@@ -95,7 +95,7 @@ class UserController extends BaseController
             $notifToken = $request->input('noti_token');
             $result = $this->checkLogin($phone, $password);
             if ($result != null) {
-                $result->noti_token = $notifToken;
+                $this->updateUserFirebaseToken($phone, $notifToken);
                 $this->updateUser($result);
                 $patients = $this->getPatientByPhone($phone);
                 $userResponse = new \stdClass();
@@ -151,11 +151,8 @@ class UserController extends BaseController
             return response()->json($error, 404);
         }
         $user = Auth::user();
-        $user->noti_token = "null";
-        $this->updateUser($user);
+        $this->updateUserFirebaseToken($user->phone, "null");
         $request->user('api')->token()->revoke();
-//        Auth::guard('api')->logout();
-
 //        Session::flush();
 //        Session::regenerate();
         $successResponse = new \stdClass();
@@ -323,23 +320,15 @@ class UserController extends BaseController
 
     public function updateNotifToken(Request $request)
     {
-        $token = $request->input('noti_token');
-        $phone = $request->input('phone');
-        $user = $this->getUserByPhone($phone);
-        if ($user != null) {
-            $user->noti_token = $token;
-            $result = $this->updateUser($user);
-            if ($result) {
-                return response()->json("Change firebase notification token successful", 200);
-
-            } else {
-                return response()->json("change firebase notification token error", 400);
-            }
-        } else {
-            $error = new \stdClass();
-            $error->error = "Không tìm thấy số điện thoại " . $phone;
-            $error->exception = "nothing";
-            return response()->json($error, 400);
+        try {
+            $token = $request->input('noti_token');
+            $phone = $request->input('phone');
+            $this->updateUserFirebaseToken($phone, $token);
+            $successResponse = $this->getSuccessObj(500, "OK", "Change notification token success", "Null data");
+            return response()->json($successResponse, 200);
+        }catch (\Exception $ex){
+            $errorResponse = $this->getErrorObj("Error when update firebase token", $ex);
+            return response()->json($errorResponse, 500);
         }
     }
 
