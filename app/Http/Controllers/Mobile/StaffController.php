@@ -312,7 +312,7 @@ class StaffController extends BaseController
 
     }
 
-    public function getCurrentFreeDentist(Request $request)
+    public function getCurrentFreeDentists(Request $request)
     {
         $date = $request->input('date');
         try {
