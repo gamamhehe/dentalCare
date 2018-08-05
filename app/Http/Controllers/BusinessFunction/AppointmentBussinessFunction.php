@@ -47,10 +47,16 @@ trait AppointmentBussinessFunction
         return $response;
     }
 
-    public function attachFieldAppointment($appointment){
-            $appointment->dentist = $appointment->belongsToStaff()->first();
-            $appointment->patient = $appointment->hasPatientOfAppointment()->first();
-            return $appointment;
+    public function attachFieldAppointment($appointment)
+    {
+        $appointment->dentist = $appointment->belongsToStaff()->first();
+        $patientAppointment = $appointment->hasPatientOfAppointment()->first();;
+        if ($patientAppointment != null) {
+            $appointment->patient = $patientAppointment->belongsToPatient()->first();
+        } else {
+            $appointment->patient = null;
+        }
+        return $appointment;
     }
 
     public function getAppointmentsByStartTime($startTime)
@@ -603,7 +609,7 @@ trait AppointmentBussinessFunction
     {
 //
         $dateString = Carbon::now()->format('Y-m-d');
-        $newDate = date('Y-m-d', strtotime('+1 day',strtotime($dateString)));
+        $newDate = date('Y-m-d', strtotime('+1 day', strtotime($dateString)));
         return Appointment::where('staff_id', $dentist_id)
             ->where('start_time', '>', Carbon::now()->format('Y-m-d'))
             ->where('start_time', '<', $newDate)
@@ -620,7 +626,7 @@ trait AppointmentBussinessFunction
     function viewAppointmentInDateForReception()
     {
         $dateString = Carbon::now()->format('Y-m-d');
-        $newDate = date('Y-m-d', strtotime('+1 day',strtotime($dateString)));
+        $newDate = date('Y-m-d', strtotime('+1 day', strtotime($dateString)));
         return Appointment::where('start_time', '>', Carbon::now()->format('Y-m-d'))
             ->where('start_time', '<', $newDate)
             ->get();
@@ -643,7 +649,6 @@ trait AppointmentBussinessFunction
         }
         return $listCurrentFreeDentist;
     }
-
 
 
     public function checkAppointmentComing($appointmentId)
@@ -673,9 +678,10 @@ trait AppointmentBussinessFunction
 
     }
 
-    public function checkDoneAppointment($appointmentId){
+    public function checkDoneAppointment($appointmentId)
+    {
         $appointment = Appointment::where('id', $appointmentId)->first();
-        if ($appointment->status == 2){
+        if ($appointment->status == 2) {
             $appointment->status = 3;
             $appointment->save();
             return 1;
