@@ -43,8 +43,7 @@ trait AppointmentBussinessFunction
     public function getAppointmentById($id)
     {
         $appointment = Appointment::where('id', $id)->first();
-        $response = $this->attachFieldAppointment($appointment);
-        return $response;
+        return $appointment;
     }
 
     public function attachFieldAppointment($appointment)

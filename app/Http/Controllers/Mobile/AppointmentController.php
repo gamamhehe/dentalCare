@@ -49,7 +49,8 @@ class AppointmentController extends BaseController
     {
         try {
             $appointment = $this->getAppointmentById($id);
-            return response()->json($appointment, 200);
+            $response = $this->attachFieldAppointment($appointment);
+            return response()->json($response, 200);
         } catch (Exception $exception) {
             $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
             return response()->json($error, 400);
