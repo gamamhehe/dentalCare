@@ -10,6 +10,7 @@ use App\Jobs\SendReminderJob;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
 use App\Model\Appointment;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Staff;
 use Carbon\Carbon;
@@ -81,13 +82,26 @@ class MobileController extends Controller
 
     }
 
-    public function sendFirebase($topic, $content)
+    public function sendFirebase($phone, $content)
     {
         $requestObject = Utilities::getFirebaseRequestObj(
             AppConst::RESPONSE_PROMOTION,
             "test",
-            $content, $content, '/topics/' .
-            AppConst::TOPIC_PROMOTION);
+            $content, $content, '/topics/' .AppConst::TOPIC_PROMOTION);
+
+        try {
+            $response = Utilities::sendFirebase($requestObject);
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+        return response()->json("SUCCESS");
+    } public function sendFirebaseToPhone($phone, $content)
+    {
+        $userFbToken = FirebaseToken::where('phone', $phone)->first();
+        $requestObject = Utilities::getFirebaseRequestObj(
+            AppConst::RESPONSE_PROMOTION,
+            "test",
+            $content, $content, $userFbToken->noti_token);
 
         try {
             $response = Utilities::sendFirebase($requestObject);

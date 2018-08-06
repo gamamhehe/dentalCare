@@ -57,26 +57,14 @@
                     <!-- User image -->
 
                     <li class="user-header">
+                        <p>{{ Session::get('currentAdmin')->belongToStaff()->first()->name}}</p>
+                        <div>  <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <img src="{{Session::get('currentAdmin')->belongToStaff()->first()->avatar}}" class="centerThing img-responsive img-fruid circleBorder" style="max-width: 100px;max-height: 100px;" >
 
-                        <p>
-                            {{ Session::get('currentAdmin')->belongToStaff()->first()->name}}
-                        </p>
+                                </a></div>
                     </li>
                     <!-- Menu Body -->
-                    {{--<li class="user-body">--}}
-                        {{--<div class="row">--}}
-                            {{--<div class="col-xs-4 text-center">--}}
-                                {{--<a href="#">Followers</a>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-4 text-center">--}}
-                                {{--<a href="#">Sales</a>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-4 text-center">--}}
-                                {{--<a href="#">Friends</a>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- /.row -->--}}
-                    {{--</li>--}}
+                   
                     <!-- Menu Footer-->
                     <li class="user-footer">
                         <div class="pull-left">
@@ -92,3 +80,4 @@
         </ul>
     </div>
 </nav>
+       <link rel="stylesheet" href="/assets/user/css/mycss.css">

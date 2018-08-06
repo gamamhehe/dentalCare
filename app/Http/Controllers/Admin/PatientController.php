@@ -27,6 +27,10 @@ class PatientController extends Controller
 {
 
     use AppointmentBussinessFunction;
+    use TreatmentHistoryBusinessFunction;
+    use AnamnesisBusinessFunction;
+    use UserBusinessFunction;
+    use PatientBusinessFunction;
 
 
     public function login(Request $request)

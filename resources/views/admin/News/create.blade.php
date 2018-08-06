@@ -64,7 +64,7 @@
           function xxx(evt,sel){
         var check  = document.getElementById('thumbnail').value;
         if(check.length!= 0){
-            swal("Hết nulll nhaaa!", "", "error");  
+            swal("Không còn trống!", "", "error");  
         }
         }
         });
@@ -73,7 +73,7 @@
             $(document).ready(function () {
             var check  = document.getElementById('thumbnail').value;
                 if(check.length !=0){
-                    alert("DKM");
+                    
                 }
                 Page.initTinyMCE();
                 Page.initLFM();

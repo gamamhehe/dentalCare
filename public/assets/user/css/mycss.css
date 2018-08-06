@@ -11,7 +11,12 @@ html.login {
  height: 100%;
     margin: 0;
 }
-
+.navHidden{
+    visibility: hidden;
+}
+.navVisible{
+    visibility: visible;
+}
 body.login {
    height: 100%;
     margin: 0;
@@ -711,7 +716,7 @@ background-color: #FEFEFE;
 }
 .tieude{
     color: #1760b1;
-    font-size: 20px;
+    font-size: 15px;
     text-align: center;
     margin-top: 1em;
 }
@@ -1017,12 +1022,17 @@ body
     transition: 0.5s;
 }
 
+.bochinh {
+    overflow: hidden;
+}
+
 .motmon:hover img {
     transform: scale(1.2);
 }
 
 .motmon img {
     transition: 2s;
+    overflow: hidden;
 }
 
 .tieudeour {
@@ -1111,7 +1121,7 @@ a.btn {
 .tron {
     height: 25px;
     width: 25px;
-    background: #f04c23;
+    background: #0275d8;
     border-radius: 50%;
     position: absolute;
     top: -11px;
@@ -1121,7 +1131,7 @@ a.btn {
 
 .gach {
     position: relative;
-    background: #f04c23;
+    background: #0275d8;
     width: 230px;
     height: 3px;
     margin: 20px 0px 40px 0px;
@@ -1146,7 +1156,7 @@ a.btn {
 }
 
 h4.textdaubep {
-    color: #F33A3A;
+    color: #1760b1;
     font-size: 20px;
     margin: 20px 0px 5px 0px;
 }
@@ -1242,14 +1252,22 @@ h4.tdbanner2 {
 }
 
 h3.tdbanner1 {
-    font-family: 'Italianno', cursive;
     font-size: 48px;
     letter-spacing: 9px;
     animation: divao 2s forwards;
+    font-family: 'Roboto', sans-serif;
+    font-size: 55px;
+    text-transform: uppercase;
+    color: royalblue;
 }
-
+.circleBorder{
+    border-radius: 100%;
+    border: 5px solid #fff;
+    /*box-shadow: 1px 4px 6px 2px #dadada;*/
+    position: relative;
+}
 .textbanner {
-    background: rgba(0, 0, 0, 0.7);
+    /*background: rgba(0, 0, 0, 0.7);*/
     width: 100%;
     height: 100%;
     top: 0px;
@@ -1265,6 +1283,7 @@ h3.tdbanner1 {
     height: 685px;
     background-size: cover;
     background-position: center;
+    
 }
 .hinhhai {
     background: url(/assets/images/Carousel/carousel2.jpg);
@@ -1315,18 +1334,11 @@ h3.tdbanner1 {
     background-size: cover;
     background-position: center;
 }
-/*.nav>li>a:focus, .nav>li>a:hover{
-    background-color: red !important; 
-
-}
-.thanhmenu ul.navbar-nav li.nav-item a.nav-link :hover{
-background-color: red;
-}*/
+ 
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link {
     padding: 20px 9px;
     text-transform: uppercase;
-    color: white;
     border-bottom: 3px solid transparent;
     font-size: 15px;
     font-weight: 600;
@@ -1341,16 +1353,62 @@ a.nav-link:focus { /*menu hien tai*/
 a.nav-link.biendoichumenu {
     color: white;
 }
-
+.thanhmenu ul.navbar-nav li.nav-item
+a.nav-link {
+    color: white;
+}
+.thanhmenu {
+    padding: 0px;
+    background-color: #0275d8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: 0.4s;
+}
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link:hover {
-    color: #336600;
-    background-color: red;
+    color: #0275d8;
+    border-color: #0275d8;
+}
+.thanhmenu ul.navbar-nav li.nav-item
+a.nav-link.biendoichumenu:hover {
+     color: white;
+    border-color: white;
 }
 
-.thanhmenu ul.navbar-nav li.nav-item.active
-a.nav-link:hover {
-    border-color: #336600;
+.thanhmenu ul.navbar-nav li.nav-item
+a.nav-link.active{
+     border-color: #0275d8;
+}
+.thanhmenu ul.navbar-nav li.nav-item
+a.nav-link.biendoichumenu.active{
+     border-color: white;
+}
+.box_box_dktv{
+    background-color: blue;
+}
+.box_dktv{
+   background: #c61b25 !important;
+    padding: 10px;
+    border-radius: 5px;
+    position: fixed;
+    color: #fff !important;
+    font-weight: 600;
+    z-index: 1;
+    right:-200px; top:300px;
+    background: red;
+    animation: mymove 10s infinite;
+    animation-delay: 0s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+}
+@-webkit-keyframes mymove {
+    0%   {background-color:#c61b25;  right:-200px;  top:300px;}
+    10%  {background-color:#c61b25;  right:0px; top:300px;}
+    60%  {background-color:#c61b25;  right:0px; top:300px;}
+    70%  {background-color:#c61b25;  right:-200px; top:300px;}
+    100% {background-color:#c61b25; right:-200px;top:300px;}
 }
 
 
@@ -1377,15 +1435,7 @@ a.nav-link:hover {
     height: 100%;
     width: 100%;
 }
-.thanhmenu {
-    padding: 0px;
-    /*background-color: #f04c23;*/
-    /*background: transparent;*/
-    background-color: red;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    transition: 0.4s;
 
-}
 .divcenter{
     margin: 0 auto;
     width: 100%;
@@ -1437,10 +1487,33 @@ img.centerThing{
 }
 
 .thanhmenu.biendoimenu {
-    background: #f04c23;
+    background: #0275d8;
 }
-
-
+#thd .tmp03 .col-lg {
+    padding: 0 10px;
+}
+#thd .tmp03 .col-lg .img a {
+    text-align: center;
+    display: block;
+    padding-top: 50px;
+    color: #008bc3;
+    text-decoration: underline;
+    font-family: sanf-hv;
+}#thd {
+    font-size: 15px;
+}
+@media (min-width: 992px)
+.col-lg {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
+@media (min-width: 768px)
+.col-md {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
 
 .top
 {

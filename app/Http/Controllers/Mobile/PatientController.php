@@ -30,6 +30,7 @@ class PatientController extends BaseController
             $birthday = $request->input('date_of_birth');
             $address = $request->input('address');
             $districtId = $request->input('district_id');
+            $listAnamnesisId = $request->input('anamnesis[]');
             $patient = $this->getPatientById($patientId);
             if ($patient != null) {
                 $patient->name = $name;
@@ -37,7 +38,7 @@ class PatientController extends BaseController
                 $patient->date_of_birth = $birthday;
                 $patient->address = $address;
                 $patient->district_id = $districtId;
-                $result = $this->updatePatient($patient);
+                $result = $this->updatePatientWithAnamnesis($patient,$listAnamnesisId);
                 if ($result == true) {
                     $successResponse = new \stdClass();
                     $successResponse->status = "OK";
@@ -69,7 +70,7 @@ class PatientController extends BaseController
     {
         try {
             $phone = $request->input("phone");
-            $staffId = $request->input("dentist_id");
+//            $staffId = $request->input("dentist_id");
             $user = $this->getUserByPhone($phone);
             if ($user == null) {
                 $error = $this->getErrorObj("Số điện thoại chưa được đăng kí", "No exception");
@@ -77,7 +78,7 @@ class PatientController extends BaseController
             }
             $patients = $this->getPatientByPhone($phone);
             $user->patients = $patients;
-            $user->appointments = $this->getUserApptByDate($phone, (new \DateTime())->format('Y-m-d'),$staffId);
+            $user->appointments = $this->getUserApptByDate($phone, (new \DateTime())->format('Y-m-d'));
             return $user;
         } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);

@@ -34,7 +34,8 @@ class HomeController extends Controller
     	 return view('WebUser.HomePage');
     }
     public function DoctorInformation(Request $request){
-    	$doctors = DB::table('tbl_staffs')->get();
+    	$doctors = $this->getListDentist();
+
     	return view("WebUser.DoctorInformation",['doctors'=>$doctors]);
     }
      public function BangGiaDichVu(){
@@ -49,9 +50,7 @@ class HomeController extends Controller
         echo "string";
         exit();
     }
-    // public function Profile(Request $request){
-    //     return view('WebUser.User.Profile');
-    // }
+  
     public function getNewsWebUser($id){
 
        $News = $this->getNews($id);

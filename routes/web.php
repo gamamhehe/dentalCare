@@ -71,6 +71,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-treatment', 'Admin\TreatmentController@create');
         Route::get('/edit-treatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
         Route::post('/edit-treatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
+        //dentist
+
 
     });
     Route::group(['middleware' => 'receptionist'], function () {
@@ -175,9 +177,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/list-appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
     Route::get('/list-appointment-in-date', 'Admin\StaffController@viewAppointmentInDate')->name('admin.listAppointmentInDate.dentist');
     Route::get('/get-appointment', 'Admin\StaffController@getListAppointmentForStaff');
+    Route::get('/get-dentist', 'Admin\StaffController@getStaff');
+    Route::get('/create-dentist', 'Admin\StaffController@createStaff');
+    Route::post('/create-dentist', 'Admin\StaffController@create');
     Route::get('/get-appointment-in-date', 'Admin\StaffController@getListAppointmentInDateForStaff');
-    Route::get('/create-dentist', 'Admin\StaffController@create');
-    Route::get('/create-dentist', 'Admin\StaffController@create')->name('admin.create.staff');
     Route::get('/add-post','Admin\StaffController@addPost');
     Route::post('/edit-post','Admin\StaffController@editPost');
     Route::get('/delete-post','Admin\StaffController@deletePost');

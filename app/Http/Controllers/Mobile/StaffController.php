@@ -148,8 +148,8 @@ class StaffController extends BaseController
             }
             $name = $request->input('name');
             $gender = $request->input('gender');
-            $birthday = $request->input('birthday');
-            $districtId = $request->input('districtId');
+            $birthday = $request->input('date_of_birth');
+            $districtId = $request->input('district_id');
             $address = $request->input('address');
             $listAnamnesisId = $request->input('anamnesis[]');
             $patient = new Patient();
@@ -305,6 +305,27 @@ class StaffController extends BaseController
         try {
             $dentists = $this->getAvailableDentistAtDate($date);
             return response()->json($dentists, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+
+    }
+
+    public function getCurrentFreeDentists(Request $request)
+    {
+        $date = $request->input('date');
+        try {
+            $availableDentists = $this->getAvailableDentistAtDate($date);
+            $freeDentists = $this->getCurrentFreeDentist();
+            foreach ($availableDentists as $dentist) {
+                if (in_array($dentist->id, $freeDentists)) {
+                    $dentist->status = 'Đang rãnh';
+                }else{
+                    $dentist->status = 'Đang bận';
+                }
+            }
+            return response()->json($availableDentists, 200);
         } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi máy chủ", $ex);
             return response()->json($error, 500);
