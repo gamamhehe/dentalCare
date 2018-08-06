@@ -15,6 +15,7 @@ use DateTime;
 use DB;
 use Response;
 use App\Helpers\AppConst;
+use Pusher\Pusher;
 
 class AppointmentController extends Controller
 {
@@ -115,7 +116,7 @@ class AppointmentController extends Controller
         return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
     }
 
-    public function startTreatmentDetailController($appointId)
+    public function startAppointmentController($appointId)
     {
         $appointment = $this->getAppointmentById($appointId);
         // $statusString = $appointment->status;
@@ -132,6 +133,19 @@ class AppointmentController extends Controller
         }
         $checkAppoint = $this->checkAppointmentExistPatient($appointId);
         $patientFinal = [];
+        $this->startAppointment($appointId);
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+        $pusher = new Pusher(
+            'e3c057cd172dfd888756',
+            '993a258c11b7d6fde229',
+            '562929',
+            $options
+        );
+        $appointment->pushStatus = 1;
+        $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
         $result = [];
         if ($checkAppoint == 0) {
             $patient = null;
@@ -152,6 +166,7 @@ class AppointmentController extends Controller
             $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
-        return view('admin.Patient.Treat', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
+        return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
     }
+
 }

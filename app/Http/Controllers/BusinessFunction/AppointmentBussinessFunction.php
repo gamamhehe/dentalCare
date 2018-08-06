@@ -15,6 +15,7 @@ use App\Model\Staff;
 use App\Model\UserHasRole;
 use App\User;
 use DateTime;
+use DeepCopy\f002\A;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
@@ -686,5 +687,11 @@ trait AppointmentBussinessFunction
             return 1;
         }
         return 0;
+    }
+
+    public function startAppointment($id){
+        $appointment = Appointment::where('id', $id)->first();
+        $appointment->status = 2;
+        $appointment->save();
     }
 }

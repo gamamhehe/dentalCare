@@ -165,7 +165,7 @@ class PatientController extends Controller
                         '562929',
                         $options
                     );
-
+                    $appointment->pushStatus = 0;
                     $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
                     $status = 1;
                 } else {
