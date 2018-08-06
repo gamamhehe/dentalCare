@@ -11,6 +11,7 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\AnamnesisPatient;
 use App\Model\Patient;
+use App\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -84,6 +85,10 @@ trait PatientBusinessFunction
         DB::beginTransaction();
         try {
             $patient->save();
+            $patientAnamnesis = $patient->hasAnamnesisPatient()->get();
+            foreach ($patientAnamnesis as $anamnesi) {
+                $anamnesi->delete();
+            }
             if ($listAnamnesisId != null) {
                 foreach ($listAnamnesisId as $id) {
                     $anamnesis = new AnamnesisPatient();
