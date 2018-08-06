@@ -165,7 +165,7 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                         <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">View</a>
+                         <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">Chi tiết</a>
                     <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Hoàn Tất</button>
                 </div>
                 ';

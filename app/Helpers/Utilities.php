@@ -184,4 +184,14 @@ class Utilities
             throw new \Exception($ex->getMessage());
         }
     }
+
+    public static function generateRandomString($source, $length = 8) {
+        $characters = $source;
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 }
