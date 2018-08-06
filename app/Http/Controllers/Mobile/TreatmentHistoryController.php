@@ -9,8 +9,10 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Helpers\AppConst;
 use App\Http\Controllers\BusinessFunction\HistoryTreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
+use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
@@ -28,7 +30,7 @@ class TreatmentHistoryController extends BaseController
     use UserBusinessFunction;
     use TreatmentHistoryBusinessFunction;
     use PatientBusinessFunction;
-
+    use StaffBusinessFunction;
 
     public function create(Request $request)
     {
@@ -162,10 +164,17 @@ class TreatmentHistoryController extends BaseController
     public function getTreatmentHistoryReport(Request $request)
     {
         try {
-            $dentistId = $request->input("dentist_id");
+            $staffId = $request->input("staff_id");
+            $staffObj = $this->getStaffById($staffId);
             $month = $request->input("month");
             $year = $request->input("year");
-            $response = $this->getTreatmentReport($dentistId, $month, $year);
+            $roleId = $staffObj->belongsToUser()->first()->hasUserHasRole()->first()->role_id;
+            $response = "";
+            if ($roleId == AppConst::ROLE_DENTIST) {
+                $response = $this->getTreatmentReportByDentist($staffId, $month, $year);
+            } else {
+                $response = $this->getTreatmentReportByReceptionist($month, $year);
+            }
             return response()->json($response, 200);
         } catch (\Exception $ex) {
             $error = $this->getErrorObj("Lỗi máy chủ", $ex);
