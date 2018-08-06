@@ -19,6 +19,7 @@ use App\Model\MedicinesQuantity;
 use App\Model\TreatmentHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class TreatmentHistoryController extends BaseController
@@ -157,4 +158,17 @@ class TreatmentHistoryController extends BaseController
         }
     }
 
+    public function getTreatmentHistoryReport(Request $request)
+    {
+        try {
+            $dentistId = $request->input("dentist_id");
+            $month = $request->input("month");
+            $year = $request->input("year");
+            $response = $this->getTreatmentReport($dentistId, $month, $year);
+            return response()->json($response, 200);
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
 }

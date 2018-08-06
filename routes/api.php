@@ -92,6 +92,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get("treatmentHistory/all", "Mobile\TreatmentHistoryController@getAll");
     Route::get("treatmentHistory/getByPhone/{phone}", "Mobile\TreatmentHistoryController@getByPhone");
     Route::get("treatmentHistory/getById/{id}", "Mobile\TreatmentHistoryController@getById");
+    Route::get("treatmentHistory/getTreatmentHistoryReport", "Mobile\TreatmentHistoryController@getTreatmentHistoryReport");
     Route::get("treatmentHistory/getByPatientId/{id}", "Mobile\TreatmentHistoryController@getByPatientId");
     Route::post("treatmentHistory/create", "Mobile\TreatmentHistoryController@create");
     Route::post("treatmentDetail/create", "Mobile\TreatmentDetailController@create");
