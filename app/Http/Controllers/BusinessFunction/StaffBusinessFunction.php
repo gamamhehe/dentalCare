@@ -33,7 +33,23 @@ trait StaffBusinessFunction
             return false;
         }
     }
-
+    public function getStaffForDataTable(){
+         $staffs = Staff::all();
+        foreach ($staffs as $staff ) {
+            $staff->hasUserHasRole = $staff->belongsToUser()->first()->hasUserHasRole()->get();
+            $staffName = "";
+            foreach ($staff->hasUserHasRole as $key ) {
+                $key->roleName = $key->belongsToRole()->first()->name;
+                if(strlen($staffName)==0){
+               $staffName = $staffName." ".$key->roleName; 
+                }else{
+                  $staffName = $staffName." - ".$key->roleName;   
+                }
+            }
+            $staff->RoleStaff = $staffName;
+        } 
+        return $staffs;
+    }
     public function updateStaff($request, $idStaff)
     {
         DB::beginTransaction();
@@ -101,7 +117,19 @@ trait StaffBusinessFunction
     {
         return Staff::all();
     }
-
+    public function getListDentist(){
+        $dentist=[];
+        $staffs = $this->getListStaff();
+        foreach ($staffs as $staff) {
+            $staff->role = $staff->belongsToUser()->first()->hasUserHasRole()->get();
+            foreach ($staff->role as $key) {
+                if($key->role_id==2){
+                    $dentist[] = $staff;
+                }
+            }
+        }
+        return $dentist;
+    }
     public function getListStaffRequestAbsent($staffId)
     {
         $staff = Staff::where('id', $staffId)->first();

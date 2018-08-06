@@ -9,6 +9,7 @@ use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentCategoriesBusinessFunction;
 use App\Http\Controllers\BusinessFunction\FeedbackBusinessFunction;
 use App\Model\Staff;
+use App\Model\Role;
 use App\Model\TreatmentCategory;
 use App\Model\User;
 use App\Model\Tooth;
@@ -45,33 +46,51 @@ class StaffController extends Controller
 
     public function create(Request $request)
     {
-        $post = Staff::all();
-        return view('admin.dentist.list', ['post' => $post]);
-        $checkExist = $this->checkExistUser($request->phone);
-        if ($checkExist) {
-            return false;
-        }
-        $userHasRole = new UserHasRole();
-        $userHasRole->phone = $request->phone;
-        $userHasRole->role_id = $request->role_id;
-        $userHasRole->start_time = Carbon::now();
-        $staff = new Staff();
-        $user = new User();
-        $staff->name = $request->name;
-        $staff->address = $request->address;
-        $staff->phone = $request->phone;
-        $staff->date_of_birth = $request->date_of_birth;
-        $staff->gender = $request->gender;
-        $staff->avatar = $request->avatar;
-        $staff->district_id = $request->district_id;
-        $staff->degree = $request->degree;
-        $user->phone = $user->phone;
-        $user->password = Hash::make($user->phone);
 
-        $this->createUserWithRole($user, $staff, $userHasRole);
+        // $checkExist = $this->checkExistUser($request->phone);
+        // if ($checkExist) {
+        //     return false;
+        // }
+        // $userHasRole = new UserHasRole();
+        // $userHasRole->phone = $request->phone;
+        // $userHasRole->role_id = $request->role_id;
+        // $userHasRole->start_time = Carbon::now();
+        // $staff = new Staff();
+        // $user = new User();
+        // $staff->name = $request->name;
+        // $staff->address = $request->address;
+        // $staff->phone = $request->phone;
+        // $staff->date_of_birth = $request->date_of_birth;
+        // $staff->gender = $request->gender;
+        // $staff->avatar = $request->avatar;
+        // $staff->district_id = $request->district_id;
+        // $staff->degree = $request->degree;
+        // $user->phone = $user->phone;
+        // $user->password = Hash::make($user->phone);
+
+        // $this->createUserWithRole($user, $staff, $userHasRole);
+    }
+    public function getStaff(Request $request){
+        
+        $staffs =  $this->getStaffForDataTable();
+         return Datatables::of($staffs)->addColumn('action', function($staffs) {
+                return '
+                 <a href="#" class="show-modal btn btn-info btn-sm" data-id="'.$staffs->id.'" data-name="'.$staffs->name.'" data-address="'.$staffs->address.'"
+                                           data-date="'.$staffs->date_of_birth.'" data-phone="'.$staffs->phone.'"  data-sex="'.$staffs->gender.'">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="'.$staffs->id.'" data-name="'.$staffs->name.'" data-address="'.$staffs->address.'"
+                                           data-date="'.$staffs->date_of_birth.'" data-phone="'.$staffs->phone.'"  data-sex="'.$staffs->gender.'">
+                                            <i class="glyphicon glyphicon-pencil"></i>
+                                        </a>
+               <button value="'.$staffs->id.'" class="btn btn-danger btn-sm btn-dell">  <i class="glyphicon glyphicon-trash" ></i></button>';
+            })->make(true);
+       
     }
     public function createStaff(Request $request){
-       return view('admin.dentist.list');
+       $post = Staff::all();
+       $role = Role::all();
+        return view('admin.dentist.list', ['post' => $post,'roles'=>$role]);
     }
 
     public function login(Request $request)
@@ -131,8 +150,9 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                         <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">View</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Hoàn Tất</button>
+                    <a href="appointment-detail/'. $appoint->id.'" class="btn btn-sm btn-success">Chi tiết</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Bắt đầu</button>
+                    <a type="button" class="btn btn-sm  btn-success" href="start-appointment/' . $appoint->id . '">Hoàn tất</a>
                 </div>
                 ';
             })->make(true);
@@ -165,8 +185,9 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                         <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">View</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Hoàn Tất</button>
+                    <a href="appointment-detail/'. $appoint->id.'" class="btn btn-sm btn-success">Chi tiết</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Bắt đầu</button>
+                    <a type="button" class="btn btn-sm  btn-success" href="start-appointment/' . $appoint->id . '">Hoàn tất</a>
                 </div>
                 ';
             })->make(true);
@@ -258,9 +279,9 @@ class StaffController extends Controller
         $staff= $request->session()->get('currentAdmin');
         $staff->staffDetail = $staff->belongToStaff()->first();
         $staff->Role = $staff->hasUserHasRole()->first()->belongsToRole()->first();
-        $start= $this->getNumberStart($staff->staffDetail->id); 
-        
+        $start= $this->getNumberStart($staff->staffDetail->id);
+
         return view('admin.Staff.profile',['staff'=>$staff,'start'=>$start]);
-    } 
+    }
 
 }

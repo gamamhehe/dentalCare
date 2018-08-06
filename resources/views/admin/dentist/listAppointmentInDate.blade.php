@@ -26,43 +26,6 @@
                 </div>
 
             </div>
-            <div id="create" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title"></h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" role="form">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered" id="sss">
-                                        <thead>
-                                        <tr>
-                                            <th style="text-align: center; width: 10%">Mã</th>
-                                            <th style="text-align: center; width: 30%">Dịch vụ</th>
-                                            <th style="text-align: center; width: 20%">Răng</th>
-                                            <th style="text-align: center; width: 30%">Note</th>
-                                            <th style="text-align: center; width: 20%">Tùy chọn</th>
-
-                                        </tr>
-                                        </thead>
-                                        <tbody id="data">
-
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-warning" type="button" data-dismiss="modal">
-                                <span class="glyphicon glyphicon-remobe"></span>Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
     </div>
 @endsection

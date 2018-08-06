@@ -25,11 +25,13 @@ use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
 {
-    use UserBusinessFunction;
-    use PatientBusinessFunction;
+
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
     use AnamnesisBusinessFunction;
+    use UserBusinessFunction;
+    use PatientBusinessFunction;
+
 
     public function login(Request $request)
     {
@@ -289,7 +291,7 @@ class PatientController extends Controller
          
     }
 
-    public function detailPatientByAppoinmentId($appointId)
+    public function detailAppoinmentById($appointId)
     {
         $appointment = $this->getAppointmentById($appointId);
         // $statusString = $appointment->status;
@@ -321,9 +323,9 @@ class PatientController extends Controller
                     }
                 }
 
-                $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
             } else {
             }
+            $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
         return view('admin.Patient.Treat', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
