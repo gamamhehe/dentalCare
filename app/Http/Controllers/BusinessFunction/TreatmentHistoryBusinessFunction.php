@@ -224,6 +224,7 @@ trait TreatmentHistoryBusinessFunction
         return (TreatmentHistory::where('id', $id)->first());
     }
 
+    
     public function getTreatmentReport($dentistId, $monthInNumber, $yearInNumber)
     {
         $data = DB::select(DB::raw("

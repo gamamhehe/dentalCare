@@ -158,6 +158,7 @@ class TreatmentHistoryController extends BaseController
         }
     }
 
+
     public function getTreatmentHistoryReport(Request $request)
     {
         try {
