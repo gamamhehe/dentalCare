@@ -59,6 +59,7 @@ class StaffController extends BaseController
                 $this->updateUser($result);//update notification token
                 $staffProfile = $result->belongToStaff()->first();
                 $staffProfile->district = $staffProfile->belongsToDistrict()->first();
+                $staffProfile->role_id = $result->hasUserHasRole()->first()->role_id;
                 $clientSecret = env(AppConst::PASSWORD_CLIENT_SECRET, false);
                 $clientId = env(AppConst::PASSWORD_CLIENT_ID, false);
                 $request->request->add([
@@ -183,6 +184,24 @@ class StaffController extends BaseController
                 "Không thể đăng kí thông tin người dùng", $ex);
             return response()->json($error, 400);
         }
+    }
+//allow staff to book in the end of the day.
+    public function bookAppointment2(Request $request)
+    {
+        //get role of staff
+//        $userObj = $dentistObj->belongsToUser()->first();
+//        $userObj->hasUserHasRole()->where('role_id', AppConst::ROLE_DENTIST)
+//            ->orWhere('role_id', AppConst::ROLE_RECEPTIONIST)->first();
+
+
+    }
+
+    //query chart
+    public function getChartTreatmentData(Request $request){
+        $staffId = $request->input('staff_id');
+        $month = $request->input('month');
+        $year = $request->input('year');
+
     }
 
     public function createUser(Request $request)
