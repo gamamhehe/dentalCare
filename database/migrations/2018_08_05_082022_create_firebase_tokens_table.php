@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblUsersTable extends Migration
+class CreateFirebaseTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTblUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_users', function (Blueprint $table) {
+        Schema::create('tbl_firebase_tokens', function (Blueprint $table) {
+            $table->increments('id');
             $table->string("phone");
-            $table->string("password");
-            $table->boolean("is_deleted")->default(0);
-            $table->rememberToken();
+            $table->string("noti_token",500)->nullable();
             $table->timestamps();
-            $table->primary('phone');
         });
     }
 
@@ -30,6 +28,6 @@ class CreateTblUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_users');
+        Schema::dropIfExists('tbl_firebase_tokens');
     }
 }
