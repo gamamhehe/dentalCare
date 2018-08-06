@@ -131,8 +131,9 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                         <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">View</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Hoàn Tất</button>
+                    <a href="appointment-detail/'. $appoint->id.'" class="btn btn-sm btn-success">Chi tiết</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Bắt đầu</button>
+                    <a type="button" class="btn btn-sm  btn-success" href="start-appointment/' . $appoint->id . '">Hoàn tất</a>
                 </div>
                 ';
             })->make(true);
@@ -165,8 +166,9 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                         <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">Chi tiết</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Hoàn Tất</button>
+                    <a href="appointment-detail/'. $appoint->id.'" class="btn btn-sm btn-success">Chi tiết</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Bắt đầu</button>
+                    <a type="button" class="btn btn-sm  btn-success" href="start-appointment/' . $appoint->id . '">Hoàn tất</a>
                 </div>
                 ';
             })->make(true);
@@ -258,9 +260,9 @@ class StaffController extends Controller
         $staff= $request->session()->get('currentAdmin');
         $staff->staffDetail = $staff->belongToStaff()->first();
         $staff->Role = $staff->hasUserHasRole()->first()->belongsToRole()->first();
-        $start= $this->getNumberStart($staff->staffDetail->id); 
-        
+        $start= $this->getNumberStart($staff->staffDetail->id);
+
         return view('admin.Staff.profile',['staff'=>$staff,'start'=>$start]);
-    } 
+    }
 
 }

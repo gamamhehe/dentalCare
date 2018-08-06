@@ -25,11 +25,9 @@ use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
 {
-    use UserBusinessFunction;
-    use PatientBusinessFunction;
+
     use AppointmentBussinessFunction;
-    use TreatmentHistoryBusinessFunction;
-    use AnamnesisBusinessFunction;
+
 
     public function login(Request $request)
     {
@@ -289,7 +287,7 @@ class PatientController extends Controller
          
     }
 
-    public function detailPatientByAppoinmentId($appointId)
+    public function detailAppoinmentById($appointId)
     {
         $appointment = $this->getAppointmentById($appointId);
         // $statusString = $appointment->status;
