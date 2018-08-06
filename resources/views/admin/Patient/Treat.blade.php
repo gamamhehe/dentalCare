@@ -6,9 +6,6 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-sm-12" style="text-align: center;"><h1>Thông tin bệnh nhân</h1></div>
-
-<<<<<<< HEAD
-
             </div>
         </div>
     </div>
