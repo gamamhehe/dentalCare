@@ -62,10 +62,10 @@ trait AppointmentBussinessFunction
     public function getAppointmentByDate($phone, $date, $status = null)
     {
         $result = null;
-        if($status == null) {
+        if ($status == null) {
             $result = Appointment::where('phone', $phone)
                 ->whereDate('start_time', $date)->get();
-        }else{
+        } else {
             $result = Appointment::where('phone', $phone)
                 ->whereDate('start_time', $date)
                 ->whereDate('status', $status)
@@ -224,7 +224,6 @@ trait AppointmentBussinessFunction
             DB::commit();
             return $appointment;
         } catch (Exception $exception) {
-
             $exception->getTrace();
             DB::rollback();
             return null;
@@ -258,7 +257,7 @@ trait AppointmentBussinessFunction
             ->whereMonth('start_time', $monthInNumber)
             ->whereYear('start_time', $yearInNumber)
             ->get();
-        foreach ($appointments as $appointment){
+        foreach ($appointments as $appointment) {
             $appointment->patient = $appointment->hasPatientOfAppointment()->first();
         }
         return $appointments;
@@ -332,10 +331,10 @@ trait AppointmentBussinessFunction
 
     public function updateAppointment($appointment)
     {
-        try{
+        try {
             $appointment->save();
             return true;
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             throw new \Exception($ex->getMessage());
         }
     }
@@ -442,7 +441,7 @@ trait AppointmentBussinessFunction
             ->first();
         if ($dentistRequestAbsent != null) {
             $absentRecord = $dentistRequestAbsent->hasAbsent()->first();
-            if ($absentRecord !=null && $absentRecord->is_approved == 1) {
+            if ($absentRecord != null && $absentRecord->is_approved == 1) {
                 return true;
             } else {
                 return false;
@@ -531,7 +530,7 @@ trait AppointmentBussinessFunction
         $listPatientIsExamination = [];
         foreach ($listAppointmentComing as $appointment) {
             $patientOfAppointment = PatientOfAppointment::where('appointment_id', $appointment->id)->first();
-            if($patientOfAppointment!=null) {
+            if ($patientOfAppointment != null) {
                 $listPatientIsExamination[] = $patientOfAppointment->patient_id;
             }
         }
@@ -590,14 +589,33 @@ trait AppointmentBussinessFunction
     public function viewAppointmentForDentist($dentist_id)
     {
         return Appointment::where('staff_id', $dentist_id)
-            ->where('start_time', '>=', Carbon::now()->format('Y-m-d'))
+            ->get();
+    }
+
+    public function viewAppointmentInDateForDentist($dentist_id)
+    {
+//
+        $dateString = Carbon::now()->format('Y-m-d');
+        $newDate = date('Y-m-d', strtotime('+1 day',strtotime($dateString)));
+        return Appointment::where('staff_id', $dentist_id)
+            ->where('start_time', '>', Carbon::now()->format('Y-m-d'))
+            ->where('start_time', '<', $newDate)
             ->get();
     }
 
     public
     function viewAppointmentForReception()
     {
-        return Appointment::where('start_time', '>=', Carbon::now()->format('Y-m-d'))
+        return Appointment::all();
+    }
+
+    public
+    function viewAppointmentInDateForReception()
+    {
+        $dateString = Carbon::now()->format('Y-m-d');
+        $newDate = date('Y-m-d', strtotime('+1 day',strtotime($dateString)));
+        return Appointment::where('start_time', '>', Carbon::now()->format('Y-m-d'))
+            ->where('start_time', '<', $newDate)
             ->get();
     }
 
@@ -644,5 +662,15 @@ trait AppointmentBussinessFunction
             return 0;
         }
 
+    }
+
+    public function checkDoneAppointment($appointmentId){
+        $appointment = Appointment::where('id', $appointmentId)->first();
+        if ($appointment->status == 2){
+            $appointment->status = 3;
+            $appointment->save();
+            return 1;
+        }
+        return 0;
     }
 }

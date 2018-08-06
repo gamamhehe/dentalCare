@@ -60,11 +60,17 @@ class PaypalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postPaymentWithpaypal(Request $request)
+    public function postPaymentWithpaypal(Request $request, $amountPayment, $payment_id)
     {
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
-        $amountPayment = $request->amount/20000;
+        $amountPaymentSession = $amountPayment;
+        $contents = file_get_contents('http://apilayer.net/api/live?access_key=87c3a276dd52229dc68f4c51f583602a');
+        $pos = strrpos($contents, "USDVND");
+        if ($pos) {
+            $ratio = substr($contents, $pos + 8, 5);
+        }
+        $amountPayment = $amountPayment/((int) $ratio);
         $amount = new Amount();
         $amount->setCurrency('USD')
             ->setTotal($amountPayment);
@@ -108,8 +114,8 @@ class PaypalController extends Controller
 
         /** add payment ID to session **/
         session(['paypal_payment_id' => $payment->getId()]);
-        session(['payment_id' => $request->payment_id]);
-        session(['amount' => $amountPayment]);
+        session(['payment_id' => $payment_id]);
+        session(['amount' => $amountPaymentSession]);
         if(isset($redirect_url)) {
             /** redirect to paypal **/
             return Redirect::away($redirect_url);
@@ -144,17 +150,17 @@ class PaypalController extends Controller
 
             /** it's all right **/
             /** Here Write your database logic like that insert record or value in database if you want **/
-            $this->updatePaymentPaid($request->session()->get('amount', 0) * 20000, $request->session()->get('payment_id'));
+            $this->updatePaymentPaid($request->session()->get('amount', 0), $request->session()->get('payment_id'));
             $paymentDetail = new PaymentDetail();
             $paymentDetail->payment_id = $request->session()->get('payment_id');
-            $paymentDetail->received_money = $request->session()->get('amount', 0) * 20000;
+            $paymentDetail->received_money = $request->session()->get('amount', 0) ;
             $paymentDetail->date_create = Carbon::now();
             $paymentDetail->staff_id = 1;
 
             $this->createPaymentDetail($paymentDetail);
             $request->session()->remove('payment_id');
             $request->session()->remove('amount');
-            \Session::put('success','Payment success');
+//            \Session::put('success','Payment success');
             return redirect('/danh-sach-chi-tra');
         }
         \Session::put('error','Payment failed');

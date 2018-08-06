@@ -62,4 +62,12 @@ class AppointmentController extends Controller
 
     }
 
+
+    public function checkDone($appointmentId){
+        $status = $this->checkDoneAppointment($appointmentId);
+        $data = array(
+            'statusDone' => $status,
+        );
+        echo json_encode($data);
+    }
 }

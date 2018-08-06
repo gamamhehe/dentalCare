@@ -70,6 +70,23 @@ class StaffController extends Controller
 
         // $this->createUserWithRole($user, $staff, $userHasRole);
     }
+    public function getStaff(Request $request){
+        
+        $staffs =  $this->getStaffForDataTable();
+         return Datatables::of($staffs)->addColumn('action', function($staffs) {
+                return '
+                 <a href="#" class="show-modal btn btn-info btn-sm" data-id="'.$staffs->id.'" data-name="'.$staffs->name.'" data-address="'.$staffs->address.'"
+                                           data-date="'.$staffs->date_of_birth.'" data-phone="'.$staffs->phone.'"  data-sex="'.$staffs->gender.'">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="'.$staffs->id.'" data-name="'.$staffs->name.'" data-address="'.$staffs->address.'"
+                                           data-date="'.$staffs->date_of_birth.'" data-phone="'.$staffs->phone.'"  data-sex="'.$staffs->gender.'">
+                                            <i class="glyphicon glyphicon-pencil"></i>
+                                        </a>
+               <button value="'.$staffs->id.'" class="btn btn-danger btn-sm btn-dell">  <i class="glyphicon glyphicon-trash" ></i></button>';
+            })->make(true);
+       
+    }
     public function createStaff(Request $request){
        $post = Staff::all();
        $role = Role::all();
@@ -140,6 +157,40 @@ class StaffController extends Controller
             })->make(true);
 
     }
+    public function getListAppointmentInDateForStaff(Request $request)
+    {
+        $sessionAdmin = $request->session()->get('currentAdmin', null);
+        $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
+
+        if ($role == 2) {
+            $listAppointment = $this->viewAppointmentInDateForDentist($sessionAdmin->belongToStaff()->first()->id);
+        } else {
+            $listAppointment = $this->viewAppointmentInDateForReception();
+        }
+        foreach ($listAppointment as $appointment){
+            if ($appointment->status == 0){
+                $appointment->status = 'Bệnh nhân chưa đến';
+            }else if ($appointment->status == 1){
+                $appointment->status = 'Bệnh nhân đã đến';
+            }else if ($appointment->status == 2){
+                $appointment->status = 'Đang khám';
+            }else if ($appointment->status == 3){
+                $appointment->status = 'Đã khám';
+            }else if ($appointment->status == 4){
+                $appointment->status = 'Hủy';
+            }
+        }
+        return Datatables::of($listAppointment)
+            ->addColumn('action', function ($appoint) {
+                return '
+                <div>
+                         <a href="appointment-detail/'. $appoint->id.'" class="btn btn-success">View</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')"><i class="glyphicon glyphicon-edit"></i>Hoàn Tất</button>
+                </div>
+                ';
+            })->make(true);
+
+    }
 
     public function checkComingPatient($appointmentId)
     {
@@ -172,6 +223,11 @@ class StaffController extends Controller
     public function viewAppointment(Request $request)
     {
         return view('admin.dentist.listAppointment');
+    }
+
+    public function viewAppointmentInDate(Request $request)
+    {
+        return view('admin.dentist.listAppointmentInDate');
     }
 
     public function receiveAppointment(Request $request)

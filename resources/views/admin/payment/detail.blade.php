@@ -26,9 +26,9 @@
                         <label>Trạng thái thanh toán: </label>
                         <span>
                             @if($payment->is_done == true)
-                                <td style="text-align: center">Đã Hoàn Thành</td>
+                                <span style="text-align: center">Đã Hoàn Thành</span>
                             @else
-                                <td style="text-align: center">Chưa Hoàn Thành</td>
+                                <span style="text-align: center">Chưa Hoàn Thành</span>
                             @endif
                         </span>
                     </div>
@@ -65,6 +65,11 @@
                             @endif
                             </tbody>
                         </table>
+                    </div>
+                    <div class="form-group">
+                        @foreach($payment->updateList as $update)
+                            <span>+ {{$update->update_information}}</span>
+                        @endforeach
                     </div>
                 </div>
             </div>

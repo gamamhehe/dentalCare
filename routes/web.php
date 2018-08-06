@@ -173,15 +173,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     // Route::get('/create-Patient', 'Admin\PatientController@create');
     //Dentist
     Route::get('/list-appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
+    Route::get('/list-appointment-in-date', 'Admin\StaffController@viewAppointmentInDate')->name('admin.listAppointmentInDate.dentist');
     Route::get('/get-appointment', 'Admin\StaffController@getListAppointmentForStaff');
+    Route::get('/get-dentist', 'Admin\StaffController@getStaff');
     Route::get('/create-dentist', 'Admin\StaffController@createStaff');
     Route::post('/create-dentist', 'Admin\StaffController@create');
+    Route::get('/get-appointment-in-date', 'Admin\StaffController@getListAppointmentInDateForStaff');
     Route::get('/add-post','Admin\StaffController@addPost');
     Route::post('/edit-post','Admin\StaffController@editPost');
     Route::get('/delete-post','Admin\StaffController@deletePost');
     
     Route::get('/create-treatment/{id}','Admin\StaffController@createTreatmentByStaff')->name('create.treatmentHistory');
     Route::get('/check-coming/{id}','Admin\StaffController@checkComingPatient');
+    Route::get('/check-done/{id}','Admin\AppointmentController@checkDone');
     Route::post('/create-treatment-history-patient','Admin\TreatmentHistoryController@createTreatmentHistory')->name('admin.createTreatmentHistoryPatient.dentist');
     Route::get('/get-treatment-history-patient/{id}','Admin\TreatmentHistoryController@getTreatmentHistoryByPatient');
 
@@ -242,7 +246,7 @@ Route::get('/startTreatment', 'Admin\TreatmentController@startTreatment')->name(
 
 //Route::get('paywithpaypal','Admin\PaypalController@payWithPaypal');
 // route for post request
-Route::post('paypal','Admin\PaypalController@postPaymentWithpaypal')->name('paypal');
+Route::get('paypal/{amount}/{id}','Admin\PaypalController@postPaymentWithpaypal')->name('paypal');
 // route for check status responce
 Route::get('paypal', 'Admin\PaypalController@getPaymentStatus')->name('status');
 

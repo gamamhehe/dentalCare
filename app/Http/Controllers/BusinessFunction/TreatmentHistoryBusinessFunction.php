@@ -156,7 +156,7 @@ trait TreatmentHistoryBusinessFunction
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;
             if ($payment) {
-                $this->updatePayment($total_price, $payment->id);
+                $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
             } else {
                 $idPayment = $this->createPayment($total_price, $phone);

@@ -30,6 +30,7 @@ class PatientController extends Controller
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
     use AnamnesisBusinessFunction;
+
     public function login(Request $request)
     {
 
@@ -38,7 +39,7 @@ class PatientController extends Controller
             'password' => 'required|min:6|max:11',
         ]);
         $user = $this->checkLogin($request->phone, $request->password);
-        
+
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID == 4) {
@@ -196,11 +197,11 @@ class PatientController extends Controller
     {
         $output = '';
 
-        if ($valueSearch == 'all'){
+        if ($valueSearch == 'all') {
             $data = Patient::all();
         } else {
             $data = DB::table('tbl_patients')
-                ->where('phone', 'like', $valueSearch.'%')
+                ->where('phone', 'like', $valueSearch . '%')
                 ->orWhere('name', 'like', '%' . $valueSearch . '%')
                 ->orderBy('name', 'desc')
                 ->get();
@@ -219,7 +220,7 @@ class PatientController extends Controller
          <td>' . $row->address . '</td>
          <td>' . $row->date_of_birth . '</td>
          <td>
-            <a href="thong-tin-benh-nhan/'.$row->id.'" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
+            <a href="thong-tin-benh-nhan/' . $row->id . '" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
             <button type="button" class="btn btn-default btn-success"
                                  onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button>
            
@@ -271,10 +272,12 @@ class PatientController extends Controller
         $listDistrict = District::where('city_id', $id)->get();
         return $listDistrict;
     }
-    public function getInfoPatientById($id){
-        $patient = Patient::where('id',$id)->first();
-        $result =[];
-        if($patient){
+
+    public function getInfoPatientById($id)
+    {
+        $patient = Patient::where('id', $id)->first();
+        $result = [];
+        if ($patient) {
             $idPatient = $patient->id;
             $result = $this->getTreatmentHistory($idPatient);
         }
@@ -285,42 +288,44 @@ class PatientController extends Controller
         return view('admin.Patient.detail',['Anamnesis'=>$anam,'patient'=>$patient,'listTreatmentHistory'=>$result]);
          
     }
-    public function detailPatientByAppoinmentId($appointId){
+
+    public function detailPatientByAppoinmentId($appointId)
+    {
         $appointment = $this->getAppointmentById($appointId);
         // $statusString = $appointment->status;
-        if($appointment->status == 0){
+        if ($appointment->status == 0) {
             $appointment->statusString = "Vừa tạo";
-        }else if ($appointment->status == 1){
+        } else if ($appointment->status == 1) {
             $appointment->statusString = "Đã tạo";
-        }else if ($appointment->status == 2){
+        } else if ($appointment->status == 2) {
             $appointment->statusString = "Đang khám";
-        }else if ($appointment->status == 3){
+        } else if ($appointment->status == 3) {
             $appointment->statusString = "Đã khám xong";
-        }else{
+        } else {
             $appointment->statusString = "Đã xóa";
         }
         $checkAppoint = $this->checkAppointmentExistPatient($appointId);
         $patientFinal = [];
         $result = [];
-        if($checkAppoint == 0){
+        if ($checkAppoint == 0) {
             $patient = null;
-        }else{
-            $patient = Patient::where('id',$checkAppoint)->first();
+        } else {
+            $patient = Patient::where('id', $checkAppoint)->first();
             // $result =[];
-            if($patient){
+            if ($patient) {
                 $idPatient = $patient->id;
                 $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
                 foreach ($listTreatmentHistory as $treatmentHistory) {
-                        if($treatmentHistory->finish_date == null){
-                          $result[] = $treatmentHistory;
-                        }
+                    if ($treatmentHistory->finish_date == null) {
+                        $result[] = $treatmentHistory;
+                    }
                 }
-               
-            }else{
+
+                $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
+            } else {
             }
-       
+
         }
-        $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
-         return view('admin.Patient.Treat',['appointment'=>$appointment,'patient'=>$patient,'listTreatmentHistory'=>$result]);
+        return view('admin.Patient.Treat', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
     }
 }

@@ -10,13 +10,22 @@
                     </div>
                    
                 </div>
-                <div class="col-xs-12" style="padding-bottom :1em;padding-right: 5em;" >
-                        <a href="#" class="col-md-1 create-modal btn btn-success btn-sm" class="block" style="float: right;">
-                                        Thêm mới
-                                    </a>
+                <a href="#" class="btn btn-info create-modal ">  Thêm mới</a>
+
                                      
-                </div>
-                <div class="">
+                <div class="row layout" style=" margin-right: 4em"  >
+
+        <table id="dup-table" class="table myTable table-bordered Mytable-hover">
+          <thead>
+          <tr style="height: 1.3em;">
+            <td class="col-sm-1">id</td>
+            <td class="col-sm-6" style="text-align: left;">Tên Bài Viết</td>
+            <td class="col-sm-3">Lựa chọn</td>
+          </tr>
+          </thead>
+        </table> 
+      </div>
+              <!--   <div class="">
                     <div class="table table-responsive">
                         <table class="table myTable table-bordered Mytable-hover" id="table">
                             <tr>
@@ -52,7 +61,7 @@
                         </table>
                     </div>
                     {{--{{$post->links()}}--}}
-                </div>
+                </div> -->
                 {{-- Modal Form Create Post --}}
                 <div id="create" class="modal fade" role="dialog">
                     <div class="modal-dialog">
@@ -143,7 +152,98 @@
                             </div>
                         </div>
                     </div>
-                </div></div>
+                </div>
+                 <div id="edit" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group row add">
+                                        <label class="control-label col-sm-3" for="title">Tênxxx</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                   placeholder="Họ và tên" required>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3" for="body">Địa chỉ</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="address" name="address"
+                                                   placeholder="Địa  chỉ" required>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3" for="body">Quận</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="district" name="address"
+                                                   placeholder="Quận" required>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3" for="body">Bằng cấp</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="degree" name="degree"
+                                                   placeholder="Bằng cấp" >
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3" for="body">Ghi chú</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="description" name="Ghi chú"
+                                                   placeholder="Your Body Here" required>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3" for="body">Số điện thoại</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="phone" name="phone"
+                                                   placeholder="Số điện thoại" required>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3" for="body">Giới tính</label>
+                                        <div class="col-sm-4">
+                                            <select name="gender">
+                                                <option value="Male">Nam</option>
+                                                <option value="Female">Nữ</option>
+                                                <option value="Option">Khác</option>
+                                            </select>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                        <label class="control-label col-sm-3" for="body">Vai trò</label>
+                                        <div class="col-sm-4">
+                                            <select name="role">
+                                            @foreach($roles as $role)
+                                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                            @endforeach
+                                            </select>
+                                            <p class="error text-center alert alert-danger hidden"></p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-warning" type="submit" id="add" onclick="save()" >
+                                    <span class="glyphicon glyphicon-plus"></span>Khởi tạo
+                                </button>
+                                <button class="btn btn-warning" type="button" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-remobe"></span>Đóng
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
             {{-- Modal Form Show POST --}}
             <div id="show" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -240,10 +340,11 @@
     </div>
 
 @endsection
+@section('js')
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script type="text/javascript">
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
     $(document).on('click','.create-modal', function() {
         $('#create').modal('show');
         $('.form-horizontal').show();
@@ -251,6 +352,7 @@
     });
     $(document).on('click', '.show-modal', function() {
         $('#show').modal('show');
+         $('.modal-title').text('Chi tiết nhân viên');
         $('#idShow').text($(this).data('id'));
         $('#nameShow').text($(this).data('name'));
         $('#addressShow').text($(this).data('address'));
@@ -262,6 +364,12 @@
         $('#create').modal('show');
         $('.form-horizontal').show();
         $('.modal-title').text('Chỉnh sửa nhân viên');
+          $('#idShow').text($(this).data('id'));
+        $('#nameShow').text($(this).data('name'));
+        $('#addressShow').text($(this).data('address'));
+        $('#dateShow').text($(this).data('date'));
+        $('#phoneShow').text($(this).data('phone'));
+        $('#sexShow').text($(this).data('sex'));
     });
     $(document).on('click', '.btn-dell', function(e) {
             var id=$(this).val();
@@ -279,6 +387,31 @@
                 },
             });
     });
-
+     $('#dup-table').DataTable({
+        language: {
+            "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
+            "zeroRecords": "Không tìm thấy kết quả ",
+            "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",
+            "infoEmpty": "Không có kết quả .",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search" : "Tìm kiếm ","infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
+        },
+        processing: true,
+        serverSide: true,
+        order: [[ 0, "desc" ]],
+        bLengthChange:true,
+        pageLength: 5,
+        ajax: '/admin/get-dentist',
+        columns : [
+          
+              {data: 'id'},
+              {data: 'name'},
+              {
+                  
+                  data: 'action'
+              },
+            ],
+        });
 
 </script>
+@endsection

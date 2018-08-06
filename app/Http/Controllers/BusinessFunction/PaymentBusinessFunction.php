@@ -11,6 +11,8 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Payment;
 use App\Model\PaymentDetail;
+use App\Model\PaymentUpdateDetail;
+use App\Model\Treatment;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -77,20 +79,26 @@ trait PaymentBusinessFunction
         return null;
     }
 
-    public function updatePayment($price, $idPayment)
+    public function updatePayment($price, $idPayment, $idTreatment)
     {
         DB::beginTransaction();
         try {
             $payment = Payment::find($idPayment);
+            $nameTreatment = Treatment::where('id', $idTreatment)->first()->name;
+            $updatePrice = (int)$payment->total_price + (int)$price;
+            $updateInformation = 'Tổng tiền của chi trả thay đổi từ '. $payment->total_price .' VND sang '
+            . $updatePrice .' VND để thanh toán cho liệu trình '. $nameTreatment;
+            PaymentUpdateDetail::create([
+                'payment_id' => $idPayment,
+                'update_information' => $updateInformation,
+            ]);
             $payment->total_price = $payment->total_price + $price;
-            if ($payment->total_price == 0) {
-                $payment->is_done = true;
-            }
             $payment->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             return false;
         }
     }
@@ -116,6 +124,7 @@ trait PaymentBusinessFunction
         try {
             $payment = Payment::find($idPayment);
             $payment->paid = $payment->paid + $price;
+
             if ($payment->total_price == $payment->paid) {
                 $payment->is_done = true;
             }

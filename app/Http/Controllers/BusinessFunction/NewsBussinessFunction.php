@@ -21,9 +21,8 @@ use Mockery\Exception;
 
 trait NewsBussinessFunction
 {
-    public function createNews($input)
+    public function createNews($input,$staff_id)
     {
-
         DB::beginTransaction();
         try {
             $constants = "http://150.95.104.237";
@@ -32,24 +31,35 @@ trait NewsBussinessFunction
             if($var!= 1){
                 $link_img= $constants."".$input['image_header'];
             }
-            $News = new News;
-            $News->image_header = $link_img;
-            $News->content =  $input['content'];
-            $News->title = $input['title'];
-            $News->staff_id = 1;
-            $News->created_date=Carbon::now();
-            $News->save();
+            $NewsId = News::create([
+                'image_header' => $link_img,
+                'content' =>  $input['content'],
+                'title' => $input['title'],
+                'staff_id' => $staff_id,
+                'created_date' => Carbon::now(),
+            ])->id;
             DB::commit();
-            return true;
-
+            return $NewsId;
         } catch (\Exception $e) {
             DB::rollback();
             return false;
-
         }
 
     }
-
+    public function createType($NewsId,$TypeNews){
+        DB::beginTransaction();
+        try {
+            $result = NewsType::create([
+                'type_id' => $TypeNews,
+                'news_id' =>  $NewsId,
+            ])->news_id;
+            DB::commit();
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
     public function getMoreNews($currentIndex, $numItem, $typeId)
     {
         $data = Type::where('id',$typeId)->first()
