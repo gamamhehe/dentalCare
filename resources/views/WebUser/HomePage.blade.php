@@ -111,10 +111,10 @@
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
-                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Profile</a>
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a> 
                                 </div>
                                 <div class="pull-right" style="padding-right: 1em;">
-                                    <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
                                 </div>
 
                             </li>
@@ -275,10 +275,10 @@
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
-                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Profile</a>
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
                                 </div>
                                 <div class="pull-right" style="padding-right: 1em;">
-                                    <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
                                 </div>
 
                             </li>
@@ -484,58 +484,13 @@
                             </div>
                         </div>
                 </div>
-               
-               
-
-                
             </div>
         </div>
-
-      
-        <!-- <div class="row">
-            <div class="col-lg col-md">
-                <div class="img wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.1s" style="visibility: visible; animation-duration: 0.5s; animation-delay: 0.1s; animation-name: fadeInUp;">
-                    <img src="/assets/images/HomePage/dv1.jpg" class="aligncenter ">
-                    <a href="" data-toggle="modal" data-target="#t31">BỌC RĂNG SỨ »</a>
-                </div>
-            </div>
-            <div class="col-lg col-md">
-                <div class="img wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.2s" style="visibility: visible; animation-duration: 0.5s; animation-delay: 0.2s; animation-name: fadeInUp;">
-                    <img src="/assets/images/HomePage/dv2.jpg" class="aligncenter ">
-                    <a href="" data-toggle="modal" data-target="#t32">TẨY TRẮNG RĂNG »</a>
-                </div>
-            </div>
-            <div class="col-lg col-md">
-                <div class="img wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.3s" style="visibility: visible; animation-duration: 0.5s; animation-delay: 0.3s; animation-name: fadeInUp;">
-                    <img src="/assets/images/HomePage/dv3.jpg" class="aligncenter ">
-                    <a href="" data-toggle="modal" data-target="#t33">NIỀNG RĂNG »</a>
-                </div>
-            </div>
-            <div class="col-lg col-md">
-                <div class="img wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.4s" style="visibility: visible; animation-duration: 0.5s; animation-delay: 0.4s; animation-name: fadeInUp;">
-                    <img src="/assets/images/HomePage/dv4.jpg" class="aligncenter ">
-                    <a href="" data-toggle="modal" data-target="#t34">CẤY GHÉP IMPLANT »</a>
-                </div>
-            </div>
-            <div class="col-lg col-md">
-                <div class="img wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.5s" style="visibility: visible; animation-duration: 0.5s; animation-delay: 0.5s; animation-name: fadeInUp;">
-                    <img src="/assets/images/HomePage/dv5.jpg" class="aligncenter ">
-                    <a href="" data-toggle="modal" data-target="#t35">PHẪU THUẬT <br> CHỈNH HÌNH »</a>
-                </div>
-            </div>
-            <div class="col-lg col-md">
-                <div class="img wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.6s" style="visibility: visible; animation-duration: 0.5s; animation-delay: 0.6s; animation-name: fadeInUp;">
-                    <img src="/assets/images/HomePage/dv6.jpg" class="aligncenter">
-                    <a href="" data-toggle="modal" data-target="#t36">GÓI CHĂM SÓC <br> RĂNG TOÀN DIỆN »</a>
-                </div>
-            </div>
-         
-         
         <!-- dich vu noi bat -->
         <div class="container" style="margin-top: 30px;margin-bottom: 50px;">
             <div class="row wow bounceIn">
                 <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
-                    <h3><strong>QUY TRÌNH THĂM KHÁM WECARE</strong></h3>
+                    <h3><strong>QUY TRÌNH THĂM KHÁM DENTAL GOLD</strong></h3>
                     <div class="gach">
                         <div class="tron"></div>
                     </div>
