@@ -167,7 +167,7 @@ trait PaymentBusinessFunction
 
     public function getReport($monthInNumber, $yearInNumber)
     {
-        $data = DB::select(DB::raw("SELECT sum(tmh.total_price) as sum_price, staff.id as staff_id ,staff.name as staff_name FROM
+        $data = DB::select(DB::raw("SELECT sum(tmh.total_price) as total_price, staff.id as staff_id ,staff.name as staff_name FROM
 (
     select  min(td_created_date) as td_created_date , treatment_history_id FROM
     (
