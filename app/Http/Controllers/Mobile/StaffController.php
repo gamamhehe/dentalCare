@@ -392,6 +392,7 @@ class StaffController extends BaseController
             $email = $request->input('email');
             $birthday = $request->input('date_of_birth');
             $address = $request->input('address');
+            $degree = $request->input('degree');
             $districtId = $request->input('district_id');
             $staff = $this->getStaffById($staffId);
             if ($staff != null) {
@@ -401,6 +402,7 @@ class StaffController extends BaseController
                 $staff->gender = $gender;
                 $staff->date_of_birth = $birthday;
                 $staff->address = $address;
+                $staff->degree = $degree;
                 $staff->district_id = $districtId;
                 $result = $this->updateStaffProfile($staff);
                 if ($result == true) {
