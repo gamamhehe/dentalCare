@@ -111,12 +111,12 @@
     });
 
     var channel = pusher.subscribe('receivePatient');
-    channel.bind('ReceivePatient', function (data) {
+    channel.bind('ReceivePatient', function (dataPush) {
         var staff_id = $('#staff_id').val();
-        if (data.staff_id == staff_id) {
+        if (dataPush.staff_id == staff_id) {
             // viet code trong nay
             var num = $('#notiNumber').text();
-            if (data.pushStatus == 0) {
+            if (dataPush.pushStatus == 0) {
                 $('#notiNumber').html(Number(num) + 1);
                 document.getElementById("notiNumber").style.visibility = "visible";
                 $.ajax({
@@ -130,7 +130,7 @@
                     }
                 });
             }
-            if (data.pushStatus == 1) {
+            if (dataPush.pushStatus == 1) {
                 $('#notiNumber').html(Number(num) - 1);
                 var num2 = $('#notiNumber').text();
                 if (Number(num2) == 0) {
@@ -139,11 +139,12 @@
                 $.ajax({
                     url: '/admin/change-session', //this is your uri
                     type: 'GET', //this is your method
-
                     dataType: 'json',
                     success: function (data) {
+                        window.location.href = "/admin/appointment-detail/" + dataPush.id;
                     },
                     error: function (data) {
+                        window.location.href = "/admin/appointment-detail/" + dataPush.id;
                     }
                 });
             }

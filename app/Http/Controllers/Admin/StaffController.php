@@ -156,7 +156,7 @@ class StaffController extends Controller
                 return '
                 <div>
                     <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                    <a type="button" class="btn btn-sm  btn-success" href="start-appointment/' . $appoint->id . '">Bắt đầu</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
                     <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button>
                 </div>
                 ';
@@ -192,7 +192,7 @@ class StaffController extends Controller
                 return '
                 <div>
                     <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                    <a type="button" class="btn btn-sm  btn-success" href="start-appointment/' . $appoint->id . '">Bắt đầu</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
                     <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button>
                 </div>
                 ';

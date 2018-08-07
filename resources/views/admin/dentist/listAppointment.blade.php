@@ -131,6 +131,16 @@
                 }
             });
         }
+        function checkStart(id) {
+            $.ajax({
+                url: '/admin/start-appointment/' + id, //this is your uri
+                type: 'GET', //this is your method
+                dataType: 'json',
+                success: function (data) {
+                }, error: function (data) {
+                }
+            });
+        }
     </script>
 
 @endsection

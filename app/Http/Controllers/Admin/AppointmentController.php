@@ -119,20 +119,6 @@ class AppointmentController extends Controller
     public function startAppointmentController($appointId)
     {
         $appointment = $this->getAppointmentById($appointId);
-        // $statusString = $appointment->status;
-        if ($appointment->status == 0) {
-            $appointment->statusString = "Vừa tạo";
-        } else if ($appointment->status == 1) {
-            $appointment->statusString = "Đã tạo";
-        } else if ($appointment->status == 2) {
-            $appointment->statusString = "Đang khám";
-        } else if ($appointment->status == 3) {
-            $appointment->statusString = "Đã khám xong";
-        } else {
-            $appointment->statusString = "Đã xóa";
-        }
-        $checkAppoint = $this->checkAppointmentExistPatient($appointId);
-        $patientFinal = [];
         $this->startAppointment($appointId);
         $options = array(
             'cluster' => 'ap1',
@@ -146,27 +132,6 @@ class AppointmentController extends Controller
         );
         $appointment->pushStatus = 1;
         $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
-        $result = [];
-        if ($checkAppoint == 0) {
-            $patient = null;
-        } else {
-            $patient = Patient::where('id', $checkAppoint)->first();
-            // $result =[];
-            if ($patient) {
-                $idPatient = $patient->id;
-                $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
-                foreach ($listTreatmentHistory as $treatmentHistory) {
-                    if ($treatmentHistory->finish_date == null) {
-                        $result[] = $treatmentHistory;
-                    }
-                }
-
-            } else {
-            }
-            $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
-
-        }
-        return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
     }
 
 }
