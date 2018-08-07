@@ -171,7 +171,7 @@ trait PaymentBusinessFunction
 SELECT th.id, th.total_price,td.staff_id, staff.name as name FROM tbl_treatment_histories 
 as th JOIN tbl_treatment_details as td ON th.id = td.treatment_history_id JOIN tbl_staffs as staff ON staff.id = td.staff_id 
 WHERE MONTH(th.created_date) = :month AND YEAR(th.created_date) = :year 
-GROUP BY th.id, td.treatment_history_id, th.total_price,td.staff_id,staff.name
+GROUP BY th.id 
  ORDER BY td.created_date ASC ) AS subquery 
  GROUP BY staff_id,subquery.name "),
             array(
