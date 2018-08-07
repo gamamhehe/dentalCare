@@ -187,6 +187,7 @@ class StaffController extends BaseController
             return response()->json($error, 400);
         }
     }
+
 //allow staff to book in the end of the day.
     public function bookAppointment2(Request $request)
     {
@@ -199,7 +200,8 @@ class StaffController extends BaseController
     }
 
     //query chart
-    public function getChartTreatmentData(Request $request){
+    public function getChartTreatmentData(Request $request)
+    {
         $staffId = $request->input('staff_id');
         $month = $request->input('month');
         $year = $request->input('year');
@@ -342,7 +344,7 @@ class StaffController extends BaseController
             foreach ($availableDentists as $dentist) {
                 if (in_array($dentist->id, $freeDentists)) {
                     $dentist->status = 'Đang rãnh';
-                }else{
+                } else {
                     $dentist->status = 'Đang bận';
                 }
             }
@@ -459,7 +461,7 @@ class StaffController extends BaseController
                 $patientAppointment = $appointment->hasPatientOfAppointment()->first();
                 if ($patientAppointment != null) {
                     $appointment->patient = $patientAppointment->belongsToPatient()->first();
-                }else{
+                } else {
                     $appointment->patient = null;
                 }
             }
@@ -475,19 +477,17 @@ class StaffController extends BaseController
         try {
             $id = $request->input('id');
             $image = $request->file('image');
-            $tmpPatient = $this->getPatientById($id);
-            if ($tmpPatient != null) {
-                if ($this->editAvatar($image, $id, "staff")) {
-                    $patient = $this->getPatientById($id);
-                    $response = new \stdClass();
-                    $response->status = "OK";
-                    $response->message = "Chỉnh sửa avatar thành côngs";
-                    $response->data = $patient->avatar;
-                    return response()->json($response, 200);
-                } else {
-                    $error = $this->getErrorObj("Có lỗi xảy ra, không thể chỉnh sửa avatar", "Nothing");
-                    return response()->json($error, 400);
-                }
+            $tmpStaff = $this->getStaffById($id);
+            if ($tmpStaff != null) {
+                $timestamp = (new DateTime())->getTimestamp();
+                $urlImg = Utilities::saveFile($image, AppConst::AVATAR_PATH, $timestamp);
+                $tmpStaff->avatar = $urlImg;
+                $this->updateStaffProfile($tmpStaff);
+                $response = new \stdClass();
+                $response->status = "OK";
+                $response->message = "Chỉnh sửa avatar thành côngs";
+                $response->data = $tmpStaff->avatar;
+                return response()->json($response, 200);
             } else {
                 $error = $this->getErrorObj("Không thể tìm thấy bệnh nhân ", "Nothing");
                 return response()->json($error, 400);
@@ -517,9 +517,9 @@ class StaffController extends BaseController
                     null : $absentObj->belongsToStaff()->first();
                 $requestAbsentObj->message_from_staff = $absentObj->message_from_staff;
                 $requestAbsentObj->created_time = $absentObj->created_time;
-                $requestAbsentObj->is_approved = $absentObj->is_approved ==null ? 0 : $absentObj->is_approved;
-            }else{
-                $requestAbsentObj->staff_approve =null;
+                $requestAbsentObj->is_approved = $absentObj->is_approved == null ? 0 : $absentObj->is_approved;
+            } else {
+                $requestAbsentObj->staff_approve = null;
                 $requestAbsentObj->message_from_staff = null;
                 $requestAbsentObj->created_time = null;
                 $requestAbsentObj->is_approved = 0;
