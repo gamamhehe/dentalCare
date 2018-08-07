@@ -477,7 +477,7 @@ class StaffController extends BaseController
             $image = $request->file('image');
             $tmpPatient = $this->getPatientById($id);
             if ($tmpPatient != null) {
-                if ($this->editAvatar($image, $id)) {
+                if ($this->editAvatar($image, $id, "staff")) {
                     $patient = $this->getPatientById($id);
                     $response = new \stdClass();
                     $response->status = "OK";
