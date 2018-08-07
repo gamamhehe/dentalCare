@@ -109,10 +109,10 @@
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
-                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Profile</a>
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
                                 </div>
                                 <div class="pull-right" style="padding-right: 1em;">
-                                    <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
                                 </div>
 
                             </li>
@@ -273,10 +273,10 @@
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
-                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Profile</a>
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
                                 </div>
                                 <div class="pull-right" style="padding-right: 1em;">
-                                    <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
                                 </div>
 
                             </li>

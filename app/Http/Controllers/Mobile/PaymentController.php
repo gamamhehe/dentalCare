@@ -214,12 +214,25 @@ class PaymentController extends BaseController
                 $error = $this->getErrorObj("Không tìm thấy id của thanh toán", "No exception");
                 return response()->json($error, 400);
             }
-        }catch (Exception $ex){
+        } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi máy chủ", $ex);
             return response()->json($error, 500);
         }
 
     }
 
+    public function getPaymentReport(Request $request)
+    {
+        try {
+            $month = $request->input("month");
+            $year = $request->input("year");
+            $data = $this->getReport($month, $year);
+            return response()->json($data);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+
+    }
 
 }

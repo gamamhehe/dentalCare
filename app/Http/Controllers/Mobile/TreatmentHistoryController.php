@@ -9,8 +9,10 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Helpers\AppConst;
 use App\Http\Controllers\BusinessFunction\HistoryTreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
+use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
@@ -19,6 +21,7 @@ use App\Model\MedicinesQuantity;
 use App\Model\TreatmentHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class TreatmentHistoryController extends BaseController
@@ -27,7 +30,7 @@ class TreatmentHistoryController extends BaseController
     use UserBusinessFunction;
     use TreatmentHistoryBusinessFunction;
     use PatientBusinessFunction;
-
+    use StaffBusinessFunction;
 
     public function create(Request $request)
     {
@@ -157,4 +160,25 @@ class TreatmentHistoryController extends BaseController
         }
     }
 
+
+    public function getTreatmentHistoryReport(Request $request)
+    {
+        try {
+            $staffId = $request->input("staff_id");
+            $staffObj = $this->getStaffById($staffId);
+            $month = $request->input("month");
+            $year = $request->input("year");
+            $roleId = $staffObj->belongsToUser()->first()->hasUserHasRole()->first()->role_id;
+            $response = "";
+            if ($roleId == AppConst::ROLE_DENTIST) {
+                $response = $this->getTreatmentReportByDentist($staffId, $month, $year);
+            } else {
+                $response = $this->getTreatmentReportByReceptionist($month, $year);
+            }
+            return response()->json($response, 200);
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
 }
