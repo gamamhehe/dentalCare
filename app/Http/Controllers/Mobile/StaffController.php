@@ -169,8 +169,10 @@ class StaffController extends BaseController
             $result = null;
             if ($newAccount) {
                 $result = $this->createUserWithAnamnesis($user, $patient, $userHasRole, $listAnamnesisId);
+                $this->logBugAppointment("CREATE NEW USE");
             } else {
                 $result = $this->updatePatientWithAnamnesis($patient, $listAnamnesisId);
+                $this->logBugAppointment("CREATE NEW PATIENT");
             }
             if ($result) {
                 return response()->json($patient, 200);
