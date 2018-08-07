@@ -55,7 +55,7 @@ class StaffController extends BaseController
             }
             $result = $this->checkLogin($phone, $password);
             if ($result != null) {
-                $result->noti_token = $notifToken;
+                $this->updateUserFirebaseToken($phone, $notifToken);
                 $this->updateUser($result);//update notification token
                 $staffProfile = $result->belongToStaff()->first();
                 $staffProfile->district = $staffProfile->belongsToDistrict()->first();
