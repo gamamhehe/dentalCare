@@ -104,6 +104,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
     //payment
     Route::get('payment/getByPhone/{phone}', 'Mobile\PaymentController@getByPhone');
+    Route::get('payment/getPaymentReport/', 'Mobile\PaymentController@getPaymentReport');
     Route::post('payment/updatePaymentPrice/', 'Mobile\PaymentController@updatePaymentPrice');
     //staff
 
