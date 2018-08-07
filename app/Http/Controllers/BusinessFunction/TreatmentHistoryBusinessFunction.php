@@ -247,8 +247,7 @@ trait TreatmentHistoryBusinessFunction
     {
         $data = DB::select(DB::raw("
                       SELECT count(*) as num, subquery.treatment_id, subquery.treatment_name  FROM (
-                      SELECT  td.staff_id AS staff_id,  tm.id AS treatment_id , tm.name AS treatment_name FROM tbl_treatment_histories as th
-                      JOIN tbl_treatment_details as td ON th.id = td.treatment_history_id
+                      SELECT  tm.id AS treatment_id , tm.name AS treatment_name FROM tbl_treatment_histories as th
                       JOIN tbl_treatments as tm ON tm.id = th.treatment_id
                       WHERE MONTH(th.created_date) = :month  AND YEAR(th.created_date) = :year  
                     ) AS subquery 
