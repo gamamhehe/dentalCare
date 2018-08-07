@@ -86,8 +86,8 @@ trait PaymentBusinessFunction
             $payment = Payment::find($idPayment);
             $nameTreatment = Treatment::where('id', $idTreatment)->first()->name;
             $updatePrice = (int)$payment->total_price + (int)$price;
-            $updateInformation = 'Tổng tiền của chi trả thay đổi từ '. $payment->total_price .' VND sang '
-            . $updatePrice .' VND để thanh toán cho liệu trình '. $nameTreatment;
+            $updateInformation = 'Tổng tiền của chi trả thay đổi từ ' . $payment->total_price . ' VND sang '
+                . $updatePrice . ' VND để thanh toán cho liệu trình ' . $nameTreatment;
             PaymentUpdateDetail::create([
                 'payment_id' => $idPayment,
                 'update_information' => $updateInformation,
@@ -151,15 +151,33 @@ trait PaymentBusinessFunction
         }
     }
 
-    public function searchPayment($phone){
+    public function searchPayment($phone)
+    {
         return Payment::where('phone', $phone)->get();
     }
 
-    public function getDetailListPaymentById($idPayment){
+    public function getDetailListPaymentById($idPayment)
+    {
         $result = PaymentDetail::where('payment_id', $idPayment)->get();
-        foreach ($result as $detail){
+        foreach ($result as $detail) {
             $detail->staff = $detail->beLongsToStaff()->first()->name;
         }
         return $result;
+    }
+
+    public function getReport($monthInNumber, $yearInNumber)
+    {
+        $data = DB::select(DB::raw("SELECT sum(total_price) as total_price, staff_id , subquery.name as staff_name FROM( 
+SELECT th.id, th.total_price,td.staff_id, staff.name as name FROM tbl_treatment_histories 
+as th JOIN tbl_treatment_details as td ON th.id = td.treatment_history_id JOIN tbl_staffs as staff ON staff.id = td.staff_id 
+WHERE MONTH(th.created_date) = :month AND YEAR(th.created_date) = :year 
+GROUP BY th.id, td.treatment_history_id, th.total_price,td.staff_id,staff.name
+ ORDER BY td.created_date ASC ) AS subquery 
+ GROUP BY staff_id,subquery.name "),
+            array(
+                'month' => $monthInNumber,
+                'year' => $yearInNumber
+            ));
+        return $data;
     }
 }

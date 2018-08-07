@@ -79,13 +79,26 @@ class PatientController extends BaseController
             $patients = $this->getPatientByPhone($phone);
             $user->patients = $patients;
             $user->appointments = $this->getUserApptByDate($phone, (new \DateTime())->format('Y-m-d'));
+            foreach ($user->appointments as $appointment) {
+                $this->attachFieldAppointment($appointment);
+            }
             return $user;
         } catch (Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);
             return response()->json($error, 500);
         }
     }
-
+    public function attachFieldAppointment($appointment)
+    {
+        $appointment->dentist = $appointment->belongsToStaff()->first();
+        $patientAppointment = $appointment->hasPatientOfAppointment()->first();;
+        if ($patientAppointment != null) {
+            $appointment->patient = $patientAppointment->belongsToPatient()->first();
+        } else {
+            $appointment->patient = null;
+        }
+        return $appointment;
+    }
     public function receive(Request $request)
     {
 
