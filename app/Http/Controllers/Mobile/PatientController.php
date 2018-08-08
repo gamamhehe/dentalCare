@@ -162,4 +162,15 @@ class PatientController extends BaseController
         }
     }
 
+    public function getListPatientByPhone(Request $request)
+    {
+        try {
+            $phone = $request->input('phone');
+            $patients = $this->getPatientByPhone($phone);
+            return response()->json($patients);
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Có lỗi xảy ra", $ex);
+            return response()->json($error, 500);
+        }
+    }
 }
