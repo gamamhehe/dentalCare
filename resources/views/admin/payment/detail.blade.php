@@ -102,7 +102,7 @@
                     </div>
                     <div class="form-group">
                         @foreach($payment->updateList as $update)
-                            <span>+ {{$update->update_information}}</span>
+                            <span>+ {{$update->update_information}}</span><br>
                         @endforeach
                     </div>
                 </div>

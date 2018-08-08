@@ -76,23 +76,10 @@ class AppointmentController extends Controller
         echo json_encode($data);
     }
 
-    public function detailAppoinmentById($appointId)
+    public function detailAppointmentById($appointId)
     {
         $appointment = $this->getAppointmentById($appointId);
-        // $statusString = $appointment->status;
-        if ($appointment->status == 0) {
-            $appointment->statusString = "Vừa tạo";
-        } else if ($appointment->status == 1) {
-            $appointment->statusString = "Đã tạo";
-        } else if ($appointment->status == 2) {
-            $appointment->statusString = "Đang khám";
-        } else if ($appointment->status == 3) {
-            $appointment->statusString = "Đã khám xong";
-        } else {
-            $appointment->statusString = "Đã xóa";
-        }
         $checkAppoint = $this->checkAppointmentExistPatient($appointId);
-        $patientFinal = [];
         $result = [];
         if ($checkAppoint == 0) {
             $patient = null;

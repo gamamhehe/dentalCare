@@ -665,7 +665,7 @@ trait AppointmentBussinessFunction
 
     public function getCurrentAppointmentComming($staff_id)
     {
-        return count(Appointment::where('staff_id', $staff_id)->where('status', 1)->get());
+        return count(Appointment::where('staff_id', $staff_id)->where('status', 1)->where('start_time', '>', Carbon::now()->format('Y-m-d'))->get());
     }
 
     public function checkAppointmentExistPatient($appointmentId)
