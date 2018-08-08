@@ -102,7 +102,7 @@ trait AppointmentBussinessFunction
         DB::beginTransaction();
         try {
             $suitableDentistId = -1;
-            $defaultEstimatedTime = "00:30";
+            $defaultEstimatedTime = "01:30";
             $defaultStartOfDay = "07:00:00";
             $defaultStartAfternoon = ' 13:00:00';
             $bookingDateObj = new \DateTime($bookingDate);

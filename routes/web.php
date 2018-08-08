@@ -38,6 +38,7 @@ Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
 Route::get('/lien-he','Admin\HomeController@xxx');
+Route::post('/create-appointment-user', 'Admin\AppointmentController@UserAppoinment');
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
