@@ -66,6 +66,9 @@ class AppointmentController extends BaseController
         try {
             $date = $request->input('date');
             $appointments = $this->getAppointmentByDate($date);
+            foreach ($appointments as $appointment) {
+                $this->attachFieldAppointment($appointment);
+            }
             return response()->json($appointments, 200);
         } catch (\Exception $exception) {
             $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
