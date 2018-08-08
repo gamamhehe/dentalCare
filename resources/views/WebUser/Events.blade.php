@@ -377,8 +377,8 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 <!-- end qc -->
 <!-- modal -->
 <div id="create" class="modal fade" role="dialog" >
-    <div class="modal-dialog" style="width:500px;">
-        <div class="modal-content" style="height: 420px;min-height: 420px;">
+    <div class="modal-dialog" style="width:400px;">
+        <div class="modal-content" style="height: 400px;min-height: 400px;">
             <div class="modal-header" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <div><img src="/assets/images/HomePage/logo.png" alt="" class="centerThing"></div>
@@ -392,6 +392,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="guestPhone" name="guestPhone"
                             placeholder="Số điện thoại" disabled value="{{Session::get('currentPatient')->phone}}">
+                         <input type="hidden" id="phoneNumber" name="phoneNumber" value="{{Session::get('currentPatient')->phone}}">
                         </div>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="guestName" name="guestName"
@@ -542,9 +543,12 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
     $('.modal-title').text('Add Post');
 });
    $(document).ready( function(){
-    <?php if (Session::has('message')): ?>
-        swal("{{Session::get('message')}}", "", "error");
-    <?php endif ?>
+        <?php if (Session::has('success')): ?>
+          swal("Lịch hẹn đã được đặt", "{{Session::get('success')}}", "success");  
+        <?php endif ?>
+          <?php if (Session::has('error')): ?>
+          swal("{{Session::get('error')}}", "", "error");  
+        <?php endif ?>
        $("#startdate").datepicker({
         startDate: '+1d',
         autoclose: true,

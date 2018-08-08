@@ -87,6 +87,35 @@
                                         </div>
                                     </div>
                                 </div>
+                            @else
+                            <div class="box-header with-border box-info">
+                                    <h3 class="box-title" style="float: left;">Thông tin bệnh nhân</h3>
+                                    <a class="btn btn-success btn-sm" style="float: right;"
+                                       href="#"> Cập nhật thông tin
+                                    </a>
+                                </div>
+                                <div class="panel-body">
+                                 <div class="form-group row add">
+                                    <p style="color: red">* Bệnh nhân mới.Hãy cập nhật thông tin bệnh nhân</p>
+                                    </div>
+                                    <div class="form-group row add">
+                                        <div class="col-sm-4"><label>Họ Tên</label></div>
+                                        <div class="col-sm-6" style="padding: 0px;margin: 0px;">
+                                            <input type="text" value="{{$appointment->name}}" name="name"
+                                                   class="form-control pull-right" id="phone" style="margin:0px;width: 100%"
+                                                   disabled/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row add">
+                                        <div class="col-sm-4"><label>Điện thoại</label></div>
+                                        <div class="col-sm-6" style="padding: 0px;margin: 0px;">
+                                            <input type="text" value="{{$appointment->phone}}" name="phone"
+                                                   class="form-control pull-right" id="phone" style="margin:0px;width: 100%"
+                                                   disabled/>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             @endif
                         </div>
                     </div>

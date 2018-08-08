@@ -135,11 +135,14 @@ class AppointmentController extends Controller
     }
 
     public function UserAppoinment(Request $request){
-        dd($request->all());
     try {
         $phone = $request['guestPhone'];
+        if($phone==null){
+           $phone =  $request['phoneNumber'];
+        }
         $dateBooking = $request['start_date'];
         $errormess ="Lịch hẹn ngày ".$dateBooking." đã đầy";
+
         $note = $request['guestNote'];
         if($note == null){
             $note = "Không có";
@@ -148,12 +151,15 @@ class AppointmentController extends Controller
         $newformat = date('Y-m-d',strtotime($dateBooking));
         $newApp = $this->createAppointment($newformat, $phone, $note,null,
               null,null, $request->guestName);
+        $numerical_order = $newApp->numerical_order;
+        $start_time = $newApp->start_time;
+        $successMess = "Số thứ tự :".$numerical_order.", Bắt đầu khám vào lúc : ".$start_time; 
         $dateTime = new DateTime($newApp->start_time);
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
         $this->dispatch(new SendSmsJob($phone, $smsMessage));
-        return redirect()->back()->with('message', 'Lịch hẹn đã được đặt!');
+        return redirect()->back()->withSuccess($successMess);
        } catch (\Exception $e) {
-            return redirect()->back()->with('message', $errormess);
+          return redirect()->back()->withError($errormess);
        }
     }
 }

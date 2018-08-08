@@ -110,7 +110,7 @@ trait AppointmentBussinessFunction
             $this->logBugAppointment("                                 ");
             $this->logBugAppointment("Begin createAppointment");
             $suitableDentistId = -1;
-            $defaultEstimatedTime = "01:30";
+            $defaultEstimatedTime = "00:30";
             $defaultStartOfDay = "07:00:00";
             $defaultStartAfternoon = ' 13:00:00';
             $maxDateInStr = "2035-12-12";
