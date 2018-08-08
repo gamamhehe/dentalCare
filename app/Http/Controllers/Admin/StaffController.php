@@ -27,6 +27,7 @@ class StaffController extends Controller
     use TreatmentHistoryBusinessFunction;
     use TreatmentCategoriesBusinessFunction;
     use FeedbackBusinessFunction;
+
     public function loginGet(Request $request)
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
@@ -70,27 +71,31 @@ class StaffController extends Controller
 
         // $this->createUserWithRole($user, $staff, $userHasRole);
     }
-    public function getStaff(Request $request){
-        
-        $staffs =  $this->getStaffForDataTable();
-         return Datatables::of($staffs)->addColumn('action', function($staffs) {
-                return '
-                 <a href="#" class="show-modal btn btn-info btn-sm" data-id="'.$staffs->id.'" data-name="'.$staffs->name.'" data-address="'.$staffs->address.'"
-                                           data-date="'.$staffs->date_of_birth.'" data-phone="'.$staffs->phone.'"  data-sex="'.$staffs->gender.'">
+
+    public function getStaff(Request $request)
+    {
+
+        $staffs = $this->getStaffForDataTable();
+        return Datatables::of($staffs)->addColumn('action', function ($staffs) {
+            return '
+                 <a href="#" class="show-modal btn btn-info btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
+                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="'.$staffs->id.'" data-name="'.$staffs->name.'" data-address="'.$staffs->address.'"
-                                           data-date="'.$staffs->date_of_birth.'" data-phone="'.$staffs->phone.'"  data-sex="'.$staffs->gender.'">
+                <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
+                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '">
                                             <i class="glyphicon glyphicon-pencil"></i>
                                         </a>
-               <button value="'.$staffs->id.'" class="btn btn-danger btn-sm btn-dell">  <i class="glyphicon glyphicon-trash" ></i></button>';
-            })->make(true);
-       
+               <button value="' . $staffs->id . '" class="btn btn-danger btn-sm btn-dell">  <i class="glyphicon glyphicon-trash" ></i></button>';
+        })->make(true);
+
     }
-    public function createStaff(Request $request){
-       $post = Staff::all();
-       $role = Role::all();
-        return view('admin.dentist.list', ['post' => $post,'roles'=>$role]);
+
+    public function createStaff(Request $request)
+    {
+        $post = Staff::all();
+        $role = Role::all();
+        return view('admin.dentist.list', ['post' => $post, 'roles' => $role]);
     }
 
     public function login(Request $request)
@@ -133,16 +138,16 @@ class StaffController extends Controller
         } else {
             $listAppointment = $this->viewAppointmentForReception();
         }
-        foreach ($listAppointment as $appointment){
-            if ($appointment->status == 0){
+        foreach ($listAppointment as $appointment) {
+            if ($appointment->status == 0) {
                 $appointment->status = 'Bệnh nhân chưa đến';
-            }else if ($appointment->status == 1){
+            } else if ($appointment->status == 1) {
                 $appointment->status = 'Bệnh nhân đã đến';
-            }else if ($appointment->status == 2){
+            } else if ($appointment->status == 2) {
                 $appointment->status = 'Đang khám';
-            }else if ($appointment->status == 3){
+            } else if ($appointment->status == 3) {
                 $appointment->status = 'Đã khám';
-            }else if ($appointment->status == 4){
+            } else if ($appointment->status == 4) {
                 $appointment->status = 'Hủy';
             }
         }
@@ -150,14 +155,15 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                    <a href="appointment-detail/'. $appoint->id.'" class="btn btn-sm btn-success">Chi tiết</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Bắt đầu</button>
-                    <a type="button" class="btn btn-sm  btn-success" href="start-appointment/' . $appoint->id . '">Hoàn tất</a>
+                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button>
                 </div>
                 ';
             })->make(true);
 
     }
+
     public function getListAppointmentInDateForStaff(Request $request)
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
@@ -168,16 +174,16 @@ class StaffController extends Controller
         } else {
             $listAppointment = $this->viewAppointmentInDateForReception();
         }
-        foreach ($listAppointment as $appointment){
-            if ($appointment->status == 0){
+        foreach ($listAppointment as $appointment) {
+            if ($appointment->status == 0) {
                 $appointment->status = 'Bệnh nhân chưa đến';
-            }else if ($appointment->status == 1){
+            } else if ($appointment->status == 1) {
                 $appointment->status = 'Bệnh nhân đã đến';
-            }else if ($appointment->status == 2){
+            } else if ($appointment->status == 2) {
                 $appointment->status = 'Đang khám';
-            }else if ($appointment->status == 3){
+            } else if ($appointment->status == 3) {
                 $appointment->status = 'Đã khám';
-            }else if ($appointment->status == 4){
+            } else if ($appointment->status == 4) {
                 $appointment->status = 'Hủy';
             }
         }
@@ -185,9 +191,9 @@ class StaffController extends Controller
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                    <a href="appointment-detail/'. $appoint->id.'" class="btn btn-sm btn-success">Chi tiết</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Bắt đầu</button>
-                    <a type="button" class="btn btn-sm  btn-success" href="start-appointment/' . $appoint->id . '">Hoàn tất</a>
+                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button>
                 </div>
                 ';
             })->make(true);
@@ -209,6 +215,7 @@ class StaffController extends Controller
         echo json_encode($data);
 
     }
+
     public function getList()
     {
         return $this->getListStaff();
@@ -270,18 +277,22 @@ class StaffController extends Controller
 
 
     }
-    public function changeSession(){
-        session(['currentAppointmentComming' => Session::get('currentAppointmentComming') + 1]);
 
+    public function changeSession()
+    {
+        $user = Session::get('currentAdmin');
+        session(['currentAppointmentComming' => $this->getCurrentAppointmentComming($user->belongToStaff()->first()->id)]);
         echo '';
     }
-    public function profile(Request $request){
-        $staff= $request->session()->get('currentAdmin');
+
+    public function profile(Request $request)
+    {
+        $staff = $request->session()->get('currentAdmin');
         $staff->staffDetail = $staff->belongToStaff()->first();
         $staff->Role = $staff->hasUserHasRole()->first()->belongsToRole()->first();
-        $start= $this->getNumberStart($staff->staffDetail->id);
+        $start = $this->getNumberStart($staff->staffDetail->id);
 
-        return view('admin.Staff.profile',['staff'=>$staff,'start'=>$start]);
+        return view('admin.Staff.profile', ['staff' => $staff, 'start' => $start]);
     }
 
 }

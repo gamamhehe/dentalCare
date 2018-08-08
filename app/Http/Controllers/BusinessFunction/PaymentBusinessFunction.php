@@ -167,13 +167,20 @@ trait PaymentBusinessFunction
 
     public function getReport($monthInNumber, $yearInNumber)
     {
-        $data = DB::select(DB::raw("SELECT sum(total_price) as total_price, staff_id , subquery.name as staff_name FROM( 
-SELECT th.id, th.total_price,td.staff_id, staff.name as name FROM tbl_treatment_histories 
-as th JOIN tbl_treatment_details as td ON th.id = td.treatment_history_id JOIN tbl_staffs as staff ON staff.id = td.staff_id 
-WHERE MONTH(th.created_date) = :month AND YEAR(th.created_date) = :year 
-GROUP BY th.id, td.treatment_history_id, th.total_price,td.staff_id,staff.name
- ORDER BY td.created_date ASC ) AS subquery 
- GROUP BY staff_id,subquery.name "),
+        $data = DB::select(DB::raw("SELECT sum(tmh.total_price) as total_price, staff.id as staff_id ,staff.name as staff_name FROM
+(
+    select  min(td_created_date) as td_created_date , treatment_history_id FROM
+    (
+SELECT th.id as treatment_history_id, td.created_date as td_created_date FROM tbl_treatment_histories as th
+JOIN tbl_treatment_details  as td ON th.id = td.treatment_history_id
+        WHERE MONTH(th.created_date) = :month AND YEAR(th.created_date) = :year
+    ) as suq
+    GROUP BY suq.treatment_history_id
+) as submin
+   JOIN tbl_treatment_details as tmd ON tmd.created_date = submin.td_created_date
+   JOIN tbl_staffs as staff ON staff.id= tmd.staff_id
+   JOIN tbl_treatment_histories as tmh ON tmh.id= submin.treatment_history_id
+   GROUP BY staff.id,staff.name"),
             array(
                 'month' => $monthInNumber,
                 'year' => $yearInNumber

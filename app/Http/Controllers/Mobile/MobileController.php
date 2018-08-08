@@ -6,6 +6,9 @@ use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
+use App\Jobs\ExcCustomFuncJob;
+use App\Jobs\SendFirebaseJob;
 use App\Jobs\SendReminderJob;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
@@ -87,7 +90,7 @@ class MobileController extends Controller
         $requestObject = Utilities::getFirebaseRequestObj(
             AppConst::RESPONSE_PROMOTION,
             "test",
-            $content, $content, '/topics/' .AppConst::TOPIC_PROMOTION);
+            $content, $content, '/topics/' . AppConst::TOPIC_PROMOTION);
 
         try {
             $response = Utilities::sendFirebase($requestObject);
@@ -95,7 +98,9 @@ class MobileController extends Controller
         } catch (Exception $e) {
         }
         return response()->json("SUCCESS");
-    } public function sendFirebaseToPhone($phone, $content)
+    }
+
+    public function sendFirebaseToPhone($phone, $content)
     {
         $userFbToken = FirebaseToken::where('phone', $phone)->first();
         $requestObject = Utilities::getFirebaseRequestObj(
@@ -111,16 +116,11 @@ class MobileController extends Controller
         return response()->json("SUCCESS");
     }
 
+    use TreatmentHistoryBusinessFunction;
 
     public function test2(Request $request)
     {
-        $staff = Staff::where('id', 5)->first();
-        $result = $this->isDentistAbsent($staff, '2018-07-23');
-        if ($result) {
-            return "TRUE";
-        } else {
-            return "FALSE";
-        }
+
 
     }
 
@@ -137,22 +137,30 @@ class MobileController extends Controller
         $dentist = Staff::where('id', $dentistId)->first();
         $list = $dentist->hasAppointment()->get();
         $count = $list->count();
-        return response()->json(['count'=>$count,'list'=>$list], 200);
+        return response()->json(['count' => $count, 'list' => $list], 200);
     }
 
+    /**
+     * @param Request $request
+     */
     public function test3(Request $request)
     {
-        $id = $request->query('id');
-        $appointment = $this->getAppointmentById($id);
-        if ($appointment != null) {
-            $crrDate = new DateTime();
-            $appDate = new DateTime($appointment->start_time);
-            if ($this->isUpCommingAppointment($crrDate, $appDate)) {
-                return response()->json($appDate->format("Y-m-d H:i:s"));
-            }
-        }
-        return response()->json('-__-');
+//        $id = $request->query('id');
+//        $appointment = $this->getAppointmentById($id);
+//        if ($appointment != null) {
+//            $crrDate = new DateTime();
+//            $appDate = new DateTime($appointment->start_time);
+//            if ($this->isUpCommingAppointment($crrDate, $appDate)) {
+//                return response()->json($appDate->format("Y-m-d H:i:s"));
+//            }
+//        }
+//        return response()->json('-__-');
+        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
+            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
+        ));
     }
+
+
 
     public function test4()
     {

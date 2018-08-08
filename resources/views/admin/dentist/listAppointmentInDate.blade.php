@@ -76,39 +76,39 @@
             });
         });
 
-        $(document).on('click', '.btn-dell', function(e) {
-            var id=$(this).val();
-
-            $.ajax({
-                url: 'get-treatment-history-patient/'+id, //this is your uri
-                type: 'GET', //this is your method
-
-                dataType: 'json',
-                success: function(data){
-                    if(data.statusComing == 0){
-                        swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error");
-                        return;
-                    }
-                    $('#create').modal('show');
-                    $('.form-horizontal').show();
-                    $('.modal-title').text('Add Post');
-                    document.getElementById('data').innerHTML = '';
-                    data = data.resultHis;
-                    if(data.length == 0){
-                        $('#data').append('<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>');
-                    }else{
-
-                        for (var i = 0; i < data.length; i++) {
-                            $('#data').append('<tr><td>' + data[i].id + '</td><td>' + data[i].nameTreat.name + '</td><td>' + data[i].tooth_number +'</td><td>' + data[i].description +'</td><td><a href="treatment-history-detail/'+data[i].id+'" class="btn btn-success" role="button">Skip</a></td></tr>');
-                        }
-                    }
-                    // alert(data[0].id);
-                },error: function(obj,text,error) {
-                    //show error
-                    alert( showNotice("error",obj.responseText));
-                },
-            });
-        });
+        // $(document).on('click', '.btn-dell', function(e) {
+        //     var id=$(this).val();
+        //
+        //     $.ajax({
+        //         url: 'get-treatment-history-patient/'+id, //this is your uri
+        //         type: 'GET', //this is your method
+        //
+        //         dataType: 'json',
+        //         success: function(data){
+        //             if(data.statusComing == 0){
+        //                 swal("Bệnh nhân chưa đến hoặc đã khám xong", "", "error");
+        //                 return;
+        //             }
+        //             $('#create').modal('show');
+        //             $('.form-horizontal').show();
+        //             $('.modal-title').text('Add Post');
+        //             document.getElementById('data').innerHTML = '';
+        //             data = data.resultHis;
+        //             if(data.length == 0){
+        //                 $('#data').append('<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>');
+        //             }else{
+        //
+        //                 for (var i = 0; i < data.length; i++) {
+        //                     $('#data').append('<tr><td>' + data[i].id + '</td><td>' + data[i].nameTreat.name + '</td><td>' + data[i].tooth_number +'</td><td>' + data[i].description +'</td><td><a href="treatment-history-detail/'+data[i].id+'" class="btn btn-success" role="button">Skip</a></td></tr>');
+        //                 }
+        //             }
+        //             // alert(data[0].id);
+        //         },error: function(obj,text,error) {
+        //             //show error
+        //             alert( showNotice("error",obj.responseText));
+        //         },
+        //     });
+        // });
         function checkDone(id){
             $.ajax({
                 url: '/admin/check-done/'+ id, //this is your uri
@@ -124,6 +124,16 @@
                     }
                 },error: function (data) {
                     swal("Check connnection", "", "error");
+                }
+            });
+        }
+        function checkStart(id){
+            $.ajax({
+                url: '/admin/start-appointment/'+ id, //this is your uri
+                type: 'GET', //this is your method
+                dataType: 'json',
+                success: function(data){
+                },error: function (data) {
                 }
             });
         }

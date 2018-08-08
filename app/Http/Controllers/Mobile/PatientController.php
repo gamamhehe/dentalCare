@@ -9,9 +9,12 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Helpers\AppConst;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Jobs\SendFirebaseJob;
+use App\Model\FirebaseToken;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -38,7 +41,7 @@ class PatientController extends BaseController
                 $patient->date_of_birth = $birthday;
                 $patient->address = $address;
                 $patient->district_id = $districtId;
-                $result = $this->updatePatientWithAnamnesis($patient,$listAnamnesisId);
+                $result = $this->updatePatientWithAnamnesis($patient, $listAnamnesisId);
                 if ($result == true) {
                     $successResponse = new \stdClass();
                     $successResponse->status = "OK";
@@ -88,6 +91,7 @@ class PatientController extends BaseController
             return response()->json($error, 500);
         }
     }
+
     public function attachFieldAppointment($appointment)
     {
         $appointment->dentist = $appointment->belongsToStaff()->first();
@@ -99,6 +103,7 @@ class PatientController extends BaseController
         }
         return $appointment;
     }
+
     public function receive(Request $request)
     {
 
@@ -127,7 +132,8 @@ class PatientController extends BaseController
 //                    $options
 //                );
 //                $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
-                $successResponse = $this->getSuccessObj(200, "OK","Nhận bệnh thành công", "No Exception");
+                $this->sendFirebaseReloadAppointment($appointment->staff_id);
+                $successResponse = $this->getSuccessObj(200, "OK", "Nhận bệnh thành công", "No Exception");
                 return response()->json($successResponse, 200);
             } else {
                 $error = $this->getErrorObj("Lỗi không xác dịnh", "No Exception");
@@ -136,4 +142,40 @@ class PatientController extends BaseController
         }
     }
 
+    public function sendFirebaseReloadAppointment($staffId)
+    {
+        $staff = $this->getStaffById($staffId);
+        if ($staff != null) {
+            $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
+            if ($staffFirebaseToken != null) {
+
+                dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
+                        $staff->id,
+                        "No message",
+                        AppConst::ACTION_RELOAD_APPOINTMENT,
+                        $staffFirebaseToken->noti_token)
+                );
+            }
+            $this->logInfo("Send sendFirebaseReloadAppointment func");
+        } else {
+            $this->logInfo("staff in sendFirebaseReloadAppointment null");
+        }
+    }
+
+    public function getListPatientByPhone(Request $request)
+    {
+        try {
+            $phone = $request->input('phone');
+            $user = $this->getUserByPhone($phone);
+            if ($user == null) {
+                $error = $this->getErrorObj("Số điện thoại chưa được đăng kí", "No exception");
+                return response()->json($error, 400);
+            }
+            $patients = $this->getPatientByPhone($phone);
+            return response()->json($patients);
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Có lỗi xảy ra", $ex);
+            return response()->json($error, 500);
+        }
+    }
 }
