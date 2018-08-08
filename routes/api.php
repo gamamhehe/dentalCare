@@ -66,6 +66,7 @@ Route::get("firebase/{topic}/{content}", "Mobile\MobileController@sendFirebase")
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
 
+Route::get("reload/{staffid}", "Mobile\PatientController@sendFirebaseReloadAppointment");
 //input bacsiranh?date=value
 Route::get("bacsiranh", "Mobile\TestController@getDentist");
 Route::get("reminder", "Mobile\MobileController@sendReminder");
