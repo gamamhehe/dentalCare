@@ -51,6 +51,9 @@ class AppointmentController extends BaseController
             $phone = $request->input('phone');
             $dateStr = (new \DateTime())->format('Y-m-d');
             $appointments = $this->getAppointmentByDate($phone, $dateStr);
+            foreach ($appointments as $appointment) {
+                $this->attachFieldAppointment($appointment);
+            }
             return response()->json($appointments, 200);
         }catch (\Exception $ex){
             $error = $this->getErrorObj("Có lỗi xảy ra", $ex);
@@ -102,6 +105,14 @@ class AppointmentController extends BaseController
                 $startDateTime = new DateTime($result->start_time);
                 $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
                 $this->dispatch(new SendSmsJob($phone, $smsMessage));
+                $user = $this->getUserByPhone($phone);
+                if ($user == null) {
+                    $user = new User();
+                    $user->phone = $phone;
+                    $user->password =  Hash::make($phone);
+                    $this->createUser($user);
+                    dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
+                }
                 return response()->json($listAppointment, 200);
             } else {
                 $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
@@ -111,14 +122,14 @@ class AppointmentController extends BaseController
 
         } catch (ApiException $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex);
-            return response()->json($error, 400);
+            return response()->json($error, 500);
         } catch (\Exception $ex) {
             if ($ex->getMessage() == "isEndOfTheDay") {
                 $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
             } else {
                 $error = $this->getErrorObj("Lỗi server", $ex);
             }
-            return response()->json($error, 400);
+            return response()->json($error, 500);
         }
     }
 
