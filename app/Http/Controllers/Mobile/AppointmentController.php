@@ -14,6 +14,7 @@ use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Jobs\SendSmsJob;
 use App\Model\Appointment;
@@ -128,6 +129,7 @@ class AppointmentController extends BaseController
                     $userHasRole = new UserHasRole();
                     $userHasRole->phone = $phone;
                     $userHasRole->role_id = 1;
+                    $userHasRole->start_time = Carbon::now();
                     $this->createUser($user, $userHasRole);
 
                     Log::info("USER NULL KHONGOHKAO");
