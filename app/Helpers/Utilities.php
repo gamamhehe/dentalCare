@@ -140,6 +140,7 @@ class Utilities
             $response = $request->getBody()->getContents();
             return $response;
         } catch (GuzzleException $ex) {
+            Log::info("Error send firebase " . $ex->getMessage());
             throw new Exception($ex);
         }
     }

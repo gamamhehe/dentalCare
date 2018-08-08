@@ -16,6 +16,7 @@ class AppConst
     const RESPONSE_REMINDER = 'RESPONSE_REMINDER';
     const RESPONSE_FEEDBACK = 'RESPONSE_FEEDBACK';
     const RESPONSE_PROMOTION = 'RESPONSE_PROMOTION';
+    const RESPONSE_RELOAD = 'RESPONSE_RELOAD';
 
     const TOPIC_PROMOTION = "PROMOTION";
 
@@ -38,6 +39,10 @@ class AppConst
     const ROLE_PATIENT = 4;
 
     const TREATMENT_HISTORY_PATH = '/assets/images/TreatmentHistory/';
+    const AVATAR_PATH = '/assets/images/avatar/';
+
+
+    const ACTION_RELOAD_APPOINTMENT = "ACTION_RELOAD_APPOINTMENT";
 //0 vua tao =>Chua tới
 //1 da toi 
 //2 dang kham

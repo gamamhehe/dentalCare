@@ -45,6 +45,19 @@ class AppointmentController extends BaseController
         }
     }
 
+    public function getUserAppointmentByCurrentDate(Request $request)
+    {
+        try {
+            $phone = $request->input('phone');
+            $dateStr = (new \DateTime())->format('Y-m-d');
+            $appointments = $this->getAppointmentByDate($phone, $dateStr);
+            return response()->json($appointments, 200);
+        }catch (\Exception $ex){
+            $error = $this->getErrorObj("Có lỗi xảy ra", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
     public function getById($id)
     {
         try {
@@ -62,6 +75,9 @@ class AppointmentController extends BaseController
     {
         try {
             $appointments = $this->getAppointmentByPhone($phone);
+            foreach ($appointments as $appointment) {
+                $this->attachFieldAppointment($appointment);
+            }
             return response()->json($appointments, 200);
         } catch (Exception $exception) {
             $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
@@ -116,7 +132,7 @@ class AppointmentController extends BaseController
             $this->updateAppointment($appointment);
             $successResponse = $this->getSuccessObj(200, "OK", "Sửa lịch thành công", "No data");
             return response()->json($successResponse);
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             $error = $this->getErrorObj('Lỗi máy chủ', $ex);
             return response()->json($error, 500);
         }
@@ -129,7 +145,7 @@ class AppointmentController extends BaseController
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
             $dentistId = $request->input('dentist_id');
-            $this->logBugAppointment("DEN: " .$dentistId);
+            $this->logBugAppointment("DEN: " . $dentistId);
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
             $currentDay = new DateTime();

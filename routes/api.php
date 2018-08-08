@@ -66,6 +66,7 @@ Route::get("firebase/{topic}/{content}", "Mobile\MobileController@sendFirebase")
 //input topappt?date=value
 Route::get("topappt", "Mobile\MobileController@topappt");
 
+Route::get("reload/{staffid}", "Mobile\PatientController@sendFirebaseReloadAppointment");
 //input bacsiranh?date=value
 Route::get("bacsiranh", "Mobile\TestController@getDentist");
 Route::get("reminder", "Mobile\MobileController@sendReminder");
@@ -102,6 +103,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get("appointment/getById/{id}", "Mobile\AppointmentController@getById");
     Route::post("appointment/updateStatus", "Mobile\AppointmentController@updateStatus");
     Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
+    Route::get("appointment/getUserAppointmentByCurrentDate/", "Mobile\AppointmentController@getUserAppointmentByCurrentDate");
     //payment
     Route::get('payment/getByPhone/{phone}', 'Mobile\PaymentController@getByPhone');
     Route::get('payment/getPaymentReport/', 'Mobile\PaymentController@getPaymentReport');
@@ -125,6 +127,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
     Route::post("patient/updatePatient", "Mobile\PatientController@updatePatientInfo");
     Route::get('patient/getByPhone', "Mobile\PatientController@getByPhone");
+    Route::get('patient/getListPatientByPhone', "Mobile\PatientController@getListPatientByPhone");
     Route::get('staff/getPatientAppointmentByDate', "Mobile\StaffController@getPatientAppointmentByDate");
     Route::post("patient/receive", "Mobile\PatientController@receive");
     ////////Anamesis

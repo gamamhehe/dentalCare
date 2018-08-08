@@ -15,6 +15,7 @@ use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Jobs\SendSmsJob;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\User;
 use App\Model\UserHasRole;
@@ -146,6 +147,12 @@ class UserController extends BaseController
 
     public function logout(Request $request)
     {
+        $phone = $request->input("phone");
+        $fbToken = FirebaseToken::where('phone', $phone)->first();
+        if ($fbToken != null) {
+            $fbToken->noti_token = "null";
+            $fbToken->save();
+        }
         if (!Auth::guard('api')->check()) {
             $error = $this->getErrorObj(AppConst::MSG_LOGOUT_ERROR, null);
             return response()->json($error, 404);
