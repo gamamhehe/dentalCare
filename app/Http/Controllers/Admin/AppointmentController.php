@@ -76,7 +76,7 @@ class AppointmentController extends Controller
         echo json_encode($data);
     }
 
-    public function detailAppoinmentById($appointId)
+    public function detailAppointmentById($appointId)
     {
         $appointment = $this->getAppointmentById($appointId);
         // $statusString = $appointment->status;
@@ -92,7 +92,6 @@ class AppointmentController extends Controller
             $appointment->statusString = "Đã xóa";
         }
         $checkAppoint = $this->checkAppointmentExistPatient($appointId);
-        $patientFinal = [];
         $result = [];
         if ($checkAppoint == 0) {
             $patient = null;
@@ -113,6 +112,7 @@ class AppointmentController extends Controller
             $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
+          
         return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
     }
 
@@ -134,4 +134,26 @@ class AppointmentController extends Controller
         $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
     }
 
+    public function UserAppoinment(Request $request){
+        dd($request->all());
+    try {
+        $phone = $request['guestPhone'];
+        $dateBooking = $request['start_date'];
+        $errormess ="Lịch hẹn ngày ".$dateBooking." đã đầy";
+        $note = $request['guestNote'];
+        if($note == null){
+            $note = "Không có";
+        }
+
+        $newformat = date('Y-m-d',strtotime($dateBooking));
+        $newApp = $this->createAppointment($newformat, $phone, $note,null,
+              null,null, $request->guestName);
+        $dateTime = new DateTime($newApp->start_time);
+        $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
+        $this->dispatch(new SendSmsJob($phone, $smsMessage));
+        return redirect()->back()->with('message', 'Lịch hẹn đã được đặt!');
+       } catch (\Exception $e) {
+            return redirect()->back()->with('message', $errormess);
+       }
+    }
 }

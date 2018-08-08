@@ -110,7 +110,7 @@ trait AppointmentBussinessFunction
             $this->logBugAppointment("                                 ");
             $this->logBugAppointment("Begin createAppointment");
             $suitableDentistId = -1;
-            $defaultEstimatedTime = "00:30";
+            $defaultEstimatedTime = "01:30";
             $defaultStartOfDay = "07:00:00";
             $defaultStartAfternoon = ' 13:00:00';
             $maxDateInStr = "2035-12-12";
@@ -669,7 +669,7 @@ trait AppointmentBussinessFunction
 
     public function getCurrentAppointmentComming($staff_id)
     {
-        return count(Appointment::where('staff_id', $staff_id)->where('status', 1)->get());
+        return count(Appointment::where('staff_id', $staff_id)->where('status', 1)->where('start_time', '>', Carbon::now()->format('Y-m-d'))->get());
     }
 
     public function checkAppointmentExistPatient($appointmentId)

@@ -97,17 +97,17 @@
                                                     </h4>
                                                 </div>
                                                 <div class="container">
-                                                    <div class="col-sm-4">Giá
-                                                        : {{$treatmentHistory->treatment->max_price}} VNĐ
+                                                    <div class="col-sm-4">Giá gốc
+                                                        : {{$treatmentHistory->price}} VNĐ
                                                     </div>
                                                     <div class="col-sm-4">Khuyến mãi : 0%</div>
-                                                    <div class="col-sm-4">Còn lại
-                                                        : {{$treatmentHistory->treatment->max_price}} VNĐ
+                                                    <div class="col-sm-4">Tổng tiền
+                                                        : {{$treatmentHistory->total_price}} VNĐ
                                                     </div>
                                                     <div class="col-sm-4">Răng
                                                         : {{$treatmentHistory->tooth->tooth_name}}</div>
                                                     <div class="col-sm-4">Ngày bắt đầu
-                                                        : {{$treatmentHistory->create_date}}</div>
+                                                        : {{$treatmentHistory->created_date}}</div>
                                                     <div class="col-sm-4">Ngày kết thúc
                                                         : {{$treatmentHistory->finish_date}}</div>
                                                 </div>
