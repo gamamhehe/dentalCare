@@ -6,9 +6,7 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả <a href="#" class="create-modal btn btn-success btn-sm">
-                                <i class="glyphicon glyphicon-plus">XXX</i>
-                            </a></div>
+                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả </div>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -37,7 +35,7 @@
                                             <label class="control-label col-sm-2" for="title">Số tiền :</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="name" name="name"
-                                                       placeholder="Your name Here" required>
+                                                       placeholder="Số tiền" required>
                                                 <p class="error text-center alert alert-danger hidden"></p>
                                             </div>
                                         </div>
@@ -84,18 +82,16 @@
                                                 <form action="{{route('getPaymentDetail')}}">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="idPayment" value="{{$payment->id}}">
-                                                    <button type="submit" class="btn btn-default btn-success">Xem Chi
-                                                        Tiết Chi Trả
+                                                    <button type="submit" class="btn btn-default btn-success">Xem chi tiết Chi Trả
                                                     </button>
                                                 </form>
                                                 @if($payment->is_done == false)
-                                                    <form action="{{route('getPaymentDetail')}}">
-                                                        {{ csrf_field() }}
+
                                                         <input type="hidden" name="idPayment" value="{{$payment->id}}">
-                                                        <button type="submit" class="btn btn-default btn-success">Tạo
-                                                            Chỉ Trả
-                                                        </button>
-                                                    </form>
+                                                    <a href="#" class="create-modal btn btn-success btn-sm">
+                                                        <i class="glyphicon">Tạo chi trả</i>
+                                                    </a>
+
                                                 @endif
                                             </div>
                                         </td>
@@ -124,7 +120,7 @@
         $(document).on('click', '.create-modal', function () {
             $('#create').modal('show');
             $('.form-horizontal').show();
-            $('.modal-title').text('Add Post');
+            $('.modal-title').text('Chi trả');
         });
 
         function search() {
