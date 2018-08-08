@@ -11,12 +11,32 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Absent;
 use App\Model\Role;
-use App\RequestAbsent;
+use App\Model\RequestAbsent;
 use Carbon\Carbon;
-
+use DB;
 trait AbsentBusinessFunction
 {
-    public function checkExistAbsentStaff($staff, $start_date, $end_Date)
+
+    public function checkAbsentForStaffWasApprove($staff,$start_date,$end_Date){
+        $result = $this->getListAbsentApproveStaff($staff->id);
+        foreach ($result as $key => $value) {
+           if((new Carbon($start_date))->format('Y-m-d') >= (new Carbon($value->start_date))->format('Y-m-d') &&  (new Carbon($start_date))->format('Y-m-d') <=(new Carbon($value->end_date))->format('Y-m-d') ){
+               return false;
+           }//start
+
+           if((new Carbon($value->start_date))->format('Y-m-d') <= (new Carbon($end_Date))->format('Y-m-d') &&(new Carbon($value->end_date))->format('Y-m-d') >= (new Carbon($end_Date))->format('Y-m-d')){
+             return false;
+           }//end
+           if((new Carbon($value->start_date))->format('Y-m-d') >= (new Carbon($start_date))->format('Y-m-d') && (new Carbon($value->end_date))->format('Y-m-d')  <= (new Carbon($end_Date))->format('Y-m-d') ){
+           return false;
+           }//all
+            
+        }
+       return true;
+         
+
+    }
+   public function checkExistAbsentStaff($staff, $start_date, $end_Date)
     {
         $checkExistAbsentStaff = RequestAbsent::where('staff_id', $staff->id)
             ->get()->where('end_date', '>', $start_date->format("Y-m-d"))
@@ -26,8 +46,8 @@ trait AbsentBusinessFunction
             return false;
         else
             return true;
-
     }
+
 
     public function createAbsent($staff, $start_date, $end_date, $reason)
     {
@@ -39,14 +59,12 @@ trait AbsentBusinessFunction
                 'end_date' => $end_date,
                 'reason' => $reason,
             ]);
-            return true;
-
+            DB::commit();
+             return true;
         } catch (\Exception $e) {
             DB::rollback();
             return false;
-
         }
-
     }
 
     public function getListAbsentNotApprove()
@@ -60,10 +78,49 @@ trait AbsentBusinessFunction
         }
         return $result;
     }
+    public function getListAbsentApproveStaff($staff_id){
+        $listAbsent = RequestAbsent::where('staff_id',$staff_id)->get();
+        $result = [];
+        foreach ($listAbsent as $absent) {
+            if($absent->hasAbsent()->first() !=null){
+            $result[] = $absent;   
+            }
+        }
+        return $result;
+    }
 
     public function getListAbsent()
     {
         return RequestAbsent::all();
+    }
+    public function getListAbsentByAdmin()
+    {
+        $x =  RequestAbsent::all();
+        foreach ($x as $key ) {
+            $key->nameStaff = $key->belongsToStaff()->first()->name;
+            $key->status = $key->hasAbsent()->first();
+        }
+        return $x;
+        
+    }
+    public function getListAbsentByStaff($id)
+    {
+        $x =  RequestAbsent::where('staff_id',$id)->get();
+        foreach ($x as $key ) {
+            $key->status = $key->hasAbsent()->first();
+        }
+        return $x;
+    }
+    public function getListAbsentByStaffNotApprove($id)
+    {
+       $listAbsent = RequestAbsent::where('staff_id',$id)->get();
+        $result = [];
+        foreach ($listAbsent as $absent) {
+            if($absent->hasAbsent()->first() ==null){
+            $result[] = $absent;   
+            }
+        }
+        return $result;
     }
 
     public function approveAbsent($idAbsent, $idAdmin, $message)
@@ -77,15 +134,28 @@ trait AbsentBusinessFunction
             ]);
             DB::commit();
             return true;
-
         } catch (\Exception $e) {
             DB::rollback();
             return false;
-
         }
     }
 
     public  function showListAbsentOfStaff($id){
-        return RequestAbsent::where('staff_id', $id);
+        return RequestAbsent::where('staff_id', $id)->get();
+    }
+    public  function deleteAbsentById($id){
+        DB::beginTransaction();
+        try {
+            $RequestAbsent = RequestAbsent::where('id', $id)->first();
+            $RequestAbsent->delete();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+        }
+    }
+    public function getAbsentById($id){
+        return RequestAbsent::where('id',$id)->first();
     }
 }

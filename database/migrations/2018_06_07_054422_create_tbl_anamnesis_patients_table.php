@@ -16,7 +16,7 @@ class CreateTblAnamnesisPatientsTable extends Migration
         Schema::create('tbl_anamnesis_patients', function (Blueprint $table) {
             $table->integer('patient_id');
             $table->integer('anamnesis_id');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->primary(array('patient_id', 'anamnesis_id'));
             $table->timestamps();
         });

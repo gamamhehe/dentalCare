@@ -1,84 +1,229 @@
 @extends('admin.master')
 @section('content')
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content">
-            <div class="container"  >
-                <div class="row" style="text-align: center;">
-                    <label><h1>Tạo Bệnh tiền sử</h1></label>
-                </div>
-
-                <form method ="post" class="form-horizontal" action="create-Anamnesis" enctype="multipart/form-data" id="createAnamnesis">
-                    {{ csrf_field() }}
-                    <div class="row" style="margin-bottom: 1em;">
-                        <div class="col-sm-2"><label>Tên bệnh </label></div>
-                        <div class="col-sm-10" style="padding-right: 0;">
-                            <input type="text" class="form-control input-width" id="name" name="name" placeholder="Input Title News" required="required" />
-                        </div>
-
-                    </div>
-                    <div class="row" style="margin-bottom: 1em;">
-                        <div class="col-sm-2"><label>Miêu tả bệnh </label></div>
-                        <div class="col-sm-10" style="padding-right: 0;">
-                            <input type="text" class="form-control input-width" id="description" name="description" placeholder="Input Title News" required="required" />
-                        </div>
-
-                    </div>
-                    <div class=""  style="margin-top: 1em;">
-                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Tạo</button>
-                    </div>
-
-                </form>
+<div class="content-wrapper" >
+    <!-- Content Header (Page header) -->
+    <section class="content" >
+        <div class="container"  >
+            <div class="row " style="text-align: center; margin-right: 4em">
+                <label><h1>Danh sách Đơn xin nghỉ</h1></label>
             </div>
-
-
-        </section>
-
-
-    </div>
-@endsection
+              <div class="row layout" style=" margin-right: 4em;"  >
+                    <div class="form-group row add">
+                        <div class="col-xs-3">
+                            <select name="Date" id="Date" style="height: 2.5em;width: 100%">
+                                <option value="" disabled selected hidden>Lọc theo tháng</option> 
+                                @foreach($dates as $date)
+                                <option value="{{$date->value}}">{{$date->string}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                         <div class="col-xs-3">
+                            <select name="Staff" id="Staff" style="height: 2.5em;width: 100%">
+                                <option value="" disabled selected hidden>Lọc theo Nhân viên</option> 
+                                @foreach($staffs as $staff)
+                                <option value="{{$staff->id}}">{{$staff->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                         <div class="col-xs-3">
+                            <select name="StatusApp" id="StatusApp" style="height: 2.5em;width: 100%">
+                             
+                                <option value="1">Đã duyệt</option>
+                                 <option value="0">Chưa duyệt</option>
+                            </select>
+                        </div>
+                          <div class="col-xs-1">
+                           <button class="btn btn-info" style="width: 100%;" id="search" > Tìm </button>
+                        </div>
+                       
+                    </div>
+                </div>
+            <div class="row layout" style=" margin-right: 4em"  >
+                <table id="dup-table" class="table table-striped Mytable-hover">
+                    <thead>
+                    <tr style="background-color: #eee;">
+                        <td class="col-sm-1">Mã</td>
+                        <td class="col-sm-3">Nhân viên</td>
+                        <td class="col-sm-2">Ngày bắt đầu</td>
+                        <td class="col-sm-2">Ngày kết thúc</td>
+                        <td class="col-sm-2">Trạng thái</td>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div id="create" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <form method ="post" class="form-horizontal" action="create-Appointment" enctype="multipart/form-data" id="createAppoint">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" id="idAbsent">
+                                    <div class="form-group row add">
+                                    <label class="control-label col-xs-3" for="title">Người chấp thuận:</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" class="form-control" id="staffApprove" name="staffApprove"
+                                               required="required" disabled>
+                                    </div>
+                                    </div>
+                                    <div class="form-group row add">
+                                    <label class="control-label col-xs-3" for="title">Nhân viên làm đơn :</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" class="form-control" id="staff" name="staff"
+                                               required="required" disabled>
+                                    </div>
+                                    </div>
+                                    <div class="form-group row add">
+                                        <label class="control-label col-xs-3" for="title">Ngày nghỉ:</label>
+                                        <div class="col-xs-8">
+                                            <input type="text" class="form-control col-xs-5" id="end_date" name="end_date"
+                                                   required="required" disabled>
+                                            <input type="text" class="form-control col-xs-5" id="start_date" name="start_date"
+                                           required="required" disabled>
+                                        </div>
+                                    </div>
+                                         
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3" for="title">Lời nhắn</label>
+                                            <div class="input-group date col-xs-8 " style="    padding-left: 15px">
+                                                 <textarea  type="text" class="form-control input-width" id="message" name="message" placeholder="Lời nhắn" required="required"   cols="50" rows="3"></textarea>
+                                            </div>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-warning" type="button" id="addApprove" >
+                                    <span class="glyphicon glyphicon-plus"></span>Chấp nhận đơn
+                                </button>
+                                <button class="btn btn-warning" type="button" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-remobe"></span>Đóng
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </section>
+</div>
+@endsection 
 @section('js')
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            <?php if (Session::has('success')): ?>
-            swal("Bài viết chưa được tạo!", "", "error");
-            <?php endif ?>
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    $(document).ready(function() {
+        <?php if (Session::has('success')): ?>
+     swal("{{ Session::get('success')}}", "", "success");
+        <?php endif ?>
 
-            function xxx(evt,sel){
-                var check  = document.getElementById('thumbnail').value;
-                if(check.length!= 0){
-                    swal("Hết nulll nhaaa!", "", "error");
-                }
-            }
-        });
-        $('#lfm').filemanager('image');
-        $(window).on('load', function () {
-            $(document).ready(function () {
-                var check  = document.getElementById('thumbnail').value;
-                if(check.length !=0){
-                    alert("DKM");
-                }
-                Page.initTinyMCE();
-                Page.initLFM();
-
+    });
+     $(document).on('click','.approve-Absent', function() {
+        $('#create').modal('show');
+        $('.form-horizontal').show();
+        $('.modal-title').text('Khởi tạo lịch hẹn');
+        $('#staffApprove').val($(this).data('id'));
+        $('#idAbsent').val($(this).data('id'));
+        $('#staff').val($(this).data('name'));
+        $('#start_date').val($(this).data('start'));
+        $('#end_date').val($(this).data('end'));
+    });
+     $(document).on('click','#search', function() {
+        $.ajax({
+          type: 'GET',
+          url: '/admin/searchAbsent',
+          data:{
+             "_token": "{{ csrf_token() }}",
+            'date': $('#Date').val(),
+            'staff':$('#Staff').val(),
+            'statusApp':$('#StatusApp').val(),
+             
+          },
+          success: function(data){
+            // if ((data==1)) {
+            //     swal("Đặt lịch nghỉ thành công", "Kiểm tra và xóa những lịch hẹn trùng", "success");
+            //        $('#dup-table').DataTable().ajax.reload();
+            //         $('#create').modal('hide');
+               
+            // } else {
+            //        swal(data, "", "error");
+            // }
+          },
             });
-        });
-        function validateQuestionBeforeCreate(evt,sel){
-            // swal("Bài viết chưa được tạo!", "", "error");
-
-            var name = document.getElementById('name').value;
-            var description = document.getElementById('description').value;
-
-            if($.trim(name) == ''){
-                swal("Vui lòng điền tiêu đề!", "", "error");
-            }else if($.trim(description) == ''){
-                swal("Vui lòng chọn ảnh!", "", "error");
-
-            }else{
-                document.getElementById('createAnamnesis').submit();
+    });
+     $(document).on('click','#addApprove', function() {
+        
+        $.ajax({
+          type: 'POST',
+          url: '/admin/approve-absent',
+          data:{
+             "_token": "{{ csrf_token() }}",
+            'Absent': $('#idAbsent').val(),
+            'message':$('#message').val()
+             
+          },
+          success: function(data){
+            if ((data==1)) {
+                swal("Đặt lịch nghỉ thành công", "Kiểm tra và xóa những lịch hẹn trùng", "success");
+                   $('#dup-table').DataTable().ajax.reload();
+                    $('#create').modal('hide');
+               
+            } else {
+                   swal(data, "", "error");
             }
-        }
+          },
+            });
+    });
+    $(function() {
+        $('#dup-table').DataTable({
+            language: {
+            "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
+            "zeroRecords": "Không tìm thấy kết quả ",
+            "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",
+            "infoEmpty": "Không có kết quả .",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search" : "Tìm kiếm ",
+            "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
+        },
+            processing: true,
+            serverSide: true,
+            order: [[ 0, "desc" ]],
+            bLengthChange:true,
+            pageLength: 10,
+            ajax: '/admin/get-list-absent-admin',
+            columns : [
+                {data: 'id'},
+                {data: 'nameStaff'},
+                {data: 'start_date'},
+                {data: 'end_date'},
+                {
 
-    </script>
+                    data: 'action'
+                },
+            ],
+        });
+    });
+//     function deleteNews(obj){
+
+// //          var linkDelete = "admin/deleteNews/";
+//         var id = obj.getAttribute("id");
+//         $.ajax(
+//             {
+//                 url: "/admin/delete-event/"+id,
+//                 method:"get",
+//                 data: {
+//                     id:id
+//                 },
+//                 success: function ()
+//                 {
+//                     $('#dup-table').DataTable().ajax.reload();
+//                 }
+
+//             });
+//     }
+</script>
+
 @endsection

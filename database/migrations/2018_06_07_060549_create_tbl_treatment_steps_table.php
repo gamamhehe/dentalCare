@@ -16,7 +16,6 @@ class CreateTblTreatmentStepsTable extends Migration
         Schema::create('tbl_treatment_steps', function (Blueprint $table) {
             $table->integer('step_id');
             $table->integer('treatment_id');
-            $table->string('description');
             $table->primary(array('step_id', 'treatment_id'));
             $table->timestamps();
         });

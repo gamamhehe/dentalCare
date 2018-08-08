@@ -8,7 +8,7 @@
                  <label><h1>Tạo Tin Tức</h1></label>
              </div>
 
-             <form method ="post" class="form-horizontal" action="create-News" enctype="multipart/form-data" id="createNews">
+             <form method ="post" class="form-horizontal" action="create-news" enctype="multipart/form-data" id="createNews">
                   {{ csrf_field() }}
                    <div class="row" style="margin-bottom: 1em;">
                         
@@ -64,7 +64,7 @@
           function xxx(evt,sel){
         var check  = document.getElementById('thumbnail').value;
         if(check.length!= 0){
-            swal("Hết nulll nhaaa!", "", "error");  
+            swal("Không còn trống!", "", "error");  
         }
         }
         });
@@ -73,7 +73,7 @@
             $(document).ready(function () {
             var check  = document.getElementById('thumbnail').value;
                 if(check.length !=0){
-                    alert("DKM");
+                    
                 }
                 Page.initTinyMCE();
                 Page.initLFM();

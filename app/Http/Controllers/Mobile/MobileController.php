@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers\Mobile;
 
+use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
+use App\Jobs\ExcCustomFuncJob;
+use App\Jobs\SendFirebaseJob;
 use App\Jobs\SendReminderJob;
 use App\Jobs\SendSmsJob;
+use App\Model\AnamnesisPatient;
 use App\Model\Appointment;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
+use App\Model\Staff;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use SMSGatewayMe\Client\Api\MessageApi;
 use SMSGatewayMe\Client\ApiClient;
 use SMSGatewayMe\Client\Configuration;
@@ -75,24 +85,82 @@ class MobileController extends Controller
 
     }
 
-    public function test2(Request $request)
+    public function sendFirebase($phone, $content)
     {
-        return $this->getSastifyAppointmentDate();
+        $requestObject = Utilities::getFirebaseRequestObj(
+            AppConst::RESPONSE_PROMOTION,
+            "test",
+            $content, $content, '/topics/' . AppConst::TOPIC_PROMOTION);
+
+        try {
+            $response = Utilities::sendFirebase($requestObject);
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+        return response()->json("SUCCESS");
     }
 
+    public function sendFirebaseToPhone($phone, $content)
+    {
+        $userFbToken = FirebaseToken::where('phone', $phone)->first();
+        $requestObject = Utilities::getFirebaseRequestObj(
+            AppConst::RESPONSE_PROMOTION,
+            "test",
+            $content, $content, $userFbToken->noti_token);
+
+        try {
+            $response = Utilities::sendFirebase($requestObject);
+            return response()->json($response, 200);
+        } catch (Exception $e) {
+        }
+        return response()->json("SUCCESS");
+    }
+
+    use TreatmentHistoryBusinessFunction;
+
+    public function test2(Request $request)
+    {
+
+
+    }
+
+    public function testAppointment(Request $request)
+
+    {
+
+    }
+
+    public function getDentistAppointment(Request $request)
+
+    {
+        $dentistId = $request->input('dentist_id');
+        $dentist = Staff::where('id', $dentistId)->first();
+        $list = $dentist->hasAppointment()->get();
+        $count = $list->count();
+        return response()->json(['count' => $count, 'list' => $list], 200);
+    }
+
+    /**
+     * @param Request $request
+     */
     public function test3(Request $request)
     {
-        $id = $request->query('id');
-        $appointment = $this->getAppointmentById($id);
-        if ($appointment != null) {
-            $crrDate = new DateTime();
-            $appDate = new DateTime($appointment->start_time);
-            if ($this->isUpCommingAppointment($crrDate, $appDate)) {
-                return response()->json($appDate->format("Y-m-d H:i:s"));
-            }
-        }
-        return response()->json('-__-');
+//        $id = $request->query('id');
+//        $appointment = $this->getAppointmentById($id);
+//        if ($appointment != null) {
+//            $crrDate = new DateTime();
+//            $appDate = new DateTime($appointment->start_time);
+//            if ($this->isUpCommingAppointment($crrDate, $appDate)) {
+//                return response()->json($appDate->format("Y-m-d H:i:s"));
+//            }
+//        }
+//        return response()->json('-__-');
+        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
+            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
+        ));
     }
+
+
 
     public function test4()
     {
@@ -117,7 +185,7 @@ class MobileController extends Controller
     {
         $date = $request->query('date');
         $data = '' . $this->getColumnTime();
-        $listDentists = $this->getAvailableDentist($date);
+        $listDentists = $this->getAvailableDentistAtDate($date);
         $numDentist = 1;
         foreach ($listDentists as $dentist) {
             $appointments = $this->getDentistApptAtDate($dentist->id, $date);
@@ -137,10 +205,28 @@ class MobileController extends Controller
         return $data;
     }
 
+    public function sendReminder(Request $request)
+    {
+        $appID = $request->input('id');
+        $appointment = $this->getAppointmentById($appID);
+        if ($appointment == null) {
+            return response()->json(['error' => "Khong tim thay " . $appID], 200);
+        }
+        $this->dispatch(new SendReminderJob($appointment));
+        return response()->json(['success' => "Gui thanh cong " . $appID], 200);
+
+    }
+
+    public function testSMS($phone, $content)
+    {
+        $result = Utilities::sendSMS($phone, $content);
+        return response()->json($result, 200);
+    }
+
     public function getApptTemplate($appointment, $numDentist)
     {
         $standardDate = new DateTime($appointment->start_time);
-        $standardDate->setTime(7, 0);
+        $standardDate->setTime(0, 0);
         $bookingDate = new DateTime($appointment->start_time);
         $estimatedTimeObj = new DateTime($appointment->estimated_time);
         $diff = $bookingDate->diff($standardDate);
@@ -186,14 +272,14 @@ class MobileController extends Controller
         $date = new DateTime();
 
         $template = '<div style="float:left;width:100px">';
-        for ($i = 0; $i < 840; $i += 30) {
+        for ($i = 0; $i < 1440; $i += 30) {
             $bgColor = '#20d8b3';
-            if ($i >= 300 && $i < 360) {
+            if (($i >= 720 && $i < 780) || ($i < 420) || ($i >= 1140)) {
                 $bgColor = '#333300';
             }
             $topPos = $i * 5;
             $heightPx = 30 * 5;
-            $date->setTime(7 + intval(($i / 60)), $i % 60);
+            $date->setTime(intval(($i / 60)), $i % 60);
 //            $this->logDebug("I " .(7 + intval(($i / 60))));
 //            $this->logDebug(($date->format('H:i')));
             $template .= '<div style="border:1px solid white;position:absolute;top:'
@@ -242,7 +328,7 @@ class MobileController extends Controller
     public function topappt(Request $request)
     {
         $date = $request->query('date');
-        $listDentsit = $this->getAvailableDentist($date);
+        $listDentsit = $this->getAvailableDentistAtDate($date);
         $listApps = $this->getListTopAppointment($listDentsit, $date);
         $response = new \stdClass();
         $response->numDentist = count($listDentsit);

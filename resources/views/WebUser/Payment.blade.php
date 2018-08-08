@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"><head>
     <title>Danh sách chi trả</title>
@@ -22,158 +23,337 @@
 
 </head>
 <body>
-<div class="top">
     <!-- start menu -->
-    <nav class="navbar navbar-light   bg-faded thanhmenu">
-        <div class="container">
-            <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
-                    data-target="#navmn">
-            </button>
+<nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;" id="navHeader">
+    <div class="container">
+        <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
+                data-target="#navmn">
+        </button>
 
-            <div class="collapse navbar-toggleable-xs" id="navmn">
-                <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
-                <ul class="nav navbar-nav float-sm-right">
+        <div class="collapse navbar-toggleable-xs" id="navmn">
+            <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+            <ul class="nav navbar-nav float-sm-right">
 
-                    <li class="nav-item active">
-                        <a class="nav-link " href="/gioithieu">Giới Thiệu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  " href="/doctorList">Chuyên Gia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  " href="/event">Event</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  " href="#contact">dịch vụ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  " href="/banggia">bản giá</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  " href="/gioithieu">contact us</a>
-                    </li>
-                    <li class="nav-item">
+                <li class="nav-item active">
+                    <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/danh-sach-bac-si">Chuyên Gia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/su-kien">Sự kiện</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+                </li>
+                
+                <li class="nav-item">
 
-                    @if(Session::has('currentUser'))
-                        <li class="nav-item dropdown ">
-                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"
-                                     class="img-fluid img-responsive" style="max-height: 25px;">
+                @if(Session::has('currentUser'))
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
+                                 class="img-fluid img-responsive" style="max-height: 25px;">
 
-                            </a>
-                            <ul class="dropdown-menu"
-                                style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
-                                <!-- User image -->
+                        </a>
+                        <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
 
-                                <li class="user-header">
-                                    <div class="container" style=";padding:10px 0px;">
-                                        <div class="row">
-                                            <div class="col-sm-6 hoverImg" style="float: left;padding-left: 20px;">
-                                                <img src="assets/images/icon/user.jpg"
-                                                     class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image" onclick="changeInfo()" width="50px;">
-                                            </div>
-                                            <div class="col-sm-6"  >
-                                                <img src="assets/images/icon/user.jpg"
-                                                     class="img-circle img-responsive img-fluid" alt="User Image"  id="divAcc2" width="50px;" onclick="changeInfo2()">
-                                            </div>
+                            <li class="user-header">
+                                <div class="container" style=";padding:10px 0px; ">
+                                    <div class="row">
+                                        <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
+                                            <img src="{{Session::get('currentPatient')->avatar}}"
+                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
+                                        </div>
+                                        @foreach(\Session::get('listPatient') as $key => $value)
+                                        <div class="col-sm-2"  >
 
+                                            <img src="{{ $value->avatar }}"
+                                                 class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="user-header" id="acc1" style="display: block">
+                                <p>
+
+                                   {{Session::get('currentPatient')->name}}
+                                </p>
+                            </li>
+                            <li class="user-header" id="acc2" style="display: none">
+                                <p>
+                                    @foreach(\Session::get('listPatient') as $key)
+                                        @if($key->id != Session::get('currentPatient')->id )
+                                        <h1>{{$key->name}}</h1>
+                                        @endif
+
+                                    @endforeach
+                                </p>
+                            </li>
+                                 <hr>
+
+                            <li class="a-hover">
+                                <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
+                            </li>
+                            <li class="gachngang"></li>
+                            <li class="  a-hover">
+                                <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
+                            </li>
+                            <li class="gachngang"></li>
+                            <li class=" a-hover">
+                                <a href="#"><span>Lịch hẹn</span></a>
+                            </li>
+                              <li class="gachngang"></li>
+
+                            <!-- Menu Body -->
+                            <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                                <div class="pull-left" style="padding-left: 1em;">
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
+                                </div>
+                                <div class="pull-right" style="padding-right: 1em;">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </li>
+
+                @else
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" id="buttonLogin">
+                            {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
+                            {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
+                            Đăng Nhập
+                        </a>
+                        <ul class="dropdown-menu" id="drop"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
+                            <!-- User image -->
+                            <li class="user-header">
+                                Đăng nhập
+
+                            </li>
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke">
+                                <div class="col-ms-12 col-md-offset-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
+
+                                            <form action="{!! url('/loginUser') !!}" method="Post">
+                                                {{ csrf_field() }}
+                                                <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                           required autofocus>
+                                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                                     
+                                                </div>
+                                                <div class="form-group has-feedback">
+                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                                     
+                                                </div>
+                                             <!--    @if (\Session::has('fail'))
+                                                    <span class="help-block has-error" style="color: #dd4b39">
+                                                       <strong>{!! \Session::get('fail') !!} </strong>
+                                                </span>
+                                                @endif -->
+                                                <div class="row">
+                                                    <!-- /.col -->
+                                                    <div class="col-xs-12">
+                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
+                                                    </div>
+                                                    <!-- /.col -->
+
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                    {{--<p>--}}
-                                    {{--Alexander Pierce - Web Developer--}}
-                                    {{--<small>Member since Nov. 2012</small>--}}
-                                    {{--</p>--}}
-                                </li>
-                                <li class="user-header" id="acc1" style="display: block">
-                                    <p>
-                                        Phúc Huỳnh
-                                        <small>Member since Nov. 2012</small>
-                                    </p>
-                                </li>
-                                <li class="user-header" id="acc2" style="display: none">
-                                    <p>
-                                        Lực
-                                        <small>Member since Nov. 2012</small>
-                                    </p>
-                                </li>
-                                <li class="a-hover">
-                                    <a href="#">Lịch sử khám bệnh</a>
-                                </li>
-                                <li class="gachngang"></li>
-                                <li class="  a-hover">
-                                    <a href="/danhsachchitra"><span>Danh sách chi trả</span></a>
-                                </li>
-                                <li class="gachngang"></li>
-                                <li class=" a-hover">
-                                    <a href="#/lichsubenhan/1"><span>Lịch hẹn</span></a>
-                                </li>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    @endif
+                    </li>
 
-                                <!-- Menu Body -->
 
-                                <!-- Menu Footer-->
-                                <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
-                                    <div class="pull-left" style="padding-left: 1em;">
-                                        <a href="/myProfile/1" class="btn btn-success btn-flat">Profile</a>
-                                    </div>
-                                    <div class="pull-right" style="padding-right: 1em;">
-                                        <a href="/signOut" class="btn btn-success btn-flat">Sign out</a>
-                                    </div>
-
-                                </li>
-                            </ul>
-                        </li>
-
-                    @else
-                        <li class="nav-item dropdown ">
-                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
-                                {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
-                                Đăng Nhập
-                            </a>
-                            <ul class="dropdown-menu"
-                                style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
-                                <!-- User image -->
-                                <li class="user-header">
-                                    Đăng nhập
-                                </li>
-                                <!-- Menu Body -->
-
-                                <!-- Menu Footer-->
-                                <li class="user-footer" style="background-color: whitesmoke">
-                                    <div class="col-ms-12 col-md-offset-12">
-                                        <div class="panel panel-default">
-                                            <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
-                                                <form method ="post" class="form-horizontal" action="/loginUser" enctype="multipart/form-data"  >
-                                                    {{ csrf_field() }}
-                                                    <fieldset>
-                                                        <div class="form-group">
-                                                            <input class="form-control" placeholder="Phone" name="phone" id="phone"
-                                                                   type="text">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input class="form-control" placeholder="Password" name="password" id="password"
-                                                                   type="password" value="">
-                                                        </div>
-                                                        <input class="btn btn-lg btn-success btn-block" type="submit"
-                                                               value="Login">
-                                                    </fieldset>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        @endif
-                        </li>
-                </ul>
-            </div>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+<nav class="navbar navbar-light navbar-fixed-top bg-faded navHidden thanhmenu" id="navTop">
+    <div class="container">
+        <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
+                data-target="#navmn">
+        </button>
+
+        <div class="collapse navbar-toggleable-xs" id="navmn">
+            <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+            <ul class="nav navbar-nav float-sm-right">
+
+                <li class="nav-item active">
+                    <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/danh-sach-bac-si">Chuyên Gia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/su-kien">Sự kiện</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+                </li>
+                
+                <li class="nav-item">
+
+                @if(Session::has('currentUser'))
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
+                                 class="img-fluid img-responsive" style="max-height: 25px;">
+
+                        </a>
+                        <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
+
+                            <li class="user-header">
+                                <div class="container" style=";padding:10px 0px; ">
+                                    <div class="row">
+                                        <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
+                                            <img src="{{Session::get('currentPatient')->avatar}}"
+                                                 class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
+                                        </div>
+                                        @foreach(\Session::get('listPatient') as $key => $value)
+                                        <div class="col-sm-2"  >
+
+                                            <img src="{{ $value->avatar }}"
+                                                 class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="user-header" id="acc1" style="display: block">
+                                <p>
+
+                                   {{Session::get('currentPatient')->name}}
+                                </p>
+                            </li>
+                            <li class="user-header" id="acc2" style="display: none">
+                                <p>
+                                    @foreach(\Session::get('listPatient') as $key)
+                                        @if($key->id != Session::get('currentPatient')->id )
+                                        <h1>{{$key->name}}</h1>
+                                        @endif
+
+                                    @endforeach
+                                </p>
+                            </li>
+                                 <hr>
+
+                            <li class="a-hover">
+                                <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
+                            </li>
+                            <li class="gachngang"></li>
+                            <li class="  a-hover">
+                                <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
+                            </li>
+                            <li class="gachngang"></li>
+                            <li class=" a-hover">
+                                <a href="#"><span>Lịch hẹn</span></a>
+                            </li>
+                              <li class="gachngang"></li>
+
+                            <!-- Menu Body -->
+                            <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                                <div class="pull-left" style="padding-left: 1em;">
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
+                                </div>
+                                <div class="pull-right" style="padding-right: 1em;">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </li>
+
+                @else
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" id="buttonLogin">
+                            {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
+                            {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
+                            Đăng Nhập
+                        </a>
+                        <ul class="dropdown-menu" id="drop"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
+                            <!-- User image -->
+                            <li class="user-header">
+                                Đăng nhập
+
+                            </li>
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke">
+                                <div class="col-ms-12 col-md-offset-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
+
+                                            <form action="{!! url('/loginUser') !!}" method="Post">
+                                                {{ csrf_field() }}
+                                                <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                           required autofocus>
+                                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                                     
+                                                </div>
+                                                <div class="form-group has-feedback">
+                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                                     
+                                                </div>
+                                             <!--    @if (\Session::has('fail'))
+                                                    <span class="help-block has-error" style="color: #dd4b39">
+                                                       <strong>{!! \Session::get('fail') !!} </strong>
+                                                </span>
+                                                @endif -->
+                                                <div class="row">
+                                                    <!-- /.col -->
+                                                    <div class="col-xs-12">
+                                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
+                                                    </div>
+                                                    <!-- /.col -->
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    @endif
+                    </li>
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
 
     <!-- end menu -->
-</div>
 <div class="container" >
     <div class="row" style="background: url(/assets/images/banggia.jpg);height: 7em;">
         <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle" >
@@ -195,20 +375,18 @@
                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$Payment->id}}"><div class="container">
                                <div class="col-sm-4">Ngày tạo: {{$Payment->created_at}}</div>
                                <div class="col-sm-4">Chi phí : {{$Payment->total_price}} VNĐ</div>
-                               <div class="col-sm-4">Đã thu : {{$Payment->prepaid}} VNĐ</div>
+                               <div class="col-sm-4">Đã thu : {{$Payment->paid}} VNĐ</div>
                                <div class="col-sm-4">Trạng Thái :
-                               @if($Payment->is_done == 0)
+                               @if($Payment->is_done == 1)
                                    hoàn thành
                                @else
                                    chưa hoàn thành
                                    @endif
                                </div>
                                <div>
-                                   <form id="payment-form" role="form" action="{!! route('paypal') !!}" method="POST">
-                                       <input type="hidden" name="amount" value="{{ $Payment->total_price - $Payment->prepaid }}">
+                                       <input type="hidden" name="amount" value="{{ $Payment->total_price - $Payment->paid }}">
                                        <input type="hidden" name="payment_id" value="{{ $Payment->id}}">
-                                   <button type="submit">Paypal Payment</button>
-                                   </form>
+                                   <a href="paypal/{{ $Payment->total_price - $Payment->paid }}/{{ $Payment->id}}" class="btn btn-success">View</a>
                                </div>
                            </div></a>
                    </div>
@@ -286,5 +464,18 @@
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
 <script type="text/javascript">
+function changeInfo(id) {
+        var Chooseid = id;
 
+
+        $.ajax({
+            url: 'changeCP/' + Chooseid,
+            type:'GET',
+            success: function(result){
+                location.reload();
+            } ,error: function (data) {
+                alert(data);
+            }
+        });
+    }
 </script>

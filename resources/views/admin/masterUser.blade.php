@@ -10,8 +10,10 @@
         var baseUrl = '{{ url("/") }}';
     </script>
     <!-- Tell the browser to be responsive to screen width -->
+
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
+
     <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/assets/admin/bower_components/font-awesome/css/font-awesome.min.css">
@@ -31,6 +33,7 @@
           href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="/assets/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
     <link rel="stylesheet" href="/assets/admin/app_css_custom.css">
@@ -60,7 +63,7 @@
 
     <script type="text/javascript" src="/assets/user/js/myjs.js"></script>
     <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
-    <link rel="stylesheet" href="/assets/user/css/mycss.css">
+   
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -76,6 +79,7 @@
     @yield('content')
     @include('admin.blocks.footerWeb')
 </div>
+ <link rel="stylesheet" href="/assets/user/css/mycss.css">
 <script src="/assets/admin/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/assets/admin/bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script>

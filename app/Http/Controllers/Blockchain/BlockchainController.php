@@ -67,7 +67,7 @@ class BlockchainController extends Controller
             'treatment_id' => $history -> treatment_id,
             'patient_id' => $history -> patient_id, 
             'description' => $history -> description,
-            'create_date' => $history -> create_date,
+            'created_date' => $history -> created_date,
             'finish_date' => $history -> finish_date,
             'tooth_number' => $history -> tooth_number,
             'price' => $history -> price,
