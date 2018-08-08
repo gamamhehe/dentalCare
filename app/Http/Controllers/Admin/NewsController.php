@@ -13,10 +13,18 @@ class NewsController extends Controller
 {
     use NewsBussinessFunction;
     public function create(Request $request){
-        if( $this->createNews($request->all())){
-            return redirect()->route("admin.list.news")->withSuccess("Bài viết đã được tạo");
+        $staff_id = $request->session()->get("currentAdmin")->belongToStaff()->first();
+        $result =  $this->createNews($request->all(),$staff_id->id);
+        if($result==false){
+           return redirect('admin/News/list')->withSuccess("Có lỗi xảy ra khi khởi tạo");
         }else{
-            return redirect('admin/News/list')->withSuccess("Có lỗi xảy ra khi khởi tạo");
+           $NewsId= $result;
+           $resultTwo = $this->createType($NewsId,1);
+           if($resultTwo==false){
+             return redirect('admin/News/list')->withSuccess("Có lỗi xảy ra khi khởi tạo");
+            }else{
+                return redirect()->route("admin.list.news")->withSuccess("Bài viết đã được tạo");
+            }
         }
     }
 

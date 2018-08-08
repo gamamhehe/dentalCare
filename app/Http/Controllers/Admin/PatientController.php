@@ -6,25 +6,32 @@ use App\Events\ReceiveAppointment;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
+use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
 use App\Model\Patient;
 use App\Model\Payment;
 use App\Model\AnamnesisCatalog;
 use App\Model\User;
 use App\Model\District;
-use App\Model\city;
+use App\Model\City;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Session;
 use DB;
+use Pusher\Pusher;
 use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
 {
+
+    use AppointmentBussinessFunction;
+    use TreatmentHistoryBusinessFunction;
+    use AnamnesisBusinessFunction;
     use UserBusinessFunction;
     use PatientBusinessFunction;
-    use AppointmentBussinessFunction;
+
 
     public function login(Request $request)
     {
@@ -34,7 +41,7 @@ class PatientController extends Controller
             'password' => 'required|min:6|max:11',
         ]);
         $user = $this->checkLogin($request->phone, $request->password);
-        
+
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID == 4) {
@@ -47,9 +54,9 @@ class PatientController extends Controller
                 session(['currentPatient' => $listPatient[0]]);
                 return redirect()->intended(route('homepage'));
             }
-            return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
+            return redirect()->back()->with('fail', 'Bạn không được phép truy cập ')->withInput($request->only('phone'));
         }
-        return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
+        return redirect()->back()->with('fail', 'Tài khoản sai thông tin')->withInput($request->only('phone'));
     }
 
     public function changeCurrentPatient(Request $requet, $id)
@@ -66,6 +73,7 @@ class PatientController extends Controller
         $checkExist = $this->checkExistUser($request->phone);
         if ($checkExist) {
             $patient = new Patient();
+            $listAnamnesis = $request->anam;
             $userHasRole = new UserHasRole();
             $userHasRole->phone = $request->phone;
             $userHasRole->role_id = 4;
@@ -76,9 +84,12 @@ class PatientController extends Controller
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->date_of_birth = $request->date_of_birth;
             $patient->gender = $request->gender;
-            $patient->avatar = $request->avatar;
             $patient->district_id = $request->district_id;
-            $result = $this->createPatient($patient);
+            $patientID = $this->createPatient($patient);
+            if($patientID ==false){
+                  return redirect('admin/live-seach')->withSuccess("Bệnh nhân chưa được tạo");
+            }
+            $result = $this->createAnamnesisForPatient($listAnamnesis,$patientID);
         } else {
             $patient = new Patient();
             $userHasRole = new UserHasRole();
@@ -98,9 +109,9 @@ class PatientController extends Controller
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
         }
         if ($result) {
-            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Sự kiện đã được tạo");
+            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Bệnh nhân đã được tạo");
         } else {
-            return redirect('admin/live-seach')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/live-seach')->withSuccess("Bệnh nhân chưa được tạo");
         }
     }
 
@@ -144,7 +155,18 @@ class PatientController extends Controller
                 if ($appointment) {
                     $appointment->status = 1;
                     $this->saveAppointment($appointment, $id);
-                    event(new ReceiveAppointment($appointment));
+                    $options = array(
+                        'cluster' => 'ap1',
+                        'encrypted' => true
+                    );
+                    $pusher = new Pusher(
+                        'e3c057cd172dfd888756',
+                        '993a258c11b7d6fde229',
+                        '562929',
+                        $options
+                    );
+                    $appointment->pushStatus = 0;
+                    $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
                     $status = 1;
                 } else {
                     $status = 0;
@@ -177,11 +199,11 @@ class PatientController extends Controller
     {
         $output = '';
 
-        if ($valueSearch == 'all'){
+        if ($valueSearch == 'all') {
             $data = Patient::all();
         } else {
             $data = DB::table('tbl_patients')
-                ->where('phone', 'like', $valueSearch.'%')
+                ->where('phone', 'like', $valueSearch . '%')
                 ->orWhere('name', 'like', '%' . $valueSearch . '%')
                 ->orderBy('name', 'desc')
                 ->get();
@@ -195,13 +217,16 @@ class PatientController extends Controller
             foreach ($data as $row) {
                 $output .= '
         <tr>
-         <td style="width: 20%">' . $row->name . '</td>
-         <td style="width: 15%">' . $row->phone . '</td>
-         <td style="width: 30%">' . $row->address . '</td>
-         <td style="width: 15%">' . $row->date_of_birth . '</td>
-         <td align="center" style="width: 20%">
-         <button type="button" class="btn btn-default btn-success"
-                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button></td>
+         <td>' . $row->name . '</td>
+         <td>' . $row->phone . '</td>
+         <td>' . $row->address . '</td>
+         <td>' . $row->date_of_birth . '</td>
+         <td>
+            <a href="thong-tin-benh-nhan/' . $row->id . '" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
+            <button type="button" class="btn btn-default btn-success"
+                                 onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button>
+           
+                                 </td>
         </tr>
         ';
             }
@@ -248,5 +273,61 @@ class PatientController extends Controller
     {
         $listDistrict = District::where('city_id', $id)->get();
         return $listDistrict;
+    }
+
+    public function getInfoPatientById($id)
+    {
+        $patient = Patient::where('id', $id)->first();
+        $result = [];
+        if ($patient) {
+            $idPatient = $patient->id;
+            $result = $this->getTreatmentHistory($idPatient);
+        }
+        $anam= $this->getListAnamnesisByPatient($id);
+        if($anam == null){
+            $anam ="Không có";
+        }
+        return view('admin.Patient.detail',['Anamnesis'=>$anam,'patient'=>$patient,'listTreatmentHistory'=>$result]);
+         
+    }
+
+    public function detailAppoinmentById($appointId)
+    {
+        $appointment = $this->getAppointmentById($appointId);
+        // $statusString = $appointment->status;
+        if ($appointment->status == 0) {
+            $appointment->statusString = "Vừa tạo";
+        } else if ($appointment->status == 1) {
+            $appointment->statusString = "Đã tạo";
+        } else if ($appointment->status == 2) {
+            $appointment->statusString = "Đang khám";
+        } else if ($appointment->status == 3) {
+            $appointment->statusString = "Đã khám xong";
+        } else {
+            $appointment->statusString = "Đã xóa";
+        }
+        $checkAppoint = $this->checkAppointmentExistPatient($appointId);
+        $patientFinal = [];
+        $result = [];
+        if ($checkAppoint == 0) {
+            $patient = null;
+        } else {
+            $patient = Patient::where('id', $checkAppoint)->first();
+            // $result =[];
+            if ($patient) {
+                $idPatient = $patient->id;
+                $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
+                foreach ($listTreatmentHistory as $treatmentHistory) {
+                    if ($treatmentHistory->finish_date == null) {
+                        $result[] = $treatmentHistory;
+                    }
+                }
+
+            } else {
+            }
+            $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
+
+        }
+        return view('admin.Patient.Treat', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
     }
 }

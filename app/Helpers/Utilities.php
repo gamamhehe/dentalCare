@@ -140,6 +140,7 @@ class Utilities
             $response = $request->getBody()->getContents();
             return $response;
         } catch (GuzzleException $ex) {
+            Log::info("Error send firebase " . $ex->getMessage());
             throw new Exception($ex);
         }
     }
@@ -183,5 +184,15 @@ class Utilities
         } catch (Exception $ex) {
             throw new \Exception($ex->getMessage());
         }
+    }
+
+    public static function generateRandomString($source, $length = 8) {
+        $characters = $source;
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

@@ -49,7 +49,8 @@ class AppointmentController extends BaseController
     {
         try {
             $appointment = $this->getAppointmentById($id);
-            return response()->json($appointment, 200);
+            $response = $this->attachFieldAppointment($appointment);
+            return response()->json($response, 200);
         } catch (Exception $exception) {
             $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
             return response()->json($error, 400);
@@ -105,6 +106,22 @@ class AppointmentController extends BaseController
         }
     }
 
+    public function updateStatus(Request $request)
+    {
+        try {
+            $status = $request->input('status');
+            $appointmentId = $request->input('appointment_id');
+            $appointment = $this->getAppointmentById($appointmentId);
+            $appointment->status = $status;
+            $this->updateAppointment($appointment);
+            $successResponse = $this->getSuccessObj(200, "OK", "Sửa lịch thành công", "No data");
+            return response()->json($successResponse);
+        }catch (\Exception $ex){
+            $error = $this->getErrorObj('Lỗi máy chủ', $ex);
+            return response()->json($error, 500);
+        }
+    }
+
     public function bookAppointmentStaff(Request $request)
     {
         try {
@@ -112,6 +129,7 @@ class AppointmentController extends BaseController
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
             $dentistId = $request->input('dentist_id');
+            $this->logBugAppointment("DEN: " .$dentistId);
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
             $currentDay = new DateTime();

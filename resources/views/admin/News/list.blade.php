@@ -8,7 +8,7 @@
           <label><h1>Danh sách Tin Tức</h1></label>
       </div>
       <div class="row layout" style=" margin-right: 4em"  >
-        <table id="dup-table" class="table myTable table-bordered">
+        <table id="dup-table" class="table myTable table-bordered Mytable-hover">
           <thead>
           <tr style="height: 1.3em;">
             <td class="col-sm-1">id</td>
@@ -23,6 +23,7 @@
     </div>
 @endsection
 @section('js')
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script> 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>

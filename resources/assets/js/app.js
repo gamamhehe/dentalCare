@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -18,5 +17,16 @@ window.Vue = require('vue');
 Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    // created() {
+    //     Echo.private('receivePatient')
+    //         .listen('ReceiveAppointment', (e) => {
+    //             alert(this.abx);
+    //         if(e.appointment.id == this.abx)
+    //     {
+    //         alert(e.appointment.id);
+    //     }
+    // })
+    //     ;
+    // }
 });

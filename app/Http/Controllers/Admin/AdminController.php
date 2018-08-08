@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Model\Appointment;
+use App\Model\AnamnesisCatalog;
 use App\Model\City;
 use App\Model\District;
 use App\Model\Event;
@@ -27,6 +28,7 @@ use App\Model\RequestAbsent;
 use App\Model\TreatmentCategory;
 use App\Model\Tooth;
 use App\Model\News;
+use App\Model\Medicine;
 use App\Model\Payment;
 use App\Model\PaymentDetail;
 use Illuminate\Http\Request;
@@ -57,29 +59,31 @@ class AdminController extends Controller
     {
         DB::beginTransaction();
         try {
-            User::create([
-                'phone' => '01279011091',
-                'password' => Hash::make('123123'),
+            //role
+            Role::create([
+                'id' => '1',
+                'name' => 'Quản trị viên',
+                'description' => 'Quản lí toàn bộ hệ thống',
             ]);
-            UserHasRole::create([
-                'phone' => '01279011091',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
+            Role::create([
+                'id' => '2',
+                'name' => 'Nha Sĩ',
+                'description' => 'Nha sĩ là người khám bệnh trực tiếp cho bệnh nhân',
             ]);
-            User::create([
-                'phone' => '01279011092',
-                'password' => Hash::make('123123'),
+            Role::create([
+                'id' => '3',
+                'name' => 'Tiếp tân',
+                'description' => 'Tiếp tân của phòng khám',
             ]);
-            UserHasRole::create([
-                'phone' => '01279011092',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
+            Role::create([
+                'id' => '4',
+                'name' => 'Bệnh nhân',
+                'description' => 'Bệnh nhân',
             ]);
+            //user
             User::create([
                 'phone' => '01279011096',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011096',
@@ -87,44 +91,9 @@ class AdminController extends Controller
                 'start_time' => Carbon::now(),
                 'end_time' => null
             ]);
-            Role::create([
-                'id' => '1',
-                'name' => 'Administrator',
-                'description' => 'Administrator of all system',
-            ]);
-            User::create([
-                'phone' => '01279011099',
-                'password' => Hash::make('123123'),
-            ]);
-            UserHasRole::create([
-                'phone' => '01279011099',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
-            Role::create([
-                'id' => '4',
-                'name' => 'Patient',
-                'description' => 'Patient',
-            ]);
-            User::create([
-                'phone' => '01279011097',
-                'password' => Hash::make('123123'),
-            ]);
-            UserHasRole::create([
-                'phone' => '01279011097',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
-            Role::create([
-                'id' => '2',
-                'name' => 'Doctor',
-                'description' => 'Doctor of dental Clinic',
-            ]);
             User::create([
                 'phone' => '01279011098',
-                'password' => Hash::make('123123'),
+                'password' => Hash::make('123123123'),
             ]);
             UserHasRole::create([
                 'phone' => '01279011098',
@@ -132,10 +101,598 @@ class AdminController extends Controller
                 'start_time' => Carbon::now(),
                 'end_time' => null
             ]);
-            Role::create([
-                'id' => '3',
-                'name' => 'Receptionist',
-                'description' => 'Receptionist of dental Clinic',
+            User::create([
+                'phone' => '0909555777',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555777',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0909555778',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555778',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+             User::create([
+                'phone' => '0909555779',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555779',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+             User::create([
+                'phone' => '0909555780',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555780',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+             User::create([
+                'phone' => '0909555781',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555781',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+             User::create([
+                'phone' => '0909555782',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555782',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+             User::create([
+                'phone' => '0909555783',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555783',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+             User::create([
+                'phone' => '0909555784',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555784',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+             User::create([
+                'phone' => '0909555785',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555785',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+              User::create([
+                'phone' => '0909555786',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555786',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+              User::create([
+                'phone' => '0909555787',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555787',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+              User::create([
+                'phone' => '0909555788',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909555788',
+                'role_id' => 2,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0909777555',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909777555',
+                'role_id' => 3,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0909777556',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909777556',
+                'role_id' => 3,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0909777557',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909777557',
+                'role_id' => 3,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0909777558',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909777558',
+                'role_id' => 3,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0909777559',
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909777559',
+                'role_id' => 3,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            //patient
+            User::create([
+                'phone' => '0915469963', //phúc
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0915469963',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '01685149049',//trịnh 
+                'password' => Hash::make('123123123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '01685149049',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            //vitual
+            User::create([
+                'phone' => '0913520187', 
+                'password' => Hash::make('0913520187'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0913520187',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0915235776', 
+                'password' => Hash::make('0915235776'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0915235776',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0913270058',
+                'password' => Hash::make('0913270058'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0913270058',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0913947554',
+                'password' => Hash::make('0913947554'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0913947554',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0904035045',
+                'password' => Hash::make('0904035045'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0904035045',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0913287146',
+                'password' => Hash::make('0913287146'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0913287146',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '01214757979',
+                'password' => Hash::make('01214757979'),
+            ]);
+            UserHasRole::create([
+                'phone' => '01214757979',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0909539588',
+                'password' => Hash::make('0909539588'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0909539588',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0935109545',
+                'password' => Hash::make('0935109545'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0935109545',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0935105105',
+                'password' => Hash::make('0935105105'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0935105105',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '01230405077',
+                'password' => Hash::make('01230405077'),
+            ]);
+            UserHasRole::create([
+                'phone' => '01230405077',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0903211462',
+                'password' => Hash::make('0903211462'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0903211462',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0903552741',
+                'password' => Hash::make('0903552741'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0903552741',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0904777652',
+                'password' => Hash::make('0904777652'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0904777652',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0902159753',
+                'password' => Hash::make('0902159753'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0902159753',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0905045789',
+                'password' => Hash::make('0905045789'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0905045789',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            User::create([
+                'phone' => '0903056987',
+                'password' => Hash::make('0903056987'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0903056987',
+                'role_id' => 4,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+
+
+            //end patient
+
+            Staff::create([
+                'name' => 'Paypal test',
+                'degree' => 'Paypal',
+                'address' => 'Paypal',
+                'district_id' => '0',
+                'phone' => '0000000000',
+                'date_of_birth' => '1900-01-01',
+                'gender' => 'Nam',
+                'email' =>'abc@gmail.com'
+            ]);
+            User::create([
+                'phone' => '0000000000',
+                'password' => Hash::make('123'),
+            ]);
+            UserHasRole::create([
+                'phone' => '0000000000',
+                'role_id' => 3,
+                'start_time' => Carbon::now(),
+                'end_time' => null
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Huỳnh Tài Administrator',
+                'degree' => 'Thạc Sĩ',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
+                'phone' => '01279011096',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'Nữ',
+                'email' =>'abc@gmail.com'
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Huỳnh Tài Reception',
+                'degree' => 'Thạc Sĩ',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
+                'phone' => '01279011098',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'Nữ',
+                'email' =>'TaiNHReception@dentalgold.com'
+            ]);
+            //data thật Dental
+            Staff::create([
+                'name' => 'Huỳnh Văn Tài',
+                'degree' => 'Tiến Sĩ - Bác sĩ',
+                'address' => '322 Cách Mạng Tháng 8',
+                'district_id' => 2,
+                'phone' => '0909555777',
+                'description' => '<p>Giám đốc hệ thống chuỗi nha khoa Dental Gold</p><p><b>1. Quá trình đào tạo</b> <br> - Bảo vệ Luận án Tiến Sĩ Đại học chuyên ngành Răng hàm mặt năm 2013 <br> - Tu nghiệp tại nước ngoài: Trường Đại học Milan ( Italia), Trường Đại học TelAvil ( Israel), Bologna ( Italia), Đại học mahidol ( Thái lan) <br> - Tốt nghiệp lớp liên đại học Pháp Việt khoá 2006-2008; 2016-2017 về các chuyên ngành nâng cao: Điều trị nội nha, implant, phục hình thẩm mỹ, phẫu thuật nha chu, răng trẻ em, Nắn chỉnh răng</p><p><b>2. Thành tựu nghề nghiệp:</b> <br> - Giám đốc hệ thống chuỗi nha khoa Dental Gold <br> - Thành viên Hiệp hội implant thế giới ( ICOI : International Congress of Oral Implantologists được thành lập từ năm 1972 tại Hoa Kì). Tham gia các hội nghị của ICOI tổ chức tại Mỹ, Mexico… <br> - Thành viên hiệp hội nha sĩ Mĩ ( ADA: American Dental Association ) <br> - Thành viên hiệp hội ITI ( International Team for Implantology): Hiệp hội các nhà cấy ghép Implant do Thuỵ Sĩ đứng ra quy tụ nhiều Bác sĩ cấy ghép implant thế giới sinh hoạt trao đổi kinh nghiệm, đưa ra các đồng thuận trong thực hành implant nha khoa.</p>',
+                'date_of_birth' => '1986-12-01',
+                'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist11.PNG',
+                'gender' => 'Nam',
+                'email' =>'TaiHV@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Đàm Ngọc Trâm',
+                'degree' => 'Tiến Sĩ - Bác Sĩ',
+                'address' => '188 Nguyễn xí',
+                'district_id' => 1,
+                'phone' => '0909555778',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
+                'date_of_birth' => '1976-10-01',
+                 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist12.PNG',
+                'gender' => 'Nữ',
+                'email' =>'TramDamNgoc@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Thái Quốc Long',
+                'degree' => 'Bác Sĩ',
+                'address' => '132 Phan Huy Ích',
+                'district_id' => 1,
+                'phone' => '0909555779',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
+                'date_of_birth' => '1976-08-01',
+                 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist13.PNG',
+                'gender' => 'Nam',
+                'email' =>'LongTQ@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Đắc Minh',
+                'degree' => 'Bác Sĩ',
+                'address' => '435 Tô Ký',
+                'district_id' => 1,
+                'phone' => '0909555780',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist14.PNG',
+                'date_of_birth' => '1975-09-03',
+                'gender' => 'Nam',
+                'email' =>'MinhND@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Hồ Anh Tuấn',
+                'degree' => 'Bác Sĩ',
+                'address' => '187 Trường Chinh',
+                'district_id' => 1,
+                'phone' => '0909555781',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist15.PNG',
+                'date_of_birth' => '1980-02-03',
+                'gender' => 'Nam',
+                'email' =>'TuanHA@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Minh Hải',
+                'degree' => 'Bác Sĩ',
+                'address' => '1021 Tô Hiến Thành',
+                'district_id' => 1,
+                'phone' => '0909555782',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist20.PNG',
+                'date_of_birth' => '1977-10-03',
+                'gender' => 'Nam',
+                'email' =>'HaiNM@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Quang Anh',
+                'degree' => 'Thạc Sĩ - Bác Sĩ',
+                'address' => '133 Hòa Hảo',
+                'district_id' => 1,
+                'phone' => '0909555783',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist23.PNG',
+                'date_of_birth' => '1989-08-01',
+                'gender' => 'Nam',
+                'email' =>'AnhNQ@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Thái Ngọc Trâm',
+                'degree' => 'Bác Sĩ',
+                'address' => '133 Kỳ Hòa',
+                'district_id' => 1,
+                'phone' => '0909555784',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
+                'date_of_birth' => '1976-08-01',
+                'gender' => 'Nữ', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist17.PNG',
+                'email' =>'TramTN@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Phan Huỳnh Bảo Long',
+                'degree' => 'Bác Sĩ',
+                'address' => '452 Hòa Hảo',
+                'district_id' => 1,
+                'phone' => '0909555785',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
+                'date_of_birth' => '1982-08-01',
+                'gender' => 'Nam', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentistBoss3.jpg',
+                'email' =>'LongPHB@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Hương Giang',
+                'degree' => 'Thạc Sĩ -Bác Sĩ',
+                'address' => '32 Phan Huy Ích',
+                'district_id' => 1,
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
+                'phone' => '0909555786','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist18.PNG',
+                'date_of_birth' => '1984-07-03',
+                'gender' => 'Nam',
+                'email' =>'GiangNH@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Đặng Thị Thơ',
+                'degree' => 'Bác Sĩ',
+                'address' => '132 Phan Huy Ích',
+                'district_id' => 1,
+                'phone' => '0909555787',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
+                'date_of_birth' => '1976-08-01',
+                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist19.PNG',
+                'email' =>'ThoDT@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Nguyễn Quốc Bảo',
+                'degree' => 'Bác Sĩ',
+                'address' => '177 Phan Huy Ích',
+                'district_id' => 1,
+                'phone' => '0909555788',
+                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
+                'date_of_birth' => '1974-11-11',
+                'gender' => 'Nam', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentistBoss2.jpg',
+                'email' =>'BaoNQ@dentalgold.com.vn'
+            ]);
+            //reception
+            Staff::create([
+                'name' => 'Phan Bảo Trâm',
+                'degree' => 'Nhân Viên',
+                'address' => '227 Phan Huy Ích',
+                'district_id' => 1,
+                'phone' => '0909777555',
+                'date_of_birth' => '1995-11-11',
+                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist24.PNG',
+                'email' =>'TramPB@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Trần Bảo Ngọc Quỳnh',
+                'degree' => 'Nhân Viên',
+                'address' => '227 Phan Huy Ích',
+                'district_id' => 1,
+                'phone' => '0909777556',
+                'date_of_birth' => '1995-10-08',
+                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist25.PNG',
+                'email' =>'QuynhTBN@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Huỳnh Minh Ngọc',
+                'degree' => 'Nhân Viên',
+                'address' => '227 Phan Huy Ích',
+                'district_id' => 1,
+                'phone' => '0909777557',
+                'date_of_birth' => '1994-08-04',
+                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist16.PNG',
+                'email' =>'NgocHM@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Phùng Văn Loan',
+                'degree' => 'Nhân Viên',
+                'address' => '123 Tô Ký',
+                'district_id' => 1,
+                'phone' => '0909777558',
+                'date_of_birth' => '1995-11-11',
+                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist21.PNG',
+                'email' =>'LoanPV@dentalgold.com.vn'
+            ]);
+            Staff::create([
+                'name' => 'Trần Ngọc Nhung',
+                'degree' => 'Nhân Viên',
+                'address' => '227 Phan Huy Ích',
+                'district_id' => 1,
+                'phone' => '0909777559',
+                'date_of_birth' => '1995-11-11',
+                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist21.PNG',
+                'email' =>'NhungTN@dentalgold.com.vn'
             ]);
 
             Treatment::create([
@@ -782,64 +1339,186 @@ class AdminController extends Controller
 
 
             Patient::create([
-                'name' => 'Nguyễn Huỳnh Tài',
+                'name' => 'Huỳnh Võ Thiên Phúc',
                 'address' => '188 Nguyễn xí',
-                'phone' => '01279011096',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
+                'phone' => '0915469963',
+                'date_of_birth' => '1995-04-01',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
                 'district_id' => 1,
             ]);
 
             Patient::create([
-                'name' => 'Huỳnh Võ Thiên Phúc',
-                'address' => '188 Cầu xí',
-                'phone' => '01279011096',
+                'name' => 'Võ Quốc Trịnh',
+                'address' => '18 Quang Trung',
+                'phone' => '01685149049',
                 'date_of_birth' => '1996-10-02',
-                'gender' => 'FEMALE',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
                 'district_id' => 1,
-                'is_parent' => 0
+                 
             ]);
 
             Patient::create([
                 'name' => 'Nhiêu Sĩ Lực',
                 'address' => '188 Cầu Đường',
-                'phone' => '01279011097',
+                'phone' => '0913520187',
                 'date_of_birth' => '1996-10-03',
-                'gender' => 'FEMALE',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
                 'district_id' => 1,
             ]);
             Patient::create([
-                'name' => 'Bệnh Nhân 1',
+                'name' => 'Hoàng Quốc Huynh',
                 'address' => '188 Cầu Đường',
-                'phone' => '01279011099',
+                'phone' => '0915235776',
                 'date_of_birth' => '1996-10-03',
                 'gender' => 'FEMALE',
-                'avatar' => 'assets/images/icon/user.jpg',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
                 'district_id' => 1,
             ]);
             Patient::create([
-                'name' => 'Bệnh Nhân 2',
-                'address' => '188 Cầu Đường',
-                'phone' => '01279011099',
+                'name' => 'Đỗ Thụy An',
+                'address' => '188 Cống Lỡ',
+                'phone' => '0913270058',
                 'date_of_birth' => '1996-10-03',
                 'gender' => 'FEMALE',
-                'avatar' => 'assets/images/icon/user1.jpg',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
                 'district_id' => 1,
             ]);
             Patient::create([
-                'name' => 'Bệnh Nhân 3',
+                'name' => 'Nguyễn Thị Bình',
                 'address' => '188 Cầu Đường',
-                'phone' => '01279011099',
+                'phone' => '0913947554',
                 'date_of_birth' => '1996-10-03',
                 'gender' => 'FEMALE',
-                'avatar' => 'assets/images/icon/user2.jpg',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
                 'district_id' => 1,
             ]);
+            Patient::create([
+                'name' => 'Bành Văn Bình',
+                'address' => '188 Tô Ký',
+                'phone' => '0904035045',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'FEMALE',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Trần Văn An',
+                'address' => '188 Cách Mạng Tháng 8',
+                'phone' => '0913287146',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'FEMALE',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Bành Văn Bình',
+                'address' => '188 Cầu Đường',
+                'phone' => '01214757979',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nữ',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Nguyễn Thị Na',
+                'address' => '188 Cầu Cáp',
+                'phone' => '0909539588',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nữ',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Nguyễn Thị Hường',
+                'address' => '188 Đồng Đen',
+                'phone' => '0935109545',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nữ',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Nguyễn Thị Thơ',
+                'address' => '188 Phan Huy Ích',
+                'phone' => '0935105105',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nữ',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Trần Văn Tùng',
+                'address' => '188 Cầu Đường',
+                'phone' => '01230405077',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Huỳnh Văn An',
+                'address' => '188 Cầu Tre',
+                'phone' => '0903211462',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Trần Khánh Tùng',
+                'address' => '188 Tô Thị',
+                'phone' => '0903552741',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Nguyễn Gia Bảo',
+                'address' => '188 Cầu Đường',
+                'phone' => '0904777652',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Nguyễn Tường Vân Nam',
+                'address' => '188 Cầu Đường',
+                'phone' => '0902159753',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Nguyễn Trung Kiên',
+                'address' => '188 Cầu Đường',
+                'phone' => '0905045789',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+            Patient::create([
+                'name' => 'Trần Thanh Tùng',
+                'address' => '179 Huỳnh Lan Khanh',
+                'phone' => '0903056987',
+                'date_of_birth' => '1996-10-03',
+                'gender' => 'Nam',
+                'avatar' => 'assets/images/avatar/user_avatar_5.png',
+                'district_id' => 1,
+            ]);
+
+
             TreatmentHistory::create([
                 'treatment_id' => 1,
                 'patient_id' => 1,
                 'description' => 'ABC',
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'finish_date' => Carbon::now(),
                 'tooth_number' => '11',
                 'price' => 1000000,
@@ -849,7 +1528,7 @@ class AdminController extends Controller
             TreatmentDetail::create([
                 'treatment_history_id' => 1,
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
             TreatmentDetailStep::create([
@@ -860,7 +1539,7 @@ class AdminController extends Controller
             TreatmentDetail::create([
                 'treatment_history_id' => 1,
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
             TreatmentDetailStep::create([
@@ -872,7 +1551,7 @@ class AdminController extends Controller
                 'treatment_id' => 1,
                 'patient_id' => 2,
                 'description' => 'ABC',
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'finish_date' => Carbon::now(),
                 'tooth_number' => '11',
                 'price' => 1000000,
@@ -882,7 +1561,7 @@ class AdminController extends Controller
             TreatmentDetail::create([
                 'treatment_history_id' => 2,
                 'staff_id' => 2,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
             TreatmentDetailStep::create([
@@ -893,71 +1572,17 @@ class AdminController extends Controller
             TreatmentDetail::create([
                 'treatment_history_id' => 2,
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
             TreatmentDetailStep::create([
                 'treatment_detail_id' => 4,
                 'step_id' => 2,
             ]);
-            Staff::create([
-                'name' => 'Paypal',
-                'degree' => 'Paypal',
-                'address' => 'Paypal',
-                'district_id' => '0',
-                'phone' => '0000000000',
-                'date_of_birth' => '1900-01-01',
-                'gender' => 'MALE',
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Huỳnh Tài Dentist',
-                'degree' => 'Chịch',
-                'address' => '188 Nguyễn xí',
-                'district_id' => 1,
-                'phone' => '01279011097',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Huỳnh Tài Dentist2',
-                'degree' => 'Chịch',
-                'address' => '188 Nguyễn xí',
-                'district_id' => 1,
-                'phone' => '01279011091',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Huỳnh Tài Dentist 3',
-                'degree' => 'Chịch',
-                'address' => '188 Nguyễn xí',
-                'district_id' => 1,
-                'phone' => '01279011092',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Huỳnh Tài Administrator',
-                'degree' => 'Chịch',
-                'address' => '188 Nguyễn xí',
-                'district_id' => 1,
-                'phone' => '01279011096',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Huỳnh Tài Reception',
-                'degree' => 'Chịch',
-                'address' => '188 Nguyễn xí',
-                'district_id' => 1,
-                'phone' => '01279011098',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'MALE',
-            ]);
-
+            
             Appointment::create([
                 'start_time' => Carbon::now(),
-                'note' => 'lo di kham di',
+                'note' => 'Khám chi tiết',
                 'phone' => '01279011096',
                 'staff_id' => 2,
                 'numerical_order' => '1',
@@ -967,24 +1592,201 @@ class AdminController extends Controller
             Absent::create([
                'staff_approve_id' => 2,
                'request_absent_id' =>  1,
-                'message_from_staff' => 'deoo cho',
+                'message_from_staff' => 'Chấp Nhận',
+                'created_time'=> Carbon::now(),
+                'is_approved' => 1,
             ]);
             Absent::create([
                 'staff_approve_id' => 2,
                 'request_absent_id' =>  2,
-                'message_from_staff' => 'okie cho',
+                'message_from_staff' => 'Chấp Nhận, đảm bảo công việc nhé',
+                'created_time'=> Carbon::now(),
+                'is_approved' => 1,
             ]);
             RequestAbsent::create([
                 'staff_id' => 2,
                 'start_date' => '2018-06-26',
                 'end_date' => '2018-06-28',
-                'reason' =>  'tao thich',
+                'reason' =>  'Đám cưới em trai',
+                'is_delete'=>'0',
             ]);
             RequestAbsent::create([
-                'staff_id' => 1,
+                'staff_id' => 7,
+                'start_date' => '2018-09-15',
+                'end_date' => '2018-09-17',
+                'reason' =>  'Nghỉ bệnh',
+                'is_delete'=>'0',
+            ]);
+            RequestAbsent::create([
+                'staff_id' => 5,
+                'start_date' => '2018-08-29',
+                'end_date' => '2018-08-30',
+                'reason' =>  'Nghỉ bệnh',
+                'is_delete'=>'0',
+            ]);
+            RequestAbsent::create([
+                'staff_id' => 9,
+                'start_date' => '2018-09-05',
+                'end_date' => '2018-09-06',
+                'reason' =>  'Đám cưới em trai',
+                'is_delete'=>'0',
+            ]);
+            RequestAbsent::create([
+                'staff_id' => 12,
+                'start_date' => '2018-09-14',
+                'end_date' => '2018-09-15',
+                'reason' =>  'Sinh nhật con gái',
+                'is_delete'=>'0',
+            ]);
+            RequestAbsent::create([
+                'staff_id' => 5,
+                'start_date' => '2018-09-18',
+                'end_date' => '2018-09-22',
+                'reason' =>  'Mừng sinh nhật lần 80 của bà nội',
+                'is_delete'=>'0',
+            ]);
+            RequestAbsent::create([
+                'staff_id' => 4,
                 'start_date' => '2018-06-25',
                 'end_date' => '2018-07-01',
-                'reason' =>  'tao thich',
+                'reason' =>  'Đám cưới chị gái',
+                'is_delete'=>'0',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/photos/shares/Niềng-răng-nên-ăn-gì-nên-kiêng-gì-nha-sỹ-tư-vấn-tuyệt-đối-tuân-thủ-1.jpg',
+                'content' => '<p>&nbsp;&nbsp;</p>
+<header class="entry-header">
+<div class="entry-header-text entry-header-text-top text-center">
+<h1 class="entry-title">LỰA CHỌN THỰC PHẨM PH&Ugrave; HỢP KHI NIỀNG RĂNG</h1>
+<div class="entry-divider is-divider small">&nbsp;</div>
+</div>
+<div class="entry-image relative"><a href="http://nhakhoawecare.com/lua-chon-thuc-pham-phu-hop-khi-nieng-rang/"><img class="attachment-large size-large wp-post-image" src="http://nhakhoawecare.com/wp-content/uploads/2018/04/Ni%E1%BB%81ng-r%C4%83ng-n%C3%AAn-%C4%83n-g%C3%AC-n%C3%AAn-ki%C3%AAng-g%C3%AC-nha-s%E1%BB%B9-t%C6%B0-v%E1%BA%A5n-tuy%E1%BB%87t-%C4%91%E1%BB%91i-tu%C3%A2n-th%E1%BB%A7-1.jpg" sizes="(max-width: 600px) 100vw, 600px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/04/Niềng-răng-n&ecirc;n-ăn-g&igrave;-n&ecirc;n-ki&ecirc;ng-g&igrave;-nha-sỹ-tư-vấn-tuyệt-đối-tu&acirc;n-thủ-1.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/04/Niềng-răng-n&ecirc;n-ăn-g&igrave;-n&ecirc;n-ki&ecirc;ng-g&igrave;-nha-sỹ-tư-vấn-tuyệt-đối-tu&acirc;n-thủ-1-300x171.jpg 300w" alt="" width="600" height="342" /></a>
+<div class="badge absolute top post-date badge-outline">
+<div class="badge-inner">&nbsp;</div>
+</div>
+</div>
+</header>
+<div class="entry-content single-page">
+<h1><strong>LỰA CHỌN THỰC PHẨM PH&Ugrave; HỢP KHI NIỀNG RĂNG</strong></h1>
+<p><strong>WeCare h&ocirc;m nay sẽ c&ugrave;ng với qu&yacute; kh&aacute;ch h&agrave;ng t&igrave;m hiểu về những điều cần lưu &yacute; n&ecirc;n v&agrave; kh&ocirc;ng n&ecirc;n ăn g&igrave; sau khi niềng răng- qu&aacute; tr&igrave;nh sau để tạo n&ecirc;n một h&agrave;m răng đều, đẹp, chắc v&agrave; khỏe.. C&oacute; thể n&oacute;i chế độ ăn uống cũng đ&oacute;ng g&oacute;p vai tr&ograve; rất quan trọng để c&oacute; được một h&agrave;m răng ho&agrave;n hảo như mong muốn.V&igrave; thể muốn răng khỏe, răng xinh h&atilde;y nắm chắc những m&eacute;o nhỏ dưới đ&acirc;y của WeCare nh&eacute;!</strong></p>
+<p><img class="size-medium wp-image-380 aligncenter" src="http://nhakhoawecare.com/wp-content/uploads/2018/04/cham-soc-rang-nieng-8886-300x204.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/04/cham-soc-rang-nieng-8886-300x204.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/04/cham-soc-rang-nieng-8886.jpg 600w" alt="" width="300" height="204" /></p>
+<h2><strong>Vậy bạn n&ecirc;n d&ugrave;ng những thực phẩm g&igrave; để th&ecirc;m v&agrave;o qu&aacute; tr&igrave;nh niềng răng tốt hơn?</strong></h2>
+<p><strong>Điều đầu ti&ecirc;n sau khi bạn niềng răng đ&oacute; l&agrave; bạn n&ecirc;n ăn c&aacute;c loại thức ăn mềm như s&uacute;p, ch&aacute;o, b&aacute;nh m&igrave;, b&aacute;nh xốp mềm,&hellip;để tr&aacute;nh l&agrave;m tổn thương, l&agrave;m lệch h&igrave;nh dạng răng sau khi niềng.</strong></p>
+<p><strong>Tr&aacute;nh n&ecirc;n ăn những m&oacute;n cứng như xo&agrave;i, cốc, ổi,&hellip;hay l&agrave; c&aacute;c m&oacute;n d&iacute;nh răng như kẹo cao su, kẹo gummy,&hellip;để tr&aacute;nh trường hợp l&agrave;m hỏng khu&ocirc;n răng sau khi niềng.</strong></p>
+<p><strong>Hạn chế ăn những thực phẩm chứa nhiều chất tinh bột. V&igrave; khi ta ăn nhiều loại thức ăn n&agrave;y sẽ tạo n&ecirc;n axit v&agrave; g&acirc;y ra c&aacute;c mảng b&aacute;m tr&ecirc;n răng. Đ&acirc;y l&agrave; một trong những l&iacute; do g&acirc;y n&ecirc;n s&acirc;u răng nhiều nhất. C&ugrave;ng với đ&oacute; l&agrave; tr&aacute;nh c&aacute;c loại thức ăn như tr&agrave;, nước &eacute;p tr&aacute;i c&acirc;y, đồ ăn ngọt,&hellip;.</strong></p>
+<p><strong>Hơn nữa c&aacute;c bạn n&ecirc;n d&ugrave;ng c&aacute;c sản phẩm từ sữa như: bơ mềm, ph&ocirc; mai,&hellip; Tại sao ư? Tại v&igrave; đ&acirc;y l&agrave; những loại thức ăn dễ nhai c&ugrave;ng với đ&oacute; c&oacute; th&ecirc;m nhiều chất dinh dưỡng gi&uacute;p qu&aacute; tr&igrave;nh niềng răng tốt hơn.</strong></p>
+<p><strong>Kết hợp v&agrave;o bữa ăn c&aacute;c sản phẩm từ trứng sẽ tốt hơn cho răng miệng. V&igrave; trong trứng c&oacute; Flour khi đưa v&agrave;o men răng sẽ l&agrave;m cho răng của ch&uacute;ng ta cứng chắc hơn v&agrave; ngăn cản sự ph&aacute; hủy của axit trong thức ăn. Đ&acirc;y c&oacute; thể được xem l&agrave; một trong những thực phẩm tốt cho qu&aacute; tr&igrave;nh niềng răng của c&aacute;c bạn.</strong></p>
+<p><strong>C&ugrave;ng với đ&oacute; l&agrave; bạn n&ecirc;n đưa v&agrave;o bữa ăn của m&igrave;nh c&aacute;c loại thực phẩm từ rau, củ quả. Bạn c&oacute; thể chế biến c&aacute;c m&oacute;n mềm từ rau củ như luộc, xay,&hellip; để kết hợp với rau v&agrave; ch&aacute;o. Tốt hơn nữa l&agrave; bạn c&oacute; thể uống tr&agrave; xanh, nước &eacute;p nho,việt quốc v&agrave; quả m&acirc;m x&ocirc;i. Điều n&agrave;y vừa tốt cho hệ ti&ecirc;u h&oacute;a, cho cơ thể cũng như rất tốt cho sức khỏe răng của bạn nữa nh&eacute;!</strong></p>
+<p><img class="size-medium wp-image-379 aligncenter" src="http://nhakhoawecare.com/wp-content/uploads/2018/04/Ni%E1%BB%81ng-r%C4%83ng-n%C3%AAn-%C4%83n-g%C3%AC-n%C3%AAn-ki%C3%AAng-g%C3%AC-nha-s%E1%BB%B9-t%C6%B0-v%E1%BA%A5n-tuy%E1%BB%87t-%C4%91%E1%BB%91i-tu%C3%A2n-th%E1%BB%A7-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/04/Niềng-răng-n&ecirc;n-ăn-g&igrave;-n&ecirc;n-ki&ecirc;ng-g&igrave;-nha-sỹ-tư-vấn-tuyệt-đối-tu&acirc;n-thủ-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/04/Niềng-răng-n&ecirc;n-ăn-g&igrave;-n&ecirc;n-ki&ecirc;ng-g&igrave;-nha-sỹ-tư-vấn-tuyệt-đối-tu&acirc;n-thủ-1.jpg 600w" alt="" width="300" height="171" /></p>
+<h2><strong>Những m&oacute;n m&agrave; ta n&ecirc;n ăn mỗi ng&agrave;y sau qu&aacute; tr&igrave;nh niềng răng</strong></h2>
+<p><strong>Vậy theo bạn thực phẩm m&agrave; ta kh&ocirc;ng n&ecirc;n ăn l&agrave; những thực phẩm n&agrave;o?</strong></p>
+<p><strong>Đối lập ở tr&ecirc;n, thực phẩm kh&ocirc;ng n&ecirc;n ăn đầu ti&ecirc;n đ&oacute; l&agrave; những thức ăn dai, gi&ograve;n, cứng, d&iacute;nh như kẹo cao su, nước đ&aacute;, kẹo cứng, vỏ b&aacute;nh pizza, b&aacute;nh nếp,&hellip;</strong></p>
+<p><strong>Điều tiếp theo l&agrave; bạn n&ecirc;n hạn chế c&aacute;c m&oacute;n c&oacute; đường. Đ&oacute; l&agrave; v&igrave; trong thức ăn n&agrave;y dễ sinh ra c&aacute;c axit v&agrave; c&aacute;c mảng b&aacute;m g&acirc;y ra s&acirc;u răng cũng như c&aacute;c bệnh về lợi. C&aacute;c bạn n&ecirc;n tr&aacute;nh c&aacute;c thực phẩm như: soda, kẹo c&oacute; chứa đường, c&aacute;c loại b&aacute;nh kẹo c&oacute; m&agrave;u sắc nh&acirc;n tạo để tr&aacute;nh l&agrave;m hại đến răng của m&igrave;nh sau khi niềng.</strong></p>
+<p><strong>H&ocirc;m nay WeCare đ&atilde; cung cấp cho bạn v&agrave;i mẹo nhỏ để c&oacute; thể gi&uacute;p bạn c&oacute; được răng đẹp v&agrave; khỏe nhất sau khi niềng răng cũng như c&aacute;c sản phẩm tốt cho sức khỏe của ch&iacute;nh bạn nh&eacute;! H&atilde;y lu&ocirc;n theo d&otilde;i ch&uacute;ng t&ocirc;i để c&oacute; được c&aacute;c th&ocirc;ng tin hữu &iacute;ch sớm nhất.</strong></p>
+</div>',
+                'title' => 'LỰA CHỌN THỰC PHẨM PHÙ HỢP KHI NIỀNG RĂNG',
+                'staff_id' => '1',
+                'created_date' => '2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/photos/shares/rang-cua-thua-ho-phai-lam-sao-1.jpg',
+                'content' => '<h1><strong>Răng cửa hở! Phải l&agrave;m g&igrave;?</strong></h1>
+<p><strong>Ng&agrave;y nay c&ugrave;ng với sự ph&aacute;t triển vượt bậc của nền c&ocirc;ng nghệ đ&oacute; l&agrave; nền nha khoa hiện đại Việt Nam ch&uacute;ng ta. &ldquo;C&aacute;i răng c&aacute;i g&oacute;c l&agrave; g&oacute;c con người&rdquo; &ndash; Nhu cầu l&agrave;m đẹp răng kh&ocirc;ng chỉ l&agrave; nhu cầu của những người nổi tiếng m&agrave; c&ograve;n l&agrave; nhu cầu của tất cả mọi người trong x&atilde; hội ng&agrave;y nay. Hơn nữa, nụ cười tươi tắn c&ograve;n mang lại cho người sở hữu n&oacute; sự tự tin v&agrave; rạng ngời. Ch&iacute;nh v&igrave; những l&iacute; do n&agrave;y m&agrave; xu hướng thẩm mĩ nha khoa đang dần trở th&agrave;nh tr&agrave;o lưu trong những năm gần đ&acirc;y.</strong></p>
+<p><strong>V&agrave; h&ocirc;m nay, nha khoa WeCare sẽ trả lời v&agrave;i thắc mắc m&agrave; qu&yacute; kh&aacute;ch h&agrave;ng quan t&acirc;m hiện nay.</strong></p>
+<p><strong>Kh&aacute;ch h&agrave;ng: Thưa b&aacute;c sĩ, nếu răng cửa của t&ocirc;i bị hở th&igrave; c&oacute; c&aacute;ch n&agrave;o để h&agrave;m răng của t&ocirc;i kh&iacute;t lại v&agrave; đều hơn kh&ocirc;ng ạ? V&agrave; c&aacute;c c&aacute;ch ấy c&oacute; những ưu v&agrave; nhược điểm với chi ph&iacute; để trả hết sau một liệu tr&igrave;nh như thế n&agrave;o vậy ạ?</strong></p>
+<p><strong>B&aacute;c sĩ: Trong trường hợp của bạn ở nha khoa ch&uacute;ng t&ocirc;i sẽ c&oacute; 3 phương &aacute;n thẩm mĩ để bạn lựa chọn:</strong></p>
+<ul>
+<li><strong>Ở phương &aacute;n thứ nhất n&agrave;y nha khoa sẽ tr&aacute;m bằng vật liệu 3M (được nhập từ Mỹ) để thẩm mĩ răng cho bạn. Với c&aacute;ch n&agrave;y vừa tiết tiệm được chi ph&iacute;, &iacute;t ph&aacute; hủy cấu tr&uacute;c răng lại vừa c&oacute; độ cứng, độ chịu lực, chịu m&ograve;n cao n&ecirc;n được kh&aacute; nhiều người tin tưởng v&agrave; sử dụng. Nhưng miếng tr&aacute;m sẽ đổi m&agrave;u sau v&agrave;i năm v&agrave; miếng tr&aacute;m c&oacute; thể bị bong tr&oacute;c n&ecirc;n hạn chế nhai đồ cứng với lực mạnh.</strong></li>
+<li><strong>Nếu bạn muốn c&oacute; một h&agrave;m răng vừa c&oacute; t&iacute;nh thẩm mĩ cao lại vừa an to&agrave;n, đảm bảo chất lượng v&agrave; ăn uống như răng thật th&igrave; bạn n&ecirc;n chọn c&aacute;ch thứ 2- phục h&igrave;nh răng bằng m&atilde;o sứ. Ở c&aacute;ch n&agrave;y bạn kh&ocirc;ng cần lo sẽ bị bong, tr&oacute;c, rớt v&agrave; bị xỉn m&agrave;u sau một thời gian.Với lại n&oacute; kh&ocirc;ng g&acirc;y hại cho khoang miệng v&agrave; tuổi thọ răng sứ cao, n&oacute; c&oacute; thể tồn tại trong m&ocirc;i trường miệng từ 15-20 năm. Nhưng c&aacute;i nhược điểm lớn nhất của phương &aacute;n n&agrave;y đ&oacute; l&agrave; bạn phải m&agrave;i răng, n&oacute; sẽ bị mất răng thật để phục h&igrave;nh răng mới.</strong></li>
+<li><strong>C&ograve;n nếu bạn muốn c&oacute; một nụ cười đẹp với h&agrave;m răng ngay ngắn, đúng vị tr&iacute; m&agrave; kh&ocirc;ng phải bất cứ phương ph&aacute;p chỉnh nha n&agrave;o cũng c&oacute; thể giải quyết được th&igrave; h&atilde;y chọn phương &aacute;n 3- niềng răng. Ở phương &aacute;n n&agrave;y mang lại cho bạn h&agrave;m răng chắc chắn v&agrave; ổn định, chi ph&iacute; lại ph&ugrave; hợp với khả năng t&agrave;i ch&iacute;nh của bạn.Nhưng n&oacute; lại chiếm nhiều thời gian trong qu&aacute; tr&igrave;nh điều trị v&agrave; t&ugrave;y thuộc v&agrave;o khớp cắn.</strong></li>
+</ul>
+<p><strong>Đ&oacute; l&agrave; c&aacute;c phương &aacute;n tốt nhất ở nha khoa ch&uacute;ng t&ocirc;i sẽ đem lại cho bạn nụ cười TƯƠI TẮN- RẠNG RỠ.</strong></p>',
+                'title' => 'RĂNG CỬA HỞ! PHẢI LÀM SAO?',
+                'staff_id' => '1',
+                'created_date' => '2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/photos/shares/cham-soc-rang-mieng.jpg',
+                'content' => '<header class="entry-header">
+<div class="entry-header-text entry-header-text-top text-center">
+<h1 class="entry-title">CHĂM S&Oacute;C RĂNG MIỆNG HẰNG NG&Agrave;Y C&Ugrave;NG WECARE</h1>
+<div class="entry-divider is-divider small">&nbsp;</div>
+</div>
+<div class="entry-image relative"><a href="http://nhakhoawecare.com/cham-soc-rang-mieng-hang-wecare/"><img class="attachment-large size-large wp-post-image" src="http://nhakhoawecare.com/wp-content/uploads/2018/04/chi-nha-khoa-6.jpg" sizes="(max-width: 600px) 100vw, 600px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/04/chi-nha-khoa-6.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/04/chi-nha-khoa-6-300x187.jpg 300w" alt="" width="600" height="374" /></a>
+<div class="badge absolute top post-date badge-outline">
+<div class="badge-inner">&nbsp;</div>
+</div>
+</div>
+</header>
+<div class="entry-content single-page">
+<h1><strong>CHĂM S&Oacute;C RĂNG MIỆNG HẰNG NG&Agrave;Y C&Ugrave;NG WECARE</strong></h1>
+<p><strong>Xin ch&agrave;o c&aacute;c bạn!&nbsp; Ng&agrave;y h&ocirc;m nay của bạn như thế n&agrave;o rồi?&nbsp; Bạn c&oacute; chăm s&oacute;c răng miệng đ&uacute;ng c&aacute;ch để m&igrave;nh c&oacute; được h&agrave;m răng sạch đẹp kh&ocirc;ng? Nếu c&aacute;c bạn chưa biết l&agrave;m đ&uacute;ng c&aacute;ch th&igrave; h&ocirc;m nay WeCare sẽ c&ugrave;ng với bạn t&igrave;m hiểu r&otilde; hơn về c&aacute;ch để vệ sinh răng miệng tốt nhất nh&eacute;!</strong></p>
+<h2><strong>Thế vệ sinh răng miệng đ&uacute;ng c&aacute;ch l&agrave; g&igrave;?</strong></h2>
+<p><strong>Điều đ&oacute; thể hiện bằng miệng của bạn tr&ocirc;ng khỏe mạnh v&agrave; kh&ocirc;ng c&oacute; m&ugrave;i h&ocirc;i. Thế điều n&agrave;y c&oacute; nghĩa l&agrave;:</strong></p>
+<p><strong>&ndash; Răng của bạn sạch sẽ v&agrave; kh&ocirc;ng vướng vụn thức ăn.</strong></p>
+<p><strong>&ndash; Nướu c&oacute; m&agrave;u hồng v&agrave; kh&ocirc;ng tổn thương hoặc chảy m&aacute;u khi bạn chải răng hoặc d&ugrave;ng chỉ nha khoa.</strong></p>
+<p><strong>&ndash; H&ocirc;i miệng kh&ocirc;ng phải l&agrave; vấn đề thường xuy&ecirc;n.</strong></p>
+<p><strong>Nếu nướu răng của bạn bị tổn thương hoặc chảy m&aacute;u trong khi đ&aacute;nh răng hoặc d&ugrave;ng chỉ nha khoa, hoặc bạn đang c&oacute; hơi thở h&ocirc;i li&ecirc;n tục, h&atilde;y đến với WeCare để được c&aacute;c nha sĩ tại đ&acirc;y tư vấn bất k&igrave; vấn đề m&agrave; bạn đang gặp phải nh&eacute;!</strong></p>
+<p><strong>Hơn nữa c&aacute;c nha sĩ c&oacute; thể gi&uacute;p bạn t&igrave;m hiểu c&aacute;c kĩ thuật vệ sinh răng miệng v&agrave; c&oacute; thể gi&uacute;p chỉ ra c&aacute;c khu vực miệng của bạn cần được ch&uacute; &yacute; khi chải răng v&agrave; d&ugrave;ng chỉ nha khoa.</strong></p>
+<h2><strong>Những c&aacute;ch n&agrave;o bạn n&ecirc;n l&agrave;m để vệ sinh răng miệng tốt nhất?</strong></h2>
+<p><strong>Duy tr&igrave; vệ sinh răng miệng tốt l&agrave; một trong những điều quan trọng nhất bạn c&oacute; thể l&agrave;m cho răng v&agrave; nướu răng của bạn. Điều n&agrave;y kh&ocirc;ng chỉ cho ph&eacute;p bạn tr&ocirc;ng đẹp v&agrave; cảm thấy thoải m&aacute;i, ch&uacute;ng c&ograve;n khiến bạn c&oacute; thể ăn v&agrave; n&oacute;i đ&uacute;ng c&aacute;ch. Sức khỏe răng miệng tốt l&agrave; một trong những điều quan trọng đối với hạnh ph&uacute;c của bạn.</strong></p>
+<p><strong>Chăm s&oacute;c ph&ograve;ng ngừa h&agrave;ng ng&agrave;y, bao gồm việc chải răng v&agrave; d&ugrave;ng chỉ nha khoa đ&uacute;ng c&aacute;ch. N&oacute; gi&uacute;p dừng lại c&aacute;c vấn đề trước khi ch&uacute;ng ph&aacute;t triển v&agrave; &iacute;t g&acirc;y đau đớn, tốn k&eacute;m, v&agrave; &iacute;t đ&aacute;ng lo ngại hơn l&agrave; c&aacute;c điều kiện điều trị phải thực hiện.</strong></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="/photos/shares/cham-soc-rang-mieng.jpg" alt="" width="500" height="333" /></p>
+<p><strong>Trong giữa c&aacute;c lần thường xuy&ecirc;n đến nha sĩ, c&oacute; những bước đơn giản m&agrave; mỗi ch&uacute;ng ta c&oacute; thể l&agrave;m để l&agrave;m giảm đ&aacute;ng kể nguy cơ ph&aacute;t triển s&acirc;u răng, bệnh nướu v&agrave; c&aacute;c vấn đề răng miệng kh&aacute;c. Ch&uacute;ng bao gồm:</strong></p>
+<p><strong>&ndash; Đ&aacute;nh răng kĩ hai lần mỗi ng&agrave;y v&agrave; d&ugrave;ng chỉ nha khoa h&agrave;ng ng&agrave;y</strong></p>
+<p><strong>&ndash; Ăn một chế độ ăn uống c&acirc;n bằng v&agrave; hạn chế c&aacute;c đồ ăn nhẹ giữa c&aacute;c bữa ăn.</strong></p>
+<p><strong>&ndash; Sử dụng c&aacute;c sản phẩm nha khoa c&oacute; chứa fluor, bao gồm cả kem đ&aacute;nh răng.</strong></p>
+<p><strong>&ndash; Rửa với nước s&uacute;c miệng c&oacute; chứa chất flour nếu nha sĩ khuy&ecirc;n d&ugrave;ng.</strong></p>
+<p><strong>&ndash; Đảm bảo rằng trẻ em dưới 12 tuổi uống nước c&oacute; chất fluor hoặc d&ugrave;ng thuốc bổ sung fluor nếu ch&uacute;ng sống trong một v&ugrave;ng kh&ocirc;ng c&oacute; chất fluor.</strong></p>
+<p><strong>Duy tr&igrave; vệ sinh răng miệng tốt l&agrave; một trong những điều thiết yếu để bạn c&oacute; thể c&oacute; những đặc điểm tốt cho răng v&agrave; nướu của bạn. Răng khỏe mạnh kh&ocirc;ng chỉ cho ph&eacute;p bạn tr&ocirc;ng đẹp v&agrave; cảm thấy thoải m&aacute;i, ch&uacute;ng c&ograve;n khiến ch&uacute;ng ta c&oacute; thể ăn v&agrave; n&oacute;i đ&uacute;ng c&aacute;ch.</strong></p>
+</div>',
+                'title' => 'CHĂM SÓC RĂNG MIỆNG HẰNG NGÀY CÙNG DENTAL GOLD',
+                'staff_id' => '1',
+                'created_date' => '2018-06-19 04:31:27',
+            ]);
+            News::create([
+                'image_header' => 'http://150.95.104.237/photos/shares/46dce1ec-3be1-4f41-a6e5-365d3165ae58.jpg',
+                'content' => '<header class="entry-header">
+<div class="entry-header-text entry-header-text-top text-center">
+<h1 class="entry-title">RĂNG ĐẸP V&Agrave; KHỎE &ndash; N&Ecirc;N V&Agrave; KH&Ocirc;NG N&Ecirc;N ĂN G&Igrave; Đ&Acirc;Y?</h1>
+<div class="entry-divider is-divider small">&nbsp;</div>
+</div>
+<div class="entry-image relative"><br />
+<div class="badge absolute top post-date badge-outline">
+<div class="badge-inner"><img style="display: block; margin-left: auto; margin-right: auto;" src="/photos/shares/46dce1ec-3be1-4f41-a6e5-365d3165ae58.jpg" alt="" width="376" height="250" /></div>
+</div>
+</div>
+</header>
+<div class="entry-content single-page">
+<h1><strong>RĂNG ĐẸP V&Agrave; KHỎE &ndash; N&Ecirc;N V&Agrave; KH&Ocirc;NG N&Ecirc;N ĂN G&Igrave; Đ&Acirc;Y?</strong></h1>
+<p><strong><em>V&acirc;ng, trong cuộc sống ch&uacute;ng ta c&oacute; thể n&oacute;i sức khỏe l&agrave; một trong c&aacute;c yếu tố quan trọng h&agrave;ng đầu. V&agrave; răng cũng vậy, n&oacute; cũng l&agrave; một phần của yếu tố sức khỏe. C&aacute;i m&agrave; ch&uacute;ng ta quan t&acirc;m nhất. Ch&iacute;nh v&igrave; điều n&agrave;y n&ecirc;n nha khoa WeCare ch&uacute;ng t&ocirc;i h&ocirc;m nay đ&atilde; n&ecirc;u l&ecirc;n c&aacute;c thực phẩm n&ecirc;n v&agrave; kh&ocirc;ng n&ecirc;n ăn để c&oacute; được một h&agrave;m răng khỏe mạnh.</em></strong></p>
+<h2><strong>Thực phẩm n&ecirc;n ăn:</strong></h2>
+<h3><strong>1.Nước lọc:</strong></h3>
+<p><strong>Sau mỗi bữa ăn hoặc sau khi uống c&aacute;c loại nước c&oacute; ga, c&oacute; m&agrave;u bạn n&ecirc;n s&uacute;c miệng bằng nước. Điều n&agrave;y sẽ hạn chế tối đa c&aacute;c mẩu thức ăn c&ograve;n b&aacute;m v&agrave;o dễ g&acirc;y s&acirc;u răng.</strong></p>
+<p><img class="aligncenter" style="display: block; margin-left: auto; margin-right: auto;" src="http://giadinh.mediacdn.vn/thumb_w/640/2017/may-loc-nuoc-uong-truc-tiep3-1507799316285.jpg" alt="K&aacute;&ordm;&iquest;t qu&aacute;&ordm;&pound; h&Atilde;&not;nh &aacute;&ordm;&pound;nh cho n&AElig;&deg;&aacute;&raquo;c l&aacute;&raquo;c" width="640" height="481" /></p>
+<h3><strong>2.C&aacute;c thực phẩm l&agrave; sản phẩm từ sữa:</strong></h3>
+<p><strong>Đ&oacute; l&agrave; ph&ocirc; m&aacute;t, sữa đ&ocirc;ng v&agrave; c&aacute;c sản phẩm c&oacute; nhiều vitamin kh&aacute;c. C&aacute;c chất n&agrave;y rất c&oacute; lợi cho sức khỏe răng của mỗi ch&uacute;ng ta.</strong></p>
+<p>&nbsp;</p>
+<h3><strong>3.C&aacute;c loại hạt vỏ cứng:</strong></h3>
+<p><strong>Trong c&aacute;c hạt n&agrave;y c&oacute; c&aacute;c vitamin, kho&aacute;ng chất, canxi, sắt, kẽm, v&agrave; c&aacute;c loại dưỡng chất kh&aacute;c. Ch&iacute;nh nhờ điều n&agrave;y n&ecirc;n n&oacute; rất c&oacute; lợi cho sự khỏe mạnh của răng bạn.</strong></p>
+<h3><strong>4.Tr&agrave; xanh:</strong></h3>
+<p><strong>Trong tr&agrave; xanh c&oacute; chất catechin c&oacute; khả năng kiểm so&aacute;t t&igrave;nh trạng vi&ecirc;m v&agrave; chống nhiềm tr&ugrave;ng do vi khuẩn. V&agrave; theo nghiện cứu của c&aacute;c nh&agrave; khoa học đ&atilde; đưa ra kết luận rằng những người thường sử dụng tr&agrave; xanh th&igrave; c&oacute; &iacute;t vi khuẩn v&agrave; acid v&agrave; vi khuẩn trong miệng họ hơn. Chưa hết ở đ&oacute;, tr&agrave; xanh c&ograve;n chấm dứt t&igrave;nh trạng chảy m&aacute;u lợi, chảy m&aacute;u ch&acirc;n răng nữa.</strong></p>
+<p><img class="aligncenter" style="display: block; margin-left: auto; margin-right: auto;" src="http://sohanews.sohacdn.com/thumb_w/660/2017/natural-antibacterial-properties-green-tea-1500544525275-0-0-434-700-crop-1500544533450.jpg" alt="K&aacute;&ordm;&iquest;t qu&aacute;&ordm;&pound; h&Atilde;&not;nh &aacute;&ordm;&pound;nh cho tr&Atilde;&nbsp; xanh" /></p>
+<h2><strong><em>Đ&oacute; l&agrave; những thứ ch&uacute;ng ta n&ecirc;n ăn vậy c&ograve;n những thực phẩm m&agrave; ta kh&ocirc;ng n&ecirc;n ăn l&agrave; những g&igrave;?</em></strong></h2>
+<h3><strong>1.Thực phẩm c&oacute; t&iacute;nh axit:</strong></h3>
+<p><strong>Bạn n&ecirc;n hạn chế ăn chanh hoặc c&aacute;c loại tr&aacute;i c&acirc;y c&oacute; t&iacute;nh axit cao hoặc s&uacute;c miệng bằng nước lo&atilde;ng sau khi bạn ăn xong. N&oacute; sẽ gi&uacute;p l&agrave;m bạn pha lo&atilde;ng axit trong miệng. C&ugrave;ng với đ&oacute; bạn n&ecirc;n đợi 30 ph&uacute;t sau mới được đ&aacute;nh răng, như vậy men răng mới c&oacute; thời gian để phục hồi lại b&igrave;nh thường.</strong></p>
+<h3><strong>2.Đ&aacute; lạnh:</strong></h3>
+<p><strong>Ai cũng biết rằng đ&aacute; rất lạnh v&agrave; cứng. V&igrave; thế khi bạn ăn ch&uacute;ng qu&aacute; nhiều, n&oacute; sẽ ảnh hưởng ti&ecirc;u cực đến men răng( bề mặt bảo vệ răng).</strong></p>
+<p><img class="aligncenter" style="display: block; margin-left: auto; margin-right: auto;" src="https://dwbxi9io9o7ce.cloudfront.net/images/dreamstime_15806431.max-600x600.jpg" alt="K&aacute;&ordm;&iquest;t qu&aacute;&ordm;&pound; h&Atilde;&not;nh &aacute;&ordm;&pound;nh cho &Auml;&Atilde;&iexcl; l&aacute;&ordm;&iexcl;nh" /></p>
+<h3><strong>3.Nước c&oacute; ga v&agrave; rượu:</strong></h3>
+<p><strong>Rượu l&agrave; chất c&oacute; thể l&agrave;m ố v&agrave; hỏng răng của bạn đấy! C&ugrave;ng với đ&oacute; l&agrave; nguy&ecirc;n nh&acirc;n lớn của ung thư miệng nữa. Ch&iacute;nh v&igrave; điều n&agrave;y, bạn chỉ n&ecirc;n uống 1 ly mỗi ng&agrave;y v&agrave; nhớ đ&aacute;nh răng kĩ sau mỗi lần uống nh&eacute;!</strong></p>
+<p><strong>Chưa hết, với nước ngọt c&oacute; ga th&igrave; ch&uacute;ng c&oacute; rất nhiều axit photphoric v&agrave; citric l&agrave;m mềm men răng v&agrave; tăng nguy cơ s&acirc;u răng cho ch&iacute;nh người sử dụng n&oacute; đấy. Nếu bạn muốn uống th&igrave; h&atilde;y s&uacute;c miệng bằng nước lọc sau mỗi lần uống n&oacute; nh&eacute;!</strong></p>
+<h3><strong>4.Thực phẩm chứa nhiều tinh bột:</strong></h3>
+<p><strong>Đ&oacute; l&agrave; c&aacute;c loại thực phẩm như: b&aacute;nh m&igrave; trắng, pizzza, m&igrave; ống v&agrave; b&aacute;nh m&igrave; kẹp thịt,&hellip;Đ&oacute; l&agrave; c&aacute;c loại thực phẩm chứa nhiều tinh bột v&agrave; dễ d&agrave;ng lọt v&agrave;o c&aacute;c khẽ răng g&acirc;y n&ecirc;n s&acirc;u răng.</strong></p>
+</div>',
+                'title' => 'RĂNG ĐẸP VÀ KHỎE – NÊN VÀ KHÔNG NÊN ĂN GÌ ĐÂY?',
+                'staff_id' => '1',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
@@ -1063,86 +1865,7 @@ class AdminController extends Controller
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
                 'title' => 'TRỒNG RĂNG IMPLANT – GIẢI PHÁP PHỤC HÌNH RĂNG BỊ MẤT HOÀN HẢO',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
-                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
-<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
-<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
-<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
-<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
-<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
-<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
-</figure>
-<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
-<ul>
-<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
-</ul>
-<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
-<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
-<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
-</figure>
-<ul>
-<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
-</ul>
-<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
-<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
-<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
-</figure>
-<ul>
-<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
-</ul>
-<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
-<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
-<ol>
-<li>
-<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
-</li>
-</ol>
-<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
-<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
-<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
-<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
-</figure>
-<ol start="2">
-<li>
-<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
-</li>
-</ol>
-<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
-<ol start="3">
-<li>
-<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
-</figure>
-<ol start="4">
-<li>
-<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
-</li>
-</ol>
-<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
-<ol start="5">
-<li>
-<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
-<ol start="6">
-<li>
-<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
-</li>
-</ol>
-<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' => 'Trám răng đẹp như thủy tiên',
-                'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/veneer-su-gia-bao-nhieu-1.jpg',
@@ -1167,357 +1890,141 @@ class AdminController extends Controller
 <p>Tuổi thọ của mặt d&aacute;n sứ Veneer c&oacute; thể k&eacute;o d&agrave;i từ 10 &ndash; 15 năm nếu được chăm s&oacute;c v&agrave; bảo vệ đ&uacute;ng c&aacute;ch.&nbsp; B&ecirc;n cạnh đ&oacute;, mặt d&aacute;n sứ c&ograve;n b&aacute;m&nbsp;chắc tr&ecirc;n th&acirc;n răng, kh&ocirc;ng bị k&ecirc;nh hở, kh&ocirc;ng dễ bị bong, bật khi nhai gắn, chải răng nhờ chất liệu kết d&iacute;nh đặc biệt, kh&ocirc;ng dễ bị h&oacute;a lỏng l&agrave;m rơi miếng d&aacute;n n&ecirc;n bạn c&oacute; thể y&ecirc;n t&acirc;m khi sử dụng.</p>',
                 'title' => 'LÀM RĂNG SỨ MẶT DÁN SỨ VENEER – ĐẢM BẢO TÍNH THẨM MỸ CAO',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
+                'created_date' => '2018-06-19 04:31:27',
             ]);
             News::create([
-                'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/TrongImplent.jpg',
-                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
-<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
-<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
-<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
-<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
-<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
-<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
-</figure>
-<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
-<ul>
-<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
-</ul>
-<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
-<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
-<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
-</figure>
-<ul>
-<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
-</ul>
-<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
-<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
-<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
-</figure>
-<ul>
-<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
-</ul>
-<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
-<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
-<ol>
-<li>
-<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
-</li>
-</ol>
-<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
-<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
-<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
-<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
-</figure>
-<ol start="2">
-<li>
-<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
-</li>
-</ol>
-<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
-<ol start="3">
-<li>
-<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
-</figure>
-<ol start="4">
-<li>
-<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
-</li>
-</ol>
-<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
-<ol start="5">
-<li>
-<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
-<ol start="6">
-<li>
-<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
-</li>
-</ol>
-<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' => 'Nghệ thuật tẩy trắng răng công nghệ Úc',
+                'image_header' => 'http://150.95.104.237/photos/shares/2.jpg',
+                'content' => '<p class="the-article-summary cms-desc">Nhờ chiết xuất từ thảo dược tự nhi&ecirc;n như vỏ quả cau, đinh hương, cam thảo, kem đ&aacute;nh răng dược liệu gi&uacute;p đẩy l&ugrave;i h&ocirc;i miệng hiệu quả.</p>
+<div class="the-article-body cms-body">
+<p>T&igrave;nh trạng h&ocirc;i miệng g&acirc;y ảnh hưởng nhiều đến cuộc sống h&agrave;ng ng&agrave;y v&agrave; khiến kh&ocirc;ng &iacute;t người lo lắng.</p>
+<h3>Chất lượng sống ảnh hưởng v&igrave; h&ocirc;i miệng</h3>
+<p>Chị Ho&agrave;i Thương (28 tuổi, ở H&agrave; Nội) l&agrave;m nh&acirc;n vi&ecirc;n kinh doanh, thường xuy&ecirc;n phải tiếp x&uacute;c với nhiều kh&aacute;ch h&agrave;ng. Nhưng gần đ&acirc;y, chị cảm thấy hiệu quả c&ocirc;ng việc giảm s&uacute;t, nguy&ecirc;n nh&acirc;n một phần v&igrave; miệng xuất hiện m&ugrave;i h&ocirc;i.<br />&ldquo;T&ocirc;i thật sự kh&oacute; chịu, chất lượng sống, c&ocirc;ng việc bị ảnh hưởng. T&ocirc;i đ&atilde; thử nhiều c&aacute;ch nhưng kh&ocirc;ng hiệu quả l&acirc;u, l&uacute;c n&agrave;o cũng cảm gi&aacute;c m&igrave;nh mất lịch sự&rdquo;, chị Thương than thở.</p>
+<p>Sau khi được tư vấn, chị Thương biết t&igrave;nh trạng hơi thở c&oacute; m&ugrave;i kh&ocirc;ng phải tự nhi&ecirc;n xuất hiện m&agrave; do vi khuẩn sinh s&ocirc;i, ph&aacute;t triển từ trong miệng. Ch&uacute;ng ph&aacute; vỡ c&aacute;c mảnh vụn thức ăn v&agrave; tạo ra hợp chất ph&aacute;t ra m&ugrave;i h&ocirc;i.</p>
+<p>&ldquo;B&aacute;c sĩ cũng n&oacute;i t&ocirc;i bị h&ocirc;i miệng do th&oacute;i quen vệ sinh răng miệng chưa tốt, chưa đ&uacute;ng. Chỉ xỉa răng kh&ocirc;ng thể k&eacute;o hết thức ăn c&ograve;n s&oacute;t, vi khuẩn sinh s&ocirc;i, g&acirc;y h&ocirc;i miệng&rdquo;, chị Thương chia sẻ.</p>
+<p>Kh&ocirc;ng những thế, việc xỉa răng c&ograve;n khiến phần lợi bị trầy xước, đ&ocirc;i khi sưng đỏ, chảy m&aacute;u kẽ ch&acirc;n răng. Đ&acirc;y l&agrave; dấu hiệu sớm của bệnh vi&ecirc;m lợi - một nguy&ecirc;n nh&acirc;n g&acirc;y h&ocirc;i miệng thường gặp, nhưng nhiều người chủ quan, bỏ qua. Ngo&agrave;i ra, những người bị s&acirc;u răng, vừa nhổ răng kh&ocirc;n, c&oacute; chỗ vỡ trơ tủy răng hoặc lỗ hổng s&acirc;u răng, nhiều mảng cao răng&hellip; cũng dễ bị h&ocirc;i miệng.</p>
+<p>Với người đeo niềng, răng giả, vi khuẩn sẽ dễ t&iacute;ch tụ ở c&aacute;c kẽ g&acirc;y m&ugrave;i h&ocirc;i. T&igrave;nh trạng n&agrave;y c&ograve;n xuất hiện do uống rượu, h&uacute;t thuốc l&aacute;, ăn c&aacute;c thực phẩm để lại m&ugrave;i như tỏi, h&agrave;nh, thức ăn cay&hellip;</p>
+<table class="picture" align="center">
+<tbody>
+<tr>
+<td class="pic">
+<div class="photoset-item"><img title="Chữa h&ocirc;i miệng bằng kem đ&aacute;nh răng dược liệu h&igrave;nh ảnh 1" src="https://znews-photo-td.zadn.vn/w660/Uploaded/wyhktpu/2018_07_09/8cachdanhbayhoithocomui_01.jpg" alt="Chua hoi mieng bang kem danh rang duoc lieu hinh anh 1" width="660" height="409" /></div>
+</td>
+</tr>
+<tr>
+<td class="pCaption caption">Vi&ecirc;m lợi l&agrave; một nguy&ecirc;n nh&acirc;n g&acirc;y h&ocirc;i miệng thường gặp.</td>
+</tr>
+</tbody>
+</table>
+<h3>C&aacute;ch ph&ograve;ng tr&aacute;nh h&ocirc;i miệng</h3>
+<p>Để vệ sinh răng miệng đ&uacute;ng c&aacute;ch, bạn cần uống nhiều nước để giữ ẩm miệng, tập th&oacute;i quen đ&aacute;nh răng 2 lần/ng&agrave;y. Vệ sinh kỹ c&aacute;c g&oacute;c cạnh của miệng, loại bỏ thức ăn thừa d&iacute;nh ở c&aacute;c kẽ răng. Đồng thời, việc đ&aacute;nh, cạo lưỡi ngăn sự ph&aacute;t triển mạnh của vi khuẩn cũng cần được ch&uacute; &yacute;. Nếu mắc c&aacute;c bệnh l&yacute; trong miệng người mắc cần điều trị, đi kh&aacute;m nha khoa định kỳ 6 th&aacute;ng/lần.</p>
+<p>B&ecirc;n cạnh đ&oacute;, việc chọn kem đ&aacute;nh răng cũng rất quan trọng để &ldquo;ph&ograve;ng từ xa" nguy&ecirc;n nh&acirc;n g&acirc;y h&ocirc;i miệng. C&aacute;c chuy&ecirc;n gia khuyến c&aacute;o n&ecirc;n d&ugrave;ng sản phẩm kem đ&aacute;nh răng dược liệu tự nhi&ecirc;n. V&igrave; sản phẩm n&agrave;y kh&ocirc;ng chỉ l&agrave;m sạch răng lợi, an to&agrave;n, ngừa s&acirc;u, mảng b&aacute;m m&agrave; c&ograve;n gi&uacute;p tăng cường m&aacute;u lưu th&ocirc;ng dưới tủy răng, lợi, gi&uacute;p nu&ocirc;i dưỡng v&agrave; bảo vệ từ b&ecirc;n trong. Kem đ&aacute;nh răng dược liệu cũng gi&uacute;p khử m&ugrave;i h&ocirc;i miệng.</p>
+<p>Đ&ocirc;ng y ghi nhận một số vị dược liệu c&oacute; t&aacute;c dụng chăm s&oacute;c sức khỏe răng miệng đ&atilde; được nghi&ecirc;n cứu như chiết xuất vỏ quả cau, đinh hương, cam thảo, một dược&hellip; Trong đ&oacute;, đinh hương c&oacute; vị cay, t&ecirc;, kh&aacute;ng khuẩn, khử m&ugrave;i, được d&ugrave;ng trong nhiều b&agrave;i thuốc gi&uacute;p giảm c&aacute;c bệnh về răng miệng. Tinh chất bạc h&agrave; c&oacute; t&aacute;c dụng diệt khuẩn, thơm miệng, được d&ugrave;ng phổ biến trong c&aacute;c sản phẩm chăm s&oacute;c răng miệng kh&aacute;c để tạo hơi thở thơm m&aacute;t tự nhi&ecirc;n. Sự phối hợp h&agrave;i ho&agrave; giữa 2 vị thuốc n&agrave;y sẽ gi&uacute;p tăng t&aacute;c dụng ngăn chặn vi khuẩn g&acirc;y m&ugrave;i.</p>
+<table class="picture" align="center">
+<tbody>
+<tr>
+<td class="pic">
+<div class="photoset-item"><img src="https://znews-photo-td.zadn.vn/w660/Uploaded/wyhktpu/2018_07_09/2.jpg" alt="Chua hoi mieng bang kem danh rang duoc lieu hinh anh 2" width="609" height="410" /></div>
+</td>
+</tr>
+<tr>
+<td class="pCaption caption">Kem đ&aacute;nh răng dược liệu chứa nhiều th&agrave;nh phần chữa h&ocirc;i miệng.</td>
+</tr>
+</tbody>
+</table>
+</div>',
+                'title' => 'Chữa hôi miệng bằng kem đánh răng dược liệu',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
-            ]);
+                'created_date' => '2018-06-19 04:31:27',
+            ]);   
             News::create([
-                'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/TayTrangRang.jpg',
-                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
-<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
-<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
-<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
-<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
-<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
-<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
-</figure>
-<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
-<ul>
-<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
-</ul>
-<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
-<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
-<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
-</figure>
-<ul>
-<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
-</ul>
-<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
-<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
-<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
-</figure>
-<ul>
-<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
-</ul>
-<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
-<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
-<ol>
-<li>
-<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
-</li>
-</ol>
-<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
-<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
-<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
-<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
-</figure>
-<ol start="2">
-<li>
-<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
-</li>
-</ol>
-<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
-<ol start="3">
-<li>
-<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
-</figure>
-<ol start="4">
-<li>
-<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
-</li>
-</ol>
-<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
-<ol start="5">
-<li>
-<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
-<ol start="6">
-<li>
-<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
-</li>
-</ol>
-<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' => 'Bảo vệ hàm răng chắc khỏe cho trẻ',
+                'image_header' => 'http://150.95.104.237/photos/shares/nhorangso6.jpg',
+                'content' => '<p class="the-article-summary cms-desc">Để tr&aacute;nh nguy cơ nhổ răng bất đắc dĩ, việc vệ sinh răng miệng thường xuy&ecirc;n bằng kem đ&aacute;nh răng dược liệu được nhiều người ưu ti&ecirc;n sử dụng.</p>
+<div class="the-article-body cms-body">
+<p>Thống k&ecirc; mới nhất của Bệnh viện Răng h&agrave;m mặt Trung ương H&agrave; Nội cho thấy c&oacute; đến 90% d&acirc;n số gặp c&aacute;c vấn đề về răng miệng, trong đ&oacute; chủ yếu l&agrave; s&acirc;u răng, vi&ecirc;m lợi v&agrave; phải nhổ răng.</p>
+<h3>&ldquo;Mất răng&rdquo; do đ&acirc;u?</h3>
+<p>Theo c&aacute;c chuy&ecirc;n gia nha khoa, răng lợi cũng như c&aacute;c bộ phận kh&aacute;c của cơ thể, cần được nu&ocirc;i dưỡng để ph&aacute;t triển khỏe mạnh.Chỉ l&agrave;m sạch b&ecirc;n ngo&agrave;i th&ocirc;i chưa đủ, cần phải nu&ocirc;i dưỡng, t&aacute;i tạo răng lợi h&agrave;ng ng&agrave;y từ b&ecirc;n trong.<br />Răng gồm 4 nh&oacute;m với răng cửa đảm nhiệm chức năng cắt, răng nanh x&eacute;, răng h&agrave;m nhỏ v&agrave; h&agrave;m lớn sẽ nghiền thức ăn. Khi c&aacute;c răng vĩnh viễn mọc l&ecirc;n, nhưng bị mất v&igrave; l&yacute; do n&agrave;o đ&oacute;, sẽ kh&ocirc;ng c&oacute; răng thay thế nữa.</p>
+<table class="picture" align="center">
+<tbody>
+<tr>
+<td class="pic">
+<div class="photoset-item"><img title="C&aacute;ch ph&ograve;ng tr&aacute;nh nguy cơ nhổ răng bất đắc dĩ h&igrave;nh ảnh 1" src="https://znews-photo-td.zadn.vn/w660/Uploaded/wyhktpu/2018_07_04/nhorangso6.jpg" alt="Cach phong tranh nguy co nho rang bat dac di hinh anh 1" width="500" height="329" /></div>
+</td>
+</tr>
+<tr>
+<td class="pCaption caption">Răng vĩnh viễn c&oacute; thể bị buộc nhổ bỏ v&igrave; bị tổn thương.</td>
+</tr>
+</tbody>
+</table>
+<p>Ngo&agrave;i nguy&ecirc;n nh&acirc;n do va chạm mạnh g&acirc;y g&atilde;y hoặc mất răng, phần kh&ocirc;ng nhỏ c&ograve;n lại li&ecirc;n quan đến những bệnh răng miệng thường gặp như vi&ecirc;m lợi, chảy m&aacute;u ch&acirc;n răng, bệnh nha chu, s&acirc;u răng&hellip;</p>
+<p>Bệnh nha chu kh&ocirc;ng chỉ ảnh hưởng đến nướu răng m&agrave; c&ograve;n cả xương, d&acirc;y chằng xung quanh răng, thậm ch&iacute; l&agrave;m giảm sức đề kh&aacute;ng to&agrave;n cơ thể. Nguy&ecirc;n nh&acirc;n ch&iacute;nh của bệnh phổ biến n&agrave;y l&agrave; do t&igrave;nh trạng vệ sinh răng miệng k&eacute;m,t&iacute;ch tụ th&agrave;nh cao răng.</p>
+<p>Cao răng c&agrave;ng nhiều sẽ dẫn đến t&igrave;nh trạng vi&ecirc;m lợi c&agrave;ng nặng, c&oacute; thể khiến lợi sưng phồng, chảy m&aacute;u, ph&aacute; hủy xương ổ răng, hậu quả l&agrave;m răng bị lung lay, kh&ocirc;ng thể cắn, x&eacute;, nhai, nghiền... Nha sĩ l&uacute;c n&agrave;y bắt buộc phải nhổ bỏ c&aacute;c răng bị ảnh hưởng mặc d&ugrave; vẫn c&ograve;n l&agrave;nh lặn.</p>
+<h3>Ph&ograve;ng nguy cơ nhổ răng bất đắc dĩ</h3>
+<p>Để giữ răng chắc, khỏe, bạn cần c&oacute; chế độ ăn uống hợp l&yacute;, đủ dinh dưỡng; tr&aacute;nh những thứ qu&aacute; n&oacute;ng hoặc qu&aacute; lạnh. Việc vệ sinh răng miệng thường xuy&ecirc;n, đ&uacute;ng c&aacute;ch để ph&ograve;ng ngừa c&aacute;c bệnh răng miệng, tr&aacute;nh bị mất răng &ldquo;bất đắc dĩ&rdquo; đ&oacute;ng vai tr&ograve; rất quan trọng.</p>
+<p>Những người hay gặp c&aacute;c vấn đề răng miệng về nhiệt, vi&ecirc;m lợi, chảy m&aacute;u ch&acirc;n răng, tụt lợi dẫn đến răng lung lay, &ecirc; buốt&hellip; n&ecirc;n d&ugrave;ng kem đ&aacute;nh răng dược liệu. Sản phẩm tự nhi&ecirc;n n&agrave;y kh&ocirc;ng chỉ l&agrave;m sạch răng lợi, an to&agrave;n m&agrave; c&ograve;n tăng cường m&aacute;u lưu th&ocirc;ng dưới tủy răng, lợi, gi&uacute;p nu&ocirc;i dưỡng v&agrave; bảo vệ từ b&ecirc;n trong.</p>
+<table class="picture" align="center">
+<tbody>
+<tr>
+<td class="pic">
+<div class="photoset-item"><img src="https://znews-photo-td.zadn.vn/w660/Uploaded/wyhktpu/2018_07_04/img20160707173259397.jpg" alt="Cach phong tranh nguy co nho rang bat dac di hinh anh 2" width="640" height="427" /></div>
+</td>
+</tr>
+<tr>
+<td class="pCaption caption">Những người hay gặp c&aacute;c vấn đề về răng miệng n&ecirc;n d&ugrave;ng kem đ&aacute;nh răng dược liệu.</td>
+</tr>
+</tbody>
+</table>
+<p>Nổi bật trong đ&oacute; l&agrave; kem đ&aacute;nh răng dược liệu Ngọc Ch&acirc;u với th&agrave;nh phần tinh chất dược liệu (vỏ quả cau, đinh hương, cam thảo, một dược, hoa h&ograve;e, keo ong&hellip;), bổ sung vitamin v&agrave; muối. Trong đ&oacute;, vỏ quả cau gi&uacute;p chắc ch&acirc;n răng, trắng răng; đinh hương kh&aacute;ng khuẩn khử m&ugrave;i, giảm &ecirc; buốt răng; cam thảo, keo ong lại chống vi&ecirc;m lợi, nhiệt miệng; hoa h&ograve;e hỗ trợ hoạt huyết, bền th&agrave;nh mạch, ngăn chảy m&aacute;u ch&acirc;n răng&hellip;</p>
+<p>C&aacute;c th&agrave;nh phần được phối hợp khoa học, ph&aacute;t huy t&aacute;c dụng đồng thời l&ecirc;n cả răng v&agrave; lợi. Nhờ vậy, răng lợi kh&ocirc;ng chỉ được l&agrave;m sạch, bảo vệ b&ecirc;n ngo&agrave;i m&agrave; c&ograve;n tăng cường lưu th&ocirc;ng m&aacute;u, nu&ocirc;i dưỡng từ gốc. Sản phẩm cũng g&oacute;p phần bảo vệ lợi, chắc ch&acirc;n răng, ngăn ngừa nhiệt miệng, vi&ecirc;m lợi, tụt lợi, chảy m&aacute;u ch&acirc;n răng, vi&ecirc;m quanh ch&acirc;n răng&hellip;</p>
+</div>',
+                'title' => 'Cách phòng tránh nguy cơ nhổ răng bất đắc dĩ',
                 'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/RangSuVEENER.png',
-                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
-<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
-<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
-<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
-<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
-<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
-<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
-</figure>
-<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
-<ul>
-<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
-</ul>
-<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
-<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
-<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
-</figure>
-<ul>
-<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
-</ul>
-<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
-<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
-<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
-</figure>
-<ul>
-<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
-</ul>
-<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
-<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
-<ol>
-<li>
-<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
-</li>
-</ol>
-<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
-<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
-<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
-<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
-</figure>
-<ol start="2">
-<li>
-<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
-</li>
-</ol>
-<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
-<ol start="3">
-<li>
-<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
-</figure>
-<ol start="4">
-<li>
-<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
-</li>
-</ol>
-<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
-<ol start="5">
-<li>
-<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
-<ol start="6">
-<li>
-<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
-</li>
-</ol>
-<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' => 'Trồng răng sứ tặng tặng thẻ',
-                'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/assets/images/TreatmentCateImg/NiengRang.jpg',
-                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
-<p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
-<p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
-<p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
-<p><strong>&ndash; Chiếc răng bền nhất.</strong></p>
-<p><strong>&ndash; Bảo vệ sức khỏe răng miệng triệt để nhất.</strong></p>
-<p><strong>&ndash; Phục hồi ho&agrave;n hảo chức năng của một chiếc răng.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Trồng răng Implant</figcaption>
-</figure>
-<p><strong>Tuy nhi&ecirc;n, muốn c&oacute; một h&agrave;m răng như thế th&igrave; việc đầu ti&ecirc;n bạn cần l&agrave;m đ&oacute; l&agrave; chọn một nha khoa cực k&igrave; uy t&iacute;n. Vậy c&aacute;c bạn sẽ được g&igrave; khi đến với nha khoa của ch&uacute;ng t&ocirc;i?</strong></p>
-<ul>
-<li><strong>Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm:</strong></li>
-</ul>
-<p><strong>C&oacute; thể n&oacute;i để nhận x&eacute;t hay đ&aacute;nh gi&aacute; một nha khoa n&agrave;o đ&oacute; th&igrave; việc đầu ti&ecirc;n ta cần quan t&acirc;m đến đ&oacute; l&agrave; yếu tố đội ngũ b&aacute;c sĩ. C&aacute;c b&aacute;c sĩ ở nha khoa ở WeCare đều đ&atilde; c&oacute; rất nhiều kinh nghiệm trong việc phục hồi răng từ đơn giản đến phức tạp v&agrave; hầu như mọi trường hợp cấy gh&eacute;p răng Implant đều th&agrave;nh c&ocirc;ng.</strong></p>
-<figure id="attachment_156" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-156 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-300x200.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-768x512.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-1024x682.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2-600x400.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/3-2.jpg 1280w" alt="" width="300" height="200" />
-<figcaption class="wp-caption-text">Đội h&igrave;nh b&aacute;c sĩ giỏi chuy&ecirc;n m&ocirc;n v&agrave; c&oacute; nhiều năm kinh nghiệm</figcaption>
-</figure>
-<ul>
-<li><strong>100% vật liệu được nhập khẩu v&agrave; trải qua kiểm định khắt khe:</strong></li>
-</ul>
-<p><strong>Nha khoa WeCare c&oacute; khả năng nhập khẩu trực tiếp trụ răng nh&acirc;n tạo Implant ch&iacute;nh h&atilde;ng n&ecirc;n đảm bảo chất lượng răng tốt nhất.</strong></p>
-<figure id="attachment_155" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-155 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-300x225.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-768x576.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png-600x450.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/2.png.jpg 950w" alt="" width="300" height="225" />
-<figcaption class="wp-caption-text"><strong>Vật liệu được nhập khẩu</strong></figcaption>
-</figure>
-<ul>
-<li><strong>M&aacute;y m&oacute;c v&agrave; trang thiết bị hiện đại:</strong></li>
-</ul>
-<p><strong>Để qu&aacute; tr&igrave;nh trồng răng Implant đạt được kết quả tốt nhất th&igrave; thiết bị hỗ trợ cấy gh&eacute;p răng Implant hiện đại cũng g&oacute;p một phần đ&aacute;ng kể để gi&uacute;p c&aacute;c b&aacute;c sĩ tối ưu được trong thao t&aacute;c, linh hoạt v&agrave; c&oacute; độ t&ugrave;y chỉnh lớn. Trang thiết bị hỗ trợ gh&eacute;p răng ở nha khoa ch&uacute;ng t&ocirc;i rất hiện đại, đ&atilde; được kiểm định kĩ về t&iacute;nh năng hoạt động v&agrave; chất lượng kĩ thuật n&ecirc;n đảm bảo cấy gh&eacute;p an to&agrave;n tuyệt đối, tối ưu ho&agrave;n hảo nhất.</strong></p>
-<p><strong>Nhưng để c&oacute; một h&agrave;m răng đẹp v&agrave; chắc khỏe như mong muốn th&igrave; bạn phải trải qua c&aacute;c bước sau đ&acirc;y với c&aacute;c nha sĩ ở WeCare ch&uacute;ng t&ocirc;i:</strong></p>
-<ol>
-<li>
-<h4><strong>Thăm kh&aacute;m v&agrave; chụp phim bằng m&aacute;y X quang:</strong></h4>
-</li>
-</ol>
-<p><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng, t&igrave;nh trạng răng, nướu v&agrave; sức khỏe tổng thể bằng c&aacute;c thao t&aacute;c chụp X-quang, kiểm tra mật độ xương, độ d&agrave;y xương h&agrave;m.</strong></p>
-<p><strong>Dựa tr&ecirc;n kết quả khảo s&aacute;t đ&oacute; , b&aacute;c sĩ sẽ t&iacute;nh to&aacute;n được ch&iacute;nh x&aacute;c độ d&agrave;i, k&iacute;ch cỡ, đường k&iacute;nh v&agrave; số ren cho trụ Implant tương th&iacute;ch với đặc điểm cấu tạo xương h&agrave;m bị mất răng. Đ&acirc;y sẽ l&agrave; cơ sở để b&aacute;c sĩ x&aacute;c định x&aacute;c định hướng đi của trụ nh&acirc;n tạo v&agrave; độ n&ocirc;ng s&acirc;u khi cấy gh&eacute;p.</strong></p>
-<figure id="attachment_306" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-306 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-300x199.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-768x511.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-1024x681.jpg 1024w, http://nhakhoawecare.com/wp-content/uploads/2018/03/DSC_1459-600x399.jpg 600w" alt="" width="300" height="199" />
-<figcaption class="wp-caption-text"><strong>Bệnh nh&acirc;n sẽ được kh&aacute;m tổng qu&aacute;t khoang miệng</strong></figcaption>
-</figure>
-<ol start="2">
-<li>
-<h4><strong>B&aacute;c sĩ l&ecirc;n kế hoạch điều trị v&agrave; cấy gh&eacute;p Implant cho răng:</strong></h4>
-</li>
-</ol>
-<p><strong>Khi đ&atilde; c&oacute; đầy đủ những th&ocirc;ng số cơ bản b&aacute;c sĩ sẽ l&ecirc;n kế hoạch điều trị cụ thể với &nbsp;&nbsp;kh&aacute;ch h&agrave;ng. C&ugrave;ng với đ&oacute;, họ sẽ tư vấn về c&aacute;c điều kiện cấy gh&eacute;p Implant v&agrave; mức chi ph&iacute; để kh&aacute;ch h&agrave;ng biết r&otilde;, nếu kh&ocirc;ng c&oacute; vấn đề g&igrave; kh&aacute;c th&igrave; b&aacute;c sĩ sẽ đặt lịch hẹn để cấy gh&eacute;p Implant.</strong></p>
-<ol start="3">
-<li>
-<h4><strong>Thực hiện cấy gh&eacute;p Implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Đến ng&agrave;y hẹn cấy gh&eacute;p bạn phải để t&acirc;m trạng m&igrave;nh thoải m&aacute;i, ăn uống đầy đủ v&agrave; chắc chắn sức khỏe tốt. B&aacute;c sĩ sẽ g&acirc;y t&ecirc; v&ugrave;ng cấy gh&eacute;p cho n&ecirc;n trong thời gian cấy gh&eacute;p bạn sẽ kh&ocirc;ng cảm thấy đau hay kh&oacute; chịu nữa. Sau đ&oacute;, b&aacute;c sĩ sẽ b&oacute;c t&aacute;ch nướu, khoan lỗ tr&ecirc;n xương h&agrave;m để cắm trụ Implant v&agrave;o.</strong></p>
-<figure id="attachment_158" class="wp-caption aligncenter" style="text-align: center;"><img class="wp-image-158 size-medium" style="display: block; margin-left: auto; margin-right: auto;" src="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg" sizes="(max-width: 300px) 100vw, 300px" srcset="http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-300x171.jpg 300w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-768x438.jpg 768w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1-600x342.jpg 600w, http://nhakhoawecare.com/wp-content/uploads/2018/03/5-1.jpg 1000w" alt="" width="300" height="171" />
-<figcaption class="wp-caption-text">Thực hiện cấy gh&eacute;p Implant</figcaption>
-</figure>
-<ol start="4">
-<li>
-<h4><strong>Lấy dấu mẫu h&agrave;m v&agrave; thiết kế răng sứ:</strong></h4>
-</li>
-</ol>
-<p><strong>Bạn lo sợ rằng h&agrave;m răng của bạn sẽ bị trống sau khi cắm trụ Implant v&agrave;o? Kh&ocirc;ng,đừng lo, v&igrave; trước khi cắm trụ Implant v&agrave;o, họ đ&atilde; chuẩn bị răng tạm thời cho bạn, thường l&agrave; h&agrave;m th&aacute;o lắp. Sau một thời gian khi trụ Implant t&iacute;ch hợp trong xương h&agrave;m, b&aacute;c sĩ sẽ phục h&igrave;nh răng sứ l&ecirc;n tr&ecirc;n. Răng tạm sẽ gi&uacute;p bạn ăn nhai, đ&aacute;p ứng việc giao tiếp, sinh hoạt trong qu&aacute; tr&igrave;nh chờ trụ Implant t&iacute;ch hợp với xương h&agrave;m.</strong></p>
-<ol start="5">
-<li>
-<h4><strong>T&aacute;i kh&aacute;m sau khi cấy gh&eacute;p implant:</strong></h4>
-</li>
-</ol>
-<p><strong>Sau khi cấy gh&eacute;p Implant xong, khoảng một tuần- 10 ng&agrave;y sau bạn phải gặp b&aacute;c sĩ để kiểm tra c&aacute;c m&ocirc; nướu xung quanh xem c&oacute; l&agrave;nh lại chưa. B&aacute;c sĩ sẽ chụp phim để kiểm tra khả năng t&iacute;ch hợp Implant v&agrave;o xương như thế n&agrave;o.</strong></p>
-<ol start="6">
-<li>
-<h4><strong>Phục h&igrave;nh răng sứ tr&ecirc;n trụ implant</strong>:</h4>
-</li>
-</ol>
-<p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' => 'Nạo tủy công nghệ Mỹ - gây tê nhanh chóng',
-                'staff_id' => '1',
-                'create_date' => '2018-06-19 04:31:27',
-            ]);
-
+                'created_date' => '2018-06-19 04:31:27',
+            ]);          
             Type::create([
                 'id'=>'1',
                 'type'=>'Tin tức'
             ]);
+            Type::create([
+                'id'=>'2',
+                'type'=>'Sự kiện'
+            ]);
             NewsType::create([
                 'type_id'=>'1',
                 'news_id'=>'1'
-            ]);  NewsType::create([
+            ]);  
+            NewsType::create([
                 'type_id'=>'1',
                 'news_id'=>'2'
-            ]);  NewsType::create([
+            ]);  
+            NewsType::create([
                 'type_id'=>'1',
                 'news_id'=>'3'
-            ]);  NewsType::create([
+            ]);  
+            NewsType::create([
                 'type_id'=>'1',
                 'news_id'=>'4'
-            ]);  NewsType::create([
-                'type_id'=>'2',
+            ]);  
+            NewsType::create([
+                'type_id'=>'1',
                 'news_id'=>'5'
-            ]);  NewsType::create([
-                'type_id'=>'2',
+            ]);  
+            NewsType::create([
+                'type_id'=>'1',
                 'news_id'=>'6'
-            ]);  NewsType::create([
-                'type_id'=>'2',
+            ]);  
+            NewsType::create([
+                'type_id'=>'1',
                 'news_id'=>'7'
-            ]);  NewsType::create([
-                'type_id'=>'2',
+            ]);  
+            NewsType::create([
+                'type_id'=>'1',
                 'news_id'=>'8'
-            ]);  NewsType::create([
+            ]);
+            NewsType::create([
                 'type_id'=>'2',
                 'news_id'=>'1'
-            ]);  NewsType::create([
+            ]);  
+            NewsType::create([
                 'type_id'=>'2',
                 'news_id'=>'3'
             ]);
@@ -1820,32 +2327,6 @@ class AdminController extends Controller
 
             ]);
             //end
-
-
-            //Trám
-//            Step::create([
-//                'name' => 'Sửa soạn răng hỏng và xử lý bệnh lý',
-//                'description' => 'Sau khi được thăm khám, nha sỹ sẽ tiến hành sửa soạn răng hỏng cho bệnh nhân. Xác định ổ bệnh cần nạo vét và sử dụng dụng cụ đã được thanh trùng lấy đi chất bẩn.',
-//
-//            ]);
-//            Step::create([
-//                'name' => 'Hàn trám tạm thời',
-//                'description' => 'Trong quy trình trám răng bị sâu, nha sỹ trám miếng trám thời lên răng sâu sau khi đó hẹn bạn tái khám để kiểm tra xem ổ sâu đã được nạo vét hết chưa.',
-//
-//            ]);
-//            Step::create([
-//                'name' => 'Tái khám và tiến hành trám răng vĩnh viễn',
-//                'description' => 'Sau khoảng 1 tuần, nếu vị trí sâu răng không có biểu hiện đau nhức gì tức là khoang sâu đã sạch. Lúc này, nha sỹ sẽ bóc miếng trám tạm thời và dùng vật liệu composite lên răng bệnh trám vĩnh viễn.',
-//
-//            ]);
-//            Step::create([
-//                'name' => 'Hoàn thành quá trình điều trị',
-//                'description' => 'Bước sau cùng của quy trình trám răng sâu, bác sỹ sẽ tư vấn cho bệnh nhân sau khi thực hiện hàn trám về cách chăm sóc răng miệng và chế độ ăn uống để miếng trám được bền chặt và hạn chế sâu răng tái phát.',
-//
-//            ]);
-            //xxx
-
-
             //implant end + xquang
             Step::create([
                 'name' => 'Phẫu thuật đặt Implant (tiểu phẫu)',
@@ -1913,596 +2394,481 @@ class AdminController extends Controller
             TreatmentStep::create([
                 'treatment_id'=>'1',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'1',
                 'step_id' =>'4',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'1',
                 'step_id' =>'5',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'2',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'2',
                 'step_id' =>'6',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'2',
                 'step_id' =>'5',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'3',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'3',
                 'step_id' =>'5',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'3',
                 'step_id' =>'8',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'4',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'4',
                 'step_id' =>'4',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'4',
                 'step_id' =>'6',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'5',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'5',
                 'step_id' =>'9',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'6',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'7',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'6',
                 'step_id' =>'10',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'7',
                 'step_id' =>'10',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'6',
                 'step_id' =>'11',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'7',
                 'step_id' =>'11',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'12',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'13',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'14',
-                'description' =>'Chưa có',
             ]);TreatmentStep::create([
                 'treatment_id'=>'8',
                 'step_id' =>'15',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'9',
                 'step_id' =>'16',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'9',
                 'step_id' =>'17',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'10',
                 'step_id' =>'18',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'11',
                 'step_id' =>'19',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'12',
                 'step_id' =>'20',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'13',
                 'step_id' =>'20',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'14',
                 'step_id' =>'20',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'15',
                 'step_id' =>'21',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'16',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'16',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'16',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'16',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'2',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'17',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'2',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'18',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'2',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'19',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'2',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'3',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'22',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'24',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'20',
                 'step_id' =>'23',
-                'description' =>'Chưa có',
             ]);
 //            --------------
             TreatmentStep::create([
                 'treatment_id'=>'21',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'21',
                 'step_id' =>'25',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'21',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'22',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'22',
                 'step_id' =>'26',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'22',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'23',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'23',
                 'step_id' =>'27',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'23',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'24',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'24',
                 'step_id' =>'28',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'24',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'25',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'25',
                 'step_id' =>'29',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'25',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'26',
                 'step_id' =>'31',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'26',
                 'step_id' =>'30',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'26',
                 'step_id' =>'32',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'29',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'29',
                 'step_id' =>'37',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'29',
                 'step_id' =>'36',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'30',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'30',
                 'step_id' =>'38',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'30',
                 'step_id' =>'36',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'31',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'31',
                 'step_id' =>'39',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'31',
                 'step_id' =>'36',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'40',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'42',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'45',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'32',
                 'step_id' =>'46',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'40',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'41',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'45',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'33',
                 'step_id' =>'46',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'40',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'43',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'45',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'34',
                 'step_id' =>'46',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'35',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'35',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'35',
                 'step_id' =>'43',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'36',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'36',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'36',
                 'step_id' =>'44',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'37',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'37',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'37',
                 'step_id' =>'45',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'38',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'38',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'38',
                 'step_id' =>'46',
-                'description' =>'Chưa có',
             ]);
             //--------------
             TreatmentStep::create([
                 'treatment_id'=>'39',
                 'step_id' =>'1',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'39',
                 'step_id' =>'7',
-                'description' =>'Chưa có',
             ]);
             TreatmentStep::create([
                 'treatment_id'=>'39',
                 'step_id' =>'47',
-                'description' =>'Chưa có',
             ]);
 
             //end
@@ -2512,7 +2878,7 @@ class AdminController extends Controller
                 'end_date' => '2018-07-15 20:08:18',
                 'discount' => '20',
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'treatment_id' => 1,
             ]);
             Event::create([
@@ -2521,7 +2887,7 @@ class AdminController extends Controller
                 'end_date' => '2018-06-17 20:08:18',
                 'discount' => '30',
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'treatment_id' => 1,
             ]);
             Event::create([
@@ -2530,7 +2896,7 @@ class AdminController extends Controller
                 'end_date' => '2018-07-15 20:08:18',
                 'discount' => '20',
                 'staff_id' => 1,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'treatment_id' => 2,
             ]);
 
@@ -6285,6 +6651,209 @@ class AdminController extends Controller
             'name' => 'Huyện Ngọc Hiển',
             'city_id' => 96
         ]);
+        Medicine::create([
+            'name' => 'Paracetamol',
+            'use' =>'giảm đau',
+            'description'=> 'giảm đau'
+        ]);
+        Medicine::create([
+            'name' => 'Aspirin',
+            'use' =>'giảm đau',
+            'description'=> 'giảm đau'
+        ]);
+         Medicine::create([
+            'name' => 'Ibuprofen',
+            'use' =>'giảm đau',
+            'description'=> 'giảm đau'
+        ]);
+        Medicine::create([
+            'name' => 'Corticoid',
+            'use' =>'Chống viêm mạnh',
+            'description'=> 'Chống viêm mạnh'
+        ]);
+         Medicine::create([
+            'name' => 'Cimetidin',
+            'use' =>'thuốc giảm tiết dịch dạ dày',
+            'description'=> 'thuốc giảm tiết dịch dạ dày'
+        ]);
+          Medicine::create([
+            'name' => 'Omeprazol',
+            'use' =>'thuốc giảm tiết dịch dạ dày',
+            'description'=> 'thuốc giảm tiết dịch dạ dày'
+        ]);
+           Medicine::create([
+            'name' => 'Penicillin ',
+            'use' =>'Kháng sinh',
+            'description'=> 'Kháng sinh'
+        ]);
+            Medicine::create([
+            'name' => 'Phenoxymethylpenicillin',
+            'use' =>'Kháng sinh',
+            'description'=> 'Kháng sinh'
+        ]);
+        Medicine::create([
+            'name' => 'Phenoxymethylpenicillin',
+            'use' =>'Kháng sinh',
+            'description'=> 'Kháng sinh'
+        ]);
+        Medicine::create([
+            'name' => 'Cefixim',
+            'use' =>'Kháng sinh',
+            'description'=> 'Kháng sinh dòng cephalosporin '
+        ]);
+        Medicine::create([
+            'name' => 'Acyclovir',
+            'use' =>'Chống nhiễm nấm ở khoang miệng',
+            'description'=> 'Chống nhiễm nấm ở khoang miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Penciclovir',
+            'use' =>'Chống nhiễm nấm ở khoang miệng',
+            'description'=> 'Chống nhiễm nấm ở khoang miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Nước súc miệng Chlorhexidin 0,2% ',
+            'use' =>'Nước súc miệng',
+            'description'=> 'Nước súc miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Nước súc miệng Hydrogen peroxid 6%.',
+            'use' =>'Nước súc miệng',
+            'description'=> 'Nước súc miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Pilocarpin',
+            'use' =>'Thuốc chống khô miệng',
+            'description'=> ' tác dụng kích thích vào tuyến nước bọt gây tăng tiết, kích thích vào cơ trơn thành ống tuyến co bóp để đẩy nước bọt vào miệng'
+        ]);
+        Medicine::create([
+            'name' => 'Acmegel 100mg',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Aldezol-0.5g/100ml',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Dophargyl',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Dorogyne',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> 'Merynal'
+        ]);
+        Medicine::create([
+            'name' => 'Menystin',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Mediginal',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Flagyl 250mg',
+            'use' =>'Thuốc điều trị nha chu',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Cebemyxine',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Emla',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Emla 5%',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Lidocain 2%',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Lidocain 100mg/5ml',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Izac',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        Medicine::create([
+            'name' => 'Framykoin 5g',
+            'use' =>'Thuốc điều trị viêm ổ răng',
+            'description'=> ''
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Máu loãng',
+             'description'=> 'Máu loãng'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Tiểu đường',
+             'description'=> 'Tiểu đường'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Thần kinh',
+             'description'=> 'Thần kinh'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Đột quy',
+             'description'=> 'Đột quy'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Huyết áp thấp',
+             'description'=> 'Huyết áp thấp'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Huyết áp cao',
+             'description'=> 'Huyết áp cao'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Ung thư',
+             'description'=> 'Ung thư'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Hen suyễn',
+             'description'=> 'Hen suyễn'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh thận',
+             'description'=> 'Bệnh thận'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh tâm thần',
+             'description'=> 'Bệnh tâm thần'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Dị tật bẩm sinh',
+             'description'=> 'Dị tật bẩm sinh'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh truyền nhiễm qua máu',
+             'description'=> 'Bệnh truyền nhiễm qua máu'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'AIDS',
+             'description'=> 'AIDS'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'AIDS',
+             'description'=> 'AIDS'
+        ]);
+
+
     }
 
     public function initClientToken(){

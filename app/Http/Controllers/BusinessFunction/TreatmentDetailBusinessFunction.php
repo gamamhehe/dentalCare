@@ -17,7 +17,7 @@ use App\Model\TreatmentImage;
 use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-
+use DateTime;
 trait TreatmentDetailBusinessFunction
 {
 
@@ -42,7 +42,7 @@ trait TreatmentDetailBusinessFunction
                 'treatment_history_id' => $idTreatmentHistory,
                 'staff_id' => $dentist_id,
                 'note' => $note,
-                'create_date' => Carbon::now()
+                'created_date' => Carbon::now()
             ])->id;
             DB::commit();
             return $idTreatmentDetail;
@@ -83,9 +83,10 @@ trait TreatmentDetailBusinessFunction
             }
             Utilities::logDebug("tmDetail save");
             if ($images != null) {
+                $num = 0;
                 foreach ($images as $image) {
                     $timestmp = (new \DateTime())->getTimestamp();
-                    $path = Utilities::saveFile($image, AppConst::TREATMENT_HISTORY_PATH, $timestmp);
+                    $path = Utilities::saveFile($image, AppConst::TREATMENT_HISTORY_PATH, $timestmp.($num++));
                     $treatmentImage = new TreatmentImage();
                     $treatmentImage->treatment_detail_id = $tmDetailId;
                     $treatmentImage->image_link = $path;

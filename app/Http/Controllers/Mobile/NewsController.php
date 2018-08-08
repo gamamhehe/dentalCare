@@ -62,7 +62,7 @@ use NewsBussinessFunction;
             $News->title = $input['title'];
             // $News->staff_id = $staffId;
             $News->staff_id = 1;
-            $News->create_date=Carbon::now();
+            $News->created_date=Carbon::now();
             $News->save();
             DB::commit();
             return redirect('/list-News')->withSuccess("Bài viết đã được tạo");

@@ -44,6 +44,7 @@ trait TreatmentHistoryBusinessFunction
                 $treatmentMedicines = $treatmentHistoryDetail->hasMedicinesQuantity()->get();
                 foreach ($treatmentMedicines as $treatmentMedicine) {
                     $treatmentMedicine->medicine = $treatmentMedicine->belongsToMedicine()->first();
+
                 }
                 $treatmentDetailSteps = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
                 foreach ($treatmentDetailSteps as $treatmentDetailStep) {
@@ -155,7 +156,7 @@ trait TreatmentHistoryBusinessFunction
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;
             if ($payment) {
-                $this->updatePayment($total_price, $payment->id);
+                $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
             } else {
                 $idPayment = $this->createPayment($total_price, $phone);
@@ -164,7 +165,7 @@ trait TreatmentHistoryBusinessFunction
                 'treatment_id' => $idTreatment,
                 'patient_id' => $idPatient,
                 'description' => $description,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'tooth_number' => $toothNumber,
                 'price' => $price,
                 'total_price' => $total_price,
@@ -221,6 +222,43 @@ trait TreatmentHistoryBusinessFunction
     public function getTreatmentHistoryById($id)
     {
         return (TreatmentHistory::where('id', $id)->first());
+    }
+
+
+    public function getTreatmentReportByDentist($dentistId, $monthInNumber, $yearInNumber)
+    {
+        $data = DB::select(DB::raw("
+                      SELECT count(*) as num, subquery.treatment_id, subquery.treatment_name  FROM (
+                      SELECT  td.staff_id AS staff_id,  tm.id AS treatment_id , tm.name AS treatment_name FROM tbl_treatment_histories as th
+                      JOIN tbl_treatment_details as td ON th.id = td.treatment_history_id
+                      JOIN tbl_treatments as tm ON tm.id = th.treatment_id
+                      WHERE MONTH(th.created_date) = :month  AND YEAR(th.created_date) = :year AND td.staff_id = :staff_id 
+                    ) AS subquery 
+                        GROUP BY subquery.treatment_id, subquery.treatment_name"),
+            array(
+                'month' => $monthInNumber,
+                'year' => $yearInNumber,
+                'staff_id' => $dentistId
+            ));
+        return $data;
+//            ->select('',);
+
+    } public function getTreatmentReportByReceptionist( $monthInNumber, $yearInNumber)
+    {
+        $data = DB::select(DB::raw("
+                      SELECT count(*) as num, subquery.treatment_id, subquery.treatment_name  FROM (
+                      SELECT  tm.id AS treatment_id , tm.name AS treatment_name FROM tbl_treatment_histories as th
+                      JOIN tbl_treatments as tm ON tm.id = th.treatment_id
+                      WHERE MONTH(th.created_date) = :month  AND YEAR(th.created_date) = :year  
+                    ) AS subquery 
+                        GROUP BY subquery.treatment_id, subquery.treatment_name"),
+            array(
+                'month' => $monthInNumber,
+                'year' => $yearInNumber
+            ));
+        return $data;
+//            ->select('',);
+
     }
 
     public function updateTreatmentHistoryDone($id)

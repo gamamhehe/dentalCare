@@ -11,6 +11,7 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\AnamnesisPatient;
 use App\Model\Patient;
+use App\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +27,7 @@ trait PatientBusinessFunction
         return null;
     }
 
+
     public function getPatientByPhone($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
@@ -34,6 +36,12 @@ trait PatientBusinessFunction
                 $district = $item->belongsToDistrict()->first();
                 $item->district = $district;
                 $item->city = $district == null ? null : $district->belongsToCity()->first();
+                $patientAnamnesis = $item->hasAnamnesisPatient()->get();
+                $anamnesis = [];
+                foreach ($patientAnamnesis as $ans){
+                    $anamnesis[]= $ans->belongsToAnamnesisCatalog()->first();
+                }
+                $item->anamnesis  = $anamnesis;
             }
             return $patients;
         }
@@ -44,9 +52,17 @@ trait PatientBusinessFunction
     {
         DB::beginTransaction();
         try {
-            $patient->save();
+            $PatientId = Patient::create([
+                'name' => $patient->name,
+                'address' => $patient->address,
+                'phone' => $patient->phone,
+                'avatar' => $patient->avatar,
+                'date_of_birth' => $patient->date_of_birth,
+                'gender' => $patient->gender,
+                'district_id' => $patient->district_id,
+            ])->id;
             DB::commit();
-            return true;
+            return $PatientId;
         } catch (\Exception $e) {
             DB::rollback();
             return false;
@@ -69,6 +85,10 @@ trait PatientBusinessFunction
         DB::beginTransaction();
         try {
             $patient->save();
+            $patientAnamnesis = $patient->hasAnamnesisPatient()->get();
+            foreach ($patientAnamnesis as $anamnesi) {
+                $anamnesi->delete();
+            }
             if ($listAnamnesisId != null) {
                 foreach ($listAnamnesisId as $id) {
                     $anamnesis = new AnamnesisPatient();

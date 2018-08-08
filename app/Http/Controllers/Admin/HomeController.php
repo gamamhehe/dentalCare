@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ReceiveAppointment;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\NewsBussinessFunction;
+use App\Model\Appointment;
 use App\Model\User;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\EventBusinessFunction;
@@ -11,11 +13,14 @@ use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Carbon\Carbon;
+use DateTime;
 use App\Staff;
 use App\TreatmentCategory;
 use Config;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use Illuminate\Support\Facades\Session;
+use Pusher\Pusher;
 use Yajra\Datatables\Facades\Datatables;
 class HomeController extends Controller
 {
@@ -29,7 +34,8 @@ class HomeController extends Controller
     	 return view('WebUser.HomePage');
     }
     public function DoctorInformation(Request $request){
-    	$doctors = DB::table('tbl_staffs')->get();
+    	$doctors = $this->getListDentist();
+
     	return view("WebUser.DoctorInformation",['doctors'=>$doctors]);
     }
      public function BangGiaDichVu(){
@@ -44,9 +50,7 @@ class HomeController extends Controller
         echo "string";
         exit();
     }
-    // public function Profile(Request $request){
-    //     return view('WebUser.User.Profile');
-    // }
+  
     public function getNewsWebUser($id){
 
        $News = $this->getNews($id);
@@ -77,16 +81,32 @@ class HomeController extends Controller
         $value = $request->session()->get('currentPatient');
         $id = $value->id;
         $list = $this->getListAnamnesisByPatient($id);
-        
-        return view("WebUser.User.Profile",['patient'=>$value,'anamnesis'=>$list]);
+        $listAppointment = $value->hasAppointment()->get();
+        $listReal =[];
+        $today = Carbon::now();
+        foreach ($listAppointment as $Appointment) {
+            $Appointment->detail = $Appointment->belongsToAppointment()->first();
+
+            $timeFormat  =$Appointment->detail->estimated_time;
+            $dateFormat  =$Appointment->detail->start_time;
+            $newDatetime = new DateTime($dateFormat);
+            $result = $this->addTimeToDate($newDatetime,$timeFormat);
+             $Appointment->detail->dateComming = $result->format('Y-m-d');
+            $Appointment->detail->timeComming = $result->format('H:i');
+            if( $Appointment->detail->start_time > $today){
+                    $listReal[] = $Appointment;
+            }
+        }
+        return view("WebUser.User.Profile",['patient'=>$value,'anamnesis'=>$list,'listAppointment'=>$listReal]);
+    }
+    private function addTimeToDate($date, $timeStr)
+    {
+        $intervalTime = new \DateInterval('P0000-00-00T' . $timeStr);
+        $date->add($intervalTime);
+        return $date;
     }
     public function aboutUs(Request $request){
         return view("WebUser.User.AboutUs");
-    }
-
-
-
-    public function testFunction(Request $request){
     }
 
     public function registerPost(Request $request){
@@ -103,7 +123,24 @@ class HomeController extends Controller
         $request->session()->remove('listPatient');
         return redirect()->route('homepage');
     }
+
     public function profile(Request $request){
         return view('admin.Staff.profile');
-    } 
+    }
+
+    public function testFunction(){
+        $appointment = Appointment::where('id', '>', '1')->first();
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+        $pusher = new Pusher(
+            'e3c057cd172dfd888756',
+            '993a258c11b7d6fde229',
+            '562929',
+            $options
+        );
+
+        $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
+    }
 }

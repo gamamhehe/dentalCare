@@ -18,4 +18,7 @@ class Payment extends Model
     public function hasPaymentDetail(){
         return $this->hasMany('App\Model\PaymentDetail', 'payment_id', 'id');
     }
+    public function hasPaymentUpdateDetail(){
+        return $this->hasMany('App\Model\PaymentUpdateDetail', 'payment_id', 'id');
+    }
 }

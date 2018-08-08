@@ -21,7 +21,7 @@ class TestController
     public function getDentist(Request $request)
     {
         $date = $request->query('date');
-        $listAvailableDentist = $this->getAvailableDentist($date);
+        $listAvailableDentist = $this->getAvailableDentistAtDate($date);
         return response()->json($listAvailableDentist);
     }
 

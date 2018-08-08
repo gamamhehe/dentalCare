@@ -28,13 +28,28 @@
                             class="fa fa-list-alt"></i><span>Bệnh nhân</span></a>
             </li>
             <li class="treeview">
-                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Lịch hẹn</span><span
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Lịch hẹn </span>
+                    @if(Session::get('currentAppointmentComming') != 0)
+                        <span class="pull-right-container">
+              <span class="label label-primary pull-right" style="margin-right: 20px"
+                    id="notiNumber"> {{ Session::get('currentAppointmentComming') }}</span>
+            </span>
+                    @endif
+                    @if(Session::get('currentAppointmentComming') == 0)
+                        <span class="pull-right-container">
+              <span class="label label-primary pull-right" style="margin-right: 20px;visibility: hidden"
+                    id="notiNumber"> {{ Session::get('currentAppointmentComming') }}</span>
+            </span>
+                        @endif
+                    <span
                             class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.AppointmentPatient.index')}}">Tạo Lịch Hẹn</a></li>
                     <li><a href="{{ route('admin.listAppointment.dentist')}}">Danh sách Lịch hẹn</a></li>
+                    <li><a href="{{ route('admin.listAppointmentInDate.dentist')}}">Danh sách Lịch hẹn trong ngày</a></li>
                 </ul>
             </li>
+            
             <li>
                 <a href="{{ route('admin.absent')}}"><i class="fa fa-list-alt"></i><span>Xin nghỉ</span></a>
             </li>
@@ -88,6 +103,7 @@
 
                 </ul>
             </li>
+              
             @if(Session::get('roleAdmin') == 2 or Session::get('roleAdmin') == 1)
                 <li class="treeview">
                     <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Tủ Thuốc </span><span
@@ -108,6 +124,7 @@
                     </ul>
                 </li>
             @endif
+            
         </ul>
     </section>
 </aside>

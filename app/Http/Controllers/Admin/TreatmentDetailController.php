@@ -18,18 +18,19 @@ class TreatmentDetailController extends Controller
   use TreatmentBusinessFunction;
   	public function createTreatmentDetailController(Request $request){
   		 // $idTreatmentHistory=$request['idTreatmentHistory'];
-
+ 
       //details
   		$idTreatmentHistory=$request->idTreatmentHistory;
   		$description =$request['description'];
   		$dentist = $request->session()->get('currentAdmin');
   		$staffId= $dentist->belongToStaff()->first()->id;
+
   		$TreatmentDetailId =$this->createTreatmentDetail($idTreatmentHistory,$description,$staffId);
   		if($TreatmentDetailId){
 	  			$message = 'success';
+           
 	  		}else{
 	  			 $message = 'error';
-
 	  			 return redirect()->back()->withInput()->with('message', $message);
 	  		}
   		//done treatDetail
@@ -49,6 +50,7 @@ class TreatmentDetailController extends Controller
 
   		}
       //done image
+
   		//medicine
 
       $medicine =$request['medicine'];
@@ -126,7 +128,6 @@ class TreatmentDetailController extends Controller
           $message = 'success';
         }else{
            $message = 'error';
-
            return redirect()->back()->withInput()->with('message', $message);
         }
       // end detail

@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <!-- <link rel="stylesheet" href="/assets/admin/bower_components/font-awesome/css/font-awesome.min.css"> -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <!-- Ionicons -->
     <link rel="stylesheet" href="/assets/admin/bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
@@ -35,7 +36,8 @@
     <link rel="stylesheet" href="/assets/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
     <link rel="stylesheet" href="/assets/admin/app_css_custom.css">
     <link rel="stylesheet" href="/assets/admin/input_file/fileinput.css">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/assets/user/datatable/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
@@ -51,6 +53,7 @@
     @yield('css')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+<input type="hidden" value="{{Session::get('currentAdmin')->belongToStaff()->first()->id}}" id="staff_id">
 <div class="wrapper">
     @include('admin.blocks.header')
     @include('admin.blocks.sidebar')
@@ -96,6 +99,58 @@
 <script src="/assets/admin/dist/js/demo.js"></script>
 <script src="{{URL::to('assets/admin/tinymce/js/tinymce/tinymce.min.js')}}"></script>
 <script src="{{URL::to('assets/admin/main.js')}}"></script>
+
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+
+    var pusher = new Pusher('e3c057cd172dfd888756', {
+        cluster: 'ap1',
+        encrypted: true
+    });
+
+    var channel = pusher.subscribe('receivePatient');
+    channel.bind('ReceivePatient', function (dataPush) {
+        var staff_id = $('#staff_id').val();
+        if (dataPush.staff_id == staff_id) {
+            // viet code trong nay
+            var num = $('#notiNumber').text();
+            if (dataPush.pushStatus == 0) {
+                $('#notiNumber').html(Number(num) + 1);
+                document.getElementById("notiNumber").style.visibility = "visible";
+                $.ajax({
+                    url: '/admin/change-session', //this is your uri
+                    type: 'GET', //this is your method
+
+                    dataType: 'json',
+                    success: function (data) {
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            if (dataPush.pushStatus == 1) {
+                $('#notiNumber').html(Number(num) - 1);
+                var num2 = $('#notiNumber').text();
+                if (Number(num2) == 0) {
+                    document.getElementById("notiNumber").style.visibility = "hidden";
+                }
+                $.ajax({
+                    url: '/admin/change-session', //this is your uri
+                    type: 'GET', //this is your method
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = "/admin/appointment-detail/" + dataPush.id;
+                    },
+                    error: function (data) {
+                        window.location.href = "/admin/appointment-detail/" + dataPush.id;
+                    }
+                });
+            }
+        }
+    });
+</script>
 @yield('js')
 </body>
 </html>

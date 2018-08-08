@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="login">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,15 +28,15 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login">
+ 
 <div class="login-box">
     <div class="login-logo">
-        <a href="/"><b>Dental Care</b></a>
+        <a href="/"><b>Dental Gold</b></a>
     </div>
     <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
-
+    <div class="login-box-body" style="background: rgba(230, 230, 230,0.7);border-radius: 25px;" >
+        
         <form action="{!! url('/loginAdmin') !!}" method="Post">
             {{ csrf_field() }}
             <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
@@ -50,7 +50,7 @@
                 @endif
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                <input type="password" class="form-control" placeholder="Password" name="password" required style="background-color: #fff;">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 @if ($errors->has('password'))
                     <span class="help-block">
@@ -65,22 +65,18 @@
             @endif
             <div class="row">
                 <!-- /.col -->
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                <div class="col-xs-12"><button type="submit" class="btn btn-primary btn-block">Sign In</button></div>
                 <!-- /.col -->
             </div>
         </form>
-
-
         <!-- /.social-auth-links -->
-
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
-
+        <a href="#">Tôi không nhớ mật khẩu</a><br>
+        <!-- <a href="register.html" class="text-center">Register a new membership</a> -->
     </div>
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
-
+ <link rel="stylesheet" href="/assets/user/css/mycss.css">
 <!-- jQuery 3 -->
 <script src="/assets/admin/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

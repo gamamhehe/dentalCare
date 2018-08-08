@@ -9,12 +9,14 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 
+use App\Helpers\AppConst;
 use App\Model\Appointment;
 use App\Model\PatientOfAppointment;
 use App\Model\Staff;
 use App\Model\UserHasRole;
 use App\User;
 use DateTime;
+use DeepCopy\f002\A;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
@@ -46,6 +48,18 @@ trait AppointmentBussinessFunction
         return $appointment;
     }
 
+    public function attachFieldAppointment($appointment)
+    {
+        $appointment->dentist = $appointment->belongsToStaff()->first();
+        $patientAppointment = $appointment->hasPatientOfAppointment()->first();;
+        if ($patientAppointment != null) {
+            $appointment->patient = $patientAppointment->belongsToPatient()->first();
+        } else {
+            $appointment->patient = null;
+        }
+        return $appointment;
+    }
+
     public function getAppointmentsByStartTime($startTime)
     {
         $appointments = Appointment::whereDate('start_time', $startTime)->get();
@@ -56,59 +70,78 @@ trait AppointmentBussinessFunction
     /**
      * @param $phone
      * @param $date
-     * @return List Appointment
+     * @param null $status
+     * @return Appointment[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection|null
      */
-    public function getAppointmentByDate($phone, $date)
+    public function getAppointmentByDate($phone, $date, $status = null)
     {
-        $result = Appointment::where('phone', $phone)
-            ->whereDate('start_time', $date)->get();
+        $result = null;
+        if ($status == null) {
+            $result = Appointment::where('phone', $phone)
+                ->whereDate('start_time', $date)->get();
+        } else {
+            $result = Appointment::where('phone', $phone)
+                ->whereDate('start_time', $date)
+                ->whereDate('status', $status)
+                ->get();
+        }
         return $result;
     }
 
-    public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name)
+    /**
+     * @param $bookingDate format: Y-m-d (ex: 2018-12-20)
+     * @param $phone : 11 digits
+     * @param $note
+     * @param $dentistId
+     * @param $patientId
+     * @param $estimatedTimeStr
+     * @param $name
+     * @return Appointment|mixed|null
+     * @throws \Exception
+     */
+    public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name, $allowOvertime = false)
     {
         DB::beginTransaction();
         try {
+            $this->logBugAppointment("                                 ");
+            $this->logBugAppointment("Begin createAppointment");
             $suitableDentistId = -1;
             $defaultEstimatedTime = "00:30";
             $defaultStartOfDay = "07:00:00";
             $defaultStartAfternoon = ' 13:00:00';
-            $listDentist = $this->getAvailableDentistAtDate((new \DateTime())->format('Y-m-d'));
-            $NUM_OF_DENTIST = count($listDentist);
-            $this->logDebug('NUM_DENTIST' . $NUM_OF_DENTIST);
-            $bookingDateNewFormat = (new \DateTime($bookingDate))->format("Y-m-d");
-            $listAppointment = $this->getAppointmentsByStartTime($bookingDateNewFormat);
-            $dentistObj = $this->getStaffById($dentistId);
-            $this->logDebug(($dentistObj == null) ?
-                ("DENTIST OBJ ID" . $dentistId . ' NULL') :
-                "DENTIST OBJ NOT NULL");
-            $predictAppointmentDate = new \DateTime();
+            $maxDateInStr = "2035-12-12";
             $bookingDateObj = new \DateTime($bookingDate);
-//            $appointmentArray = $listAppointment->toArray();
-            $appointmentArray = $this->getListTopAppointment($listDentist, $bookingDate);
+            $bookingDateDBFormat = $bookingDateObj->format("Y-m-d");
+            $listDentist = $this->getAvailableDentistAtDate($bookingDateDBFormat);
+            $NUM_OF_DENTIST = count($listDentist);
+            $this->logBugAppointment('NUM_DENTIST' . $NUM_OF_DENTIST);
+            $listAppointment = $this->getAppointmentsByStartTime($bookingDateDBFormat);
+            $dentistObj = $this->getStaffById($dentistId);
+            $predictAppointmentDate = new \DateTime();
+            $appointmentArray = $this->getListTopAppointment($listDentist, $bookingDateDBFormat);
             //sort descendent
             usort($appointmentArray, array($this, "sortByTimeStamp"));
             //'if statement' return the $predictAppointmentDate and $suitableDentistId for the code below it
             if (count($appointmentArray) < $NUM_OF_DENTIST) {
-                // kieu j cung co loi
                 if ($dentistId == null || $dentistId == 0) {
-                    $this->logDebug("INTO COUNT< NUMMOF DENTIST ___dentistId = null");
+                    $this->logBugAppointment("INTO COUNT< NUMMOF DENTIST ___dentistId = null");
                     $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, $defaultStartOfDay);
-                    $listFreeDentists = $this->getFreeDentistsAtDate($listDentist, $bookingDateNewFormat);
+                    $listFreeDentists = $this->getFreeDentistsAtDate($listDentist, $bookingDateDBFormat);
                     $randomDentist = $this->getRandomDentist($listFreeDentists);
                     $suitableDentistId = $randomDentist->id;
+                    $this->logBugAppointment('id of free dentist: ' .$randomDentist);
                 } else if ($dentistId != null && $dentistObj == null) {//cannot find dentist
-                    $this->logDebug("INTO COUNT < NUMMOF DENTIST ___dentistId != null but cannot find dentist object in databse");
+                    $this->logBugAppointment("Num apppointment < num dentist cannot find dentist obj in database");
                     return null;
                 } else if ($dentistId != null && $dentistObj != null
-                    && $this->isDentistAbsent($dentistObj, $bookingDateNewFormat)) {
-                    $this->logDebug("INTO COUNT < NUMMOF DENTIST ___dentistId != null, Dentist absent");
+                    && $this->isDentistAbsent($dentistObj, $bookingDateDBFormat)) {
+                    $this->logBugAppointment("Num apppointment < num dentist ___dentistId != null, Dentist absent");
                     return null;
                 } else {///neu nguoi dat la bac si
-                    $this->logDebug("INTO COUNT< NUMMOF DENTIST ___dentistId != null");
+                    $this->logBugAppointment("Num apppointment < num dentist nguoi dat la bac si");
                     $suitableDentistId = $dentistId;
                     //lay ra lich cuoi cung cua bac si, vi lich nay chi co 1 hang nen trich tu list ra luon
-                    $dentistAppointment = $this->getLastestAppointment($bookingDate, $dentistId);
+                    $dentistAppointment = $this->getLastestAppointment($bookingDateDBFormat, $dentistId);
                     if ($dentistAppointment == null) {
                         $predictAppointmentDate = $this->addTimeToDate($bookingDateObj, "07:00:00");
                     } else {
@@ -116,18 +149,18 @@ trait AppointmentBussinessFunction
                     }
                 }
             } else {
-                if ($dentistId == null || $dentistObj == null ||  $dentistId == 0) {
-                    $this->logDebug("INTO COUNT >= NUMMOF DENTIST ___ Dentistt id == null");
+                if ($dentistId == null || $dentistObj == null || $dentistId == 0) {
+                    $this->logBugAppointment("INTO COUNT >= NUMMOF DENTIST ___ Dentistt id == null");
                     $equallyAppointment = [];
                     $equallyAppointment[] = $appointmentArray[0];
                     $this->arrangeEquallyAppointment($equallyAppointment, $appointmentArray, 1);
                     if (count($equallyAppointment) > 1) {
-                        $this->logDebug("INTO COUNT EQUALLY > 1");
+                        $this->logBugAppointment("INTO COUNT EQUALLY > 1");
                         $appointment = $this->getRandomAppointment($equallyAppointment);
                         $predictAppointmentDate = $this->getNextStartTime($appointment);
                         $suitableDentistId = $appointment['staff_id'];
                     } else {
-                        $maxdate = new \DateTime("2035-12-12");
+                        $maxdate = new \DateTime($maxDateInStr);
                         $minTimeStamp = $maxdate->getTimestamp() + $maxdate->getTimestamp();
                         $minAppointment = array();
                         foreach ($appointmentArray as $item) {
@@ -138,7 +171,7 @@ trait AppointmentBussinessFunction
                             }
                         }
                         $minAppId = $minAppointment->id;
-                        $this->logDebug("INTO COUNT EQUALLY == 1" . "Min ApptID: " . $minAppId . " MinApp startTime: " . $minAppointment['start_time']);
+                        $this->logBugAppointment("INTO COUNT EQUALLY == 1" . "Min ApptID: " . $minAppId . " MinApp startTime: " . $minAppointment['start_time']);
 
                         // $predictAppointmentDate= the finish datetime of the previous patient;
                         $minAppointmentStartDateTime = new \DateTime($minAppointment['start_time']);
@@ -147,16 +180,16 @@ trait AppointmentBussinessFunction
                         $suitableDentistId = $minAppointment['staff_id'];
                     }
                 } else if ($dentistId != null && $dentistObj == null) {
-                    $this->logDebug("INTO COUNT < NUMMOF DENTIST ___dentistId != null but cannot find dentist object in databse");
+                    $this->logBugAppointment("Num apppointment < num dentist ___dentistId != null but cannot find dentist object in databse");
                     return null;
                 } else if ($dentistId != null && $dentistObj != null
-                    && $this->isDentistAbsent($dentistObj, $bookingDateNewFormat)) {
-                    $this->logDebug("INTO COUNT < NUMMOF DENTIST ___dentistId != null, Dentist absent");
+                    && $this->isDentistAbsent($dentistObj, $bookingDateDBFormat)) {
+                    $this->logBugAppointment("Num apppointment < num dentist ___dentistId != null, Dentist absent");
                     return null;
                 } else {
-                    $this->logDebug("INTO COUNT >= NUMMOF DENTIST ___ Dentistt id != null");
+                    $this->logBugAppointment("INTO COUNT >= NUMMOF DENTIST ___ Dentistt id != null");
                     $suitableDentistId = $dentistId;
-                    $dentistAppointment = $this->getLastestAppointment($bookingDate, $dentistId);
+                    $dentistAppointment = $this->getLastestAppointment($bookingDateDBFormat, $dentistId);
                     $predictAppointmentDate = $this->getNextStartTime($dentistAppointment);
                 }
                 //if the predict time is in lunch break, add it to the afternoon start at 13h
@@ -169,23 +202,22 @@ trait AppointmentBussinessFunction
             $tmpPredictTime = clone $predictAppointmentDate;
             $currentDateTime = new DateTime();
             //process when patient book appointment at the same day, and
-            $diffDate = ($currentDateTime->diff($predictAppointmentDate));
+//            $diffDate = ($currentDateTime->diff($predictAppointmentDate));
             if (($currentDateTime->getTimestamp() - $predictAppointmentDate->getTimeStamp()) > 0) {
                 $predictAppointmentDate = $this->addTimeToDate($currentDateTime, '00:10:00');
-                $arrayFreeDentist = $this->getFreeDentistsFromTime($listDentist, $currentDateTime, $currentDateTime);
+                $arrayFreeDentist = $this->getFreeDentistsAtDate($listDentist, $bookingDateDBFormat);
                 $randomDentist = $this->getRandomDentist($arrayFreeDentist);
                 $suitableDentistId = $randomDentist['id'];
-                $this->logDebug("ZZZ");
+                $this->logBugAppointment("Predict appointment time before currentime (book appointment at currenday)");
             }
             $endAppointmentTime = $this->addTimeToDate($tmpPredictTime, $estimatedTimeObj->format("H:i:s"));
             if ($this->isInLunchBreak($endAppointmentTime) || $this->isInLunchBreak($predictAppointmentDate)) {
-                $this->logDebug("IS in lunch");
-                $predictAppointmentDate = new \DateTime($bookingDateNewFormat . $defaultStartAfternoon);
-            } else if ($this->isEndOfTheDay($predictAppointmentDate)) {
-                $this->logDebug("isEndOfTheDay");
+                $this->logBugAppointment("IS in lunch");
+                $predictAppointmentDate = new \DateTime($bookingDateDBFormat . $defaultStartAfternoon);
+            } else if ($this->isEndOfTheDay($predictAppointmentDate) && !$allowOvertime) {
+                $this->logBugAppointment("isEndOfTheDay");
                 throw new \Exception ('isEndOfTheDay');
             }
-
             $numericalOrder = $listAppointment->count() + 1;
             $appointment = new Appointment();
             $appointment->phone = $phone;
@@ -202,8 +234,9 @@ trait AppointmentBussinessFunction
                 $patientAppointment->patient_id = $patientId;
                 $patientAppointment->save();
             }
-            $this->logDebug("Id new appointment: " . ($appointment->id));
             DB::commit();
+            $this->logBugAppointment("New appointment id" . ($appointment->id));
+            $this->logBugAppointment("End createAppointment");
             return $appointment;
         } catch (Exception $exception) {
             $exception->getTrace();
@@ -239,6 +272,9 @@ trait AppointmentBussinessFunction
             ->whereMonth('start_time', $monthInNumber)
             ->whereYear('start_time', $yearInNumber)
             ->get();
+        foreach ($appointments as $appointment) {
+            $appointment->patient = $appointment->hasPatientOfAppointment()->first();
+        }
         return $appointments;
     }
 
@@ -268,9 +304,9 @@ trait AppointmentBussinessFunction
         }
     }
 
-    private function logDebug($message)
+    private function logBugAppointment($message)
     {
-        Log::info("LOG_DEBUG_Appointment: " . $message);
+        Log::info($message);
     }
 
     public function isUpCommingAppointment($currentDateObj, $appointmentDateObj)
@@ -308,6 +344,16 @@ trait AppointmentBussinessFunction
         return false;
     }
 
+    public function updateAppointment($appointment)
+    {
+        try {
+            $appointment->save();
+            return true;
+        } catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
+    }
+
     /**
      * @param $time
      * @return array dentist id int[]
@@ -336,12 +382,12 @@ trait AppointmentBussinessFunction
         }
     }
 
-    private function getFreeDentistsAtDate($listAvailableDentists, $date)
+    private function getFreeDentistsAtDate($listAvailableDentists, $dateStr)
     {
         //get all dentist that works at that day
 //        $listAvailableDentists = $this->getAvailableDentistAtDate($date);
         $listFreeDentists = [];
-        $appointments = $this->getAppointmentsByStartTime($date);
+        $appointments = $this->getAppointmentsByStartTime($dateStr);
         //find dentist that doesn't treat for patient at the first of the day
         foreach ($listAvailableDentists as $availableDentist) {
             if (!($this->isDentistBusy($appointments, $availableDentist->id))) {
@@ -398,20 +444,22 @@ trait AppointmentBussinessFunction
         return $availableDentist;
     }
 
-    public function isDentistAbsent($dentist, $dateStr)
+    /**
+     * @param $dentist
+     * @param $dateStr Ex: 2018-10-20
+     * @return bool
+     */
+    public function isDentistAbsent($dentistObj, $dateStr)
     {
-        $dentistRequestAbsent = $dentist->hasAbsent()->get();
+        $dentistRequestAbsent = $dentistObj->hasAbsent()
+            ->whereDate('start_date', $dateStr)
+            ->first();
         if ($dentistRequestAbsent != null) {
-            if ($dentistRequestAbsent->count() == 0) {
+            $absentRecord = $dentistRequestAbsent->hasAbsent()->first();
+            if ($absentRecord != null && $absentRecord->is_approved == 1) {
+                return true;
+            } else {
                 return false;
-            }
-            foreach ($dentistRequestAbsent as $requestAbsent) {
-                $approveAbsentRecord = $requestAbsent->hasAbsent()->first();
-                if (strtotime($requestAbsent->start_date) <= strtotime($dateStr)
-                    && strtotime($requestAbsent->end_date) >= strtotime($dateStr)
-                    && $approveAbsentRecord != null) {
-                    return true;
-                }
             }
         }
         return false;
@@ -493,11 +541,13 @@ trait AppointmentBussinessFunction
 
     public function checkPatientIsExamination($idPatient)
     {
-        $listAppointmentComing = Appointment::where('status', 1)->get();
+        $listAppointmentComing = Appointment::where('status', 2)->get();
         $listPatientIsExamination = [];
         foreach ($listAppointmentComing as $appointment) {
             $patientOfAppointment = PatientOfAppointment::where('appointment_id', $appointment->id)->first();
-            $listPatientIsExamination[] = $patientOfAppointment->patient_id;
+            if ($patientOfAppointment != null) {
+                $listPatientIsExamination[] = $patientOfAppointment->patient_id;
+            }
         }
         if (in_array($idPatient, $listPatientIsExamination)) {
             return true;
@@ -554,14 +604,33 @@ trait AppointmentBussinessFunction
     public function viewAppointmentForDentist($dentist_id)
     {
         return Appointment::where('staff_id', $dentist_id)
-            ->where('start_time', '>=', Carbon::now()->format('Y-m-d'))
+            ->get();
+    }
+
+    public function viewAppointmentInDateForDentist($dentist_id)
+    {
+//
+        $dateString = Carbon::now()->format('Y-m-d');
+        $newDate = date('Y-m-d', strtotime('+1 day', strtotime($dateString)));
+        return Appointment::where('staff_id', $dentist_id)
+            ->where('start_time', '>', Carbon::now()->format('Y-m-d'))
+            ->where('start_time', '<', $newDate)
             ->get();
     }
 
     public
     function viewAppointmentForReception()
     {
-        return Appointment::where('start_time', '>=', Carbon::now()->format('Y-m-d'))
+        return Appointment::all();
+    }
+
+    public
+    function viewAppointmentInDateForReception()
+    {
+        $dateString = Carbon::now()->format('Y-m-d');
+        $newDate = date('Y-m-d', strtotime('+1 day', strtotime($dateString)));
+        return Appointment::where('start_time', '>', Carbon::now()->format('Y-m-d'))
+            ->where('start_time', '<', $newDate)
             ->get();
     }
 
@@ -569,7 +638,7 @@ trait AppointmentBussinessFunction
     function getCurrentFreeDentist()
     {
         $listAvailableDentist = $this->getAvailableDentistAtDate(Carbon::now());
-        $listCurrentBusyAppointment = Appointment::where('status', 1)->get();
+        $listCurrentBusyAppointment = Appointment::where('status', 2)->get();
         $listCurrentBusyDentist = [];
         foreach ($listCurrentBusyAppointment as $appointment) {
             $listCurrentBusyDentist[] = $appointment->staff_id;
@@ -583,6 +652,7 @@ trait AppointmentBussinessFunction
         return $listCurrentFreeDentist;
     }
 
+
     public function checkAppointmentComing($appointmentId)
     {
         $appointment = Appointment::where('id', $appointmentId)->first();
@@ -591,5 +661,39 @@ trait AppointmentBussinessFunction
             return $patient_id;
         }
         return false;
+    }
+
+    public function getCurrentAppointmentComming($staff_id)
+    {
+        return count(Appointment::where('staff_id', $staff_id)->where('status', 1)->get());
+    }
+
+    public function checkAppointmentExistPatient($appointmentId)
+    {
+        $appointment = Appointment::where('id', $appointmentId)->first();
+        $existPatient = PatientOfAppointment::where('appointment_id', $appointmentId)->first();
+        if ($existPatient) {
+            return ($existPatient->patient_id);
+        } else {
+            return 0;
+        }
+
+    }
+
+    public function checkDoneAppointment($appointmentId)
+    {
+        $appointment = Appointment::where('id', $appointmentId)->first();
+        if ($appointment->status == 2) {
+            $appointment->status = 3;
+            $appointment->save();
+            return 1;
+        }
+        return 0;
+    }
+
+    public function startAppointment($id){
+        $appointment = Appointment::where('id', $id)->first();
+        $appointment->status = 2;
+        $appointment->save();
     }
 }

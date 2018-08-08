@@ -8,7 +8,9 @@ class Staff extends Model
 {
     //
     protected $table = 'tbl_staffs';
-    protected $fillable = ['name','degree','address', 'district_id', 'date_of_birth', 'phone', 'gender', 'avatar'];
+
+    protected $fillable = ['name','degree','address', 'district_id', 'date_of_birth', 'phone', 'gender', 'avatar','email'];
+
     public function belongsToUser(){
         return $this->belongsTo('App\Model\User','phone', 'phone');
     }
@@ -33,4 +35,7 @@ class Staff extends Model
     public function hasAppointment(){
         return $this->hasMany('App\Model\Appointment', 'staff_id', 'id');
     }
+    public function belongsToDistrict(){
+    return $this->belongsTo('App\Model\District', 'district_id', 'id');
+}
 }

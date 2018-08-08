@@ -80,15 +80,6 @@
         {{--</script>--}}
         {{--</section>--}}
 
-
-        <form id="payment-form" role="form" action="{!! route('paypal') !!}" method="POST">
-            {{ csrf_field() }}
-            <input type="hidden" name="amount" value="200000">
-            <input type="hidden" name="payment_id" value="1">
-            <img src="/photos/shares/paypal_button.png" alt="" class="img-responsive img-fluid">
-            <button type="submit">Paypal Payment</button>
-        </form>
-
     </div>
 @endsection
 @section('js')

@@ -13,11 +13,13 @@ use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
+use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
 use App\Model\Patient;
+use App\Model\RequestAbsent;
 use App\Model\Staff;
 use App\Model\User;
 use App\Model\UserHasRole;
@@ -34,6 +36,7 @@ class StaffController extends BaseController
     use UserBusinessFunction;
     use PatientBusinessFunction;
     use AppointmentBussinessFunction;
+    use RequestAbsentBusinessFunction;
 
     public function loginStaff(Request $request)
     {
@@ -52,9 +55,11 @@ class StaffController extends BaseController
             }
             $result = $this->checkLogin($phone, $password);
             if ($result != null) {
-                $result->noti_token = $notifToken;
+                $this->updateUserFirebaseToken($phone, $notifToken);
                 $this->updateUser($result);//update notification token
                 $staffProfile = $result->belongToStaff()->first();
+                $staffProfile->district = $staffProfile->belongsToDistrict()->first();
+                $staffProfile->role_id = $result->hasUserHasRole()->first()->role_id;
                 $clientSecret = env(AppConst::PASSWORD_CLIENT_SECRET, false);
                 $clientId = env(AppConst::PASSWORD_CLIENT_ID, false);
                 $request->request->add([
@@ -72,6 +77,7 @@ class StaffController extends BaseController
                     $staffProfile->refresh_token = $tokenResponseBody->refresh_token;
                     $staffProfile->token_type = $tokenResponseBody->token_type;
                     $staffProfile->expires_in = $tokenResponseBody->expires_in;
+                    $staffProfile->token_created_date = $result->tokens()->first()->created_at;
                 }
                 return response()->json($staffProfile, 200);
             } else {
@@ -143,8 +149,8 @@ class StaffController extends BaseController
             }
             $name = $request->input('name');
             $gender = $request->input('gender');
-            $birthday = $request->input('birthday');
-            $districtId = $request->input('districtId');
+            $birthday = $request->input('date_of_birth');
+            $districtId = $request->input('district_id');
             $address = $request->input('address');
             $listAnamnesisId = $request->input('anamnesis[]');
             $patient = new Patient();
@@ -163,8 +169,10 @@ class StaffController extends BaseController
             $result = null;
             if ($newAccount) {
                 $result = $this->createUserWithAnamnesis($user, $patient, $userHasRole, $listAnamnesisId);
+                $this->logBugAppointment("CREATE NEW USE");
             } else {
                 $result = $this->updatePatientWithAnamnesis($patient, $listAnamnesisId);
+                $this->logBugAppointment("CREATE NEW PATIENT");
             }
             if ($result) {
                 return response()->json($patient, 200);
@@ -178,6 +186,26 @@ class StaffController extends BaseController
                 "Không thể đăng kí thông tin người dùng", $ex);
             return response()->json($error, 400);
         }
+    }
+
+//allow staff to book in the end of the day.
+    public function bookAppointment2(Request $request)
+    {
+        //get role of staff
+//        $userObj = $dentistObj->belongsToUser()->first();
+//        $userObj->hasUserHasRole()->where('role_id', AppConst::ROLE_DENTIST)
+//            ->orWhere('role_id', AppConst::ROLE_RECEPTIONIST)->first();
+
+
+    }
+
+    //query chart
+    public function getChartTreatmentData(Request $request)
+    {
+        $staffId = $request->input('staff_id');
+        $month = $request->input('month');
+        $year = $request->input('year');
+
     }
 
     public function createUser(Request $request)
@@ -266,7 +294,6 @@ class StaffController extends BaseController
                     "Result is null, No exception");
                 return response()->json($error, 400);
             }
-
         } catch (ApiException $e) {
             $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
             return response()->json($error, 400);
@@ -306,5 +333,203 @@ class StaffController extends BaseController
             return response()->json($error, 500);
         }
 
+    }
+
+    public function getCurrentFreeDentists(Request $request)
+    {
+        $date = $request->input('date');
+        try {
+            $availableDentists = $this->getAvailableDentistAtDate($date);
+            $freeDentists = $this->getCurrentFreeDentist();
+            foreach ($availableDentists as $dentist) {
+                if (in_array($dentist->id, $freeDentists)) {
+                    $dentist->status = 'Đang rãnh';
+                } else {
+                    $dentist->status = 'Đang bận';
+                }
+            }
+            return response()->json($availableDentists, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+
+    }
+
+    public function getListRequestAbsent(Request $request)
+    {
+        try {
+            $staffId = $request->input('staff_id');
+            $listRequestAbsents = $this->getListStaffRequestAbsent($staffId);
+            return response()->json($listRequestAbsents, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
+    public function getListRequestAbsentByTime(Request $request)
+    {
+        try {
+            $staffId = $request->input('staff_id');
+            $month = $request->input('month');
+            $year = $request->input('year');
+
+            $listRequestAbsents = $this->getListStaffRequestAbsentByTime($staffId, $month, $year);
+            return response()->json($listRequestAbsents, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
+    public function updateStaffInfo(Request $request)
+    {
+        try {
+            $staffId = $request->input('id');
+            $name = $request->input('name');
+            $gender = $request->input('gender');
+            $email = $request->input('email');
+            $birthday = $request->input('date_of_birth');
+            $address = $request->input('address');
+            $degree = $request->input('degree');
+            $districtId = $request->input('district_id');
+            $staff = $this->getStaffById($staffId);
+            if ($staff != null) {
+                $staff->id = $staffId;
+                $staff->name = $name;
+                $staff->email = $email;
+                $staff->gender = $gender;
+                $staff->date_of_birth = $birthday;
+                $staff->address = $address;
+                $staff->degree = $degree;
+                $staff->district_id = $districtId;
+                $result = $this->updateStaffProfile($staff);
+                if ($result == true) {
+                    $successResponse = new \stdClass();
+                    $successResponse->status = "OK";
+                    $successResponse->code = 200;
+                    $successResponse->message = "Sửa tài khoản thành công";
+                    $successResponse->data = $staff;
+                    return response()->json($successResponse, 200);
+                } else {
+                    $error = $this->getErrorObj("Không thể sửa đổi thông tin người dùng", "No exception");
+                    return response()->json($error, 400);
+                }
+            } else {
+                $error = $this->getErrorObj("Không thể tìm thấy id bệnh nhân", "No exception");
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 400);
+        }
+    }
+
+    public function changePassword(Request $request)
+    {
+        $phone = $request->input('phone');
+        $newPassword = $request->input('password');
+        $currentPassword = $request->input('current_password');
+        $user = $this->checkLogin($phone, $currentPassword);
+        $errorResponse = new \stdClass();
+        if ($user != null) {
+            if ($this->changeUserPassword($phone, $newPassword)) {
+                $successResponse = new \stdClass();
+                $successResponse->status = "OK";
+                $successResponse->code = 200;
+                $successResponse->message = "Sửa mật khẩu thành công";
+                $successResponse->data = null;
+                return response()->json($successResponse, 200);
+            } else {
+                $errorResponse->error = "Không thể sửa mật khẩu";
+                $errorResponse->exception = null;
+                return response()->json($errorResponse, 400);
+            }
+        } else {
+            $errorResponse->error = "Mật khẩu hiện tại không hợp lệ";
+            $errorResponse->exception = null;
+            return response()->json($errorResponse, 400);
+        }
+    }
+
+    public function getPatientAppointmentByDate(Request $request)
+    {
+        $dateStr = $request->input('date');
+        $dentistId = $request->input('staff_id');
+        try {
+            $appointments = $this->getDentistApptAtDate($dentistId, $dateStr);
+            foreach ($appointments as $appointment) {
+                $patientAppointment = $appointment->hasPatientOfAppointment()->first();
+                if ($patientAppointment != null) {
+                    $appointment->patient = $patientAppointment->belongsToPatient()->first();
+                } else {
+                    $appointment->patient = null;
+                }
+            }
+            return response()->json($appointments);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
+    public function changeAvatar(Request $request)
+    {
+        try {
+            $id = $request->input('id');
+            $image = $request->file('image');
+            $tmpStaff = $this->getStaffById($id);
+            if ($tmpStaff != null) {
+                $timestamp = (new DateTime())->getTimestamp();
+                $urlImg = Utilities::saveFile($image, AppConst::AVATAR_PATH, $timestamp);
+                $tmpStaff->avatar = $urlImg;
+                $this->updateStaffProfile($tmpStaff);
+                $response = new \stdClass();
+                $response->status = "OK";
+                $response->message = "Chỉnh sửa avatar thành côngs";
+                $response->data = $tmpStaff->avatar;
+                return response()->json($response, 200);
+            } else {
+                $error = $this->getErrorObj("Không thể tìm thấy bệnh nhân ", "Nothing");
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 400);
+        }
+    }
+
+    public function requestAbsent(Request $request)
+    {
+        try {
+            $staffId = $request->input('staff_id');
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $reason = $request->input('reason');
+            $requestAbsentObj = new RequestAbsent();
+            $requestAbsentObj->staff_id = $staffId;
+            $requestAbsentObj->reason = $reason;
+            $requestAbsentObj->start_date = $startDate;
+            $requestAbsentObj->end_date = $endDate;
+            $this->createRequestAbsent($requestAbsentObj);
+            $absentObj = $this->getAbsentObject($requestAbsentObj);
+            if ($absentObj != null) {
+                $requestAbsentObj->staff_approve = $absentObj->belongsToStaff() == null ?
+                    null : $absentObj->belongsToStaff()->first();
+                $requestAbsentObj->message_from_staff = $absentObj->message_from_staff;
+                $requestAbsentObj->created_time = $absentObj->created_time;
+                $requestAbsentObj->is_approved = $absentObj->is_approved == null ? 0 : $absentObj->is_approved;
+            } else {
+                $requestAbsentObj->staff_approve = null;
+                $requestAbsentObj->message_from_staff = null;
+                $requestAbsentObj->created_time = null;
+                $requestAbsentObj->is_approved = 0;
+            }
+            return response()->json($requestAbsentObj, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
     }
 }

@@ -19,7 +19,7 @@ class CreateTblNewsTable extends Migration
             $table->longText('content');
             $table->string('title');
             $table->integer('staff_id');
-            $table->dateTime('create_date');
+            $table->dateTime('created_date');
             $table->timestamps();
         });
     }

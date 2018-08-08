@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\AnamnesisPatient;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Role;
 use App\Model\User;
@@ -127,10 +128,13 @@ trait UserBusinessFunction
     public function getUserByPhone($phone)
     {
         $user = User::where('phone', $phone)->first();
-        if ($user != null) {
-            return $user;
-        }
-        return null;
+        return $user;
+    }
+
+    public function getUserFirebaseToken($phone)
+    {
+        $token = FirebaseToken::where('phone', $phone)->first();
+        return $token;
     }
 
     public function checkExistUser($phone)
@@ -168,6 +172,21 @@ trait UserBusinessFunction
         }
     }
 
+    public function updateUserFirebaseToken($phone, $token)
+    {
+        try {
+            $userToken = FirebaseToken::where('phone', $phone)->first();
+            if ($userToken == null) {
+                $userToken = new FirebaseToken();
+            }
+            $userToken->noti_token = $token;
+            $userToken->phone = $phone;
+            $userToken->save();
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getPrevious());
+        }
+    }
+
     public function getUserPhones($keyword)
     {
         $phones = User::where('phone', 'like', '%' . $keyword . '%')
@@ -175,6 +194,18 @@ trait UserBusinessFunction
             ->toArray();
         return $phones;
     }
+
+
+    public function getUserApptByDate($phone, $dateStr, $orderBy = 'asc')
+    {
+        $user = User::where('phone', $phone)->first();
+        $appointments = $user->hasAppointment()
+            ->whereDate('start_time', $dateStr)
+            ->orderBy('numerical_order', $orderBy)
+            ->get();
+        return $appointments;
+    }
+
 
     public function deleteRole($id)
     {

@@ -11,6 +11,8 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Model\Payment;
 use App\Model\PaymentDetail;
+use App\Model\PaymentUpdateDetail;
+use App\Model\Treatment;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -77,20 +79,26 @@ trait PaymentBusinessFunction
         return null;
     }
 
-    public function updatePayment($price, $idPayment)
+    public function updatePayment($price, $idPayment, $idTreatment)
     {
         DB::beginTransaction();
         try {
             $payment = Payment::find($idPayment);
+            $nameTreatment = Treatment::where('id', $idTreatment)->first()->name;
+            $updatePrice = (int)$payment->total_price + (int)$price;
+            $updateInformation = 'Tổng tiền của chi trả thay đổi từ ' . $payment->total_price . ' VND sang '
+                . $updatePrice . ' VND để thanh toán cho liệu trình ' . $nameTreatment;
+            PaymentUpdateDetail::create([
+                'payment_id' => $idPayment,
+                'update_information' => $updateInformation,
+            ]);
             $payment->total_price = $payment->total_price + $price;
-            if ($payment->total_price == 0) {
-                $payment->is_done = true;
-            }
             $payment->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             return false;
         }
     }
@@ -116,7 +124,8 @@ trait PaymentBusinessFunction
         try {
             $payment = Payment::find($idPayment);
             $payment->paid = $payment->paid + $price;
-            if ($payment->total_price == $payment->prepaid) {
+
+            if ($payment->total_price == $payment->paid) {
                 $payment->is_done = true;
             }
             $payment->save();
@@ -142,15 +151,40 @@ trait PaymentBusinessFunction
         }
     }
 
-    public function searchPayment($phone){
+    public function searchPayment($phone)
+    {
         return Payment::where('phone', $phone)->get();
     }
 
-    public function getDetailListPaymentById($idPayment){
+    public function getDetailListPaymentById($idPayment)
+    {
         $result = PaymentDetail::where('payment_id', $idPayment)->get();
-        foreach ($result as $detail){
+        foreach ($result as $detail) {
             $detail->staff = $detail->beLongsToStaff()->first()->name;
         }
         return $result;
+    }
+
+    public function getReport($monthInNumber, $yearInNumber)
+    {
+        $data = DB::select(DB::raw("SELECT sum(tmh.total_price) as total_price, staff.id as staff_id ,staff.name as staff_name FROM
+(
+    select  min(td_created_date) as td_created_date , treatment_history_id FROM
+    (
+SELECT th.id as treatment_history_id, td.created_date as td_created_date FROM tbl_treatment_histories as th
+JOIN tbl_treatment_details  as td ON th.id = td.treatment_history_id
+        WHERE MONTH(th.created_date) = :month AND YEAR(th.created_date) = :year
+    ) as suq
+    GROUP BY suq.treatment_history_id
+) as submin
+   JOIN tbl_treatment_details as tmd ON tmd.created_date = submin.td_created_date
+   JOIN tbl_staffs as staff ON staff.id= tmd.staff_id
+   JOIN tbl_treatment_histories as tmh ON tmh.id= submin.treatment_history_id
+   GROUP BY staff.id,staff.name"),
+            array(
+                'month' => $monthInNumber,
+                'year' => $yearInNumber
+            ));
+        return $data;
     }
 }

@@ -5,10 +5,41 @@
     <section class="content" >
         <div class="container"  >
             <div class="row " style="text-align: center; margin-right: 4em">
-                <label><h1>Danh sách các Sự kiện</h1></label>
+                <label><h1>Danh sách Đơn xin nghỉ</h1></label>
             </div>
+              <div class="row layout" style=" margin-right: 4em;"  >
+                    <div class="form-group row add">
+                        <div class="col-xs-3">
+                            <select name="Date" id="Date" style="height: 2.5em;width: 100%">
+                                <option value="" disabled selected hidden>Lọc theo tháng</option> 
+                                @foreach($dates as $date)
+                                <option value="{{$date->value}}">{{$date->string}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                         <div class="col-xs-3">
+                            <select name="Staff" id="Staff" style="height: 2.5em;width: 100%">
+                                <option value="" disabled selected hidden>Lọc theo Nhân viên</option> 
+                                @foreach($staffs as $staff)
+                                <option value="{{$staff->id}}">{{$staff->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                         <div class="col-xs-3">
+                            <select name="StatusApp" id="StatusApp" style="height: 2.5em;width: 100%">
+                             
+                                <option value="1">Đã duyệt</option>
+                                 <option value="0">Chưa duyệt</option>
+                            </select>
+                        </div>
+                          <div class="col-xs-1">
+                           <button class="btn btn-info" style="width: 100%;" id="search" > Tìm </button>
+                        </div>
+                       
+                    </div>
+                </div>
             <div class="row layout" style=" margin-right: 4em"  >
-                <table id="dup-table" class="table myTable table-bordered">
+                <table id="dup-table" class="table table-striped Mytable-hover">
                     <thead>
                     <tr style="background-color: #eee;">
                         <td class="col-sm-1">Mã</td>
@@ -80,6 +111,7 @@
 </div>
 @endsection 
 @section('js')
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
@@ -98,6 +130,29 @@
         $('#staff').val($(this).data('name'));
         $('#start_date').val($(this).data('start'));
         $('#end_date').val($(this).data('end'));
+    });
+     $(document).on('click','#search', function() {
+        $.ajax({
+          type: 'GET',
+          url: '/admin/searchAbsent',
+          data:{
+             "_token": "{{ csrf_token() }}",
+            'date': $('#Date').val(),
+            'staff':$('#Staff').val(),
+            'statusApp':$('#StatusApp').val(),
+             
+          },
+          success: function(data){
+            // if ((data==1)) {
+            //     swal("Đặt lịch nghỉ thành công", "Kiểm tra và xóa những lịch hẹn trùng", "success");
+            //        $('#dup-table').DataTable().ajax.reload();
+            //         $('#create').modal('hide');
+               
+            // } else {
+            //        swal(data, "", "error");
+            // }
+          },
+            });
     });
      $(document).on('click','#addApprove', function() {
         
