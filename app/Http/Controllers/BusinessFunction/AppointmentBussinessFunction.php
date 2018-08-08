@@ -73,13 +73,13 @@ trait AppointmentBussinessFunction
      * @param null $status
      * @return Appointment[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection|null
      */
-    public function getAppointmentByDate($phone, $dateStr, $status = null)
+    public function getUserAppointmentByDate($phone, $dateStr, $status = null)
     {
         $result = null;
         if ($status == null) {
             $result = Appointment::where('phone', $phone)
                 ->whereDate('start_time', $dateStr)
-                ->where('status' ,'!=', 4)
+                ->where('status', '!=', 4)
                 ->orderBy('start_time', 'asc')
                 ->get();
         } else {
@@ -89,6 +89,15 @@ trait AppointmentBussinessFunction
                 ->orderBy('start_time', 'asc')
                 ->get();
         }
+        return $result;
+    }
+
+    public function getAppointmentByDate($dateStr)
+    {
+        $result = Appointment::where('status', '!=', 4)
+            ->whereDate('start_time', $dateStr)
+            ->orderBy('start_time', 'asc')
+            ->get();
         return $result;
     }
 
@@ -133,7 +142,7 @@ trait AppointmentBussinessFunction
                     $listFreeDentists = $this->getFreeDentistsAtDate($listDentist, $bookingDateDBFormat);
                     $randomDentist = $this->getRandomDentist($listFreeDentists);
                     $suitableDentistId = $randomDentist->id;
-                    $this->logBugAppointment('id of free dentist: ' .$randomDentist);
+                    $this->logBugAppointment('id of free dentist: ' . $randomDentist);
                 } else if ($dentistId != null && $dentistObj == null) {//cannot find dentist
                     $this->logBugAppointment("Num apppointment < num dentist cannot find dentist obj in database");
                     return null;
@@ -695,7 +704,8 @@ trait AppointmentBussinessFunction
         return 0;
     }
 
-    public function startAppointment($id){
+    public function startAppointment($id)
+    {
         $appointment = Appointment::where('id', $id)->first();
         $appointment->status = 2;
         $appointment->save();
