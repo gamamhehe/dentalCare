@@ -19,7 +19,7 @@ class CreateTblTreatmentHistoriesTable extends Migration
             $table->integer('patient_id');
             $table->integer('tooth_number');
             $table->string('description');
-            $table->dateTime('create_date');
+            $table->dateTime('created_date');
             $table->dateTime('finish_date')->nullable();
             $table->bigInteger('price');
             $table->bigInteger('total_price');

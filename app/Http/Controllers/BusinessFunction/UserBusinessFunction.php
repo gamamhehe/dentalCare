@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
+use App\Model\AnamnesisPatient;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Role;
 use App\Model\User;
@@ -41,14 +43,16 @@ trait UserBusinessFunction
         }
     }
 
-    public function createUser($user)
+    public function createUser($user,$userHasRole)
     {
         DB::beginTransaction();
         try {
             $user->save();
+            $userHasRole->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
+            Log::info("ERROR LUU USER".$e->getMessage());
             DB::rollback();
             return false;
         }
@@ -68,7 +72,33 @@ trait UserBusinessFunction
             DB::rollback();
             throw new Exception($e->getMessage());
         }
-    } public function updateUser($user)
+
+    }
+
+    public function createUserWithAnamnesis($user, $patient, $userHasRole, $listAnamnesisId)
+    {
+        DB::beginTransaction();
+        try {
+            $user->save();
+            $patient->save();
+            $userHasRole->save();
+            if ($listAnamnesisId != null) {
+                foreach ($listAnamnesisId as $id) {
+                    $anamnesis = new AnamnesisPatient();
+                    $anamnesis->anamnesis_id = $id;
+                    $anamnesis->patient_id = $patient->id;
+                    $anamnesis->save();
+                }
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function updateUser($user)
     {
         DB::beginTransaction();
         try {
@@ -100,10 +130,13 @@ trait UserBusinessFunction
     public function getUserByPhone($phone)
     {
         $user = User::where('phone', $phone)->first();
-        if ($user != null) {
-            return $user;
-        }
-        return null;
+        return $user;
+    }
+
+    public function getUserFirebaseToken($phone)
+    {
+        $token = FirebaseToken::where('phone', $phone)->first();
+        return $token;
     }
 
     public function checkExistUser($phone)
@@ -141,13 +174,40 @@ trait UserBusinessFunction
         }
     }
 
+    public function updateUserFirebaseToken($phone, $token)
+    {
+        try {
+            $userToken = FirebaseToken::where('phone', $phone)->first();
+            if ($userToken == null) {
+                $userToken = new FirebaseToken();
+            }
+            $userToken->noti_token = $token;
+            $userToken->phone = $phone;
+            $userToken->save();
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getPrevious());
+        }
+    }
+
     public function getUserPhones($keyword)
     {
-        $phones = User::where('phone', 'like', '%'.$keyword.'%')
+        $phones = User::where('phone', 'like', '%' . $keyword . '%')
             ->pluck('phone')
             ->toArray();
         return $phones;
     }
+
+
+    public function getUserApptByDate($phone, $dateStr, $orderBy = 'asc')
+    {
+        $user = User::where('phone', $phone)->first();
+        $appointments = $user->hasAppointment()
+            ->whereDate('start_time', $dateStr)
+            ->orderBy('numerical_order', $orderBy)
+            ->get();
+        return $appointments;
+    }
+
 
     public function deleteRole($id)
     {
@@ -162,15 +222,30 @@ trait UserBusinessFunction
         }
     }
 
+    public function isRoleStaff($phone)
+    {
+        $staff = User::where('phone', $phone)->first();
+        if ($staff == null) {
+            return false;
+        }
+        $hasRoles = $staff->hasUserHasRole()->get();
+        foreach ($hasRoles as $role) {
+            if ($role->role_id == 4) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-    public function editAvatar($image, $id)
+
+    public function editAvatar($image, $profileId, $forWho = "user")
     {
         DB::beginTransaction();
         try {
-            $patient = Patient::where('id', $id)->first();
+            $patient = Patient::where('id', $profileId)->first();
             $avatarFolder = '/assets/images/avatar/';
             $path = public_path($avatarFolder);
-            $filename = 'user_avatar_' . $id . '.' . $image->getClientOriginalExtension();
+            $filename = $forWho . '_avatar_' . $profileId . '.' . $image->getClientOriginalExtension();
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }

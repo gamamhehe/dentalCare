@@ -23,7 +23,9 @@ class CreateTblStaffsTable extends Migration
             $table->date('date_of_birth');
             $table->string('phone');
             $table->string('gender');
-            $table->string('avatar')->nullable();
+            $table->string('email')->nullable();
+            $table->string('avatar')
+                ->default('http://150.95.104.237/assets/images/avatar/default_avatar.jpg');
             $table->timestamps();
         });
     }

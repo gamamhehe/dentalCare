@@ -10,9 +10,12 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Helpers\AppConst;
+use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Jobs\SendSmsJob;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\User;
 use App\Model\UserHasRole;
@@ -58,12 +61,11 @@ class UserController extends BaseController
                 $patient->gender = $gender;
                 $patient->district_id = $districtId;
                 $patient->name = $name;
-                $patient->avatar = "";
                 $patient->address = $address;
                 ////HASH
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
-                $userHasRole->role_id = 4;
+                $userHasRole->role_id = AppConst::ROLE_PATIENT;
                 $userHasRole->start_time = Carbon::now();
                 $this->createUserWithRole($user, $patient, $userHasRole);
 
@@ -94,9 +96,9 @@ class UserController extends BaseController
             $notifToken = $request->input('noti_token');
             $result = $this->checkLogin($phone, $password);
             if ($result != null) {
-                $result->noti_token = $notifToken;
+                $this->updateUserFirebaseToken($phone, $notifToken);
                 $this->updateUser($result);
-                $patients = $this->getPatient($phone);
+                $patients = $this->getPatientByPhone($phone);
                 $userResponse = new \stdClass();
                 $userResponse->phone = $phone;
                 $userResponse->noti_token = $notifToken;
@@ -118,6 +120,7 @@ class UserController extends BaseController
                     $userResponse->refresh_token = $tokenResponseBody->refresh_token;
                     $userResponse->token_type = $tokenResponseBody->token_type;
                     $userResponse->expires_in = $tokenResponseBody->expires_in;
+                    $userResponse->token_created_date = $result->tokens()->first()->created_date;
                 }
                 return response()->json($userResponse, 200);
             } else {
@@ -144,13 +147,19 @@ class UserController extends BaseController
 
     public function logout(Request $request)
     {
+        $phone = $request->input("phone");
+        $fbToken = FirebaseToken::where('phone', $phone)->first();
+        if ($fbToken != null) {
+            $fbToken->noti_token = "null";
+            $fbToken->save();
+        }
         if (!Auth::guard('api')->check()) {
             $error = $this->getErrorObj(AppConst::MSG_LOGOUT_ERROR, null);
             return response()->json($error, 404);
         }
+        $user = Auth::user();
+        $this->updateUserFirebaseToken($user->phone, "null");
         $request->user('api')->token()->revoke();
-        Auth::guard()->logout();
-
 //        Session::flush();
 //        Session::regenerate();
         $successResponse = new \stdClass();
@@ -204,7 +213,7 @@ class UserController extends BaseController
 
 
 //get function to change password quickly
-    public function resetpassword($phone, $password)
+    public function resetpasswordTest($phone, $password)
     {
 //        $phone = $request->get('phone');
 //        $password = $request->get('password');
@@ -218,6 +227,27 @@ class UserController extends BaseController
             return response()->json("Update Phone: " . $phone . " and password: " . $password . " Successful!");
         } else {
             return response()->json("Không tìm thấy số điện thoại " . $phone);
+        }
+    }
+
+    public function resetPassword($phone)
+    {
+        try {
+            $user = User::where('phone', $phone)->first();
+            if ($user != null) {
+                $password = Utilities::generateRandomString("0123456789abcdefghijklmnopqrstuvwxyz");
+                $user->password = Hash::make($password);
+                $this->dispatch(new SendSmsJob($phone, "Mat khau moi cua ban la " . $password));
+                $this->updateUser($user);
+                $successResponse = $this->getSuccessObj(200, "OK", "Đổi mật khẩu thành công", "No data");
+                return response()->json($successResponse);
+            } else {
+                $error = $this->getErrorObj("Không tìm thấy tài khoản này ", "No exception");
+            return response()->json($error, 400);
+        }
+        }catch (\Exception $ex){
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
         }
     }
 
@@ -297,23 +327,15 @@ class UserController extends BaseController
 
     public function updateNotifToken(Request $request)
     {
-        $token = $request->input('noti_token');
-        $phone = $request->input('phone');
-        $user = $this->getUserByPhone($phone);
-        if ($user != null) {
-            $user->noti_token = $token;
-            $result = $this->updateUser($user);
-            if ($result) {
-                return response()->json("Change firebase notification token successful", 200);
-
-            } else {
-                return response()->json("change firebase notification token error", 400);
-            }
-        } else {
-            $error = new \stdClass();
-            $error->error = "Không tìm thấy số điện thoại " . $phone;
-            $error->exception = "nothing";
-            return response()->json($error, 400);
+        try {
+            $token = $request->input('noti_token');
+            $phone = $request->input('phone');
+            $this->updateUserFirebaseToken($phone, $token);
+            $successResponse = $this->getSuccessObj(500, "OK", "Change notification token success", "Null data");
+            return response()->json($successResponse, 200);
+        }catch (\Exception $ex){
+            $errorResponse = $this->getErrorObj("Error when update firebase token", $ex);
+            return response()->json($errorResponse, 500);
         }
     }
 

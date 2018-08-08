@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
+use App\Helpers\AppConst;
+use App\Helpers\Utilities;
 use App\Model\Patient;
 use App\Model\Treatment;
 use App\Model\TreatmentDetail;
@@ -18,14 +20,15 @@ use App\Model\TreatmentImage;
 use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait TreatmentHistoryBusinessFunction
 {
-   use PaymentBusinessFunction;
-   use EventBusinessFunction;
+    use PaymentBusinessFunction;
+    use EventBusinessFunction;
+
     public function getTreatmentHistory($id)
     {
-        $listResult = [];
         $patient = Patient::where('id', $id)->first();
         if ($patient == null) {
             return [];
@@ -41,6 +44,7 @@ trait TreatmentHistoryBusinessFunction
                 $treatmentMedicines = $treatmentHistoryDetail->hasMedicinesQuantity()->get();
                 foreach ($treatmentMedicines as $treatmentMedicine) {
                     $treatmentMedicine->medicine = $treatmentMedicine->belongsToMedicine()->first();
+
                 }
                 $treatmentDetailSteps = $treatmentHistoryDetail->hasTreatmentDetailStep()->get();
                 foreach ($treatmentDetailSteps as $treatmentDetailStep) {
@@ -51,7 +55,14 @@ trait TreatmentHistoryBusinessFunction
                 $treatmentHistoryDetail->treatment_detail_steps = $treatmentDetailSteps;
             }
             $treatmentHistory->details = $treatmentHistoryDetailList;
-            $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
+            $treatment = $treatmentHistory->belongsToTreatment()->first();
+            if ($treatment != null) {
+                $treatment->treatment_steps = $treatment->hasTreatmentStep()->get();
+                foreach ($treatment->treatment_steps as $step) {
+                    $step->name = $step->belongsToStep()->first()->name;
+                }
+            }
+            $treatmentHistory->treatment = $treatment;
             $treatmentHistory->patient = $patient;
             $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
@@ -62,7 +73,7 @@ trait TreatmentHistoryBusinessFunction
     public function getTreatmentHistoryByPatientId($id)
     {
         $patient = Patient::where('id', $id)->first();
-        
+
         if ($patient != null) {
             $treatmentHistories = $patient->hasTreatmentHistory()->get();
             return $treatmentHistories;
@@ -76,18 +87,62 @@ trait TreatmentHistoryBusinessFunction
         return $treatmentHistories;
     }
 
-    public function saveTreatmentHistory($treatmentHistory)
+    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines, $images)
     {
 
         DB::beginTransaction();
         try {
-            $treatmentHistory->save();
+            $tmHistoryId = $this->createTreatmentProcess(
+                $treatmentHistory->treatment_id,
+                $treatmentHistory->patient_id,
+                $treatmentHistory->tooth_number,
+                $treatmentHistory->price,
+                $treatmentHistory->description);
+
+            Utilities::logDebug("tmHistoryId save id: " . $tmHistoryId);
+            $tmDetail = new TreatmentDetail();
+            $tmDetail->treatment_history_id = $tmHistoryId;
+            $tmDetail->staff_id = $treatmentHistory->staff_id;
+            $tmDetail->note = $detailNote;
+            $tmDetail->created_date = Carbon::now();
+            $tmDetail->save();
+            Utilities::logDebug("tmDetail save");
+            $tmDetailId = $tmDetail->id;
+            if ($detailStepIds != null) {
+                foreach ($detailStepIds as $stepId) {
+                    $tmDetailSteps = new TreatmentDetailStep();
+                    $tmDetailSteps->treatment_detail_id = $tmDetailId;
+                    $tmDetailSteps->step_id = $stepId;
+                    $tmDetailSteps->save();
+                }
+            }
+            Utilities::logDebug("detailStepIds save");
+            if ($medicines != null) {
+                foreach ($medicines as $medicine) {
+                    $medicine->treatment_detail_id = $tmDetailId;
+                    $medicine->save();
+                }
+            }
+            Utilities::logDebug("tmDetail save");
+            if ($images != null) {
+                foreach ($images as $image) {
+                    $timestmp = (new \DateTime())->getTimestamp();
+                    $path = Utilities::saveFile($image, AppConst::TREATMENT_HISTORY_PATH, $timestmp);
+                    $treatmentImage = new TreatmentImage();
+                    $treatmentImage->treatment_detail_id = $tmDetailId;
+                    $treatmentImage->image_link = $path;
+                    $treatmentImage->created_date = Carbon::now();
+                    $treatmentImage->save();
+                }
+            }
+            Utilities::logDebug("images save");
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            return false;
-
+//            Log::info("Error: " . $e->getMessage() . 'File: ' . $e->getFile() . ' Line:' . $e->getLine().$e->getTraceAsString());
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -96,13 +151,12 @@ trait TreatmentHistoryBusinessFunction
         DB::beginTransaction();
         try {
             $patient = Patient::find($idPatient);
-
             $phone = $patient->belongsToUser()->first()->phone;
             $payment = $this->checkPaymentIsDone($phone);
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;
             if ($payment) {
-                $this->updatePayment($total_price, $payment->id);
+                $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
             } else {
                 $idPayment = $this->createPayment($total_price, $phone);
@@ -111,7 +165,7 @@ trait TreatmentHistoryBusinessFunction
                 'treatment_id' => $idTreatment,
                 'patient_id' => $idPatient,
                 'description' => $description,
-                'create_date' => Carbon::now(),
+                'created_date' => Carbon::now(),
                 'tooth_number' => $toothNumber,
                 'price' => $price,
                 'total_price' => $total_price,
@@ -123,14 +177,97 @@ trait TreatmentHistoryBusinessFunction
 
         } catch (\Exception $e) {
             DB::rollback();
-            return false;
+            throw new \Exception($e->getMessage());
 
         }
 
     }
 
-    public function checkCurrentTreatmentHistoryForPatient($idPatient){
-       return TreatmentHistory::where('patient_id', $idPatient)
+    public function checkCurrentTreatmentHistoryForPatient($idPatient)
+    {
+        return TreatmentHistory::where('patient_id', $idPatient)
             ->whereNull('finish_date')->get();
+    }
+
+    public function getListTreatmentHistory()
+    {
+        $treatmentHistoryList = TreatmentHistory::all();
+        foreach ($treatmentHistoryList as $treatmentHistory) {
+            $treatmentHistory->patient = $treatmentHistory->belongsToPatient()->first();
+            $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
+        }
+        return $treatmentHistoryList;
+    }
+
+    public function getTreatmentHistoryDetail($id)
+    {
+        $treatmentHistory = TreatmentHistory::where('id', $id)->first();
+        $treatmentHistory->patient = $treatmentHistory->belongsToPatient()->first();
+        $treatmentHistory->treatment = $treatmentHistory->belongsToTreatment()->first();
+        $listDetail = $treatmentHistory->hasTreatmentDetail()->get();
+
+        foreach ($listDetail as $detail) {
+            $detail->staff = $detail->belongsToStaff()->first();
+            $listTreatmentDetailStep = $detail->hasTreatmentDetailStep()->get();
+            $result = [];
+            foreach ($listTreatmentDetailStep as $treatmentDetailStep) {
+                $result[] = $treatmentDetailStep->belongsToStep()->first()->name;
+            }
+            $detail->listStepDone = $result;
+        }
+        $treatmentHistory->listDetail = $listDetail;
+        return $treatmentHistory;
+    }
+
+    public function getTreatmentHistoryById($id)
+    {
+        return (TreatmentHistory::where('id', $id)->first());
+    }
+
+
+    public function getTreatmentReportByDentist($dentistId, $monthInNumber, $yearInNumber)
+    {
+        $data = DB::select(DB::raw("
+                      SELECT count(*) as num, subquery.treatment_id, subquery.treatment_name  FROM (
+                      SELECT  td.staff_id AS staff_id,  tm.id AS treatment_id , tm.name AS treatment_name FROM tbl_treatment_histories as th
+                      JOIN tbl_treatment_details as td ON th.id = td.treatment_history_id
+                      JOIN tbl_treatments as tm ON tm.id = th.treatment_id
+                      WHERE MONTH(th.created_date) = :month  AND YEAR(th.created_date) = :year AND td.staff_id = :staff_id 
+                    ) AS subquery 
+                        GROUP BY subquery.treatment_id, subquery.treatment_name"),
+            array(
+                'month' => $monthInNumber,
+                'year' => $yearInNumber,
+                'staff_id' => $dentistId
+            ));
+        return $data;
+//            ->select('',);
+
+    } public function getTreatmentReportByReceptionist( $monthInNumber, $yearInNumber)
+    {
+        $data = DB::select(DB::raw("
+                      SELECT count(*) as num, subquery.treatment_id, subquery.treatment_name  FROM (
+                      SELECT  tm.id AS treatment_id , tm.name AS treatment_name FROM tbl_treatment_histories as th
+                      JOIN tbl_treatments as tm ON tm.id = th.treatment_id
+                      WHERE MONTH(th.created_date) = :month  AND YEAR(th.created_date) = :year  
+                    ) AS subquery 
+                        GROUP BY subquery.treatment_id, subquery.treatment_name"),
+            array(
+                'month' => $monthInNumber,
+                'year' => $yearInNumber
+            ));
+        return $data;
+//            ->select('',);
+
+    }
+
+    public function updateTreatmentHistoryDone($id)
+    {
+
+        $date = Carbon::now();
+        TreatmentHistory::where('id', $id)->update(['finish_date' => $date]);
+        return $id;
+
+
     }
 }

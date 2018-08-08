@@ -15,6 +15,10 @@ class AppConst
 {
     const RESPONSE_REMINDER = 'RESPONSE_REMINDER';
     const RESPONSE_FEEDBACK = 'RESPONSE_FEEDBACK';
+    const RESPONSE_PROMOTION = 'RESPONSE_PROMOTION';
+    const RESPONSE_RELOAD = 'RESPONSE_RELOAD';
+
+    const TOPIC_PROMOTION = "PROMOTION";
 
     const MSG_SMS_APPOINTMENT = "";
     const MSG_REMINDER_APPOINTMENT = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";
@@ -33,9 +37,23 @@ class AppConst
     const ROLE_DENTIST = 2;
     const ROLE_RECEPTIONIST = 3;
     const ROLE_PATIENT = 4;
-//0 vua tao
-//1 dang kham
-//2 xong
+
+    const TREATMENT_HISTORY_PATH = '/assets/images/TreatmentHistory/';
+    const AVATAR_PATH = '/assets/images/avatar/';
+
+
+    const ACTION_RELOAD_APPOINTMENT = "ACTION_RELOAD_APPOINTMENT";
+//0 vua tao =>Chua tới
+//1 da toi 
+//2 dang kham
+//3 xong
+//4 xoa
+    const APPT_STATUS_CREATED = 0;
+    const APPT_STATUS_ISCOMMING = 1;
+    const APPT_STATUS_TREATING = 2;
+    const APPT_STATUS_DONE = 3;
+    const APPT_STATUS_DELETED = 4;
+
     /**
      * @param $order numerical_order of appointment
      * @param $date DateTime Object
@@ -47,5 +65,18 @@ class AppConst
         $startDate = $date->format("d-m-Y");
         return "Cam on ban da dat lich kham, so thu tu cua ban la "
             . $order . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate;
+    }
+    public static function getSmsNewUser()
+    {
+        return "Cam on ban da dat lich tai phong kham Dental Gold, tai khoan mat khau mac dinh la so dien thoai cua ban.";
+    }
+
+    public static function getSmsMSGForAbsent($name, $startDate, $endDate)
+    {
+//
+//        $startDate = $date->format("d-m-Y");
+//        $endDate = $date->format("d-m-Y");
+//        return "Đon xin nghi cua " . $name . " da duoc chap nhan.Bat dau tu ngay "
+//            . $startDate . 'den het ngay  ' . $startTime . '  .';
     }
 }

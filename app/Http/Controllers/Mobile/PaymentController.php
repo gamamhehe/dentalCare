@@ -10,7 +10,10 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\Mobile\BaseController;
+use App\Model\PaymentDetail;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -22,6 +25,7 @@ use PayPal\Rest\ApiContext;
 class PaymentController extends BaseController
 {
     use PaymentBusinessFunction;
+    use StaffBusinessFunction;
 
     public function getByPhone(Request $request, $phone)
     {
@@ -36,7 +40,7 @@ class PaymentController extends BaseController
         }
     }
 
-    public function verifyPayment(Request $request)
+    public function verifyPaymentPaypal(Request $request)
     {
 //        $response["error"] = false;
 //        $response["message"] = "Payment verified successfully";
@@ -47,7 +51,7 @@ class PaymentController extends BaseController
         $paymentId = $request->input('payment_id');
         $localPaymentId = $request->input('local_payment_id');
         $paymentClientJson = $request->input('payment_client_json');
-        Log::info("PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
+        Log::info("PaymentId: " . $localPaymentId . " PaymentId: " . $paymentId . " PaymentJson: " . $paymentClientJson);
         try {
             $payment_client = json_decode($paymentClientJson, true);
 
@@ -65,12 +69,12 @@ class PaymentController extends BaseController
             if ($payment->getState() != 'approved') {
                 $error = $this->getErrorObj(
                     "Thanh toán chưa được xác thực",
-                    "No exception");
+                    "No exception approve");
                 return response()->json($error);
             }
 
             // Amount on client side
-            $amount_client = $payment_client["amount"];
+            $amountClient = $payment_client["amount"];
 
             // Currency on client side
             $currency_client = $payment_client["currency_code"];
@@ -98,34 +102,57 @@ class PaymentController extends BaseController
 //                    $amount_server,
 //                    $amount_server);
             // Verifying the amount
-            if ($amount_server != $amount_client) {
+            if ($amount_server != $amountClient) {
                 $error = $this->getErrorObj(
                     "Số tiền thanh toán không hợp lệ",
-                    "No exception");
+                    "No exception amount client");
                 return response()->json($error, 400);
             }
             // Verifying the currency
             if ($currency_server != $currency_client) {
                 $error = $this->getErrorObj(
                     "Tiền tệ không hợp lệ",
-                    "No exception");
+                    "No exception currency client");
                 return response()->json($error, 400);
             }
             // Verifying the sale state
             if ($sale_state != 'completed') {
                 $error = $this->getErrorObj(
                     "Giao dịch không thành công",
-                    "No exception");
+                    "No exception completed");
                 return response()->json($error, 400);
             }
-            // storing the saled items
-//            insertItemSales($payment_id_in_db, $transaction, $sale_state);
-//            return response()->json($response);
-            $result = $this->updatePaymentNotePayable($amount_client, $localPaymentId);
-            if($result){
-                return response()->json("SUCCESS",200);
-            }else{
-                $error = $this->getErrorObj("Lỗi không thể lưu dữ liệu", "No exception");
+
+            $payment = $this->getPaymentById($localPaymentId);
+            if ($payment == null) {
+                $error = $this->getErrorObj("Không tìm thấy thông tin thanh toán",
+                    "No exception in payment == null");
+                return response()->json($error, 400);
+            }
+            $user = $payment->beLongsToUser()->first();
+            $staff = $user == null ? null : $user->belongToStaff()->first();
+            $received_money = $payment->total_price - $payment->paid;
+            $payment->paid = $payment->total_price;
+            $payment->is_done = 1;
+            $paymentDetail = new PaymentDetail();
+            $paypalStaff = $this->getStaffByName('paypal');
+            $paymentDetail->payment_id = $localPaymentId;
+            $paymentDetail->received_money = $received_money;
+            $paymentDetail->date_create = Carbon::now();
+            $paymentDetail->staff_id = $paypalStaff->id;
+            $result = $this->updatePaymentModel($payment, $paymentDetail);
+//            $this->logInfo('userid: '.$user->id);
+//            $this->logInfo('paymentdetail id:'.$paymentDetail->id);
+
+//            Log::info("RESULT  ");
+            if ($result) {
+//                Log::info("RESULT khac null");
+                $listPayments = $this->getPaymentByPhone($payment->phone);
+                return response()->json($listPayments, 200);
+            } else {
+                $error = $this->getErrorObj("Lỗi không thể lưu dữ liệu",
+                    "No exception result null");
+//                Log::info("RESULT bang  null");
                 return response()->json($error, 400);
             }
         } catch (\PayPal\Exception\PayPalConnectionException $exc) {
@@ -133,12 +160,12 @@ class PaymentController extends BaseController
             if ($exc->getCode() == 404) {
                 $error = $this->getErrorObj(
                     "Không tìm thấy payment 404",
-                    "No exception");
+                    $exc);
                 return response()->json($error, 400);
             } else {
                 $error = $this->getErrorObj(
                     "Lỗi không xác định else",
-                    "No exception");
+                    $exc);
                 return response()->json($error, 400);
             }
         } catch (\Exception $exc) {
@@ -152,5 +179,60 @@ class PaymentController extends BaseController
 
     }
 
+    public function updatePaymentPrice(Request $request)
+    {
+        $paymentId = $request->input('payment_id');
+        $patientPhone = $request->input('patient_phone');
+        $staffId = $request->input('staff_id');
+        $payment = $this->getPaymentById($paymentId);
+        try {
+            if ($payment != null) {
+                if ($payment->is_done == 1) {
+                    $error = $this->getErrorObj("Bạn đã thanh toán cho điều trị", "No exception");
+                    return response()->json($error, 400);
+                }
+                $payRequired = $payment->total_price - $payment->paid;
+                $amount = $request->input('amount');
+                if ($amount > $payRequired) {
+                    $error = $this->getErrorObj("Số tiền phải trả vượt quá số tiền cần trả", "No exception");
+                    return response()->json($error, 400);
+                }
+                $payment->paid = $payment->paid + $amount;
+                if ($payment->paid == $payment->total_price) {
+                    $payment->is_done = 1;
+                }
+                $paymentDetail = new PaymentDetail();
+                $paymentDetail->payment_id = $payment->id;
+                $paymentDetail->staff_id = $staffId;
+                $paymentDetail->received_money = $amount;
+                $paymentDetail->date_create = Carbon::now();
+                $this->updatePaymentModel($payment, $paymentDetail);
+                $listPayment = $this->getPaymentByPhone($patientPhone);
+//                $successReponse = $this->getSuccessObj(200, "OK", "Thanh toán thành công", "No data");
+                return response()->json($listPayment);
+            } else {
+                $error = $this->getErrorObj("Không tìm thấy id của thanh toán", "No exception");
+                return response()->json($error, 400);
+            }
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+
+    }
+
+    public function getPaymentReport(Request $request)
+    {
+        try {
+            $month = $request->input("month");
+            $year = $request->input("year");
+            $data = $this->getReport($month, $year);
+            return response()->json($data);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+
+    }
 
 }

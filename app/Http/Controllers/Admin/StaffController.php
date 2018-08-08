@@ -7,13 +7,18 @@ use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentCategoriesBusinessFunction;
+use App\Http\Controllers\BusinessFunction\FeedbackBusinessFunction;
 use App\Model\Staff;
+use App\Model\Role;
 use App\Model\TreatmentCategory;
 use App\Model\User;
 use App\Model\Tooth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
+use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Facades\Datatables;
+
 class StaffController extends Controller
 {
     //
@@ -21,6 +26,8 @@ class StaffController extends Controller
     use AppointmentBussinessFunction;
     use TreatmentHistoryBusinessFunction;
     use TreatmentCategoriesBusinessFunction;
+    use FeedbackBusinessFunction;
+
     public function loginGet(Request $request)
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
@@ -33,35 +40,62 @@ class StaffController extends Controller
     public function logout(Request $request)
     {
         $request->session()->remove('currentAdmin');
+        $request->session()->remove('roleAdmin');
+        Auth::guard('web')->logout();
         return redirect()->route('admin.login');
     }
 
     public function create(Request $request)
     {
-        $post = Staff::all();
-        return view('admin.dentist.list',['post'=>$post]);
-        $checkExist = $this->checkExistUser($request->phone);
-        if ($checkExist) {
-            return false;
-        }
-        $userHasRole = new UserHasRole();
-        $userHasRole->phone = $request->phone;
-        $userHasRole->role_id = $request->role_id;
-        $userHasRole->start_time = Carbon::now();
-        $staff = new Staff();
-        $user = new User();
-        $staff->name = $request->name;
-        $staff->address = $request->address;
-        $staff->phone = $request->phone;
-        $staff->date_of_birth = $request->date_of_birth;
-        $staff->gender = $request->gender;
-        $staff->avatar = $request->avatar;
-        $staff->district_id = $request->district_id;
-        $staff->degree = $request->degree;
-        $user->phone = $user->phone;
-        $user->password = Hash::make($user->phone);
 
-        $this->createUserWithRole($user, $staff, $userHasRole);
+        // $checkExist = $this->checkExistUser($request->phone);
+        // if ($checkExist) {
+        //     return false;
+        // }
+        // $userHasRole = new UserHasRole();
+        // $userHasRole->phone = $request->phone;
+        // $userHasRole->role_id = $request->role_id;
+        // $userHasRole->start_time = Carbon::now();
+        // $staff = new Staff();
+        // $user = new User();
+        // $staff->name = $request->name;
+        // $staff->address = $request->address;
+        // $staff->phone = $request->phone;
+        // $staff->date_of_birth = $request->date_of_birth;
+        // $staff->gender = $request->gender;
+        // $staff->avatar = $request->avatar;
+        // $staff->district_id = $request->district_id;
+        // $staff->degree = $request->degree;
+        // $user->phone = $user->phone;
+        // $user->password = Hash::make($user->phone);
+
+        // $this->createUserWithRole($user, $staff, $userHasRole);
+    }
+
+    public function getStaff(Request $request)
+    {
+
+        $staffs = $this->getStaffForDataTable();
+        return Datatables::of($staffs)->addColumn('action', function ($staffs) {
+            return '
+                 <a href="#" class="show-modal btn btn-info btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
+                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
+                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '">
+                                            <i class="glyphicon glyphicon-pencil"></i>
+                                        </a>
+               <button value="' . $staffs->id . '" class="btn btn-danger btn-sm btn-dell">  <i class="glyphicon glyphicon-trash" ></i></button>';
+        })->make(true);
+
+    }
+
+    public function createStaff(Request $request)
+    {
+        $post = Staff::all();
+        $role = Role::all();
+        return view('admin.dentist.list', ['post' => $post, 'roles' => $role]);
     }
 
     public function login(Request $request)
@@ -70,16 +104,21 @@ class StaffController extends Controller
             'phone' => 'required|min:10|max:11',
             'password' => 'required|min:6'
         ]);
+        if (Auth::guard('web')->attempt(['phone' => $request->phone, 'password' => $request->password])) {
+        }
         $user = $this->checkLogin($request->phone, $request->password);
         if ($user != null) {
             $roleID = $user->hasUserHasRole()->first()->belongsToRole()->first()->id;
             if ($roleID < 4 and $roleID > 0) {
+
                 session(['currentAdmin' => $user]);
+                session(['roleAdmin' => $roleID]);
+                session(['currentAppointmentComming' => $this->getCurrentAppointmentComming($user->belongToStaff()->first()->id)]);
                 return redirect()->intended(route('admin.dashboard'));
             }
-            return redirect()->back()->with('fail', '* You do not have permission for this page')->withInput($request->only('phone'));
+            return redirect()->back()->with('fail', '* Bạn không được phép truy cập')->withInput($request->only('phone'));
         }
-        return redirect()->back()->with('fail', '* Wrong phone number or password')->withInput($request->only('phone'));
+        return redirect()->back()->with('fail', '* Tài khoản hoặc mật khẩu sai')->withInput($request->only('phone'));
     }
 
     public function update(Request $request)
@@ -88,37 +127,106 @@ class StaffController extends Controller
         $this->updateStaff($request, $idStaff);
 
     }
-    public function getListAppointmentForStaff(Request $request){
+
+    public function getListAppointmentForStaff(Request $request)
+    {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
+
         if ($role == 2) {
             $listAppointment = $this->viewAppointmentForDentist($sessionAdmin->belongToStaff()->first()->id);
         } else {
             $listAppointment = $this->viewAppointmentForReception();
         }
-
+        foreach ($listAppointment as $appointment) {
+            if ($appointment->status == 0) {
+                $appointment->status = 'Bệnh nhân chưa đến';
+            } else if ($appointment->status == 1) {
+                $appointment->status = 'Bệnh nhân đã đến';
+            } else if ($appointment->status == 2) {
+                $appointment->status = 'Đang khám';
+            } else if ($appointment->status == 3) {
+                $appointment->status = 'Đã khám';
+            } else if ($appointment->status == 4) {
+                $appointment->status = 'Hủy';
+            }
+        }
         return Datatables::of($listAppointment)
-            ->addColumn('action', function($appoint) {
+            ->addColumn('action', function ($appoint) {
                 return '
                 <div>
-                    <button style="width: 30%" value="'.$appoint->patient_id.'" class="btn btn-primary btn-xs btn-sm btn-dell"> Skip</button>
-                    <form onsubmit="return checkHidden('.$appoint->status.');" action="createTreatment/'.$appoint->patient_id.'" style="width: 50%; float:right">
-                        <button type="submit" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Create Treatment</button>
-                    </form>
+                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button>
                 </div>
                 ';
             })->make(true);
-        
+
     }
+
+    public function getListAppointmentInDateForStaff(Request $request)
+    {
+        $sessionAdmin = $request->session()->get('currentAdmin', null);
+        $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
+
+        if ($role == 2) {
+            $listAppointment = $this->viewAppointmentInDateForDentist($sessionAdmin->belongToStaff()->first()->id);
+        } else {
+            $listAppointment = $this->viewAppointmentInDateForReception();
+        }
+        foreach ($listAppointment as $appointment) {
+            if ($appointment->status == 0) {
+                $appointment->status = 'Bệnh nhân chưa đến';
+            } else if ($appointment->status == 1) {
+                $appointment->status = 'Bệnh nhân đã đến';
+            } else if ($appointment->status == 2) {
+                $appointment->status = 'Đang khám';
+            } else if ($appointment->status == 3) {
+                $appointment->status = 'Đã khám';
+            } else if ($appointment->status == 4) {
+                $appointment->status = 'Hủy';
+            }
+        }
+        return Datatables::of($listAppointment)
+            ->addColumn('action', function ($appoint) {
+                return '
+                <div>
+                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
+                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button>
+                </div>
+                ';
+            })->make(true);
+
+    }
+
+    public function checkComingPatient($appointmentId)
+    {
+        $checkComingAppointment = $this->checkAppointmentComing($appointmentId);
+        $status = 0;
+        if ($checkComingAppointment) {
+            $status = 1;
+        }
+        $data = array(
+            'idPatient' => $checkComingAppointment,
+            'statusComing' => $status,
+            'url' => request()->getHttpHost()
+        );
+        echo json_encode($data);
+
+    }
+
     public function getList()
     {
         return $this->getListStaff();
     }
-    public function createTreatmentByStaff(Request $request,$id){
-        $patient_id=$id;
+
+    public function createTreatmentByStaff($id)
+    {
+        $patient_id = $id;
         $listTreatment = $this->getAllTreatmentCategories();
         $listTooth = Tooth::all();
-        return view ('admin.dentist.createTreatment',['listTreatmentCategories'=>$listTreatment,'listTooth'=>$listTooth,'patient_id'=>$patient_id]);
+        return view('admin.dentist.createTreatment', ['listTreatmentCategories' => $listTreatment, 'listTooth' => $listTooth, 'patient_id' => $patient_id]);
     }
 
     public function viewAppointment(Request $request)
@@ -126,12 +234,19 @@ class StaffController extends Controller
         return view('admin.dentist.listAppointment');
     }
 
-    public function receiveAppointment(Request $request){
+    public function viewAppointmentInDate(Request $request)
+    {
+        return view('admin.dentist.listAppointmentInDate');
+    }
+
+    public function receiveAppointment(Request $request)
+    {
         $listTreatmentHistory = $this->checkCurrentTreatmentHistoryForPatient($request->patient_id);
         return true;
     }
 
-    public function addPost(Request $request){
+    public function addPost(Request $request)
+    {
 
         $post = new Staff;
         $post->name = $request->name;
@@ -140,25 +255,44 @@ class StaffController extends Controller
         return response()->json($post);
     }
 
-    public function editPost(request $request){
-        $post = Staff::find ($request->id);
+    public function editPost(request $request)
+    {
+        $post = Staff::find($request->id);
         $post->name = $request->name;
         $post->address = $request->address;
         $post->save();
         return response()->json($post);
     }
-    public function deletePost(Request $request){
+
+    public function deletePost(Request $request)
+    {
         $id = $request->id;
-        if($id){
-             $data = array(
-            'id'  => $id,
+        if ($id) {
+            $data = array(
+                'id' => $id,
             );
-        $post = Staff::find ($request->id)->delete();
-        return response()->json($data);
-        }        
+            $post = Staff::find($request->id)->delete();
+            return response()->json($data);
+        }
 
 
-       
+    }
+
+    public function changeSession()
+    {
+        $user = Session::get('currentAdmin');
+        session(['currentAppointmentComming' => $this->getCurrentAppointmentComming($user->belongToStaff()->first()->id)]);
+        echo '';
+    }
+
+    public function profile(Request $request)
+    {
+        $staff = $request->session()->get('currentAdmin');
+        $staff->staffDetail = $staff->belongToStaff()->first();
+        $staff->Role = $staff->hasUserHasRole()->first()->belongsToRole()->first();
+        $start = $this->getNumberStart($staff->staffDetail->id);
+
+        return view('admin.Staff.profile', ['staff' => $staff, 'start' => $start]);
     }
 
 }

@@ -51,10 +51,13 @@ class RemindAppointment extends Command
             $apptDateTime = (new \DateTime($appointment->start_time));
             if ($this->isUpCommingAppointment($currentDateTime, $apptDateTime)) {
                 $numOfReminder++;
-                Utilities::logDebug('Send for appointment id: ' . $appointment->id);
-                $this->dispatch(new SendReminderJob($appointment->phone));
+                Utilities::logDebug('RemindAppointment.handle(): Send for: ' .
+                    $appointment->phone .
+                    ' with appointment id: ' .
+                    $appointment->id);
+                $this->dispatch(new SendReminderJob($appointment));
             }
         }
-        Utilities::logDebug("Remind: " . $numOfReminder . " appointments");
+//        Utilities::logDebug("Remind: " . $numOfReminder . " appointments");
     }
 }

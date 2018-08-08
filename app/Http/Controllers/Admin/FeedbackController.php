@@ -17,9 +17,9 @@ class FeedbackController extends Controller
     public function delete(Request $request, $id)
     {
         if ($this->deleteFeedback($id)) {
-            return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá đã được xóa");
+            return redirect('admin/list-feedback')->withSuccess("Bài đánh giá đã được xóa");
         } else {
-            return redirect('admin/list-Feedback')->withSuccess("Bài đánh giá chưa được xóa");
+            return redirect('admin/list-feedback')->withSuccess("Bài đánh giá chưa được xóa");
         }
     }
     public function loadListFeedback(Request $request)
@@ -47,12 +47,12 @@ class FeedbackController extends Controller
         if ($roleID == 1) {
             return Datatables::of($feedbackList)
                 ->addColumn('action', function ($feedbackList) {
-                    return '<a href="detailsFeedback/' . $feedbackList->id . '" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>View details</a> <a id="' . $feedbackList->id . '" onclick="deleteFeedback(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+                    return '<a href="details-feedback/' . $feedbackList->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xem chi tiết</a> <a id="' . $feedbackList->id . '" onclick="deleteFeedback(this)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
                 })->rawColumns(['demo','action'])->make(true);
         } else {
             return Datatables::of($feedbackList)
                 ->addColumn('action', function ($feedbackList) {
-                    return '<a href="viewsFeedback/' . $feedbackList->id . '" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>View</a> ';
+                    return '<a href="views-feedback/' . $feedbackList->id . '" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Xem chi tiết</a> ';
                 })->rawColumns(['demo','action'])->make(true);
         }
 
@@ -62,9 +62,8 @@ class FeedbackController extends Controller
     {
         $Feedback = $this->getFeedbackID($id);
         $contet = $Feedback->content;
-        $Feedback->content = trim($contet);
-        $Feedback->treatment_detail_id = $Feedback->belongsToTreatmentDetail()->first()->belongsToStaff()->first();
-
+        $Feedback->content = trim($contet); 
+        $Feedback->treatment_detail = $Feedback->belongsToTreatmentDetail()->first()->belongsToStaff()->first();
         return view('admin.feedback.details', ['Feedback' => $Feedback]);
     }
     public function getViewsFeedback(Request $request, $id)

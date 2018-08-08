@@ -46,7 +46,7 @@
                 <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
                     <div class="col-sm-2"><label>Ngày khởi tạo </label></div>
                     <div class="col-sm-10" style="padding-right: 0;">
-                        <input type="text" class="form-control input-width" id="discount" name="discount" placeholder="Input Title News" required="required" value="{{$Event->create_date}}" />
+                        <input type="text" class="form-control input-width" id="discount" name="discount" placeholder="Input Title News" required="required" value="{{$Event->created_date}}" />
                     </div>
                 </div>
                 <div class="row layout" style="margin-bottom: 1em;margin-right: 4em" >

@@ -77,7 +77,7 @@
                 return;
             }
             $.ajax({
-                url: '/admin/medicine_search/' + searchValue, //this is your uri
+                url: '/admin/medicine-search/' + searchValue, //this is your uri
                 type: 'GET', //this is your method
 
                 dataType: 'json',
@@ -98,7 +98,7 @@
             var prescription = document.getElementById('prescription').innerHTML;
             if (prescription != null) {
                 prescription = prescription.toString()
-                alert(prescription);
+
                 if (prescription.indexOf('value="' + id + '">') != -1) {
                     swal("Thuốc này đã tồn tại trong đơn thuốc", "", "error")
                     return

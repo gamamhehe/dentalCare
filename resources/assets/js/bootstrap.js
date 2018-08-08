@@ -44,10 +44,12 @@ if (token) {
  */
 
 // import Echo from 'laravel-echo'
-
+//
 // window.Pusher = require('pusher-js');
-
+//
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
+//     key: 'e3c057cd172dfd888756',
+//     cluster: 'ap1',
+//     encrypted: true
 // });

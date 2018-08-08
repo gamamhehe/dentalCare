@@ -20,7 +20,7 @@ class CreateTblEventsTable extends Migration
             $table->dateTime('end_date');
             $table->integer('discount');
             $table->integer('staff_id');
-            $table->dateTime('create_date');
+            $table->dateTime('created_date');
             $table->integer('treatment_id');
             $table->timestamps();
         });

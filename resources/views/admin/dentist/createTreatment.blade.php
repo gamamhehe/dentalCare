@@ -5,7 +5,7 @@
     <section class="content">
         <div class="container"  >
             <div class="row" style="text-align: center;">
-                <label><h1>Khởi tạo liệu trình/TreateHis</h1></label>
+                <label><h1>Khởi tạo liệu trình </h1></label>
             </div>
 
             <form method ="post" class="form-horizontal" action="{{ route('admin.createTreatmentHistoryPatient.dentist') }}" enctype="multipart/form-data" id="createTreat" >
@@ -63,7 +63,7 @@
                 <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Giá dịch vụ </label></div>
                     <div class="col-sm-5" style="padding-right: 0;">
-                        <input type="text" class="form-control input-width" id="price" name="price" placeholder="Giá dịch vụ" required="required" />
+                        <input type="number" class="form-control input-width" id="price" name="price" placeholder="Giá dịch vụ" required="required" min="1" max="5" />
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 1em;" >
@@ -93,8 +93,10 @@
         });
 
     $(document).ready(function() {
-getTreat(sel);
-        
+    getTreat(sel);
+       <?php if (Session::has('success')): ?>
+     swal("{{ Session::get('success')}}", "", "success");
+        <?php endif ?>   
     });
     function getTreat(sel)
     {
@@ -102,7 +104,7 @@ getTreat(sel);
      $("#max_price").val();
 
             $.ajax({
-             url: '/admin/getTreatmentByCate/'+treatCateID, //this is your uri
+             url: '/admin/get-treatment-by-cate/'+treatCateID, //this is your uri
             type: 'GET', //this is your method
             dataType: 'json',
             success: function(data){

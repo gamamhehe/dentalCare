@@ -23,7 +23,7 @@ class EventController extends Controller
 
             return redirect()->route("admin.list.event")->withSuccess("Sự kiện đã được tạo");
         }else{
-            return redirect('admin/list-Event')->withSuccess("Sự kiện chưa được tạo");
+            return redirect('admin/list-event')->withSuccess("Sự kiện chưa được tạo");
         }
     }
 
@@ -31,7 +31,7 @@ class EventController extends Controller
         $listEvent = $this->getAllEvent();
         return Datatables::of($listEvent)
             ->addColumn('action', function($listEvent) {
-                return '<a href="editEvent/'.$listEvent->id.'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Edit</a> <a id="'.$listEvent->id.'" onclick="deleteNews(this)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+                return '<a href="edit-event/'.$listEvent->id.'" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i>Chỉnh sửa</a> <a id="'.$listEvent->id.'" onclick="deleteNews(this)" class="btn btn-success btn-sm "><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             })->make(true);
     }
     public function loadcreateEvent(Request $request){
@@ -56,9 +56,9 @@ class EventController extends Controller
     public function deleteEvent(Request $request,$id){
         $EventBoolean = $this->deleteEventBusiness($id);
         if($EventBoolean){
-            return redirect('admin/list-Event')->withSuccess("Bài viết đã được xóa");
+            return redirect('admin/list-event')->withSuccess("Bài viết đã được xóa");
         }else{
-            return redirect('admin/list-Event')->withSuccess("Bài viết chưa được xóa");
+            return redirect('admin/list-event')->withSuccess("Bài viết chưa được xóa");
         }
     }
 

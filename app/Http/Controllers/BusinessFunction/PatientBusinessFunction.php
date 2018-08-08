@@ -9,9 +9,12 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 
+use App\Model\AnamnesisPatient;
 use App\Model\Patient;
+use App\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait PatientBusinessFunction
 {
@@ -24,7 +27,8 @@ trait PatientBusinessFunction
         return null;
     }
 
-    public function getPatient($phone)
+
+    public function getPatientByPhone($phone)
     {
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
@@ -32,20 +36,33 @@ trait PatientBusinessFunction
                 $district = $item->belongsToDistrict()->first();
                 $item->district = $district;
                 $item->city = $district == null ? null : $district->belongsToCity()->first();
+                $patientAnamnesis = $item->hasAnamnesisPatient()->get();
+                $anamnesis = [];
+                foreach ($patientAnamnesis as $ans){
+                    $anamnesis[]= $ans->belongsToAnamnesisCatalog()->first();
+                }
+                $item->anamnesis  = $anamnesis;
             }
             return $patients;
         }
         return null;
     }
 
-    public function createPatient($patient, $userHasRole)
+    public function createPatient($patient)
     {
         DB::beginTransaction();
         try {
-            $patient->save();
-            $userHasRole->save();
+            $PatientId = Patient::create([
+                'name' => $patient->name,
+                'address' => $patient->address,
+                'phone' => $patient->phone,
+                'avatar' => $patient->avatar,
+                'date_of_birth' => $patient->date_of_birth,
+                'gender' => $patient->gender,
+                'district_id' => $patient->district_id,
+            ])->id;
             DB::commit();
-            return true;
+            return $PatientId;
         } catch (\Exception $e) {
             DB::rollback();
             return false;
@@ -61,7 +78,30 @@ trait PatientBusinessFunction
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            throw new Exception($e->getMessage());
+            throw new \Exception($e->getMessage());
+        }
+    } public function updatePatientWithAnamnesis($patient,$listAnamnesisId)
+    {
+        DB::beginTransaction();
+        try {
+            $patient->save();
+            $patientAnamnesis = $patient->hasAnamnesisPatient()->get();
+            foreach ($patientAnamnesis as $anamnesi) {
+                $anamnesi->delete();
+            }
+            if ($listAnamnesisId != null) {
+                foreach ($listAnamnesisId as $id) {
+                    $anamnesis = new AnamnesisPatient();
+                    $anamnesis->anamnesis_id = $id;
+                    $anamnesis->patient_id = $patient->id;
+                    $anamnesis->save();
+                }
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new \Exception($e->getMessage());
         }
     }
 
