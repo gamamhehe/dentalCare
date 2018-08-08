@@ -166,6 +166,11 @@ class PatientController extends BaseController
     {
         try {
             $phone = $request->input('phone');
+            $user = $this->getUserByPhone($phone);
+            if ($user == null) {
+                $error = $this->getErrorObj("Số điện thoại chưa được đăng kí", "No exception");
+                return response()->json($error, 400);
+            }
             $patients = $this->getPatientByPhone($phone);
             return response()->json($patients);
         } catch (\Exception $ex) {
