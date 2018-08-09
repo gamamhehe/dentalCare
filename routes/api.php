@@ -102,6 +102,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get("appointment/all", "Mobile\AppointmentController@getAll");
     Route::get("appointment/getById/{id}", "Mobile\AppointmentController@getById");
     Route::post("appointment/updateStatus", "Mobile\AppointmentController@updateStatus");
+    Route::post("appointment/changeDentist", "Mobile\AppointmentController@changeDentist");
+    Route::get("appointment/getByDate", "Mobile\AppointmentController@getByDate");
     Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
     Route::get("appointment/getUserAppointmentByCurrentDate/", "Mobile\AppointmentController@getUserAppointmentByCurrentDate");
     //payment
@@ -126,6 +128,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
     Route::post("patient/updatePatient", "Mobile\PatientController@updatePatientInfo");
+    Route::post("patient/receiveManually", "Mobile\PatientController@receiveManually");
     Route::get('patient/getByPhone', "Mobile\PatientController@getByPhone");
     Route::get('patient/getListPatientByPhone', "Mobile\PatientController@getListPatientByPhone");
     Route::get('staff/getPatientAppointmentByDate', "Mobile\StaffController@getPatientAppointmentByDate");

@@ -15,6 +15,7 @@ use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Jobs\SendFirebaseJob;
 use App\Model\FirebaseToken;
+use App\Model\PatientOfAppointment;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -104,9 +105,37 @@ class PatientController extends BaseController
         return $appointment;
     }
 
+    public function receiveManually(Request $request)
+    {
+        try {
+            $patientId = $request->input('patient_id');
+            $appointmentId = $request->input('appointment_id');
+            $appointment = $this->getAppointmentById($appointmentId);
+            if ($appointment->status != 0) {
+                $errorResponse = $this->getErrorObj("Trạng thái lịch hẹn không hợp lệ", "No exception");
+                return response()->json($errorResponse, 400);
+            }
+
+            $patientAppointment = $appointment->hasPatientOfAppointment()->first();
+            if ($patientAppointment != null) {
+                $errorResponse = $this->getErrorObj("Bệnh nhân đã được nhận khám", "No exception");
+                return response()->json($errorResponse, 400);
+            } else {
+                $appointment->status = 1;
+                $this->saveAppointment($appointment, $patientId);
+                $this->sendFirebaseReloadAppointment($appointment->staff_id);
+                $successResponse = $this->getSuccessObj(200, "OK", "Change status success", "No data");
+                return response()->json($successResponse, 200);
+            }
+        } catch (Exception $exception) {
+            $errorResponse = $this->getErrorObj("Lỗi server", $exception);
+            return response()->json($errorResponse, 500);
+        }
+
+    }
+
     public function receive(Request $request)
     {
-
         $patientId = $request->input('patient_id');
         $phone = $this->getPhoneOfPatient($patientId);
         $isExamination = $this->checkPatientIsExamination($patientId);
