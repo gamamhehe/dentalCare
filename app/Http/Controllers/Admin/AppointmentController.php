@@ -50,10 +50,10 @@ class AppointmentController extends Controller
         if ($role == 2) {
             $staff_id = $sessionAdmin->belongToStaff()->first()->id;
             $newApp = $this->createAppointment($newformat, $phone, $request->note, $staff_id,
-                $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName);
+                $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName,true);
         } else {
             $newApp = $this->createAppointment($newformat, $phone, $request->note, null,
-                $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName);
+                $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName,true);
         }
         $dateTime = new DateTime($newApp->start_time);
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
