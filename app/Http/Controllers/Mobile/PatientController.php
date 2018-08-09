@@ -123,6 +123,7 @@ class PatientController extends BaseController
             } else {
                 $appointment->status = 1;
                 $this->saveAppointment($appointment, $patientId);
+                $this->sendFirebaseReloadAppointment($appointment->staff_id);
                 $successResponse = $this->getSuccessObj(200, "OK", "Change status success", "No data");
                 return response()->json($successResponse, 200);
             }
