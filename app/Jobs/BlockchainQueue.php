@@ -9,21 +9,22 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 use App\Http\Controllers\BusinessFunction\BlockchainBusinessFunction;
-use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
+use App\Model\Queue;
 
 class BlockchainQueue implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    use QueueBusinessFunction, BlockchainBusinessFunction, NodeInfoBusinessFunction;
+    use QueueBusinessFunction, BlockchainBusinessFunction;
+    protected $data_encrypt;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data_encrypt)
     {
-        //
+        $this->data_encrypt = $data_encrypt;
     }
 
     /**
@@ -35,23 +36,28 @@ class BlockchainQueue implements ShouldQueue
     public function handle()
     {
         $id = $this->addToAllNodeInNetWork($this->data_encrypt);
-        while (true) {
-            $status = $this->getStatus($id);
-            if ($status != 'waiting') {
-//                $listNode = $this->getListNode();
-//                foreach ($listNode as $node) {
-//                    $this->get_data($node->ip . '/saveNewLedger?ip='.$this->ip);
-//                }
-                if ($status == 'done') {
-                    //Lấy sổ cái mới nhất
-                    $newestLedger = $this->getNewestDataJson();
-                    $this->sendToAll($newestLedger);
-                    break;
-                }
-                sleep(60 * 10);
-            }
-        }
+        echo $id;
+//        $status = Queue::find($id);
+//        echo $status;
+//        while (true) {
+//
+////            if ($status != 'waiting') {
+////                $listNode = $this->getListNode();
+////                foreach ($listNode as $node) {
+////                    $this->get_data($node->ip . '/saveNewLedger?ip='.$this->ip);
+////                }
+//            if ($status == 2) {
+//                //Lấy sổ cái mới nhất
+//                $newestLedger = $this->getNewestDataJson();
+//                $this->sendToAll($newestLedger);
+//                break;
+//            }
+//            echo 1;
+//            sleep(10);
+//        }
     }
+
+//    }
 
     private
     function sendToAll($newestLedger)

@@ -17,7 +17,7 @@ use Carbon\Carbon;
 
 trait NodeInfoBusinessFunction
 {
-    public function isExist($ip) //Nguyen Dinh Phu. Last edit: 12-Jul-18
+    public function isExist($ip)
     {
         $check = NodeInfo::where('ip','=',$ip);
         if ($check != null) {

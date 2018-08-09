@@ -40,9 +40,9 @@ trait QueueBusinessFunction
 
     public function addToAllNodeInNetWork($data_encrypt)
     {
-        $currentIp = $_SERVER['HOSTNAME']; //dd($_SERVER) for more details
+        $currentIp = $_SERVER['REMOTE_ADDR']; //dd($_SERVER) for more details
         $listNode = $this->getListNode();
-        $id = -1;
+        $id;
         foreach ($listNode as $node) {
             $ip = $node->ip;
             $url = $ip . '/addToQueue?data_encrypt=' . $data_encrypt . '&ip=' . $currentIp; //the ip of current server
@@ -63,7 +63,7 @@ trait QueueBusinessFunction
         return $data;
     }
 
-    public function getStatus($id)
+    public function checkStatus($id)
     {
         return Queue::find($id)->status;
     }
