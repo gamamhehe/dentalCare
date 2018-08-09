@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Blockchain;
 
+use App\Model\Payment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Key;
@@ -14,13 +15,11 @@ class BlockchainController extends Controller
 
     public function GenerateKey()
     {
-        $patientId = '1'; // query from databse
         $config = array(
             "digest_alg" => "sha512",
-            "private_key_bits" => 4096,
+            "private_key_bits" => 512,
             "private_key_type" => OPENSSL_KEYTYPE_RSA,
         );
-        
         // Create the private and public key
         $res = openssl_pkey_new($config);
         // Extract the private key from $res to $privKey
@@ -29,57 +28,60 @@ class BlockchainController extends Controller
     // Extract the public key from $res to $pubKey
         $pubKey = openssl_pkey_get_details($res);
         $pubKey = $pubKey["key"];
-        $data = $patientId;
-
+        var_dump($pubKey);
+        dd($privKey);
+        $data = 'a';
     // Encrypt the data to $encrypted using the public key
         openssl_public_encrypt($data, $encrypted, $pubKey);
-
-    // Decrypt the data using the private key and store the results in $decrypted
+//
+//    // Decrypt the data using the private key and store the results in $decrypted
         openssl_private_decrypt($encrypted, $decrypted, $privKey);
-        var_dump($encrypted);
-        // dd($decrypted);
-
-        Key::create(array(
-            'patient_id' => $patientId,//query from tblUser
-            'private_key' => $privKey,
-            'public_key' => $pubKey
-        ));
+//        var_dump($encrypted);
+         dd($decrypted);
     }
 
-    public function EncryptTreatmentHistory()
+    public function EncryptCreatePayment($id)
     {
-        $patientId = '1';
-        $key = Key::where('patient_id', '=', $patientId) -> first();
-        $pubKey = $key -> public_key;
-        
-        $history = TreatmentHistory::where('patient_id', '=', $patientId) -> first();
 
-        $nameHop = 'Thanh Hung';
-        $server = NodeInfo::where('name_hopital','=',$nameHop) -> first();
+        $rsa = new RSA();
+        $key = $rsa->createKey();
+        $privateKey = $key['privatekey'];
+        $publicKey = $key['publickey'];
+        $plaintext = '0123';
+        $password = '123456';
+        $method = 'aes-256-cbc';
+        $payment= Payment::where('id', '=', $id) -> first();
+        $pubKey = '-----BEGIN PUBLIC KEY----- MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANMA8OGlPPizwjZeX5G1vSLRzH/jT4xc +FtRSzgW1lrl/HWfMGSlqskdQNbgxtwMFJVu0cN8ymBsEkRPBwwDTr0CAwEAAQ== -----END PUBLIC KEY-----';
         
-        $name = $server -> name_hopital;
-        $jsonServer = array(
-            'ip' =>  $server -> ip_server,
-            'name' => $server -> name_hopital,
+//        $history = TreatmentHistory::where('patient_id', '=', $patientId) -> first();
+//
+//        $nameHop = 'Thanh Hung';
+//        $server = NodeInfo::where('name_hopital','=',$nameHop) -> first();
+//
+//        $name = $server -> name_hopital;
+//        $jsonServer = array(
+//            'ip' =>  $server -> ip_server,
+//            'name' => $server -> name_hopital,
+//        );
+//        $jsonHistory = array(
+//
+//        );
+        $paymentArray = array(
+            'id' => $payment -> id ,
+            'paid' => $payment -> paid,
+            'total_price' => $payment -> total_price,
+            'phone' => $payment -> phone,
+            'is_done' => $payment -> is_done,
+            'created_at' => $payment -> created_at,
+            'type' => 1 // 1 is create payment
         );
-        $jsonHistory = array(
-            'id' => $history -> id , 
-            'treatment_id' => $history -> treatment_id,
-            'patient_id' => $history -> patient_id, 
-            'description' => $history -> description,
-            'created_date' => $history -> created_date,
-            'finish_date' => $history -> finish_date,
-            'tooth_number' => $history -> tooth_number,
-            'price' => $history -> price,
-            'payment_id' => $history -> payment_id,
-            'total_price' => $history -> total_price, 
-        );  
-        $mainJson = json_encode(array_merge($jsonHistory,$jsonServer));
-        openssl_public_encrypt($mainJson, $encrypted, $pubKey);
+        $jsonPayment = json_encode($paymentArray);
+        var_dump($jsonPayment);
+//        $mainJson = json_encode(array_merge($jsonHistory,$jsonServer));
+        $encrypted =openssl_pkey_get_private ($jsonPayment, $pubKey);
 
-        $priKey = $key -> private_key;
+//        $priKey = $key -> private_key;
         var_dump($encrypted);
-          
     }
 
     public function DecryptTreatmentHistory()
@@ -97,7 +99,6 @@ class BlockchainController extends Controller
     //
 //    public function GenerateKey()
 //    {
-//
 //        $rsa = new RSA();
 //        $key = $rsa->createKey();
 //        $privateKey = $key['privatekey'];
@@ -117,11 +118,11 @@ class BlockchainController extends Controller
 //        dd($encrypted);
 //
 //// My secret message 1234
-//        $data = $this->decrypt($enc, $privateKey);
-//        $decrypted = openssl_decrypt(base64_decode($data), $method, $password, OPENSSL_RAW_DATA, $iv);
-//        dd($decrypted);
+////        $data = $this->decrypt($enc, $privateKey);
+////        $decrypted = openssl_decrypt(base64_decode($data), $method, $password, OPENSSL_RAW_DATA, $iv);
+////        dd($decrypted);
 //    }
-
+//
 //    public function encrypt($data, $pubKey)
 //    {
 //        if (openssl_public_encrypt($data, $encrypted, $pubKey))

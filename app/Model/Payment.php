@@ -8,7 +8,7 @@ class Payment extends Model
 {
     //
     protected $table = 'tbl_payments';
-    protected $fillable = ['id', 'paid','total_price', 'phone', 'is_done'];
+    protected $fillable = ['id', 'paid','total_price', 'phone', 'is_done','created_at'];
     public function beLongsToUser(){
         return $this->belongsTo('App\Model\User','phone', 'phone');
     }

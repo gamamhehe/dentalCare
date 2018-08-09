@@ -220,9 +220,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
 
 
-Route::get('/generateKey', 'BlockchainController@GenerateKey');
-Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
-
+////Blockchain - HungPT
+Route::get('/generateKey', 'Blockchain\BlockchainController@GenerateKey');
+Route::get('/encryptPayment/{id}', 'Blockchain\BlockchainController@EncryptCreatePayment');
+////
 
 Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
 
