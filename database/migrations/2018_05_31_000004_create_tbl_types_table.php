@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblToothsTable extends Migration
+class CreateTblTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateTblToothsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_tooths', function (Blueprint $table) {
-            $table->integer('tooth_number');
-            $table->string('tooth_name');
-            $table->primary('tooth_number');
+        Schema::create('tbl_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -28,6 +27,8 @@ class CreateTblToothsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_tooths');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('tbl_types');
+        Schema::enableForeignKeyConstraints();
     }
 }

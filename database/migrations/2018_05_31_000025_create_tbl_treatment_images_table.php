@@ -15,10 +15,11 @@ class CreateTblTreatmentImagesTable extends Migration
     {
         Schema::create('tbl_treatment_images', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('treatment_detail_id');
+            $table->integer('treatment_detail_id')->unsigned();
             $table->string('image_link');
             $table->dateTime('created_date');
             $table->timestamps();
+            $table->foreign('treatment_detail_id')->references('id')->on('tbl_treatment_details');
         });
     }
 
@@ -29,6 +30,8 @@ class CreateTblTreatmentImagesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_treatment_images');
+        Schema::enableForeignKeyConstraints();
     }
 }

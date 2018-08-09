@@ -14,10 +14,13 @@ class CreateTblPatientOfAppointmentTable extends Migration
     public function up()
     {
         Schema::create('tbl_patient_of_appointment', function (Blueprint $table) {
-            $table->integer('appointment_id');
-            $table->integer('patient_id');
+            $table->integer('appointment_id')->unsigned();
+            $table->integer('patient_id')->unsigned();
             $table->primary(array('appointment_id', 'patient_id'));
             $table->timestamps();
+
+            $table->foreign('appointment_id')->references('id')->on('tbl_appointments');
+            $table->foreign('patient_id')->references('id')->on('tbl_patients');
         });
     }
 
@@ -28,6 +31,8 @@ class CreateTblPatientOfAppointmentTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_patient_of_appointment');
+        Schema::enableForeignKeyConstraints();
     }
 }

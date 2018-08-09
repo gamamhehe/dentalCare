@@ -15,16 +15,22 @@ class CreateTblTreatmentHistoriesTable extends Migration
     {
         Schema::create('tbl_treatment_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('treatment_id');
-            $table->integer('patient_id');
-            $table->integer('tooth_number');
+            $table->integer('treatment_id')->unsigned();
+            $table->integer('patient_id')->unsigned();
+            $table->integer('tooth_number')->unsinged();
             $table->string('description');
             $table->dateTime('created_date');
             $table->dateTime('finish_date')->nullable();
             $table->bigInteger('price');
             $table->bigInteger('total_price');
-            $table->integer('payment_id');
+            $table->integer('payment_id')->unsigned();
             $table->timestamps();
+
+
+            $table->foreign('patient_id')->references('id')->on('tbl_patients');
+            $table->foreign('payment_id')->references('id')->on('tbl_payments');
+            $table->foreign('tooth_number')->references('tooth_number')->on('tbl_tooths');
+            $table->foreign('treatment_id')->references('id')->on('tbl_treatments');
         });
     }
 
@@ -35,6 +41,8 @@ class CreateTblTreatmentHistoriesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_treatment_histories');
+        Schema::enableForeignKeyConstraints();
     }
 }

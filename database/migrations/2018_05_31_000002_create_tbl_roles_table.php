@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblFeedbacksTable extends Migration
+class CreateTblRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateTblFeedbacksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_feedbacks', function (Blueprint $table) {
+        Schema::create('tbl_roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content')->nullable();
-            $table->integer('patient_id');
-            $table->integer('treatment_detail_id');
-            $table->dateTime('date_feedback');
-            $table->integer('num_of_stars');
+            $table->string('name');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -31,6 +28,8 @@ class CreateTblFeedbacksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_feedbacks');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('tbl_roles');
+        Schema::enableForeignKeyConstraints();
     }
 }

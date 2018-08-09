@@ -19,6 +19,8 @@ class CreateTblNodeInfoTable extends Migration
             $table->primary("ip");
             $table->timestamps();
         });
+
+
     }
 
     /**

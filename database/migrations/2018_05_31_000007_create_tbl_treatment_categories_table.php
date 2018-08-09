@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblDistrictsTable extends Migration
+class CreateTblTreatmentCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTblDistrictsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_districts', function (Blueprint $table) {
+        Schema::create('tbl_treatment_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('city_id');
+            $table->string('description');
+            $table->string('icon_link');
+            $table->time('estimate_time');
             $table->timestamps();
         });
     }
@@ -28,6 +30,8 @@ class CreateTblDistrictsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_districts');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('tbl_treatment_categories');
+        Schema::enableForeignKeyConstraints();
     }
 }

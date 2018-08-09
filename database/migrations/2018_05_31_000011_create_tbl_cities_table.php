@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblRolesTable extends Migration
+class CreateTblCitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateTblRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_roles', function (Blueprint $table) {
+        Schema::create('tbl_cities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
             $table->timestamps();
         });
     }
@@ -28,6 +27,7 @@ class CreateTblRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_roles');
+        Schema::dropIfExists('tbl_cities');
+        Schema::enableForeignKeyConstraints();
     }
 }

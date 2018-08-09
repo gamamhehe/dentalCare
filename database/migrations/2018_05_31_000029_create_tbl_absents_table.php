@@ -14,13 +14,17 @@ class CreateTblAbsentsTable extends Migration
     public function up()
     {
         Schema::create('tbl_absents', function (Blueprint $table) {
-            $table->integer('staff_approve_id');
-            $table->integer('request_absent_id');
+            $table->integer('staff_approve_id')->unsigned();
+            $table->integer('request_absent_id')->unsigned();
             $table->longText('message_from_staff')->nullabe();
             $table->primary(array('staff_approve_id', 'request_absent_id'), 'staff_approve');
             $table->dateTime('created_time');
             $table->boolean('is_approved')->default(true);
             $table->timestamps();
+
+
+            $table->foreign('staff_approve_id')->references('id')->on('tbl_staffs');
+            $table->foreign('request_absent_id')->references('id')->on('tbl_request_absents');
         });
     }
 
@@ -31,6 +35,8 @@ class CreateTblAbsentsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_absents');
+        Schema::enableForeignKeyConstraints();
     }
 }

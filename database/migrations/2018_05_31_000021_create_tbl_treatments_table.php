@@ -17,10 +17,12 @@ class CreateTblTreatmentsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->integer('treatment_category_id');
+            $table->integer('treatment_category_id')->unsigned();
             $table->bigInteger('min_price');
             $table->bigInteger('max_price');
             $table->timestamps();
+
+            $table->foreign('treatment_category_id')->references('id')->on('tbl_treatment_categories');
         });
     }
 
@@ -31,6 +33,8 @@ class CreateTblTreatmentsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_treatments');
+        Schema::enableForeignKeyConstraints();
     }
 }

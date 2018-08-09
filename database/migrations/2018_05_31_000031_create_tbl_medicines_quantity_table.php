@@ -14,11 +14,14 @@ class CreateTblMedicinesQuantityTable extends Migration
     public function up()
     {
         Schema::create('tbl_medicines_quantity', function (Blueprint $table) {
-            $table->integer('medicine_id');
-            $table->integer('treatment_detail_id');
+            $table->integer('medicine_id')->unsigned();
+            $table->integer('treatment_detail_id')->unsigned();
             $table->integer('quantity');
             $table->primary(array('medicine_id', 'treatment_detail_id'),'medicine_of_detail');
             $table->timestamps();
+
+            $table->foreign('medicine_id')->references('id')->on('tbl_medicines');
+            $table->foreign('treatment_detail_id')->references('id')->on('tbl_treatment_details');
         });
     }
 
@@ -29,6 +32,8 @@ class CreateTblMedicinesQuantityTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_medicines_quantity');
+        Schema::enableForeignKeyConstraints();
     }
 }

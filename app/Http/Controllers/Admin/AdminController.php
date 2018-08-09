@@ -59,15 +59,36 @@ class AdminController extends Controller
     {
         DB::beginTransaction();
         try {
-            //role
-          
-            //user
-          
-      
+            $this->initUser();
+            $this->initRole();
+            $this->initNew();
+            $this->initType();
+            $this->initAnamnesisCatalog();
+            $this->initTreatmentCategory();
+            $this->initMedicine();
+            $this->initTooth();
+            $this->initStep();
             $this->initAddress();
+            $this->initUserHasRole();
+            $this->initStaff();
+            $this->initAppointment();
+            $this->initPatient();
+            $this->initNewType();
+            $this->initPatientOfAppointment();
+            $this->initTreatment();
+            $this->initPaymentDetail();
+            $this->initTreatmentHistory();
+            $this->initTreatmentDetail();
+            $this->initTreatmentStep();
+            $this->initEvent();
+            $this->initRequestAbsent();
+            $this->initAbsent();
+            $this->initTreatmentDetailStep();
+
+
             $this->initClientToken();
 
-            DB::commit(); 
+            DB::commit();
         } catch (\Exception $e) {
             Log::info("INIT ERROR: " . $e->getMessage());
             DB::rollback();
@@ -101,7 +122,14 @@ class AdminController extends Controller
                 'phone' => '01279011096',
                 'password' => Hash::make('123123123'),
             ]);
-         
+          User::create([
+                'phone' => '01279011097',
+                'password' => Hash::make('123123123'),
+            ]); User::create([
+                'phone' => '01279011099',
+                'password' => Hash::make('123123123'),
+            ]);
+
             User::create([
                 'phone' => '01279011098',
                 'password' => Hash::make('123123123'),
@@ -291,8 +319,13 @@ class AdminController extends Controller
     }
     public function initUserHasRole(){
         UserHasRole::create([
-        'phone' => '0903056987',
-        'role_id' => 4,
+        'phone' => '01279011097',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]); UserHasRole::create([
+        'phone' => '01279011099',
+        'role_id' => 3,
         'start_time' => Carbon::now(),
         'end_time' => null
         ]);
@@ -520,19 +553,19 @@ class AdminController extends Controller
         ]);
     }
     public function initStaff(){
+        User::create([
+            'phone' => '0000000000',
+            'password' => Hash::make('123'),
+        ]);
          Staff::create([
                 'name' => 'Paypal test',
                 'degree' => 'Paypal',
                 'address' => 'Paypal',
-                'district_id' => '0',
+                'district_id' => 16,
                 'phone' => '0000000000',
                 'date_of_birth' => '1900-01-01',
                 'gender' => 'Nam',
                 'email' =>'abc@gmail.com'
-            ]);
-            User::create([
-                'phone' => '0000000000',
-                'password' => Hash::make('123'),
             ]);
             UserHasRole::create([
                 'phone' => '0000000000',
@@ -546,6 +579,25 @@ class AdminController extends Controller
                 'address' => '188 Nguyễn xí',
                 'district_id' => 1,
                 'phone' => '01279011096',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'Nữ',
+                'email' =>'abc@gmail.com'
+            ]);
+            Staff::create([
+                'name' => 'Võ Công Minh',
+                'degree' => 'Thạc Sĩ',
+                'address' => '188 Nguyễn Kiệm',
+                'district_id' => 1,
+                'phone' => '01279011097',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'Nữ',
+                'email' =>'abasc@gmail.com'
+            ]);Staff::create([
+                'name' => 'Võ Công Minh',
+                'degree' => 'Thạc Sĩ',
+                'address' => '188 Nguyễn Kiệm',
+                'district_id' => 1,
+                'phone' => '01279011099',
                 'date_of_birth' => '1996-10-01',
                 'gender' => 'Nữ',
                 'email' =>'abc@gmail.com'

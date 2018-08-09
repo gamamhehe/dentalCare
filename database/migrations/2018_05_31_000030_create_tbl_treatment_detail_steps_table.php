@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFirebaseTokensTable extends Migration
+class CreateTblTreatmentDetailStepsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateFirebaseTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_firebase_tokens', function (Blueprint $table) {
+        Schema::create('tbl_treatment_detail_steps', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("phone");
-            $table->string("noti_token",500)->nullable();
+            $table->integer('treatment_detail_id')->unsigned();
+            $table->integer('step_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('treatment_detail_id')->references('id')->on('tbl_treatment_details');
+            $table->foreign('step_id')->references('id')->on('tbl_steps');
         });
     }
 
@@ -29,7 +32,7 @@ class CreateFirebaseTokensTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('tbl_firebase_tokens');
+        Schema::dropIfExists('tbl_treatment_detail_steps');
         Schema::enableForeignKeyConstraints();
     }
 }
