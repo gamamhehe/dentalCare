@@ -15,44 +15,39 @@ class BlockchainController extends Controller
 
     public function GenerateKey()
     {
-        $config = array(
-            "digest_alg" => "sha512",
-            "private_key_bits" => 512,
-            "private_key_type" => OPENSSL_KEYTYPE_RSA,
+        $payment = Payment::where('id', '=', 1)->first();
+        $rsa = new RSA();
+        $key = $rsa->createKey();
+        $privateKey = $key['privatekey'];
+        $publicKey = $key['publickey'];
+        $paymentArray = array(
+            'id' => $payment->id,
+            'paid' => $payment->paid,
+            'total_price' => $payment->total_price,
+            'phone' => $payment->phone,
+            'is_done' => $payment->is_done,
+            'created_at' => $payment->created_at,
+            'type' => 1 // 1 is create payment
         );
-        // Create the private and public key
-        $res = openssl_pkey_new($config);
-        // Extract the private key from $res to $privKey
-        openssl_pkey_export($res, $privKey);
-
-    // Extract the public key from $res to $pubKey
-        $pubKey = openssl_pkey_get_details($res);
-        $pubKey = $pubKey["key"];
-        var_dump($pubKey);
-        dd($privKey);
-        $data = 'a';
-    // Encrypt the data to $encrypted using the public key
-        openssl_public_encrypt($data, $encrypted, $pubKey);
+        $jsonPayment = json_encode($paymentArray);
+        $plaintext = "1222,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1";
+        $method = 'aes-256-cbc';
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
 //
-//    // Decrypt the data using the private key and store the results in $decrypted
-        openssl_private_decrypt($encrypted, $decrypted, $privKey);
-//        var_dump($encrypted);
-         dd($decrypted);
+        $encrypted = base64_encode(openssl_encrypt($plaintext, $method, '1', OPENSSL_RAW_DATA, $iv));
+        $enc = $this->encrypt($encrypted, $publicKey);
+        $data = $this->decrypt($enc, $privateKey);
+        $decrypted = openssl_decrypt(base64_decode($data), $method, '1',OPENSSL_RAW_DATA, $iv);
+        dd($decrypted);
     }
 
     public function EncryptCreatePayment($id)
     {
 
-        $rsa = new RSA();
-        $key = $rsa->createKey();
-        $privateKey = $key['privatekey'];
-        $publicKey = $key['publickey'];
-        $plaintext = '0123';
-        $password = '123456';
-        $method = 'aes-256-cbc';
-        $payment= Payment::where('id', '=', $id) -> first();
+
+        $payment = Payment::where('id', '=', $id)->first();
         $pubKey = '-----BEGIN PUBLIC KEY----- MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANMA8OGlPPizwjZeX5G1vSLRzH/jT4xc +FtRSzgW1lrl/HWfMGSlqskdQNbgxtwMFJVu0cN8ymBsEkRPBwwDTr0CAwEAAQ== -----END PUBLIC KEY-----';
-        
+
 //        $history = TreatmentHistory::where('patient_id', '=', $patientId) -> first();
 //
 //        $nameHop = 'Thanh Hung';
@@ -67,18 +62,18 @@ class BlockchainController extends Controller
 //
 //        );
         $paymentArray = array(
-            'id' => $payment -> id ,
-            'paid' => $payment -> paid,
-            'total_price' => $payment -> total_price,
-            'phone' => $payment -> phone,
-            'is_done' => $payment -> is_done,
-            'created_at' => $payment -> created_at,
+            'id' => $payment->id,
+            'paid' => $payment->paid,
+            'total_price' => $payment->total_price,
+            'phone' => $payment->phone,
+            'is_done' => $payment->is_done,
+            'created_at' => $payment->created_at,
             'type' => 1 // 1 is create payment
         );
         $jsonPayment = json_encode($paymentArray);
         var_dump($jsonPayment);
 //        $mainJson = json_encode(array_merge($jsonHistory,$jsonServer));
-        $encrypted =openssl_pkey_get_private ($jsonPayment, $pubKey);
+        $encrypted = openssl_pkey_get_private($jsonPayment, $pubKey);
 
 //        $priKey = $key -> private_key;
         var_dump($encrypted);
@@ -87,8 +82,8 @@ class BlockchainController extends Controller
     public function DecryptTreatmentHistory()
     {
         $patientId = '1';
-        $key = Key::where('patient_id', '=', $patientId) -> first();
-        $priKey = $key -> public_key;
+        $key = Key::where('patient_id', '=', $patientId)->first();
+        $priKey = $key->public_key;
 
         //
 
@@ -123,23 +118,23 @@ class BlockchainController extends Controller
 ////        dd($decrypted);
 //    }
 //
-//    public function encrypt($data, $pubKey)
-//    {
-//        if (openssl_public_encrypt($data, $encrypted, $pubKey))
-//            $data = base64_encode($encrypted);
-//        else
-//            throw new Exception('Unable to encrypt data. Perhaps it is bigger than the key size?');
-//
-//        return $data;
-//    }
-//
-//    public function decrypt($data, $priKey)
-//    {
-//        if (openssl_private_decrypt(base64_decode($data), $decrypted, $priKey))
-//            $data = $decrypted;
-//        else
-//            $data = '123';
-//
-//        return $data;
-//    }
+    public function encrypt($data, $pubKey)
+    {
+        if (openssl_public_encrypt($data, $encrypted, $pubKey))
+            $data = base64_encode($encrypted);
+        else
+            throw new Exception('Unable to encrypt data. Perhaps it is bigger than the key size?');
+
+        return $data;
+    }
+
+    public function decrypt($data, $priKey)
+    {
+        if (openssl_private_decrypt(base64_decode($data), $decrypted, $priKey))
+            $data = $decrypted;
+        else
+            $data = '123';
+
+        return $data;
+    }
 }
