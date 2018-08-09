@@ -14,9 +14,9 @@ use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 use Spatie\Async\Task;
 
-class CheckingThread extends Task
+class ClassCheckingStatus
 {
-    use QueueBusinessFunction, BlockchainBusinessFunction, NodeInfoBusinessFunction;
+    use QueueBusinessFunction, BlockchainBusinessFunction;
     private $data_encrypt;
 
     public function __construct($data_encrypt)
@@ -24,38 +24,38 @@ class CheckingThread extends Task
         $this->data_encrypt = $data_encrypt;
     }
 
-    public function configure()
+    public function checkingStatusContinously()
     {
-        // TODO: Implement configure() method.
-    }
-
-    public function run()
-    {
-//        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
+//            $id = $this->addToAllNodeInNetWork($this->data_encrypt);
+//        $id = 2;
 //        while (true) {
 //            $status = $this->checkStatus($id);
 //            if ($status == 2) {
+//                //Tạo hash, preHash
+//                //add vào blockchain
 //                //Lấy sổ cái mới nhất
 //                $newestLedger = $this->getNewestDataJson();
 //                $this->sendToAll($newestLedger);
 //                break;
 //            }
-//            sleep(60 * 10);
+//            sleep(2);
 //        }
-        return 'success';
+            $this->createNewRecordInQueue('success_2',1,'127.0.0.1');
     }
 
-    private function sendToAll($newestLedger)
+    private
+    function sendToAll($newestLedger)
     {
         $listNode = $this->getListNode();
         foreach ($listNode as $node) {
             $ip = $node->ip;
-            $url = $ip . '/createNewLedger?newest_ledger=' . $newestLedger; //the ip of current server
+            $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger; //the ip of current server
             $this->callTheURL($url);
         }
     }
 
-    private function get_data($url)
+    private
+    function get_data($url)
     {
         $ch = curl_init();
         $timeout = 5;

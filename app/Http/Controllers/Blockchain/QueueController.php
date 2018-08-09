@@ -33,36 +33,43 @@ class QueueController extends Controller
         return $this->checkStatus($id);
     }
 
-//    public function threadQueue(Request $request){
-//        $data_encrypt = $request->data_encrypt;
-//        BlockchainQueue::dispatch((new BlockchainQueue($data_encrypt))->release(10));
-//    }
-//
-    public function checkExist(Request $request)
+    public function threadQueue(Request $request)
+    {
+        $data_encrypt = $request->data_encrypt;
+        $obj = new ClassCheckingStatus($data_encrypt);
+        $function = array($obj, 'checkingStatusContinously');
+//        call_user_func($function);
+        BlockchainQueue::dispatch(new BlockchainQueue($function));
+    }
+
+
+    public
+    function checkExist(Request $request)
     {
         return json_encode($this->isExist($request->ip));
     }
 
-    public function checkingThread()
-    {
-//        $data_encrypt = $request->data_encrypt;
-
-//        $pool = Pool::create()->status();
+//
+//    public function checkingThread()
+//    {
+////        $data_encrypt = $request->data_encrypt;
+//
+////        $pool = Pool::create()->status();
+////        $pool = Pool::create();
+////        $pool->add(new CheckingThread($data_encrypt));
 //        $pool = Pool::create();
-//        $pool->add(new CheckingThread($data_encrypt));
-        $pool = Pool::create();
-
-        foreach (range(1, 5) as $i) {
-            $pool[] = async(function () {
-                usleep(random_int(10, 1000));
-
-                return 2;
-            })->then(function (int $output) {
-                $this->counter += $output;
-            });
-        }
-
-        await($pool);
-    }
+//
+//        foreach (range(1, 5) as $i) {
+//            $pool[] = async(function () {
+//                usleep(random_int(10, 1000));
+//
+//                return 2;
+//            })->then(function (int $output) {
+//                $this->counter += $output;
+//            });
+//        }
+//
+//        await($pool);
+//    }
 
 }
