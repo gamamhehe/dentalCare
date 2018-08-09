@@ -12,41 +12,41 @@ namespace App\Http\Controllers\Blockchain;
 use App\Http\Controllers\BusinessFunction\BlockchainBusinessFunction;
 use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
+use Spatie\Async\Task;
 
-class CheckingThread extends \Thread
+class CheckingThread extends Task
 {
-    use QueueBusinessFunction,BlockchainBusinessFunction,NodeInfoBusinessFunction;
+    use QueueBusinessFunction, BlockchainBusinessFunction, NodeInfoBusinessFunction;
     private $data_encrypt;
-    //ip of the server that store the queue
-    private $ip = '';
 
-    public function __construct($ip, $data_encrypt)
+    public function __construct($data_encrypt)
     {
-        $this->ip = $ip;
         $this->data_encrypt = $data_encrypt;
+    }
+
+    public function configure()
+    {
+        // TODO: Implement configure() method.
     }
 
     public function run()
     {
-        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
-        while (true) {
-            $status =$this->get_data($this->ip . '/checkStatus?id='.$this->id);
-            if ($status != 'waiting') {
-                $listNode = getListNode();
-                foreach ($listNode as $node) {
-                    $this->get_data($node->ip . '/createNewLedger?ip='.$this->ip);
-                }
-            }else if($status == 'done'){
-                //Lấy sổ cái mới nhất
-                $newestLedger = $this->getNewestDataJson();
-                $this->sendToAll($newestLedger);
-                break;
-            }
-            sleep(60 * 10);
-        }
+//        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
+//        while (true) {
+//            $status = $this->checkStatus($id);
+//            if ($status == 2) {
+//                //Lấy sổ cái mới nhất
+//                $newestLedger = $this->getNewestDataJson();
+//                $this->sendToAll($newestLedger);
+//                break;
+//            }
+//            sleep(60 * 10);
+//        }
+        return 'success';
     }
 
-    private function sendToAll($newestLedger){
+    private function sendToAll($newestLedger)
+    {
         $listNode = $this->getListNode();
         foreach ($listNode as $node) {
             $ip = $node->ip;
@@ -66,4 +66,6 @@ class CheckingThread extends \Thread
         curl_close($ch);
         return $data;
     }
+
+
 }

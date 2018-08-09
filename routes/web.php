@@ -261,8 +261,9 @@ Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
 Route::get('/saveNewLedger', 'Blochchain\BlockchainController@saveNewLedger');
 Route::get('/checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
 Route::get('/test', 'Blockchain\BlockchainController@test');
-Route::get('/threadQueue', 'Blockchain\QueueController@threadQueue');
+//Route::get('/threadQueue', 'Blockchain\QueueController@threadQueue');
 Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
+Route::get('/thread','Blockchain\QueueController@checkingThread');
 use App\Model\NodeInfo;
 Route::get('/getAllNode', function (){
     return NodeInfo::all();

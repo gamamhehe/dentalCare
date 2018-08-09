@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -35,29 +36,22 @@ class BlockchainQueue implements ShouldQueue
 
     public function handle()
     {
-        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
-        echo $id;
-//        $status = Queue::find($id);
-//        echo $status;
-//        while (true) {
-//
-////            if ($status != 'waiting') {
-////                $listNode = $this->getListNode();
-////                foreach ($listNode as $node) {
-////                    $this->get_data($node->ip . '/saveNewLedger?ip='.$this->ip);
-////                }
-//            if ($status == 2) {
-//                //Lấy sổ cái mới nhất
-//                $newestLedger = $this->getNewestDataJson();
-//                $this->sendToAll($newestLedger);
-//                break;
-//            }
-//            echo 1;
-//            sleep(10);
-//        }
+//        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
+        $id = 2;
+        $status = $this->checkStatus($id);
+//            if ($status != 'waiting') {
+//                $listNode = $this->getListNode();
+//                foreach ($listNode as $node) {
+//                    $this->get_data($node->ip . '/saveNewLedger?ip='.$this->ip);
+//                }
+        if ($status == 2) {
+            //Lấy sổ cái mới nhất
+            $newestLedger = $this->getNewestDataJson();
+            $this->sendToAll($newestLedger);
+        }
+        sleep(2);
     }
 
-//    }
 
     private
     function sendToAll($newestLedger)
