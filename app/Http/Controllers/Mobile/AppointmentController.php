@@ -113,26 +113,27 @@ class AppointmentController extends BaseController
             $dentistId = $request->input('dentist_id');
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
-            $name = $request->input('name');
+            $name = $request->input('name');$user = $this->getUserByPhone($phone);
+            $isNewUser= false;
+            if ($user == null) {
+                $user = new User();
+                $user->phone = $phone;
+                $user->password = Hash::make($phone);
+
+                $userHasRole = new UserHasRole();
+                $userHasRole->phone = $phone;
+                $userHasRole->role_id = 1;
+                $userHasRole->start_time = Carbon::now();
+                $this->createUser($user, $userHasRole);
+                $isNewUser = true;
+            }
             $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $name);
             if ($result != null) {
                 $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
                 $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
                 $this->dispatch(new SendSmsJob($phone, $smsMessage));
-                $user = $this->getUserByPhone($phone);
-                if ($user == null) {
-                    $user = new User();
-                    $user->phone = $phone;
-                    $user->password = Hash::make($phone);
-
-                    $userHasRole = new UserHasRole();
-                    $userHasRole->phone = $phone;
-                    $userHasRole->role_id = 1;
-                    $userHasRole->start_time = Carbon::now();
-                    $this->createUser($user, $userHasRole);
-
-                    Log::info("USER NULL KHONGOHKAO");
+                if ($isNewUser) {
                     $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
                 }
                 return response()->json($listAppointment, 200);
