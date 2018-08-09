@@ -42,7 +42,7 @@ trait QueueBusinessFunction
     {
         $currentIp = $_SERVER['REMOTE_ADDR']; //dd($_SERVER) for more details
         $listNode = $this->getListNode();
-        $id;
+        $id = 0;
         foreach ($listNode as $node) {
             $ip = $node->ip;
             $url = $ip . '/addToQueue?data_encrypt=' . $data_encrypt . '&ip=' . $currentIp; //the ip of current server

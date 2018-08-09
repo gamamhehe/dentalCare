@@ -19,7 +19,7 @@ trait NodeInfoBusinessFunction
 {
     public function isExist($ip)
     {
-        $check = NodeInfo::where('ip','=',$ip);
+        $check = NodeInfo::where('ip','=',$ip)->first();
         if ($check != null) {
             return true;
         }

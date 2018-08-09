@@ -10,6 +10,7 @@ use App\Model\NodeInfo;
 use App\Model\Queue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use function MongoDB\BSON\toJSON;
 
 class QueueController extends Controller
 {
@@ -34,5 +35,9 @@ class QueueController extends Controller
         $data_encrypt = $request->data_encrypt;
         BlockchainQueue::dispatch($data_encrypt);
     }
+//
+//    public function checkExist(Request $request){
+//        return json_encode($this->isExist($request->ip));
+//    }
 
 }
