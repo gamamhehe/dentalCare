@@ -12,8 +12,7 @@ use App\Http\Controllers\Controller;
 
 class QueueController extends Controller
 {
-    //Add new record to queue and waiting for processing
-    //Nguyen Dinh Phu. Last edit: 14-Jul-18
+
     use QueueBusinessFunction;
     public function addToQueue(Request $request)
     {
@@ -24,8 +23,6 @@ class QueueController extends Controller
     }
 
 
-    //check status of the record after add to queue
-    //Nguyen Dinh Phu. Last edit: 12-Jul-18
     public function checkStatusOfRecord(Request $request)
     {
         $id = $request->id;

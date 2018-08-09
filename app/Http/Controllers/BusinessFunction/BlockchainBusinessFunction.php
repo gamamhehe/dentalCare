@@ -17,7 +17,7 @@ use Carbon\Carbon;
 
 trait BlockchainBusinessFunction
 {
-    public function createNewAll($ledgerInJson){
+    public function saveNewAll($ledgerInJson){
         $ledgerObject = json_decode($ledgerInJson, true);
         if ($ledgerObject != null) {
             Blockchain::query()->delete();

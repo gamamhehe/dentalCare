@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 trait QueueBusinessFunction
 {
     use NodeInfoBusinessFunction;
-    //Nguyen Dinh Phu. Last edit: 14-Jul-18
+
     public function createNewRecordInQueue($data_encrypt, $status, $ip)
     {
         $checkExistIp = $this->isExist($ip);
@@ -42,11 +42,13 @@ trait QueueBusinessFunction
     {
         $currentIp = $_SERVER['HOSTNAME']; //dd($_SERVER) for more details
         $listNode = $this->getListNode();
+        $id = -1;
         foreach ($listNode as $node) {
             $ip = $node->ip;
             $url = $ip . '/addToQueue?data_encrypt=' . $data_encrypt . '&ip=' . $currentIp; //the ip of current server
-            $this->callTheURL($url);
+            $id = $this->callTheURL($url);
         }
+        return $id; // all id is the same
     }
 
     private function callTheURL($url)

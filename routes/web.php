@@ -256,3 +256,8 @@ use App\Events\ReceiveAppointment;
 
 Route::get('/broadcastReception', 'Admin\HomeController@testFunction');
 
+//blockchain
+Route::get('addToQueue', 'Blockchain\QueueController@addToQueue');
+Route::get('saveNewLedger', 'Blochchain\BlockchainController@saveNewLedger');
+Route::get('checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
+Route::get('test', 'Blockchain\BlockchainController@test');

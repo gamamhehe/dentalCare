@@ -80,16 +80,14 @@ class BlockchainController extends Controller
     }
 
     use BlockchainBusinessFunction;
-    //get ledger from another server and save to tbl_blockchains
-    //Nguyen Dinh Phu. Last edit: 12-Jul-18
-    public function createNewLedger(Request $request)
+    public function saveNewLedger(Request $request)
     {
         $newestLedger = $request->newest_ledger;
-        return $this->createNewAll($newestLedger);
+        return $this->saveNewAll($newestLedger);
     }
-
 
     public function test(){
         dd($_SERVER['REMOTE_ADDR']);
     }
+
 }
