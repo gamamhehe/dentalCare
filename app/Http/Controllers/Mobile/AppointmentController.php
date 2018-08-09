@@ -133,7 +133,7 @@ class AppointmentController extends BaseController
                     $this->createUser($user, $userHasRole);
 
                     Log::info("USER NULL KHONGOHKAO");
-                    dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
+                    $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
                 }
                 return response()->json($listAppointment, 200);
             } else {
