@@ -17,6 +17,7 @@ use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 
 class BlockchainController extends Controller
 {
+    use NodeInfoBusinessFunction, BlockchainBusinessFunction;
 
     public function GenerateKey()
     {
@@ -79,15 +80,18 @@ class BlockchainController extends Controller
 //        var_dump($decrypted);
     }
 
-    use BlockchainBusinessFunction;
+
     public function saveNewLedger(Request $request)
     {
         $newestLedger = $request->newest_ledger;
         return $this->saveNewAll($newestLedger);
     }
 
-    public function test(){
-        dd($_SERVER['REMOTE_ADDR']);
+    public function test()
+    {
+        $ledger = $this->getLedger();
+        $this->sendToAll($ledger);
     }
+
 
 }

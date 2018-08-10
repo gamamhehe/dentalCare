@@ -33,11 +33,10 @@ class ClassCheckingStatus
             while (true) {
                 $status = $this->checkStatus($id - 1);
                 if ($status == 2) {
-//                    $newestLedger = $this->getNewestDataJson();
-//                    $newestLedger += $this->data_encrypt;
+                    $newestLedger = json_decode($this->getNewestDataJson(), true);
+//                    array_add($newestLedger, json_decode($this->data_encrypt));
                     $this->updateAllQueue($id);
-//                    $this->sendToAll($newestLedger);
-//                    $this->updateRecordById($id);
+                    $this->sendToAll(json_encode($newestLedger));
                     break;
                 }
                 sleep(2);
