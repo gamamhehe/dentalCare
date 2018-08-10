@@ -60,10 +60,10 @@ class QueueController extends Controller
         return json_encode($this->isExist($request->ip));
     }
 
-    public function updateAll(Request $request){
-        $id = $request->id;
-        $this->updateAllQueue($id);
+    public function checkingThread(Request $request){
+        $data = $request->data_encrypt;
+        $obj = new ClassCheckingStatus($data);
+        $obj->checkingStatusContinously();
     }
-
 
 }

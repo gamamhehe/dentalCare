@@ -28,6 +28,7 @@ class ClassCheckingStatus
     {
 //        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
         $id = 3;
+        $result = '';
         if (is_integer($id)) {
             while (true) {
                 $status = $this->checkStatus($id - 1);
@@ -36,8 +37,10 @@ class ClassCheckingStatus
 //                    $newestLedger += $this->data_encrypt;
                     $this->updateAllQueue($id);
 //                    $this->sendToAll($newestLedger);
+//                    $this->updateRecordById($id);
                     break;
                 }
+                sleep(2);
             }
         }
     }
@@ -55,7 +58,6 @@ class ClassCheckingStatus
             }
         }
     }
-
 
 
     private

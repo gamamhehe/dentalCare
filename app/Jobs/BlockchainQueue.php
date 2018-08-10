@@ -17,6 +17,7 @@ use App\Model\Queue;
 class BlockchainQueue implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use QueueBusinessFunction;
 
     protected $process_function;
 
@@ -38,7 +39,7 @@ class BlockchainQueue implements ShouldQueue
 
     public function handle()
     {
-        $this->processFunction;
+        call_user_func($this->process_function);
     }
 
 

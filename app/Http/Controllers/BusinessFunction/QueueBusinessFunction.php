@@ -36,7 +36,6 @@ trait QueueBusinessFunction
                 return $e->getMessage();
             }
         }
-        return '';
     }
 
     public function addToAllNodeInNetWork($data_encrypt)
