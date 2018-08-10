@@ -33,7 +33,7 @@ Route::get("medicine/all", "Mobile\MedicineController@getAll");
 ///feedback
 Route::post('feedback/create', "Mobile\FeedbackController@create");
 //firebase
-Route::get("firebase/notify", "Mobile\FirebaseController@sendNotification");
+Route::post("firebase/notify", "Mobile\FirebaseController@sendNotification");
 Route::post("appointment/book", "Mobile\AppointmentController@bookAppointment");
 Route::get("testpassport", "Mobile\UserController@testPassport");
 Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPaymentPaypal");
