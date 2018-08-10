@@ -18,6 +18,7 @@ use App\Model\FirebaseToken;
 use App\Model\PatientOfAppointment;
 use Exception;
 use Illuminate\Http\Request;
+use Pusher\Pusher;
 
 class PatientController extends BaseController
 {
@@ -147,28 +148,30 @@ class PatientController extends BaseController
             if ($appointment === null) {
                 $error = $this->getErrorObj("Bệnh nhân chưa có lịch hẹn", "No Exception");
                 return response()->json($error, 417);
-            } else if ($appointment) {
+            } else {
                 $appointment->status = 1;
                 $this->saveAppointment($appointment, $patientId);
-//                $options = array(
-//                    'cluster' => 'ap1',
-//                    'encrypted' => true
-//                );
-//                $pusher = new Pusher(
-//                    'e3c057cd172dfd888756',
-//                    '993a258c11b7d6fde229',
-//                    '562929',
-//                    $options
-//                );
-//                $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
+                $this->updateNumAppWebsite($appointment);
                 $this->sendFirebaseReloadAppointment($appointment->staff_id);
                 $successResponse = $this->getSuccessObj(200, "OK", "Nhận bệnh thành công", "No Exception");
                 return response()->json($successResponse, 200);
-            } else {
-                $error = $this->getErrorObj("Lỗi không xác dịnh", "No Exception");
-                return response()->json($error, 400);
             }
         }
+    }
+
+    public function updateNumAppWebsite($appointment)
+    {
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+        $pusher = new Pusher(
+            'e3c057cd172dfd888756',
+            '993a258c11b7d6fde229',
+            '562929',
+            $options
+        );
+        $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
     }
 
     public function sendFirebaseReloadAppointment($staffId)

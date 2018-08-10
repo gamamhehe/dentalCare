@@ -588,6 +588,7 @@ trait AppointmentBussinessFunction
                 if (in_array($appointment->staff_id, $listCurrentFreeDentist)) {
                     return $appointment;
                 } else {
+                    //nha sĩ bận
                     return false;
                 }
             }
