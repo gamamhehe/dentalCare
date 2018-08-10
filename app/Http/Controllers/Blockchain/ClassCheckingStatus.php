@@ -27,33 +27,36 @@ class ClassCheckingStatus
     public function checkingStatusContinously()
     {
 //        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
-        $id = 2;
-        while (true) {
-            $status = $this->checkStatus($id);
-            if ($status == 2) {
-                //Tạo hash, preHash
-                //add vào blockchain
-                //Lấy sổ cái mới nhất
-//                $newestLedger = $this->getNewestDataJson();
-//                $this->sendToAll($newestLedger);
-//                $this->createNewRecordInQueue('done',1,'127.0.0.1');
-                break;
+        $id = 3;
+        if (is_integer($id)) {
+            while (true) {
+                $status = $this->checkStatus($id - 1);
+                if ($status == 2) {
+//                    $newestLedger = $this->getNewestDataJson();
+//                    $newestLedger += $this->data_encrypt;
+                    $this->updateAllQueue($id);
+//                    $this->sendToAll($newestLedger);
+                    break;
+                }
             }
-            sleep(2);
         }
-
     }
 
     private
     function sendToAll($newestLedger)
     {
         $listNode = $this->getListNode();
+        $currentIp = $_SERVER['REMOTE_ADDR'];
         foreach ($listNode as $node) {
             $ip = $node->ip;
-            $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger; //the ip of current server
-            $this->callTheURL($url);
+            if ($ip != $currentIp) {
+                $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger; //the ip of current server
+                $this->callTheURL($url);
+            }
         }
     }
+
+
 
     private
     function get_data($url)
@@ -67,6 +70,5 @@ class ClassCheckingStatus
         curl_close($ch);
         return $data;
     }
-
 
 }

@@ -16,6 +16,7 @@ use App\RequestAbsent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait QueueBusinessFunction
 {
@@ -51,6 +52,22 @@ trait QueueBusinessFunction
         return $id; // all id is the same
     }
 
+    public function updateRecordById($id)
+    {
+        DB::beginTransaction();
+        try {
+            $record = Queue::find($id);
+            $record->status = 2;
+            $record->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::info('Error in QueueBussinessFunction: '.$e->getMessage());
+            return false;
+        }
+    }
+
     private function callTheURL($url)
     {
         $ch = curl_init();
@@ -63,10 +80,21 @@ trait QueueBusinessFunction
         return $data;
     }
 
+    public function updateAllQueue($id)
+    {
+        $result = '';
+        $listNode = $this->getListNode();
+        foreach ($listNode as $node) {
+            $ip = $node->ip;
+            $url = $ip . '/updateQueue?id=' . $id;
+            $result = $this->callTheURL($url);
+        }
+    }
+
+
     public function checkStatus($id)
     {
         return Queue::find($id)->status;
     }
-
 
 }

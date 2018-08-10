@@ -18,16 +18,16 @@ class BlockchainQueue implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $data_encrypt;
+    protected $process_function;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data_encrypt)
+    public function __construct($func)
     {
-        $this->data_encrypt = $data_encrypt;
+        $this->process_function = $func;
     }
 
     /**
@@ -38,10 +38,7 @@ class BlockchainQueue implements ShouldQueue
 
     public function handle()
     {
-//        $this->processFunction;
-//        $this->createNewRecordInQueue('success_3',1,'127.0.0.1');
-        $obj = new ClassCheckingStatus($this->data_encrypt);
-        $obj->checkingStatusContinously();
+        $this->processFunction;
     }
 
 

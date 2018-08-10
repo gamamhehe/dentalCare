@@ -35,19 +35,23 @@ class QueueController extends Controller
         return $this->checkStatus($id);
     }
 
+
     public function threadQueue(Request $request)
     {
         $data_encrypt = $request->data_encrypt;
-        $job = new BlockchainQueue($data_encrypt);
-        $this->dispatch($job);
+        $obj = new ClassCheckingStatus($data_encrypt);
+        $func = array($obj, 'checkingStatusContinously');
+        BlockchainQueue::dispatch($func);
         return 'success';
     }
 
-    public function updateQueue(){
-        $record = Queue::find(2);
-        $record->status = 2;
-        $record->save();
-        return 'success';
+    public function updateQueue(Request $request){
+        $id = $request->id;
+        $result = $this->updateRecordById($id);
+        if($result){
+            return 'success';
+        }
+        return 'fail';
     }
 
     public
@@ -55,5 +59,11 @@ class QueueController extends Controller
     {
         return json_encode($this->isExist($request->ip));
     }
+
+    public function updateAll(Request $request){
+        $id = $request->id;
+        $this->updateAllQueue($id);
+    }
+
 
 }

@@ -266,6 +266,8 @@ Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
 //Route::get('/thread','Blockchain\QueueController@checkingThread');
 Route::get('/updateQueue', 'Blockchain\QueueController@updateQueue');
 
+Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
+
 use App\Model\Queue;
 Route::get('/getAllQueue', function (){
     dd(Queue::all());
