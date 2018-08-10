@@ -93,7 +93,7 @@
                                     <tr class="even gradeC" align="left">
                                         <td style="text-align: center">{{$paymentDetail->staff}}</td>
                                         <td style="text-align: center">{{number_format($paymentDetail->received_money)}}</td>
-                                        <td style="text-align: center">{{$paymentDetail->date_create }}</td>
+                                        <td style="text-align: center">{{$paymentDetail->created_date }}</td>
                                     </tr>
                                 @endforeach
                             @endif

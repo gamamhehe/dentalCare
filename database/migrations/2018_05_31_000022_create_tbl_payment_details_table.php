@@ -17,7 +17,7 @@ class CreateTblPaymentDetailsTable extends Migration
             $table->increments('id');
             $table->integer('payment_id')->unsigned();
             $table->integer('staff_id')->unsigned();
-            $table->dateTime('date_create')->nullable();
+            $table->dateTime('created_date');
             $table->bigInteger('received_money');
             $table->timestamps();
             $table->foreign('staff_id')->references('id')->on('tbl_staffs');

@@ -154,7 +154,7 @@ class PaypalController extends Controller
             $paymentDetail = new PaymentDetail();
             $paymentDetail->payment_id = $request->session()->get('payment_id');
             $paymentDetail->received_money = $request->session()->get('amount', 0) ;
-            $paymentDetail->date_create = Carbon::now();
+            $paymentDetail->created_date = Carbon::now();
             $paymentDetail->staff_id = 1;
 
             $this->createPaymentDetail($paymentDetail);

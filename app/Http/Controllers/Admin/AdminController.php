@@ -2200,56 +2200,56 @@ class AdminController extends Controller
                 'staff_id' => 3,
                 'payment_id' => '1',
                 'receptionist_id' => '1',
-                'date_create' => '2018-06-13 20:08:18',
+                'created_date' => '2018-06-13 20:08:18',
                 'received_money' => '100000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '1',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-18 20:08:18',
+                'created_date' => '2018-06-18 20:08:18',
                 'received_money' => '200000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '2',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-14 20:08:18',
+                'created_date' => '2018-06-14 20:08:18',
                 'received_money' => '200000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '2',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-19 20:08:18',
+                'created_date' => '2018-06-19 20:08:18',
                 'received_money' => '400000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '3',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-19 20:08:18',
+                'created_date' => '2018-06-19 20:08:18',
                 'received_money' => '150000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '3',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-22 20:08:18',
+                'created_date' => '2018-06-22 20:08:18',
                 'received_money' => '450000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '4',
                 'receptionist_id' => '1',
-                'date_create' => '2018-06-22 20:08:18',
+                'created_date' => '2018-06-22 20:08:18',
                 'received_money' => '250000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '4',
                 'receptionist_id' => '1',
-                'date_create' => '2018-06-30 20:08:18',
+                'created_date' => '2018-06-30 20:08:18',
                 'received_money' => '250000',
             ]);
     }
