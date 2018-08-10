@@ -138,7 +138,7 @@ class PaymentController extends BaseController
             $paypalStaff = $this->getStaffByName('paypal');
             $paymentDetail->payment_id = $localPaymentId;
             $paymentDetail->received_money = $received_money;
-            $paymentDetail->date_create = Carbon::now();
+            $paymentDetail->created_date = Carbon::now();
             $paymentDetail->staff_id = $paypalStaff->id;
             $result = $this->updatePaymentModel($payment, $paymentDetail);
 //            $this->logInfo('userid: '.$user->id);
@@ -205,7 +205,7 @@ class PaymentController extends BaseController
                 $paymentDetail->payment_id = $payment->id;
                 $paymentDetail->staff_id = $staffId;
                 $paymentDetail->received_money = $amount;
-                $paymentDetail->date_create = Carbon::now();
+                $paymentDetail->created_date = Carbon::now();
                 $this->updatePaymentModel($payment, $paymentDetail);
                 $listPayment = $this->getPaymentByPhone($patientPhone);
 //                $successReponse = $this->getSuccessObj(200, "OK", "Thanh toán thành công", "No data");

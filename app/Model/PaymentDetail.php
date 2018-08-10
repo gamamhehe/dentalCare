@@ -8,7 +8,7 @@ class PaymentDetail extends Model
 {
     //
     protected $table = 'tbl_payment_details';
-    protected $fillable = ['id', 'payment_id', 'staff_id', 'date_create', 'received_money'];
+    protected $fillable = ['id', 'payment_id', 'staff_id', 'created_date', 'received_money'];
     public function beLongsToStaff(){
         return $this->belongsTo('App\Model\Staff','staff_id', 'id');
     }
