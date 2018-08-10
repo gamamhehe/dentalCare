@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Blockchain;
 use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 use App\Jobs\BlockchainQueue;
+use App\Jobs\SendSmsJob;
 use App\Model\Blockchain;
 use App\Model\NodeInfo;
 use App\Model\Queue;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use function MongoDB\BSON\toJSON;
@@ -36,40 +38,22 @@ class QueueController extends Controller
     public function threadQueue(Request $request)
     {
         $data_encrypt = $request->data_encrypt;
-        $obj = new ClassCheckingStatus($data_encrypt);
-        $function = array($obj, 'checkingStatusContinously');
-//        call_user_func($function);
-        BlockchainQueue::dispatch(new BlockchainQueue($function));
+        $job = new BlockchainQueue($data_encrypt);
+        $this->dispatch($job);
+        return 'success';
     }
 
+    public function updateQueue(){
+        $record = Queue::find(2);
+        $record->status = 2;
+        $record->save();
+        return 'success';
+    }
 
     public
     function checkExist(Request $request)
     {
         return json_encode($this->isExist($request->ip));
     }
-
-//
-//    public function checkingThread()
-//    {
-////        $data_encrypt = $request->data_encrypt;
-//
-////        $pool = Pool::create()->status();
-////        $pool = Pool::create();
-////        $pool->add(new CheckingThread($data_encrypt));
-//        $pool = Pool::create();
-//
-//        foreach (range(1, 5) as $i) {
-//            $pool[] = async(function () {
-//                usleep(random_int(10, 1000));
-//
-//                return 2;
-//            })->then(function (int $output) {
-//                $this->counter += $output;
-//            });
-//        }
-//
-//        await($pool);
-//    }
 
 }

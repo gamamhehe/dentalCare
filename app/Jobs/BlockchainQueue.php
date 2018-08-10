@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\Blockchain\ClassCheckingStatus;
 use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -15,17 +17,17 @@ use App\Model\Queue;
 class BlockchainQueue implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    use QueueBusinessFunction, BlockchainBusinessFunction;
-    protected $processFunction;
+
+    protected $data_encrypt;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($processFunction)
+    public function __construct($data_encrypt)
     {
-        $this->processFunction = $processFunction;
+        $this->data_encrypt = $data_encrypt;
     }
 
     /**
@@ -36,7 +38,10 @@ class BlockchainQueue implements ShouldQueue
 
     public function handle()
     {
-        $this->processFunction;
+//        $this->processFunction;
+//        $this->createNewRecordInQueue('success_3',1,'127.0.0.1');
+        $obj = new ClassCheckingStatus($this->data_encrypt);
+        $obj->checkingStatusContinously();
     }
 
 

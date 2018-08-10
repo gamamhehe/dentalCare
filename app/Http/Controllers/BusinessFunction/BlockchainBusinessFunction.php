@@ -31,7 +31,7 @@ trait BlockchainBusinessFunction
                 $block->save();
                 $count++;
             }
-            return 'done';
+            return 'success';
         }
     }
 

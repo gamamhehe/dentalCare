@@ -26,21 +26,22 @@ class ClassCheckingStatus
 
     public function checkingStatusContinously()
     {
-//            $id = $this->addToAllNodeInNetWork($this->data_encrypt);
-//        $id = 2;
-//        while (true) {
-//            $status = $this->checkStatus($id);
-//            if ($status == 2) {
-//                //Tạo hash, preHash
-//                //add vào blockchain
-//                //Lấy sổ cái mới nhất
+//        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
+        $id = 2;
+        while (true) {
+            $status = $this->checkStatus($id);
+            if ($status == 2) {
+                //Tạo hash, preHash
+                //add vào blockchain
+                //Lấy sổ cái mới nhất
 //                $newestLedger = $this->getNewestDataJson();
 //                $this->sendToAll($newestLedger);
-//                break;
-//            }
-//            sleep(2);
-//        }
-            $this->createNewRecordInQueue('success_2',1,'127.0.0.1');
+//                $this->createNewRecordInQueue('done',1,'127.0.0.1');
+                break;
+            }
+            sleep(2);
+        }
+
     }
 
     private

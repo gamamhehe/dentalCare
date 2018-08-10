@@ -264,7 +264,12 @@ Route::get('/test', 'Blockchain\BlockchainController@test');
 Route::get('/jobQueue', 'Blockchain\QueueController@threadQueue');
 Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
 //Route::get('/thread','Blockchain\QueueController@checkingThread');
-use App\Model\NodeInfo;
-Route::get('/getAllNode', function (){
-    return NodeInfo::all();
+Route::get('/updateQueue', 'Blockchain\QueueController@updateQueue');
+
+use App\Model\Queue;
+Route::get('/getAllQueue', function (){
+    dd(Queue::all());
 });
+
+//Route::get('getJob', function (){
+//});
