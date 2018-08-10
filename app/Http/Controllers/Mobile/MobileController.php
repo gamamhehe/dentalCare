@@ -16,6 +16,7 @@ use App\Model\Appointment;
 use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Staff;
+use App\Model\User;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
@@ -120,7 +121,33 @@ class MobileController extends Controller
 
     public function test2(Request $request)
     {
+        $bookingDateDBFormat = '2018-08-09';
 
+        $listDentist = $this->getAvailableDentistAtDate($bookingDateDBFormat);
+        $NUM_OF_DENTIST = count($listDentist);
+        $this->logBugAppointment('NUM_DENTIST' . $NUM_OF_DENTIST);
+        $listAppointment = $this->getAppointmentsByStartTime($bookingDateDBFormat);
+//        $dentistObj = $this->getStaffById($dentistId);
+//        $predictAppointmentDate = new \DateTime();
+        $appointmentArray = $this->getListTopAppointment($listDentist, $bookingDateDBFormat);
+        usort($appointmentArray, array($this, "sortByTimeStamp"));
+        $equallyAppointment = [];
+        $equallyAppointment[] = $appointmentArray[0];
+
+        $this->arrangeEquallyAppointment($equallyAppointment, $appointmentArray, 1);
+
+
+        $arrApp = "";
+        foreach ($appointmentArray as $a) {
+            $arrApp .= $a['id'] . "__";
+
+        }
+        $arrApp2 = "";
+        foreach ($equallyAppointment as $a) {
+            $arrApp2 .= $a['id'] . "__";
+
+        }
+        return $arrApp . '<br>' . $arrApp2;
 
     }
 
@@ -160,7 +187,28 @@ class MobileController extends Controller
         ));
     }
 
+    public function sendFirebaseReloadAppointment($phone)
+    {
+        $user = User::where('phone', $phone)->first();
+        if ($user != null) {
+            $staff = $user->belongToStaff()->first();
+            if ($staff != null) {
+                $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
+                if ($staffFirebaseToken != null) {
 
+                    dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
+                            $staff->id,
+                            "No message",
+                            AppConst::ACTION_RELOAD_APPOINTMENT,
+                            $staffFirebaseToken->noti_token)
+                    );
+                }
+                $this->logInfo("Send sendFirebaseReloadAppointment func");
+            } else {
+                $this->logInfo("staff in sendFirebaseReloadAppointment null");
+            }
+        }
+    }
 
     public function test4()
     {
