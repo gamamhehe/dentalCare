@@ -29,12 +29,13 @@ class CreateTblStaffsTable extends Migration
             $table->timestamps();
 
             $table->foreign('district_id')->references('id')->on('tbl_districts');
+            $table->foreign('phone')->references('phone')->on('tbl_users');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
+     *a
      * @return void
      */
     public function down()
