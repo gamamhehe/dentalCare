@@ -87,7 +87,7 @@ trait TreatmentHistoryBusinessFunction
         return $treatmentHistories;
     }
 
-    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines, $images)
+    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines, $symptomIds, $images)
     {
 
         DB::beginTransaction();
@@ -121,6 +121,12 @@ trait TreatmentHistoryBusinessFunction
                 foreach ($medicines as $medicine) {
                     $medicine->treatment_detail_id = $tmDetailId;
                     $medicine->save();
+                }
+            }
+            if ($symptoms != null) {
+                foreach ($symptoms as $symptom) {
+                    $symptom->treatment_history_id = $tmHistoryId;
+                    $symptom->save();
                 }
             }
             Utilities::logDebug("tmDetail save");

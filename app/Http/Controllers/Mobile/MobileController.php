@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mobile;
 use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Jobs\ExcCustomFuncJob;
@@ -152,11 +153,6 @@ class MobileController extends BaseController
 
     }
 
-    public function testAppointment(Request $request)
-
-    {
-
-    }
 
     public function getDentistAppointment(Request $request)
 
@@ -183,12 +179,17 @@ class MobileController extends BaseController
 //            }
 //        }
 
-        $dateAgo = (new \DateTime())->modify('-8 day');
-        return $dateAgo->format('Y-m-d');
-//        return response()->json('-__-');
-//        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
-//            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
-//        ));
+//        $dateAgo = (new \DateTime())->modify('-8 day');
+//        return $dateAgo->format('Y-m-d');
+////        return response()->json('-__-');
+////        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
+////            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
+////        ));]
+        if ($this->isHavingFreeSlotAtDate('2018-08-12')) {
+            return response()->json("SUCC");
+        } else {
+            response()->json("ELSE");
+        }
     }
 
     public function sendFirebaseReloadAppointment($phone)
@@ -282,7 +283,7 @@ class MobileController extends BaseController
 //            Log::info("INFO OOO");
 //        };
         $ser = serialize($customObj);
-        Log::info("SER".$ser);
+        Log::info("SER" . $ser);
 //        $this->dispatch(new ExcCustomFuncJob(serialize($customObj)));
     }
 
@@ -406,6 +407,58 @@ class MobileController extends BaseController
         return response()->json($response);
     }
 
+    use PatientBusinessFunction;
+
+    public function testAppointment()
+    {
+        $timeRnd = ["00:25:00", "00:30:00", "00:35:00", "00:45:00", "00:55:00", "01:30:00"];
+        $timeNum = count($timeRnd);
+        $dateStr = (new DateTime())->format('Y-m-d');
+        $listPatient = $this->getListPatient();
+        $arrayPatient = $listPatient->toArray();
+        $listAvDentist = $this->getAvailableDentistAtDate($dateStr);
+        $listPhone = [];
+        foreach ($listPatient as $patient) {
+            $listPhone[] = $patient->belongsToUser()->first()->phone;
+        }
+        $isStaff = false;
+        $i = 0;
+        $sizeOfPatient = $listPatient->count();
+        $sizeOfPhone = count($listPhone);
+        $sizeOfDentist = count($listAvDentist);
+        $this->logInfo("SIZE PHONE: " . $sizeOfPhone);
+        $this->logInfo("SIZE DENTIST: " . $sizeOfDentist);
+        while ($i < 800 ) {
+            $patientPhone = $listPhone[rand(0, $sizeOfPhone - 1)];
+            if (!$isStaff) {  $this->logInfo("Staff false: " .
+                " patientPhone: " . $patientPhone .
+                " note : "
+            );
+                $this->createAppointment($dateStr, $patientPhone, "No note", null, null, null, null);
+            } else {
+                $rndTime = $timeRnd[rand(0, $timeNum-1)];
+                $patient = $arrayPatient[rand(0, $sizeOfPatient- 1)];
+                $dentist = $listAvDentist[rand(0, $sizeOfDentist- 1)];
+                $this->logInfo("Staff true: " .
+                    " patientPhone: " . $patientPhone .
+                    " note : " .
+                    " dentist id: " . $dentist['id'] .
+                    " patient id: " . $patient['id'] .
+                    " rndTime id: " . $rndTime
+                );
+                $this->createAppointment($dateStr, $patientPhone, "No note", $dentist['id'], $patient['id'], $rndTime, 'lucu');
+            }
+            $num = rand(0, 1);
+            if ($num == 0) {
+                $isStaff = false;
+            } else {
+                $isStaff = true;
+            }
+
+            $i++;
+        }
+        return response()->json("SUCCESS");
+    }
 
     public
     function testPOST(Request $request)

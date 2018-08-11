@@ -18,6 +18,7 @@ use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
 use App\Model\MedicinesQuantity;
+use App\Model\Symptom;
 use App\Model\TreatmentHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -50,6 +51,7 @@ class TreatmentHistoryController extends BaseController
             $medicineIds = $request->input('medicine_id');
             $medicineQuantitys = $request->input('medicine_quantity');
             $detailStepIds = $request->input('step_id');
+            $symptomIds = $request->input('symptom_id');
             $medicines = [];
             if ($medicineIds != null && count($medicineIds) > 0) {
                 for ($i = 0; $i < count($medicineIds); $i++) {
@@ -57,6 +59,14 @@ class TreatmentHistoryController extends BaseController
                     $medicine->medicine_id = $medicineIds[$i];
                     $medicine->quantity = $medicineQuantitys[$i];
                     $medicines[] = $medicine;
+                }
+            }
+            $symptoms = [];
+            if ($symptomIds != null && count($symptomIds) > 0) {
+                for ($i = 0; $i < count($symptomIds); $i++) {
+                    $symptom = new Symptom();
+                    $symptom->symptom_id = $symptomIds[$i];
+                    $symptoms[] = $symptom;
                 }
             }
 //            $paymentId = $request->input('payment_id');
@@ -83,6 +93,7 @@ class TreatmentHistoryController extends BaseController
                 $treatmentDetailNote,
                 $detailStepIds,
                 $medicines,
+                $symptoms,
                 $images);
             if ($result) {
                 $successResponse = $this->getSuccessObj(200, "OK", "Chỉnh sửa thành công", "No data");

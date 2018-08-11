@@ -57,6 +57,7 @@ Route::post("test3", "Mobile\MobileController@test3");
 Route::get("test4", "Mobile\MobileController@test4");
 Route::post("test4", "Mobile\MobileController@test4");
 Route::get("test5", "Mobile\MobileController@test5");
+Route::get("testAppointment", "Mobile\MobileController@testAppointment");
 Route::post("test5", "Mobile\MobileController@test5");
 Route::post("test5", "Mobile\MobileController@test5");
 Route::get("dentistAppointment", "Mobile\MobileController@getDentistAppointment");
