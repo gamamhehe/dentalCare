@@ -19,6 +19,7 @@ Route::post("user/register", "Mobile\UserController@register");
 Route::post("user/bookAppointment", "Mobile\UserController@bookAppointment");
 Route::get("user/resetPassword/{phone}", "Mobile\UserController@resetPassword");
 
+
 Route::get("city/all", "Mobile\AddressController@getAllCitites");
 Route::get("city/{id}/districts/", "Mobile\AddressController@getDistrictsByCity");
 Route::get("news/all", "Mobile\NewsController@getAllNews");

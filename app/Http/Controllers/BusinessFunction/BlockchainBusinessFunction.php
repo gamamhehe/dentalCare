@@ -17,6 +17,7 @@ use Carbon\Carbon;
 
 trait BlockchainBusinessFunction
 {
+
     public function saveNewAll($ledgerInJson)
     {
         $ledgerObject = json_decode($ledgerInJson, true);
@@ -36,5 +37,12 @@ trait BlockchainBusinessFunction
         }
     }
 
+
+    public function getDataBlockChain()
+    {
+        $blockchains = Blockchain::all();
+
+        return $blockchains;
+    }
 
 }

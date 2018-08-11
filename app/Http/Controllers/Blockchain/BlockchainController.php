@@ -17,67 +17,57 @@ use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 
 class BlockchainController extends Controller
 {
-    use NodeInfoBusinessFunction, BlockchainBusinessFunction;
+    use BlockchainBusinessFunction;
 
-    public function GenerateKey()
+    public function convertDataToJson()
     {
-        $patientId = '1'; // query from databse
-        $config = array("digest_alg" => "sha512", "private_key_bits" => 4096, "private_key_type" => OPENSSL_KEYTYPE_RSA,);
-
-        // Create the private and public key
-        $res = openssl_pkey_new($config);
-        // Extract the private key from $res to $privKey
-        openssl_pkey_export($res, $privKey);
-
-        // Extract the public key from $res to $pubKey
-        $pubKey = openssl_pkey_get_details($res);
-        $pubKey = $pubKey["key"];
-        $data = $patientId;
-
-        // Encrypt the data to $encrypted using the public key
-        openssl_public_encrypt($data, $encrypted, $pubKey);
-
-        // Decrypt the data using the private key and store the results in $decrypted
-        openssl_private_decrypt($encrypted, $decrypted, $privKey);
-        var_dump($encrypted);
-        // dd($decrypted);
-
-        Key::create(array('patient_id' => $patientId,//query from tblUser
-            'private_key' => $privKey, 'public_key' => $pubKey));
+        $dataBlockchainObj = $this->getDataBlockChain();
+        return $dataBlockchainObj->toJson();
     }
 
-    public function EncryptTreatmentHistory()
+    public function getDataBlockchainJson()
     {
-        $patientId = '1';
-        $key = Key::where('patient_id', '=', $patientId)->first();
-        $pubKey = $key->public_key;
-
-        $history = TreatmentHistory::where('patient_id', '=', $patientId)->first();
-
-        $nameHop = 'Thanh Hung';
-        $server = NodeInfo::where('name_hopital', '=', $nameHop)->first();
-
-        $name = $server->name_hopital;
-        $jsonServer = array('ip' => $server->ip_server, 'name' => $server->name_hopital,);
-        $jsonHistory = array('id' => $history->id, 'treatment_id' => $history->treatment_id, 'patient_id' => $history->patient_id, 'description' => $history->description, 'create_date' => $history->create_date, 'finish_date' => $history->finish_date, 'tooth_number' => $history->tooth_number, 'price' => $history->price, 'payment_id' => $history->payment_id, 'total_price' => $history->total_price,);
-        $mainJson = json_encode(array_merge($jsonHistory, $jsonServer));
-        openssl_public_encrypt($mainJson, $encrypted, $pubKey);
-
-        $priKey = $key->private_key;
-        var_dump($encrypted);
-
+        $dataBlockchainJson = $this->convertDataToJson();
+        return response($dataBlockchainJson);
     }
 
-    public function DecryptTreatmentHistory()
+    public function callAPI_GetData($IP)
     {
-        $patientId = '1';
-        $key = Key::where('patient_id', '=', $patientId)->first();
-        $priKey = $key->public_key;
+        $client = new \GuzzleHttp\Client();
+        // Create a request
+        $request = $client->get('http://' . $IP . '/datajson');
+        // Get the actual response without headers
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response);
 
-        //
+        return $data;
+    }
 
-//        openssl_private_decrypt($encrypted, $decrypted, $priKey);
-//        var_dump($decrypted);
+    public function checkBlockChain($blockchain)
+    {
+        if ($blockchain[0]->previousHash != 0)
+            return false;
+        for ($i = 0; $i < sizeof($blockchain) - 1; $i++) {
+            if ($blockchain[$i]->Hash != $blockchain[$i + 1]->previousHash)
+                return false;
+        }
+        return true;
+    }
+
+    public function checkLedger()
+    {
+        $ledger_1 = $this->callAPI_GetData('163.44.193.228');
+        $ledger_2 = json_decode($this->convertDataToJson());
+
+        if ($this->checkBlockChain($ledger_1) && $this->checkBlockChain($ledger_2))
+            if (sizeof($ledger_1) < sizeof($ledger_2)) {
+                if (($ledger_1[sizeof($ledger_1) - 1]->Hash) == ($ledger_2[sizeof($ledger_1)]->previousHash))
+                    return $ledger_2;
+            } else if (sizeof($ledger_1) > sizeof($ledger_2))
+                if (($ledger_2[sizeof($ledger_2) - 1]->Hash) == ($ledger_1[sizeof($ledger_2)]->previousHash))
+                    return $ledger_1;
+
+        return "ERROR BLOCKCHAIN";
     }
 
 
@@ -92,6 +82,4 @@ class BlockchainController extends Controller
         $ledger = $this->getLedger();
         $this->sendToAll($ledger);
     }
-
-
 }

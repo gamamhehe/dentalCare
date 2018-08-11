@@ -17,6 +17,10 @@ Route::get('logoutAdmin', 'Admin\StaffController@logout')->name('admin.logout');
 Route::post('loginAdmin', 'Admin\StaffController@login')->name('admin.login.post');
 Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
 
+Route::get('datajson', 'Blockchain\BlockchainController@getDataBlockchainJson');
+Route::get('datajsonFromSever', 'Blockchain\BlockchainController@checkLedger');
+
+
 Route::get('/cc', function () {
     return view('WebUser.User.Profile');
 });
@@ -220,7 +224,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
 
-
 Route::get('/generateKey', 'BlockchainController@GenerateKey');
 Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
 
@@ -256,6 +259,7 @@ use App\Events\ReceiveAppointment;
 
 Route::get('/broadcastReception', 'Admin\HomeController@testFunction');
 
+
 //blockchain
 Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
 Route::get('/saveNewLedger', 'Blockchain\BlockchainController@saveNewLedger');
@@ -275,3 +279,4 @@ Route::get('/getAllQueue', function (){
 
 //Route::get('getJob', function (){
 //});
+

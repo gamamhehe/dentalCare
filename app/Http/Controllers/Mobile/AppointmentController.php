@@ -207,45 +207,15 @@ class AppointmentController extends BaseController
                     "Result is null, No exception");
                 return response()->json($error, 400);
             }
-
         } catch (ApiException $e) {
             $error = $this->getErrorObj("Lỗi server", $e->getMessage());
             return response()->json($error, 400);
         } catch (\Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex->getMessage());
             return response()->json($error, 400);
-        }
-            $result = $this->createAppointment($bookingDate, $phone, $note, null, null);
-            try {
-                $phone = $request->input('phone');
-                $note = $request->input('note');
-                $bookingDate = $request->input('booking_date');
-                $dentistId = $request->input('dentist_id');
-                $estimatedTime = $request->input('estimated_time');
-                $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $estimatedTime);
-                if ($result != null) {
-                    $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
-                    $startDateTime = new DateTime($result->start_time);
-                    $smsSendingResult = Utilities::sendSMS(
-                        $phone, AppConst::getSmsMSG($result->numerical_order, $startDateTime)
-                    );
-                    $smsDecode = json_encode($smsSendingResult);
-                    Utilities::logDebug($smsDecode);
-                    return response()->json($listAppointment, 200);
-                } else {
-                    $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
-                        "Result is null, No exception");
-                    return response()->json($error, 400);
-                }
 
-            } catch (ApiException $e) {
-                $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
-                return response()->json($error, 400);
-            } catch (\Exception $ex) {
-                $error = Utilities::getErrorObj("Lỗi server", $ex->getMessage());
-                return response()->json($error, 400);
-            }
         }
+    }
 
     public function editAppointment(Request $request)
     {
