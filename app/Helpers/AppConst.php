@@ -53,6 +53,7 @@ class AppConst
     const APPT_STATUS_TREATING = 2;
     const APPT_STATUS_DONE = 3;
     const APPT_STATUS_DELETED = 4;
+    const APPT_STATUS_SENT = 5;
 
     /**
      * @param $order numerical_order of appointment
