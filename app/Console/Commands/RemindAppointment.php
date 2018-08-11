@@ -58,6 +58,6 @@ class RemindAppointment extends Command
                 $this->dispatch(new SendReminderJob($appointment));
             }
         }
-//        Utilities::logDebug("Remind: " . $numOfReminder . " appointments");
+        Utilities::logDebug("Remind: " . $numOfReminder . " appointments");
     }
 }

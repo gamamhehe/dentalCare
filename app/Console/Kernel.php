@@ -29,8 +29,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
         $schedule->command('remind:appointment')
             ->cron("*/2 * * * *");
+            $schedule->command('remind:forgotAppoinment')
+            ->cron("0 7 * * *");
         Log::info("Running Schedule");
     }
 
