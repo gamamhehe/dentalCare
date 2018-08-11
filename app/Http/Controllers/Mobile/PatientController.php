@@ -159,6 +159,46 @@ class PatientController extends BaseController
         }
     }
 
+    public function changeAvatar(Request $request)
+    {
+        try {
+            if ($request->hasFile('image')) {
+                $id = $request->input('id');
+                $image = $request->file('image');
+                $tmpPatient = $this->getPatientById($id);
+                if ($tmpPatient != null) {
+                    if ($this->editAvatar($image, $id)) {
+                        $patient = $this->getPatientById($id);
+                        $response = new \stdClass();
+                        $response->status = "OK";
+                        $response->message = "Chỉnh sửa avatar thành côngs";
+                        $response->data = $patient->avatar;
+                        return response()->json($response, 200);
+                    } else {
+                        $error = new \stdClass();
+                        $error->error = "Có lỗi xảy ra, không thể chỉnh sửa avatar";
+                        $error->exception = "Nothing";
+                        return response()->json($error, 400);
+                    }
+                } else {
+                    $error = new \stdClass();
+                    $error->error = "Không thể tìm thấy bệnh nhân ";
+                    $error->exception = "Nothing";
+                    return response()->json($error, 400);
+                }
+            } else {
+                $error = new \stdClass();
+                $error->error = "Lỗi khi nhận hình ảnh ";
+                $error->exception = "Nothing";
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = new \stdClass();
+            $error->error = "Lỗi máy chủ";
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
+        }
+    }
     public function updateNumAppWebsite($appointment)
     {
         $options = array(

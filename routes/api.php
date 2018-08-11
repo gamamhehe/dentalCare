@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post("user/login", "Mobile\UserController@loginUser");
+Route::post("user/login", "Mobile\UserController@login");
 Route::post("user/register", "Mobile\UserController@register");
 Route::post("user/bookAppointment", "Mobile\UserController@bookAppointment");
 Route::get("user/resetPassword/{phone}", "Mobile\UserController@resetPassword");
@@ -81,12 +81,12 @@ Route::middleware('auth:api')->group(function () {
     /*************************************-----------------------------*****************************************************/
     /*************************************-----Begin section for user----*****************************************************/
     /*************************************-----------------------------*****************************************************/
-    Route::post("user/changeAvatar", "Mobile\UserController@changeAvatar");
-    Route::post("user/changePassword", "Mobile\UserController@changePassword");
     Route::get("user/logout", "Mobile\UserController@logout");
     Route::post("user/updateNotifToken", "Mobile\UserController@updateNotifToken");
+    Route::post("user/changePassword", "Mobile\UserController@changePassword");
+    Route::post("patient/changeAvatar", "Mobile\PatientController@changeAvatar");
+    Route::post("patient/updatePatient", "Mobile\PatientController@updatePatientInfo");
     //patient
-    Route::post("user/updatePatient", "Mobile\PatientController@updatePatientInfo");
     //nt category
 
     //History Treatment
@@ -101,8 +101,6 @@ Route::middleware('auth:api')->group(function () {
     //appointment
     Route::get("appointment/all", "Mobile\AppointmentController@getAll");
     Route::get("appointment/getById/{id}", "Mobile\AppointmentController@getById");
-    Route::post("appointment/updateStatus", "Mobile\AppointmentController@updateStatus");
-    Route::post("appointment/changeDentist", "Mobile\AppointmentController@changeDentist");
     Route::get("appointment/getByDate", "Mobile\AppointmentController@getByDate");
     Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
     Route::get("appointment/getUserAppointmentByCurrentDate/", "Mobile\AppointmentController@getUserAppointmentByCurrentDate");
@@ -117,8 +115,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post("staff/bookAppointment", "Mobile\StaffController@bookAppointment");
     Route::post("staff/changeAvatar", "Mobile\StaffController@changeAvatar");
     Route::post("staff/changePassword", "Mobile\StaffController@changePassword");
-    //test in token
-    Route::get("getUser", "Mobile\UserController@getUser");
+    Route::post("appointment/updateStatus", "Mobile\StaffController@updateStatus");
+    Route::post("appointment/changeDentist", "Mobile\StaffController@changeDentist");
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff with token----*****************************************************/
     /*************************************-----------------------------*****************************************************/
@@ -127,7 +125,7 @@ Route::middleware('auth:api')->group(function () {
     /*************************************-----------------------------*****************************************************/
 
     Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
-    Route::post("patient/updatePatient", "Mobile\PatientController@updatePatientInfo");
+    Route::post("patient/update", "Mobile\PatientController@updatePatientInfo");
     Route::post("patient/receiveManually", "Mobile\PatientController@receiveManually");
     Route::get('patient/getByPhone', "Mobile\PatientController@getByPhone");
     Route::get('patient/getListPatientByPhone', "Mobile\PatientController@getListPatientByPhone");
@@ -138,10 +136,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('staff/getAvailableDentist', 'Mobile\StaffController@getAvailableDentist');
     Route::get('staff/getCurrentFreeDentist', 'Mobile\StaffController@getCurrentFreeDentists');
     Route::get('staff/getListRequestAbsent', 'Mobile\StaffController@getListRequestAbsent');
-    Route::post('requestAbsent/changeStatusDelete/{req_id}', 'Mobile\RequestAbsentController@changeStatusDelete');
     Route::get('staff/getListRequestAbsentByTime', 'Mobile\StaffController@getListRequestAbsentByTime');
     Route::post('staff/requestAbsent', 'Mobile\StaffController@requestAbsent');
     Route::post('staff/updateStaffInfo', 'Mobile\StaffController@updateStaffInfo');
+    Route::post('requestAbsent/changeStatusDelete/{req_id}', 'Mobile\RequestAbsentController@changeStatusDelete');
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff----*****************************************************/
     /*************************************-----------------------------*****************************************************/

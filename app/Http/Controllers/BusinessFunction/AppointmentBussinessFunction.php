@@ -711,4 +711,13 @@ trait AppointmentBussinessFunction
         $appointment->status = 2;
         $appointment->save();
     }
+
+    public function getOverdueAppointment($numDate)
+    {
+        $dateAgoObj = (new \DateTime())->modify('-'.$numDate.' day');
+        $appointmentAgo = Appointment::where('start_time', $dateAgoObj->format('Y-m-d'))
+            ->where('status', 0)->get();
+
+
+    }
 }

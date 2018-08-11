@@ -84,11 +84,70 @@ class UserController extends BaseController
         }
     }
 
+    public function bookAppointment(Request $request)
+    {
+        try {
+            $phone = $request->input('phone');
+            $note = $request->input('note');
+            $bookingDate = $request->input('booking_date');
+            $dentistId = $request->input('dentist_id');
+            $patientId = $request->input('patient_id');
+            $estimatedTime = $request->input('estimated_time');
+            $name = $request->input('name');
+            $user = $this->getUserByPhone($phone);
+            $isNewUser = false;
+            if ($user == null) {
+                $user = new User();
+                $user->phone = $phone;
+                $user->password = Hash::make($phone);
+
+                $userHasRole = new UserHasRole();
+                $userHasRole->phone = $phone;
+                $userHasRole->role_id = 1;
+                $userHasRole->start_time = Carbon::now();
+                $this->createUser($user, $userHasRole);
+                $isNewUser = true;
+            }
+            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $name);
+            if ($result != null) {
+                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
+                $startDateTime = new DateTime($result->start_time);
+                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+                $this->dispatch(new SendSmsJob($phone, $smsMessage));
+                if ($isNewUser) {
+                    $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
+                }
+                return response()->json($listAppointment, 200);
+            } else {
+                $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                    "Result is null, No exception");
+                return response()->json($error, 400);
+            }
+
+        } catch (ApiException $ex) {
+            $error = $this->getErrorObj("Lỗi server", $ex);
+            return response()->json($error, 500);
+        } catch (\Exception $ex) {
+            if ($ex->getMessage() == "isEndOfTheDay") {
+                $currentTime = (new DateTime());
+                if ($this->isEndOfTheDay($currentTime)) {
+                    $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
+                } else {
+                    $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
+                }
+                return response()->json($error, 400);
+            } else {
+                $error = $this->getErrorObj("Lỗi server", $ex);
+                return response()->json($error, 500);
+            }
+        }
+    }
+
     /**
      * @param Request $request
      * @return json
      */
-    public function loginUser(Request $request)
+    public function login(Request $request)
     {
         try {
             $phone = $request->input('phone');
@@ -243,55 +302,14 @@ class UserController extends BaseController
                 return response()->json($successResponse);
             } else {
                 $error = $this->getErrorObj("Không tìm thấy tài khoản này ", "No exception");
-            return response()->json($error, 400);
-        }
-        }catch (\Exception $ex){
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
             $error = $this->getErrorObj("Lỗi máy chủ", $ex);
             return response()->json($error, 500);
         }
     }
 
-
-    public function changeAvatar(Request $request)
-    {
-        try {
-            if ($request->hasFile('image')) {
-                $id = $request->input('id');
-                $image = $request->file('image');
-                $tmpPatient = $this->getPatientById($id);
-                if ($tmpPatient != null) {
-                    if ($this->editAvatar($image, $id)) {
-                        $patient = $this->getPatientById($id);
-                        $response = new \stdClass();
-                        $response->status = "OK";
-                        $response->message = "Chỉnh sửa avatar thành côngs";
-                        $response->data = $patient->avatar;
-                        return response()->json($response, 200);
-                    } else {
-                        $error = new \stdClass();
-                        $error->error = "Có lỗi xảy ra, không thể chỉnh sửa avatar";
-                        $error->exception = "Nothing";
-                        return response()->json($error, 400);
-                    }
-                } else {
-                    $error = new \stdClass();
-                    $error->error = "Không thể tìm thấy bệnh nhân ";
-                    $error->exception = "Nothing";
-                    return response()->json($error, 400);
-                }
-            } else {
-                $error = new \stdClass();
-                $error->error = "Lỗi khi nhận hình ảnh ";
-                $error->exception = "Nothing";
-                return response()->json($error, 400);
-            }
-        } catch (\Exception $ex) {
-            $error = new \stdClass();
-            $error->error = "Lỗi máy chủ";
-            $error->exception = $ex->getMessage();
-            return response()->json($error, 400);
-        }
-    }
 
     public function sendFirebase()
     {
@@ -333,7 +351,7 @@ class UserController extends BaseController
             $this->updateUserFirebaseToken($phone, $token);
             $successResponse = $this->getSuccessObj(500, "OK", "Change notification token success", "Null data");
             return response()->json($successResponse, 200);
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             $errorResponse = $this->getErrorObj("Error when update firebase token", $ex);
             return response()->json($errorResponse, 500);
         }
