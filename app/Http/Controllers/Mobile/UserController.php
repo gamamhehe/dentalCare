@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Helpers\AppConst;
 use App\Helpers\Utilities;
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
@@ -20,6 +21,7 @@ use App\Model\Patient;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
+use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -31,12 +33,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Mockery\Exception;
+use SMSGatewayMe\Client\ApiException;
 
 class UserController extends BaseController
 {
     use PatientBusinessFunction;
     use UserBusinessFunction;
     use TreatmentBusinessFunction;
+    use AppointmentBussinessFunction;
 
     public function register(Request $request)
     {
