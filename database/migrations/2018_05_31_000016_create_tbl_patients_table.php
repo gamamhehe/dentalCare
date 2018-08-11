@@ -26,6 +26,7 @@ class CreateTblPatientsTable extends Migration
             $table->timestamps();
 
             $table->foreign('district_id')->references('id')->on('tbl_districts');
+            $table->foreign('phone')->references('phone')->on('tbl_users');
         });
     }
 
