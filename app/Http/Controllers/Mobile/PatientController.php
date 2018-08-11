@@ -221,7 +221,7 @@ class PatientController extends BaseController
             $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
             if ($staffFirebaseToken != null) {
 
-                dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
+                $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
                         $staff->id,
                         "No message",
                         AppConst::ACTION_RELOAD_APPOINTMENT,
