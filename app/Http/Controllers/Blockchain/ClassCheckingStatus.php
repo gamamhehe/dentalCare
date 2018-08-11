@@ -50,13 +50,13 @@ class ClassCheckingStatus
     function sendToAll($newestLedger)
     {
         $listNode = $this->getListNode();
-        $currentIp = $_SERVER['REMOTE_ADDR'];
+        $currentIp = request()->ip();
         foreach ($listNode as $node) {
             $ip = $node->ip;
-            if ($ip != $currentIp) {
-                $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
-                $this->callTheURL($url);
-            }
+//            if ($ip != $currentIp) {
+            $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
+            $this->callTheURL($url);
+//            }
         }
     }
 
