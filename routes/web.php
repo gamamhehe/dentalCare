@@ -41,7 +41,8 @@ Route::get('/signOut', 'Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
-Route::get('/lien-he', 'Admin\HomeController@xxx');
+Route::get('/lien-he','Admin\HomeController@xxx');
+Route::post('/create-appointment-user', 'Admin\AppointmentController@UserAppoinment');
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
@@ -62,7 +63,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::get('/edit-medicines/{id}', 'Admin\MedicineController@loadedit');
         Route::post('/edit-medicines/{id}', 'Admin\MedicineController@edit')->name('admin.edit.medicines');
         //Patient
-        Route::get('/appointment-detail/{id}', 'Admin\AppointmentController@detailAppoinmentById');
+        Route::get('/appointment-detail/{id}', 'Admin\AppointmentController@detailAppointmentById');
         Route::get('/start-appointment/{id}', 'Admin\AppointmentController@startAppointmentController');
 
         //TreatmentController
@@ -110,7 +111,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-patient', 'Admin\PatientController@create');
 
         //payment
-        Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
         Route::get('/admin-payment', 'Admin\PaymentController@getList')->name('admin.payment');
         Route::get('/create-payment', 'Admin\PaymentController@viewCreate');
         Route::post('/create-payment', 'Admin\PaymentController@create')->name('create.payment');

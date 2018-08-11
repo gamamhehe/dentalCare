@@ -15,9 +15,10 @@ class CreateTblPaymentUpdateDetailsTable extends Migration
     {
         Schema::create('tbl_payment_update_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('payment_id');
+            $table->integer('payment_id')->unsigned();
             $table->string('update_information');
             $table->timestamps();
+            $table->foreign('payment_id')->references('id')->on('tbl_payments');
         });
     }
 
@@ -28,6 +29,8 @@ class CreateTblPaymentUpdateDetailsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_payment_update_details');
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -66,6 +66,10 @@ class AppConst
         return "Cam on ban da dat lich kham, so thu tu cua ban la "
             . $order . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate;
     }
+    public static function getSmsNewUser()
+    {
+        return "Cam on ban da dat lich tai phong kham Dental Gold, tai khoan mat khau mac dinh la so dien thoai cua ban.";
+    }
 
     public static function getSmsMSGForAbsent($name, $startDate, $endDate)
     {

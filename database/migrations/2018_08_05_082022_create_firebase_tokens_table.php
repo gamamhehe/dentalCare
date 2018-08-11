@@ -28,6 +28,8 @@ class CreateFirebaseTokensTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_firebase_tokens');
+        Schema::enableForeignKeyConstraints();
     }
 }

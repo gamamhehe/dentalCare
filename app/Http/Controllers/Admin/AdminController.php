@@ -59,8 +59,44 @@ class AdminController extends Controller
     {
         DB::beginTransaction();
         try {
-            //role
-            Role::create([
+            $this->initUser();
+            $this->initRole();
+            $this->initNew();
+            $this->initType();
+            $this->initAnamnesisCatalog();
+            $this->initTreatmentCategory();
+            $this->initMedicine();
+            $this->initTooth();
+            $this->initStep();
+            $this->initAddress();
+            $this->initUserHasRole();
+            $this->initStaff();
+            $this->initAppointment();
+            $this->initPatient();
+            $this->initNewType();
+            $this->initPatientOfAppointment();
+            $this->initTreatment();
+            $this->initPaymentDetail();
+            $this->initTreatmentHistory();
+            $this->initTreatmentDetail();
+            $this->initTreatmentStep();
+            $this->initEvent();
+            $this->initRequestAbsent();
+            $this->initAbsent();
+            $this->initTreatmentDetailStep();
+
+
+            $this->initClientToken();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            Log::info("INIT ERROR: " . $e->getMessage());
+            DB::rollback();
+            return response()->json($e->getMessage());
+        }
+    }
+    public function initRole(){
+          Role::create([
                 'id' => '1',
                 'name' => 'Quản trị viên',
                 'description' => 'Quản lí toàn bộ hệ thống',
@@ -80,406 +116,456 @@ class AdminController extends Controller
                 'name' => 'Bệnh nhân',
                 'description' => 'Bệnh nhân',
             ]);
-            //user
-            User::create([
+    }
+    public function initUser(){
+          User::create([
                 'phone' => '01279011096',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '01279011096',
-                'role_id' => 1,
-                'start_time' => Carbon::now(),
-                'end_time' => null
+          User::create([
+                'phone' => '01279011097',
+                'password' => Hash::make('123123123'),
+            ]); User::create([
+                'phone' => '01279011099',
+                'password' => Hash::make('123123123'),
             ]);
+
             User::create([
                 'phone' => '01279011098',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '01279011098',
-                'role_id' => 3,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+         
             User::create([
                 'phone' => '0909555777',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555777',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+        
             User::create([
                 'phone' => '0909555778',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555778',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+       
              User::create([
                 'phone' => '0909555779',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555779',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+      
              User::create([
                 'phone' => '0909555780',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555780',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+       
              User::create([
                 'phone' => '0909555781',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555781',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+     
              User::create([
                 'phone' => '0909555782',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555782',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+       
              User::create([
                 'phone' => '0909555783',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555783',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+   
              User::create([
                 'phone' => '0909555784',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555784',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+        
              User::create([
                 'phone' => '0909555785',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555785',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+       
               User::create([
                 'phone' => '0909555786',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555786',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+   
               User::create([
                 'phone' => '0909555787',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555787',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+        
               User::create([
                 'phone' => '0909555788',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909555788',
-                'role_id' => 2,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+          
             User::create([
                 'phone' => '0909777555',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909777555',
-                'role_id' => 3,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+         
             User::create([
                 'phone' => '0909777556',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909777556',
-                'role_id' => 3,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+     
             User::create([
                 'phone' => '0909777557',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909777557',
-                'role_id' => 3,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+          
             User::create([
                 'phone' => '0909777558',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909777558',
-                'role_id' => 3,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+     
             User::create([
                 'phone' => '0909777559',
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909777559',
-                'role_id' => 3,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+        
             //patient
             User::create([
                 'phone' => '0915469963', //phúc
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '0915469963',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+       
             User::create([
                 'phone' => '01685149049',//trịnh 
                 'password' => Hash::make('123123123'),
             ]);
-            UserHasRole::create([
-                'phone' => '01685149049',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+       
             //vitual
             User::create([
                 'phone' => '0913520187', 
                 'password' => Hash::make('0913520187'),
             ]);
-            UserHasRole::create([
-                'phone' => '0913520187',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+      
             User::create([
                 'phone' => '0915235776', 
                 'password' => Hash::make('0915235776'),
             ]);
-            UserHasRole::create([
-                'phone' => '0915235776',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+     
             User::create([
                 'phone' => '0913270058',
                 'password' => Hash::make('0913270058'),
             ]);
-            UserHasRole::create([
-                'phone' => '0913270058',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+      
             User::create([
                 'phone' => '0913947554',
                 'password' => Hash::make('0913947554'),
             ]);
-            UserHasRole::create([
-                'phone' => '0913947554',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+          
             User::create([
                 'phone' => '0904035045',
                 'password' => Hash::make('0904035045'),
             ]);
-            UserHasRole::create([
-                'phone' => '0904035045',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+   
             User::create([
                 'phone' => '0913287146',
                 'password' => Hash::make('0913287146'),
             ]);
-            UserHasRole::create([
-                'phone' => '0913287146',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+         
             User::create([
                 'phone' => '01214757979',
                 'password' => Hash::make('01214757979'),
             ]);
-            UserHasRole::create([
-                'phone' => '01214757979',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+       
             User::create([
                 'phone' => '0909539588',
                 'password' => Hash::make('0909539588'),
             ]);
-            UserHasRole::create([
-                'phone' => '0909539588',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+          
             User::create([
                 'phone' => '0935109545',
                 'password' => Hash::make('0935109545'),
             ]);
-            UserHasRole::create([
-                'phone' => '0935109545',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+         
             User::create([
                 'phone' => '0935105105',
                 'password' => Hash::make('0935105105'),
             ]);
-            UserHasRole::create([
-                'phone' => '0935105105',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+          
             User::create([
                 'phone' => '01230405077',
                 'password' => Hash::make('01230405077'),
             ]);
-            UserHasRole::create([
-                'phone' => '01230405077',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+         
             User::create([
                 'phone' => '0903211462',
                 'password' => Hash::make('0903211462'),
             ]);
-            UserHasRole::create([
-                'phone' => '0903211462',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+           
             User::create([
                 'phone' => '0903552741',
                 'password' => Hash::make('0903552741'),
             ]);
-            UserHasRole::create([
-                'phone' => '0903552741',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+         
             User::create([
                 'phone' => '0904777652',
                 'password' => Hash::make('0904777652'),
             ]);
-            UserHasRole::create([
-                'phone' => '0904777652',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+          
             User::create([
                 'phone' => '0902159753',
                 'password' => Hash::make('0902159753'),
             ]);
-            UserHasRole::create([
-                'phone' => '0902159753',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+    
             User::create([
                 'phone' => '0905045789',
                 'password' => Hash::make('0905045789'),
             ]);
-            UserHasRole::create([
-                'phone' => '0905045789',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
+     
             User::create([
                 'phone' => '0903056987',
                 'password' => Hash::make('0903056987'),
             ]);
-            UserHasRole::create([
-                'phone' => '0903056987',
-                'role_id' => 4,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
-
-
-            //end patient
-
-            Staff::create([
+    }
+    public function initUserHasRole(){
+        UserHasRole::create([
+        'phone' => '01279011097',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]); UserHasRole::create([
+        'phone' => '01279011099',
+        'role_id' => 3,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0905045789',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0902159753',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]); 
+        UserHasRole::create([
+        'phone' => '0904777652',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0903552741',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0903211462',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '01230405077',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0935105105',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0935109545',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909539588',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '01214757979',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0913287146',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0904035045',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0913947554',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0913270058',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0915235776',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0913520187',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '01685149049',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0915469963',
+        'role_id' => 4,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909777559',
+        'role_id' => 3,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909777558',
+        'role_id' => 3,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909777557',
+        'role_id' => 3,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909777556',
+        'role_id' => 3,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909777555',
+        'role_id' => 3,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555788',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555787',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555786',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555785',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555784',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555783',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555782',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555781',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555780',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555779',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555778',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '0909555777',
+        'role_id' => 2,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '01279011098',
+        'role_id' => 3,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+        UserHasRole::create([
+        'phone' => '01279011096',
+        'role_id' => 1,
+        'start_time' => Carbon::now(),
+        'end_time' => null
+        ]);
+    }
+    public function initStaff(){
+        User::create([
+            'phone' => '0000000000',
+            'password' => Hash::make('123'),
+        ]);
+         Staff::create([
                 'name' => 'Paypal test',
                 'degree' => 'Paypal',
                 'address' => 'Paypal',
-                'district_id' => '0',
+                'district_id' => 16,
                 'phone' => '0000000000',
                 'date_of_birth' => '1900-01-01',
                 'gender' => 'Nam',
                 'email' =>'abc@gmail.com'
-            ]);
-            User::create([
-                'phone' => '0000000000',
-                'password' => Hash::make('123'),
             ]);
             UserHasRole::create([
                 'phone' => '0000000000',
@@ -493,6 +579,25 @@ class AdminController extends Controller
                 'address' => '188 Nguyễn xí',
                 'district_id' => 1,
                 'phone' => '01279011096',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'Nữ',
+                'email' =>'abc@gmail.com'
+            ]);
+            Staff::create([
+                'name' => 'Võ Công Minh',
+                'degree' => 'Thạc Sĩ',
+                'address' => '188 Nguyễn Kiệm',
+                'district_id' => 1,
+                'phone' => '01279011097',
+                'date_of_birth' => '1996-10-01',
+                'gender' => 'Nữ',
+                'email' =>'abasc@gmail.com'
+            ]);Staff::create([
+                'name' => 'Võ Công Minh',
+                'degree' => 'Thạc Sĩ',
+                'address' => '188 Nguyễn Kiệm',
+                'district_id' => 1,
+                'phone' => '01279011099',
                 'date_of_birth' => '1996-10-01',
                 'gender' => 'Nữ',
                 'email' =>'abc@gmail.com'
@@ -694,8 +799,9 @@ class AdminController extends Controller
                 'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist21.PNG',
                 'email' =>'NhungTN@dentalgold.com.vn'
             ]);
-
-            Treatment::create([
+    }
+    public function initTreatment(){
+         Treatment::create([
                 'name' => 'Cạo vôi',
                 'description' => 'Cạo vôi răng',
                 'treatment_category_id' => '1',
@@ -970,8 +1076,9 @@ class AdminController extends Controller
                 'min_price' => '88000000',
                 'max_price' => '115000000',
             ]);
-
-            TreatmentCategory::create([
+    }
+    public function initTreatmentCategory(){
+          TreatmentCategory::create([
                 'name' => 'Nha Chu',
                 'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
                 'icon_link' => '/assets/images/icon/bocrangsu.png',
@@ -1019,8 +1126,9 @@ class AdminController extends Controller
                 'icon_link' => '/assets/images/icon/danmatsuVENNER.png',
                 'estimate_time' => '3'
             ]);
-
-            Tooth::create([
+    }
+    public function initTooth(){
+          Tooth::create([
                 'tooth_number' => '1',
                 'tooth_name' => 'Nguyên hàm'
             ]);
@@ -1259,73 +1367,8 @@ class AdminController extends Controller
                 'tooth_number' => '75',
                 'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối sữa 2'
             ]);
-            //end dưới trái
-
-
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 4,
-                'start_time' => '2018-07-21 10:05:42',
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 2,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 3,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 2,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 3,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 4,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 2,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 3,
-                'start_time' => Carbon::now(),
-            ]);
+    }
+    public function initPatientOfAppointment(){
 
             PatientOfAppointment::create([
                 'appointment_id' => 1,
@@ -1337,6 +1380,8 @@ class AdminController extends Controller
                 'patient_id' => 3
             ]);
 
+    }
+    public function initPatient(){
 
             Patient::create([
                 'name' => 'Huỳnh Võ Thiên Phúc',
@@ -1512,7 +1557,8 @@ class AdminController extends Controller
                 'avatar' => 'assets/images/avatar/user_avatar_5.png',
                 'district_id' => 1,
             ]);
-
+    }
+    public function initTreatmentHistory(){
 
             TreatmentHistory::create([
                 'treatment_id' => 1,
@@ -1525,28 +1571,8 @@ class AdminController extends Controller
                 'total_price' => 900000,
                 'payment_id' => 1,
             ]);
-            TreatmentDetail::create([
-                'treatment_history_id' => 1,
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'note' => 'DEF'
-            ]);
-            TreatmentDetailStep::create([
-                'treatment_detail_id' => 1,
-                'step_id' => 1,
-            ]);
-
-            TreatmentDetail::create([
-                'treatment_history_id' => 1,
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'note' => 'DEF'
-            ]);
-            TreatmentDetailStep::create([
-                'treatment_detail_id' => 2,
-                'step_id' => 2,
-            ]);
-
+           
+          
             TreatmentHistory::create([
                 'treatment_id' => 1,
                 'patient_id' => 2,
@@ -1558,28 +1584,128 @@ class AdminController extends Controller
                 'total_price' => 900000,
                 'payment_id' => 1,
             ]);
-            TreatmentDetail::create([
-                'treatment_history_id' => 2,
-                'staff_id' => 2,
-                'created_date' => Carbon::now(),
-                'note' => 'DEF'
-            ]);
-            TreatmentDetailStep::create([
-                'treatment_detail_id' => 3,
-                'step_id' => 1,
-            ]);
-
-            TreatmentDetail::create([
+    }
+    public function initTreatmentDetail(){
+           TreatmentDetail::create([
                 'treatment_history_id' => 2,
                 'staff_id' => 1,
                 'created_date' => Carbon::now(),
                 'note' => 'DEF'
             ]);
-            TreatmentDetailStep::create([
-                'treatment_detail_id' => 4,
-                'step_id' => 2,
+            TreatmentDetail::create([
+                    'treatment_history_id' => 2,
+                    'staff_id' => 2,
+                    'created_date' => Carbon::now(),
+                    'note' => 'DEF'
+                ]);
+            TreatmentDetail::create([
+                    'treatment_history_id' => 1,
+                    'staff_id' => 1,
+                    'created_date' => Carbon::now(),
+                    'note' => 'DEF'
+                ]);
+            TreatmentDetail::create([
+                    'treatment_history_id' => 1,
+                    'staff_id' => 1,
+                    'created_date' => Carbon::now(),
+                    'note' => 'DEF'
+                ]);
+    }
+    public function initTreatmentDetailStep(){
+        TreatmentDetailStep::create([
+                    'treatment_detail_id' => 3,
+                    'step_id' => 1,
+                ]);
+
+             
+                TreatmentDetailStep::create([
+                    'treatment_detail_id' => 4,
+                    'step_id' => 2,
+                ]);
+               
+        TreatmentDetailStep::create([
+                    'treatment_detail_id' => 1,
+                    'step_id' => 1,
+                ]);
+
+               
+                TreatmentDetailStep::create([
+                    'treatment_detail_id' => 2,
+                    'step_id' => 2,
+                ]);
+
+    }
+    public function initAppointment(){
+
+
+            Appointment::create([
+                'note' => 'demo data',
+                'estimated_time' => '00:00:30',
+                'numerical_order' => '12',
+                'phone' => '0915469963',
+                'staff_id' => 4,
+                'start_time' => '2018-07-21 10:05:42',
             ]);
-            
+            Appointment::create([
+                'note' => 'demo data',
+                'estimated_time' => '00:00:30',
+                'numerical_order' => '12',
+                'phone' => '0915469963',
+                'staff_id' => 2,
+                'start_time' => Carbon::now(),
+            ]);
+            Appointment::create([
+                'note' => 'demo data',
+                'estimated_time' => '00:00:30',
+                'numerical_order' => '12',
+                'phone' => '0915469963',
+                'staff_id' => 3,
+                'start_time' => Carbon::now(),
+            ]);
+            Appointment::create([
+                'note' => 'demo data',
+                'estimated_time' => '00:00:30',
+                'numerical_order' => '12',
+                'phone' => '0915469963',
+                'staff_id' => 2,
+                'start_time' => Carbon::now(),
+            ]);
+            Appointment::create([
+                'note' => 'demo data',
+                'estimated_time' => '00:00:30',
+                'numerical_order' => '12',
+                'phone' => '0915469963',
+                'staff_id' => 3,
+                'start_time' => Carbon::now(),
+            ]);
+            Appointment::create([
+                'note' => 'demo data',
+                'estimated_time' => '00:00:30',
+                'numerical_order' => '12',
+                'phone' => '0915469963',
+                'staff_id' => 4,
+                'start_time' => Carbon::now(),
+            ]);
+            Appointment::create([
+                'note' => 'demo data',
+                'estimated_time' => '00:00:30',
+                'numerical_order' => '12',
+                'phone' => '0915469963',
+                'staff_id' => 2,
+                'start_time' => Carbon::now(),
+            ]);
+            Appointment::create([
+                'note' => 'demo data',
+                'estimated_time' => '00:00:30',
+                'numerical_order' => '12',
+                'phone' => '0915469963',
+                'staff_id' => 3,
+                'start_time' => Carbon::now(),
+            ]);
+
+
+
+
             Appointment::create([
                 'start_time' => Carbon::now(),
                 'note' => 'Khám chi tiết',
@@ -1589,6 +1715,8 @@ class AdminController extends Controller
                 'estimated_time' => '00:30:00'
             ]);
 
+    }
+    public function initAbsent(){
             Absent::create([
                'staff_approve_id' => 2,
                'request_absent_id' =>  1,
@@ -1603,7 +1731,10 @@ class AdminController extends Controller
                 'created_time'=> Carbon::now(),
                 'is_approved' => 1,
             ]);
-            RequestAbsent::create([
+           
+    }
+    public function initRequestAbsent(){
+         RequestAbsent::create([
                 'staff_id' => 2,
                 'start_date' => '2018-06-26',
                 'end_date' => '2018-06-28',
@@ -1652,7 +1783,10 @@ class AdminController extends Controller
                 'reason' =>  'Đám cưới chị gái',
                 'is_delete'=>'0',
             ]);
-            News::create([
+          
+    }
+    public function initNew(){
+         News::create([
                 'image_header' => 'http://150.95.104.237/photos/shares/Niềng-răng-nên-ăn-gì-nên-kiêng-gì-nha-sỹ-tư-vấn-tuyệt-đối-tuân-thủ-1.jpg',
                 'content' => '<p>&nbsp;&nbsp;</p>
 <header class="entry-header">
@@ -1980,7 +2114,10 @@ class AdminController extends Controller
                 'staff_id' => '1',
                 'created_date' => '2018-06-19 04:31:27',
             ]);          
-            Type::create([
+           
+    }
+    public function initType(){
+         Type::create([
                 'id'=>'1',
                 'type'=>'Tin tức'
             ]);
@@ -1988,7 +2125,11 @@ class AdminController extends Controller
                 'id'=>'2',
                 'type'=>'Sự kiện'
             ]);
-            NewsType::create([
+          
+
+    }
+    public function initNewType(){
+          NewsType::create([
                 'type_id'=>'1',
                 'news_id'=>'1'
             ]);  
@@ -2028,7 +2169,10 @@ class AdminController extends Controller
                 'type_id'=>'2',
                 'news_id'=>'3'
             ]);
-            Payment::create([
+           
+    }
+    public function initPaymentDetail(){
+         Payment::create([
                 'paid' => '100000',
                 'total_price' => '300000',
                 'phone' => '01279011097',
@@ -2056,862 +2200,821 @@ class AdminController extends Controller
                 'staff_id' => 3,
                 'payment_id' => '1',
                 'receptionist_id' => '1',
-                'date_create' => '2018-06-13 20:08:18',
+                'created_date' => '2018-06-13 20:08:18',
                 'received_money' => '100000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '1',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-18 20:08:18',
+                'created_date' => '2018-06-18 20:08:18',
                 'received_money' => '200000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '2',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-14 20:08:18',
+                'created_date' => '2018-06-14 20:08:18',
                 'received_money' => '200000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '2',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-19 20:08:18',
+                'created_date' => '2018-06-19 20:08:18',
                 'received_money' => '400000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '3',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-19 20:08:18',
+                'created_date' => '2018-06-19 20:08:18',
                 'received_money' => '150000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '3',
                 'receptionist_id' => '2',
-                'date_create' => '2018-06-22 20:08:18',
+                'created_date' => '2018-06-22 20:08:18',
                 'received_money' => '450000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '4',
                 'receptionist_id' => '1',
-                'date_create' => '2018-06-22 20:08:18',
+                'created_date' => '2018-06-22 20:08:18',
                 'received_money' => '250000',
             ]);
             PaymentDetail::create([
                 'staff_id' => 3,
                 'payment_id' => '4',
                 'receptionist_id' => '1',
-                'date_create' => '2018-06-30 20:08:18',
+                'created_date' => '2018-06-30 20:08:18',
                 'received_money' => '250000',
             ]);
+    }
+    public function initStep(){
+        Step::create([
+            'name' => 'Khám và tư vấn',
+            'description' => 'Bác sĩ sẽ khám tổng quát để đánh giá tình hình sức khỏe răng miệng cũng như tình hình trạng răng miệng của bệnh nhân.Sau đó, tư vấn phương pháp điều trị cụ thể.',
 
-            //Cai nao cung cần:
-            Step::create([
-                'name' => 'Khám và tư vấn',
-                'description' => 'Bác sĩ sẽ khám tổng quát để đánh giá tình hình sức khỏe răng miệng cũng như tình hình trạng răng miệng của bệnh nhân.Sau đó, tư vấn phương pháp điều trị cụ thể.',
+        ]);
+        Step::create([
+            'name' => 'chụp X-quang',
+            'description' => 'Bệnh nhân sẽ được chụp X-quang và kiểm tra tình trạng răng miệng, mức độ sâu răng cụ thể để bác sỹ có cơ sở chỉ định việc điều trị sâu răng hay buộc phải nhổ bỏ răng sâu.',
 
-            ]);
-            Step::create([
-                'name' => 'chụp X-quang',
-                'description' => 'Bệnh nhân sẽ được chụp X-quang và kiểm tra tình trạng răng miệng, mức độ sâu răng cụ thể để bác sỹ có cơ sở chỉ định việc điều trị sâu răng hay buộc phải nhổ bỏ răng sâu.',
+        ]);
+        Step::create([
+            'name' => 'Vệ sinh khoang miệng',
+            'description' => 'Tiến hành vệ sinh vùng khoang miệng để thực hiện các bước điều trị',
 
-            ]);
-            Step::create([
-                'name' => 'Vệ sinh khoang miệng',
-                'description' => 'Tiến hành vệ sinh vùng khoang miệng để thực hiện các bước điều trị',
+        ]);
+        //end
+        //Cạo vôi răng
+        Step::create([
+            'name' => 'Cạo vôi răng (scaling)',
+            'description' => '   Bác sĩ sử dụng đầu máy siêu âm siêu nhỏ với chuyển động rung của các bước sóng lên toàn bộ bề mặt có mảng bám, vôi răng. Những mảng bám, vôi răng sẽ được loại bỏ nhanh chóng ngay cả khi chúng nằm sâu dưới nướu hay trong các kẽ răng.',
 
-            ]);
-            //end
-            //Cạo vôi răng
-            Step::create([
-                'name' => 'Cạo vôi răng (scaling)',
-                'description' => '   Bác sĩ sử dụng đầu máy siêu âm siêu nhỏ với chuyển động rung của các bước sóng lên toàn bộ bề mặt có mảng bám, vôi răng. Những mảng bám, vôi răng sẽ được loại bỏ nhanh chóng ngay cả khi chúng nằm sâu dưới nướu hay trong các kẽ răng.',
+        ]);
+        Step::create([
+            'name' => 'Đánh bóng răng',
+            'description' => 'Sau khi hoàn tất cạo vôi răng, bác sĩ sử dụng cụ và thuốc đánh bóng cho răng, giúp răng không chỉ sạch sẽ mà còn sáng bóng, có khả năng hạn chế sự tích tụ mảng bám sau này.',
 
-            ]);
-            Step::create([
-                'name' => 'Đánh bóng răng',
-                'description' => 'Sau khi hoàn tất cạo vôi răng, bác sĩ sử dụng cụ và thuốc đánh bóng cho răng, giúp răng không chỉ sạch sẽ mà còn sáng bóng, có khả năng hạn chế sự tích tụ mảng bám sau này.',
+        ]);
+        //end cao vội răng
+        // cạo vôi rang nướu dưới
+        Step::create([
+            'name' => 'Siêu âm Cavitron BP 8.0',
+            'description' => ' Đây là phương pháp lấy cao răng tối ưu nhất hiện nay, được ứng dụng ở tất cả các trung tâm nha khoa lớn trên thế giới:',
 
-            ]);
-            //end cao vội răng
-            // cạo vôi rang nướu dưới
-            Step::create([
-                'name' => 'Siêu âm Cavitron BP 8.0',
-                'description' => ' Đây là phương pháp lấy cao răng tối ưu nhất hiện nay, được ứng dụng ở tất cả các trung tâm nha khoa lớn trên thế giới:',
+        ]);
+        //end cạo vôi rang nướu dưới
+        //Cắt Nướu
+        Step::create([
+            'name' => 'Lập phác đồ điều trị',
+            'description' => 'Bác sĩ đưa kết quả chụp phim được mô phỏng trên hình ảnh không gian 3 chiều để bệnh nhân có thể hình dung cụ thể tình trạng, sau đó tư vấn về chi phí, thời gian, phương pháp tiến hành…',
 
-            ]);
-            //end cạo vôi rang nướu dưới
-            //Cắt Nướu
-            Step::create([
-                'name' => 'Lập phác đồ điều trị',
-                'description' => 'Bác sĩ đưa kết quả chụp phim được mô phỏng trên hình ảnh không gian 3 chiều để bệnh nhân có thể hình dung cụ thể tình trạng, sau đó tư vấn về chi phí, thời gian, phương pháp tiến hành…',
-
-            ]);
-            Step::create([
-                'name' => 'Phẫu thuật cắt nướu',
-                'description' => 'Dựa vào phác đồ điều trị đã lập ra, bác sĩ sẽ tiến hành điều trị cho bệnh nhân theo đúng quy trình và kỹ thuật yêu cầu.
+        ]);
+        Step::create([
+            'name' => 'Phẫu thuật cắt nướu',
+            'description' => 'Dựa vào phác đồ điều trị đã lập ra, bác sĩ sẽ tiến hành điều trị cho bệnh nhân theo đúng quy trình và kỹ thuật yêu cầu.
 ',
 
-            ]);
-            //end Cắt Nướu
-            //nạo túi nha chu
-            Step::create([
-                'name' => 'Làm sạch sâu (root planing)',
-                'description' => 'Còn làm sạch sâu là quá trình làm mịn bề mặt gốc chân răng và loại bỏ bất cứ cấu trúc răng nào bị nhiễm bệnh.',
+        ]);
+        //end Cắt Nướu
+        //nạo túi nha chu
+        Step::create([
+            'name' => 'Làm sạch sâu (root planing)',
+            'description' => 'Còn làm sạch sâu là quá trình làm mịn bề mặt gốc chân răng và loại bỏ bất cứ cấu trúc răng nào bị nhiễm bệnh.',
 
-            ]);
-            //end nạo túi nha chu
-            //XOANG
-            Step::create([
-                'name' => 'Tạo hình chất trám',
-                'description' => 'bác sĩ sẽ tiến hành đưa vật liệu trám composite vào bề mặt răng nơi vị trí cần trám, sử dụng dụng cụ nha khoa để tạo hình miếng trám sao cho vừa khít với vị trí cần trám đảm bảo thẩm mỹ cho vết trám.',
+        ]);
+        //end nạo túi nha chu
+        //XOANG
+        Step::create([
+            'name' => 'Tạo hình chất trám',
+            'description' => 'bác sĩ sẽ tiến hành đưa vật liệu trám composite vào bề mặt răng nơi vị trí cần trám, sử dụng dụng cụ nha khoa để tạo hình miếng trám sao cho vừa khít với vị trí cần trám đảm bảo thẩm mỹ cho vết trám.',
 
-            ]);
-            Step::create([
-                'name' => 'chiếu đèn laser hóa cứng miếng trám',
-                'description' => 'Sau khi cố định được miếng trám vào vị trí trám bác sĩ sẽ sử dụng bước sóng laser để làm cứng vật liệu trám composite và kết thúc quy trình điều trị. ',
+        ]);
+        Step::create([
+            'name' => 'chiếu đèn laser hóa cứng miếng trám',
+            'description' => 'Sau khi cố định được miếng trám vào vị trí trám bác sĩ sẽ sử dụng bước sóng laser để làm cứng vật liệu trám composite và kết thúc quy trình điều trị. ',
 
-            ]);
-            //end XOANG
-            //tẩy trắng răng tại phòng
-            Step::create([
-                'name' => 'Bôi gel bảo vệ nướu',
-                'description' => 'Chất gel bảo vệ nướu sẽ được thoa lên vùng tiếp xúc giữa răng và nướu với mục đích không làm tổn thương nướu khi chiếu đèn tẩy trắng. Công đoạn bôi gel che nướu và chiếu đèn sẽ được thực hiện khoảng 2 – 3 lần trong toàn bộ quy trình',
+        ]);
+        //end XOANG
+        //tẩy trắng răng tại phòng
+        Step::create([
+            'name' => 'Bôi gel bảo vệ nướu',
+            'description' => 'Chất gel bảo vệ nướu sẽ được thoa lên vùng tiếp xúc giữa răng và nướu với mục đích không làm tổn thương nướu khi chiếu đèn tẩy trắng. Công đoạn bôi gel che nướu và chiếu đèn sẽ được thực hiện khoảng 2 – 3 lần trong toàn bộ quy trình',
 
-            ]);
-            Step::create([
-                'name' => 'Phủ gel tẩy trắng răng',
-                'description' => 'Sau khi bề mặt răng được vệ sinh sạch, đồng thời lắp dụng cụ che nướu và bảo vệ nướu, bệnh nhân sẽ được phủ lên một lớp gel tẩy trắng dày khoảng 2mm bằng cọ phủ, quy trình này được lặp lại 2 lần. ',
+        ]);
+        Step::create([
+            'name' => 'Phủ gel tẩy trắng răng',
+            'description' => 'Sau khi bề mặt răng được vệ sinh sạch, đồng thời lắp dụng cụ che nướu và bảo vệ nướu, bệnh nhân sẽ được phủ lên một lớp gel tẩy trắng dày khoảng 2mm bằng cọ phủ, quy trình này được lặp lại 2 lần. ',
 
-            ]);
-            Step::create([
-                'name' => 'Tẩy trắng răng bằng đèn Plasma',
-                'description' => 'Sau khi bề mặt răng được vệ sinh sạch, đồng thời lắp dụng cụ che nướu và bảo vệ nướu, bệnh nhân sẽ được phủ lên một lớp gel tẩy trắng dày khoảng 2mm bằng cọ phủ, quy trình này được lặp lại 2 lần. ',
+        ]);
+        Step::create([
+            'name' => 'Tẩy trắng răng bằng đèn Plasma',
+            'description' => 'Sau khi bề mặt răng được vệ sinh sạch, đồng thời lắp dụng cụ che nướu và bảo vệ nướu, bệnh nhân sẽ được phủ lên một lớp gel tẩy trắng dày khoảng 2mm bằng cọ phủ, quy trình này được lặp lại 2 lần. ',
 
-            ]);
-            Step::create([
-                'name' => 'Vệ sinh sau tẩy',
-                'description' => 'Sau khi hết thời gian phủ gel, bệnh nhân sẽ được vệ sinh sạch gel tẩy trắng, đánh bóng lại răng bằng bột kim cương và so lại màu sắc răng sau khi tẩy trắng.
+        ]);
+        Step::create([
+            'name' => 'Vệ sinh sau tẩy',
+            'description' => 'Sau khi hết thời gian phủ gel, bệnh nhân sẽ được vệ sinh sạch gel tẩy trắng, đánh bóng lại răng bằng bột kim cương và so lại màu sắc răng sau khi tẩy trắng.
 ',
 
-            ]);
-            //end tẩy trắng tại phòng
-            // tẩy trắng tại nhà
-            Step::create([
-                'name' => 'Tạo khay răng bằng nhựa dẻo',
-                'description' => 'Bác sĩ sẽ lấy dấu răng của bạn và làm một cặp khay bằng nhựa dẻo vừa khít với răng của bạn',
+        ]);
+        //end tẩy trắng tại phòng
+        // tẩy trắng tại nhà
+        Step::create([
+            'name' => 'Tạo khay răng bằng nhựa dẻo',
+            'description' => 'Bác sĩ sẽ lấy dấu răng của bạn và làm một cặp khay bằng nhựa dẻo vừa khít với răng của bạn',
 
-            ]);
+        ]);
 
-            Step::create([
-                'name' => 'Bôi gel tẩy trắng (dành cho tại nhà)',
-                'description' => 'gel tẩy trắng răng với hàm lượng Hydrogen Peroxide thấp tại nhà ',
+        Step::create([
+            'name' => 'Bôi gel tẩy trắng (dành cho tại nhà)',
+            'description' => 'gel tẩy trắng răng với hàm lượng Hydrogen Peroxide thấp tại nhà ',
 
-            ]);
-            //end tẩy trắng tại nhà
-            //post sợi
-            Step::create([
-                'name' => 'Post Kim Loại',
-                'description' => 'Trám răng có chốt cắm bằng kim loại',
+        ]);
+        //end tẩy trắng tại nhà
+        //post sợi
+        Step::create([
+            'name' => 'Post Kim Loại',
+            'description' => 'Trám răng có chốt cắm bằng kim loại',
 
-            ]);
+        ]);
 //            end post soi
 //            post kim loai
-            Step::create([
-                'name' => 'Post Sợi',
-                'description' => 'Trám răng có chốt cắm bằng sợi thủy tinh - hạn chế gãy như  chốt kim loại',
+        Step::create([
+            'name' => 'Post Sợi',
+            'description' => 'Trám răng có chốt cắm bằng sợi thủy tinh - hạn chế gãy như  chốt kim loại',
 
-            ]);
+        ]);
 //            end post kim loai
-            // chữa đau răng
-            Step::create([
-                'name' => 'Chữa đau răng',
-                'description' => 'Điều trị nội nha dứt điểm về triệu chứng dau răng do bên trong răng - dưới men trắng  hoặc do tủy , dây thần kinh...',
+        // chữa đau răng
+        Step::create([
+            'name' => 'Chữa đau răng',
+            'description' => 'Điều trị nội nha dứt điểm về triệu chứng dau răng do bên trong răng - dưới men trắng  hoặc do tủy , dây thần kinh...',
 
-            ]);
-            // end chữa đau răng
+        ]);
+        // end chữa đau răng
 
-            //lấy lại tủy
-            Step::create([
-                'name' => 'Chữa tủy răng ( lấy lại tủy)',
-                'description' => 'Đây là một quy trình chữa tủy răng cho các răng đã được chữa tủy rồi nhưng vẫn còn các triệu chứng đau, khó chịu hay răng không có triệu chứng gì nhưng chất lượng nội nha không đạt yêu cầu.',
+        //lấy lại tủy
+        Step::create([
+            'name' => 'Chữa tủy răng ( lấy lại tủy)',
+            'description' => 'Đây là một quy trình chữa tủy răng cho các răng đã được chữa tủy rồi nhưng vẫn còn các triệu chứng đau, khó chịu hay răng không có triệu chứng gì nhưng chất lượng nội nha không đạt yêu cầu.',
 
-            ]);
-            //end lấy lại tủy
+        ]);
+        //end lấy lại tủy
 
-            //nhổ răng
-            Step::create([
-                'name' => 'Gây tê',
-                'description' => 'Tại vị trí răng sâu cần nhổ, bác sỹ sẽ gây tê để bệnh nhân không cảm thấy đau đớn và thoải mái trong khi bác sỹ nhổ răng.',
+        //nhổ răng
+        Step::create([
+            'name' => 'Gây tê',
+            'description' => 'Tại vị trí răng sâu cần nhổ, bác sỹ sẽ gây tê để bệnh nhân không cảm thấy đau đớn và thoải mái trong khi bác sỹ nhổ răng.',
 
-            ]);
-            Step::create([
-                'name' => 'Nhổ răng sâu',
-                'description' => 'Bác sỹ sẽ sử dụng dụng cụ để nạy nướu, làm răng lung lay, sau đó dùng kìm nha khoa để nhổ răng và lấy toàn bộ chân răng ra. Sau đó, bác sỹ tiến hành khâu lại vết nhổ và cầm máu.',
+        ]);
+        Step::create([
+            'name' => 'Nhổ răng sâu',
+            'description' => 'Bác sỹ sẽ sử dụng dụng cụ để nạy nướu, làm răng lung lay, sau đó dùng kìm nha khoa để nhổ răng và lấy toàn bộ chân răng ra. Sau đó, bác sỹ tiến hành khâu lại vết nhổ và cầm máu.',
 
-            ]);
-            Step::create([
-                'name' => 'Tiểu phẩu',
-                'description' => 'Phẩu thuật nhỏ không cần gây mê mà chỉ cần gây tê tại chổ.Trước khi tiểu khẩu cần xét nghiệm máu và đảm bảo khả năng đông của máu',
+        ]);
+        Step::create([
+            'name' => 'Tiểu phẩu',
+            'description' => 'Phẩu thuật nhỏ không cần gây mê mà chỉ cần gây tê tại chổ.Trước khi tiểu khẩu cần xét nghiệm máu và đảm bảo khả năng đông của máu',
 
-            ]);
-            // end nhổ răng
-            // dinh hình răng
-            Step::create([
-                'name' => 'MÃO SỨ KL THƯỜNG',
-                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu : kim loại quý như vàng, ',
+        ]);
+        // end nhổ răng
+        // dinh hình răng
+        Step::create([
+            'name' => 'MÃO SỨ KL THƯỜNG',
+            'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu : kim loại quý như vàng, ',
 
-            ]);
-            Step::create([
-                'name' => 'MÃO SỨ TITAN',
-                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu TITAN',
+        ]);
+        Step::create([
+            'name' => 'MÃO SỨ TITAN',
+            'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu TITAN',
 
-            ]);
-            Step::create([
-                'name' => 'MÃO SỨ ZIRCONIA',
-                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ ZIRCONIA',
+        ]);
+        Step::create([
+            'name' => 'MÃO SỨ ZIRCONIA',
+            'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ ZIRCONIA',
 
-            ]);
-            Step::create([
-                'name' => 'MÃO SỨ LAVA',
-                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ LAVA ',
+        ]);
+        Step::create([
+            'name' => 'MÃO SỨ LAVA',
+            'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ LAVA ',
 
-            ]);
-           
-            Step::create([
-                'name' => 'VENEER',
-                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu VENEER',
+        ]);
+       
+        Step::create([
+            'name' => 'VENEER',
+            'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu VENEER',
 
-            ]);
-            Step::create([
-                'name' => 'MÃO SỨ CERCON',
-                'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ CERCON',
+        ]);
+        Step::create([
+            'name' => 'MÃO SỨ CERCON',
+            'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ CERCON',
 
-            ]);
-            Step::create([
-                'name' => 'Mài cùi & làm khuông',
-                'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
+        ]);
+        Step::create([
+            'name' => 'Mài cùi & làm khuông',
+            'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
 
-            ]);
-            Step::create([
-                'name' => 'Lắp răng sứ',
-                'description' => 'Tiến hành lắp ráp mẫu răng mới cho khách hàng và điều chỉnh cho thích hợp. ',
+        ]);
+        Step::create([
+            'name' => 'Lắp răng sứ',
+            'description' => 'Tiến hành lắp ráp mẫu răng mới cho khách hàng và điều chỉnh cho thích hợp. ',
 
-            ]);
+        ]);
 //            end dinh hinh rang
 
 
-            //ham nhua rang VN
-            Step::create([
-                'name' => 'Lắp ráp & hoàn thiện',
-                'description' => 'Lắp ráp khung răng cho khách hàng',
+        //ham nhua rang VN
+        Step::create([
+            'name' => 'Lắp ráp & hoàn thiện',
+            'description' => 'Lắp ráp khung răng cho khách hàng',
 
-            ]);
-            Step::create([
-                'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG NHỰA VIỆT NAM',
-                'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
+        ]);
+        Step::create([
+            'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG NHỰA VIỆT NAM',
+            'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
 
-            ]);
-            Step::create([
-                'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG COMPOSITE  ',
-                'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
+        ]);
+        Step::create([
+            'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG COMPOSITE  ',
+            'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
 
-            ]);
-            Step::create([
-                'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG SỨ  ',
-                'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
+        ]);
+        Step::create([
+            'name' => 'Mài cùi & làm khuông HÀM NHỰA & RĂNG SỨ  ',
+            'description' => 'Thực hiện mài cùi răng để tạo khung với tỉ lệ chính xác.Sau đó bắt đầu tạo khung và lấy dấu răng.Sau đó gửi về trung tâm Lab để thiết kế với kích thước và chất liệu phù hợp ,',
 
-            ]);
-            //end
-            //implant end + xquang
-            Step::create([
-                'name' => 'Phẫu thuật đặt Implant (tiểu phẫu)',
-                'description' => 'Bác sĩ sẽ thực hiện 1 tiểu phẫu để đặt Implant vào xương hàm. Với mỗi Implant sẽ cần 10-15 phút để thực hiện. Với các trường hợp đặt implant vùng răng cửa, ngay sau phẫu thuật bạn sẽ được gắn răng tạm để sử dụng như bình thường .',
+        ]);
+        //end
+        //implant end + xquang
+        Step::create([
+            'name' => 'Phẫu thuật đặt Implant (tiểu phẫu)',
+            'description' => 'Bác sĩ sẽ thực hiện 1 tiểu phẫu để đặt Implant vào xương hàm. Với mỗi Implant sẽ cần 10-15 phút để thực hiện. Với các trường hợp đặt implant vùng răng cửa, ngay sau phẫu thuật bạn sẽ được gắn răng tạm để sử dụng như bình thường .',
 
-            ]);
-            Step::create([
-                'name' => 'Đặt trụ Implant Mỹ',
-                'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
+        ]);
+        Step::create([
+            'name' => 'Đặt trụ Implant Mỹ',
+            'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
 ',
 
-            ]);
-            Step::create([
-                'name' => 'Đặt trụ Implant Hàn Quốc',
-                'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
+        ]);
+        Step::create([
+            'name' => 'Đặt trụ Implant Hàn Quốc',
+            'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
 ',
 
-            ]);
-            Step::create([
-                'name' => 'Đặt trụ Implant NOBEL HAY STRAUMAN',
-                'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
+        ]);
+        Step::create([
+            'name' => 'Đặt trụ Implant NOBEL HAY STRAUMAN',
+            'description' => 'Thông thường sau khoảng 4-6 tháng đặt Implant khách hàng sẽ được đặt lịch hẹn tái khám, chụp phim kiểm tra.
 ',
 
-            ]);
-            Step::create([
-                'name' => 'Phục hình cố định trên Implant - giai đoạn 1',
-                'description' => 'Bác sĩ sẽ tiến hành đặt Abutment trên implant và lấy dấu bằng các vật liệu & dụng cụ chuyên biệt cho phục hình trên Implant  đồng thời chọn màu răng sứ cho phù hợp với màu răng tự nhiên của bạn.',
+        ]);
+        Step::create([
+            'name' => 'Phục hình cố định trên Implant - giai đoạn 1',
+            'description' => 'Bác sĩ sẽ tiến hành đặt Abutment trên implant và lấy dấu bằng các vật liệu & dụng cụ chuyên biệt cho phục hình trên Implant  đồng thời chọn màu răng sứ cho phù hợp với màu răng tự nhiên của bạn.',
 
-            ]);
-            Step::create([
-                'name' => 'Phục hình cố định trên Implant - giai đoạn 2',
-                'description' => 'sau khi labo đã hoàn tất răng sứ, bác sĩ sẽ thử răng cho bạn và sau đó gắn chặt răng sứ trên Implant bằng ciment hoặc ốc vặn.',
-            ]);
-            //implant end
-            //chinh nha mắc cài
-            Step::create([
-                'name' => 'Chỉnh nha mắc cài kim loại',
-                'description' => 'Niềng răng mắc cài kim loại hay còn được gọi là phương pháp niềng răng truyền thống, giúp khách hàng cải thiện khuyết điểm của hàm răng một cách hiệu quả.
+        ]);
+        Step::create([
+            'name' => 'Phục hình cố định trên Implant - giai đoạn 2',
+            'description' => 'sau khi labo đã hoàn tất răng sứ, bác sĩ sẽ thử răng cho bạn và sau đó gắn chặt răng sứ trên Implant bằng ciment hoặc ốc vặn.',
+        ]);
+        //implant end
+        //chinh nha mắc cài
+        Step::create([
+            'name' => 'Chỉnh nha mắc cài kim loại',
+            'description' => 'Niềng răng mắc cài kim loại hay còn được gọi là phương pháp niềng răng truyền thống, giúp khách hàng cải thiện khuyết điểm của hàm răng một cách hiệu quả.
 ',
 
-            ]);
-            Step::create([
-                'name' => 'Chỉnh nha mắc cài Sứ',
-                'description' => ' Niềng răng mắc cài sứ: Được cải tiến từ mắc cài inox truyền thống nhưng được làm bằng hợp kim sứ và một số vật liệu vô cơ khác.',
+        ]);
+        Step::create([
+            'name' => 'Chỉnh nha mắc cài Sứ',
+            'description' => ' Niềng răng mắc cài sứ: Được cải tiến từ mắc cài inox truyền thống nhưng được làm bằng hợp kim sứ và một số vật liệu vô cơ khác.',
 
-            ]);
-            Step::create([
-                'name' => 'Chỉnh nha mắc cài kim loại tự khóa',
-                'description' => 'Niềng răng mắc cài kim loại tự đóng/tự khóa được cải tiến từ mắc cài inox cổ điển, ',
+        ]);
+        Step::create([
+            'name' => 'Chỉnh nha mắc cài kim loại tự khóa',
+            'description' => 'Niềng răng mắc cài kim loại tự đóng/tự khóa được cải tiến từ mắc cài inox cổ điển, ',
 
-            ]);
-            Step::create([
-                'name' => 'Chỉnh nha mắc cài sứ tự khóa',
-                'description' => 'Phương pháp niềng răng mắc cài sứ tự đóng/tự khóa, có cấu tạo giống với niềng răng mắc cài kim loại và mắc cài sứ thông thường.',
+        ]);
+        Step::create([
+            'name' => 'Chỉnh nha mắc cài sứ tự khóa',
+            'description' => 'Phương pháp niềng răng mắc cài sứ tự đóng/tự khóa, có cấu tạo giống với niềng răng mắc cài kim loại và mắc cài sứ thông thường.',
 
-            ]);
-            Step::create([
-                'name' => 'Chỉnh nha INVISALIGN',
-                'description' => 'Chỉnh nha bằng Invisalign đem lại nhiều ưu điểm và thuận tiện cho bệnh nhân như thẩm mỹ cao, dễ vệ sinh, có thể tháo ra trong những dịp quan trọng',
+        ]);
+        Step::create([
+            'name' => 'Chỉnh nha INVISALIGN',
+            'description' => 'Chỉnh nha bằng Invisalign đem lại nhiều ưu điểm và thuận tiện cho bệnh nhân như thẩm mỹ cao, dễ vệ sinh, có thể tháo ra trong những dịp quan trọng',
 
-            ]);
-//            end chinh nha mac cai
-
-            //treatment_detail_step
-            TreatmentStep::create([
-                'treatment_id'=>'1',
-                'step_id' =>'3',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'1',
-                'step_id' =>'4',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'1',
-                'step_id' =>'5',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'2',
-                'step_id' =>'3',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'2',
-                'step_id' =>'6',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'2',
-                'step_id' =>'5',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'3',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'3',
-                'step_id' =>'5',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'3',
-                'step_id' =>'8',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'4',
-                'step_id' =>'3',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'4',
-                'step_id' =>'4',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'4',
-                'step_id' =>'6',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'5',
-                'step_id' =>'7',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'5',
-                'step_id' =>'9',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'6',
-                'step_id' =>'3',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'7',
-                'step_id' =>'3',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'6',
-                'step_id' =>'10',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'7',
-                'step_id' =>'10',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'6',
-                'step_id' =>'11',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'7',
-                'step_id' =>'11',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'8',
-                'step_id' =>'3',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'8',
-                'step_id' =>'12',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'8',
-                'step_id' =>'13',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'8',
-                'step_id' =>'14',
-            ]);TreatmentStep::create([
-                'treatment_id'=>'8',
-                'step_id' =>'15',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'9',
-                'step_id' =>'16',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'9',
-                'step_id' =>'17',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'10',
-                'step_id' =>'18',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'11',
-                'step_id' =>'19',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'12',
-                'step_id' =>'20',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'13',
-                'step_id' =>'20',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'14',
-                'step_id' =>'20',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'15',
-                'step_id' =>'21',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'16',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'16',
-                'step_id' =>'3',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'16',
-                'step_id' =>'22',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'16',
-                'step_id' =>'23',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'17',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'17',
-                'step_id' =>'2',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'17',
-                'step_id' =>'3',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'17',
-                'step_id' =>'22',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'17',
-                'step_id' =>'23',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'18',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'18',
-                'step_id' =>'2',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'18',
-                'step_id' =>'3',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'18',
-                'step_id' =>'22',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'18',
-                'step_id' =>'23',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'19',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'19',
-                'step_id' =>'2',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'19',
-                'step_id' =>'3',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'19',
-                'step_id' =>'22',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'19',
-                'step_id' =>'23',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'20',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'20',
-                'step_id' =>'2',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'20',
-                'step_id' =>'3',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'20',
-                'step_id' =>'22',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'20',
-                'step_id' =>'24',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'20',
-                'step_id' =>'23',
-            ]);
-//            --------------
-            TreatmentStep::create([
-                'treatment_id'=>'21',
-                'step_id' =>'31',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'21',
-                'step_id' =>'25',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'21',
-                'step_id' =>'32',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'22',
-                'step_id' =>'31',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'22',
-                'step_id' =>'26',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'22',
-                'step_id' =>'32',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'23',
-                'step_id' =>'31',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'23',
-                'step_id' =>'27',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'23',
-                'step_id' =>'32',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'24',
-                'step_id' =>'31',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'24',
-                'step_id' =>'28',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'24',
-                'step_id' =>'32',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'25',
-                'step_id' =>'31',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'25',
-                'step_id' =>'29',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'25',
-                'step_id' =>'32',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'26',
-                'step_id' =>'31',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'26',
-                'step_id' =>'30',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'26',
-                'step_id' =>'32',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'29',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'29',
-                'step_id' =>'37',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'29',
-                'step_id' =>'36',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'30',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'30',
-                'step_id' =>'38',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'30',
-                'step_id' =>'36',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'31',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'31',
-                'step_id' =>'39',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'31',
-                'step_id' =>'36',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'32',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'32',
-                'step_id' =>'40',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'32',
-                'step_id' =>'42',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'32',
-                'step_id' =>'45',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'32',
-                'step_id' =>'46',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'33',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'33',
-                'step_id' =>'40',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'33',
-                'step_id' =>'41',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'33',
-                'step_id' =>'45',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'33',
-                'step_id' =>'46',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'34',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'34',
-                'step_id' =>'40',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'34',
-                'step_id' =>'43',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'34',
-                'step_id' =>'45',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'34',
-                'step_id' =>'46',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'35',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'35',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'35',
-                'step_id' =>'43',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'36',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'36',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'36',
-                'step_id' =>'44',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'37',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'37',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'37',
-                'step_id' =>'45',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'38',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'38',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'38',
-                'step_id' =>'46',
-            ]);
-            //--------------
-            TreatmentStep::create([
-                'treatment_id'=>'39',
-                'step_id' =>'1',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'39',
-                'step_id' =>'7',
-            ]);
-            TreatmentStep::create([
-                'treatment_id'=>'39',
-                'step_id' =>'47',
-            ]);
-
-            //end
-            Event::create([
-                'name' => 'Khuyến Mãi Trám răng',
-                'start_date' => '2018-06-15 20:08:18',
-                'end_date' => '2018-07-15 20:08:18',
-                'discount' => '20',
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'treatment_id' => 1,
-            ]);
-            Event::create([
-                'name' => 'Khuyến Mãi Trám răng',
-                'start_date' => '2018-06-15 20:08:18',
-                'end_date' => '2018-06-17 20:08:18',
-                'discount' => '30',
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'treatment_id' => 1,
-            ]);
-            Event::create([
-                'name' => 'Khuyến Mãi Trám răng',
-                'start_date' => '2018-06-15 20:08:18',
-                'end_date' => '2018-07-15 20:08:18',
-                'discount' => '20',
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'treatment_id' => 2,
-            ]);
-
-            $this->initAddress();
-            $this->initClientToken();
-
-            DB::commit(); 
-        } catch (\Exception $e) {
-            Log::info("INIT ERROR: " . $e->getMessage());
-            DB::rollback();
-            return response()->json($e->getMessage());
-        }
+        ]);
     }
+    public function initTreatmentStep(){
+    TreatmentStep::create([
+        'treatment_id'=>'1',
+        'step_id' =>'3',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'1',
+        'step_id' =>'4',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'1',
+        'step_id' =>'5',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'2',
+        'step_id' =>'3',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'2',
+        'step_id' =>'6',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'2',
+        'step_id' =>'5',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'3',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'3',
+        'step_id' =>'5',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'3',
+        'step_id' =>'8',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'4',
+        'step_id' =>'3',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'4',
+        'step_id' =>'4',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'4',
+        'step_id' =>'6',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'5',
+        'step_id' =>'7',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'5',
+        'step_id' =>'9',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'6',
+        'step_id' =>'3',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'7',
+        'step_id' =>'3',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'6',
+        'step_id' =>'10',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'7',
+        'step_id' =>'10',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'6',
+        'step_id' =>'11',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'7',
+        'step_id' =>'11',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'8',
+        'step_id' =>'3',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'8',
+        'step_id' =>'12',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'8',
+        'step_id' =>'13',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'8',
+        'step_id' =>'14',
+    ]);TreatmentStep::create([
+        'treatment_id'=>'8',
+        'step_id' =>'15',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'9',
+        'step_id' =>'16',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'9',
+        'step_id' =>'17',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'10',
+        'step_id' =>'18',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'11',
+        'step_id' =>'19',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'12',
+        'step_id' =>'20',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'13',
+        'step_id' =>'20',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'14',
+        'step_id' =>'20',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'15',
+        'step_id' =>'21',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'16',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'16',
+        'step_id' =>'3',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'16',
+        'step_id' =>'22',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'16',
+        'step_id' =>'23',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'17',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'17',
+        'step_id' =>'2',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'17',
+        'step_id' =>'3',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'17',
+        'step_id' =>'22',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'17',
+        'step_id' =>'23',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'18',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'18',
+        'step_id' =>'2',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'18',
+        'step_id' =>'3',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'18',
+        'step_id' =>'22',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'18',
+        'step_id' =>'23',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'19',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'19',
+        'step_id' =>'2',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'19',
+        'step_id' =>'3',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'19',
+        'step_id' =>'22',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'19',
+        'step_id' =>'23',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'20',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'20',
+        'step_id' =>'2',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'20',
+        'step_id' =>'3',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'20',
+        'step_id' =>'22',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'20',
+        'step_id' =>'24',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'20',
+        'step_id' =>'23',
+    ]);
+//            --------------
+    TreatmentStep::create([
+        'treatment_id'=>'21',
+        'step_id' =>'31',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'21',
+        'step_id' =>'25',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'21',
+        'step_id' =>'32',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'22',
+        'step_id' =>'31',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'22',
+        'step_id' =>'26',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'22',
+        'step_id' =>'32',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'23',
+        'step_id' =>'31',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'23',
+        'step_id' =>'27',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'23',
+        'step_id' =>'32',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'24',
+        'step_id' =>'31',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'24',
+        'step_id' =>'28',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'24',
+        'step_id' =>'32',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'25',
+        'step_id' =>'31',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'25',
+        'step_id' =>'29',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'25',
+        'step_id' =>'32',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'26',
+        'step_id' =>'31',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'26',
+        'step_id' =>'30',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'26',
+        'step_id' =>'32',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'29',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'29',
+        'step_id' =>'37',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'29',
+        'step_id' =>'36',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'30',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'30',
+        'step_id' =>'38',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'30',
+        'step_id' =>'36',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'31',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'31',
+        'step_id' =>'39',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'31',
+        'step_id' =>'36',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'32',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'32',
+        'step_id' =>'40',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'32',
+        'step_id' =>'42',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'32',
+        'step_id' =>'45',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'32',
+        'step_id' =>'46',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'33',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'33',
+        'step_id' =>'40',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'33',
+        'step_id' =>'41',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'33',
+        'step_id' =>'45',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'33',
+        'step_id' =>'46',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'34',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'34',
+        'step_id' =>'40',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'34',
+        'step_id' =>'43',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'34',
+        'step_id' =>'45',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'34',
+        'step_id' =>'46',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'35',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'35',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'35',
+        'step_id' =>'43',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'36',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'36',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'36',
+        'step_id' =>'44',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'37',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'37',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'37',
+        'step_id' =>'45',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'38',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'38',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'38',
+        'step_id' =>'46',
+    ]);
+    //--------------
+    TreatmentStep::create([
+        'treatment_id'=>'39',
+        'step_id' =>'1',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'39',
+        'step_id' =>'7',
+    ]);
+    TreatmentStep::create([
+        'treatment_id'=>'39',
+        'step_id' =>'47',
+    ]);
 
-
+    }
     public function initAddress(){
 
         City::create([
@@ -6651,6 +6754,66 @@ class AdminController extends Controller
             'name' => 'Huyện Ngọc Hiển',
             'city_id' => 96
         ]);
+    }
+    public function initAnamnesisCatalog(){
+        AnamnesisCatalog::create([
+             'name' => 'Máu loãng',
+             'description'=> 'Máu loãng'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Tiểu đường',
+             'description'=> 'Tiểu đường'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Thần kinh',
+             'description'=> 'Thần kinh'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Đột quy',
+             'description'=> 'Đột quy'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Huyết áp thấp',
+             'description'=> 'Huyết áp thấp'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Huyết áp cao',
+             'description'=> 'Huyết áp cao'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Ung thư',
+             'description'=> 'Ung thư'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Hen suyễn',
+             'description'=> 'Hen suyễn'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh thận',
+             'description'=> 'Bệnh thận'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh tâm thần',
+             'description'=> 'Bệnh tâm thần'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Dị tật bẩm sinh',
+             'description'=> 'Dị tật bẩm sinh'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'Bệnh truyền nhiễm qua máu',
+             'description'=> 'Bệnh truyền nhiễm qua máu'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'AIDS',
+             'description'=> 'AIDS'
+        ]);
+        AnamnesisCatalog::create([
+             'name' => 'AIDS',
+             'description'=> 'AIDS'
+        ]);
+    }
+    public function initMedicine(){
         Medicine::create([
             'name' => 'Paracetamol',
             'use' =>'giảm đau',
@@ -6796,64 +6959,38 @@ class AdminController extends Controller
             'use' =>'Thuốc điều trị viêm ổ răng',
             'description'=> ''
         ]);
-        AnamnesisCatalog::create([
-             'name' => 'Máu loãng',
-             'description'=> 'Máu loãng'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Tiểu đường',
-             'description'=> 'Tiểu đường'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Thần kinh',
-             'description'=> 'Thần kinh'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Đột quy',
-             'description'=> 'Đột quy'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Huyết áp thấp',
-             'description'=> 'Huyết áp thấp'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Huyết áp cao',
-             'description'=> 'Huyết áp cao'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Ung thư',
-             'description'=> 'Ung thư'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Hen suyễn',
-             'description'=> 'Hen suyễn'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Bệnh thận',
-             'description'=> 'Bệnh thận'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Bệnh tâm thần',
-             'description'=> 'Bệnh tâm thần'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Dị tật bẩm sinh',
-             'description'=> 'Dị tật bẩm sinh'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'Bệnh truyền nhiễm qua máu',
-             'description'=> 'Bệnh truyền nhiễm qua máu'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'AIDS',
-             'description'=> 'AIDS'
-        ]);
-        AnamnesisCatalog::create([
-             'name' => 'AIDS',
-             'description'=> 'AIDS'
-        ]);
+    }
+    public function initDistrict(){
 
-
+    }
+    public function initEvent(){
+        Event::create([
+                'name' => 'Khuyến Mãi Trám răng',
+                'start_date' => '2018-06-15 20:08:18',
+                'end_date' => '2018-07-15 20:08:18',
+                'discount' => '20',
+                'staff_id' => 1,
+                'created_date' => Carbon::now(),
+                'treatment_id' => 1,
+            ]);
+            Event::create([
+                'name' => 'Khuyến Mãi Trám răng',
+                'start_date' => '2018-06-15 20:08:18',
+                'end_date' => '2018-06-17 20:08:18',
+                'discount' => '30',
+                'staff_id' => 1,
+                'created_date' => Carbon::now(),
+                'treatment_id' => 1,
+            ]);
+            Event::create([
+                'name' => 'Khuyến Mãi Trám răng',
+                'start_date' => '2018-06-15 20:08:18',
+                'end_date' => '2018-07-15 20:08:18',
+                'discount' => '20',
+                'staff_id' => 1,
+                'created_date' => Carbon::now(),
+                'treatment_id' => 2,
+            ]);
     }
 
     public function initClientToken(){

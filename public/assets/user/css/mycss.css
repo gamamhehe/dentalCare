@@ -361,6 +361,20 @@ h5.list:after {
     box-sizing:border-box;
     transition:.3s;
   }
+.selectSpecial{
+     width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+}
+.selectSpecial:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
+}
   input[type=password]{
     width:100%;
     border:2px solid #aaa;
@@ -1365,8 +1379,8 @@ a.nav-link {
 }
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link:hover {
-    color: #0275d8;
-    border-color: #0275d8;
+    color:  white;
+    border-color:  white;
 }
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link.biendoichumenu:hover {
@@ -1382,18 +1396,16 @@ a.nav-link.active{
 a.nav-link.biendoichumenu.active{
      border-color: white;
 }
-.box_box_dktv{
-    background-color: blue;
-}
+ 
 .box_dktv{
-   background: #c61b25 !important;
+    
     padding: 10px;
     border-radius: 5px;
     position: fixed;
     color: #fff !important;
     font-weight: 600;
     z-index: 1;
-    right:-200px; top:300px;
+    right:-300px; top:300px;
     background: red;
     animation: mymove 10s infinite;
     animation-delay: 0s;
@@ -1404,11 +1416,11 @@ a.nav-link.biendoichumenu.active{
     animation-play-state: running;
 }
 @-webkit-keyframes mymove {
-    0%   {background-color:#c61b25;  right:-200px;  top:300px;}
+    0%   {background-color:#c61b25;  right:-300px;  top:300px;}
     10%  {background-color:#c61b25;  right:0px; top:300px;}
     60%  {background-color:#c61b25;  right:0px; top:300px;}
-    70%  {background-color:#c61b25;  right:-200px; top:300px;}
-    100% {background-color:#c61b25; right:-200px;top:300px;}
+    70%  {background-color:#c61b25;  right:-300px; top:300px;}
+    100% {background-color:#c61b25; right:-300px;top:300px;}
 }
 
 

@@ -17,8 +17,7 @@ class CreateTblBlockchainsTable extends Migration
             $table->increments('id');
             $table->longText('data_encrypt');
             $table->string('previous_hash');
-            $table->string('Hash');
-            $table->timestamps();
+            $table->string('hash');
         });
     }
 

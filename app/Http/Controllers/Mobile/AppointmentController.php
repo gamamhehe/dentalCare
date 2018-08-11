@@ -14,12 +14,13 @@ use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Jobs\SendSmsJob;
 use App\Model\Appointment;
 use App\Model\Patient;
 use App\Model\UserHasRole;
-use App\User;
+use App\Model\User;
 use DateTime;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -45,6 +46,36 @@ class AppointmentController extends BaseController
         }
     }
 
+    public function getUserAppointmentByCurrentDate(Request $request)
+    {
+        try {
+            $phone = $request->input('phone');
+            $dateStr = (new \DateTime())->format('Y-m-d');
+            $appointments = $this->getUserAppointmentByDate($phone, $dateStr);
+            foreach ($appointments as $appointment) {
+                $this->attachFieldAppointment($appointment);
+            }
+            return response()->json($appointments, 200);
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj("Có lỗi xảy ra", $ex);
+            return response()->json($error, 500);
+        }
+    }
+
+    public function getByDate(Request $request)
+    {
+        try {
+            $date = $request->input('date');
+            $appointments = $this->getAppointmentByDate($date);
+            foreach ($appointments as $appointment) {
+                $this->attachFieldAppointment($appointment);
+            }
+            return response()->json($appointments, 200);
+        } catch (\Exception $exception) {
+            $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
+            return response()->json($error, 500);
+        }
+    }
     public function getById($id)
     {
         try {
@@ -62,6 +93,9 @@ class AppointmentController extends BaseController
     {
         try {
             $appointments = $this->getAppointmentByPhone($phone);
+            foreach ($appointments as $appointment) {
+                $this->attachFieldAppointment($appointment);
+            }
             return response()->json($appointments, 200);
         } catch (Exception $exception) {
             $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
@@ -70,57 +104,7 @@ class AppointmentController extends BaseController
         }
     }
 
-    public function bookAppointment(Request $request)
-    {
-        try {
-            $phone = $request->input('phone');
-            $note = $request->input('note');
-            $bookingDate = $request->input('booking_date');
-            $dentistId = $request->input('dentist_id');
-            $patientId = $request->input('patient_id');
-            $estimatedTime = $request->input('estimated_time');
-            $name = $request->input('name');
-            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $name);
-            if ($result != null) {
-                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
-                $startDateTime = new DateTime($result->start_time);
-                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
-                $this->dispatch(new SendSmsJob($phone, $smsMessage));
-                return response()->json($listAppointment, 200);
-            } else {
-                $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
-                    "Result is null, No exception");
-                return response()->json($error, 400);
-            }
 
-        } catch (ApiException $ex) {
-            $error = $this->getErrorObj("Lỗi server", $ex);
-            return response()->json($error, 400);
-        } catch (\Exception $ex) {
-            if ($ex->getMessage() == "isEndOfTheDay") {
-                $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
-            } else {
-                $error = $this->getErrorObj("Lỗi server", $ex);
-            }
-            return response()->json($error, 400);
-        }
-    }
-
-    public function updateStatus(Request $request)
-    {
-        try {
-            $status = $request->input('status');
-            $appointmentId = $request->input('appointment_id');
-            $appointment = $this->getAppointmentById($appointmentId);
-            $appointment->status = $status;
-            $this->updateAppointment($appointment);
-            $successResponse = $this->getSuccessObj(200, "OK", "Sửa lịch thành công", "No data");
-            return response()->json($successResponse);
-        }catch (\Exception $ex){
-            $error = $this->getErrorObj('Lỗi máy chủ', $ex);
-            return response()->json($error, 500);
-        }
-    }
 
     public function bookAppointmentStaff(Request $request)
     {
@@ -129,7 +113,7 @@ class AppointmentController extends BaseController
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
             $dentistId = $request->input('dentist_id');
-            $this->logBugAppointment("DEN: " .$dentistId);
+            $this->logBugAppointment("DEN: " . $dentistId);
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
             $currentDay = new DateTime();
@@ -174,7 +158,7 @@ class AppointmentController extends BaseController
         if ($result != null) {
             return response()->json($result, 200);
             $oldBookingDate = $request->input('booking_date');
-            if ($this->getAppointmentByDate($phone, $oldBookingDate) && $this->checkExistUser($phone)) {
+            if ($this->getUserAppointmentByDate($phone, $oldBookingDate) && $this->checkExistUser($phone)) {
                 $error = $this->getErrorObj("Bạn đã đặt lịch ngày " . $bookingDate . ' vui lòng kiểm tra lại tin nhắn',
                     "No exception");
                 return response()->json($error, 400);

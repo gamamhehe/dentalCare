@@ -43,11 +43,12 @@ trait UserBusinessFunction
         }
     }
 
-    public function createUser($user)
+    public function createUser($user,$userHasRole)
     {
         DB::beginTransaction();
         try {
             $user->save();
+            $userHasRole->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {

@@ -18,7 +18,6 @@
 <script type="text/javascript" src="/assets/user/js/myjs.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
 <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
-<!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
 <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
 

@@ -65,7 +65,7 @@
             @endif
             <div class="row">
                 <!-- /.col -->
-                <div class="col-xs-12"><button type="submit" class="btn btn-primary btn-block">Sign In</button></div>
+                <div class="col-xs-12"><button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button></div>
                 <!-- /.col -->
             </div>
         </form>

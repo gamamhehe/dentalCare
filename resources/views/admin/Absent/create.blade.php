@@ -76,6 +76,7 @@
            document.getElementById("datepicker2").placeholder = "Ngày kết thúc";
 
         });
+        
         $(document).ready(function() {
           <?php if (Session::has('success')): ?>
           swal("Đơn xin nghỉ đã được gởi!", "", "success");  
@@ -83,6 +84,7 @@
           <?php if (Session::has('error')): ?>
           swal("Đơn xin nghỉ chưa được gởi.", "Ngày xin nghỉ đã được chấp nhận!", "error");  
         <?php endif ?>
+        
              $("#startdate").datepicker({
         startDate: new Date(),
         autoclose: true,
