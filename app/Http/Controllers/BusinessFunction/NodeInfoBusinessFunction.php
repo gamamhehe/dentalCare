@@ -36,7 +36,7 @@ trait NodeInfoBusinessFunction
     public function getLedger()
     {
         $url = '163.44.193.228/datajson';
-        $data_encrypt = json_decode($this->get_data($url));
+        $dataEncrypt = json_decode($this->get_data($url));
         $newestLedger = json_decode($this->get_data($url), true);
         return json_encode($newestLedger);
     }

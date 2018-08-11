@@ -27,9 +27,9 @@ trait BlockchainBusinessFunction
             foreach ($ledgerObject as $element) {
                 $block = new Blockchain();
                 $tmp = (Object)$element;
-                $block->data_encrypt = $tmp->dataEncrypt;
-                $block->previous_hash = $tmp->previousHash;
-                $block->hash = $tmp->Hash;
+                $block->data_encrypt = $tmp->data_encrypt;
+                $block->previous_hash = $tmp->previous_hash;
+                $block->hash = $tmp->hash;
                 $block->save();
                 $count++;
             }

@@ -12,29 +12,31 @@ namespace App\Http\Controllers\Blockchain;
 use App\Http\Controllers\BusinessFunction\BlockchainBusinessFunction;
 use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
+use App\Http\Controllers\Blockchain\BlockchainController;
 use Spatie\Async\Task;
 
 class ClassCheckingStatus
 {
     use QueueBusinessFunction, BlockchainBusinessFunction;
-    private $data_encrypt;
+    private $dataEncrypt;
 
-    public function __construct($data_encrypt)
+    public function __construct($dataEncrypt)
     {
-        $this->data_encrypt = $data_encrypt;
+        $this->dataEncrypt = $dataEncrypt;
     }
 
     public function checkingStatusContinously()
     {
-//        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
-        $id = 3;
-        $result = '';
+        $id = $this->addToAllNodeInNetWork($this->dataEncrypt);
+//        $id = 3;
+//        $result = '';
         if (is_integer($id)) {
             while (true) {
                 $status = $this->checkStatus($id - 1);
+                $blockchainController = new BlockchainController();
                 if ($status == 2) {
-                    $newestLedger = json_decode($this->getNewestDataJson(), true);
-//                    array_add($newestLedger, json_decode($this->data_encrypt));
+                    $newestLedger = $blockchainController->checkLedger(); //
+                    array_add($newestLedger, json_decode($this->dataEncrypt));
                     $this->updateAllQueue($id);
                     $this->sendToAll(json_encode($newestLedger));
                     break;
@@ -52,7 +54,7 @@ class ClassCheckingStatus
         foreach ($listNode as $node) {
             $ip = $node->ip;
             if ($ip != $currentIp) {
-                $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger; //the ip of current server
+                $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
                 $this->callTheURL($url);
             }
         }

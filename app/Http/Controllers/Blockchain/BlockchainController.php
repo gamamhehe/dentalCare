@@ -54,18 +54,24 @@ class BlockchainController extends Controller
         return true;
     }
 
+    public function compareBlockChain($blockchain_1, $blockchain_2, $blockchain_3)
+    {
+        if ($blockchain_1 == $blockchain_2)
+            return $blockchain_1;
+        else if ($blockchain_2 == $blockchain_3)
+            return $blockchain_2;
+        else
+            return $blockchain_3;
+    }
+
     public function checkLedger()
     {
         $ledger_1 = $this->callAPI_GetData('163.44.193.228');
-        $ledger_2 = json_decode($this->convertDataToJson());
+        $ledger_2 = $this->callAPI_GetData('150.95.110.217');
+        $ledger_3 = $this->callAPI_GetData('150.95.108.108');
 
         if ($this->checkBlockChain($ledger_1) && $this->checkBlockChain($ledger_2))
-            if (sizeof($ledger_1) < sizeof($ledger_2)) {
-                if (($ledger_1[sizeof($ledger_1) - 1]->Hash) == ($ledger_2[sizeof($ledger_1)]->previousHash))
-                    return $ledger_2;
-            } else if (sizeof($ledger_1) > sizeof($ledger_2))
-                if (($ledger_2[sizeof($ledger_2) - 1]->Hash) == ($ledger_1[sizeof($ledger_2)]->previousHash))
-                    return $ledger_1;
+            return $this->compareBlockChain($ledger_1, $ledger_2, $ledger_3);
 
         return "ERROR BLOCKCHAIN";
     }
