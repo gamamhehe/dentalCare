@@ -101,21 +101,11 @@ trait QueueBusinessFunction
     {
         $result = Queue::find($id);
         if ($result == null) {
-            $obj = Queue::all()->first();
-            if ($obj != null) {
-                $firstId = $obj->id;
-                if ($firstId == $id + 1) {
-                    return '2';
-                } else {
-                    Log::info("QueueBusinessFunction_checkStatus_Error");
-                    return null;
-                }
-            } else {
+            if (is_integer((int)$id) && $id == 0) {
                 return '2';
             }
         }
         return $result->status;
     }
-
 
 }

@@ -50,7 +50,7 @@ class ClassCheckingStatus
         $listNode = $this->getListNode();
         foreach ($listNode as $node) {
             $ip = $node->ip;
-            $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
+            $url = "http://" . $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
             $result = $this->callTheURL($url);
             if ($result == 'fail') {
                 Log::info("ClassCheckingStatus_sendToAll_Error ");
