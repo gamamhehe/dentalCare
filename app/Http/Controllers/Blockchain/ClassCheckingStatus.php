@@ -34,9 +34,9 @@ class ClassCheckingStatus
                 if ($status == 2) {
                     $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
                     array_push($newestLedger, json_decode($this->dataEncrypt));
-                    $this->updateAllQueue($id);
                     $this->sendToAll(json_encode($newestLedger));
-                    break;
+                    $this->updateAllQueue($id);
+                    return;
                 }
                 sleep(1);
             }
@@ -51,7 +51,10 @@ class ClassCheckingStatus
         foreach ($listNode as $node) {
             $ip = $node->ip;
             $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
-            $this->callTheURL($url);
+            $result = $this->callTheURL($url);
+            if ($result == 'fail') {
+                Log::info("ClassCheckingStatus_sendToAll_Error ");
+            }
         }
     }
 

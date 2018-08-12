@@ -111,5 +111,8 @@ class BlockchainController extends Controller
             $result = $this->callTheURL($url);
             echo $result;
         }
+//        $newestLedger = json_decode($this->callTheURL('150.95.110.217/datajson'));
+//        array_push($newestLedger, json_decode($dataEncrypt));
+//        return json_encode($newestLedger);
     }
 }

@@ -273,6 +273,8 @@ Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
 
 Route::get('/test', 'Blockchain\BlockchainController@test');
 
+
+
 use App\Model\Queue;
 
 Route::get('/getAllQueue', function () {
