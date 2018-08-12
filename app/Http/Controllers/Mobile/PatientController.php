@@ -172,7 +172,7 @@ class PatientController extends BaseController
                         $patient = $this->getPatientById($id);
                         $response = new \stdClass();
                         $response->status = "OK";
-                        $response->message = "Chỉnh sửa avatar thành côngs";
+                        $response->message = "Chỉnh sửa avatar thành công";
                         $response->data = $patient->avatar;
                         return response()->json($response, 200);
                     } else {
@@ -212,6 +212,7 @@ class PatientController extends BaseController
             '562929',
             $options
         );
+        $appointment->pushStatus = 0;
         $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
     }
 
