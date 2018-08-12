@@ -19,7 +19,7 @@ Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
 
 Route::get('datajson', 'Blockchain\BlockchainController@getDataBlockchainJson');
 Route::get('datajsonFromSever', 'Blockchain\BlockchainController@checkLedger');
-
+Route::get('array', 'Blockchain\BlockchainController@setDataTypePayment');
 
 Route::get('/cc', function () {
     return view('WebUser.User.Profile');
