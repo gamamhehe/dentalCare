@@ -63,6 +63,7 @@ trait QueueBusinessFunction
             Log::info('Error in QueueBussinessFunction: ' . $e->getMessage());
             return false;
         }
+        return false;
     }
 
     private function callTheURL($url)
@@ -98,7 +99,13 @@ trait QueueBusinessFunction
     {
         $result = Queue::find($id);
         if ($result == null) {
-            return '2';
+            $firstId = Queue::all()->first()->id;
+            if ($firstId == $id + 1) {
+                return '2';
+            } else {
+                Log::info("QueueBusinessFunction_checkStatus_Error");
+                return null;
+            }
         }
         return $result->status;
     }

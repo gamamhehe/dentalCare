@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Blockchain;
 use App\Http\Controllers\BusinessFunction\BlockchainBusinessFunction;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 use App\Http\Controllers\Blockchain\BlockchainController;
+use Illuminate\Support\Facades\Log;
 use Spatie\Async\Task;
 
 class ClassCheckingStatus
@@ -40,6 +41,7 @@ class ClassCheckingStatus
                 sleep(1);
             }
         }
+        Log::info("ClassCheckingStatus_checkingStatusContinously_idNotInteger " . $id);
     }
 
     private

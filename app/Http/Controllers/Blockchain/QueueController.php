@@ -73,7 +73,7 @@ class QueueController extends Controller
             if ($result) {
                 return 'success';
             } else {
-                Log::info('QueueController_UpdateRecordById_ErrorInProcess' . $this->clientIp);
+                Log::info('QueueController_UpdateRecordById_ErrorInProcess ' . $this->clientIp);
                 return 'fail';
             }
         }
