@@ -8,6 +8,7 @@ use App\Model\Blockchain;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Key;
+use Illuminate\Support\Facades\Log;
 use phpDocumentor\Reflection\Types\Array_;
 use phpseclib\Crypt\RSA;
 use App\Model\TreatmentHistory;
@@ -101,15 +102,11 @@ class BlockchainController extends Controller
     {
         $dataEncrypt = $request->data_encrypt;
         $id = $request->id;
-        $result = '';
-        $url = '150.95.110.217
-                        /runJobQueue
-                        ?data_encrypt=' . $dataEncrypt;
-        $result += $this->callTheURL($url) . '\n';
-        $url = '150.95.110.217
-                        /updateAll
-                        ?id=' . $id;
-        $result += $this->callTheURL($url) . '\n';
-        echo nl2br($result);
+        $url = '150.95.110.217/runJobQueue?data_encrypt=' . $dataEncrypt;
+        $result = $this->callTheURL($url) . '\n';
+        echo $result;
+        $url = '150.95.110.217/updateAll?id=' . $id;
+        $result = $this->callTheURL($url) . '\n';
+        echo $result;
     }
 }

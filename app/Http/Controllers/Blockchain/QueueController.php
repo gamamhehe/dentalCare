@@ -12,6 +12,7 @@ use App\Model\Queue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use function MongoDB\BSON\toJSON;
 use Spatie\Async\Pool;
 
