@@ -67,7 +67,7 @@ trait TreatmentHistoryBusinessFunction
             $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
             $symptoms = [];
-            $tmHistorySymptoms = $treatmentHistory->hasSymptom()->get();
+            $tmHistorySymptoms = $treatmentHistory->hasTreatmentSymptom()->get();
             foreach ($tmHistorySymptoms as $tmSymptom) {
                 $symptoms[] = $tmSymptom->belongsToSymptom()->first();
             }
