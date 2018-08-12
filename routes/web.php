@@ -277,6 +277,12 @@ Route::get('/getAllQueue', function (){
     dd(Queue::all());
 });
 
+Route::get('/getIp', function (){
+    return request()->ip();
+});
+
+
+
 //Route::get('getJob', function (){
 //});
 
