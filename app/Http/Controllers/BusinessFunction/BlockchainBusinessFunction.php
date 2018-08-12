@@ -21,7 +21,9 @@ trait BlockchainBusinessFunction
 
     public function saveNewAll($ledgerInJson)
     {
+        Log::info("in business " . $ledgerInJson);
         $ledgerObject = json_decode($ledgerInJson, true);
+        Log::info("ledgerObject != null " . ($ledgerObject != null));
         if ($ledgerObject != null) {
             Blockchain::query()->delete();
             $count = 0;
