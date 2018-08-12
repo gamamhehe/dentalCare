@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblTreatmentCategoriesTable extends Migration
+class CreateTblSymptomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateTblTreatmentCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_treatment_categories', function (Blueprint $table) {
+        Schema::create('tbl_symptoms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
-            $table->string('icon_link');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -30,7 +29,7 @@ class CreateTblTreatmentCategoriesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('tbl_treatment_categories');
+        Schema::dropIfExists('tbl_symptoms');
         Schema::enableForeignKeyConstraints();
     }
 }

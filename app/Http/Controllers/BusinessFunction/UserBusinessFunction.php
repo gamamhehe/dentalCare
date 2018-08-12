@@ -270,13 +270,12 @@ trait UserBusinessFunction
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
-            $hostname = request()->getHttpHost();
             //get time stamp
             $date = new \DateTime();
             $timestamp = $date->getTimestamp();
-            $fullPath = 'http://' . implode('/',
+            $fullPath =  implode('/',
                     array_filter(
-                        explode('/', $hostname . $avatarFolder . $filename))
+                        explode('/',  $avatarFolder . $filename))
                 ) . '?time=' . $timestamp;
             $image->move($path, $filename);
             $patient->avatar = $fullPath;

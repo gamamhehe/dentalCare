@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <label>Trạng thái thanh toán: </label>
                         <span>
-                            @if($payment->is_done == true)
+                            @if($payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_DONE)
                                 <span style="text-align: center">Đã Hoàn Thành</span>
                             @else
                                 <span style="text-align: center">Chưa Hoàn Thành</span>
@@ -93,7 +93,7 @@
                                     <tr class="even gradeC" align="left">
                                         <td style="text-align: center">{{$paymentDetail->staff}}</td>
                                         <td style="text-align: center">{{number_format($paymentDetail->received_money)}}</td>
-                                        <td style="text-align: center">{{$paymentDetail->date_create }}</td>
+                                        <td style="text-align: center">{{$paymentDetail->created_date }}</td>
                                     </tr>
                                 @endforeach
                             @endif

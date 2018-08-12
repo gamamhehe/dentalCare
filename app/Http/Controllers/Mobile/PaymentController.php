@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Helpers\AppConst;
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\Mobile\BaseController;
@@ -133,12 +134,12 @@ class PaymentController extends BaseController
             $staff = $user == null ? null : $user->belongToStaff()->first();
             $received_money = $payment->total_price - $payment->paid;
             $payment->paid = $payment->total_price;
-            $payment->is_done = 1;
+            $payment->status = AppConst::PAYMENT_STATUS_DONE;
             $paymentDetail = new PaymentDetail();
             $paypalStaff = $this->getStaffByName('paypal');
             $paymentDetail->payment_id = $localPaymentId;
             $paymentDetail->received_money = $received_money;
-            $paymentDetail->date_create = Carbon::now();
+            $paymentDetail->created_date = Carbon::now();
             $paymentDetail->staff_id = $paypalStaff->id;
             $result = $this->updatePaymentModel($payment, $paymentDetail);
 //            $this->logInfo('userid: '.$user->id);
@@ -187,7 +188,7 @@ class PaymentController extends BaseController
         $payment = $this->getPaymentById($paymentId);
         try {
             if ($payment != null) {
-                if ($payment->is_done == 1) {
+                if ($payment->status ==  AppConst::PAYMENT_STATUS_DONE) {
                     $error = $this->getErrorObj("Bạn đã thanh toán cho điều trị", "No exception");
                     return response()->json($error, 400);
                 }
@@ -199,13 +200,13 @@ class PaymentController extends BaseController
                 }
                 $payment->paid = $payment->paid + $amount;
                 if ($payment->paid == $payment->total_price) {
-                    $payment->is_done = 1;
+                    $payment->status =  AppConst::PAYMENT_STATUS_DONE;
                 }
                 $paymentDetail = new PaymentDetail();
                 $paymentDetail->payment_id = $payment->id;
                 $paymentDetail->staff_id = $staffId;
                 $paymentDetail->received_money = $amount;
-                $paymentDetail->date_create = Carbon::now();
+                $paymentDetail->created_date = Carbon::now();
                 $this->updatePaymentModel($payment, $paymentDetail);
                 $listPayment = $this->getPaymentByPhone($patientPhone);
 //                $successReponse = $this->getSuccessObj(200, "OK", "Thanh toán thành công", "No data");

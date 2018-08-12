@@ -68,7 +68,7 @@ class PaymentController extends Controller
         $paymentDetail->staff_id = $idStaff;
         $paymentDetail->payment_id = $request->payment_id;
         $paymentDetail->received_money = $request->received_money;
-        $paymentDetail->date_create = Carbon::now();
+        $paymentDetail->created_date = Carbon::now();
         $this->createPaymentDetail($paymentDetail);
         $this->updatePaymentPrepaid($request->received_money, $request->payment_id);
         return true;
@@ -84,7 +84,7 @@ class PaymentController extends Controller
 
         if ($total_row > 0) {
             foreach ($data as $row) {
-                if ($row->is_done) {
+                if ($row->status) {
                     $output .= '
          <tr class="even gradeC" align="left">
             <td style="text-align: center">{{$row->phone}}</td>

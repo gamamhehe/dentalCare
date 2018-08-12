@@ -16,6 +16,7 @@ use App\Model\Role;
 use App\Model\Absent;
 use App\Model\Staff;
 use App\Model\Step;
+use App\Model\Symptom;
 use App\Model\TreatmentDetail;
 use App\Model\TreatmentDetailStep;
 use App\Model\TreatmentHistory;
@@ -46,8 +47,6 @@ class AdminController extends Controller
     use PatientBusinessFunction;
 
     //
-
-
 
 
     public function dashboard(Request $request)
@@ -84,6 +83,7 @@ class AdminController extends Controller
             $this->initRequestAbsent();
             $this->initAbsent();
             $this->initTreatmentDetailStep();
+            $this->initSymptom();
 
 
             $this->initClientToken();
@@ -95,1700 +95,1793 @@ class AdminController extends Controller
             return response()->json($e->getMessage());
         }
     }
-    public function initRole(){
-          Role::create([
-                'id' => '1',
-                'name' => 'Quản trị viên',
-                'description' => 'Quản lí toàn bộ hệ thống',
-            ]);
-            Role::create([
-                'id' => '2',
-                'name' => 'Nha Sĩ',
-                'description' => 'Nha sĩ là người khám bệnh trực tiếp cho bệnh nhân',
-            ]);
-            Role::create([
-                'id' => '3',
-                'name' => 'Tiếp tân',
-                'description' => 'Tiếp tân của phòng khám',
-            ]);
-            Role::create([
-                'id' => '4',
-                'name' => 'Bệnh nhân',
-                'description' => 'Bệnh nhân',
-            ]);
-    }
-    public function initUser(){
-          User::create([
-                'phone' => '01279011096',
-                'password' => Hash::make('123123123'),
-            ]);
-          User::create([
-                'phone' => '01279011097',
-                'password' => Hash::make('123123123'),
-            ]); User::create([
-                'phone' => '01279011099',
-                'password' => Hash::make('123123123'),
-            ]);
 
-            User::create([
-                'phone' => '01279011098',
-                'password' => Hash::make('123123123'),
-            ]);
-         
-            User::create([
-                'phone' => '0909555777',
-                'password' => Hash::make('123123123'),
-            ]);
-        
-            User::create([
-                'phone' => '0909555778',
-                'password' => Hash::make('123123123'),
-            ]);
-       
-             User::create([
-                'phone' => '0909555779',
-                'password' => Hash::make('123123123'),
-            ]);
-      
-             User::create([
-                'phone' => '0909555780',
-                'password' => Hash::make('123123123'),
-            ]);
-       
-             User::create([
-                'phone' => '0909555781',
-                'password' => Hash::make('123123123'),
-            ]);
-     
-             User::create([
-                'phone' => '0909555782',
-                'password' => Hash::make('123123123'),
-            ]);
-       
-             User::create([
-                'phone' => '0909555783',
-                'password' => Hash::make('123123123'),
-            ]);
-   
-             User::create([
-                'phone' => '0909555784',
-                'password' => Hash::make('123123123'),
-            ]);
-        
-             User::create([
-                'phone' => '0909555785',
-                'password' => Hash::make('123123123'),
-            ]);
-       
-              User::create([
-                'phone' => '0909555786',
-                'password' => Hash::make('123123123'),
-            ]);
-   
-              User::create([
-                'phone' => '0909555787',
-                'password' => Hash::make('123123123'),
-            ]);
-        
-              User::create([
-                'phone' => '0909555788',
-                'password' => Hash::make('123123123'),
-            ]);
-          
-            User::create([
-                'phone' => '0909777555',
-                'password' => Hash::make('123123123'),
-            ]);
-         
-            User::create([
-                'phone' => '0909777556',
-                'password' => Hash::make('123123123'),
-            ]);
-     
-            User::create([
-                'phone' => '0909777557',
-                'password' => Hash::make('123123123'),
-            ]);
-          
-            User::create([
-                'phone' => '0909777558',
-                'password' => Hash::make('123123123'),
-            ]);
-     
-            User::create([
-                'phone' => '0909777559',
-                'password' => Hash::make('123123123'),
-            ]);
-        
-            //patient
-            User::create([
-                'phone' => '0915469963', //phúc
-                'password' => Hash::make('123123123'),
-            ]);
-       
-            User::create([
-                'phone' => '01685149049',//trịnh 
-                'password' => Hash::make('123123123'),
-            ]);
-       
-            //vitual
-            User::create([
-                'phone' => '0913520187', 
-                'password' => Hash::make('0913520187'),
-            ]);
-      
-            User::create([
-                'phone' => '0915235776', 
-                'password' => Hash::make('0915235776'),
-            ]);
-     
-            User::create([
-                'phone' => '0913270058',
-                'password' => Hash::make('0913270058'),
-            ]);
-      
-            User::create([
-                'phone' => '0913947554',
-                'password' => Hash::make('0913947554'),
-            ]);
-          
-            User::create([
-                'phone' => '0904035045',
-                'password' => Hash::make('0904035045'),
-            ]);
-   
-            User::create([
-                'phone' => '0913287146',
-                'password' => Hash::make('0913287146'),
-            ]);
-         
-            User::create([
-                'phone' => '01214757979',
-                'password' => Hash::make('01214757979'),
-            ]);
-       
-            User::create([
-                'phone' => '0909539588',
-                'password' => Hash::make('0909539588'),
-            ]);
-          
-            User::create([
-                'phone' => '0935109545',
-                'password' => Hash::make('0935109545'),
-            ]);
-         
-            User::create([
-                'phone' => '0935105105',
-                'password' => Hash::make('0935105105'),
-            ]);
-          
-            User::create([
-                'phone' => '01230405077',
-                'password' => Hash::make('01230405077'),
-            ]);
-         
-            User::create([
-                'phone' => '0903211462',
-                'password' => Hash::make('0903211462'),
-            ]);
-           
-            User::create([
-                'phone' => '0903552741',
-                'password' => Hash::make('0903552741'),
-            ]);
-         
-            User::create([
-                'phone' => '0904777652',
-                'password' => Hash::make('0904777652'),
-            ]);
-          
-            User::create([
-                'phone' => '0902159753',
-                'password' => Hash::make('0902159753'),
-            ]);
-    
-            User::create([
-                'phone' => '0905045789',
-                'password' => Hash::make('0905045789'),
-            ]);
-     
-            User::create([
-                'phone' => '0903056987',
-                'password' => Hash::make('0903056987'),
-            ]);
-    }
-    public function initUserHasRole(){
-        UserHasRole::create([
-        'phone' => '01279011097',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]); UserHasRole::create([
-        'phone' => '01279011099',
-        'role_id' => 3,
-        'start_time' => Carbon::now(),
-        'end_time' => null
+    public function initRole()
+    {
+        Role::create([
+            'id' => '1',
+            'name' => 'Quản trị viên',
+            'description' => 'Quản lí toàn bộ hệ thống',
         ]);
-        UserHasRole::create([
-        'phone' => '0905045789',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
+        Role::create([
+            'id' => '2',
+            'name' => 'Nha Sĩ',
+            'description' => 'Nha sĩ là người khám bệnh trực tiếp cho bệnh nhân',
         ]);
-        UserHasRole::create([
-        'phone' => '0902159753',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]); 
-        UserHasRole::create([
-        'phone' => '0904777652',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
+        Role::create([
+            'id' => '3',
+            'name' => 'Tiếp tân',
+            'description' => 'Tiếp tân của phòng khám',
         ]);
-        UserHasRole::create([
-        'phone' => '0903552741',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0903211462',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '01230405077',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0935105105',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0935109545',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909539588',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '01214757979',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0913287146',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0904035045',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0913947554',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0913270058',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0915235776',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0913520187',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '01685149049',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0915469963',
-        'role_id' => 4,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909777559',
-        'role_id' => 3,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909777558',
-        'role_id' => 3,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909777557',
-        'role_id' => 3,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909777556',
-        'role_id' => 3,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909777555',
-        'role_id' => 3,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555788',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555787',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555786',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555785',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555784',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555783',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555782',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555781',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555780',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555779',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555778',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '0909555777',
-        'role_id' => 2,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '01279011098',
-        'role_id' => 3,
-        'start_time' => Carbon::now(),
-        'end_time' => null
-        ]);
-        UserHasRole::create([
-        'phone' => '01279011096',
-        'role_id' => 1,
-        'start_time' => Carbon::now(),
-        'end_time' => null
+        Role::create([
+            'id' => '4',
+            'name' => 'Bệnh nhân',
+            'description' => 'Bệnh nhân',
         ]);
     }
-    public function initStaff(){
+
+    public function initUser()
+    {
+        User::create([
+            'phone' => '01279011096',
+            'password' => Hash::make('123123123'),
+        ]);
+        User::create([
+            'phone' => '01279011097',
+            'password' => Hash::make('123123123'),
+        ]);
+        User::create([
+            'phone' => '01279011099',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '01279011098',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555777',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555778',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555779',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555780',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555781',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555782',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555783',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555784',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555785',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555786',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555787',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909555788',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909777555',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909777556',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909777557',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909777558',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '0909777559',
+            'password' => Hash::make('123123123'),
+        ]);
+
+        //patient
+        User::create([
+            'phone' => '0915469963', //phúc
+            'password' => Hash::make('123123123'),
+        ]);
+
+        User::create([
+            'phone' => '01685149049',//trịnh
+            'password' => Hash::make('123123123'),
+        ]);
+
+        //vitual
+        User::create([
+            'phone' => '0913520187',
+            'password' => Hash::make('0913520187'),
+        ]);
+
+        User::create([
+            'phone' => '0915235776',
+            'password' => Hash::make('0915235776'),
+        ]);
+
+        User::create([
+            'phone' => '0913270058',
+            'password' => Hash::make('0913270058'),
+        ]);
+
+        User::create([
+            'phone' => '0913947554',
+            'password' => Hash::make('0913947554'),
+        ]);
+
+        User::create([
+            'phone' => '0904035045',
+            'password' => Hash::make('0904035045'),
+        ]);
+
+        User::create([
+            'phone' => '0913287146',
+            'password' => Hash::make('0913287146'),
+        ]);
+
+        User::create([
+            'phone' => '01214757979',
+            'password' => Hash::make('01214757979'),
+        ]);
+
+        User::create([
+            'phone' => '0909539588',
+            'password' => Hash::make('0909539588'),
+        ]);
+
+        User::create([
+            'phone' => '0935109545',
+            'password' => Hash::make('0935109545'),
+        ]);
+
+        User::create([
+            'phone' => '0935105105',
+            'password' => Hash::make('0935105105'),
+        ]);
+
+        User::create([
+            'phone' => '01230405077',
+            'password' => Hash::make('01230405077'),
+        ]);
+
+        User::create([
+            'phone' => '0903211462',
+            'password' => Hash::make('0903211462'),
+        ]);
+
+        User::create([
+            'phone' => '0903552741',
+            'password' => Hash::make('0903552741'),
+        ]);
+
+        User::create([
+            'phone' => '0904777652',
+            'password' => Hash::make('0904777652'),
+        ]);
+
+        User::create([
+            'phone' => '0902159753',
+            'password' => Hash::make('0902159753'),
+        ]);
+
+        User::create([
+            'phone' => '0905045789',
+            'password' => Hash::make('0905045789'),
+        ]);
+
+        User::create([
+            'phone' => '0903056987',
+            'password' => Hash::make('0903056987'),
+        ]);
+    }
+
+    public function initSymptom()
+    {
+        Symptom::create([
+            'name' => 'Viêm nha chu',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Viêm lợi',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Viêm loét đau miệng - áp tơ',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Áp xe răng',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Sâu răng',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Răng Ố Vàng',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Đau răng',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Răng ê buốt',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Răng lỏng lẻo hoặc cong lệch',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Răng bị chảy máu lợi',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Răng bị gãy, nứt, vỡ',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Lở miệng',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Hôi miệng',
+            'description' => 'Không'
+        ]);
+        Symptom::create([
+            'name' => 'Khô miệng',
+            'description' => 'Không'
+        ]);
+    }
+
+    public function initUserHasRole()
+    {
+        UserHasRole::create([
+            'phone' => '01279011097',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '01279011099',
+            'role_id' => 3,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0905045789',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0902159753',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0904777652',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0903552741',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0903211462',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '01230405077',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0935105105',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0935109545',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909539588',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '01214757979',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0913287146',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0904035045',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0913947554',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0913270058',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0915235776',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0913520187',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '01685149049',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0915469963',
+            'role_id' => 4,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909777559',
+            'role_id' => 3,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909777558',
+            'role_id' => 3,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909777557',
+            'role_id' => 3,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909777556',
+            'role_id' => 3,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909777555',
+            'role_id' => 3,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555788',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555787',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555786',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555785',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555784',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555783',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555782',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555781',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555780',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555779',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555778',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '0909555777',
+            'role_id' => 2,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '01279011098',
+            'role_id' => 3,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        UserHasRole::create([
+            'phone' => '01279011096',
+            'role_id' => 1,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+    }
+
+    public function initStaff()
+    {
         User::create([
             'phone' => '0000000000',
             'password' => Hash::make('123'),
         ]);
-         Staff::create([
-                'name' => 'Paypal test',
-                'degree' => 'Paypal',
-                'address' => 'Paypal',
-                'district_id' => 16,
-                'phone' => '0000000000',
-                'date_of_birth' => '1900-01-01',
-                'gender' => 'Nam',
-                'email' =>'abc@gmail.com'
-            ]);
-            UserHasRole::create([
-                'phone' => '0000000000',
-                'role_id' => 3,
-                'start_time' => Carbon::now(),
-                'end_time' => null
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Huỳnh Tài Administrator',
-                'degree' => 'Thạc Sĩ',
-                'address' => '188 Nguyễn xí',
-                'district_id' => 1,
-                'phone' => '01279011096',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'Nữ',
-                'email' =>'abc@gmail.com'
-            ]);
-            Staff::create([
-                'name' => 'Võ Công Minh',
-                'degree' => 'Thạc Sĩ',
-                'address' => '188 Nguyễn Kiệm',
-                'district_id' => 1,
-                'phone' => '01279011097',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'Nữ',
-                'email' =>'abasc@gmail.com'
-            ]);Staff::create([
-                'name' => 'Võ Công Minh',
-                'degree' => 'Thạc Sĩ',
-                'address' => '188 Nguyễn Kiệm',
-                'district_id' => 1,
-                'phone' => '01279011099',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'Nữ',
-                'email' =>'abc@gmail.com'
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Huỳnh Tài Reception',
-                'degree' => 'Thạc Sĩ',
-                'address' => '188 Nguyễn xí',
-                'district_id' => 1,
-                'phone' => '01279011098',
-                'date_of_birth' => '1996-10-01',
-                'gender' => 'Nữ',
-                'email' =>'TaiNHReception@dentalgold.com'
-            ]);
-            //data thật Dental
-            Staff::create([
-                'name' => 'Huỳnh Văn Tài',
-                'degree' => 'Tiến Sĩ - Bác sĩ',
-                'address' => '322 Cách Mạng Tháng 8',
-                'district_id' => 2,
-                'phone' => '0909555777',
-                'description' => '<p>Giám đốc hệ thống chuỗi nha khoa Dental Gold</p><p><b>1. Quá trình đào tạo</b> <br> - Bảo vệ Luận án Tiến Sĩ Đại học chuyên ngành Răng hàm mặt năm 2013 <br> - Tu nghiệp tại nước ngoài: Trường Đại học Milan ( Italia), Trường Đại học TelAvil ( Israel), Bologna ( Italia), Đại học mahidol ( Thái lan) <br> - Tốt nghiệp lớp liên đại học Pháp Việt khoá 2006-2008; 2016-2017 về các chuyên ngành nâng cao: Điều trị nội nha, implant, phục hình thẩm mỹ, phẫu thuật nha chu, răng trẻ em, Nắn chỉnh răng</p><p><b>2. Thành tựu nghề nghiệp:</b> <br> - Giám đốc hệ thống chuỗi nha khoa Dental Gold <br> - Thành viên Hiệp hội implant thế giới ( ICOI : International Congress of Oral Implantologists được thành lập từ năm 1972 tại Hoa Kì). Tham gia các hội nghị của ICOI tổ chức tại Mỹ, Mexico… <br> - Thành viên hiệp hội nha sĩ Mĩ ( ADA: American Dental Association ) <br> - Thành viên hiệp hội ITI ( International Team for Implantology): Hiệp hội các nhà cấy ghép Implant do Thuỵ Sĩ đứng ra quy tụ nhiều Bác sĩ cấy ghép implant thế giới sinh hoạt trao đổi kinh nghiệm, đưa ra các đồng thuận trong thực hành implant nha khoa.</p>',
-                'date_of_birth' => '1986-12-01',
-                'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist11.PNG',
-                'gender' => 'Nam',
-                'email' =>'TaiHV@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Đàm Ngọc Trâm',
-                'degree' => 'Tiến Sĩ - Bác Sĩ',
-                'address' => '188 Nguyễn xí',
-                'district_id' => 1,
-                'phone' => '0909555778',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
-                'date_of_birth' => '1976-10-01',
-                 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist12.PNG',
-                'gender' => 'Nữ',
-                'email' =>'TramDamNgoc@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Thái Quốc Long',
-                'degree' => 'Bác Sĩ',
-                'address' => '132 Phan Huy Ích',
-                'district_id' => 1,
-                'phone' => '0909555779',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
-                'date_of_birth' => '1976-08-01',
-                 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist13.PNG',
-                'gender' => 'Nam',
-                'email' =>'LongTQ@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Đắc Minh',
-                'degree' => 'Bác Sĩ',
-                'address' => '435 Tô Ký',
-                'district_id' => 1,
-                'phone' => '0909555780',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist14.PNG',
-                'date_of_birth' => '1975-09-03',
-                'gender' => 'Nam',
-                'email' =>'MinhND@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Hồ Anh Tuấn',
-                'degree' => 'Bác Sĩ',
-                'address' => '187 Trường Chinh',
-                'district_id' => 1,
-                'phone' => '0909555781',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist15.PNG',
-                'date_of_birth' => '1980-02-03',
-                'gender' => 'Nam',
-                'email' =>'TuanHA@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Minh Hải',
-                'degree' => 'Bác Sĩ',
-                'address' => '1021 Tô Hiến Thành',
-                'district_id' => 1,
-                'phone' => '0909555782',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist20.PNG',
-                'date_of_birth' => '1977-10-03',
-                'gender' => 'Nam',
-                'email' =>'HaiNM@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Quang Anh',
-                'degree' => 'Thạc Sĩ - Bác Sĩ',
-                'address' => '133 Hòa Hảo',
-                'district_id' => 1,
-                'phone' => '0909555783',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist23.PNG',
-                'date_of_birth' => '1989-08-01',
-                'gender' => 'Nam',
-                'email' =>'AnhNQ@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Thái Ngọc Trâm',
-                'degree' => 'Bác Sĩ',
-                'address' => '133 Kỳ Hòa',
-                'district_id' => 1,
-                'phone' => '0909555784',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
-                'date_of_birth' => '1976-08-01',
-                'gender' => 'Nữ', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist17.PNG',
-                'email' =>'TramTN@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Phan Huỳnh Bảo Long',
-                'degree' => 'Bác Sĩ',
-                'address' => '452 Hòa Hảo',
-                'district_id' => 1,
-                'phone' => '0909555785',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
-                'date_of_birth' => '1982-08-01',
-                'gender' => 'Nam', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentistBoss3.jpg',
-                'email' =>'LongPHB@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Hương Giang',
-                'degree' => 'Thạc Sĩ -Bác Sĩ',
-                'address' => '32 Phan Huy Ích',
-                'district_id' => 1,
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
-                'phone' => '0909555786','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist18.PNG',
-                'date_of_birth' => '1984-07-03',
-                'gender' => 'Nam',
-                'email' =>'GiangNH@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Đặng Thị Thơ',
-                'degree' => 'Bác Sĩ',
-                'address' => '132 Phan Huy Ích',
-                'district_id' => 1,
-                'phone' => '0909555787',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
-                'date_of_birth' => '1976-08-01',
-                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist19.PNG',
-                'email' =>'ThoDT@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Nguyễn Quốc Bảo',
-                'degree' => 'Bác Sĩ',
-                'address' => '177 Phan Huy Ích',
-                'district_id' => 1,
-                'phone' => '0909555788',
-                'description'=>'<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
-                'date_of_birth' => '1974-11-11',
-                'gender' => 'Nam', 'avatar'=>'http://150.95.104.237/assets/images/Dentist/dentistBoss2.jpg',
-                'email' =>'BaoNQ@dentalgold.com.vn'
-            ]);
-            //reception
-            Staff::create([
-                'name' => 'Phan Bảo Trâm',
-                'degree' => 'Nhân Viên',
-                'address' => '227 Phan Huy Ích',
-                'district_id' => 1,
-                'phone' => '0909777555',
-                'date_of_birth' => '1995-11-11',
-                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist24.PNG',
-                'email' =>'TramPB@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Trần Bảo Ngọc Quỳnh',
-                'degree' => 'Nhân Viên',
-                'address' => '227 Phan Huy Ích',
-                'district_id' => 1,
-                'phone' => '0909777556',
-                'date_of_birth' => '1995-10-08',
-                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist25.PNG',
-                'email' =>'QuynhTBN@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Huỳnh Minh Ngọc',
-                'degree' => 'Nhân Viên',
-                'address' => '227 Phan Huy Ích',
-                'district_id' => 1,
-                'phone' => '0909777557',
-                'date_of_birth' => '1994-08-04',
-                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist16.PNG',
-                'email' =>'NgocHM@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Phùng Văn Loan',
-                'degree' => 'Nhân Viên',
-                'address' => '123 Tô Ký',
-                'district_id' => 1,
-                'phone' => '0909777558',
-                'date_of_birth' => '1995-11-11',
-                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist21.PNG',
-                'email' =>'LoanPV@dentalgold.com.vn'
-            ]);
-            Staff::create([
-                'name' => 'Trần Ngọc Nhung',
-                'degree' => 'Nhân Viên',
-                'address' => '227 Phan Huy Ích',
-                'district_id' => 1,
-                'phone' => '0909777559',
-                'date_of_birth' => '1995-11-11',
-                'gender' => 'Nữ','avatar'=>'http://150.95.104.237/assets/images/Dentist/dentist21.PNG',
-                'email' =>'NhungTN@dentalgold.com.vn'
-            ]);
+        Staff::create([
+            'name' => 'Paypal test',
+            'degree' => 'Paypal',
+            'address' => 'Paypal',
+            'district_id' => 16,
+            'phone' => '0000000000',
+            'date_of_birth' => '1900-01-01',
+            'gender' => 'Nam',
+            'email' => 'abc@gmail.com'
+        ]);
+        UserHasRole::create([
+            'phone' => '0000000000',
+            'role_id' => 3,
+            'start_time' => Carbon::now(),
+            'end_time' => null
+        ]);
+        Staff::create([
+            'name' => 'Nguyễn Huỳnh Tài Administrator',
+            'degree' => 'Thạc Sĩ',
+            'address' => '188 Nguyễn xí',
+            'district_id' => 1,
+            'phone' => '01279011096',
+            'date_of_birth' => '1996-10-01',
+            'gender' => 'Nữ',
+            'email' => 'abc@gmail.com'
+        ]);
+        Staff::create([
+            'name' => 'Võ Công Minh',
+            'degree' => 'Thạc Sĩ',
+            'address' => '188 Nguyễn Kiệm',
+            'district_id' => 1,
+            'phone' => '01279011097',
+            'date_of_birth' => '1996-10-01',
+            'gender' => 'Nữ',
+            'email' => 'abasc@gmail.com'
+        ]);
+        Staff::create([
+            'name' => 'Võ Công Minh',
+            'degree' => 'Thạc Sĩ',
+            'address' => '188 Nguyễn Kiệm',
+            'district_id' => 1,
+            'phone' => '01279011099',
+            'date_of_birth' => '1996-10-01',
+            'gender' => 'Nữ',
+            'email' => 'abc@gmail.com'
+        ]);
+        Staff::create([
+            'name' => 'Nguyễn Huỳnh Tài Reception',
+            'degree' => 'Thạc Sĩ',
+            'address' => '188 Nguyễn xí',
+            'district_id' => 1,
+            'phone' => '01279011098',
+            'date_of_birth' => '1996-10-01',
+            'gender' => 'Nữ',
+            'email' => 'TaiNHReception@dentalgold.com'
+        ]);
+        //data thật Dental
+        Staff::create([
+            'name' => 'Huỳnh Văn Tài',
+            'degree' => 'Tiến Sĩ - Bác sĩ',
+            'address' => '322 Cách Mạng Tháng 8',
+            'district_id' => 2,
+            'phone' => '0909555777',
+            'description' => '<p>Giám đốc hệ thống chuỗi nha khoa Dental Gold</p><p><b>1. Quá trình đào tạo</b> <br> - Bảo vệ Luận án Tiến Sĩ Đại học chuyên ngành Răng hàm mặt năm 2013 <br> - Tu nghiệp tại nước ngoài: Trường Đại học Milan ( Italia), Trường Đại học TelAvil ( Israel), Bologna ( Italia), Đại học mahidol ( Thái lan) <br> - Tốt nghiệp lớp liên đại học Pháp Việt khoá 2006-2008; 2016-2017 về các chuyên ngành nâng cao: Điều trị nội nha, implant, phục hình thẩm mỹ, phẫu thuật nha chu, răng trẻ em, Nắn chỉnh răng</p><p><b>2. Thành tựu nghề nghiệp:</b> <br> - Giám đốc hệ thống chuỗi nha khoa Dental Gold <br> - Thành viên Hiệp hội implant thế giới ( ICOI : International Congress of Oral Implantologists được thành lập từ năm 1972 tại Hoa Kì). Tham gia các hội nghị của ICOI tổ chức tại Mỹ, Mexico… <br> - Thành viên hiệp hội nha sĩ Mĩ ( ADA: American Dental Association ) <br> - Thành viên hiệp hội ITI ( International Team for Implantology): Hiệp hội các nhà cấy ghép Implant do Thuỵ Sĩ đứng ra quy tụ nhiều Bác sĩ cấy ghép implant thế giới sinh hoạt trao đổi kinh nghiệm, đưa ra các đồng thuận trong thực hành implant nha khoa.</p>',
+            'date_of_birth' => '1986-12-01',
+            'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist11.PNG',
+            'gender' => 'Nam',
+            'email' => 'TaiHV@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Đàm Ngọc Trâm',
+            'degree' => 'Tiến Sĩ - Bác Sĩ',
+            'address' => '188 Nguyễn xí',
+            'district_id' => 1,
+            'phone' => '0909555778',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
+            'date_of_birth' => '1976-10-01',
+            'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist12.PNG',
+            'gender' => 'Nữ',
+            'email' => 'TramDamNgoc@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Thái Quốc Long',
+            'degree' => 'Bác Sĩ',
+            'address' => '132 Phan Huy Ích',
+            'district_id' => 1,
+            'phone' => '0909555779',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
+            'date_of_birth' => '1976-08-01',
+            'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist13.PNG',
+            'gender' => 'Nam',
+            'email' => 'LongTQ@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Nguyễn Đắc Minh',
+            'degree' => 'Bác Sĩ',
+            'address' => '435 Tô Ký',
+            'district_id' => 1,
+            'phone' => '0909555780',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist14.PNG',
+            'date_of_birth' => '1975-09-03',
+            'gender' => 'Nam',
+            'email' => 'MinhND@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Hồ Anh Tuấn',
+            'degree' => 'Bác Sĩ',
+            'address' => '187 Trường Chinh',
+            'district_id' => 1,
+            'phone' => '0909555781',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist15.PNG',
+            'date_of_birth' => '1980-02-03',
+            'gender' => 'Nam',
+            'email' => 'TuanHA@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Nguyễn Minh Hải',
+            'degree' => 'Bác Sĩ',
+            'address' => '1021 Tô Hiến Thành',
+            'district_id' => 1,
+            'phone' => '0909555782',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist20.PNG',
+            'date_of_birth' => '1977-10-03',
+            'gender' => 'Nam',
+            'email' => 'HaiNM@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Nguyễn Quang Anh',
+            'degree' => 'Thạc Sĩ - Bác Sĩ',
+            'address' => '133 Hòa Hảo',
+            'district_id' => 1,
+            'phone' => '0909555783',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist23.PNG',
+            'date_of_birth' => '1989-08-01',
+            'gender' => 'Nam',
+            'email' => 'AnhNQ@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Thái Ngọc Trâm',
+            'degree' => 'Bác Sĩ',
+            'address' => '133 Kỳ Hòa',
+            'district_id' => 1,
+            'phone' => '0909555784',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
+            'date_of_birth' => '1976-08-01',
+            'gender' => 'Nữ', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist17.PNG',
+            'email' => 'TramTN@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Phan Huỳnh Bảo Long',
+            'degree' => 'Bác Sĩ',
+            'address' => '452 Hòa Hảo',
+            'district_id' => 1,
+            'phone' => '0909555785',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
+            'date_of_birth' => '1982-08-01',
+            'gender' => 'Nam', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentistBoss3.jpg',
+            'email' => 'LongPHB@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Nguyễn Hương Giang',
+            'degree' => 'Thạc Sĩ -Bác Sĩ',
+            'address' => '32 Phan Huy Ích',
+            'district_id' => 1,
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
+            'phone' => '0909555786', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist18.PNG',
+            'date_of_birth' => '1984-07-03',
+            'gender' => 'Nam',
+            'email' => 'GiangNH@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Đặng Thị Thơ',
+            'degree' => 'Bác Sĩ',
+            'address' => '132 Phan Huy Ích',
+            'district_id' => 1,
+            'phone' => '0909555787',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ nâng cao</p>',
+            'date_of_birth' => '1976-08-01',
+            'gender' => 'Nữ', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist19.PNG',
+            'email' => 'ThoDT@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Nguyễn Quốc Bảo',
+            'degree' => 'Bác Sĩ',
+            'address' => '177 Phan Huy Ích',
+            'district_id' => 1,
+            'phone' => '0909555788',
+            'description' => '<p><b>Chuyên khoa phục hình thẩm mỹ</b> <br> - Tốt nghiệp chuyên khoa RHM - Đại học Y Hà Nội <br> - Chứng chỉ Hiệp hội nha khoa thẩm mỹ châu ÂU ESCD <br> - Chứng chỉ chuyên ngành phục hình răng sứ &amp; implant nâng cao</p>',
+            'date_of_birth' => '1974-11-11',
+            'gender' => 'Nam', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentistBoss2.jpg',
+            'email' => 'BaoNQ@dentalgold.com.vn'
+        ]);
+        //reception
+        Staff::create([
+            'name' => 'Phan Bảo Trâm',
+            'degree' => 'Nhân Viên',
+            'address' => '227 Phan Huy Ích',
+            'district_id' => 1,
+            'phone' => '0909777555',
+            'date_of_birth' => '1995-11-11',
+            'gender' => 'Nữ', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist24.PNG',
+            'email' => 'TramPB@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Trần Bảo Ngọc Quỳnh',
+            'degree' => 'Nhân Viên',
+            'address' => '227 Phan Huy Ích',
+            'district_id' => 1,
+            'phone' => '0909777556',
+            'date_of_birth' => '1995-10-08',
+            'gender' => 'Nữ', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist25.PNG',
+            'email' => 'QuynhTBN@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Huỳnh Minh Ngọc',
+            'degree' => 'Nhân Viên',
+            'address' => '227 Phan Huy Ích',
+            'district_id' => 1,
+            'phone' => '0909777557',
+            'date_of_birth' => '1994-08-04',
+            'gender' => 'Nữ', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist16.PNG',
+            'email' => 'NgocHM@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Phùng Văn Loan',
+            'degree' => 'Nhân Viên',
+            'address' => '123 Tô Ký',
+            'district_id' => 1,
+            'phone' => '0909777558',
+            'date_of_birth' => '1995-11-11',
+            'gender' => 'Nữ', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist21.PNG',
+            'email' => 'LoanPV@dentalgold.com.vn'
+        ]);
+        Staff::create([
+            'name' => 'Trần Ngọc Nhung',
+            'degree' => 'Nhân Viên',
+            'address' => '227 Phan Huy Ích',
+            'district_id' => 1,
+            'phone' => '0909777559',
+            'date_of_birth' => '1995-11-11',
+            'gender' => 'Nữ', 'avatar' => 'http://150.95.104.237/assets/images/Dentist/dentist21.PNG',
+            'email' => 'NhungTN@dentalgold.com.vn'
+        ]);
     }
-    public function initTreatment(){
-         Treatment::create([
-                'name' => 'Cạo vôi',
-                'description' => 'Cạo vôi răng',
-                'treatment_category_id' => '1',
-                'min_price' => '250000',
-                'max_price' => '350000',
-            ]);
-            Treatment::create([
-                'name' => 'Cạo vôi dưới nướu ',
-                'description' => 'Cạo vôi dưới nướu ',
-                'treatment_category_id' => '1',
-                'min_price' => '500000',
-                'max_price' => '1000000',
-            ]);
-            Treatment::create([
-                'name' => 'Cắt Nướu ',
-                'description' => ' Cắt Nướu',
-                'treatment_category_id' => '1',
-                'min_price' => '1000000',
-                'max_price' => '1000000',
-            ]);
-            Treatment::create([
-                'name' => 'Phẫu Thuật Nha Chu răng ',
-                'description' => 'Phẫu Thuật Nha Chu răng ',
-                'treatment_category_id' => '1',
-                'min_price' => '2000000',
-                'max_price' => '2000000',
-            ]);
-            Treatment::create([
-                'name' => 'Nạo Túi Nha Chu ',
-                'description' => 'Nạo Túi Nha Chu ',
-                'treatment_category_id' => '1',
-                'min_price' => '200000',
-                'max_price' => '200000',
-            ]);
-            Treatment::create([
-                'name' => 'TRÁM RĂNG COMPOSITE XOANG I VÀ V',
-                'description' => 'XOANG I VÀ V',
-                'treatment_category_id' => '2',
-                'min_price' => '300000',
-                'max_price' => '500000',
-            ]);
-            Treatment::create([
-                'name' => 'TRÁM RĂNG COMPOSITE XOANG II ,III VÀ IV hay Đắt mặt',
-                'description' => 'XOANG I VÀ V',
-                'treatment_category_id' => '2',
-                'min_price' => '500000',
-                'max_price' => '1000000',
-            ]);
-            Treatment::create([
-                'name' => 'TẨY TRẮNG TẠI PHÒNG KHÁM ',
-                'description' => 'TẨY TRẮNG TẠI PHÒNG KHÁM',
-                'treatment_category_id' => '2',
-                'min_price' => '2000000',
-                'max_price' => '2000000',
-            ]);
-            Treatment::create([
-                'name' => 'TẨY TRẮNG TẠI PHÒNG Nhà ',
-                'description' => 'TẨY TRẮNG TẠI PHÒNG Nhà',
-                'treatment_category_id' => '2',
-                'min_price' => '1000000',
-                'max_price' => '1000000',
-            ]);
-            Treatment::create([
-                'name' => 'POST TRÁM - POST SỢI',
-                'description' => 'POST TRÁM - POST SỢI',
-                'treatment_category_id' => '2',
-                'min_price' => '1000000',
-                'max_price' => '1000000',
-            ]);
-            Treatment::create([
-                'name' => 'POST TRÁM - POST KIM LOẠI',
-                'description' => 'POST TRÁM - POST KIM LOẠI',
-                'treatment_category_id' => '2',
-                'min_price' => '300000',
-                'max_price' => '500000',
-            ]);
-            Treatment::create([
-                'name' => 'RĂNG CỬA',
-                'description' => 'RĂNG CỬA',
-                'treatment_category_id' => '3',
-                'min_price' => '700000 ',
-                'max_price' => '700000',
-            ]);
-            Treatment::create([
-                'name' => 'RĂNG CỐI NHỎ VÀ RĂNG NANH',
-                'description' => 'RĂNG CỐI NHỎ VÀ RĂNG NANH',
-                'treatment_category_id' => '3',
-                'min_price' => '900000',
-                'max_price' => '900000',
-            ]);
-            Treatment::create([
-                'name' => 'RĂNG CỐI LỚN',
-                'description' => 'RĂNG CỐI LỚN',
-                'treatment_category_id' => '3',
-                'min_price' => '1100000',
-                'max_price' => '1100000',
-            ]);
-            Treatment::create([
-                'name' => 'LẤY TỦY LẠI',
-                'description' => 'LẤY TỦY LẠI',
-                'treatment_category_id' => '3',
-                'min_price' => '300000',
-                'max_price' => '300000',
-            ]);
-            Treatment::create([
-                'name' => 'NHỔ RĂNG SỮA',
-                'description' => 'NHỔ RĂNG SỮA',
-                'treatment_category_id' => '4',
-                'min_price' => '0',
-                'max_price' => '0',
-            ]);
-            Treatment::create([
-                'name' => 'NHỔ RĂNG CỬA',
-                'description' => 'NHỔ RĂNG CỬA',
-                'treatment_category_id' => '4',
-                'min_price' => '500000',
-                'max_price' => '500000',
-            ]);
-            Treatment::create([
-                'name' => 'NHỔ RĂNG CỐI NHỎ',
-                'description' => 'NHỔ RĂNG CỐI NHỎ',
-                'treatment_category_id' => '4',
-                'min_price' => '700000',
-                'max_price' => '700000',
-            ]);
-            Treatment::create([
-                'name' => 'NHỔ RĂNG CỐI LỚN HOẶC RĂNG KHÔN HÀM TRÊN',
-                'description' => 'NHỔ RĂNG CỐI LỚN HOẶC RĂNG KHÔN HÀM TRÊN',
-                'treatment_category_id' => '4',
-                'min_price' => '1000000',
-                'max_price' => '1500000',
-            ]);
-            Treatment::create([
-                'name' => 'NHỔ RĂNG TIỂU PHẨU',
-                'description' => 'NHỔ RĂNG TIỂU PHẨU',
-                'treatment_category_id' => '4',
-                'min_price' => '1500000',
-                'max_price' => '2000000',
-            ]);
-            Treatment::create([
-                'name' => 'MÃO SỨ KL THƯỜNG',
-                'description' => 'MÃO SỨ KL THƯỜNG',
-                'treatment_category_id' => '5',
-                'min_price' => '1500000',
-                'max_price' => '1500000',
-            ]);
-            Treatment::create([
-                'name' => 'MÃO SỨ TITAN',
-                'description' => 'MÃO SỨ TITAN',
-                'treatment_category_id' => '5',
-                'min_price' => '2500000',
-                'max_price' => '2500000',
-            ]);
-            Treatment::create([
-                'name' => 'MÃO SỨ ZIRCONIA',
-                'description' => 'MÃO SỨ ZIRCONIA',
-                'treatment_category_id' => '5',
-                'min_price' => '4000000',
-                'max_price' => '4000000',
-            ]);
-            Treatment::create([
-                'name' => 'MÃO SỨ LAVA',
-                'description' => 'MÃO SỨ LAVA',
-                'treatment_category_id' => '5',
-                'min_price' => '7000000',
-                'max_price' => '7000000',
-            ]);
-            Treatment::create([
-                'name' => 'VENEER',
-                'description' => 'VENEER',
-                'treatment_category_id' => '5',
-                'min_price' => '6000000',
-                'max_price' => '8000000',
-            ]);
-            Treatment::create([
-                'name' => 'MÃO SỨ CERCON',
-                'description' => 'MÃO SỨ CERCON',
-                'treatment_category_id' => '5',
-                'min_price' => '5000000',
-                'max_price' => '5000000',
-            ]);
-            Treatment::create([
-                'name' => 'CÙI GIẢ KIM LOẠI',
-                'description' => 'CÙI GIẢ KIM LOẠI',
-                'treatment_category_id' => '5',
-                'min_price' => '500000',
-                'max_price' => '500000',
-            ]);
-            Treatment::create([
-                'name' => 'CÙI GIẢ SỨ',
-                'description' => 'CÙI GIẢ SỨ',
-                'treatment_category_id' => '5',
-                'min_price' => '1500000',
-                'max_price' => '1500000',
-            ]);
-            Treatment::create([
-                'name' => 'HÀM NHỰA - RĂNG NHỰA VIỆT NAM',
-                'description' => 'HÀM NHỰA RĂNG NHỰA VIỆT NAM',
-                'treatment_category_id' => '6',
-                'min_price' => '300000',
-                'max_price' => '300000',
-            ]);
-            Treatment::create([
-                'name' => 'HÀM NHỰA -RĂNG COMPOSITE',
-                'description' => 'HÀM NHỰA - RĂNG COMPOSITE',
-                'treatment_category_id' => '6',
-                'min_price' => '500000',
-                'max_price' => '500000',
-            ]);
-            Treatment::create([
-                'name' => 'HÀM NHỰA -RĂNG SỨ',
-                'description' => 'HÀM NHỰA - RĂNG SỨ',
-                'treatment_category_id' => '6',
-                'min_price' => '600000',
-                'max_price' => '600000',
-            ]);
 
-            Treatment::create([
-                'name' => 'DENTIUM HÀN QUỐC',
-                'description' => 'DENTIUM HÀN QUỐC',
-                'treatment_category_id' => '7',
-                'min_price' => '15400000',
-                'max_price' => '15400000',
-            ]);
-            Treatment::create([
-                'name' => 'DENTIUM MỸ',
-                'description' => 'DENTIUM MỸ',
-                'treatment_category_id' => '7',
-                'min_price' => '19800000',
-                'max_price' => '19800000',
-            ]);
-            Treatment::create([
-                'name' => 'NOBEL HAY STRAUMAN',
-                'description' => 'NOBEL HAY STRAUMAN',
-                'treatment_category_id' => '7',
-                'min_price' => '28600000',
-                'max_price' => '28600000',
-            ]);
+    public function initTreatment()
+    {
+        Treatment::create([
+            'name' => 'Cạo vôi',
+            'description' => 'Cạo vôi răng',
+            'treatment_category_id' => '1',
+            'min_price' => '250000',
+            'max_price' => '350000',
+        ]);
+        Treatment::create([
+            'name' => 'Cạo vôi dưới nướu ',
+            'description' => 'Cạo vôi dưới nướu ',
+            'treatment_category_id' => '1',
+            'min_price' => '500000',
+            'max_price' => '1000000',
+        ]);
+        Treatment::create([
+            'name' => 'Cắt Nướu ',
+            'description' => ' Cắt Nướu',
+            'treatment_category_id' => '1',
+            'min_price' => '1000000',
+            'max_price' => '1000000',
+        ]);
+        Treatment::create([
+            'name' => 'Phẫu Thuật Nha Chu răng ',
+            'description' => 'Phẫu Thuật Nha Chu răng ',
+            'treatment_category_id' => '1',
+            'min_price' => '2000000',
+            'max_price' => '2000000',
+        ]);
+        Treatment::create([
+            'name' => 'Nạo Túi Nha Chu ',
+            'description' => 'Nạo Túi Nha Chu ',
+            'treatment_category_id' => '1',
+            'min_price' => '200000',
+            'max_price' => '200000',
+        ]);
+        Treatment::create([
+            'name' => 'TRÁM RĂNG COMPOSITE XOANG I VÀ V',
+            'description' => 'XOANG I VÀ V',
+            'treatment_category_id' => '2',
+            'min_price' => '300000',
+            'max_price' => '500000',
+        ]);
+        Treatment::create([
+            'name' => 'TRÁM RĂNG COMPOSITE XOANG II ,III VÀ IV hay Đắt mặt',
+            'description' => 'XOANG I VÀ V',
+            'treatment_category_id' => '2',
+            'min_price' => '500000',
+            'max_price' => '1000000',
+        ]);
+        Treatment::create([
+            'name' => 'TẨY TRẮNG TẠI PHÒNG KHÁM ',
+            'description' => 'TẨY TRẮNG TẠI PHÒNG KHÁM',
+            'treatment_category_id' => '2',
+            'min_price' => '2000000',
+            'max_price' => '2000000',
+        ]);
+        Treatment::create([
+            'name' => 'TẨY TRẮNG TẠI PHÒNG Nhà ',
+            'description' => 'TẨY TRẮNG TẠI PHÒNG Nhà',
+            'treatment_category_id' => '2',
+            'min_price' => '1000000',
+            'max_price' => '1000000',
+        ]);
+        Treatment::create([
+            'name' => 'POST TRÁM - POST SỢI',
+            'description' => 'POST TRÁM - POST SỢI',
+            'treatment_category_id' => '2',
+            'min_price' => '1000000',
+            'max_price' => '1000000',
+        ]);
+        Treatment::create([
+            'name' => 'POST TRÁM - POST KIM LOẠI',
+            'description' => 'POST TRÁM - POST KIM LOẠI',
+            'treatment_category_id' => '2',
+            'min_price' => '300000',
+            'max_price' => '500000',
+        ]);
+        Treatment::create([
+            'name' => 'RĂNG CỬA',
+            'description' => 'RĂNG CỬA',
+            'treatment_category_id' => '3',
+            'min_price' => '700000 ',
+            'max_price' => '700000',
+        ]);
+        Treatment::create([
+            'name' => 'RĂNG CỐI NHỎ VÀ RĂNG NANH',
+            'description' => 'RĂNG CỐI NHỎ VÀ RĂNG NANH',
+            'treatment_category_id' => '3',
+            'min_price' => '900000',
+            'max_price' => '900000',
+        ]);
+        Treatment::create([
+            'name' => 'RĂNG CỐI LỚN',
+            'description' => 'RĂNG CỐI LỚN',
+            'treatment_category_id' => '3',
+            'min_price' => '1100000',
+            'max_price' => '1100000',
+        ]);
+        Treatment::create([
+            'name' => 'LẤY TỦY LẠI',
+            'description' => 'LẤY TỦY LẠI',
+            'treatment_category_id' => '3',
+            'min_price' => '300000',
+            'max_price' => '300000',
+        ]);
+        Treatment::create([
+            'name' => 'NHỔ RĂNG SỮA',
+            'description' => 'NHỔ RĂNG SỮA',
+            'treatment_category_id' => '4',
+            'min_price' => '0',
+            'max_price' => '0',
+        ]);
+        Treatment::create([
+            'name' => 'NHỔ RĂNG CỬA',
+            'description' => 'NHỔ RĂNG CỬA',
+            'treatment_category_id' => '4',
+            'min_price' => '500000',
+            'max_price' => '500000',
+        ]);
+        Treatment::create([
+            'name' => 'NHỔ RĂNG CỐI NHỎ',
+            'description' => 'NHỔ RĂNG CỐI NHỎ',
+            'treatment_category_id' => '4',
+            'min_price' => '700000',
+            'max_price' => '700000',
+        ]);
+        Treatment::create([
+            'name' => 'NHỔ RĂNG CỐI LỚN HOẶC RĂNG KHÔN HÀM TRÊN',
+            'description' => 'NHỔ RĂNG CỐI LỚN HOẶC RĂNG KHÔN HÀM TRÊN',
+            'treatment_category_id' => '4',
+            'min_price' => '1000000',
+            'max_price' => '1500000',
+        ]);
+        Treatment::create([
+            'name' => 'NHỔ RĂNG TIỂU PHẨU',
+            'description' => 'NHỔ RĂNG TIỂU PHẨU',
+            'treatment_category_id' => '4',
+            'min_price' => '1500000',
+            'max_price' => '2000000',
+        ]);
+        Treatment::create([
+            'name' => 'MÃO SỨ KL THƯỜNG',
+            'description' => 'MÃO SỨ KL THƯỜNG',
+            'treatment_category_id' => '5',
+            'min_price' => '1500000',
+            'max_price' => '1500000',
+        ]);
+        Treatment::create([
+            'name' => 'MÃO SỨ TITAN',
+            'description' => 'MÃO SỨ TITAN',
+            'treatment_category_id' => '5',
+            'min_price' => '2500000',
+            'max_price' => '2500000',
+        ]);
+        Treatment::create([
+            'name' => 'MÃO SỨ ZIRCONIA',
+            'description' => 'MÃO SỨ ZIRCONIA',
+            'treatment_category_id' => '5',
+            'min_price' => '4000000',
+            'max_price' => '4000000',
+        ]);
+        Treatment::create([
+            'name' => 'MÃO SỨ LAVA',
+            'description' => 'MÃO SỨ LAVA',
+            'treatment_category_id' => '5',
+            'min_price' => '7000000',
+            'max_price' => '7000000',
+        ]);
+        Treatment::create([
+            'name' => 'VENEER',
+            'description' => 'VENEER',
+            'treatment_category_id' => '5',
+            'min_price' => '6000000',
+            'max_price' => '8000000',
+        ]);
+        Treatment::create([
+            'name' => 'MÃO SỨ CERCON',
+            'description' => 'MÃO SỨ CERCON',
+            'treatment_category_id' => '5',
+            'min_price' => '5000000',
+            'max_price' => '5000000',
+        ]);
+        Treatment::create([
+            'name' => 'CÙI GIẢ KIM LOẠI',
+            'description' => 'CÙI GIẢ KIM LOẠI',
+            'treatment_category_id' => '5',
+            'min_price' => '500000',
+            'max_price' => '500000',
+        ]);
+        Treatment::create([
+            'name' => 'CÙI GIẢ SỨ',
+            'description' => 'CÙI GIẢ SỨ',
+            'treatment_category_id' => '5',
+            'min_price' => '1500000',
+            'max_price' => '1500000',
+        ]);
+        Treatment::create([
+            'name' => 'HÀM NHỰA - RĂNG NHỰA VIỆT NAM',
+            'description' => 'HÀM NHỰA RĂNG NHỰA VIỆT NAM',
+            'treatment_category_id' => '6',
+            'min_price' => '300000',
+            'max_price' => '300000',
+        ]);
+        Treatment::create([
+            'name' => 'HÀM NHỰA -RĂNG COMPOSITE',
+            'description' => 'HÀM NHỰA - RĂNG COMPOSITE',
+            'treatment_category_id' => '6',
+            'min_price' => '500000',
+            'max_price' => '500000',
+        ]);
+        Treatment::create([
+            'name' => 'HÀM NHỰA -RĂNG SỨ',
+            'description' => 'HÀM NHỰA - RĂNG SỨ',
+            'treatment_category_id' => '6',
+            'min_price' => '600000',
+            'max_price' => '600000',
+        ]);
 
-            Treatment::create([
-                'name' => 'MẮC CÀI KIM LOẠI',
-                'description' => 'MẮC CÀI KIM LOẠI',
-                'treatment_category_id' => '8',
-                'min_price' => '30000000',
-                'max_price' => '35000000',
-            ]);
-            Treatment::create([
-                'name' => 'MẮC CÀI SỨ',
-                'description' => 'MẮC CÀI SỨ',
-                'treatment_category_id' => '8',
-                'min_price' => '40000000',
-                'max_price' => '45000000',
-            ]);
-            Treatment::create([
-                'name' => 'MẮC CÀI KIM LOẠI TỰ KHÓA',
-                'description' => 'MẮC CÀI KIM LOẠI TỰ KHÓA',
-                'treatment_category_id' => '8',
-                'min_price' => '40000000',
-                'max_price' => '45000000',
-            ]);
-            Treatment::create([
-                'name' => 'MẮC CÀI SỨ',
-                'description' => 'MẮC CÀI SỨ',
-                'treatment_category_id' => '8',
-                'min_price' => '55000000',
-                'max_price' => '60000000',
-            ]);
-            Treatment::create([
-                'name' => 'INVISALIGN( KHÔNG MẮC CÀI)',
-                'description' => 'INVISALIGN( KHÔNG MẮC CÀI)',
-                'treatment_category_id' => '8',
-                'min_price' => '88000000',
-                'max_price' => '115000000',
-            ]);
+        Treatment::create([
+            'name' => 'DENTIUM HÀN QUỐC',
+            'description' => 'DENTIUM HÀN QUỐC',
+            'treatment_category_id' => '7',
+            'min_price' => '15400000',
+            'max_price' => '15400000',
+        ]);
+        Treatment::create([
+            'name' => 'DENTIUM MỸ',
+            'description' => 'DENTIUM MỸ',
+            'treatment_category_id' => '7',
+            'min_price' => '19800000',
+            'max_price' => '19800000',
+        ]);
+        Treatment::create([
+            'name' => 'NOBEL HAY STRAUMAN',
+            'description' => 'NOBEL HAY STRAUMAN',
+            'treatment_category_id' => '7',
+            'min_price' => '28600000',
+            'max_price' => '28600000',
+        ]);
+
+        Treatment::create([
+            'name' => 'MẮC CÀI KIM LOẠI',
+            'description' => 'MẮC CÀI KIM LOẠI',
+            'treatment_category_id' => '8',
+            'min_price' => '30000000',
+            'max_price' => '35000000',
+        ]);
+        Treatment::create([
+            'name' => 'MẮC CÀI SỨ',
+            'description' => 'MẮC CÀI SỨ',
+            'treatment_category_id' => '8',
+            'min_price' => '40000000',
+            'max_price' => '45000000',
+        ]);
+        Treatment::create([
+            'name' => 'MẮC CÀI KIM LOẠI TỰ KHÓA',
+            'description' => 'MẮC CÀI KIM LOẠI TỰ KHÓA',
+            'treatment_category_id' => '8',
+            'min_price' => '40000000',
+            'max_price' => '45000000',
+        ]);
+        Treatment::create([
+            'name' => 'MẮC CÀI SỨ',
+            'description' => 'MẮC CÀI SỨ',
+            'treatment_category_id' => '8',
+            'min_price' => '55000000',
+            'max_price' => '60000000',
+        ]);
+        Treatment::create([
+            'name' => 'INVISALIGN( KHÔNG MẮC CÀI)',
+            'description' => 'INVISALIGN( KHÔNG MẮC CÀI)',
+            'treatment_category_id' => '8',
+            'min_price' => '88000000',
+            'max_price' => '115000000',
+        ]);
     }
-    public function initTreatmentCategory(){
-          TreatmentCategory::create([
-                'name' => 'Nha Chu',
-                'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
-                'icon_link' => '/assets/images/icon/bocrangsu.png',
-                'estimate_time' => '3'
-            ]);
-            TreatmentCategory::create([
-                'name' => 'Trám Răng',
-                'description' => ' XXX',
-                'icon_link' => '/assets/images/icon/tramrangthammy.png',
-                'estimate_time' => '3'
-            ]);
-            TreatmentCategory::create([
-                'name' => 'Nội Nha ',
-                'description' => 'phương pháp điều trị ở bên trong của răng. Bên trong răng, dưới men trắng và một lớp cứng gọi là ngà răng, là một mô mềm gọi là tủy răng. Tủy răng chứa các mạch máu, dây thần kinh, và mô liên kết  ',
-                'icon_link' => '/assets/images/icon/caovoirang.png',
-                'estimate_time' => '3'
-            ]);
-            TreatmentCategory::create([
-                'name' => ' Nhổ Răng',
-                'description' => 'Nhổ răng khó là những răng mọc lệch, răng ngầm, răng khôn bị tai biến, răng bị gẫy chân, răng dính khớp..',
-                'icon_link' => '/assets/images/icon/nhorang.png',
-                'estimate_time' => '3'
-            ]);
-            TreatmentCategory::create([
-                'name' => 'PHỤC HÌNH CỐ ĐỊNH',
-                'description' => 'Phục hình cố định (răng giả cố định) là các loại phục hình – răng giả (mão – cầu răng sứ, mão – cầu răng kim loại…) được gắn cố định vào hàm, miệng người mang.  ',
-                'icon_link' => '/assets/images/icon/ranggiathaolap.png',
-                'estimate_time' => '3'
-            ]);
-            TreatmentCategory::create([
-                'name' => 'PHỤC HÌNH THÁO LẮP ',
-                'description' => 'Phục hình tháo lắp, cụ thể là phục hình tháo lắp răng là phương pháp phục hồi các răng hư tổn, để tái tạo các chức năng của răng. Hay phục hình tháo lắp có thể hiểu là sử dụng răng giả để tháo lắp. Bạn có thể cho răng vào và lấy ra dễ dàng để vệ sinh răng',
-                'icon_link' => '/assets/images/icon/taytrangrang.png',
-                'estimate_time' => '3'
-            ]);
-            TreatmentCategory::create([
-                'name' => 'IMPLANT (BAO GỒM PHỤC HÌNH) ',
-                'description' => 'Cấy ghép răng Implant nha khoa là phương pháp phục hình răng tốt nhất cho người bị mất răng, đảm bảo khả năng ăn nhai giống hoàn toàn như một chiếc răng bình thường.',
-                'icon_link' => '/assets/images/icon/trongimplent.png',
-                'estimate_time' => '3'
-            ]);
-            TreatmentCategory::create([
-                'name' => 'CHỈNH NHA',
-                'description' => 'Chỉnh nha là một nhánh của ngành nha khoa giúp điều chỉnh vị trí của hàm và những răng sai lệch. Những răng bị lệch lạc và những răng không vừa khít với khuôn miệng. ',
-                'icon_link' => '/assets/images/icon/danmatsuVENNER.png',
-                'estimate_time' => '3'
-            ]);
+
+    public function initTreatmentCategory()
+    {
+        TreatmentCategory::create([
+            'name' => 'Nha Chu',
+            'description' => 'Nha chu là tổ chức xung quanh răng, chức năng chính là chống đỡ và giữ răng trong xương hàm. Răng khỏe mạnh được giữ trong xương hàm bởi xương ổ răng, dây chằng và nướu răng.',
+            'icon_link' => '/assets/images/icon/bocrangsu.png',
+            'estimate_time' => '3'
+        ]);
+        TreatmentCategory::create([
+            'name' => 'Trám Răng',
+            'description' => ' XXX',
+            'icon_link' => '/assets/images/icon/tramrangthammy.png',
+            'estimate_time' => '3'
+        ]);
+        TreatmentCategory::create([
+            'name' => 'Nội Nha ',
+            'description' => 'phương pháp điều trị ở bên trong của răng. Bên trong răng, dưới men trắng và một lớp cứng gọi là ngà răng, là một mô mềm gọi là tủy răng. Tủy răng chứa các mạch máu, dây thần kinh, và mô liên kết  ',
+            'icon_link' => '/assets/images/icon/caovoirang.png',
+            'estimate_time' => '3'
+        ]);
+        TreatmentCategory::create([
+            'name' => ' Nhổ Răng',
+            'description' => 'Nhổ răng khó là những răng mọc lệch, răng ngầm, răng khôn bị tai biến, răng bị gẫy chân, răng dính khớp..',
+            'icon_link' => '/assets/images/icon/nhorang.png',
+            'estimate_time' => '3'
+        ]);
+        TreatmentCategory::create([
+            'name' => 'PHỤC HÌNH CỐ ĐỊNH',
+            'description' => 'Phục hình cố định (răng giả cố định) là các loại phục hình – răng giả (mão – cầu răng sứ, mão – cầu răng kim loại…) được gắn cố định vào hàm, miệng người mang.  ',
+            'icon_link' => '/assets/images/icon/ranggiathaolap.png',
+            'estimate_time' => '3'
+        ]);
+        TreatmentCategory::create([
+            'name' => 'PHỤC HÌNH THÁO LẮP ',
+            'description' => 'Phục hình tháo lắp, cụ thể là phục hình tháo lắp răng là phương pháp phục hồi các răng hư tổn, để tái tạo các chức năng của răng. Hay phục hình tháo lắp có thể hiểu là sử dụng răng giả để tháo lắp. Bạn có thể cho răng vào và lấy ra dễ dàng để vệ sinh răng',
+            'icon_link' => '/assets/images/icon/taytrangrang.png',
+            'estimate_time' => '3'
+        ]);
+        TreatmentCategory::create([
+            'name' => 'IMPLANT (BAO GỒM PHỤC HÌNH) ',
+            'description' => 'Cấy ghép răng Implant nha khoa là phương pháp phục hình răng tốt nhất cho người bị mất răng, đảm bảo khả năng ăn nhai giống hoàn toàn như một chiếc răng bình thường.',
+            'icon_link' => '/assets/images/icon/trongimplent.png',
+            'estimate_time' => '3'
+        ]);
+        TreatmentCategory::create([
+            'name' => 'CHỈNH NHA',
+            'description' => 'Chỉnh nha là một nhánh của ngành nha khoa giúp điều chỉnh vị trí của hàm và những răng sai lệch. Những răng bị lệch lạc và những răng không vừa khít với khuôn miệng. ',
+            'icon_link' => '/assets/images/icon/danmatsuVENNER.png',
+            'estimate_time' => '3'
+        ]);
     }
-    public function initTooth(){
-          Tooth::create([
-                'tooth_number' => '1',
-                'tooth_name' => 'Nguyên hàm'
-            ]);
 
-            Tooth::create([
-                'tooth_number' => '2',
-                'tooth_name' => 'Hàm trên'
-            ]);
-            Tooth::create([
-                'tooth_number' => '3',
-                'tooth_name' => 'Hàm dưới'
-            ]);
-            Tooth::create([
-                'tooth_number' => '4',
-                'tooth_name' => 'Nhiều răng'
-            ]);
-            Tooth::create([
-                'tooth_number' => '11',
-                'tooth_name' => 'Răng số 1 hàm trên phải - Răng cửa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '12',
-                'tooth_name' => 'Răng số 2 hàm trên phải - Răng cửa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '13',
-                'tooth_name' => 'Răng số 3 hàm trên phải - Răng Nanh'
-            ]);
-            Tooth::create([
-                'tooth_number' => '14',
-                'tooth_name' => 'Răng số 4 hàm trên phải - Răng cối nhỏ'
-            ]);
-            Tooth::create([
-                'tooth_number' => '15',
-                'tooth_name' => 'Răng số 5 hàm trên phải - Răng cối nhỏ'
-            ]);
-            Tooth::create([
-                'tooth_number' => '16',
-                'tooth_name' => 'Răng số 6 hàm trên phải - Răng cối lớn'
-            ]);
-            Tooth::create([
-                'tooth_number' => '17',
-                'tooth_name' => 'Răng số 7 hàm trên phải - Răng cối lớn'
-            ]);
-            Tooth::create([
-                'tooth_number' => '18',
-                'tooth_name' => 'Răng số 8 hàm trên phải - Răng cối lớn'
-            ]);
-            //end trên phải
-            // dưới trái
-            Tooth::create([
-                'tooth_number' => '21',
-                'tooth_name' => 'Răng số 1 hàm trên trái - Răng cửa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '22',
-                'tooth_name' => 'Răng số 2 hàm trên trái - Răng cửa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '23',
-                'tooth_name' => 'Răng số 3 hàm trên trái - Răng Nanh'
-            ]);
-            Tooth::create([
-                'tooth_number' => '24',
-                'tooth_name' => 'Răng số 4 hàm trên trái - Răng cối nhỏ'
-            ]);
-            Tooth::create([
-                'tooth_number' => '25',
-                'tooth_name' => 'Răng số 5 hàm trên trái - Răng cối nhỏ'
-            ]);
-            Tooth::create([
-                'tooth_number' => '26',
-                'tooth_name' => 'Răng số 6 hàm trên trái - Răng cối lớn'
-            ]);
-            Tooth::create([
-                'tooth_number' => '27',
-                'tooth_name' => 'Răng số 7 hàm trên trái - Răng cối lớn'
-            ]);
-            Tooth::create([
-                'tooth_number' => '28',
-                'tooth_name' => 'Răng số 8 hàm trên trái - Răng cối lớn'
-            ]);
-            //endham dưới trái
-            Tooth::create([
-                'tooth_number' => '41',
-                'tooth_name' => 'Răng số 1 hàm dưới phải - Răng cửa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '42',
-                'tooth_name' => 'Răng số 2 hàm dưới phải - Răng cửa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '43',
-                'tooth_name' => 'Răng số 3 hàm dưới phải - Răng Nanh'
-            ]);
-            Tooth::create([
-                'tooth_number' => '44',
-                'tooth_name' => 'Răng số 4 hàm dưới phải - Răng cối nhỏ'
-            ]);
-            Tooth::create([
-                'tooth_number' => '45',
-                'tooth_name' => 'Răng số 5 hàm dưới phải - Răng cối nhỏ'
-            ]);
-            Tooth::create([
-                'tooth_number' => '46',
-                'tooth_name' => 'Răng số 6 hàm dưới phải - Răng cối lớn'
-            ]);
-            Tooth::create([
-                'tooth_number' => '47',
-                'tooth_name' => 'Răng số 7 hàm dưới phải - Răng cối lớn'
-            ]);
-            Tooth::create([
-                'tooth_number' => '48',
-                'tooth_name' => 'Răng số 8 hàm dưới phải - Răng cối lớn'
-            ]);
-            //end dưới phải
-            // dưới trái
-            Tooth::create([
-                'tooth_number' => '31',
-                'tooth_name' => 'Răng số 1 hàm dưới trái - Răng cửa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '32',
-                'tooth_name' => 'Răng số 2 hàm dưới trái - Răng cửa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '33',
-                'tooth_name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
-            ]);
-            Tooth::create([
-                'tooth_number' => '34',
-                'tooth_name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
-            ]);
-            Tooth::create([
-                'tooth_number' => '35',
-                'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
-            ]);
-            Tooth::create([
-                'tooth_number' => '36',
-                'tooth_name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
-            ]);
-            Tooth::create([
-                'tooth_number' => '37',
-                'tooth_name' => 'Răng số 7 hàm dưới trái - Răng cối lớn'
-            ]);
-            Tooth::create([
-                'tooth_number' => '38',
-                'tooth_name' => 'Răng số 8 hàm dưới trái - Răng cối lớn'
-            ]);
-            //endham dưới trái
-            //rang tre con
-            // tren phải
-            Tooth::create([
-                'tooth_number' => '51',
-                'tooth_name' => 'Răng số 1 hàm trên phải (Trẻ em) - Răng cửa giữa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '52',
-                'tooth_name' => 'Răng số 1 hàm trên phải (Trẻ em) - Răng cửa bên'
-            ]);
-            Tooth::create([
-                'tooth_number' => '53',
-                'tooth_name' => 'Răng số 3 hàm trên phải - Răng nanh sữa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '54',
-                'tooth_name' => 'Răng số 4 hàm trên phải - Răng cối sữa 1'
-            ]);
-            Tooth::create([
-                'tooth_number' => '55',
-                'tooth_name' => 'Răng số 5 hàm trên phải - Răng cối sữa 2'
-            ]);
-            //end tren phai
-            // tren trái
-            Tooth::create([
-                'tooth_number' => '61',
-                'tooth_name' => 'Răng số 1 hàm trên trái (Trẻ em) - Răng cửa giữa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '62',
-                'tooth_name' => 'Răng số 1 hàm trên trái (Trẻ em) - Răng cửa bên'
-            ]);
-            Tooth::create([
-                'tooth_number' => '63',
-                'tooth_name' => 'Răng số 3 hàm trên trái - Răng nanh sữa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '64',
-                'tooth_name' => 'Răng số 4 hàm trên trái - Răng cối sữa 1'
-            ]);
-            Tooth::create([
-                'tooth_number' => '65',
-                'tooth_name' => 'Răng số 5 hàm trên trái - Răng cối sữa 2'
-            ]);
-            //end tren trái
-            // dưới phải
-            Tooth::create([
-                'tooth_number' => '81',
-                'tooth_name' => 'Răng số 1 hàm dưới phải (Trẻ em) - Răng cửa giữa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '82',
-                'tooth_name' => 'Răng số 1 hàm dưới phải (Trẻ em) - Răng cửa bên'
-            ]);
-            Tooth::create([
-                'tooth_number' => '83',
-                'tooth_name' => 'Răng số 3 hàm dưới phải  - Răng nanh sữa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '84',
-                'tooth_name' => 'Răng số 4 hàm dưới phải  - Răng cối sữa 1'
-            ]);
-            Tooth::create([
-                'tooth_number' => '85',
-                'tooth_name' => 'Răng số 5 hàm dưới phải - Răng cối sữa 2'
-            ]);
-            //end dưới phải
-            // dưới trái
-            Tooth::create([
-                'tooth_number' => '71',
-                'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa giữa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '72',
-                'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa bên'
-            ]);
-            Tooth::create([
-                'tooth_number' => '73',
-                'tooth_name' => 'Răng số 3 hàm dưới trái - Răng nanh sữa'
-            ]);
-            Tooth::create([
-                'tooth_number' => '74',
-                'tooth_name' => 'Răng số 4 hàm dưới trái - Răng cối sữa 1'
-            ]);
-            Tooth::create([
-                'tooth_number' => '75',
-                'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối sữa 2'
-            ]);
+    public function initTooth()
+    {
+        Tooth::create([
+            'tooth_number' => '1',
+            'tooth_name' => 'Nguyên hàm'
+        ]);
+
+        Tooth::create([
+            'tooth_number' => '2',
+            'tooth_name' => 'Hàm trên'
+        ]);
+        Tooth::create([
+            'tooth_number' => '3',
+            'tooth_name' => 'Hàm dưới'
+        ]);
+        Tooth::create([
+            'tooth_number' => '4',
+            'tooth_name' => 'Nhiều răng'
+        ]);
+        Tooth::create([
+            'tooth_number' => '11',
+            'tooth_name' => 'Răng số 1 hàm trên phải - Răng cửa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '12',
+            'tooth_name' => 'Răng số 2 hàm trên phải - Răng cửa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '13',
+            'tooth_name' => 'Răng số 3 hàm trên phải - Răng Nanh'
+        ]);
+        Tooth::create([
+            'tooth_number' => '14',
+            'tooth_name' => 'Răng số 4 hàm trên phải - Răng cối nhỏ'
+        ]);
+        Tooth::create([
+            'tooth_number' => '15',
+            'tooth_name' => 'Răng số 5 hàm trên phải - Răng cối nhỏ'
+        ]);
+        Tooth::create([
+            'tooth_number' => '16',
+            'tooth_name' => 'Răng số 6 hàm trên phải - Răng cối lớn'
+        ]);
+        Tooth::create([
+            'tooth_number' => '17',
+            'tooth_name' => 'Răng số 7 hàm trên phải - Răng cối lớn'
+        ]);
+        Tooth::create([
+            'tooth_number' => '18',
+            'tooth_name' => 'Răng số 8 hàm trên phải - Răng cối lớn'
+        ]);
+        //end trên phải
+        // dưới trái
+        Tooth::create([
+            'tooth_number' => '21',
+            'tooth_name' => 'Răng số 1 hàm trên trái - Răng cửa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '22',
+            'tooth_name' => 'Răng số 2 hàm trên trái - Răng cửa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '23',
+            'tooth_name' => 'Răng số 3 hàm trên trái - Răng Nanh'
+        ]);
+        Tooth::create([
+            'tooth_number' => '24',
+            'tooth_name' => 'Răng số 4 hàm trên trái - Răng cối nhỏ'
+        ]);
+        Tooth::create([
+            'tooth_number' => '25',
+            'tooth_name' => 'Răng số 5 hàm trên trái - Răng cối nhỏ'
+        ]);
+        Tooth::create([
+            'tooth_number' => '26',
+            'tooth_name' => 'Răng số 6 hàm trên trái - Răng cối lớn'
+        ]);
+        Tooth::create([
+            'tooth_number' => '27',
+            'tooth_name' => 'Răng số 7 hàm trên trái - Răng cối lớn'
+        ]);
+        Tooth::create([
+            'tooth_number' => '28',
+            'tooth_name' => 'Răng số 8 hàm trên trái - Răng cối lớn'
+        ]);
+        //endham dưới trái
+        Tooth::create([
+            'tooth_number' => '41',
+            'tooth_name' => 'Răng số 1 hàm dưới phải - Răng cửa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '42',
+            'tooth_name' => 'Răng số 2 hàm dưới phải - Răng cửa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '43',
+            'tooth_name' => 'Răng số 3 hàm dưới phải - Răng Nanh'
+        ]);
+        Tooth::create([
+            'tooth_number' => '44',
+            'tooth_name' => 'Răng số 4 hàm dưới phải - Răng cối nhỏ'
+        ]);
+        Tooth::create([
+            'tooth_number' => '45',
+            'tooth_name' => 'Răng số 5 hàm dưới phải - Răng cối nhỏ'
+        ]);
+        Tooth::create([
+            'tooth_number' => '46',
+            'tooth_name' => 'Răng số 6 hàm dưới phải - Răng cối lớn'
+        ]);
+        Tooth::create([
+            'tooth_number' => '47',
+            'tooth_name' => 'Răng số 7 hàm dưới phải - Răng cối lớn'
+        ]);
+        Tooth::create([
+            'tooth_number' => '48',
+            'tooth_name' => 'Răng số 8 hàm dưới phải - Răng cối lớn'
+        ]);
+        //end dưới phải
+        // dưới trái
+        Tooth::create([
+            'tooth_number' => '31',
+            'tooth_name' => 'Răng số 1 hàm dưới trái - Răng cửa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '32',
+            'tooth_name' => 'Răng số 2 hàm dưới trái - Răng cửa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '33',
+            'tooth_name' => 'Răng số 3 hàm dưới trái - Răng Nanh'
+        ]);
+        Tooth::create([
+            'tooth_number' => '34',
+            'tooth_name' => 'Răng số 4 hàm dưới trái - Răng cối nhỏ'
+        ]);
+        Tooth::create([
+            'tooth_number' => '35',
+            'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối nhỏ'
+        ]);
+        Tooth::create([
+            'tooth_number' => '36',
+            'tooth_name' => 'Răng số 6 hàm dưới trái - Răng cối lớn'
+        ]);
+        Tooth::create([
+            'tooth_number' => '37',
+            'tooth_name' => 'Răng số 7 hàm dưới trái - Răng cối lớn'
+        ]);
+        Tooth::create([
+            'tooth_number' => '38',
+            'tooth_name' => 'Răng số 8 hàm dưới trái - Răng cối lớn'
+        ]);
+        //endham dưới trái
+        //rang tre con
+        // tren phải
+        Tooth::create([
+            'tooth_number' => '51',
+            'tooth_name' => 'Răng số 1 hàm trên phải (Trẻ em) - Răng cửa giữa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '52',
+            'tooth_name' => 'Răng số 1 hàm trên phải (Trẻ em) - Răng cửa bên'
+        ]);
+        Tooth::create([
+            'tooth_number' => '53',
+            'tooth_name' => 'Răng số 3 hàm trên phải - Răng nanh sữa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '54',
+            'tooth_name' => 'Răng số 4 hàm trên phải - Răng cối sữa 1'
+        ]);
+        Tooth::create([
+            'tooth_number' => '55',
+            'tooth_name' => 'Răng số 5 hàm trên phải - Răng cối sữa 2'
+        ]);
+        //end tren phai
+        // tren trái
+        Tooth::create([
+            'tooth_number' => '61',
+            'tooth_name' => 'Răng số 1 hàm trên trái (Trẻ em) - Răng cửa giữa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '62',
+            'tooth_name' => 'Răng số 1 hàm trên trái (Trẻ em) - Răng cửa bên'
+        ]);
+        Tooth::create([
+            'tooth_number' => '63',
+            'tooth_name' => 'Răng số 3 hàm trên trái - Răng nanh sữa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '64',
+            'tooth_name' => 'Răng số 4 hàm trên trái - Răng cối sữa 1'
+        ]);
+        Tooth::create([
+            'tooth_number' => '65',
+            'tooth_name' => 'Răng số 5 hàm trên trái - Răng cối sữa 2'
+        ]);
+        //end tren trái
+        // dưới phải
+        Tooth::create([
+            'tooth_number' => '81',
+            'tooth_name' => 'Răng số 1 hàm dưới phải (Trẻ em) - Răng cửa giữa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '82',
+            'tooth_name' => 'Răng số 1 hàm dưới phải (Trẻ em) - Răng cửa bên'
+        ]);
+        Tooth::create([
+            'tooth_number' => '83',
+            'tooth_name' => 'Răng số 3 hàm dưới phải  - Răng nanh sữa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '84',
+            'tooth_name' => 'Răng số 4 hàm dưới phải  - Răng cối sữa 1'
+        ]);
+        Tooth::create([
+            'tooth_number' => '85',
+            'tooth_name' => 'Răng số 5 hàm dưới phải - Răng cối sữa 2'
+        ]);
+        //end dưới phải
+        // dưới trái
+        Tooth::create([
+            'tooth_number' => '71',
+            'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa giữa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '72',
+            'tooth_name' => 'Răng số 1 hàm dưới trái (Trẻ em) - Răng cửa bên'
+        ]);
+        Tooth::create([
+            'tooth_number' => '73',
+            'tooth_name' => 'Răng số 3 hàm dưới trái - Răng nanh sữa'
+        ]);
+        Tooth::create([
+            'tooth_number' => '74',
+            'tooth_name' => 'Răng số 4 hàm dưới trái - Răng cối sữa 1'
+        ]);
+        Tooth::create([
+            'tooth_number' => '75',
+            'tooth_name' => 'Răng số 5 hàm dưới trái - Răng cối sữa 2'
+        ]);
     }
-    public function initPatientOfAppointment(){
 
-            PatientOfAppointment::create([
-                'appointment_id' => 1,
-                'patient_id' => 1
-            ]);
+    public function initPatientOfAppointment()
+    {
 
-            PatientOfAppointment::create([
-                'appointment_id' => 2,
-                'patient_id' => 3
-            ]);
+        PatientOfAppointment::create([
+            'appointment_id' => 1,
+            'patient_id' => 1
+        ]);
+
+        PatientOfAppointment::create([
+            'appointment_id' => 2,
+            'patient_id' => 3
+        ]);
 
     }
-    public function initPatient(){
 
-            Patient::create([
-                'name' => 'Huỳnh Võ Thiên Phúc',
-                'address' => '188 Nguyễn xí',
-                'phone' => '0915469963',
-                'date_of_birth' => '1995-04-01',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
+    public function initPatient()
+    {
 
-            Patient::create([
-                'name' => 'Võ Quốc Trịnh',
-                'address' => '18 Quang Trung',
-                'phone' => '01685149049',
-                'date_of_birth' => '1996-10-02',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-                 
-            ]);
+        Patient::create([
+            'name' => 'Huỳnh Võ Thiên Phúc',
+            'address' => '188 Nguyễn xí',
+            'phone' => '0915469963',
+            'date_of_birth' => '1995-04-01',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
 
-            Patient::create([
-                'name' => 'Nhiêu Sĩ Lực',
-                'address' => '188 Cầu Đường',
-                'phone' => '0913520187',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Hoàng Quốc Huynh',
-                'address' => '188 Cầu Đường',
-                'phone' => '0915235776',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'FEMALE',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Đỗ Thụy An',
-                'address' => '188 Cống Lỡ',
-                'phone' => '0913270058',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'FEMALE',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Nguyễn Thị Bình',
-                'address' => '188 Cầu Đường',
-                'phone' => '0913947554',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'FEMALE',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Bành Văn Bình',
-                'address' => '188 Tô Ký',
-                'phone' => '0904035045',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'FEMALE',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Trần Văn An',
-                'address' => '188 Cách Mạng Tháng 8',
-                'phone' => '0913287146',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'FEMALE',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Bành Văn Bình',
-                'address' => '188 Cầu Đường',
-                'phone' => '01214757979',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nữ',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Nguyễn Thị Na',
-                'address' => '188 Cầu Cáp',
-                'phone' => '0909539588',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nữ',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Nguyễn Thị Hường',
-                'address' => '188 Đồng Đen',
-                'phone' => '0935109545',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nữ',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Nguyễn Thị Thơ',
-                'address' => '188 Phan Huy Ích',
-                'phone' => '0935105105',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nữ',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Trần Văn Tùng',
-                'address' => '188 Cầu Đường',
-                'phone' => '01230405077',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Huỳnh Văn An',
-                'address' => '188 Cầu Tre',
-                'phone' => '0903211462',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Trần Khánh Tùng',
-                'address' => '188 Tô Thị',
-                'phone' => '0903552741',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Nguyễn Gia Bảo',
-                'address' => '188 Cầu Đường',
-                'phone' => '0904777652',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Nguyễn Tường Vân Nam',
-                'address' => '188 Cầu Đường',
-                'phone' => '0902159753',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Nguyễn Trung Kiên',
-                'address' => '188 Cầu Đường',
-                'phone' => '0905045789',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
-            Patient::create([
-                'name' => 'Trần Thanh Tùng',
-                'address' => '179 Huỳnh Lan Khanh',
-                'phone' => '0903056987',
-                'date_of_birth' => '1996-10-03',
-                'gender' => 'Nam',
-                'avatar' => 'assets/images/avatar/user_avatar_5.png',
-                'district_id' => 1,
-            ]);
+        Patient::create([
+            'name' => 'Võ Quốc Trịnh',
+            'address' => '18 Quang Trung',
+            'phone' => '01685149049',
+            'date_of_birth' => '1996-10-02',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+
+        ]);
+
+        Patient::create([
+            'name' => 'Nhiêu Sĩ Lực',
+            'address' => '188 Cầu Đường',
+            'phone' => '0913520187',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Hoàng Quốc Huynh',
+            'address' => '188 Cầu Đường',
+            'phone' => '0915235776',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'FEMALE',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Đỗ Thụy An',
+            'address' => '188 Cống Lỡ',
+            'phone' => '0913270058',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'FEMALE',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Nguyễn Thị Bình',
+            'address' => '188 Cầu Đường',
+            'phone' => '0913947554',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'FEMALE',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Bành Văn Bình',
+            'address' => '188 Tô Ký',
+            'phone' => '0904035045',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'FEMALE',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Trần Văn An',
+            'address' => '188 Cách Mạng Tháng 8',
+            'phone' => '0913287146',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'FEMALE',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Bành Văn Bình',
+            'address' => '188 Cầu Đường',
+            'phone' => '01214757979',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nữ',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Nguyễn Thị Na',
+            'address' => '188 Cầu Cáp',
+            'phone' => '0909539588',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nữ',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Nguyễn Thị Hường',
+            'address' => '188 Đồng Đen',
+            'phone' => '0935109545',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nữ',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Nguyễn Thị Thơ',
+            'address' => '188 Phan Huy Ích',
+            'phone' => '0935105105',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nữ',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Trần Văn Tùng',
+            'address' => '188 Cầu Đường',
+            'phone' => '01230405077',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Huỳnh Văn An',
+            'address' => '188 Cầu Tre',
+            'phone' => '0903211462',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Trần Khánh Tùng',
+            'address' => '188 Tô Thị',
+            'phone' => '0903552741',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Nguyễn Gia Bảo',
+            'address' => '188 Cầu Đường',
+            'phone' => '0904777652',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Nguyễn Tường Vân Nam',
+            'address' => '188 Cầu Đường',
+            'phone' => '0902159753',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Nguyễn Trung Kiên',
+            'address' => '188 Cầu Đường',
+            'phone' => '0905045789',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
+        Patient::create([
+            'name' => 'Trần Thanh Tùng',
+            'address' => '179 Huỳnh Lan Khanh',
+            'phone' => '0903056987',
+            'date_of_birth' => '1996-10-03',
+            'gender' => 'Nam',
+            'avatar' => 'assets/images/avatar/user_avatar_5.png',
+            'district_id' => 1,
+        ]);
     }
-    public function initTreatmentHistory(){
 
-            TreatmentHistory::create([
-                'treatment_id' => 1,
-                'patient_id' => 1,
-                'description' => 'ABC',
-                'created_date' => Carbon::now(),
-                'finish_date' => Carbon::now(),
-                'tooth_number' => '11',
-                'price' => 1000000,
-                'total_price' => 900000,
-                'payment_id' => 1,
-            ]);
-           
-          
-            TreatmentHistory::create([
-                'treatment_id' => 1,
-                'patient_id' => 2,
-                'description' => 'ABC',
-                'created_date' => Carbon::now(),
-                'finish_date' => Carbon::now(),
-                'tooth_number' => '11',
-                'price' => 1000000,
-                'total_price' => 900000,
-                'payment_id' => 1,
-            ]);
+    public function initTreatmentHistory()
+    {
+
+        TreatmentHistory::create([
+            'treatment_id' => 1,
+            'patient_id' => 1,
+            'description' => 'ABC',
+            'created_date' => Carbon::now(),
+            'finish_date' => Carbon::now(),
+            'tooth_number' => '11',
+            'price' => 1000000,
+            'total_price' => 900000,
+            'payment_id' => 1,
+        ]);
+
+
+        TreatmentHistory::create([
+            'treatment_id' => 1,
+            'patient_id' => 2,
+            'description' => 'ABC',
+            'created_date' => Carbon::now(),
+            'finish_date' => Carbon::now(),
+            'tooth_number' => '11',
+            'price' => 1000000,
+            'total_price' => 900000,
+            'payment_id' => 1,
+        ]);
     }
-    public function initTreatmentDetail(){
-           TreatmentDetail::create([
-                'treatment_history_id' => 2,
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'note' => 'DEF'
-            ]);
-            TreatmentDetail::create([
-                    'treatment_history_id' => 2,
-                    'staff_id' => 2,
-                    'created_date' => Carbon::now(),
-                    'note' => 'DEF'
-                ]);
-            TreatmentDetail::create([
-                    'treatment_history_id' => 1,
-                    'staff_id' => 1,
-                    'created_date' => Carbon::now(),
-                    'note' => 'DEF'
-                ]);
-            TreatmentDetail::create([
-                    'treatment_history_id' => 1,
-                    'staff_id' => 1,
-                    'created_date' => Carbon::now(),
-                    'note' => 'DEF'
-                ]);
+
+    public function initTreatmentDetail()
+    {
+        TreatmentDetail::create([
+            'treatment_history_id' => 2,
+            'staff_id' => 1,
+            'created_date' => Carbon::now(),
+            'note' => 'DEF'
+        ]);
+        TreatmentDetail::create([
+            'treatment_history_id' => 2,
+            'staff_id' => 2,
+            'created_date' => Carbon::now(),
+            'note' => 'DEF'
+        ]);
+        TreatmentDetail::create([
+            'treatment_history_id' => 1,
+            'staff_id' => 1,
+            'created_date' => Carbon::now(),
+            'note' => 'DEF'
+        ]);
+        TreatmentDetail::create([
+            'treatment_history_id' => 1,
+            'staff_id' => 1,
+            'created_date' => Carbon::now(),
+            'note' => 'DEF'
+        ]);
     }
-    public function initTreatmentDetailStep(){
+
+    public function initTreatmentDetailStep()
+    {
         TreatmentDetailStep::create([
-                    'treatment_detail_id' => 3,
-                    'step_id' => 1,
-                ]);
+            'treatment_detail_id' => 3,
+            'step_id' => 1,
+        ]);
 
-             
-                TreatmentDetailStep::create([
-                    'treatment_detail_id' => 4,
-                    'step_id' => 2,
-                ]);
-               
+
         TreatmentDetailStep::create([
-                    'treatment_detail_id' => 1,
-                    'step_id' => 1,
-                ]);
+            'treatment_detail_id' => 4,
+            'step_id' => 2,
+        ]);
 
-               
-                TreatmentDetailStep::create([
-                    'treatment_detail_id' => 2,
-                    'step_id' => 2,
-                ]);
-
-    }
-    public function initAppointment(){
+        TreatmentDetailStep::create([
+            'treatment_detail_id' => 1,
+            'step_id' => 1,
+        ]);
 
 
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 4,
-                'start_time' => '2018-07-21 10:05:42',
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 2,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 3,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 2,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 3,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 4,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 2,
-                'start_time' => Carbon::now(),
-            ]);
-            Appointment::create([
-                'note' => 'demo data',
-                'estimated_time' => '00:00:30',
-                'numerical_order' => '12',
-                'phone' => '0915469963',
-                'staff_id' => 3,
-                'start_time' => Carbon::now(),
-            ]);
-
-
-
-
-            Appointment::create([
-                'start_time' => Carbon::now(),
-                'note' => 'Khám chi tiết',
-                'phone' => '01279011096',
-                'staff_id' => 2,
-                'numerical_order' => '1',
-                'estimated_time' => '00:30:00'
-            ]);
+        TreatmentDetailStep::create([
+            'treatment_detail_id' => 2,
+            'step_id' => 2,
+        ]);
 
     }
-    public function initAbsent(){
-            Absent::create([
-               'staff_approve_id' => 2,
-               'request_absent_id' =>  1,
-                'message_from_staff' => 'Chấp Nhận',
-                'created_time'=> Carbon::now(),
-                'is_approved' => 1,
-            ]);
-            Absent::create([
-                'staff_approve_id' => 2,
-                'request_absent_id' =>  2,
-                'message_from_staff' => 'Chấp Nhận, đảm bảo công việc nhé',
-                'created_time'=> Carbon::now(),
-                'is_approved' => 1,
-            ]);
-           
+
+    public function initAppointment()
+    {
+
+
+        Appointment::create([
+            'note' => 'demo data',
+            'estimated_time' => '00:00:30',
+            'numerical_order' => '12',
+            'phone' => '0915469963',
+            'staff_id' => 4,
+            'start_time' => '2018-07-21 10:05:42',
+        ]);
+        Appointment::create([
+            'note' => 'demo data',
+            'estimated_time' => '00:00:30',
+            'numerical_order' => '12',
+            'phone' => '0915469963',
+            'staff_id' => 2,
+            'start_time' => Carbon::now(),
+        ]);
+        Appointment::create([
+            'note' => 'demo data',
+            'estimated_time' => '00:00:30',
+            'numerical_order' => '12',
+            'phone' => '0915469963',
+            'staff_id' => 3,
+            'start_time' => Carbon::now(),
+        ]);
+        Appointment::create([
+            'note' => 'demo data',
+            'estimated_time' => '00:00:30',
+            'numerical_order' => '12',
+            'phone' => '0915469963',
+            'staff_id' => 2,
+            'start_time' => Carbon::now(),
+        ]);
+        Appointment::create([
+            'note' => 'demo data',
+            'estimated_time' => '00:00:30',
+            'numerical_order' => '12',
+            'phone' => '0915469963',
+            'staff_id' => 3,
+            'start_time' => Carbon::now(),
+        ]);
+        Appointment::create([
+            'note' => 'demo data',
+            'estimated_time' => '00:00:30',
+            'numerical_order' => '12',
+            'phone' => '0915469963',
+            'staff_id' => 4,
+            'start_time' => Carbon::now(),
+        ]);
+        Appointment::create([
+            'note' => 'demo data',
+            'estimated_time' => '00:00:30',
+            'numerical_order' => '12',
+            'phone' => '0915469963',
+            'staff_id' => 2,
+            'start_time' => Carbon::now(),
+        ]);
+        Appointment::create([
+            'note' => 'demo data',
+            'estimated_time' => '00:00:30',
+            'numerical_order' => '12',
+            'phone' => '0915469963',
+            'staff_id' => 3,
+            'start_time' => Carbon::now(),
+        ]);
+
+
+        Appointment::create([
+            'start_time' => Carbon::now(),
+            'note' => 'Khám chi tiết',
+            'phone' => '01279011096',
+            'staff_id' => 2,
+            'numerical_order' => '1',
+            'estimated_time' => '00:30:00'
+        ]);
+
     }
-    public function initRequestAbsent(){
-         RequestAbsent::create([
-                'staff_id' => 2,
-                'start_date' => '2018-06-26',
-                'end_date' => '2018-06-28',
-                'reason' =>  'Đám cưới em trai',
-                'is_delete'=>'0',
-            ]);
-            RequestAbsent::create([
-                'staff_id' => 7,
-                'start_date' => '2018-09-15',
-                'end_date' => '2018-09-17',
-                'reason' =>  'Nghỉ bệnh',
-                'is_delete'=>'0',
-            ]);
-            RequestAbsent::create([
-                'staff_id' => 5,
-                'start_date' => '2018-08-29',
-                'end_date' => '2018-08-30',
-                'reason' =>  'Nghỉ bệnh',
-                'is_delete'=>'0',
-            ]);
-            RequestAbsent::create([
-                'staff_id' => 9,
-                'start_date' => '2018-09-05',
-                'end_date' => '2018-09-06',
-                'reason' =>  'Đám cưới em trai',
-                'is_delete'=>'0',
-            ]);
-            RequestAbsent::create([
-                'staff_id' => 12,
-                'start_date' => '2018-09-14',
-                'end_date' => '2018-09-15',
-                'reason' =>  'Sinh nhật con gái',
-                'is_delete'=>'0',
-            ]);
-            RequestAbsent::create([
-                'staff_id' => 5,
-                'start_date' => '2018-09-18',
-                'end_date' => '2018-09-22',
-                'reason' =>  'Mừng sinh nhật lần 80 của bà nội',
-                'is_delete'=>'0',
-            ]);
-            RequestAbsent::create([
-                'staff_id' => 4,
-                'start_date' => '2018-06-25',
-                'end_date' => '2018-07-01',
-                'reason' =>  'Đám cưới chị gái',
-                'is_delete'=>'0',
-            ]);
-          
+
+    public function initAbsent()
+    {
+        Absent::create([
+            'staff_approve_id' => 2,
+            'request_absent_id' => 1,
+            'message_from_staff' => 'Chấp Nhận',
+            'created_time' => Carbon::now(),
+            'is_approved' => 1,
+        ]);
+        Absent::create([
+            'staff_approve_id' => 2,
+            'request_absent_id' => 2,
+            'message_from_staff' => 'Chấp Nhận, đảm bảo công việc nhé',
+            'created_time' => Carbon::now(),
+            'is_approved' => 1,
+        ]);
+
     }
-    public function initNew(){
-         News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/Niềng-răng-nên-ăn-gì-nên-kiêng-gì-nha-sỹ-tư-vấn-tuyệt-đối-tuân-thủ-1.jpg',
-                'content' => '<p>&nbsp;&nbsp;</p>
+
+    public function initRequestAbsent()
+    {
+        RequestAbsent::create([
+            'staff_id' => 2,
+            'start_date' => '2018-06-26',
+            'end_date' => '2018-06-28',
+            'reason' => 'Đám cưới em trai',
+            'is_delete' => '0',
+        ]);
+        RequestAbsent::create([
+            'staff_id' => 7,
+            'start_date' => '2018-09-15',
+            'end_date' => '2018-09-17',
+            'reason' => 'Nghỉ bệnh',
+            'is_delete' => '0',
+        ]);
+        RequestAbsent::create([
+            'staff_id' => 5,
+            'start_date' => '2018-08-29',
+            'end_date' => '2018-08-30',
+            'reason' => 'Nghỉ bệnh',
+            'is_delete' => '0',
+        ]);
+        RequestAbsent::create([
+            'staff_id' => 9,
+            'start_date' => '2018-09-05',
+            'end_date' => '2018-09-06',
+            'reason' => 'Đám cưới em trai',
+            'is_delete' => '0',
+        ]);
+        RequestAbsent::create([
+            'staff_id' => 12,
+            'start_date' => '2018-09-14',
+            'end_date' => '2018-09-15',
+            'reason' => 'Sinh nhật con gái',
+            'is_delete' => '0',
+        ]);
+        RequestAbsent::create([
+            'staff_id' => 5,
+            'start_date' => '2018-09-18',
+            'end_date' => '2018-09-22',
+            'reason' => 'Mừng sinh nhật lần 80 của bà nội',
+            'is_delete' => '0',
+        ]);
+        RequestAbsent::create([
+            'staff_id' => 4,
+            'start_date' => '2018-06-25',
+            'end_date' => '2018-07-01',
+            'reason' => 'Đám cưới chị gái',
+            'is_delete' => '0',
+        ]);
+
+    }
+
+    public function initNew()
+    {
+        News::create([
+            'image_header' => 'http://150.95.104.237/photos/shares/Niềng-răng-nên-ăn-gì-nên-kiêng-gì-nha-sỹ-tư-vấn-tuyệt-đối-tuân-thủ-1.jpg',
+            'content' => '<p>&nbsp;&nbsp;</p>
 <header class="entry-header">
 <div class="entry-header-text entry-header-text-top text-center">
 <h1 class="entry-title">LỰA CHỌN THỰC PHẨM PH&Ugrave; HỢP KHI NIỀNG RĂNG</h1>
@@ -1818,13 +1911,13 @@ class AdminController extends Controller
 <p><strong>Điều tiếp theo l&agrave; bạn n&ecirc;n hạn chế c&aacute;c m&oacute;n c&oacute; đường. Đ&oacute; l&agrave; v&igrave; trong thức ăn n&agrave;y dễ sinh ra c&aacute;c axit v&agrave; c&aacute;c mảng b&aacute;m g&acirc;y ra s&acirc;u răng cũng như c&aacute;c bệnh về lợi. C&aacute;c bạn n&ecirc;n tr&aacute;nh c&aacute;c thực phẩm như: soda, kẹo c&oacute; chứa đường, c&aacute;c loại b&aacute;nh kẹo c&oacute; m&agrave;u sắc nh&acirc;n tạo để tr&aacute;nh l&agrave;m hại đến răng của m&igrave;nh sau khi niềng.</strong></p>
 <p><strong>H&ocirc;m nay WeCare đ&atilde; cung cấp cho bạn v&agrave;i mẹo nhỏ để c&oacute; thể gi&uacute;p bạn c&oacute; được răng đẹp v&agrave; khỏe nhất sau khi niềng răng cũng như c&aacute;c sản phẩm tốt cho sức khỏe của ch&iacute;nh bạn nh&eacute;! H&atilde;y lu&ocirc;n theo d&otilde;i ch&uacute;ng t&ocirc;i để c&oacute; được c&aacute;c th&ocirc;ng tin hữu &iacute;ch sớm nhất.</strong></p>
 </div>',
-                'title' => 'LỰA CHỌN THỰC PHẨM PHÙ HỢP KHI NIỀNG RĂNG',
-                'staff_id' => '1',
-                'created_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/rang-cua-thua-ho-phai-lam-sao-1.jpg',
-                'content' => '<h1><strong>Răng cửa hở! Phải l&agrave;m g&igrave;?</strong></h1>
+            'title' => 'LỰA CHỌN THỰC PHẨM PHÙ HỢP KHI NIỀNG RĂNG',
+            'staff_id' => '1',
+            'created_date' => '2018-06-19 04:31:27',
+        ]);
+        News::create([
+            'image_header' => 'http://150.95.104.237/photos/shares/rang-cua-thua-ho-phai-lam-sao-1.jpg',
+            'content' => '<h1><strong>Răng cửa hở! Phải l&agrave;m g&igrave;?</strong></h1>
 <p><strong>Ng&agrave;y nay c&ugrave;ng với sự ph&aacute;t triển vượt bậc của nền c&ocirc;ng nghệ đ&oacute; l&agrave; nền nha khoa hiện đại Việt Nam ch&uacute;ng ta. &ldquo;C&aacute;i răng c&aacute;i g&oacute;c l&agrave; g&oacute;c con người&rdquo; &ndash; Nhu cầu l&agrave;m đẹp răng kh&ocirc;ng chỉ l&agrave; nhu cầu của những người nổi tiếng m&agrave; c&ograve;n l&agrave; nhu cầu của tất cả mọi người trong x&atilde; hội ng&agrave;y nay. Hơn nữa, nụ cười tươi tắn c&ograve;n mang lại cho người sở hữu n&oacute; sự tự tin v&agrave; rạng ngời. Ch&iacute;nh v&igrave; những l&iacute; do n&agrave;y m&agrave; xu hướng thẩm mĩ nha khoa đang dần trở th&agrave;nh tr&agrave;o lưu trong những năm gần đ&acirc;y.</strong></p>
 <p><strong>V&agrave; h&ocirc;m nay, nha khoa WeCare sẽ trả lời v&agrave;i thắc mắc m&agrave; qu&yacute; kh&aacute;ch h&agrave;ng quan t&acirc;m hiện nay.</strong></p>
 <p><strong>Kh&aacute;ch h&agrave;ng: Thưa b&aacute;c sĩ, nếu răng cửa của t&ocirc;i bị hở th&igrave; c&oacute; c&aacute;ch n&agrave;o để h&agrave;m răng của t&ocirc;i kh&iacute;t lại v&agrave; đều hơn kh&ocirc;ng ạ? V&agrave; c&aacute;c c&aacute;ch ấy c&oacute; những ưu v&agrave; nhược điểm với chi ph&iacute; để trả hết sau một liệu tr&igrave;nh như thế n&agrave;o vậy ạ?</strong></p>
@@ -1835,13 +1928,13 @@ class AdminController extends Controller
 <li><strong>C&ograve;n nếu bạn muốn c&oacute; một nụ cười đẹp với h&agrave;m răng ngay ngắn, đúng vị tr&iacute; m&agrave; kh&ocirc;ng phải bất cứ phương ph&aacute;p chỉnh nha n&agrave;o cũng c&oacute; thể giải quyết được th&igrave; h&atilde;y chọn phương &aacute;n 3- niềng răng. Ở phương &aacute;n n&agrave;y mang lại cho bạn h&agrave;m răng chắc chắn v&agrave; ổn định, chi ph&iacute; lại ph&ugrave; hợp với khả năng t&agrave;i ch&iacute;nh của bạn.Nhưng n&oacute; lại chiếm nhiều thời gian trong qu&aacute; tr&igrave;nh điều trị v&agrave; t&ugrave;y thuộc v&agrave;o khớp cắn.</strong></li>
 </ul>
 <p><strong>Đ&oacute; l&agrave; c&aacute;c phương &aacute;n tốt nhất ở nha khoa ch&uacute;ng t&ocirc;i sẽ đem lại cho bạn nụ cười TƯƠI TẮN- RẠNG RỠ.</strong></p>',
-                'title' => 'RĂNG CỬA HỞ! PHẢI LÀM SAO?',
-                'staff_id' => '1',
-                'created_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/cham-soc-rang-mieng.jpg',
-                'content' => '<header class="entry-header">
+            'title' => 'RĂNG CỬA HỞ! PHẢI LÀM SAO?',
+            'staff_id' => '1',
+            'created_date' => '2018-06-19 04:31:27',
+        ]);
+        News::create([
+            'image_header' => 'http://150.95.104.237/photos/shares/cham-soc-rang-mieng.jpg',
+            'content' => '<header class="entry-header">
 <div class="entry-header-text entry-header-text-top text-center">
 <h1 class="entry-title">CHĂM S&Oacute;C RĂNG MIỆNG HẰNG NG&Agrave;Y C&Ugrave;NG WECARE</h1>
 <div class="entry-divider is-divider small">&nbsp;</div>
@@ -1874,13 +1967,13 @@ class AdminController extends Controller
 <p><strong>&ndash; Đảm bảo rằng trẻ em dưới 12 tuổi uống nước c&oacute; chất fluor hoặc d&ugrave;ng thuốc bổ sung fluor nếu ch&uacute;ng sống trong một v&ugrave;ng kh&ocirc;ng c&oacute; chất fluor.</strong></p>
 <p><strong>Duy tr&igrave; vệ sinh răng miệng tốt l&agrave; một trong những điều thiết yếu để bạn c&oacute; thể c&oacute; những đặc điểm tốt cho răng v&agrave; nướu của bạn. Răng khỏe mạnh kh&ocirc;ng chỉ cho ph&eacute;p bạn tr&ocirc;ng đẹp v&agrave; cảm thấy thoải m&aacute;i, ch&uacute;ng c&ograve;n khiến ch&uacute;ng ta c&oacute; thể ăn v&agrave; n&oacute;i đ&uacute;ng c&aacute;ch.</strong></p>
 </div>',
-                'title' => 'CHĂM SÓC RĂNG MIỆNG HẰNG NGÀY CÙNG DENTAL GOLD',
-                'staff_id' => '1',
-                'created_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/46dce1ec-3be1-4f41-a6e5-365d3165ae58.jpg',
-                'content' => '<header class="entry-header">
+            'title' => 'CHĂM SÓC RĂNG MIỆNG HẰNG NGÀY CÙNG DENTAL GOLD',
+            'staff_id' => '1',
+            'created_date' => '2018-06-19 04:31:27',
+        ]);
+        News::create([
+            'image_header' => 'http://150.95.104.237/photos/shares/46dce1ec-3be1-4f41-a6e5-365d3165ae58.jpg',
+            'content' => '<header class="entry-header">
 <div class="entry-header-text entry-header-text-top text-center">
 <h1 class="entry-title">RĂNG ĐẸP V&Agrave; KHỎE &ndash; N&Ecirc;N V&Agrave; KH&Ocirc;NG N&Ecirc;N ĂN G&Igrave; Đ&Acirc;Y?</h1>
 <div class="entry-divider is-divider small">&nbsp;</div>
@@ -1918,13 +2011,13 @@ class AdminController extends Controller
 <h3><strong>4.Thực phẩm chứa nhiều tinh bột:</strong></h3>
 <p><strong>Đ&oacute; l&agrave; c&aacute;c loại thực phẩm như: b&aacute;nh m&igrave; trắng, pizzza, m&igrave; ống v&agrave; b&aacute;nh m&igrave; kẹp thịt,&hellip;Đ&oacute; l&agrave; c&aacute;c loại thực phẩm chứa nhiều tinh bột v&agrave; dễ d&agrave;ng lọt v&agrave;o c&aacute;c khẽ răng g&acirc;y n&ecirc;n s&acirc;u răng.</strong></p>
 </div>',
-                'title' => 'RĂNG ĐẸP VÀ KHỎE – NÊN VÀ KHÔNG NÊN ĂN GÌ ĐÂY?',
-                'staff_id' => '1',
-                'created_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
-                'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
+            'title' => 'RĂNG ĐẸP VÀ KHỎE – NÊN VÀ KHÔNG NÊN ĂN GÌ ĐÂY?',
+            'staff_id' => '1',
+            'created_date' => '2018-06-19 04:31:27',
+        ]);
+        News::create([
+            'image_header' => 'http://150.95.104.237/photos/shares/implant-1.png',
+            'content' => '<h2 style="color: blue;">TRỒNG RĂNG IMPLANT</h2>
 <p><strong>Với sự ph&aacute;t triển của nha khoa hiện nay th&igrave; c&aacute;c bạn sẽ kh&ocirc;ng c&ograve;n lo ngại v&agrave; xấu hổ với những chiếc răng bị mất của m&igrave;nh nữa. Đến với nha khoa của ch&uacute;ng t&ocirc;i c&aacute;c bạn sẽ được tư vấn miễn ph&iacute; bởi c&aacute;c b&aacute;c sĩ c&oacute; nhiều năm kinh nghiệm trong việc&rdquo; trồng răng Implant&rdquo; để c&oacute; được một h&agrave;m răng chắc, khỏe v&agrave; đẹp.</strong></p>
 <p><strong>Tuy nhi&ecirc;n, kh&aacute;i niệm &ldquo;trồng răng Implant&rdquo; c&ograve;n rất &iacute;t người biết đến. Vậy trồng răng Implant l&agrave; g&igrave;? Kĩ thuật trồng răng Implant&nbsp;l&agrave; việc phục hồi răng bị mất bằng việc cắm v&iacute;t Implant v&agrave;o trong xương h&agrave;m l&agrave;m trụ sau đ&oacute; sẽ phục h&igrave;nh m&atilde;o sứ ở tr&ecirc;n để gi&uacute;p lấy lại n&eacute;t thẩm mĩ cũng như giữ vững cấu tr&uacute;c của h&agrave;m răng.T&ugrave;y&nbsp;v&agrave;o t&igrave;nh trạng răng h&agrave;m v&agrave; nhu cầu của mỗi kh&aacute;ch h&agrave;ng, c&aacute;c b&aacute;c sĩ sẽ tư vấn số lượng cũng như vị tr&iacute; cấy gh&eacute;p răng Implant ph&ugrave; hợp cho từng đối tượng. Vậy việc trồng răng Implant sẽ cho bạn những lợi &iacute;ch g&igrave;?</strong></p>
 <p><strong>&ndash; Chiếc răng chắc chắn nhất.</strong></p>
@@ -1997,13 +2090,13 @@ class AdminController extends Controller
 </li>
 </ol>
 <p><strong>Thời điểm n&agrave;y l&agrave; sau 3-6 th&aacute;ng cấy gh&eacute;p trụ implant. C&ocirc;ng việc tương tự như khi bọc m&atilde;o răng sứ hay cầu răng th&ocirc;ng thường. B&aacute;c sĩ sẽ tư vấn cho m&igrave;nh loại răng sứ ph&ugrave; hợp như cercon, titan&hellip;T&ugrave;y theo nhu cầu thẩm mĩ v&agrave; chi ph&iacute; của từng người m&agrave; bạn chọn loại răng sứ th&iacute;ch hợp cho m&igrave;nh. Bạn c&oacute; thể đến nha khoa trong 2-4 lần hẹn, t&ugrave;y v&agrave;o số lượng răng sứ m&agrave; thời gian sẽ ch&ecirc;nh lệch.</strong></p>',
-                'title' => 'TRỒNG RĂNG IMPLANT – GIẢI PHÁP PHỤC HÌNH RĂNG BỊ MẤT HOÀN HẢO',
-                'staff_id' => '1',
-                'created_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/veneer-su-gia-bao-nhieu-1.jpg',
-                'content' => '<p>iện nay, tại c&aacute;c trung t&acirc;m nha khoa lớn thường &aacute;p dụng phổ biến phương ph&aacute;p n&agrave;y cho một số trường hợp dưới đ&acirc;y:</p>
+            'title' => 'TRỒNG RĂNG IMPLANT – GIẢI PHÁP PHỤC HÌNH RĂNG BỊ MẤT HOÀN HẢO',
+            'staff_id' => '1',
+            'created_date' => '2018-06-19 04:31:27',
+        ]);
+        News::create([
+            'image_header' => 'http://150.95.104.237/photos/shares/veneer-su-gia-bao-nhieu-1.jpg',
+            'content' => '<p>iện nay, tại c&aacute;c trung t&acirc;m nha khoa lớn thường &aacute;p dụng phổ biến phương ph&aacute;p n&agrave;y cho một số trường hợp dưới đ&acirc;y:</p>
 <p><img class="alignnone size-full wp-image-2953" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" alt="" width="30" height="30" data-lazy-src="https://nhakhoakim.com/wp-content/uploads/2016/11/tick-1.png" />Răng bị nhiễm m&agrave;u do nhiễm thuốc kh&aacute;ng sinh m&agrave; tẩy trắng răng kh&ocirc;ng thể mang lại hiệu quả</p>
 <p><img class="alignnone size-full wp-image-2953" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" alt="" width="30" height="30" data-lazy-src="https://nhakhoakim.com/wp-content/uploads/2016/11/tick-1.png" />&nbsp;Răng bị thưa,&nbsp;hai răng cửa c&oacute; k&iacute;ch thước to hơn c&aacute;c răng c&ograve;n lại</p>
 <p><img class="alignnone size-full wp-image-2953" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" alt="" width="30" height="30" data-lazy-src="https://nhakhoakim.com/wp-content/uploads/2016/11/tick-1.png" />&nbsp;Răng bị sứt mẻ,&nbsp;bể vỡ</p>
@@ -2022,13 +2115,13 @@ class AdminController extends Controller
 <p><em>Mặt d&aacute;n&nbsp;răng&nbsp;sứ Veneer được thiết kế kh&aacute; mỏng n&ecirc;n kh&aacute; thoải m&aacute;i khi ăn nhai, kh&ocirc;ng lo cộm cấn</em></p>
 <p><strong><img class="alignnone size-full wp-image-26933 lazyloaded" src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" alt="tick-3" width="22" height="24" data-lazy-src="https://benhvienranghammat.com.vn/wp-content/uploads/2016/06/tick-3.jpg" />&nbsp;Tuổi thọ cao</strong></p>
 <p>Tuổi thọ của mặt d&aacute;n sứ Veneer c&oacute; thể k&eacute;o d&agrave;i từ 10 &ndash; 15 năm nếu được chăm s&oacute;c v&agrave; bảo vệ đ&uacute;ng c&aacute;ch.&nbsp; B&ecirc;n cạnh đ&oacute;, mặt d&aacute;n sứ c&ograve;n b&aacute;m&nbsp;chắc tr&ecirc;n th&acirc;n răng, kh&ocirc;ng bị k&ecirc;nh hở, kh&ocirc;ng dễ bị bong, bật khi nhai gắn, chải răng nhờ chất liệu kết d&iacute;nh đặc biệt, kh&ocirc;ng dễ bị h&oacute;a lỏng l&agrave;m rơi miếng d&aacute;n n&ecirc;n bạn c&oacute; thể y&ecirc;n t&acirc;m khi sử dụng.</p>',
-                'title' => 'LÀM RĂNG SỨ MẶT DÁN SỨ VENEER – ĐẢM BẢO TÍNH THẨM MỸ CAO',
-                'staff_id' => '1',
-                'created_date' => '2018-06-19 04:31:27',
-            ]);
-            News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/2.jpg',
-                'content' => '<p class="the-article-summary cms-desc">Nhờ chiết xuất từ thảo dược tự nhi&ecirc;n như vỏ quả cau, đinh hương, cam thảo, kem đ&aacute;nh răng dược liệu gi&uacute;p đẩy l&ugrave;i h&ocirc;i miệng hiệu quả.</p>
+            'title' => 'LÀM RĂNG SỨ MẶT DÁN SỨ VENEER – ĐẢM BẢO TÍNH THẨM MỸ CAO',
+            'staff_id' => '1',
+            'created_date' => '2018-06-19 04:31:27',
+        ]);
+        News::create([
+            'image_header' => 'http://150.95.104.237/photos/shares/2.jpg',
+            'content' => '<p class="the-article-summary cms-desc">Nhờ chiết xuất từ thảo dược tự nhi&ecirc;n như vỏ quả cau, đinh hương, cam thảo, kem đ&aacute;nh răng dược liệu gi&uacute;p đẩy l&ugrave;i h&ocirc;i miệng hiệu quả.</p>
 <div class="the-article-body cms-body">
 <p>T&igrave;nh trạng h&ocirc;i miệng g&acirc;y ảnh hưởng nhiều đến cuộc sống h&agrave;ng ng&agrave;y v&agrave; khiến kh&ocirc;ng &iacute;t người lo lắng.</p>
 <h3>Chất lượng sống ảnh hưởng v&igrave; h&ocirc;i miệng</h3>
@@ -2066,13 +2159,13 @@ class AdminController extends Controller
 </tbody>
 </table>
 </div>',
-                'title' => 'Chữa hôi miệng bằng kem đánh răng dược liệu',
-                'staff_id' => '1',
-                'created_date' => '2018-06-19 04:31:27',
-            ]);   
-            News::create([
-                'image_header' => 'http://150.95.104.237/photos/shares/nhorangso6.jpg',
-                'content' => '<p class="the-article-summary cms-desc">Để tr&aacute;nh nguy cơ nhổ răng bất đắc dĩ, việc vệ sinh răng miệng thường xuy&ecirc;n bằng kem đ&aacute;nh răng dược liệu được nhiều người ưu ti&ecirc;n sử dụng.</p>
+            'title' => 'Chữa hôi miệng bằng kem đánh răng dược liệu',
+            'staff_id' => '1',
+            'created_date' => '2018-06-19 04:31:27',
+        ]);
+        News::create([
+            'image_header' => 'http://150.95.104.237/photos/shares/nhorangso6.jpg',
+            'content' => '<p class="the-article-summary cms-desc">Để tr&aacute;nh nguy cơ nhổ răng bất đắc dĩ, việc vệ sinh răng miệng thường xuy&ecirc;n bằng kem đ&aacute;nh răng dược liệu được nhiều người ưu ti&ecirc;n sử dụng.</p>
 <div class="the-article-body cms-body">
 <p>Thống k&ecirc; mới nhất của Bệnh viện Răng h&agrave;m mặt Trung ương H&agrave; Nội cho thấy c&oacute; đến 90% d&acirc;n số gặp c&aacute;c vấn đề về răng miệng, trong đ&oacute; chủ yếu l&agrave; s&acirc;u răng, vi&ecirc;m lợi v&agrave; phải nhổ răng.</p>
 <h3>&ldquo;Mất răng&rdquo; do đ&acirc;u?</h3>
@@ -2110,150 +2203,158 @@ class AdminController extends Controller
 <p>Nổi bật trong đ&oacute; l&agrave; kem đ&aacute;nh răng dược liệu Ngọc Ch&acirc;u với th&agrave;nh phần tinh chất dược liệu (vỏ quả cau, đinh hương, cam thảo, một dược, hoa h&ograve;e, keo ong&hellip;), bổ sung vitamin v&agrave; muối. Trong đ&oacute;, vỏ quả cau gi&uacute;p chắc ch&acirc;n răng, trắng răng; đinh hương kh&aacute;ng khuẩn khử m&ugrave;i, giảm &ecirc; buốt răng; cam thảo, keo ong lại chống vi&ecirc;m lợi, nhiệt miệng; hoa h&ograve;e hỗ trợ hoạt huyết, bền th&agrave;nh mạch, ngăn chảy m&aacute;u ch&acirc;n răng&hellip;</p>
 <p>C&aacute;c th&agrave;nh phần được phối hợp khoa học, ph&aacute;t huy t&aacute;c dụng đồng thời l&ecirc;n cả răng v&agrave; lợi. Nhờ vậy, răng lợi kh&ocirc;ng chỉ được l&agrave;m sạch, bảo vệ b&ecirc;n ngo&agrave;i m&agrave; c&ograve;n tăng cường lưu th&ocirc;ng m&aacute;u, nu&ocirc;i dưỡng từ gốc. Sản phẩm cũng g&oacute;p phần bảo vệ lợi, chắc ch&acirc;n răng, ngăn ngừa nhiệt miệng, vi&ecirc;m lợi, tụt lợi, chảy m&aacute;u ch&acirc;n răng, vi&ecirc;m quanh ch&acirc;n răng&hellip;</p>
 </div>',
-                'title' => 'Cách phòng tránh nguy cơ nhổ răng bất đắc dĩ',
-                'staff_id' => '1',
-                'created_date' => '2018-06-19 04:31:27',
-            ]);          
-           
-    }
-    public function initType(){
-         Type::create([
-                'id'=>'1',
-                'type'=>'Tin tức'
-            ]);
-            Type::create([
-                'id'=>'2',
-                'type'=>'Sự kiện'
-            ]);
-          
+            'title' => 'Cách phòng tránh nguy cơ nhổ răng bất đắc dĩ',
+            'staff_id' => '1',
+            'created_date' => '2018-06-19 04:31:27',
+        ]);
 
     }
-    public function initNewType(){
-          NewsType::create([
-                'type_id'=>'1',
-                'news_id'=>'1'
-            ]);  
-            NewsType::create([
-                'type_id'=>'1',
-                'news_id'=>'2'
-            ]);  
-            NewsType::create([
-                'type_id'=>'1',
-                'news_id'=>'3'
-            ]);  
-            NewsType::create([
-                'type_id'=>'1',
-                'news_id'=>'4'
-            ]);  
-            NewsType::create([
-                'type_id'=>'1',
-                'news_id'=>'5'
-            ]);  
-            NewsType::create([
-                'type_id'=>'1',
-                'news_id'=>'6'
-            ]);  
-            NewsType::create([
-                'type_id'=>'1',
-                'news_id'=>'7'
-            ]);  
-            NewsType::create([
-                'type_id'=>'1',
-                'news_id'=>'8'
-            ]);
-            NewsType::create([
-                'type_id'=>'2',
-                'news_id'=>'1'
-            ]);  
-            NewsType::create([
-                'type_id'=>'2',
-                'news_id'=>'3'
-            ]);
-           
+
+    public function initType()
+    {
+        Type::create([
+            'id' => '1',
+            'type' => 'Tin tức'
+        ]);
+        Type::create([
+            'id' => '2',
+            'type' => 'Sự kiện'
+        ]);
+
+
     }
-    public function initPaymentDetail(){
-         Payment::create([
-                'paid' => '100000',
-                'total_price' => '300000',
-                'phone' => '01279011097',
-                'is_done' => false,
-            ]);
-            Payment::create([
-                'paid' => '200000',
-                'total_price' => '600000',
-                'phone' => '01279011096',
-                'is_done' => false,
-            ]);
-            Payment::create([
-                'paid' => '150000',
-                'total_price' => '600000',
-                'phone' => '01279011098',
-                'is_done' => false,
-            ]);
-            Payment::create([
-                'paid' => '250000',
-                'total_price' => '500000',
-                'phone' => '01279011099',
-                'is_done' => false,
-            ]);
-            PaymentDetail::create([
-                'staff_id' => 3,
-                'payment_id' => '1',
-                'receptionist_id' => '1',
-                'date_create' => '2018-06-13 20:08:18',
-                'received_money' => '100000',
-            ]);
-            PaymentDetail::create([
-                'staff_id' => 3,
-                'payment_id' => '1',
-                'receptionist_id' => '2',
-                'date_create' => '2018-06-18 20:08:18',
-                'received_money' => '200000',
-            ]);
-            PaymentDetail::create([
-                'staff_id' => 3,
-                'payment_id' => '2',
-                'receptionist_id' => '2',
-                'date_create' => '2018-06-14 20:08:18',
-                'received_money' => '200000',
-            ]);
-            PaymentDetail::create([
-                'staff_id' => 3,
-                'payment_id' => '2',
-                'receptionist_id' => '2',
-                'date_create' => '2018-06-19 20:08:18',
-                'received_money' => '400000',
-            ]);
-            PaymentDetail::create([
-                'staff_id' => 3,
-                'payment_id' => '3',
-                'receptionist_id' => '2',
-                'date_create' => '2018-06-19 20:08:18',
-                'received_money' => '150000',
-            ]);
-            PaymentDetail::create([
-                'staff_id' => 3,
-                'payment_id' => '3',
-                'receptionist_id' => '2',
-                'date_create' => '2018-06-22 20:08:18',
-                'received_money' => '450000',
-            ]);
-            PaymentDetail::create([
-                'staff_id' => 3,
-                'payment_id' => '4',
-                'receptionist_id' => '1',
-                'date_create' => '2018-06-22 20:08:18',
-                'received_money' => '250000',
-            ]);
-            PaymentDetail::create([
-                'staff_id' => 3,
-                'payment_id' => '4',
-                'receptionist_id' => '1',
-                'date_create' => '2018-06-30 20:08:18',
-                'received_money' => '250000',
-            ]);
+
+    public function initNewType()
+    {
+        NewsType::create([
+            'type_id' => '1',
+            'news_id' => '1'
+        ]);
+        NewsType::create([
+            'type_id' => '1',
+            'news_id' => '2'
+        ]);
+        NewsType::create([
+            'type_id' => '1',
+            'news_id' => '3'
+        ]);
+        NewsType::create([
+            'type_id' => '1',
+            'news_id' => '4'
+        ]);
+        NewsType::create([
+            'type_id' => '1',
+            'news_id' => '5'
+        ]);
+        NewsType::create([
+            'type_id' => '1',
+            'news_id' => '6'
+        ]);
+        NewsType::create([
+            'type_id' => '1',
+            'news_id' => '7'
+        ]);
+        NewsType::create([
+            'type_id' => '1',
+            'news_id' => '8'
+        ]);
+        NewsType::create([
+            'type_id' => '2',
+            'news_id' => '1'
+        ]);
+        NewsType::create([
+            'type_id' => '2',
+            'news_id' => '3'
+        ]);
+
     }
-    public function initStep(){
+
+    public function initPaymentDetail()
+    {
+        Payment::create([
+            'paid' => '100000',
+            'total_price' => '300000',
+            'phone' => '01279011097',
+            'status' => 1,
+        ]);
+        Payment::create([
+            'paid' => '200000',
+            'total_price' => '600000',
+            'phone' => '01279011096',
+            'status' => 1,
+        ]);
+        Payment::create([
+            'paid' => '150000',
+            'total_price' => '600000',
+            'phone' => '01279011098',
+            'status' => 1,
+        ]);
+        Payment::create([
+            'paid' => '250000',
+            'total_price' => '500000',
+            'phone' => '01279011099',
+            'status' => 1,
+        ]);
+        PaymentDetail::create([
+            'staff_id' => 3,
+            'payment_id' => '1',
+            'receptionist_id' => '1',
+            'created_date' => '2018-06-13 20:08:18',
+            'received_money' => '100000',
+        ]);
+        PaymentDetail::create([
+            'staff_id' => 3,
+            'payment_id' => '1',
+            'receptionist_id' => '2',
+            'created_date' => '2018-06-18 20:08:18',
+            'received_money' => '200000',
+        ]);
+        PaymentDetail::create([
+            'staff_id' => 3,
+            'payment_id' => '2',
+            'receptionist_id' => '2',
+            'created_date' => '2018-06-14 20:08:18',
+            'received_money' => '200000',
+        ]);
+        PaymentDetail::create([
+            'staff_id' => 3,
+            'payment_id' => '2',
+            'receptionist_id' => '2',
+            'created_date' => '2018-06-19 20:08:18',
+            'received_money' => '400000',
+        ]);
+        PaymentDetail::create([
+            'staff_id' => 3,
+            'payment_id' => '3',
+            'receptionist_id' => '2',
+            'created_date' => '2018-06-19 20:08:18',
+            'received_money' => '150000',
+        ]);
+        PaymentDetail::create([
+            'staff_id' => 3,
+            'payment_id' => '3',
+            'receptionist_id' => '2',
+            'created_date' => '2018-06-22 20:08:18',
+            'received_money' => '450000',
+        ]);
+        PaymentDetail::create([
+            'staff_id' => 3,
+            'payment_id' => '4',
+            'receptionist_id' => '1',
+            'created_date' => '2018-06-22 20:08:18',
+            'received_money' => '250000',
+        ]);
+        PaymentDetail::create([
+            'staff_id' => 3,
+            'payment_id' => '4',
+            'receptionist_id' => '1',
+            'created_date' => '2018-06-30 20:08:18',
+            'received_money' => '250000',
+        ]);
+    }
+
+    public function initStep()
+    {
         Step::create([
             'name' => 'Khám và tư vấn',
             'description' => 'Bác sĩ sẽ khám tổng quát để đánh giá tình hình sức khỏe răng miệng cũng như tình hình trạng răng miệng của bệnh nhân.Sau đó, tư vấn phương pháp điều trị cụ thể.',
@@ -2425,7 +2526,7 @@ class AdminController extends Controller
             'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu SỨ LAVA ',
 
         ]);
-       
+
         Step::create([
             'name' => 'VENEER',
             'description' => 'Mão kim loại gồm có các loại mão được làm từ các chất liệu VENEER',
@@ -2531,491 +2632,678 @@ class AdminController extends Controller
             'name' => 'Chỉnh nha INVISALIGN',
             'description' => 'Chỉnh nha bằng Invisalign đem lại nhiều ưu điểm và thuận tiện cho bệnh nhân như thẩm mỹ cao, dễ vệ sinh, có thể tháo ra trong những dịp quan trọng',
 
+        ]); 
+        Step::create([
+            'name' => 'Bảo hành',
+            'description' => 'Bảo hành cho liệu trình',
+
         ]);
     }
-    public function initTreatmentStep(){
-    TreatmentStep::create([
-        'treatment_id'=>'1',
-        'step_id' =>'3',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'1',
-        'step_id' =>'4',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'1',
-        'step_id' =>'5',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'2',
-        'step_id' =>'3',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'2',
-        'step_id' =>'6',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'2',
-        'step_id' =>'5',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'3',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'3',
-        'step_id' =>'5',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'3',
-        'step_id' =>'8',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'4',
-        'step_id' =>'3',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'4',
-        'step_id' =>'4',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'4',
-        'step_id' =>'6',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'5',
-        'step_id' =>'7',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'5',
-        'step_id' =>'9',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'6',
-        'step_id' =>'3',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'7',
-        'step_id' =>'3',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'6',
-        'step_id' =>'10',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'7',
-        'step_id' =>'10',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'6',
-        'step_id' =>'11',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'7',
-        'step_id' =>'11',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'8',
-        'step_id' =>'3',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'8',
-        'step_id' =>'12',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'8',
-        'step_id' =>'13',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'8',
-        'step_id' =>'14',
-    ]);TreatmentStep::create([
-        'treatment_id'=>'8',
-        'step_id' =>'15',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'9',
-        'step_id' =>'16',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'9',
-        'step_id' =>'17',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'10',
-        'step_id' =>'18',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'11',
-        'step_id' =>'19',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'12',
-        'step_id' =>'20',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'13',
-        'step_id' =>'20',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'14',
-        'step_id' =>'20',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'15',
-        'step_id' =>'21',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'16',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'16',
-        'step_id' =>'3',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'16',
-        'step_id' =>'22',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'16',
-        'step_id' =>'23',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'17',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'17',
-        'step_id' =>'2',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'17',
-        'step_id' =>'3',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'17',
-        'step_id' =>'22',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'17',
-        'step_id' =>'23',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'18',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'18',
-        'step_id' =>'2',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'18',
-        'step_id' =>'3',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'18',
-        'step_id' =>'22',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'18',
-        'step_id' =>'23',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'19',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'19',
-        'step_id' =>'2',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'19',
-        'step_id' =>'3',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'19',
-        'step_id' =>'22',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'19',
-        'step_id' =>'23',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'20',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'20',
-        'step_id' =>'2',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'20',
-        'step_id' =>'3',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'20',
-        'step_id' =>'22',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'20',
-        'step_id' =>'24',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'20',
-        'step_id' =>'23',
-    ]);
+
+    public function initTreatmentStep()
+    {
+        TreatmentStep::create([
+            'treatment_id' => '1',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '1',
+            'step_id' => '4',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '1',
+            'step_id' => '5',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '2',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '2',
+            'step_id' => '6',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '2',
+            'step_id' => '5',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '3',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '3',
+            'step_id' => '5',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '3',
+            'step_id' => '8',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '4',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '4',
+            'step_id' => '4',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '4',
+            'step_id' => '6',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '5',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '5',
+            'step_id' => '9',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '6',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '7',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '6',
+            'step_id' => '10',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '7',
+            'step_id' => '10',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '6',
+            'step_id' => '11',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '7',
+            'step_id' => '11',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '8',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '8',
+            'step_id' => '12',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '8',
+            'step_id' => '13',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '8',
+            'step_id' => '14',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '8',
+            'step_id' => '15',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '9',
+            'step_id' => '16',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '9',
+            'step_id' => '17',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '10',
+            'step_id' => '18',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '11',
+            'step_id' => '19',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '12',
+            'step_id' => '20',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '13',
+            'step_id' => '20',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '14',
+            'step_id' => '20',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '15',
+            'step_id' => '21',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '16',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '16',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '16',
+            'step_id' => '22',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '16',
+            'step_id' => '23',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '17',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '17',
+            'step_id' => '2',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '17',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '17',
+            'step_id' => '22',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '17',
+            'step_id' => '23',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '18',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '18',
+            'step_id' => '2',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '18',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '18',
+            'step_id' => '22',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '18',
+            'step_id' => '23',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '19',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '19',
+            'step_id' => '2',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '19',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '19',
+            'step_id' => '22',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '19',
+            'step_id' => '23',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '20',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '20',
+            'step_id' => '2',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '20',
+            'step_id' => '3',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '20',
+            'step_id' => '22',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '20',
+            'step_id' => '24',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '20',
+            'step_id' => '23',
+        ]);
 //            --------------
-    TreatmentStep::create([
-        'treatment_id'=>'21',
-        'step_id' =>'31',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'21',
-        'step_id' =>'25',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'21',
-        'step_id' =>'32',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'22',
-        'step_id' =>'31',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'22',
-        'step_id' =>'26',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'22',
-        'step_id' =>'32',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'23',
-        'step_id' =>'31',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'23',
-        'step_id' =>'27',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'23',
-        'step_id' =>'32',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'24',
-        'step_id' =>'31',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'24',
-        'step_id' =>'28',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'24',
-        'step_id' =>'32',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'25',
-        'step_id' =>'31',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'25',
-        'step_id' =>'29',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'25',
-        'step_id' =>'32',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'26',
-        'step_id' =>'31',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'26',
-        'step_id' =>'30',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'26',
-        'step_id' =>'32',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'29',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'29',
-        'step_id' =>'37',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'29',
-        'step_id' =>'36',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'30',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'30',
-        'step_id' =>'38',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'30',
-        'step_id' =>'36',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'31',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'31',
-        'step_id' =>'39',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'31',
-        'step_id' =>'36',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'32',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'32',
-        'step_id' =>'40',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'32',
-        'step_id' =>'42',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'32',
-        'step_id' =>'45',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'32',
-        'step_id' =>'46',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'33',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'33',
-        'step_id' =>'40',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'33',
-        'step_id' =>'41',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'33',
-        'step_id' =>'45',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'33',
-        'step_id' =>'46',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'34',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'34',
-        'step_id' =>'40',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'34',
-        'step_id' =>'43',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'34',
-        'step_id' =>'45',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'34',
-        'step_id' =>'46',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'35',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'35',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'35',
-        'step_id' =>'43',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'36',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'36',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'36',
-        'step_id' =>'44',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'37',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'37',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'37',
-        'step_id' =>'45',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'38',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'38',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'38',
-        'step_id' =>'46',
-    ]);
-    //--------------
-    TreatmentStep::create([
-        'treatment_id'=>'39',
-        'step_id' =>'1',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'39',
-        'step_id' =>'7',
-    ]);
-    TreatmentStep::create([
-        'treatment_id'=>'39',
-        'step_id' =>'47',
-    ]);
+        TreatmentStep::create([
+            'treatment_id' => '21',
+            'step_id' => '31',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '21',
+            'step_id' => '25',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '21',
+            'step_id' => '32',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '22',
+            'step_id' => '31',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '22',
+            'step_id' => '26',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '22',
+            'step_id' => '32',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '23',
+            'step_id' => '31',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '23',
+            'step_id' => '27',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '23',
+            'step_id' => '32',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '24',
+            'step_id' => '31',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '24',
+            'step_id' => '28',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '24',
+            'step_id' => '32',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '25',
+            'step_id' => '31',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '25',
+            'step_id' => '29',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '25',
+            'step_id' => '32',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '26',
+            'step_id' => '31',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '26',
+            'step_id' => '30',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '26',
+            'step_id' => '32',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '29',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '29',
+            'step_id' => '37',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '29',
+            'step_id' => '36',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '30',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '30',
+            'step_id' => '38',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '30',
+            'step_id' => '36',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '31',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '31',
+            'step_id' => '39',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '31',
+            'step_id' => '36',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '32',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '32',
+            'step_id' => '40',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '32',
+            'step_id' => '42',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '32',
+            'step_id' => '45',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '32',
+            'step_id' => '46',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '33',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '33',
+            'step_id' => '40',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '33',
+            'step_id' => '41',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '33',
+            'step_id' => '45',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '33',
+            'step_id' => '46',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '34',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '34',
+            'step_id' => '40',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '34',
+            'step_id' => '43',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '34',
+            'step_id' => '45',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '34',
+            'step_id' => '46',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '35',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '35',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '35',
+            'step_id' => '43',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '36',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '36',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '36',
+            'step_id' => '44',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '37',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '37',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '37',
+            'step_id' => '45',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '38',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '38',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '38',
+            'step_id' => '46',
+        ]);
+        //--------------
+        TreatmentStep::create([
+            'treatment_id' => '39',
+            'step_id' => '1',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '39',
+            'step_id' => '7',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '39',
+            'step_id' => '47',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '39',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '1',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '2',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '3',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '4',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '5',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '6',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '7',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '8',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '9',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '10',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '11',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '12',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '13',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '14',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '15',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '16',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '17',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '18',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '19',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '20',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '21',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '22',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '23',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '24',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '25',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '26',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '27',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '28',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '29',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '30',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '31',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '32',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '33',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '34',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '35',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '36',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '37',
+            'step_id' => '48',
+        ]);
+        TreatmentStep::create([
+            'treatment_id' => '38',
+            'step_id' => '48',
+        ]);
+
+
+
+        
+
+
+
+
+
+
 
     }
-    public function initAddress(){
+
+    public function initAddress()
+    {
 
         City::create([
             'id' => 1,
@@ -6755,245 +7043,255 @@ class AdminController extends Controller
             'city_id' => 96
         ]);
     }
-    public function initAnamnesisCatalog(){
+
+    public function initAnamnesisCatalog()
+    {
         AnamnesisCatalog::create([
-             'name' => 'Máu loãng',
-             'description'=> 'Máu loãng'
+            'name' => 'Máu loãng',
+            'description' => 'Máu loãng'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Tiểu đường',
-             'description'=> 'Tiểu đường'
+            'name' => 'Tiểu đường',
+            'description' => 'Tiểu đường'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Thần kinh',
-             'description'=> 'Thần kinh'
+            'name' => 'Thần kinh',
+            'description' => 'Thần kinh'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Đột quy',
-             'description'=> 'Đột quy'
+            'name' => 'Đột quy',
+            'description' => 'Đột quy'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Huyết áp thấp',
-             'description'=> 'Huyết áp thấp'
+            'name' => 'Huyết áp thấp',
+            'description' => 'Huyết áp thấp'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Huyết áp cao',
-             'description'=> 'Huyết áp cao'
+            'name' => 'Huyết áp cao',
+            'description' => 'Huyết áp cao'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Ung thư',
-             'description'=> 'Ung thư'
+            'name' => 'Ung thư',
+            'description' => 'Ung thư'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Hen suyễn',
-             'description'=> 'Hen suyễn'
+            'name' => 'Hen suyễn',
+            'description' => 'Hen suyễn'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Bệnh thận',
-             'description'=> 'Bệnh thận'
+            'name' => 'Bệnh thận',
+            'description' => 'Bệnh thận'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Bệnh tâm thần',
-             'description'=> 'Bệnh tâm thần'
+            'name' => 'Bệnh tâm thần',
+            'description' => 'Bệnh tâm thần'
         ]);
         AnamnesisCatalog::create([
              'name' => 'Dị tật bẩm sinh về răng',
              'description'=> 'Dị tật bẩm sinh về răng'
+ 
         ]);
         AnamnesisCatalog::create([
-             'name' => 'Bệnh truyền nhiễm qua máu',
-             'description'=> 'Bệnh truyền nhiễm qua máu'
+            'name' => 'Bệnh truyền nhiễm qua máu',
+            'description' => 'Bệnh truyền nhiễm qua máu'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'AIDS',
-             'description'=> 'AIDS'
+            'name' => 'AIDS',
+            'description' => 'AIDS'
         ]);
         AnamnesisCatalog::create([
-             'name' => 'AIDS',
-             'description'=> 'AIDS'
+            'name' => 'AIDS',
+            'description' => 'AIDS'
         ]);
     }
-    public function initMedicine(){
+
+    public function initMedicine()
+    {
         Medicine::create([
             'name' => 'Paracetamol',
-            'use' =>'giảm đau',
-            'description'=> 'giảm đau'
+            'use' => 'giảm đau',
+            'description' => 'giảm đau'
         ]);
         Medicine::create([
             'name' => 'Aspirin',
-            'use' =>'giảm đau',
-            'description'=> 'giảm đau'
+            'use' => 'giảm đau',
+            'description' => 'giảm đau'
         ]);
-         Medicine::create([
+        Medicine::create([
             'name' => 'Ibuprofen',
-            'use' =>'giảm đau',
-            'description'=> 'giảm đau'
+            'use' => 'giảm đau',
+            'description' => 'giảm đau'
         ]);
         Medicine::create([
             'name' => 'Corticoid',
-            'use' =>'Chống viêm mạnh',
-            'description'=> 'Chống viêm mạnh'
+            'use' => 'Chống viêm mạnh',
+            'description' => 'Chống viêm mạnh'
         ]);
-         Medicine::create([
+        Medicine::create([
             'name' => 'Cimetidin',
-            'use' =>'thuốc giảm tiết dịch dạ dày',
-            'description'=> 'thuốc giảm tiết dịch dạ dày'
+            'use' => 'thuốc giảm tiết dịch dạ dày',
+            'description' => 'thuốc giảm tiết dịch dạ dày'
         ]);
-          Medicine::create([
+        Medicine::create([
             'name' => 'Omeprazol',
-            'use' =>'thuốc giảm tiết dịch dạ dày',
-            'description'=> 'thuốc giảm tiết dịch dạ dày'
+            'use' => 'thuốc giảm tiết dịch dạ dày',
+            'description' => 'thuốc giảm tiết dịch dạ dày'
         ]);
-           Medicine::create([
+        Medicine::create([
             'name' => 'Penicillin ',
-            'use' =>'Kháng sinh',
-            'description'=> 'Kháng sinh'
-        ]);
-            Medicine::create([
-            'name' => 'Phenoxymethylpenicillin',
-            'use' =>'Kháng sinh',
-            'description'=> 'Kháng sinh'
+            'use' => 'Kháng sinh',
+            'description' => 'Kháng sinh'
         ]);
         Medicine::create([
             'name' => 'Phenoxymethylpenicillin',
-            'use' =>'Kháng sinh',
-            'description'=> 'Kháng sinh'
+            'use' => 'Kháng sinh',
+            'description' => 'Kháng sinh'
+        ]);
+        Medicine::create([
+            'name' => 'Phenoxymethylpenicillin',
+            'use' => 'Kháng sinh',
+            'description' => 'Kháng sinh'
         ]);
         Medicine::create([
             'name' => 'Cefixim',
-            'use' =>'Kháng sinh',
-            'description'=> 'Kháng sinh dòng cephalosporin '
+            'use' => 'Kháng sinh',
+            'description' => 'Kháng sinh dòng cephalosporin '
         ]);
         Medicine::create([
             'name' => 'Acyclovir',
-            'use' =>'Chống nhiễm nấm ở khoang miệng',
-            'description'=> 'Chống nhiễm nấm ở khoang miệng'
+            'use' => 'Chống nhiễm nấm ở khoang miệng',
+            'description' => 'Chống nhiễm nấm ở khoang miệng'
         ]);
         Medicine::create([
             'name' => 'Penciclovir',
-            'use' =>'Chống nhiễm nấm ở khoang miệng',
-            'description'=> 'Chống nhiễm nấm ở khoang miệng'
+            'use' => 'Chống nhiễm nấm ở khoang miệng',
+            'description' => 'Chống nhiễm nấm ở khoang miệng'
         ]);
         Medicine::create([
             'name' => 'Nước súc miệng Chlorhexidin 0,2% ',
-            'use' =>'Nước súc miệng',
-            'description'=> 'Nước súc miệng'
+            'use' => 'Nước súc miệng',
+            'description' => 'Nước súc miệng'
         ]);
         Medicine::create([
             'name' => 'Nước súc miệng Hydrogen peroxid 6%.',
-            'use' =>'Nước súc miệng',
-            'description'=> 'Nước súc miệng'
+            'use' => 'Nước súc miệng',
+            'description' => 'Nước súc miệng'
         ]);
         Medicine::create([
             'name' => 'Pilocarpin',
-            'use' =>'Thuốc chống khô miệng',
-            'description'=> ' tác dụng kích thích vào tuyến nước bọt gây tăng tiết, kích thích vào cơ trơn thành ống tuyến co bóp để đẩy nước bọt vào miệng'
+            'use' => 'Thuốc chống khô miệng',
+            'description' => ' tác dụng kích thích vào tuyến nước bọt gây tăng tiết, kích thích vào cơ trơn thành ống tuyến co bóp để đẩy nước bọt vào miệng'
         ]);
         Medicine::create([
             'name' => 'Acmegel 100mg',
-            'use' =>'Thuốc điều trị nha chu',
-            'description'=> ''
+            'use' => 'Thuốc điều trị nha chu',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Aldezol-0.5g/100ml',
-            'use' =>'Thuốc điều trị nha chu',
-            'description'=> ''
+            'use' => 'Thuốc điều trị nha chu',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Dophargyl',
-            'use' =>'Thuốc điều trị nha chu',
-            'description'=> ''
+            'use' => 'Thuốc điều trị nha chu',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Dorogyne',
-            'use' =>'Thuốc điều trị nha chu',
-            'description'=> 'Merynal'
+            'use' => 'Thuốc điều trị nha chu',
+            'description' => 'Merynal'
         ]);
         Medicine::create([
             'name' => 'Menystin',
-            'use' =>'Thuốc điều trị nha chu',
-            'description'=> ''
+            'use' => 'Thuốc điều trị nha chu',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Mediginal',
-            'use' =>'Thuốc điều trị nha chu',
-            'description'=> ''
+            'use' => 'Thuốc điều trị nha chu',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Flagyl 250mg',
-            'use' =>'Thuốc điều trị nha chu',
-            'description'=> ''
+            'use' => 'Thuốc điều trị nha chu',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Cebemyxine',
-            'use' =>'Thuốc điều trị viêm ổ răng',
-            'description'=> ''
+            'use' => 'Thuốc điều trị viêm ổ răng',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Emla',
-            'use' =>'Thuốc điều trị viêm ổ răng',
-            'description'=> ''
+            'use' => 'Thuốc điều trị viêm ổ răng',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Emla 5%',
-            'use' =>'Thuốc điều trị viêm ổ răng',
-            'description'=> ''
+            'use' => 'Thuốc điều trị viêm ổ răng',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Lidocain 2%',
-            'use' =>'Thuốc điều trị viêm ổ răng',
-            'description'=> ''
+            'use' => 'Thuốc điều trị viêm ổ răng',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Lidocain 100mg/5ml',
-            'use' =>'Thuốc điều trị viêm ổ răng',
-            'description'=> ''
+            'use' => 'Thuốc điều trị viêm ổ răng',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Izac',
-            'use' =>'Thuốc điều trị viêm ổ răng',
-            'description'=> ''
+            'use' => 'Thuốc điều trị viêm ổ răng',
+            'description' => ''
         ]);
         Medicine::create([
             'name' => 'Framykoin 5g',
-            'use' =>'Thuốc điều trị viêm ổ răng',
-            'description'=> ''
+            'use' => 'Thuốc điều trị viêm ổ răng',
+            'description' => ''
         ]);
     }
-    public function initDistrict(){
+
+    public function initDistrict()
+    {
 
     }
-    public function initEvent(){
+
+    public function initEvent()
+    {
         Event::create([
-                'name' => 'Khuyến Mãi Trám răng',
-                'start_date' => '2018-06-15 20:08:18',
-                'end_date' => '2018-07-15 20:08:18',
-                'discount' => '20',
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'treatment_id' => 1,
-            ]);
-            Event::create([
-                'name' => 'Khuyến Mãi Trám răng',
-                'start_date' => '2018-06-15 20:08:18',
-                'end_date' => '2018-06-17 20:08:18',
-                'discount' => '30',
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'treatment_id' => 1,
-            ]);
-            Event::create([
-                'name' => 'Khuyến Mãi Trám răng',
-                'start_date' => '2018-06-15 20:08:18',
-                'end_date' => '2018-07-15 20:08:18',
-                'discount' => '20',
-                'staff_id' => 1,
-                'created_date' => Carbon::now(),
-                'treatment_id' => 2,
-            ]);
+            'name' => 'Khuyến Mãi Trám răng',
+            'start_date' => '2018-06-15 20:08:18',
+            'end_date' => '2018-07-15 20:08:18',
+            'discount' => '20',
+            'staff_id' => 1,
+            'created_date' => Carbon::now(),
+            'treatment_id' => 1,
+        ]);
+        Event::create([
+            'name' => 'Khuyến Mãi Trám răng',
+            'start_date' => '2018-06-15 20:08:18',
+            'end_date' => '2018-06-17 20:08:18',
+            'discount' => '30',
+            'staff_id' => 1,
+            'created_date' => Carbon::now(),
+            'treatment_id' => 1,
+        ]);
+        Event::create([
+            'name' => 'Khuyến Mãi Trám răng',
+            'start_date' => '2018-06-15 20:08:18',
+            'end_date' => '2018-07-15 20:08:18',
+            'discount' => '20',
+            'staff_id' => 1,
+            'created_date' => Carbon::now(),
+            'treatment_id' => 2,
+        ]);
     }
 
-    public function initClientToken(){
+    public function initClientToken()
+    {
         //ko co model nen insert raw
         DB::insert("INSERT INTO oauth_clients (id, user_id, name, secret, redirect, personal_access_client, password_client, revoked, created_at, updated_at) VALUES
 (1, NULL, 'Laravel Personal Access Client', '70ZQNcZU1hBP45hRKBVHUpeUQ5GGEgUPN4NQhSLR', 'http://localhost', 1, 0, 0, '2018-07-10 16:07:11', '2018-07-10 16:07:11'),

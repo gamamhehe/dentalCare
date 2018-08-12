@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mobile;
 use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Jobs\ExcCustomFuncJob;
@@ -13,9 +14,11 @@ use App\Jobs\SendReminderJob;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
 use App\Model\Appointment;
+use App\Model\CustomObjectJob;
 use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Staff;
+use App\Model\User;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
@@ -33,7 +36,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Thread;
 
-class MobileController extends Controller
+class MobileController extends BaseController
 {
 
     use AppointmentBussinessFunction;
@@ -120,15 +123,36 @@ class MobileController extends Controller
 
     public function test2(Request $request)
     {
+        $bookingDateDBFormat = '2018-08-09';
 
+        $listDentist = $this->getAvailableDentistAtDate($bookingDateDBFormat);
+        $NUM_OF_DENTIST = count($listDentist);
+        $this->logBugAppointment('NUM_DENTIST' . $NUM_OF_DENTIST);
+        $listAppointment = $this->getAppointmentsByStartTime($bookingDateDBFormat);
+//        $dentistObj = $this->getStaffById($dentistId);
+//        $predictAppointmentDate = new \DateTime();
+        $appointmentArray = $this->getListTopAppointment($listDentist, $bookingDateDBFormat);
+        usort($appointmentArray, array($this, "sortByTimeStamp"));
+        $equallyAppointment = [];
+        $equallyAppointment[] = $appointmentArray[0];
+
+        $this->arrangeEquallyAppointment($equallyAppointment, $appointmentArray, 1);
+
+
+        $arrApp = "";
+        foreach ($appointmentArray as $a) {
+            $arrApp .= $a['id'] . "__";
+
+        }
+        $arrApp2 = "";
+        foreach ($equallyAppointment as $a) {
+            $arrApp2 .= $a['id'] . "__";
+
+        }
+        return $arrApp . '<br>' . $arrApp2;
 
     }
 
-    public function testAppointment(Request $request)
-
-    {
-
-    }
 
     public function getDentistAppointment(Request $request)
 
@@ -154,13 +178,50 @@ class MobileController extends Controller
 //                return response()->json($appDate->format("Y-m-d H:i:s"));
 //            }
 //        }
-//        return response()->json('-__-');
-        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
-            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
-        ));
+
+//        $dateAgo = (new \DateTime())->modify('-8 day');
+//        return $dateAgo->format('Y-m-d');
+////        return response()->json('-__-');
+////        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
+////            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
+////        ));]
+//        if ($this->isHavingFreeSlotAtDate('2018-08-12')) {
+//            return response()->json("SUCC");
+//        } else {
+//            response()->json("ELSE");
+//        }
+
+        $sevenDateAgoObj = (new \DateTime())->modify('-0 day');
+        $arrayAppointment7DayAgo = (new Appointment)->whereDate('start_time', $sevenDateAgoObj->format('Y-m-d'))
+            ->where('status', AppConst::APPT_STATUS_CREATED)
+            ->select('phone')
+            ->distinct()->get();
+//            ->pluck('phone');
+        return response()->json($arrayAppointment7DayAgo);
     }
 
+    public function sendFirebaseReloadAppointment($phone)
+    {
+        $user = User::where('phone', $phone)->first();
+        if ($user != null) {
+            $staff = $user->belongToStaff()->first();
+            if ($staff != null) {
+                $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
+                if ($staffFirebaseToken != null) {
 
+                    $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
+                            $staff->id,
+                            "No message",
+                            AppConst::ACTION_RELOAD_APPOINTMENT,
+                            $staffFirebaseToken->noti_token)
+                    );
+                }
+                $this->logInfo("Send sendFirebaseReloadAppointment func");
+            } else {
+                $this->logInfo("staff in sendFirebaseReloadAppointment null");
+            }
+        }
+    }
 
     public function test4()
     {
@@ -221,6 +282,23 @@ class MobileController extends Controller
     {
         $result = Utilities::sendSMS($phone, $content);
         return response()->json($result, 200);
+    }
+
+    public function testCustomFunc(Request $request)
+    {
+        $customObj = new CustomObjectJob();
+//        $customObj->handle2 = function () {
+//            Log::info("INFO OOO");
+//        };
+        $ser = serialize($customObj);
+        Log::info("SER" . $ser);
+//        $this->dispatch(new ExcCustomFuncJob(serialize($customObj)));
+    }
+
+    public function helloPassing()
+    {
+        Log::info("Hello passing");
+
     }
 
     public function getApptTemplate($appointment, $numDentist)
@@ -337,6 +415,60 @@ class MobileController extends Controller
         return response()->json($response);
     }
 
+    use PatientBusinessFunction;
+
+    public function testAppointment(Request $request)
+    {
+
+        $timeRnd = ["00:25:00", "00:30:00", "00:35:00", "00:45:00", "00:55:00", "01:30:00"];
+        $timeNum = count($timeRnd);
+        $dateStr = $request->input('date');
+        $listPatient = $this->getListPatient();
+        $arrayPatient = $listPatient->toArray();
+        $listAvDentist = $this->getAvailableDentistAtDate($dateStr);
+        $listPhone = [];
+        foreach ($listPatient as $patient) {
+            $listPhone[] = $patient->belongsToUser()->first()->phone;
+        }
+        $isStaff = $request->input('staff');
+        $rndIsStaff= false;
+        $i = 0;
+        $sizeOfPatient = $listPatient->count();
+        $sizeOfPhone = count($listPhone);
+        $sizeOfDentist = count($listAvDentist);
+        $this->logInfo("SIZE PHONE: " . $sizeOfPhone);
+        $this->logInfo("SIZE DENTIST: " . $sizeOfDentist);
+        while ($i < 80  ) {
+            $patientPhone = $listPhone[rand(0, $sizeOfPhone - 1)];
+            if ($rndIsStaff ||  $isStaff) {  $this->logInfo("Staff false: " .
+                " patientPhone: " . $patientPhone .
+                " note : "
+            );
+                $this->createAppointment($dateStr, $patientPhone, "No note", null, null, null, null);
+            } else {
+                $rndTime = $timeRnd[rand(0, $timeNum-1)];
+                $patient = $arrayPatient[rand(0, $sizeOfPatient- 1)];
+                $dentist = $listAvDentist[rand(0, $sizeOfDentist- 1)];
+                $this->logInfo("Staff true: " .
+                    " patientPhone: " . $patientPhone .
+                    " note : " .
+                    " dentist id: " . $dentist['id'] .
+                    " patient id: " . $patient['id'] .
+                    " rndTime id: " . $rndTime
+                );
+                $this->createAppointment($dateStr, $patientPhone, "No note", $dentist['id'], $patient['id'], $rndTime, 'lucu');
+            }
+            $num = rand(0, 1);
+            if ($num == 0) {
+                $rndIsStaff = false;
+            } else {
+                $rndIsStaff = true;
+            }
+
+            $i++;
+        }
+        return response()->json("SUCCESS");
+    }
 
     public
     function testPOST(Request $request)

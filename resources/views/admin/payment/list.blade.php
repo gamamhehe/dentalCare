@@ -72,7 +72,7 @@
                                         <td style="text-align: center">{{$payment->phone}}</td>
                                         <td style="text-align: center">{{number_format($payment->total_price)}}</td>
                                         <td style="text-align: center">{{number_format($payment->total_price - $payment->paid) }}</td>
-                                        @if($payment->is_done == true)
+                                        @if($payment->status == true)
                                             <td style="text-align: center">Đã Hoàn Thành</td>
                                         @else
                                             <td style="text-align: center">Chưa Hoàn Thành</td>
@@ -85,7 +85,7 @@
                                                     <button type="submit" class="btn btn-default btn-success">Xem chi tiết Chi Trả
                                                     </button>
                                                 </form>
-                                                @if($payment->is_done == false)
+                                                @if($payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_NOT_DONE)
 
                                                         <input type="hidden" name="idPayment" value="{{$payment->id}}">
                                                     <a href="#" class="create-modal btn btn-success btn-sm">

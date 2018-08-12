@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\ReceiveAppointment;
+use App\Helpers\AppConst;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
+use App\Jobs\SendFirebaseJob;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Payment;
 use App\Model\AnamnesisCatalog;
@@ -18,6 +21,7 @@ use App\Model\UserHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Session;
 use DB;
 use DateTime;
@@ -87,11 +91,10 @@ class PatientController extends Controller
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
             $patientID = $this->createPatient($patient);
-           
             if($patientID ==false){
                 return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
             }
-            $result = $this->createAnamnesisForPatient($listAnamnesis,$patientID);
+            $result = $this->createAnamnesisForPatient($listAnamnesis, $patientID);
         } else {
             $patient = new Patient();
             $userHasRole = new UserHasRole();
@@ -171,6 +174,7 @@ class PatientController extends Controller
                     );
                     $appointment->pushStatus = 0;
                     $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
+                    $this->sendFirebaseReloadAppointment($appointment->staff_id);
                     $status = 1;
                 } else {
                     $status = 0;
@@ -182,6 +186,25 @@ class PatientController extends Controller
         );
 
         echo json_encode($data);
+    }
+    public function sendFirebaseReloadAppointment($staffId)
+    {
+        $staff = $this->getStaffById($staffId);
+        if ($staff != null) {
+            $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
+            if ($staffFirebaseToken != null) {
+
+                $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
+                        $staffId,
+                        "No message",
+                        AppConst::ACTION_RELOAD_APPOINTMENT,
+                        $staffFirebaseToken->noti_token)
+                );
+            }
+            Log::info("Send sendFirebaseReloadAppointment to token: ". $staffFirebaseToken->noti_token);
+        } else {
+            Log::info("staff in sendFirebaseReloadAppointment null");
+        }
     }
 
     public function listAppointment($id)
@@ -287,12 +310,12 @@ class PatientController extends Controller
             $idPatient = $patient->id;
             $result = $this->getTreatmentHistory($idPatient);
         }
-        $anam= $this->getListAnamnesisByPatient($id);
-        if($anam == null){
-            $anam ="Không có";
+        $anam = $this->getListAnamnesisByPatient($id);
+        if ($anam == null) {
+            $anam = "Không có";
         }
-        return view('admin.Patient.detail',['Anamnesis'=>$anam,'patient'=>$patient,'listTreatmentHistory'=>$result]);
-         
+        return view('admin.Patient.detail', ['Anamnesis' => $anam, 'patient' => $patient, 'listTreatmentHistory' => $result]);
+
     }
 
     public function detailAppoinmentById($appointId)

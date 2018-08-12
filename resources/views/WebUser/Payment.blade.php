@@ -377,7 +377,7 @@
                                <div class="col-sm-4">Chi phí : {{$Payment->total_price}} VNĐ</div>
                                <div class="col-sm-4">Đã thu : {{$Payment->paid}} VNĐ</div>
                                <div class="col-sm-4">Trạng Thái :
-                               @if($Payment->is_done == 1)
+                               @if($Payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_DONE)
                                    hoàn thành
                                @else
                                    chưa hoàn thành
@@ -404,7 +404,7 @@
                     </tr>
                     @foreach($Payment->payment_details as $paymentDetail)
                     <tr>
-                        <th>{{$paymentDetail->date_create}}</th>
+                        <th>{{$paymentDetail->created_date}}</th>
                         <th>{{$paymentDetail->received_money}} VNĐ</th>
                         <th>{{$paymentDetail->staff->name}}</th>
                     </tr>
