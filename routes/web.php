@@ -284,8 +284,3 @@ Route::get('/getIp', function () {
     return $ip;
 });
 
-
-
-//Route::get('getJob', function (){
-//});
-

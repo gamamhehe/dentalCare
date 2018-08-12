@@ -40,7 +40,8 @@ trait QueueBusinessFunction
 
     public function addToAllNodeInNetWork($dataEncrypt)
     {
-        $currentIp = \request()->ip();
+        $host= gethostname();
+        $currentIp = gethostbyname($host);
         $listNode = $this->getListNode();
         $id = 0;
         foreach ($listNode as $node) {
