@@ -10,6 +10,8 @@
             </div>
         </div>
 
+<!-- nhan benh -->
+        
         <div class="box box-info">
             <div class="panel-body">
                 <div class="container">
@@ -25,7 +27,7 @@
                                     <div class="col-sm-4"><label>Thời gian bắt đầu</label></div>
                                     <div class="col-sm-6" style="padding-left: 0px;">
                                         <input type="text" value="{{$appointment->start_time}}" name="name"
-                                               class="form-control pull-right" id="startdate" style="margin:0px;"
+                                               class="form-control pull-right"  style="margin:0px;"
                                                disabled/>
                                     </div>
                                 </div>
@@ -33,7 +35,7 @@
                                     <div class="col-sm-4"><label>Thời gian cuộc hẹn</label></div>
                                     <div class="col-sm-6" style="padding-left: 0px;">
                                         <input type="text" value="{{$appointment->estimated_time}}" name="name"
-                                               class="form-control pull-right" id="startdate" style="margin:0px;"
+                                               class="form-control pull-right"  style="margin:0px;"
                                                disabled/>
                                     </div>
                                 </div>
@@ -41,7 +43,7 @@
                                     <div class="col-sm-4"><label>Trạng thái</label></div>
                                     <div class="col-sm-6" style="padding-left: 0px;">
                                         <input type="text" value="{{$appointment->statusString}}" name="name"
-                                               class="form-control pull-right" id="startdate" style="margin:0px;"
+                                               class="form-control pull-right"  style="margin:0px;"
                                                disabled/>
                                     </div>
                                 </div>
@@ -49,26 +51,39 @@
                         </div>
                         <!-- right -->
                         <div class="col-xs-6">
-                            @if($patient != null)
+                           
                                 <div class="box-header with-border box-info">
-                                    <h3 class="box-title" style="float: left;">Thông tin bệnh nhân</h3>
-                                    <a class="btn btn-success btn-sm" style="float: right;"
-                                       href="/admin/create-treatment/{{$patient->id}}"> Tạo mới liệu trình
-                                    </a>
+                                    <h3 class="box-title" style="float: left;">Thông tin tài khoản</h3>
                                 </div>
+                                 @if($patient != null)
                                 <div class="panel-body">
+                                    <div class="form-group row add">
+                                    @if($appointment->status != 0)
+                                    <a class="btn btn-success btn-sm" style="float: right;"
+                                       href="/admin/create-treatment/xxx"> Tạo mới liệu trình
+                                    </a>
+                                    @endif
+                                    @if($appointment->status == 0)
+                                    @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                                      <a class="btn btn-info btn-sm applyApp" style="float: right;"
+                                       href="#"> Nhận bệnh
+                                    </a>
+                                    @endif
+                                    @endif
+                                    </div>
                                     <div class="form-group row add">
                                         <div class="col-sm-4"><label>Họ Tên</label></div>
                                         <div class="col-sm-6" style="padding-left: 0px;">
-                                            <a href="/admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
+                                            <!-- <a href="/admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a> -->
+                                            <a href="#">{{$appointment->name}}</a>
                                         </div>
                                     </div>
                                     <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Điện thoại</label></div>
+                                        <div class="col-sm-4"><label>Số Điện thoại</label></div>
                                         <div class="col-sm-6" style="padding: 0px;margin: 0px;">
-                                            <input type="text" value="{{$patient->phone}}" name="name"
-                                                   class="form-control pull-right" id="startdate" style="margin:0px;"
-                                                   disabled/>
+                                            <input type="text" value="{{$appointment->phone}}" name="special" id="special" 
+                                                   class="form-control pull-right"  style="margin:0px;" disabled 
+                                                   />
                                         </div>
                                     </div>
                                     <div class="form-group row add">
@@ -87,16 +102,25 @@
                                         </div>
                                     </div>
                                 </div>
-                            @else
-                            <div class="box-header with-border box-info">
-                                    <h3 class="box-title" style="float: left;">Thông tin bệnh nhân</h3>
-                                    <a class="btn btn-success btn-sm" style="float: right;"
-                                       href="#"> Cập nhật thông tin
-                                    </a>
-                                </div>
+                                 @else
                                 <div class="panel-body">
                                  <div class="form-group row add">
-                                    <p style="color: red">* Bệnh nhân mới.Hãy cập nhật thông tin bệnh nhân</p>
+                                    <div class="col-sm-11">  * Bệnh nhân mới.Hãy cập nhật thông tin bệnh nhân</div>
+                                    <div class="col-sm-1">
+                                            @if($appointment->status != 0)
+                                            <a class="btn btn-success btn-sm" style="float: right;"
+                                               href="/admin/create-treatment/xxx"> Tạo mới liệu trình
+                                            </a>
+                                            @endif
+                                            @if($appointment->status == 0)
+                                                @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                                                  <a class="btn btn-info btn-sm applyApp" style="float: right;"
+                                                   href="#"> Nhận bệnh
+                                                </a>
+                                                @endif
+                                            @endif
+                                    </div>
+                                 
                                     </div>
                                     <div class="form-group row add">
                                         <div class="col-sm-4"><label>Họ Tên</label></div>
@@ -243,11 +267,331 @@
             </div>
         </div>
     </div>
+@if($patient != null)
+<div id="create" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" >
+                <div class="modal-content centerThing" style="text-align: center;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" class="form-horizontal" action="create-patient"
+                              enctype="multipart/form-data" id="createAppoint">
+                            {{ csrf_field() }}
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Họ & Tên </label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="namePatient" name="namePatient"
+                                           placeholder="Họ và tên bệnh nhân" required>
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Địa chỉ </label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="addressPatient" name="addressPatient"
+                                           placeholder="Địa chỉ cư trú" required>
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Thành Phố </label>
+                                <div class="col-xs-3">
+                                    <select name="cityPatient" id="cityPatient" style="height: 30px;"
+                                            onchange="disctrict(this)">
+                                        @foreach($citys as $city)
+                                            <option value="{{$city->id}}">{{$city->name}}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <label class="control-label col-xs-1" for="title">Quận </label>
+                                <div class="col-xs-3">
+                                    <select name="districtsPatient" id="districtsPatient" style="height: 30px;">
+                                        @foreach($District as $one)
+                                            <option value="{{$one->id}}">{{$one->name}}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Số Di động </label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="phonePatient" name="phonePatient"
+                                           placeholder="Số điện thoại di động" value="{{$appointment->phone}}" disabled required>
+                                    <input type="hidden" value="{{$appointment->phone}}" id="PhoneAppoint">
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-2" for="title">Năm sinh </label>
+                                <div class="col-xs-10">
+                                   <div class="col-sm-3 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                          <input type="text" placeholder="Ngày sinh" name="start_dateX" class="form-control pull-right" id="start_dateX" style="margin:0px;" />
+                          <i class="fa fa-calendar"></i>
+                          </div>
+                                  
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Giới tính </label>
+                                <div class="col-xs-10">
+                                    <select name="genderPatient" id="genderPatient"
+                                            style="height: 30px;width: 5em;float: left;">
+                                        <option value="Male">Nam</option>
+                                        <option value="FeMale">Nữ</option>
+                                        <option value="Unknow">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                           
+                            <hr>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Bệnh tiền sử </label>
+                                <div class=" row col-xs-10"
+                                     style=" float: left;border: 2px gray solid;border-radius: 20px;">
+                                    <div class=" ">
+                                        @foreach($AnamnesisCatalog as $one)
+
+                                            <div class="col-xs-3" style="text-align: left;">
+                                                <input type="checkbox" class="anam" name="anam[]" value="{{$one->id}}" id="myCheck" onclick="myFunction()">
+                                                {{$one->name}}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info" type="button" id="addPatientExist">
+                            <span class="glyphicon glyphicon-plus"></span>Tạo bệnh nhân
+                        </button>
+                        <button class="btn btn-info" type="button" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remobe"></span>Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+@else
+<div id="create" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" >
+                <div class="modal-content centerThing" style="text-align: center;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" class="form-horizontal" action="create-patient"
+                              enctype="multipart/form-data" id="createAppoint">
+                            {{ csrf_field() }}
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Họ & Tên </label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="namePatient" name="namePatient"
+                                           placeholder="Họ và tên bệnh nhân" required>
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Địa chỉ </label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="addressPatient" name="addressPatient"
+                                           placeholder="Địa chỉ cư trú" required>
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Thành Phố </label>
+                                <div class="col-xs-3">
+                                    <select name="cityPatient" id="cityPatient" style="height: 30px;"
+                                            onchange="disctrict(this)">
+                                        @foreach($citys as $city)
+                                            <option value="{{$city->id}}">{{$city->name}}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <label class="control-label col-xs-1" for="title">Quận </label>
+                                <div class="col-xs-3">
+                                    <select name="districtsPatient" id="districtsPatient" style="height: 30px;">
+                                        @foreach($District as $one)
+                                            <option value="{{$one->id}}">{{$one->name}}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Số Di động </label>
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" id="phonePatient" name="phonePatient"
+                                           placeholder="Số điện thoại di động" value="{{$appointment->phone}}" disabled required>
+                                    <input type="hidden" value="{{$appointment->phone}}" id="PhoneAppoint">
+                                    <p class="error text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-2" for="title">Năm sinh </label>
+                                <div class="col-xs-10">
+                                   <div class="col-sm-3 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                          <input type="text" placeholder="Ngày sinh" name="start_dateX" class="form-control pull-right" id="start_dateX" style="margin:0px;" />
+                          <i class="fa fa-calendar"></i>
+                          </div>
+                                  
+                                </div>
+                            </div>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Giới tính </label>
+                                <div class="col-xs-10">
+                                    <select name="genderPatient" id="genderPatient"
+                                            style="height: 30px;width: 5em;float: left;">
+                                        <option value="Male">Nam</option>
+                                        <option value="FeMale">Nữ</option>
+                                        <option value="Unknow">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                           
+                            <hr>
+                            <div class="form-group row add">
+                                <label class="control-label col-xs-2" for="title">Bệnh tiền sử </label>
+                                <div class=" row col-xs-10"
+                                     style=" float: left;border: 2px gray solid;border-radius: 20px;">
+                                    <div class=" ">
+                                        @foreach($AnamnesisCatalog as $one)
+
+                                            <div class="col-xs-3" style="text-align: left;">
+                                                <input type="checkbox" class="anam" name="anam[]" value="{{$one->id}}" id="myCheck" onclick="myFunction()">
+                                                {{$one->name}}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info" type="button" id="addPatient">
+                            <span class="glyphicon glyphicon-plus"></span>Tạo bệnh nhân
+                        </button>
+                    
+                        <button class="btn btn-info" type="button" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remobe"></span>Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+@endif
+<!-- nhan benh -->
+<div id="create2" class="modal fade" role="dialog" >
+    <div class="modal-dialog md-sm" >
+        <div class="modal-content" >
+            <div class="modal-header"">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="centerThing"><h2 style="text-align: center;" >Cập nhật lịch hẹn bệnh nhân</h2></div>
+            </div>
+            <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
+                 <form method ="post" class="form-horizontal" action="create-appointment-user" enctype="multipart/form-data" id="AppointmentGuestX">
+                 {{ csrf_field() }}
+
+                    <div class="form-group row add">
+                      <div class="form-group">
+                                <label class="control-label col-xs-3" for="title">Số điện thoại</label>
+                                <div class="col-xs-8" style="padding-right: 0px;">
+                                   <div class="col-sm-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                          <input type="text" placeholder="Ngày sinh" name="start_dateX" class="form-control pull-right" id="start_dateX" style="margin:0px;" value="{{$appointment->phone}}"  disabled />
+                          <i class="fa fa-phone"></i>
+                          </div>
+                                  
+                                </div>
+                            </div>
+                      <div class="form-group">
+                                <label class="control-label col-xs-3" for="title">Người khám </label>
+                                <div class="col-xs-8" style="padding-right: 0px;">
+                                    <div class="col-sm-12 col-xs-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                                        <div class="col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
+                                            <select name="PatientSelected" id="PatientSelected" style="height: 30px;width: 100%">
+                                            @foreach($listPatient as $one)
+                                            <option value="{{$one->id}}">{{$one->name}}</option>
+
+                                            @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3 col-xs-12" style="padding-right: 0;padding-left: 0;">
+                                                 <a class="btn btn-info btn-sm" href="#create" data-toggle="modal" data-dismiss="modal">Tạo mới bệnh nhân </a>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        
+                     
+
+                    <div class="col-sm-12" style="padding-top: 2em;">
+                     <button class="btn btn-info" type="button" style=" width: 100%;" id="add" onclick="save(this)" >
+                         <span class="glyphicon glyphicon-plus"></span>Hoàn thành
+                     </button>
+                 </div>
+
+             </div>
+         </form>
+     </div>
+
+ </div>
+</div>
+</div>
 @endsection
 @section('js')
     <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="/assets/user/css/mycss.css">
     <script>
+        $(document).on('click','.th2', function() {
+            $('#create').modal('show');
+            $('.form-horizontal').show();
+            $('.modal-title').text('Khởi tạo bệnh nhân');
+});
+       $(document).on('click','.applyApp', function() {
+        var case3 = '{{$case3}}';
+        if(case3 == 1){
+                       $.ajax({
+                    url: '/admin/apply-appointment-change-status',  
+                    type: 'GET',
+                    data: {
+                        'appID': '{{$appointment->id}}',
+                    },  
+                    success: function (data) {
+                        if ((data.errors)) {
+                            alert(data.errors.body);
+                        } else {
+                            swal("Nhận bệnh thành công", "", "success");
+                        }
+                    },
+                });
+            return;
+        }else{
+           if($.trim(patientExist) == ''){//no patient
+            $('#create').modal('show');
+            $('.form-horizontal').show();
+            $('.modal-title').text('Khởi tạo bệnh nhân');
+        }else{//have patient
+            $('#create2').modal('show');
+            $('.form-horizontal').show();
+            $('.modal-title').text('');
+        } 
+        }                   
+});
         $(document).ready(function () {
             <?php if (Session::has('success')): ?>
             swal("Sự kiện đa được tạo!", "", "error");
@@ -260,6 +604,14 @@
                     swal("Hết nulll nhaaa!", "", "error");
                 }
             }
+
+            $("#start_dateX").datepicker({
+            // startDate: 'd',
+             changeYear: true,
+    changeMonth: true,
+            showMonthAfterYear: true,
+            autoclose: true,
+            });
         });
 
         function checkComing(id) {
@@ -311,7 +663,26 @@
                 ],
             });
         });
-
+        function save(){
+                var guestName = $('#PatientSelected').val();
+           
+             $.ajax({
+                url: '/admin/apply-appointment-exist',  
+                type: 'GET',
+                data: {
+                    
+                    'patientID': guestName,
+                    'appID': '{{$appointment->id}}',
+                },  
+                success: function (data) {
+                    if ((data.errors)) {
+                         swal("Nhận bệnh không thành công", "", "error");
+                    } else {
+                        swal("Nhận bệnh thành công", "", "success");
+                    }
+                },
+            });
+        }
         function validateQuestionBeforeCreate(evt, sel) {
             // swal("Bài viết chưa được tạo!", "", "error");
 
@@ -355,6 +726,106 @@
                 ;
             }
             var accordion = new Accordion($('.accordion-container'), false);
+        });
+        $("#addPatientExist").click(function () {
+         
+            var data=[];
+             $('.anam:checked').each(function(){
+                data.push($(this).val());
+             })
+            var nameCreate = document.getElementById("namePatient").value;
+            var addressCreate = document.getElementById("addressPatient").value;
+            var phoneCreate = document.getElementById("phonePatient").value;
+            var birthdateCreate = document.getElementById("start_dateX").value;
+            var genderCreate = document.getElementById("genderPatient").value;
+            var districtCreate = document.getElementById("districtsPatient").value;
+            var appID ='{{$appointment->id}}';
+            if ($.trim(nameCreate) == '') {
+                swal("Vui lòng điền họ tên bệnh nhân!", "", "error");
+                return;
+            } else if ($.trim(addressCreate) == '') {
+                swal("Vui lòng điền địa chỉ bệnh nhân  !", "", "error");
+                return;
+            }else if ($.trim(birthdateCreate) == '') {
+                swal("Vui lòng điền ngày sinh!", "", "error");
+                return;
+            }else{
+              $.ajax({
+                type: 'GET',
+                url: '/admin/apply-appointment',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'name': nameCreate,
+                    'address': addressCreate,
+                    'phone': phoneCreate,
+                    'date_of_birth': birthdateCreate,
+                    'gender': genderCreate,
+                    'district_id': districtCreate,
+                    'anam' : data,
+                    'appId':appID,
+
+                },
+                success: function (data) {
+                    if ((data.errors)) {
+                        alert(data.errors.body);
+                    } else {
+                        location.reload(true);
+                        swal("Khởi tạo bệnh nhân thành công", "", "success");
+                    }
+                },
+            });   
+            }
+           
+        });
+        $("#addPatient").click(function () {
+         
+            var data=[];
+             $('.anam:checked').each(function(){
+                data.push($(this).val());
+             })
+            var nameCreate = document.getElementById("namePatient").value;
+            var addressCreate = document.getElementById("addressPatient").value;
+            var phoneCreate = document.getElementById("phonePatient").value;
+            var birthdateCreate = document.getElementById("start_dateX").value;
+            var genderCreate = document.getElementById("genderPatient").value;
+            var districtCreate = document.getElementById("districtsPatient").value;
+            var appID ='{{$appointment->id}}';
+            if ($.trim(nameCreate) == '') {
+                swal("Vui lòng điền họ tên bệnh nhân!", "", "error");
+                return;
+            } else if ($.trim(addressCreate) == '') {
+                swal("Vui lòng điền địa chỉ bệnh nhân  !", "", "error");
+                return;
+            }else if ($.trim(birthdateCreate) == '') {
+                swal("Vui lòng điền ngày sinh!", "", "error");
+                return;
+            }else{
+              $.ajax({
+                type: 'GET',
+                url: '/admin/apply-appointment',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'name': nameCreate,
+                    'address': addressCreate,
+                    'phone': phoneCreate,
+                    'date_of_birth': birthdateCreate,
+                    'gender': genderCreate,
+                    'district_id': districtCreate,
+                    'anam' : data,
+                    'appId':appID,
+
+                },
+                success: function (data) {
+                    if ((data.errors)) {
+                        alert(data.errors.body);
+                    } else {
+                        location.reload(true);
+                        swal("Khởi tạo bệnh nhân thành công", "", "success");
+                    }
+                },
+            });   
+            }
+           
         });
     </script>
 @endsection

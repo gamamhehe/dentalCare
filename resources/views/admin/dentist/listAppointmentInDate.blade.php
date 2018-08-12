@@ -5,7 +5,7 @@
         <section class="content" >
             <div class=""  >
                 <div class="row " style="text-align: center; margin-right: 4em">
-                    <label><h1>Danh sách Lịch hẹn của Bác Sĩ </h1></label>
+                    <label><h1>Danh sách lịch hẹn trong ngày </h1></label>
                 </div>
                 <div class="panel panel-default" style="">
                     <div class="panel-body">

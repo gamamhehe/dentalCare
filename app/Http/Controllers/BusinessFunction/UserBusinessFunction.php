@@ -15,6 +15,7 @@ use App\Model\Role;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -233,6 +234,28 @@ trait UserBusinessFunction
             }
         }
         return true;
+    }
+    public function createAccountNewMember($phone){
+        $user = User::where('phone', $phone)->first();
+        
+        if($user == null){// không có
+            $user = new User();
+            $user->phone = $phone;
+            $user->password = Hash::make($phone);
+            $userHasRole = new UserHasRole();
+            $userHasRole->phone = $phone;
+            $userHasRole->role_id = 4;
+            $userHasRole->start_time = Carbon::now();
+
+            $resultXX = $this->createUser($user,$userHasRole);
+            if($resultXX){
+                return true;
+            }else{
+                return false;
+            }
+        }else{//có
+            return true;
+        }
     }
 
 
