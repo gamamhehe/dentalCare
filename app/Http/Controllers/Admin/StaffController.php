@@ -114,7 +114,7 @@ class StaffController extends Controller
                 session(['currentAdmin' => $user]);
                 session(['roleAdmin' => $roleID]);
                 session(['currentAppointmentComming' => $this->getCurrentAppointmentComming($user->belongToStaff()->first()->id)]);
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect()->intended(route('admin.AppointmentPatient.index'));
             }
             return redirect()->back()->with('fail', '* Bạn không được phép truy cập')->withInput($request->only('phone'));
         }
