@@ -133,7 +133,6 @@ class PatientController extends BaseController
             $errorResponse = $this->getErrorObj("Lỗi server", $exception);
             return response()->json($errorResponse, 500);
         }
-
     }
 
     public function receive(Request $request)
