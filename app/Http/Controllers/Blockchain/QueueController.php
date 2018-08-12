@@ -22,10 +22,10 @@ class QueueController extends Controller
 
     public function addToQueue(Request $request)
     {
-        $data_encrypt = $request->data_encrypt;
+        $dataEncrypt = $request->data_encrypt;
         $status = 1; // 1 là waiting, 2 là  done
         $ip = $request->ip;
-        return $this->createNewRecordInQueue($data_encrypt, $status, $ip);
+        return $this->createNewRecordInQueue($dataEncrypt, $status, $ip);
     }
 
 
@@ -36,10 +36,10 @@ class QueueController extends Controller
     }
 
 
-    public function threadQueue(Request $request)
+    public function runThreadQueue(Request $request)
     {
-        $data_encrypt = $request->data_encrypt;
-        $obj = new ClassCheckingStatus($data_encrypt);
+        $dataEncrypt = $request->data_encrypt;
+        $obj = new ClassCheckingStatus($dataEncrypt);
         $func = array($obj, 'checkingStatusContinously');
         BlockchainQueue::dispatch($func);
         return 'success';

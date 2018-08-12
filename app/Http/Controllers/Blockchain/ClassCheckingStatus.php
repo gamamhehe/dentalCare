@@ -17,24 +17,23 @@ use Spatie\Async\Task;
 class ClassCheckingStatus
 {
     use QueueBusinessFunction, BlockchainBusinessFunction;
-    private $data_encrypt;
+    private $dataEncrypt;
 
-    public function __construct($data_encrypt)
+    public function __construct($dataEncrypt)
     {
-        $this->data_encrypt = $data_encrypt;
+        $this->dataEncrypt = $dataEncrypt;
     }
 
     public function checkingStatusContinously()
     {
-//        $id = $this->addToAllNodeInNetWork($this->data_encrypt);
-        $id = 3;
+        $id = $this->addToAllNodeInNetWork($this->dataEncrypt);
         $result = '';
         if (is_integer($id)) {
             while (true) {
                 $status = $this->checkStatus($id - 1);
                 if ($status == 2) {
-                    $newestLedger = json_decode($this->getNewestDataJson(), true);
-//                    array_add($newestLedger, json_decode($this->data_encrypt));
+                    $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
+                    array_push($newestLedger, json_decode($this->dataEncrypt));
                     $this->updateAllQueue($id);
                     $this->sendToAll(json_encode($newestLedger));
                     break;
@@ -48,7 +47,7 @@ class ClassCheckingStatus
     function sendToAll($newestLedger)
     {
         $listNode = $this->getListNode();
-        $currentIp = $_SERVER['REMOTE_ADDR'];
+        $currentIp = request()->ip();
         foreach ($listNode as $node) {
             $ip = $node->ip;
             if ($ip != $currentIp) {
