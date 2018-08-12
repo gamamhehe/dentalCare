@@ -104,7 +104,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/edit-event/{id}', 'Admin\EventController@edit')->name('admin.edit.event');
         //patient
         Route::post('/create-patient', 'Admin\PatientController@create');
-
+        Route::get('/apply-appointment','Admin\AppointmentController@applyAppointment');// no patient
+        Route::get('/apply-appointment-exist','Admin\AppointmentController@applyAppointmentExistPatient');// have patient patient
+        Route::get('/apply-appointment-change-status','Admin\AppointmentController@applyAppointmentWithStatus');// already exist
         //payment
         Route::get('/admin-payment', 'Admin\PaymentController@getList')->name('admin.payment');
         Route::get('/create-payment', 'Admin\PaymentController@viewCreate');
@@ -153,7 +155,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     //Treatment
     Route::get('/get-treatment-by-cate/{id}', 'Admin\TreatmentController@getTreatmentByCategoryId');
 
-
+    Route::get('/appointment-detail/{id}', 'Admin\AppointmentController@detailAppointmentById');
     Route::get('/medicine-search/{id}', 'Admin\MedicineController@ajaxSearch');
 
     Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');

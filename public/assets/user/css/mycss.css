@@ -11,6 +11,7 @@ html.login {
  height: 100%;
     margin: 0;
 }
+
 .navHidden{
     visibility: hidden;
 }
@@ -451,8 +452,9 @@ background-repeat: no-repeat;
 #dup-table thead>tr {
 background-color: green;
 }
+
 /*img popup*/
-.modal-dialog {width:600px;}
+/*.modal-dialog {width:600px;}*/
 .thumbnail {margin-bottom:6px;}
 /*eng img*/
 /*flip*/
@@ -1550,7 +1552,7 @@ img.centerThing{
 }
 
 @media (max-width: 576px)
-{
+{   
     *{}
     .resOFF{
         display: block;
@@ -1639,7 +1641,7 @@ img.centerThing{
 @media (min-width: 577px) and (max-width:991px)
 {
     *{}
-
+    
     .nut a.fa {
         margin: 0;
         margin-top: 10px;

@@ -24,6 +24,16 @@
    <i class="fa fa-calendar"></i>
                           </div>
                         </div>
+
+                    <div class="form-group">
+                          <div class="col-sm-2"><label>Từ ngày </label></div>
+                          <div class="col-sm-3 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                          <input type="text" placeholder="Ngày bắt đầu" name="start_date" class="form-control pull-right" id="startdate2" style="margin:0px;" />
+                          <i class="fa fa-calendar"></i>
+                          </div>
+                           
+                        </div>
+
                          <div class="form-group">
                         <div class="col-sm-2"><label>Lí do</label></div> 
                       
@@ -104,6 +114,7 @@
                  document.getElementById("enddate").placeholder = "Ngày kết thúc";
                  // $("#datepicker2").datepicker("setMinDate", new Date(2018, 10 -1, 25));
                 });
+  
 
         });
    

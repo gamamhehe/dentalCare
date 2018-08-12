@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Session;
 use DB;
+use DateTime;
 use Pusher\Pusher;
 use App\Http\Controllers\Controller;
 
@@ -71,7 +72,7 @@ class PatientController extends Controller
 
         return redirect()->intended(route('homepage'));
     }
-
+    
     public function create(Request $request)
     {
         $checkExist = $this->checkExistUser($request->phone);
@@ -86,12 +87,12 @@ class PatientController extends Controller
             $patient->address = $request->address;
             $patient->phone = $request->phone;
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
-            $patient->date_of_birth = $request->date_of_birth;
+            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s') ;
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
             $patientID = $this->createPatient($patient);
-            if ($patientID == false) {
-                return redirect('admin/live-seach')->withSuccess("Bệnh nhân chưa được tạo");
+            if($patientID ==false){
+                return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
             }
             $result = $this->createAnamnesisForPatient($listAnamnesis, $patientID);
         } else {
@@ -104,18 +105,20 @@ class PatientController extends Controller
             $patient->name = $request->name;
             $patient->address = $request->address;
             $patient->phone = $request->phone;
-            $patient->date_of_birth = $request->date_of_birth;
+            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s') ;
             $patient->gender = $request->gender;
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->district_id = $request->district_id;
             $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
+            //thieu ne  $result = $this->createAnamnesisForPatient($listAnamnesis,$patientID);
+             
         }
         if ($result) {
-            return redirect()->route("admin.AppointmentPatient.index")->withSuccess("Bệnh nhân đã được tạo");
+            return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
         } else {
-            return redirect('admin/live-seach')->withSuccess("Bệnh nhân chưa được tạo");
+            return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
         }
     }
 
@@ -352,6 +355,7 @@ class PatientController extends Controller
             $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
+     
         return view('admin.Patient.Treat', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
     }
 }

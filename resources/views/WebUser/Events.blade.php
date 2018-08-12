@@ -521,7 +521,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 </body>
 </html>
  <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
-        <script src="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- datepicker -->
 <script src="/assets/admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         <script src="/assets/user/js/wow.min.js"></script>

@@ -7087,8 +7087,9 @@ class AdminController extends Controller
             'description' => 'Bệnh tâm thần'
         ]);
         AnamnesisCatalog::create([
-            'name' => 'Dị tật bẩm sinh',
-            'description' => 'Dị tật bẩm sinh'
+             'name' => 'Dị tật bẩm sinh về răng',
+             'description'=> 'Dị tật bẩm sinh về răng'
+ 
         ]);
         AnamnesisCatalog::create([
             'name' => 'Bệnh truyền nhiễm qua máu',

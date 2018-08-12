@@ -322,11 +322,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                                      
                                                 </div>
-                                             <!--    @if (\Session::has('fail'))
-                                                    <span class="help-block has-error" style="color: #dd4b39">
-                                                       <strong>{!! \Session::get('fail') !!} </strong>
-                                                </span>
-                                                @endif -->
+                                         
                                                 <div class="row">
                                                     <!-- /.col -->
                                                     <div class="col-xs-12">
@@ -372,7 +368,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 <!-- end qc -->
 <!-- modal -->
 <div id="create" class="modal fade" role="dialog" >
-    <div class="modal-dialog" style="width:400px;">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content" style="height: 400px;min-height: 400px;">
             <div class="modal-header" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>

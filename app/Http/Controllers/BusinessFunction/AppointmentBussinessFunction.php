@@ -258,6 +258,37 @@ trait AppointmentBussinessFunction
             return null;
         }
     }
+    public function AppointmentOfPatient($patient_id,$appointment_id){
+        DB::beginTransaction();
+        try {
+            $patientAppointment = new PatientOfAppointment();
+            $patientAppointment->appointment_id = $appointment_id;
+            $patientAppointment->patient_id = $patient_id;
+            $patientAppointment->save();
+            DB::commit();
+            return true;
+        }catch (Exception $exception) {
+            $exception->getTrace();
+            DB::rollback();
+            return null;
+        }
+    }
+    public function updateStatusAppoinment($status,$appointment_id){
+         DB::beginTransaction();
+        try {
+            $appointment = Appointment::find($appointment_id);
+            
+            $appointment->status = $status;
+            $appointment->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+           return false;
+
+        }
+
+    }
 
     public function getListTopAppointment($listAvailableDentist, $dateStr)
     {
