@@ -103,11 +103,11 @@ class BlockchainController extends Controller
         $dataEncrypt = $request->data_encrypt;
         $id = $request->id;
         if ($dataEncrypt != null) {
-            $url = 'localhost:8000/runJobQueue?data_encrypt=' . $dataEncrypt;
+            $url = '150.95.110.217/runJobQueue?data_encrypt=' . $dataEncrypt;
             $result = $this->callTheURL($url);
             echo $result;
         } else if ($id != null) {
-            $url = 'localhost:8000/updateAll?id=' . $id;
+            $url = '150.95.110.217/updateAll?id=' . $id;
             $result = $this->callTheURL($url);
             echo $result;
         }
