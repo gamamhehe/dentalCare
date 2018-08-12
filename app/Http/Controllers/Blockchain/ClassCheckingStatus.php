@@ -55,6 +55,7 @@ class ClassCheckingStatus
             if ($result == 'fail') {
                 Log::info("ClassCheckingStatus_sendToAll_Error ");
             }
+            Log::info($result);
         }
     }
 
