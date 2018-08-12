@@ -84,11 +84,9 @@ class QueueController extends Controller
     public function updateAll(Request $request)
     {
         if ($this->isExist($this->clientIp)) {
-            if ($this->isExist($this->clientIp)) {
-                $id = $request->id;
-                $successfullResult = $this->updateAllQueue($id);
-                return json_encode($successfullResult);
-            }
+            $id = $request->id;
+            $successfullResult = $this->updateAllQueue($id);
+            return json_encode($successfullResult);
         }
         Log::info('QueueController_updateAll_ClientIpNotInNetwork: ' . $this->clientIp);
         return '0';

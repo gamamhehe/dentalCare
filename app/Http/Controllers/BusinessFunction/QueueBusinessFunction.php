@@ -88,8 +88,10 @@ trait QueueBusinessFunction
             $result = $this->callTheURL($url);
             if ($result == 'success') {
                 $count++;
-            } else {
+            } else if ($result == 'fail') {
                 Log::info('QueueBusinessFunction_updateAllQueue_ResultNotSuccessWithIP: ' . $ip);
+            }else{
+                Log::info('QueueBusinessFunction_updateAllQueue_Error');
             }
         }
         return $count;
