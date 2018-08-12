@@ -51,7 +51,7 @@ class ClassCheckingStatus
         foreach ($listNode as $node) {
             $ip = $node->ip;
             $url = "http://" . $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
-            $result = $this->callTheURL($url);
+            $result = $this->get_data($url);
             if ($result == 'fail') {
                 Log::info("ClassCheckingStatus_sendToAll_Error ");
             }
