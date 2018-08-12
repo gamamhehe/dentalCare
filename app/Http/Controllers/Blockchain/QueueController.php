@@ -20,77 +20,42 @@ class QueueController extends Controller
 
     use QueueBusinessFunction;
 
-    private $clientIp;
-
-    public function __construct()
-    {
-        $this->clientIp = \request()->ip();
-    }
-
-
     public function addToQueue(Request $request)
     {
         $dataEncrypt = $request->data_encrypt;
         $status = 1; // 1 là waiting, 2 là  done
-        $checkExistIp = $this->isExist($this->clientIp);
-        if ($checkExistIp) {
-            return $this->createNewRecordInQueue($dataEncrypt, $status);
-        }
-        Log::info('QueueController_addToQueue_ClientIpNotInNetwork: ' . $this->clientIp);
-        return 'fail';
+        $ip = $request->ip;
+        return $this->createNewRecordInQueue($dataEncrypt, $status, $ip);
     }
 
     public function checkStatusOfRecord(Request $request)
     {
-        if ($this->isExist($this->clientIp)) {
-            $id = $request->id;
-            return $this->checkStatus($id);
-        }
-        Log::info('QueueController_checkStatusOfRecord_ClientIpNotInNetwork: ' . $this->clientIp);
-        return 'fail';
+        $id = $request->id;
+        return $this->checkStatus($id);
     }
 
 
-    public function runJobQueue(Request $request)
+    public function runThreadQueue(Request $request)
     {
-        if ($this->isExist($this->clientIp)) {
-            $dataEncrypt = $request->data_encrypt;
-            $obj = new ClassCheckingStatus($dataEncrypt);
-            $func = array($obj, 'checkingStatusContinously');
-            BlockchainQueue::dispatch($func);
+        $dataEncrypt = $request->data_encrypt;
+        $obj = new ClassCheckingStatus($dataEncrypt);
+        $func = array($obj, 'checkingStatusContinously');
+        BlockchainQueue::dispatch($func);
+        return 'success';
+    }
+
+    public function updateQueue(Request $request){
+        $id = $request->id;
+        $result = $this->updateRecordById($id);
+        if($result){
             return 'success';
         }
-        Log::info('QueueController_runJobQueue_ClientIpNotInNetwork: ' . $this->clientIp);
         return 'fail';
     }
 
-    public function updateQueue(Request $request)
-    {
-        if ($this->isExist($this->clientIp)) {
-            $id = $request->id;
-            $result = $this->updateRecordById($id);
-            if ($result) {
-                return 'success';
-            } else {
-                Log::info('QueueController_UpdateRecordById_ErrorInProcess' . $this->clientIp);
-                return 'fail';
-            }
-        }
-        Log::info('QueueController_UpdateRecordById_ClientIpNotInNetwork: ' . $this->clientIp);
-        return 'fail';
-    }
-
-    public function updateAll(Request $request)
-    {
-        if ($this->isExist($this->clientIp)) {
-            if ($this->isExist($this->clientIp)) {
-                $id = $request->id;
-                $successfullResult = $this->updateAllQueue($id);
-                return json_encode($successfullResult);
-            }
-        }
-        Log::info('QueueController_updateAll_ClientIpNotInNetwork: ' . $this->clientIp);
-        return '0';
+    public function updateAll(Request $request){
+        $id = $request->id;
+        $this->updateAllQueue($id);
     }
 
     public
@@ -98,4 +63,7 @@ class QueueController extends Controller
     {
         return json_encode($this->isExist($request->ip));
     }
+
+
+
 }

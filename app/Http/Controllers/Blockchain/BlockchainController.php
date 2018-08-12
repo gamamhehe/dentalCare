@@ -17,15 +17,7 @@ use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 
 class BlockchainController extends Controller
 {
-    use BlockchainBusinessFunction, NodeInfoBusinessFunction, QueueBusinessFunction;
-
-    private $clientIp;
-
-    public function __construct()
-    {
-        $this->clientIp = \request()->ip();
-    }
-
+    use BlockchainBusinessFunction;
 
     public function convertDataToJson()
     {
@@ -88,28 +80,15 @@ class BlockchainController extends Controller
 
     public function saveNewLedger(Request $request)
     {
-        if ($this->isExist($this->clientIp)) {
-            $newestLedger = $request->newest_ledger;
-            return $this->saveNewAll($newestLedger);
-        }
-        Log::info('BlockchainController_SaveNewLedger_ClientIpNotInNetwork: ' . $this->clientIp);
-        return 'fail';
-
+        $newestLedger = $request->newest_ledger;
+        return $this->saveNewAll($newestLedger);
     }
 
     public function test(Request $request)
     {
         $dataEncrypt = $request->data_encrypt;
-        $id = $request->id;
-        $result = '';
-        $url = '150.95.110.217
-                        /runJobQueue
-                        ?data_encrypt=' . $dataEncrypt;
-        $result += $this->callTheURL($url) . '\n';
-        $url = '150.95.110.217
-                        /updateAll
-                        ?id=' . $id;
-        $result += $this->callTheURL($url) . '\n';
-        echo nl2br($result);
+        $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
+        array_push($newestLedger, json_decode($dataEncrypt));
+        return json_encode($newestLedger);
     }
 }

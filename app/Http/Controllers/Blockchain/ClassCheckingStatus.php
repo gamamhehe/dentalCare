@@ -28,6 +28,7 @@ class ClassCheckingStatus
     public function checkingStatusContinously()
     {
         $id = $this->addToAllNodeInNetWork($this->dataEncrypt);
+        $result = '';
         if (is_integer((int)$id)) {
             while (true) {
                 $status = $this->checkStatus($id - 1);
@@ -38,7 +39,7 @@ class ClassCheckingStatus
                     $this->sendToAll(json_encode($newestLedger));
                     break;
                 }
-                sleep(1);
+                sleep(2);
             }
         }
     }
@@ -47,6 +48,7 @@ class ClassCheckingStatus
     function sendToAll($newestLedger)
     {
         $listNode = $this->getListNode();
+
         foreach ($listNode as $node) {
             $ip = $node->ip;
             $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;

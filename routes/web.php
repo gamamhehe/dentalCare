@@ -261,25 +261,25 @@ Route::get('/broadcastReception', 'Admin\HomeController@testFunction');
 
 
 //blockchain
-
+Route::get('/test', 'Blockchain\BlockchainController@test');
 Route::get('/saveNewLedger', 'Blockchain\BlockchainController@saveNewLedger');
 Route::get('/checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
 Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
 Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
 Route::get('/updateQueue', 'Blockchain\QueueController@updateQueue');
-Route::get('/runJobQueue', 'Blockchain\QueueController@runJobQueue');
+
+Route::get('/runThreadQueue', 'Blockchain\QueueController@runThreadQueue');
+
 Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
-
-
-Route::get('/test', 'Blockchain\BlockchainController@test');
 
 use App\Model\Queue;
 
 Route::get('/getAllQueue', function () {
     dd(Queue::all());
 });
+
 Route::get('/getIp', function () {
-    $host = gethostname();
+    $host= gethostname();
     $ip = gethostbyname($host);
     return $ip;
 });
