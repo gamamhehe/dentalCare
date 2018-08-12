@@ -53,6 +53,11 @@ class QueueController extends Controller
         return 'fail';
     }
 
+    public function updateAll(Request $request){
+        $id = $request->id;
+        $this->updateAllQueue($id);
+    }
+
     public
     function checkExist(Request $request)
     {

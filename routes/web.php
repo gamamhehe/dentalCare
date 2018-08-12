@@ -269,7 +269,8 @@ Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
 Route::get('/updateQueue', 'Blockchain\QueueController@updateQueue');
 
 Route::get('/runThreadQueue', 'Blockchain\QueueController@runThreadQueue');
-//Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
+
+Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
 
 use App\Model\Queue;
 Route::get('/getAllQueue', function (){
