@@ -7,6 +7,7 @@ use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Jobs\ExcCustomFuncJob;
 use App\Jobs\SendFirebaseJob;
@@ -186,19 +187,29 @@ class MobileController extends BaseController
 ////            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
 ////        ));]
 //        if ($this->isHavingFreeSlotAtDate('2018-08-12')) {
-//            return response()->json("SUCC");
+//            return resp.4onse()->json("SUCC");
 //        } else {
 //            response()->json("ELSE");
 //        }
 
-        $sevenDateAgoObj = (new \DateTime())->modify('-0 day');
-        $arrayAppointment7DayAgo = (new Appointment)->whereDate('start_time', $sevenDateAgoObj->format('Y-m-d'))
-            ->where('status', AppConst::APPT_STATUS_CREATED)
-            ->select('phone')
-            ->distinct()->get();
-//            ->pluck('phone');
-        return response()->json($arrayAppointment7DayAgo);
+//        $sevenDateAgoObj = (new \DateTime())->modify('-0 day');
+//        $arrayAppointment7DayAgo = (new Appointment)->whereDate('start_time', $sevenDateAgoObj->format('Y-m-d'))
+//            ->where('status', AppConst::APPT_STATUS_CREATED)
+//            ->select('phone')
+//            ->distinct()->get();
+////            ->pluck('phone');
+///
+//        $listAvailb = $this->getAvailableDentistAtDate((new DateTime())->format('Y-m-d'));
+//        $freeDentists = $this->getCurrentFreeDentist();
+//        $obj = new \stdClass();
+//        $obj->free = $freeDentists;
+//        $obj->avai = $listAvailb;
+//        return response()->json($obj);
+
+    $tmHis = $this->getTreatmentHistory($request->id);
+        return response()->json($tmHis);
     }
+//    use StaffBusinessFunction;
 
     public function sendFirebaseReloadAppointment($phone)
     {
@@ -438,7 +449,7 @@ class MobileController extends BaseController
         $sizeOfDentist = count($listAvDentist);
         $this->logInfo("SIZE PHONE: " . $sizeOfPhone);
         $this->logInfo("SIZE DENTIST: " . $sizeOfDentist);
-        while ($i < 80  ) {
+        while ($this->isHavingFreeSlotAtDate($dateStr)) {
             $patientPhone = $listPhone[rand(0, $sizeOfPhone - 1)];
             if ($rndIsStaff ||  $isStaff) {  $this->logInfo("Staff false: " .
                 " patientPhone: " . $patientPhone .
