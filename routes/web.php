@@ -41,7 +41,7 @@ Route::get('/signOut', 'Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
-Route::get('/lien-he','Admin\HomeController@xxx');
+Route::get('/lien-he', 'Admin\HomeController@xxx');
 Route::post('/create-appointment-user', 'Admin\AppointmentController@UserAppoinment');
 // end webuser
 
@@ -273,12 +273,30 @@ Route::get('/runThreadQueue', 'Blockchain\QueueController@runThreadQueue');
 Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
 
 use App\Model\Queue;
-Route::get('/getAllQueue', function (){
+
+Route::get('/getAllQueue', function () {
     dd(Queue::all());
 });
 
-Route::get('/getIp', function (){
-    return request()->ip();
+Route::get('/getIp', function () {
+    // Get real visitor IP behind CloudFlare network
+    if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+        $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+    }
+    $client = @$_SERVER['HTTP_CLIENT_IP'];
+    $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+    $remote = $_SERVER['REMOTE_ADDR'];
+
+    if (filter_var($client, FILTER_VALIDATE_IP)) {
+        $ip = $client;
+    } elseif (filter_var($forward, FILTER_VALIDATE_IP)) {
+        $ip = $forward;
+    } else {
+        $ip = $remote;
+    }
+
+    return $ip;
 });
 
 
