@@ -99,12 +99,17 @@ trait QueueBusinessFunction
     {
         $result = Queue::find($id);
         if ($result == null) {
-            $firstId = Queue::all()->first()->id;
-            if ($firstId == $id + 1) {
-                return '2';
+            $obj = Queue::all()->first();
+            if ($obj != null) {
+                $firstId = $obj->id;
+                if ($firstId == $id + 1) {
+                    return '2';
+                } else {
+                    Log::info("QueueBusinessFunction_checkStatus_Error");
+                    return null;
+                }
             } else {
-                Log::info("QueueBusinessFunction_checkStatus_Error");
-                return null;
+                return '2';
             }
         }
         return $result->status;
