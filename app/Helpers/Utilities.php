@@ -167,7 +167,6 @@ class Utilities
     {
         try {
             $filename = $saveName . '.' . $file->getClientOriginalExtension();
-            $hostname = request()->getHttpHost();
             //get time stamp
             $path = public_path($publicPath);
             $date = new \DateTime();
@@ -175,9 +174,9 @@ class Utilities
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
-            $fullPath = 'http://' . implode('/',
+            $fullPath =   implode('/',
                     array_filter(
-                        explode('/', $hostname . $publicPath . $filename))
+                        explode('/',  $publicPath . $filename))
                 ) . '?time=' . $timestamp;
             $file->move($path, $filename);
             return $fullPath;
