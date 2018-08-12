@@ -74,7 +74,7 @@ class AppConst
         $startTime = $date->format("H:i");
         $startDate = $date->format("d-m-Y");
         if ($isVnMSG) {
-            return "Cảm ơm bạn đã đặt lịch khám, số thứ tự của bạn là "
+            return "Cảm ơn bạn đã đặt lịch khám, số thứ tự của bạn là "
                 . $order . ' .Dự kiến khám lúc ' . $startTime . ' ngày ' . $startDate . ' tại 190 Trường Chinh - Quận 12 - TP HCM';
         } else {
             return "Cam on ban da dat lich kham, so thu tu cua ban la "
