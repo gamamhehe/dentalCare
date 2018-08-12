@@ -28,7 +28,7 @@ class ClassCheckingStatus
     {
         $id = $this->addToAllNodeInNetWork($this->dataEncrypt);
         $result = '';
-        if (is_integer($id)) {
+        if (is_integer((int)$id)) {
             while (true) {
                 $status = $this->checkStatus($id - 1);
                 if ($status == 2) {
