@@ -212,19 +212,18 @@ trait AppointmentBussinessFunction
             if ($estimatedTimeStr != null) {
                 $estimatedTimeObj = new DateTime($estimatedTimeStr);
             }
-            $tmpPredictTime = clone $predictAppointmentDate;
             $currentDateTime = new DateTime();
             //process when patient book appointment at the same day, and
 //            $diffDate = ($currentDateTime->diff($predictAppointmentDate));
-            $this->logBugAppointment('date' . $tmpPredictTime->format('Y-m-d H:i:s'));
             if (($currentDateTime->getTimestamp() - $predictAppointmentDate->getTimeStamp()) > 0) {
                 $predictAppointmentDate = $this->addTimeToDate($currentDateTime, '00:10:00');
                 $arrayFreeDentist = $this->getFreeDentistsAtDate($listDentist, $bookingDateDBFormat);
-                $this->logBugAppointment($arrayFreeDentist);
                 $randomDentist = $this->getRandomDentist($arrayFreeDentist);
                 $suitableDentistId = $randomDentist['id'];
-                $this->logBugAppointment("Predict appointment time before currentime (book appointment at currenday)");
+                $this->logBugAppointment("Predict appointment time before currentime (book appointment at currenday)"
+                    . $predictAppointmentDate->format('Y-m-d H:i:s'));
             }
+            $tmpPredictTime = clone $predictAppointmentDate;
             $endAppointmentTimeObj = $this->addTimeToDate($tmpPredictTime, $estimatedTimeObj->format("H:i:s"));
             if ($this->isInLunchBreak($predictAppointmentDate, $endAppointmentTimeObj)) {
                 $this->logBugAppointment("IS in lunch");
@@ -359,7 +358,7 @@ trait AppointmentBussinessFunction
         $endTime = $apptFinishTime->format('H:i:s');
 
         if (((strtotime($endTime) >= strtotime('12:15:00'))
-                && (strtotime($endTime) <=strtotime('13:00:00'))
+                && (strtotime($endTime) <= strtotime('13:00:00'))
                 && (strtotime($startTime) <= strtotime('12:00:00')))
             || ((strtotime($endTime) <= strtotime('13:00:00'))
                 && (strtotime($startTime) >= strtotime('12:00:00')))
@@ -450,7 +449,7 @@ trait AppointmentBussinessFunction
     private function getRandomDentist($arrayDentist)
     {
         $sizeList = sizeof($arrayDentist);
-        $this->logBugAppointment($arrayDentist);
+//        $this->logBugAppointment($arrayDentist);
         $index = rand(0, $sizeList - 1);
         $randomDentist = $arrayDentist[$index];
         return $randomDentist;
