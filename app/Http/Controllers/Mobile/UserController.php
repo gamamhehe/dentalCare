@@ -116,7 +116,7 @@ class UserController extends BaseController
             if ($result != null) {
 //                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
-                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime, true);
                 $this->dispatch(new SendSmsJob($phone, $smsMessage));
                 if ($isNewUser) {
                     $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));

@@ -59,22 +59,29 @@ class AppConst
 //  const PAYMENT_STATUS_
 //  const PAYMENT_STATUS_
 //  const PAYMENT_STATUS_
-    const PAYMENT_STATUS_NOT_DONE =1;
-    const PAYMENT_STATUS_DONE =2;
+    const PAYMENT_STATUS_NOT_DONE = 1;
+    const PAYMENT_STATUS_DONE = 2;
     const PAYMENT_STATUS_CANCEL = 3;
 
     /**
      * @param $order numerical_order of appointment
      * @param $date DateTime Object
+     * @param bool $isVnMSG
      * @return string
      */
-    public static function getSmsMSG($order, $date)
+    public static function getSmsMSG($order, $date, $isVnMSG = false)
     {
         $startTime = $date->format("H:i");
         $startDate = $date->format("d-m-Y");
-        return "Cam on ban da dat lich kham, so thu tu cua ban la "
-            . $order . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate;
+        if ($isVnMSG) {
+            return "Cảm ơm bạn đã đặt lịch khám, số thứ tự của bạn là "
+                . $order . ' .Dự kiến khám lúc ' . $startTime . ' ngày ' . $startDate . ' tại 190 Trường Chinh - Quận 12 - TP HCM';
+        } else {
+            return "Cam on ban da dat lich kham, so thu tu cua ban la "
+                . $order . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate . ' tai 190 Truong Chinh - Quan 12 - TP HCM';
+        }
     }
+
     public static function getSmsNewUser()
     {
         return "Cam on ban da dat lich tai phong kham Dental Gold, tai khoan mat khau mac dinh la so dien thoai cua ban.";
