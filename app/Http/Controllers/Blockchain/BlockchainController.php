@@ -70,7 +70,8 @@ class BlockchainController extends Controller
         $ledger_2 = $this->callAPI_GetData('150.95.110.217');
         $ledger_3 = $this->callAPI_GetData('150.95.108.108');
 
-        if ($this->checkBlockChain($ledger_1) && $this->checkBlockChain($ledger_2))
+        if ($this->checkBlockChain($ledger_1) && $this->checkBlockChain($ledger_2)
+            && $this->checkBlockChain($ledger_3))
             return $this->compareBlockChain($ledger_1, $ledger_2, $ledger_3);
 
         return "ERROR BLOCKCHAIN";
