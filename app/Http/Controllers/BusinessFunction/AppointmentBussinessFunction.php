@@ -754,6 +754,9 @@ trait AppointmentBussinessFunction
         $this->attachTopAppointmentForDentist($availableDentist, $dateStr);
         foreach ($availableDentist as $dentist) {
             $appointment = $dentist->appointment;
+            if ($appointment == null) {
+                return true;
+            }
             $endApptTimeObj = new DateTime($appointment->start_time);
             $this->addTimeToDate($endApptTimeObj, $appointment->estimated_time);
             $endDayTimeObj = new DateTime($dateStr . ' 19:15:00');
