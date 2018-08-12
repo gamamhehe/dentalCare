@@ -55,6 +55,13 @@ class AppConst
     const APPT_STATUS_DELETED = 4;
     const APPT_STATUS_SENT = 5;
 
+//    const PAYMENT_STATUS_
+//    const PAYMENT_STATUS_
+//    const PAYMENT_STATUS_
+//    const PAYMENT_STATUS_
+    const PAYMENT_STATUS_DONE =66;
+    const PAYMENT_STATUS_NOT_DONE =696;
+
     /**
      * @param $order numerical_order of appointment
      * @param $date DateTime Object

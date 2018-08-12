@@ -84,7 +84,7 @@ class PaymentController extends Controller
 
         if ($total_row > 0) {
             foreach ($data as $row) {
-                if ($row->is_done) {
+                if ($row->status) {
                     $output .= '
          <tr class="even gradeC" align="left">
             <td style="text-align: center">{{$row->phone}}</td>

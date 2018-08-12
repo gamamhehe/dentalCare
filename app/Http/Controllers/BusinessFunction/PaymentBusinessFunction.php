@@ -72,7 +72,7 @@ trait PaymentBusinessFunction
     {
         $listPayment = Payment::where('phone', $phone)->get();
         foreach ($listPayment as $payment) {
-            if ($payment->is_done == false) {
+            if ($payment->status == false) {
                 return $payment;
             }
         }
@@ -126,7 +126,7 @@ trait PaymentBusinessFunction
             $payment->paid = $payment->paid + $price;
 
             if ($payment->total_price == $payment->paid) {
-                $payment->is_done = true;
+                $payment->status = true;
             }
             $payment->save();
             DB::commit();

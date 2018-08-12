@@ -133,7 +133,7 @@ class PaymentController extends BaseController
             $staff = $user == null ? null : $user->belongToStaff()->first();
             $received_money = $payment->total_price - $payment->paid;
             $payment->paid = $payment->total_price;
-            $payment->is_done = 1;
+            $payment->status = 1;
             $paymentDetail = new PaymentDetail();
             $paypalStaff = $this->getStaffByName('paypal');
             $paymentDetail->payment_id = $localPaymentId;
@@ -187,7 +187,7 @@ class PaymentController extends BaseController
         $payment = $this->getPaymentById($paymentId);
         try {
             if ($payment != null) {
-                if ($payment->is_done == 1) {
+                if ($payment->status == 1) {
                     $error = $this->getErrorObj("Bạn đã thanh toán cho điều trị", "No exception");
                     return response()->json($error, 400);
                 }
@@ -199,7 +199,7 @@ class PaymentController extends BaseController
                 }
                 $payment->paid = $payment->paid + $amount;
                 if ($payment->paid == $payment->total_price) {
-                    $payment->is_done = 1;
+                    $payment->status = 1;
                 }
                 $paymentDetail = new PaymentDetail();
                 $paymentDetail->payment_id = $payment->id;

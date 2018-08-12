@@ -409,8 +409,9 @@ class MobileController extends BaseController
 
     use PatientBusinessFunction;
 
-    public function testAppointment()
+    public function testAppointment(Request $request)
     {
+
         $timeRnd = ["00:25:00", "00:30:00", "00:35:00", "00:45:00", "00:55:00", "01:30:00"];
         $timeNum = count($timeRnd);
         $dateStr = (new DateTime())->format('Y-m-d');
@@ -421,16 +422,17 @@ class MobileController extends BaseController
         foreach ($listPatient as $patient) {
             $listPhone[] = $patient->belongsToUser()->first()->phone;
         }
-        $isStaff = false;
+        $isStaff = $request->input('staff');
+        $rndIsStaff= false;
         $i = 0;
         $sizeOfPatient = $listPatient->count();
         $sizeOfPhone = count($listPhone);
         $sizeOfDentist = count($listAvDentist);
         $this->logInfo("SIZE PHONE: " . $sizeOfPhone);
         $this->logInfo("SIZE DENTIST: " . $sizeOfDentist);
-        while ($i < 800 ) {
+        while ($i < 80  ) {
             $patientPhone = $listPhone[rand(0, $sizeOfPhone - 1)];
-            if (!$isStaff) {  $this->logInfo("Staff false: " .
+            if ($rndIsStaff ||  $isStaff) {  $this->logInfo("Staff false: " .
                 " patientPhone: " . $patientPhone .
                 " note : "
             );
@@ -450,9 +452,9 @@ class MobileController extends BaseController
             }
             $num = rand(0, 1);
             if ($num == 0) {
-                $isStaff = false;
+                $rndIsStaff = false;
             } else {
-                $isStaff = true;
+                $rndIsStaff = true;
             }
 
             $i++;
