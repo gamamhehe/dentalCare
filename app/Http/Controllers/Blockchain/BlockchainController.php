@@ -84,9 +84,11 @@ class BlockchainController extends Controller
         return $this->saveNewAll($newestLedger);
     }
 
-    public function test()
+    public function test(Request $request)
     {
-        $ledger = $this->getLedger();
-        $this->sendToAll($ledger);
+        $dataEncrypt = $request->data_encrypt;
+        $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
+        array_push($newestLedger, json_decode($dataEncrypt));
+        return json_encode($newestLedger);
     }
 }

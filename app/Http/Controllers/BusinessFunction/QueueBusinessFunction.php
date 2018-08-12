@@ -51,11 +51,11 @@ trait QueueBusinessFunction
         return $id; // all id is the same
     }
 
-    public function updateRecordByDataEncrypt($dataEncrypt)
+    public function updateRecordById($id)
     {
         DB::beginTransaction();
         try {
-            $record = Queue::where('data_encrypt', '=', $dataEncrypt);
+            $record = Queue::find($id);
             $record->status = 2;
             $record->save();
             DB::commit();
@@ -79,30 +79,21 @@ trait QueueBusinessFunction
         return $data;
     }
 
-    public function updateAllQueue($dataEncrypt)
+    public function updateAllQueue($id)
     {
         $result = '';
         $listNode = $this->getListNode();
         foreach ($listNode as $node) {
             $ip = $node->ip;
-            $url = $ip . '/updateQueue?data_encrypt=' . $dataEncrypt;
+            $url = $ip . '/updateQueue?id=' . $id;
             $result = $this->callTheURL($url);
         }
     }
 
-    public function checkStatus($dataEncrypt)
+    public function checkStatus($id)
     {
-        return Queue::where('data_encrypt','=', $dataEncrypt)->first()->status;
+        return Queue::find($id)->status;
     }
-
-    public function isYourTurn($currentIp){
-        $id = Queue::where('status','=', 2)->last()->id;
-        $ip = Queue::find($id + 1)->ip;
-        if($ip == $currentIp)
-            return true;
-        return false;
-    }
-
 
 
 }

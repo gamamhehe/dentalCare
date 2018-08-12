@@ -261,15 +261,14 @@ Route::get('/broadcastReception', 'Admin\HomeController@testFunction');
 
 
 //blockchain
-Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
+Route::get('/test', 'Blockchain\BlockchainController@test');
 Route::get('/saveNewLedger', 'Blockchain\BlockchainController@saveNewLedger');
 Route::get('/checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
-Route::get('/test', 'Blockchain\BlockchainController@test');
-Route::get('/threadQueue', 'Blockchain\QueueController@threadQueue');
+Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
 Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
-
 Route::get('/updateQueue', 'Blockchain\QueueController@updateQueue');
-//
+
+Route::get('/runThreadQueue', 'Blockchain\QueueController@runThreadQueue');
 //Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
 
 use App\Model\Queue;

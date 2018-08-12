@@ -27,19 +27,20 @@ class ClassCheckingStatus
 
     public function checkingStatusContinously()
     {
-        $this->addToAllNodeInNetWork($this->dataEncrypt);
-        $blockchainController = new BlockchainController();
-        $currentIp = request()->ip();
-        while (true) {
-            $isTurn = $this->isYourTurn($currentIp);
-            if ($isTurn) {
-                $newestLedger = json_decode($this->get_data($currentIp.'/datajson'));
-                array_add($newestLedger, json_decode($this->dataEncrypt));
-                $this->updateAllQueue($this->dataEncrypt);
-                $this->sendToAll(json_encode($newestLedger));
-                break;
+        $id = $this->addToAllNodeInNetWork($this->dataEncrypt);
+        $result = '';
+        if (is_integer((int)$id)) {
+            while (true) {
+                $status = $this->checkStatus($id - 1);
+                if ($status == 2) {
+                    $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
+                    array_push($newestLedger, json_decode($this->dataEncrypt));
+                    $this->updateAllQueue($id);
+                    $this->sendToAll(json_encode($newestLedger));
+                    break;
+                }
+                sleep(2);
             }
-            sleep(2);
         }
     }
 

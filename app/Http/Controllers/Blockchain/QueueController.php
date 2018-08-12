@@ -28,15 +28,14 @@ class QueueController extends Controller
         return $this->createNewRecordInQueue($dataEncrypt, $status, $ip);
     }
 
-
     public function checkStatusOfRecord(Request $request)
     {
-        $dataEncrypt = $request->data_encrypt;
-        return $this->checkStatus($dataEncrypt);
+        $id = $request->id;
+        return $this->checkStatus($id);
     }
 
 
-    public function threadQueue(Request $request)
+    public function runThreadQueue(Request $request)
     {
         $dataEncrypt = $request->data_encrypt;
         $obj = new ClassCheckingStatus($dataEncrypt);
@@ -46,8 +45,8 @@ class QueueController extends Controller
     }
 
     public function updateQueue(Request $request){
-        $dataEncrypt = $request->data_encrypt;
-        $result = $this->updateRecordByDataEncrypt($dataEncrypt);
+        $id = $request->id;
+        $result = $this->updateRecordById($id);
         if($result){
             return 'success';
         }
