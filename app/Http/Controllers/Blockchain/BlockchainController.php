@@ -17,7 +17,7 @@ use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 
 class BlockchainController extends Controller
 {
-    use BlockchainBusinessFunction, NodeInfoBusinessFunction, QueueBusinessFunction;
+    use BlockchainBusinessFunction, QueueBusinessFunction;
 
     private $clientIp;
 
