@@ -22,11 +22,11 @@ trait QueueBusinessFunction
 {
     use NodeInfoBusinessFunction;
 
-    public function createNewRecordInQueue($dataEncrypt, $status)
+    public function createNewRecordInQueue($dataEncrypt, $status, $ip)
     {
         DB::beginTransaction();
         try {
-            $id = Queue::create(['data_encrypt' => $dataEncrypt, 'status' => $status, 'ip' => $ip,])->id;
+            $id = Queue::create(['data_encrypt' => $dataEncrypt, 'status' => $status, 'ip' => $ip])->id;
             DB::commit();
             return json_encode($id);
         } catch (\Exception $e) {
@@ -90,7 +90,7 @@ trait QueueBusinessFunction
                 $count++;
             } else if ($result == 'fail') {
                 Log::info('QueueBusinessFunction_updateAllQueue_ResultNotSuccessWithIP: ' . $ip);
-            }else{
+            } else {
                 Log::info('QueueBusinessFunction_updateAllQueue_Error');
             }
         }

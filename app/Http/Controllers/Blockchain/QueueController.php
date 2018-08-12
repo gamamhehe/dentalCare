@@ -35,7 +35,7 @@ class QueueController extends Controller
         $status = 1; // 1 là waiting, 2 là  done
         $checkExistIp = $this->isExist($this->clientIp);
         if ($checkExistIp) {
-            return $this->createNewRecordInQueue($dataEncrypt, $status);
+            return $this->createNewRecordInQueue($dataEncrypt, $status, $this->clientIp);
         }
         Log::info('QueueController_addToQueue_ClientIpNotInNetwork: ' . $this->clientIp);
         return 'fail';
