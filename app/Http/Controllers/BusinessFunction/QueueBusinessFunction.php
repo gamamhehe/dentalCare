@@ -22,25 +22,22 @@ trait QueueBusinessFunction
 {
     use NodeInfoBusinessFunction;
 
-    public function createNewRecordInQueue($dataEncrypt, $status, $ip)
+    public function createNewRecordInQueue($dataEncrypt, $status)
     {
-        $checkExistIp = $this->isExist($ip);
-        if ($checkExistIp == true) {
-            DB::beginTransaction();
-            try {
-                $id = Queue::create(['data_encrypt' => $dataEncrypt, 'status' => $status, 'ip' => $ip,])->id;
-                DB::commit();
-                return json_encode($id);
-            } catch (\Exception $e) {
-                DB::rollback();
-                return $e->getMessage();
-            }
+        DB::beginTransaction();
+        try {
+            $id = Queue::create(['data_encrypt' => $dataEncrypt, 'status' => $status, 'ip' => $ip,])->id;
+            DB::commit();
+            return json_encode($id);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e->getMessage();
         }
     }
 
     public function addToAllNodeInNetWork($dataEncrypt)
     {
-        $host= gethostname();
+        $host = gethostname();
         $currentIp = gethostbyname($host);
         $listNode = $this->getListNode();
         $id = 0;
@@ -82,18 +79,28 @@ trait QueueBusinessFunction
 
     public function updateAllQueue($id)
     {
-        $result = '';
+        $count = 0;
         $listNode = $this->getListNode();
         foreach ($listNode as $node) {
             $ip = $node->ip;
             $url = $ip . '/updateQueue?id=' . $id;
             $result = $this->callTheURL($url);
+            if ($result == 'success') {
+                $count++;
+            } else {
+                Log::info('QueueBusinessFunction_updateAllQueue_ResultNotSuccessWithIP: ' . $ip);
+            }
         }
+        return $count;
     }
 
     public function checkStatus($id)
     {
-        return Queue::find($id)->status;
+        $result = Queue::find($id);
+        if ($result == null) {
+            return '2';
+        }
+        return $result->status;
     }
 
 

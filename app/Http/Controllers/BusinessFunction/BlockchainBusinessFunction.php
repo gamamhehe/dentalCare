@@ -33,15 +33,15 @@ trait BlockchainBusinessFunction
                 $block->save();
                 $count++;
             }
-            return 'success';
+            return json_encode($count);
         }
+        return '0';
     }
 
 
     public function getDataBlockChain()
     {
         $blockchains = Blockchain::all();
-
         return $blockchains;
     }
 
