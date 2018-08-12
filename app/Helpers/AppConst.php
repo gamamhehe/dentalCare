@@ -22,6 +22,7 @@ class AppConst
 
     const MSG_SMS_APPOINTMENT = "";
     const MSG_REMINDER_APPOINTMENT = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";
+    const MSG_REMINDER_FORGOT_APPOINTMENT = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
     const MSG_LOGOUT_ERROR = "Không tìm thấy phiên đăng nhập của tài khoản";
     const MSG_LOGOUT_SUCCESS = "Đăng xuất thành công";
@@ -43,11 +44,11 @@ class AppConst
 
 
     const ACTION_RELOAD_APPOINTMENT = "ACTION_RELOAD_APPOINTMENT";
-//0 vua tao =>Chua tới
-//1 da toi 
-//2 dang kham
-//3 xong
-//4 xoa
+//  0 vua tao =>Chua tới
+//  1 da toi
+//  2 dang kham
+//  3 xong
+//  4 xoa
     const APPT_STATUS_CREATED = 0;
     const APPT_STATUS_ISCOMMING = 1;
     const APPT_STATUS_TREATING = 2;
@@ -55,12 +56,12 @@ class AppConst
     const APPT_STATUS_DELETED = 4;
     const APPT_STATUS_SENT = 5;
 
-//    const PAYMENT_STATUS_
-//    const PAYMENT_STATUS_
-//    const PAYMENT_STATUS_
-//    const PAYMENT_STATUS_
-    const PAYMENT_STATUS_DONE =66;
-    const PAYMENT_STATUS_NOT_DONE =696;
+//  const PAYMENT_STATUS_
+//  const PAYMENT_STATUS_
+//  const PAYMENT_STATUS_
+    const PAYMENT_STATUS_NOT_DONE =1;
+    const PAYMENT_STATUS_DONE =2;
+    const PAYMENT_STATUS_CANCEL = 3;
 
     /**
      * @param $order numerical_order of appointment

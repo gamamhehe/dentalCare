@@ -2275,25 +2275,25 @@ class AdminController extends Controller
             'paid' => '100000',
             'total_price' => '300000',
             'phone' => '01279011097',
-            'status' => 0,
+            'status' => 1,
         ]);
         Payment::create([
             'paid' => '200000',
             'total_price' => '600000',
             'phone' => '01279011096',
-            'status' => 0,
+            'status' => 1,
         ]);
         Payment::create([
             'paid' => '150000',
             'total_price' => '600000',
             'phone' => '01279011098',
-            'status' => 0,
+            'status' => 1,
         ]);
         Payment::create([
             'paid' => '250000',
             'total_price' => '500000',
             'phone' => '01279011099',
-            'status' => 0,
+            'status' => 1,
         ]);
         PaymentDetail::create([
             'staff_id' => 3,

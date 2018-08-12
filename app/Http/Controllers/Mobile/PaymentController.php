@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Mobile;
 
 
+use App\Helpers\AppConst;
 use App\Http\Controllers\BusinessFunction\PaymentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\Mobile\BaseController;
@@ -133,7 +134,7 @@ class PaymentController extends BaseController
             $staff = $user == null ? null : $user->belongToStaff()->first();
             $received_money = $payment->total_price - $payment->paid;
             $payment->paid = $payment->total_price;
-            $payment->status = 1;
+            $payment->status = AppConst::PAYMENT_STATUS_DONE;
             $paymentDetail = new PaymentDetail();
             $paypalStaff = $this->getStaffByName('paypal');
             $paymentDetail->payment_id = $localPaymentId;
@@ -187,7 +188,7 @@ class PaymentController extends BaseController
         $payment = $this->getPaymentById($paymentId);
         try {
             if ($payment != null) {
-                if ($payment->status == 1) {
+                if ($payment->status ==  AppConst::PAYMENT_STATUS_DONE) {
                     $error = $this->getErrorObj("Bạn đã thanh toán cho điều trị", "No exception");
                     return response()->json($error, 400);
                 }
@@ -199,7 +200,7 @@ class PaymentController extends BaseController
                 }
                 $payment->paid = $payment->paid + $amount;
                 if ($payment->paid == $payment->total_price) {
-                    $payment->status = 1;
+                    $payment->status =  AppConst::PAYMENT_STATUS_DONE;
                 }
                 $paymentDetail = new PaymentDetail();
                 $paymentDetail->payment_id = $payment->id;

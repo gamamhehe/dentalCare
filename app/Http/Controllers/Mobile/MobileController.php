@@ -185,11 +185,19 @@ class MobileController extends BaseController
 ////        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
 ////            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
 ////        ));]
-        if ($this->isHavingFreeSlotAtDate('2018-08-12')) {
-            return response()->json("SUCC");
-        } else {
-            response()->json("ELSE");
-        }
+//        if ($this->isHavingFreeSlotAtDate('2018-08-12')) {
+//            return response()->json("SUCC");
+//        } else {
+//            response()->json("ELSE");
+//        }
+
+        $sevenDateAgoObj = (new \DateTime())->modify('-0 day');
+        $arrayAppointment7DayAgo = (new Appointment)->whereDate('start_time', $sevenDateAgoObj->format('Y-m-d'))
+            ->where('status', AppConst::APPT_STATUS_CREATED)
+            ->select('phone')
+            ->distinct()->get();
+//            ->pluck('phone');
+        return response()->json($arrayAppointment7DayAgo);
     }
 
     public function sendFirebaseReloadAppointment($phone)
@@ -414,7 +422,7 @@ class MobileController extends BaseController
 
         $timeRnd = ["00:25:00", "00:30:00", "00:35:00", "00:45:00", "00:55:00", "01:30:00"];
         $timeNum = count($timeRnd);
-        $dateStr = (new DateTime())->format('Y-m-d');
+        $dateStr = $request->input('date');
         $listPatient = $this->getListPatient();
         $arrayPatient = $listPatient->toArray();
         $listAvDentist = $this->getAvailableDentistAtDate($dateStr);
