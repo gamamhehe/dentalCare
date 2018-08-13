@@ -170,47 +170,44 @@ class MobileController extends BaseController
      */
     public function test3(Request $request)
     {
-//        $id = $request->query('id');
-//        $appointment = $this->getAppointmentById($id);
-//        if ($appointment != null) {
-//            $crrDate = new DateTime();
-//            $appDate = new DateTime($appointment->start_time);
-//            if ($this->isUpCommingAppointment($crrDate, $appDate)) {
-//                return response()->json($appDate->format("Y-m-d H:i:s"));
-//            }
-//        }
-
-//        $dateAgo = (new \DateTime())->modify('-8 day');
-//        return $dateAgo->format('Y-m-d');
-////        return response()->json('-__-');
-////        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
-////            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
-////        ));]
-//        if ($this->isHavingFreeSlotAtDate('2018-08-12')) {
-//            return resp.4onse()->json("SUCC");
-//        } else {
-//            response()->json("ELSE");
-//        }
-
-//        $sevenDateAgoObj = (new \DateTime())->modify('-0 day');
-//        $arrayAppointment7DayAgo = (new Appointment)->whereDate('start_time', $sevenDateAgoObj->format('Y-m-d'))
-//            ->where('status', AppConst::APPT_STATUS_CREATED)
-//            ->select('phone')
-//            ->distinct()->get();
-////            ->pluck('phone');
-///
-//        $listAvailb = $this->getAvailableDentistAtDate((new DateTime())->format('Y-m-d'));
-//        $freeDentists = $this->getCurrentFreeDentist();
-//        $obj = new \stdClass();
-//        $obj->free = $freeDentists;
-//        $obj->avai = $listAvailb;
-//        return response()->json($obj);
-
-    $tmHis = $this->getTreatmentHistory($request->id);
-        return response()->json($tmHis);
+        $date = $request->input('date');
+        try {
+            $availableDentists = $this->getAvailableDentistAtDate($date);
+            $freeDentists = $this->getCurrentFreeDentist();
+//            return response()->json($freeDentists);
+            foreach ($availableDentists as $dentist) {
+                if (in_array($dentist->id, $freeDentists)) {
+                    $dentist->status = 'Đang rãnh';
+                } else {
+                    $dentist->status = 'Đang bận';
+                }
+            }
+            return response()->json($availableDentists, 200);
+        } catch (Exception $ex) {
+            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($error, 500);
+        }
+        for ($i = 3000; $i < 3500; $i++){
+            $aa = new Appointment();
+            $aa->start_time = '2018-08-20';
+            $aa->numerical_order = $i;
+            $aa->staff_id = 12;
+            $aa->phone = '01214757979';
+            $aa->estimated_time = (new DateTime())->format("H:i:s");
+            $aa->save();
+        }
+        return response()->json($aa);
+        if ($this->isHavingFreeSlotAtDate('2018-08-13')) {
+            return response()->json("trong ");
+        } else {
+            return response()->json("khong trong");
+        }
+        $endApptTimeObj = new DateTime('2018-08-13 02:20:00');
+//        $this->addTimeToDate($endApptTimeObj, $appointment->estimated_time);
+        $endDayTimeObj = new DateTime('2018-08-13 03:55:00');
+        $diff = ($endDayTimeObj->diff($endApptTimeObj));
+        return response()->json($diff);
     }
-//    use StaffBusinessFunction;
-
     public function sendFirebaseReloadAppointment($phone)
     {
         $user = User::where('phone', $phone)->first();
@@ -430,55 +427,73 @@ class MobileController extends BaseController
 
     public function testAppointment(Request $request)
     {
-
-        $timeRnd = ["00:25:00", "00:30:00", "00:35:00", "00:45:00", "00:55:00", "01:30:00"];
-        $timeNum = count($timeRnd);
-        $dateStr = $request->input('date');
-        $listPatient = $this->getListPatient();
-        $arrayPatient = $listPatient->toArray();
-        $listAvDentist = $this->getAvailableDentistAtDate($dateStr);
-        $listPhone = [];
-        foreach ($listPatient as $patient) {
-            $listPhone[] = $patient->belongsToUser()->first()->phone;
-        }
-        $isStaff = $request->input('staff');
-        $rndIsStaff= false;
-        $i = 0;
-        $sizeOfPatient = $listPatient->count();
-        $sizeOfPhone = count($listPhone);
-        $sizeOfDentist = count($listAvDentist);
-        $this->logInfo("SIZE PHONE: " . $sizeOfPhone);
-        $this->logInfo("SIZE DENTIST: " . $sizeOfDentist);
-        while ($this->isHavingFreeSlotAtDate($dateStr)) {
-            $patientPhone = $listPhone[rand(0, $sizeOfPhone - 1)];
-            if ($rndIsStaff ||  $isStaff) {  $this->logInfo("Staff false: " .
-                " patientPhone: " . $patientPhone .
-                " note : "
-            );
-                $this->createAppointment($dateStr, $patientPhone, "No note", null, null, null, null);
-            } else {
-                $rndTime = $timeRnd[rand(0, $timeNum-1)];
-                $patient = $arrayPatient[rand(0, $sizeOfPatient- 1)];
-                $dentist = $listAvDentist[rand(0, $sizeOfDentist- 1)];
-                $this->logInfo("Staff true: " .
-                    " patientPhone: " . $patientPhone .
-                    " note : " .
-                    " dentist id: " . $dentist['id'] .
-                    " patient id: " . $patient['id'] .
-                    " rndTime id: " . $rndTime
-                );
-                $this->createAppointment($dateStr, $patientPhone, "No note", $dentist['id'], $patient['id'], $rndTime, 'lucu');
+        try {
+            $numAppt = 0;
+            $timeRnd = ["00:25:00", "00:30:00", "00:35:00", "00:45:00", "00:55:00", "01:30:00"];
+            $timeNum = count($timeRnd);
+            $dateStr = $request->input('date');
+            $listPatient = $this->getListPatient();
+            $arrayPatient = $listPatient->toArray();
+            $listAvDentist = $this->getAvailableDentistAtDate($dateStr);
+            $listPhone = [];
+            foreach ($listPatient as $patient) {
+                $listPhone[] = $patient->belongsToUser()->first()->phone;
             }
-            $num = rand(0, 1);
-            if ($num == 0) {
-                $rndIsStaff = false;
-            } else {
-                $rndIsStaff = true;
-            }
+            $isStaff = $request->input('staff');
+            $rndIsStaff = false;
+            $i = 0;
+            $sizeOfPatient = $listPatient->count();
+            $sizeOfPhone = count($listPhone);
+            $sizeOfDentist = count($listAvDentist);
+            $this->logInfo("SIZE PHONE: " . $sizeOfPhone);
+            $this->logInfo("SIZE DENTIST: " . $sizeOfDentist);
+//            while ($this->isHavingFreeSlotAtDate($dateStr)) {
+            while ($i < 200) {
+                $patientPhone = $listPhone[rand(0, $sizeOfPhone - 1)];
+                if ($rndIsStaff || $isStaff) {
+                    $this->logInfo("Staff false: " .
+                        " dateStr: " . $dateStr .
+                        " patientPhone: " . $patientPhone .
+                        " note : "
+                    );
+                    try {
+                        $appt =$this->createAppointment($dateStr, $patientPhone, "No note", null, null, null, null);
+                        if($appt != null){$numAppt++;}
+                    } catch (Exception $e) {
+                        Log::info('MobileController ex1: ' . $e->getMessage());
+                    }
+                } else {
+                    $rndTime = $timeRnd[rand(0, $timeNum - 1)];
+                    $patient = $arrayPatient[rand(0, $sizeOfPatient - 1)];
+                    $dentist = $listAvDentist[rand(0, $sizeOfDentist - 1)];
+                    $this->logInfo("Staff true: " .
+                        " patientPhone: " . $patientPhone .
+                        " note : " .
+                        " dentist id: " . $dentist['id'] .
+                        " patient id: " . $patient['id'] .
+                        " rndTime id: " . $rndTime
+                    );
+                    try {
+                        $appt = $this->createAppointment($dateStr, $patientPhone, "No note", $dentist['id'], $patient['id'], $rndTime, 'lucu');
+                        if($appt != null){$numAppt++;}
+                    } catch (Exception $e) {
+                        Log::info('MobileController ex2: ' . $e->getMessage());
+                    }
+                }
+                $num = rand(0, 1);
+                if ($num == 0) {
+                    $rndIsStaff = false;
+                } else {
+                    $rndIsStaff = true;
+                }
 
-            $i++;
+                $i++;
+            }
+            Log::info("Total appt created: " .$numAppt);
+            return response()->json("SUCCESS");
+        } catch (\Exception $exception) {
+            return response()->json($this->getErrorObj("loi server", $exception));
         }
-        return response()->json("SUCCESS");
     }
 
     public
