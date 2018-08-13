@@ -58,9 +58,9 @@ class BlockchainController extends Controller
     public function checkLedger(){
         $nodeInfo = json_decode($this -> getNodeInfo());
 
-        $ledger_1 = $this -> callAPI_GetData($nodeInfo[0] -> name);
-        $ledger_2 = $this -> callAPI_GetData($nodeInfo[1] -> name);
-        $ledger_3 = $this -> callAPI_GetData($nodeInfo[2] -> name);
+        $ledger_1 = $this -> callAPI_GetData($nodeInfo[0] -> ip);
+        $ledger_2 = $this -> callAPI_GetData($nodeInfo[1] -> ip);
+        $ledger_3 = $this -> callAPI_GetData($nodeInfo[2] -> ip);
 
         if($this -> checkBlockChain($ledger_1) && $this -> checkBlockChain($ledger_2))
             return $this -> compareBlockChain($ledger_1, $ledger_2, $ledger_3);
