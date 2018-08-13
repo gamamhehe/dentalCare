@@ -34,7 +34,8 @@ class ClassCheckingStatus
                 if ($status == 2) {
                     $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
                     array_push($newestLedger, json_decode($this->dataEncrypt));
-                    $this->sendToAll(json_encode($newestLedger));
+                    $this->saveNewAll($newestLedger);
+                    $this->sendToAll();
                     $this->updateAllQueue($id);
                     return;
                 }
@@ -45,17 +46,21 @@ class ClassCheckingStatus
     }
 
     private
-    function sendToAll($newestLedger)
+    function sendToAll()
     {
         $listNode = $this->getListNode();
+        $host = gethostname();
+        $serverIp = gethostbyname($host);
         foreach ($listNode as $node) {
             $ip = $node->ip;
-            $url = "http://" . $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
-            $result = $this->get_data($url);
-            if ($result == 'fail') {
-                Log::info("ClassCheckingStatus_sendToAll_Error ");
+            if ($serverIp != $ip) {
+                $url = $ip . '/saveNewLedger';
+                $result = $this->get_data($url);
+                if ($result == 'fail') {
+                    Log::info("ClassCheckingStatus_sendToAll_Error ");
+                }
+                Log::info($result);
             }
-            Log::info($result);
         }
     }
 

@@ -19,9 +19,8 @@ use Illuminate\Support\Facades\Log;
 trait BlockchainBusinessFunction
 {
 
-    public function saveNewAll($ledgerInJson)
+    public function saveNewAll($ledgerObject)
     {
-        $ledgerObject = json_decode($ledgerInJson, true);
         if ($ledgerObject != null) {
             Blockchain::query()->delete();
             $count = 0;

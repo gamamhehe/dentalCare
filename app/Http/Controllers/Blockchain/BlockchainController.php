@@ -90,12 +90,22 @@ class BlockchainController extends Controller
     public function saveNewLedger(Request $request)
     {
         if ($this->isExist($this->clientIp)) {
-            $newestLedger = $request->newest_ledger;
-            return $this->saveNewAll($newestLedger);
+            $newestLedger = $this->callTheURL($this->clientIp . '/getThisLedger');
+            if ($newestLedger != 'fail')
+                return $this->saveNewAll(json_decode($newestLedger));
         }
         Log::info('BlockchainController_SaveNewLedger_ClientIpNotInNetwork: ' . $this->clientIp);
         return 'fail';
+    }
 
+    public function getThisLedger()
+    {
+        if ($this->isExist($this->clientIp)) {
+            $result = Blockchain::all();
+            return json_encode($result);
+        }
+        Log::info('BlockchainController_getThisLedger_ClientIpNotInNetwork: ' . $this->clientIp);
+        return 'fail';
     }
 
     public function test(Request $request)
