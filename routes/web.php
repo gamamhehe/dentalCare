@@ -181,7 +181,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/check-done/{id}', 'Admin\AppointmentController@checkDone');
     Route::post('/create-treatment-history-patient', 'Admin\TreatmentHistoryController@createTreatmentHistory')->name('admin.createTreatmentHistoryPatient.dentist');
     Route::get('/get-treatment-history-patient/{id}', 'Admin\TreatmentHistoryController@getTreatmentHistoryByPatient');
-
+    Route::get('/get-free-dentist', 'Admin\AppointmentController@getFreeDentist');
+    Route::get('/change-dentist-free', 'Admin\AppointmentController@changeDentist');
     //Step
     Route::get('/step-treatment', 'Admin\StepController@create')->name('admin.stepTreatment'); //view
     Route::get('/treatment-history-detail/{id}', 'Admin\TreatmentDetailController@updateTreatmentDetail')->name('admin.stepTreatmentUpdate'); //view

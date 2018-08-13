@@ -54,9 +54,10 @@ class PatientController extends Controller
                 session(['currentUser' => $user]);
 
                 $listPatient = $user->hasPatient()->get();
-                session(['listPatient' => $listPatient]);
-
-                session(['currentPatient' => $listPatient[0]]);
+                if (count($listPatient) > 0) {
+                    session(['listPatient' => $listPatient]);
+                    session(['currentPatient' => $listPatient[0]]);
+                }
                 return redirect()->intended(route('homepage'));
             }
             return redirect()->back()->with('fail', 'Bạn không được phép truy cập ')->withInput($request->only('phone'));

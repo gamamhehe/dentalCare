@@ -1,15 +1,18 @@
 @extends('admin.master')
 @section('content')
-    <div class="content-wrapper" >
+    <div class="content-wrapper">
         <div class="box">
 
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả Chi Tiết </div>
-                         <a href="#" class="create-modal btn btn-success btn-sm">
-                                         Tạo chi trả 
-                                    </a>
+                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả Chi Tiết</div>
+                        @if($payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_DONE)
+                        @else
+                            <a href="#" class="create-modal btn btn-success btn-sm">
+                                Tạo chi trả
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <div id="create" class="modal fade" role="dialog">
@@ -21,7 +24,7 @@
                             </div>
                             <div class="modal-body">
                                 <form class="form-horizontal" role="form">
-                                 {{ csrf_field() }}
+                                    {{ csrf_field() }}
                                     <div class="form-group row add">
                                         <label class="control-label col-sm-2" for="title">Số tiền :</label>
                                         <div class="col-sm-10">
@@ -35,7 +38,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-warning" type="submit" id="add" onclick="save()">
-                                  Thanh toán
+                                    Thanh toán
                                 </button>
                                 <button class="btn btn-warning" type="button" data-dismiss="modal">
                                     <span class="glyphicon glyphicon-remobe"></span>Đóng
@@ -120,37 +123,40 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-         $(document).on('click','.create-modal', function() {
-        $('#create').modal('show');
-        $('.form-horizontal').show();
-        $('.modal-title').text('Chi trả');
-    });
-         function save(){
+        $(document).on('click', '.create-modal', function () {
+            $('#create').modal('show');
+            $('.form-horizontal').show();
+            $('.modal-title').text('Chi trả');
+        });
+
+        function save() {
             var money = document.getElementById("money").value;
             if ($.trim(money) == '') {
                 swal("Vui lòng điền họ số tiền!", "", "error");
                 return;
-            }else{
-                 $.ajax({
-                type: 'POST',
-                url: '/admin/create-paymen-detail',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'payment_id': '{{$payment->id}}',
-                    'received_money': money,
-                },
-                success: function (data) {
-                    if ((data.errors)) {
-                        alert(data.errors.body);
-                    } else {
-                        swal("Thành toán thành công", "", "success");
-                        location.reload(true);
-                        
-                    }
-                },
-            }); 
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/create-paymen-detail',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'payment_id': '{{$payment->id}}',
+                        'received_money': money,
+                    },
+                    success: function (data) {
+                        if ((data.errors)) {
+                            alert(data.errors.body);
+                        } else {
+                            swal("Thành toán thành công", "", "success");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+
+                        }
+                    },
+                });
             }
-           
-         }
+
+        }
     </script>
 @endsection
