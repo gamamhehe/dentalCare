@@ -15,9 +15,12 @@ use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Jobs\SendFirebaseJob;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\RequestAbsent;
 use App\Model\Staff;
@@ -38,6 +41,7 @@ class StaffController extends BaseController
     use PatientBusinessFunction;
     use AppointmentBussinessFunction;
     use RequestAbsentBusinessFunction;
+    use TreatmentHistoryBusinessFunction;
 
     public function loginStaff(Request $request)
     {
@@ -90,6 +94,55 @@ class StaffController extends BaseController
         } catch (\Exception $ex) {
             Log::info($ex->getTraceAsString());
             return response()->json($this->getErrorObj('Lỗi server', $ex), 400);
+        }
+    }
+
+
+    public function doneTreatment(Request $request)
+    {
+        try {
+            $tmHistory = $this->getTreatmentHistoryById($request->input('treatment_history_id'));
+            $dateStr = (new DateTime())->format("Y-m-d");
+            $tmDetails = $this->getListTmDetailByDate($tmHistory->id, $dateStr);
+            $treatment = $tmHistory->belongsToTreatment()->first();
+            $count = 0;
+            if ($tmDetails != null) {
+                $this->logInfo(" tmDetails != null");
+                foreach ($tmDetails as $detail) {
+                    $count++;
+                    $feedback = $detail->hasFeedback()->first();
+                    if ($feedback == null) {
+                        $this->logInfo("$feedback == null");
+                        $dentist = Staff::where('id', $detail->staff_id)->first();
+                        $patientId = $tmHistory->patient_id;
+                        $phone = Patient::where('id', $patientId)->first()->phone;
+                        $firebaseToken = FirebaseToken::where('phone', $phone)->first();
+                        if ($firebaseToken != null) {
+                            $feedbackObj = Utilities::getFeedbackObject(
+                                $dentist->name,
+                                $patientId,
+                                $detail->id,
+                                $dentist->avatar,
+                                $treatment->name,
+                                $detail->created_date);
+                            $this->dispatch(new SendFirebaseJob(
+                                AppConst::RESPONSE_FEEDBACK,
+                                "Thông báo",
+                                "Đánh giá dịch vụ ". $treatment->name . ' lần '.$count,
+                                json_encode($feedbackObj),
+                                $firebaseToken->noti_token
+                            ));
+                            $this->logInfo("Send feedback to".$phone);
+                        }else{
+                            $this->logInfo("Fire base null");
+                        }
+                    }
+                }
+            }
+            return response()->json($this->getSuccessObj(200, "OK", "Gửi khảo sát thành công", "No data"));
+        } catch (Exception $ex) {
+            $errorObj = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($errorObj, 500);
         }
     }
 

@@ -9,6 +9,12 @@
 namespace App\Helpers;
 
 
+use App\Jobs\SendFirebaseJob;
+use App\Jobs\SendSmsJob;
+use App\Model\FirebaseToken;
+use App\Model\Patient;
+use App\Model\Staff;
+use App\Model\TreatmentDetail;
 use App\Model\User;
 use DateTime;
 use Exception;
@@ -52,6 +58,14 @@ class Utilities
     }
 
     /**
+     * @param $tmHistoryId
+     */
+    public function sendFeedback($tmHistory)
+    {
+
+    }
+
+    /**
      * @param $phone
      * @return mixed|string
      */
@@ -67,26 +81,26 @@ class Utilities
             $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc " . $startTime;
             $user = User::where('phone', $phone)->first();
             if ($user == null) {
-                self::logDebug('Firebase Appointment: Cannot find user with phone: ' . $phone);
+                self::logInfo('Firebase Appointment: Cannot find user with phone: ' . $phone);
                 return "'Firebase Appointment: Cannot find user with phone: ' . $phone";
             } else if ($user->noti_token == "NO_TOKEN") {
-                self::logDebug("Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN");
+                self::logInfo("Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN");
                 return "Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN";
             } else {
                 $token = $user->noti_token;
                 $requestObj = self::getFirebaseRequestObj($type, $title, $message, $body, $token);
                 $response = self::sendFirebase($requestObj);
                 $responseObj = json_decode($response);
-                self::logDebug("Firebase Appointment:  Response is " . $response);
+                self::logInfo("Firebase Appointment:  Response is " . $response);
                 return $responseObj;
             }
         } catch (Exception $ex) {
-            self::logDebug("Firebase Appointment: Exception when sending firebase reminding appointment: " . $ex->getMessage());
+            self::logInfo("Firebase Appointment: Exception when sending firebase reminding appointment: " . $ex->getMessage());
             return $ex->getMessage();
         }
     }
 
-    public static function logDebug($message)
+    public static function logInfo($message)
     {
         Log::info($message);
     }
@@ -112,9 +126,15 @@ class Utilities
         return $reminderObj;
     }
 
-    public static function getFeedbackObject()
+    public static function getFeedbackObject($dentistName, $patientId, $treatmentDetailId, $dentistAvatar, $treatmentName, $createdDate)
     {
         $fbObject = new \stdClass();
+        $fbObject->dentist_name = $dentistName;
+        $fbObject->patient_id = $patientId;
+        $fbObject->treatment_detail_id = $treatmentDetailId;
+        $fbObject->dentist_avatar = $dentistAvatar;
+        $fbObject->treatment_name = $treatmentName;
+        $fbObject->created_date = $createdDate;
         return $fbObject;
     }
 
@@ -163,6 +183,7 @@ class Utilities
         }
         return $message;
     }
+
     public static function saveFile($file, $publicPath, $saveName)
     {
         try {
@@ -174,9 +195,9 @@ class Utilities
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
-            $fullPath =   implode('/',
+            $fullPath = implode('/',
                     array_filter(
-                        explode('/',  $publicPath . $filename))
+                        explode('/', $publicPath . $filename))
                 ) . '?time=' . $timestamp;
             $file->move($path, $filename);
             return $fullPath;
@@ -185,7 +206,8 @@ class Utilities
         }
     }
 
-    public static function generateRandomString($source, $length = 8) {
+    public static function generateRandomString($source, $length = 8)
+    {
         $characters = $source;
         $charactersLength = strlen($characters);
         $randomString = '';

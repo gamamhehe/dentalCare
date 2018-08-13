@@ -313,7 +313,7 @@ class MobileController extends BaseController
             $apptDateTime = (new \DateTime($appointment->start_time));
             if ($this->isUpCommingAppointment($currentDateTime, $apptDateTime)) {
                 $numOfReminder++;
-                Utilities::logDebug('Send for appointment id: ' . $appointment->id);
+                Utilities::logInfo('Send for appointment id: ' . $appointment->id);
                 $this->dispatch(new SendReminderJob($appointment->phone));
                 $apss[] = $appointment;
             }
