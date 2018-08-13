@@ -81,18 +81,18 @@
                             {{ csrf_field() }}
                             <div class="form-group row add">
                                 <label class="control-label col-xs-4" for="title">Số điện thoại:</label>
-                                <div class="col-xs-6">
+                                <div class="col-xs-6" style="padding-right: 0;padding-left: 0;">
                                     <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
                                            required="required">
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
-                                <div class="col-xs-2" style="padding-left:0px;">
+                                <div class="col-xs-2" style="">
                                     <button class="btn btn-success" type="button" onclick="checkValid()">Check</button>
                                 </div>
                             </div>
                             <div class="form-group row add">
                                 <label class="control-label col-xs-4" for="title">Danh sách bệnh nhân:</label>
-                                <div class="col-xs-8">
+                                <div class="col-xs-8" style="padding-right: 0;padding-left: 0;">
                                     <select style="height: 2em;min-width: 25em;"
                                             id="PatientSelect">
 
@@ -100,14 +100,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-xs-4" for="title">Ngày đặt:</label>
-                                <div class="input-group date col-xs-5 " style="    padding-left: 15px">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" placeholder="yyyy-mm-dd" class="form-control pull-right"
-                                           id="datepicker"/>
-                                </div>
+                               
+                                <div class="control-label col-sm-4 col-xs-4" for="body"><label>Ngày đặt </label></div>
+                          <div class="col-sm-5 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                          <input type="text" placeholder="Ngày hẹn" id="datepicker" class="form-control pull-right" id="startdate" style="margin:0px;" />
+                          <i class="fa fa-calendar"></i>
+                          </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="body">Estimate time:</label>
@@ -125,10 +123,10 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-warning" type="button" id="add">
-                            <span class="glyphicon glyphicon-plus"></span>Save Post
+                           Khởi tạo
                         </button>
                         <button class="btn btn-warning" type="button" data-dismiss="modal">
-                            <span class="glyphicon glyphicon-remobe"></span>Close
+                            <span class="glyphicon glyphicon-remobe"></span>Đóng
                         </button>
                     </div>
                 </div>
@@ -219,7 +217,7 @@
                             <div class="form-group row add">
                                 <label class="control-label col-xs-2" for="title">Bệnh tiền sử :</label>
                                 <div class=" row col-xs-10"
-                                     style=" float: left;border: 2px gray solid;border-radius: 20px;">
+                                     style=" float: left;">
                                     <div class=" ">
                                         @foreach($AnamnesisCatalog as $one)
 

@@ -123,7 +123,7 @@
                                     <div class="col-sm-1">
                                             @if($appointment->status != 0)
                                             <a class="btn btn-success btn-sm" style="float: right;"
-                                               href="/admin/create-treatment/xxx"> Tạo mới liệu trình
+                                               href="#"> Tạo mới liệu trình
                                             </a>
                                             @endif
                                             @if($appointment->status == 0)
