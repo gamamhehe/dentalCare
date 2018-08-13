@@ -19,6 +19,7 @@ use App\Model\CustomObjectJob;
 use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Staff;
+use App\Model\TreatmentDetail;
 use App\Model\User;
 use Carbon\Carbon;
 use DateTime;
@@ -170,44 +171,115 @@ class MobileController extends BaseController
      */
     public function test3(Request $request)
     {
-        $date = $request->input('date');
-        try {
-            $availableDentists = $this->getAvailableDentistAtDate($date);
-            $freeDentists = $this->getCurrentFreeDentist();
-//            return response()->json($freeDentists);
-            foreach ($availableDentists as $dentist) {
-                if (in_array($dentist->id, $freeDentists)) {
-                    $dentist->status = 'Đang rãnh';
-                } else {
-                    $dentist->status = 'Đang bận';
-                }
-            }
-            return response()->json($availableDentists, 200);
-        } catch (Exception $ex) {
-            $error = $this->getErrorObj("Lỗi máy chủ", $ex);
-            return response()->json($error, 500);
-        }
-        for ($i = 3000; $i < 3500; $i++){
-            $aa = new Appointment();
-            $aa->start_time = '2018-08-20';
-            $aa->numerical_order = $i;
-            $aa->staff_id = 12;
-            $aa->phone = '01214757979';
-            $aa->estimated_time = (new DateTime())->format("H:i:s");
-            $aa->save();
-        }
-        return response()->json($aa);
-        if ($this->isHavingFreeSlotAtDate('2018-08-13')) {
-            return response()->json("trong ");
-        } else {
-            return response()->json("khong trong");
-        }
-        $endApptTimeObj = new DateTime('2018-08-13 02:20:00');
-//        $this->addTimeToDate($endApptTimeObj, $appointment->estimated_time);
-        $endDayTimeObj = new DateTime('2018-08-13 03:55:00');
-        $diff = ($endDayTimeObj->diff($endApptTimeObj));
-        return response()->json($diff);
     }
+
+    public function deletePayment($payment)
+    {
+        $paymentDetail = $payment->hasPaymentDetail()->get();
+        if ($paymentDetail != null) {
+            foreach ($paymentDetail as $detail) {
+                $detail->delete();
+            }
+            $paymentDetail->delete();
+        }
+    }
+
+    public function deleteAppointment($appointment)
+    {
+        $poas = $appointment->hasPatientOfAppointment()->get();
+        if ($poas != null) {
+            foreach ($poas as $poa) {
+                $poa->delete();
+            }
+        }
+        $appointment->delete();
+    }
+
+    public function deleteTreatmentDetail($treatmentDetail)
+    {
+
+        $treatmentDetailStep = $treatmentDetail->hasTreatmentDetailStep()->get();
+        $treatmentDetailImage = $treatmentDetail->hasTreatmentImage()->get();
+        $treatmentDetailFeedback = $treatmentDetail->hasFeedback()->get();
+        if ($treatmentDetailStep != null) {
+            foreach ($treatmentDetailStep as $item) {
+                $item->delete();
+            }
+        }
+        if ($treatmentDetailImage != null) {
+            foreach ($treatmentDetailImage as $item) {
+                $item->delete();
+            }
+        }
+        if ($treatmentDetailFeedback != null) {
+            foreach ($treatmentDetailFeedback as $item) {
+                $item->delete();
+            }
+        }
+        $treatmentDetail->delete();
+
+    }
+
+    /**
+     * @param $patientId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteUser(Request $request)
+    {
+
+        $user = User::where('phone', $request->phone)->first();
+        if ($user == null) {
+            $msg = ("Khong tim thay user " . $request->phone);
+            return response()->json(["Error" => $msg]);
+        }
+        $patients = $user->hasPatient()->get();
+        if ($patients != null) {
+            foreach ($patients as $patient) {
+                $treatmentHistories = $patient->hasTreatmentHistory()->get();
+                foreach ($treatmentHistories as $tmHistory) {
+                    $tmDetails = $tmHistory->hasTreatmentDetail()->get();
+                    foreach ($tmDetails as $tmDetail) {
+                        $this->deleteTreatmentDetail($tmDetail);
+                    }
+                    $tmSymptoms = $tmHistory->hasTreatmentSymptom()->get();
+                    if ($tmSymptoms != null) {
+                        foreach ($tmSymptoms as $symptom) {
+                            $symptom->delete();
+                        }
+                    }
+                    $tmHistory->delete();
+                }
+                $payments = $user->hasPayment()->get();
+                if ($payments != null) {
+                    foreach ($payments as $payment) {
+                        $this->deletePayment($payment);
+                    }
+                }
+                $patientAnamnesis = $patient->hasAnamnesisPatient()->get();
+                if ($patientAnamnesis != null) {
+                    foreach ($patientAnamnesis as $anamnesi) {
+                        $anamnesi->delete();
+                    }
+                }
+
+            }
+        }
+        $appointments = $user->hasAppointment()->get();
+        if ($appointments != null) {
+            foreach ($appointments as $appointment) {
+                $this->deleteAppointment($appointment);
+            }
+        }
+        $userHasRole = $user->hasUserHasRole()->get();
+        if ($userHasRole != null) {
+            foreach ($userHasRole as $role) {
+                $role->delete();
+            }
+        }
+        $user->delete();
+
+    }
+
     public function sendFirebaseReloadAppointment($phone)
     {
         $user = User::where('phone', $phone)->first();
@@ -457,8 +529,10 @@ class MobileController extends BaseController
                         " note : "
                     );
                     try {
-                        $appt =$this->createAppointment($dateStr, $patientPhone, "No note", null, null, null, null);
-                        if($appt != null){$numAppt++;}
+                        $appt = $this->createAppointment($dateStr, $patientPhone, "No note", null, null, null, null);
+                        if ($appt != null) {
+                            $numAppt++;
+                        }
                     } catch (Exception $e) {
                         Log::info('MobileController ex1: ' . $e->getMessage());
                     }
@@ -475,7 +549,9 @@ class MobileController extends BaseController
                     );
                     try {
                         $appt = $this->createAppointment($dateStr, $patientPhone, "No note", $dentist['id'], $patient['id'], $rndTime, 'lucu');
-                        if($appt != null){$numAppt++;}
+                        if ($appt != null) {
+                            $numAppt++;
+                        }
                     } catch (Exception $e) {
                         Log::info('MobileController ex2: ' . $e->getMessage());
                     }
@@ -489,7 +565,7 @@ class MobileController extends BaseController
 
                 $i++;
             }
-            Log::info("Total appt created: " .$numAppt);
+            Log::info("Total appt created: " . $numAppt);
             return response()->json("SUCCESS");
         } catch (\Exception $exception) {
             return response()->json($this->getErrorObj("loi server", $exception));

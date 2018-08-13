@@ -28,6 +28,7 @@ use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use SMSGatewayMe\Client\ApiException;
 
@@ -87,6 +88,7 @@ class StaffController extends BaseController
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
+            Log::info($ex->getTraceAsString());
             return response()->json($this->getErrorObj('Lỗi server', $ex), 400);
         }
     }
