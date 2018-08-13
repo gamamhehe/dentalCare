@@ -713,7 +713,8 @@ trait AppointmentBussinessFunction
     function getCurrentFreeDentist()
     {
         $listAvailableDentist = $this->getAvailableDentistAtDate(Carbon::now());
-        $listCurrentBusyAppointment = Appointment::where('status', 2)->get();
+        $listCurrentBusyAppointment = Appointment::whereDate('start_time', (new DateTime())->format('Y-m-d'))
+            ->where('status', 2)->get();
         $listCurrentBusyDentist = [];
         foreach ($listCurrentBusyAppointment as $appointment) {
             $listCurrentBusyDentist[] = $appointment->staff_id;
