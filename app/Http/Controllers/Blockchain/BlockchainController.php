@@ -89,9 +89,7 @@ class BlockchainController extends Controller
 
     public function saveNewLedger(Request $request)
     {
-        Log::info("This is save function. Client Ip: " . $this->clientIp);
         if ($this->isExist($this->clientIp)) {
-            Log::info("Works: line 94");
             $newestLedger = $request->newest_ledger;
             return $this->saveNewAll($newestLedger);
         }

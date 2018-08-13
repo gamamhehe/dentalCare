@@ -273,12 +273,6 @@ Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
 
 Route::get('/test', 'Blockchain\BlockchainController@test');
 
-//Route::get('/testOfTest', function (\Illuminate\Http\Request $request){
-//    $dataEncrypt = $request->data_encrypt;
-//    $obj = new \App\Http\Controllers\Blockchain\ClassCheckingStatus($dataEncrypt);
-//    $obj->checkingStatusContinously();
-//});
-
 use App\Model\Queue;
 
 Route::get('/getAllQueue', function () {
