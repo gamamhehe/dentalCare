@@ -2,22 +2,23 @@
 <html lang="en"><head>
 <title> Đội ngũ bác sĩ </title>
 <meta charset="utf-8">
- 
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
-	<script src="/assets/user/js/jquery-3.2.1.js"></script>
-	<script src="/assets/user/js/jquery.easing.1.3.js"></script>
+<script src="/assets/user/js/jquery-3.2.1.js"></script>
+<script src="/assets/user/js/jquery.easing.1.3.js"></script>
 
-	<link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css"/>
-	<script src="/assets/user/js/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css"/>
+<script src="/assets/user/js/jquery.fancybox.js"></script>
 
-	<script type="text/javascript" src="/assets/user/js/myjs.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese"
-		  rel="stylesheet">
-	<link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
-	<!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
-	<link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
-	<link rel="stylesheet" href="/assets/user/css/mycss.css">
+<script type="text/javascript" src="/assets/user/js/myjs.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<!-- Daterange picker -->
+<link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
+<!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
+<link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
+<link rel="stylesheet" href="/assets/user/css/mycss.css">
 </head>
 <body>
 <nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;" id="navHeader">
@@ -348,7 +349,87 @@
         </div>
     </div>
 </nav>
+<!-- regist -->
+<div class="box_dktv" style="overflow: hidden;width: 220px;max-width: 300px;">
+<div class="divOut" style="padding: 4px;">
+  <div class="container" style="    border: 1px solid white;
+  padding: 5px;">
+  <div class="row">
+    <div class="col-xs-1"> <img src="/assets/images/Homepage/dktv.png" alt="No Image" style="float: left;" class="img-responsive img-fruid"></div>
+    <div class="col-xs-10">
+        <a href="#" class="btnkn2tv create-modal" style="color: white;">
+            <div>
+                <div>ĐĂNG KÝ TƯ VẤN</div>
 
+                <div>Hotline: 1900.9999</div>
+            </div>
+        </a></div>
+    </div>
+</div>
+</div>
+</div>
+<!-- end qc -->
+<!-- modal -->
+<div id="create" class="modal fade" role="dialog" >
+<div class="modal-dialog modal-sm">
+    <div class="modal-content" style="height: 400px;min-height: 400px;">
+        <div class="modal-header" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div><img src="/assets/images/HomePage/logo.png" alt="" class="centerThing"></div>
+        </div>
+        <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
+         <form method ="post" class="form-horizontal" action="create-appointment-user" enctype="multipart/form-data" id="AppointmentGuest">
+             {{ csrf_field() }}
+
+             <div class="form-group row add">
+                @if(Session::has('currentUser'))
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" id="guestPhone" name="guestPhone"
+                    placeholder="Số điện thoại" disabled value="{{Session::get('currentPatient')->phone}}">
+                    <input type="hidden" id="phoneNumber" name="phoneNumber" value="{{Session::get('currentPatient')->phone}}">
+                </div>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" id="guestName" name="guestName"
+                    placeholder="Họ và tên" required>
+                </div>
+                @else
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" id="guestPhone" name="guestPhone"
+                    placeholder="Số điện thoại" required>
+                </div>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" id="guestName" name="guestName"
+                    placeholder="Họ và tên" required>
+                </div>
+                @endif
+                
+                
+                <div class="col-sm-12" style="margin: 8px 0;">
+                  <div class="col-sm-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                      <input type="text" placeholder="Ngày bắt đầu" name="start_date" class="form-control pull-right" id="startdate" style="margin:0px;" />
+                      <i class="fa fa-calendar"></i>
+                  </div>
+              </div>
+
+              <div class="col-sm-12" style="margin: 8px 0;">
+                <textarea name="guestNote" id="guestNote" style="resize: none;width: 100%" rows="4" placeholder="Nhu cầu khi khám"></textarea>
+            </div>
+
+
+            <div class="col-sm-12" style="padding-top: 2em;">
+             <button class="btn btn-warning" type="button" style=" width: 100%;" id="add" onclick="save(this)" >
+                 <span class="glyphicon glyphicon-plus"></span>Hoàn thành
+             </button>
+         </div>
+
+     </div>
+ </form>
+</div>
+
+</div>
+</div>
+</div>
+<!-- end -->
  
 	<!-- div bac si -->
 <div class="container" style="margin-top: 50px;margin-bottom: 50px;background-image: ">
@@ -474,23 +555,79 @@
 	
 </body>
 </html>
+<script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
+<script src="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/assets/admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="/assets/user/js/wow.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-    function changeInfo(id) {
-        var Chooseid = id;
+
+$(document).ready( function(){
+    new WOW().init();
+    <?php if (Session::has('success')): ?>
+    swal("Lịch hẹn đã được đặt", "{{Session::get('success')}}", "success");  
+<?php endif ?>
+<?php if (Session::has('error')): ?>
+swal("{{Session::get('error')}}", "", "error");  
+<?php endif ?>
+$("#startdate").datepicker({
+startDate: 'd',
+autoclose: true,
+});
+        // start;$errors->has('phone')
+        <?php if (Session::has('fail')): ?>
+        swal("{{Session::get('fail')}}", "", "error");
+    <?php endif ?>
+    <?php if (Session::has('phone')): ?>
+    swal("{{$errors->first('phone') }}", "", "error");
+<?php endif ?>
+<?php if (Session::has('phone')): ?>
+swal("{{$errors->first('pass') }}", "", "error");
+<?php endif ?>
+
+        // end;
+        var phone = '{{$errors->first('phone')}}';
+        var pass = '{{$errors->first('password')}}';
+        if(phone){
+         swal(phone, "", "error");
+     }else{
+
+     }
+ });
+function changeInfo(id) {
+    var Chooseid = id;
 
 
-        $.ajax({
-            url: 'changeCP/' + Chooseid,
-            type:'GET',
-            success: function(result){
-                location.reload();
-            } ,error: function (data) {
-                alert(data);
-            }
-        });
-    }
+    $.ajax({
+        url: 'changeCP/' + Chooseid,
+        type:'GET',
+        success: function(result){
+            location.reload();
+        } ,error: function (data) {
+            alert(data);
+        }
+    });
+}
+$(document).on('click','.create-modal', function() {
+    $('#create').modal('show');
+    $('.form-horizontal').show();
+    $('.modal-title').text('Add Post');
+});
+function save(){
+    var guestName = $('#guestName').val();
+    var guestPhone = $('#guestPhone').val();
+    var guestTime = $('#startdate').val();
+    if($.trim(guestName) == ''){
+       swal("Vui lòng điền họ tên!", "", "error");
+   }else if($.trim(guestPhone) == ''){
+       swal("Vui lòng điền số điện thoại!", "", "error");
+
+   }else if($.trim(guestTime) == ''){
+      swal("Vui lòng chọn ngày khám!", "", "error");
+  }
+  else{
+   document.getElementById('AppointmentGuest').submit();    
+}
+
+}
 </script>
-<!-- 
-font-family: 'Italianno', cursive;
-font-family: 'Open Sans', sans-serif; 
--->

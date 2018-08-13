@@ -11,7 +11,12 @@ html.login {
  height: 100%;
     margin: 0;
 }
-
+.img-center{
+    display:block;
+    margin:auto;
+   /*  width:100%;
+     height:auto;*/
+}
 .navHidden{
     visibility: hidden;
 }
@@ -1247,16 +1252,18 @@ p, .gallery h3, .chefs h3, .contact h3 {
 
 .nutbanner a.btn {
     margin-top: 16px;
-    border-radius: 2px;
+    border-radius: 20px;
     padding: 10px 20px;
     text-transform: uppercase;
     font-size: 20px;
     transition: 0.3s;
     animation: dilen 2s forwards;
+    background-color: #f04c23;
+    color: white;
 }
 
 .nutbanner a.btn:hover {
-    background: #f04c23;
+    color: blue;
     border: 1px solid #f04c23;
 }
 
@@ -1282,6 +1289,10 @@ h3.tdbanner1 {
     /*box-shadow: 1px 4px 6px 2px #dadada;*/
     position: relative;
 }
+.listType{
+    border-bottom:1px solid #ececec;font-size: 15px;    padding: 7px 0 7px 25px;margin:0;position: relative;
+}
+ 
 .textbanner {
     /*background: rgba(0, 0, 0, 0.7);*/
     width: 100%;
@@ -1378,16 +1389,19 @@ a.nav-link {
     background-color: #0275d8;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: 0.4s;
+    height: 70px;
 }
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link:hover {
     color:  white;
     border-color:  white;
+    background-color: #0275d8;
 }
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link.biendoichumenu:hover {
      color: white;
     border-color: white;
+    background-color: #0275d8;
 }
 
 .thanhmenu ul.navbar-nav li.nav-item

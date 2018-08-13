@@ -6,21 +6,20 @@
 
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <script src="/assets/user/js/jquery-3.2.1.js"></script>
-<script src="/assets/user/js/jquery.easing.1.3.js"></script>
+            <script src="/assets/user/js/jquery.easing.1.3.js"></script>
 
-<link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css"/>
-<script src="/assets/user/js/jquery.fancybox.js"></script>
+            <link rel="stylesheet" href="/assets/user/js/jquery.fancybox.css"/>
+            <script src="/assets/user/js/jquery.fancybox.js"></script>
 
-<script type="text/javascript" src="/assets/user/js/myjs.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
-<link rel="stylesheet"
-href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+            <script type="text/javascript" src="/assets/user/js/myjs.js"></script>
+            <link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
+            <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 <!-- Daterange picker -->
-<link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-<link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
-<!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
-<link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
-<link rel="stylesheet" href="/assets/user/css/mycss.css">
+            <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+            <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
+            <!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
+            <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
+            <link rel="stylesheet" href="/assets/user/css/mycss.css">
         </head>
         <body>
         <nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;" id="navHeader">
@@ -358,7 +357,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                     <div>
                         <div>ĐĂNG KÝ TƯ VẤN</div>
 
-                        <div>Hotline: 1900.9090</div>
+                        <div>Hotline: 1900.9999</div>
                     </div>
                 </a></div>
             </div>
@@ -427,11 +426,6 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 </div>
 </div>
         <div class="top">
-
-            <!-- start menu -->
-
-            <!-- end menu -->
-
             <!-- start banner -->
             <div class="banner">
                 <div id="carousel" class="carousel slide" data-ride="carousel">
@@ -445,10 +439,10 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                             
                             <div class="carousel-caption textbanner">
                                 <div class="goi">
-                                    <h3 class="tdbanner1">Nha khoa Gold</h3>
-                                    <h4 class="tdbanner2">Dental Gold</h4>
+                                    <h3 class="tdbanner1">&nbsp</h3>
+                                    <h4 class="tdbanner2"></h4>
                                     <div class="nutbanner">
-                                        <a href="" class="btn btn-outline-secondary">Đặt Lịch ngay</a>
+                                        <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
                                     </div>
                                 </div>
                             </div>
@@ -456,10 +450,10 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                         <div class="carousel-item  hinhhai img-responsive">
                             <div class="carousel-caption textbanner">
                                 <div class="goi">
-                                   <h3 class="tdbanner1">Nha khoa Gold</h3>
-                                   <h4 class="tdbanner2">Dental Gold</h4>
+                                 <!--   <h3 class="tdbanner1">Nha khoa Gold</h3>
+                                   <h4 class="tdbanner2">Dental Gold</h4> -->
                                    <div class="nutbanner">
-                                    <a href="" class="btn btn-outline-secondary">Đặt Lịch ngay</a>
+                                      <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
                                 </div>
                             </div>
                         </div>
@@ -467,10 +461,10 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                     <div class="carousel-item  hinhba img-responsive">
                         <div class="carousel-caption textbanner">
                             <div class="goi">
-                               <h3 class="tdbanner1">Nha khoa Gold</h3>
-                               <h4 class="tdbanner2">Dental Gold</h4>
+                        <!--        <h3 class="tdbanner1">Nha khoa Gold</h3>
+                               <h4 class="tdbanner2">Dental Gold</h4> -->
                                <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Đặt Lịch ngay</a>
+                                 <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
                             </div>
                         </div>
                     </div>
@@ -768,9 +762,8 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 
         </body>
         </html>
- <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
-        <script src="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
+<script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
+<script src="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="/assets/admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         <script src="/assets/user/js/wow.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
