@@ -8,6 +8,7 @@ use App\Model\Blockchain;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Key;
+use Illuminate\Support\Facades\Log;
 use phpDocumentor\Reflection\Types\Array_;
 use phpseclib\Crypt\RSA;
 use App\Model\TreatmentHistory;
@@ -17,7 +18,15 @@ use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 
 class BlockchainController extends Controller
 {
-    use BlockchainBusinessFunction;
+    use BlockchainBusinessFunction, QueueBusinessFunction;
+
+    private $clientIp;
+
+    public function __construct()
+    {
+        $this->clientIp = \request()->ip();
+    }
+
 
     public function convertDataToJson()
     {
@@ -80,15 +89,55 @@ class BlockchainController extends Controller
 
     public function saveNewLedger(Request $request)
     {
-        $newestLedger = $request->newest_ledger;
-        return $this->saveNewAll($newestLedger);
+        if ($this->isExist($this->clientIp)) {
+            $newestLedger = $this->callTheURL($this->clientIp . '/getThisLedger');
+            if ($newestLedger != 'fail')
+                return $this->saveNewAll(json_decode($newestLedger));
+        }
+        Log::info('BlockchainController_SaveNewLedger_ClientIpNotInNetwork: ' . $this->clientIp);
+        return 'fail';
+    }
+
+    public function getThisLedger()
+    {
+        if ($this->isExist($this->clientIp)) {
+            $result = Blockchain::all();
+            return json_encode($result);
+        }
+        Log::info('BlockchainController_getThisLedger_ClientIpNotInNetwork: ' . $this->clientIp);
+        return 'fail';
     }
 
     public function test(Request $request)
     {
         $dataEncrypt = $request->data_encrypt;
-        $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
-        array_push($newestLedger, json_decode($dataEncrypt));
-        return json_encode($newestLedger);
+        $id = $request->id;
+        $host = gethostname();
+        $ip = gethostbyname($host);
+        if ($dataEncrypt != null) {
+            $url = $ip . '/runJobQueue?data_encrypt=' . $dataEncrypt;
+            $result = $this->callTheURL($url);
+            echo $result;
+        } else if ($id != null) {
+            $url = $ip . '/updateAll?id=' . $id;
+            $result = $this->callTheURL($url);
+            echo $result;
+        }
+//        $newestLedger = json_decode($this->callTheURL('150.95.110.217/datajson'));
+//        array_push($newestLedger, json_decode($dataEncrypt));
+//        return json_encode($newestLedger);
+    }
+
+    public function testPerformance()
+    {
+        $dataEncrypt = '{"data_encrypt":"TaiGay","previous_hash":"ThongNatDit","hash":"TuongAnTaiTro"}';
+        $listNode = $this->getListNode();
+        for ($i = 0; $i <= 2000; $i++) {
+            $j = rand() % count($listNode);
+            $url = $listNode[$j]->ip . '/test?data_encrypt=' . $dataEncrypt;
+            $client = new \GuzzleHttp\Client();
+            $client->get($url);
+        }
+        return 'feeling';
     }
 }

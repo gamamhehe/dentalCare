@@ -12,6 +12,7 @@ use App\Model\Queue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use function MongoDB\BSON\toJSON;
 use Spatie\Async\Pool;
 
@@ -24,8 +25,12 @@ class QueueController extends Controller
     {
         $dataEncrypt = $request->data_encrypt;
         $status = 1; // 1 là waiting, 2 là  done
-        $ip = $request->ip;
-        return $this->createNewRecordInQueue($dataEncrypt, $status, $ip);
+        $checkExistIp = $this->isExist($this->clientIp);
+        if ($checkExistIp) {
+            return $this->createNewRecordInQueue($dataEncrypt, $status, $this->clientIp);
+        }
+        Log::info('QueueController_addToQueue_ClientIpNotInNetwork: ' . $this->clientIp);
+        return 'fail';
     }
 
     public function checkStatusOfRecord(Request $request)
@@ -44,18 +49,30 @@ class QueueController extends Controller
         return 'success';
     }
 
-    public function updateQueue(Request $request){
-        $id = $request->id;
-        $result = $this->updateRecordById($id);
-        if($result){
-            return 'success';
+    public function updateQueue(Request $request)
+    {
+        if ($this->isExist($this->clientIp)) {
+            $id = $request->id;
+            $result = $this->updateRecordById($id);
+            if ($result) {
+                return 'success';
+            } else {
+                Log::info('QueueController_UpdateRecordById_ErrorInProcess ' . $this->clientIp);
+                return 'fail';
+            }
         }
         return 'fail';
     }
 
-    public function updateAll(Request $request){
-        $id = $request->id;
-        $this->updateAllQueue($id);
+    public function updateAll(Request $request)
+    {
+        if ($this->isExist($this->clientIp)) {
+            $id = $request->id;
+            $successfullResult = $this->updateAllQueue($id);
+            return json_encode($successfullResult);
+        }
+        Log::info('QueueController_updateAll_ClientIpNotInNetwork: ' . $this->clientIp);
+        return '0';
     }
 
     public
@@ -63,7 +80,6 @@ class QueueController extends Controller
     {
         return json_encode($this->isExist($request->ip));
     }
-
 
 
 }

@@ -24,23 +24,20 @@ trait QueueBusinessFunction
 
     public function createNewRecordInQueue($dataEncrypt, $status, $ip)
     {
-        $checkExistIp = $this->isExist($ip);
-        if ($checkExistIp == true) {
-            DB::beginTransaction();
-            try {
-                $id = Queue::create(['data_encrypt' => $dataEncrypt, 'status' => $status, 'ip' => $ip,])->id;
-                DB::commit();
-                return json_encode($id);
-            } catch (\Exception $e) {
-                DB::rollback();
-                return $e->getMessage();
-            }
+        DB::beginTransaction();
+        try {
+            $id = Queue::create(['data_encrypt' => $dataEncrypt, 'status' => $status, 'ip' => $ip])->id;
+            DB::commit();
+            return json_encode($id);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e->getMessage();
         }
     }
 
     public function addToAllNodeInNetWork($dataEncrypt)
     {
-        $host= gethostname();
+        $host = gethostname();
         $currentIp = gethostbyname($host);
         $listNode = $this->getListNode();
         $id = 0;
@@ -66,17 +63,14 @@ trait QueueBusinessFunction
             Log::info('Error in QueueBussinessFunction: ' . $e->getMessage());
             return false;
         }
+        return false;
     }
 
     private function callTheURL($url)
     {
-        $ch = curl_init();
-        $timeout = 5;
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        $data = curl_exec($ch);
-        curl_close($ch);
+        $client = new \GuzzleHttp\Client();
+        $request = $client->get($url);
+        $data = $request->getBody()->getContents();
         return $data;
     }
 
@@ -84,17 +78,30 @@ trait QueueBusinessFunction
     {
         $result = '';
         $listNode = $this->getListNode();
+        $count = 0;
         foreach ($listNode as $node) {
             $ip = $node->ip;
             $url = $ip . '/updateQueue?id=' . $id;
             $result = $this->callTheURL($url);
+            if ($result == 'success') {
+                $count++;
+            } else if ($result == 'fail') {
+                Log::info('QueueBusinessFunction_updateAllQueue_ResultNotSuccessWithIP: ' . $ip);
+            } else {
+                Log::info('QueueBusinessFunction_updateAllQueue_Error');
+            }
         }
     }
 
     public function checkStatus($id)
     {
-        return Queue::find($id)->status;
+        $result = Queue::find($id);
+        if ($result == null) {
+            if (is_integer((int)$id) && $id == 0) {
+                return '2';
+            }
+        }
+        return $result->status;
     }
-
 
 }

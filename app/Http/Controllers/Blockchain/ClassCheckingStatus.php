@@ -10,9 +10,9 @@ namespace App\Http\Controllers\Blockchain;
 
 
 use App\Http\Controllers\BusinessFunction\BlockchainBusinessFunction;
-use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 use App\Http\Controllers\Blockchain\BlockchainController;
+use Illuminate\Support\Facades\Log;
 use Spatie\Async\Task;
 
 class ClassCheckingStatus
@@ -35,24 +35,33 @@ class ClassCheckingStatus
                 if ($status == 2) {
                     $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
                     array_push($newestLedger, json_decode($this->dataEncrypt));
+                    $this->saveNewAll($newestLedger);
+                    $this->sendToAll();
                     $this->updateAllQueue($id);
-                    $this->sendToAll(json_encode($newestLedger));
-                    break;
+                    return;
                 }
                 sleep(2);
             }
         }
+        Log::info("ClassCheckingStatus_checkingStatusContinously_idNotInteger " . $id);
     }
 
     private
-    function sendToAll($newestLedger)
+    function sendToAll()
     {
         $listNode = $this->getListNode();
-
+        $host = gethostname();
+        $serverIp = gethostbyname($host);
         foreach ($listNode as $node) {
             $ip = $node->ip;
-            $url = $ip . '/saveNewLedger?newest_ledger=' . $newestLedger;
-            $this->callTheURL($url);
+            if ($serverIp != $ip) {
+                $url = $ip . '/saveNewLedger';
+                $result = $this->get_data($url);
+                if ($result == 'fail') {
+                    Log::info("ClassCheckingStatus_sendToAll_Error ");
+                }
+                Log::info($result);
+            }
         }
     }
 
@@ -60,13 +69,9 @@ class ClassCheckingStatus
     private
     function get_data($url)
     {
-        $ch = curl_init();
-        $timeout = 5;
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        $data = curl_exec($ch);
-        curl_close($ch);
+        $client = new \GuzzleHttp\Client();
+        $request = $client->get($url);
+        $data = $request->getBody()->getContents();
         return $data;
     }
 
