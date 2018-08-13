@@ -166,7 +166,7 @@ class BlockchainController extends Controller
 
     public function ReadPublickey()
     {
-        $content = File::get(storage_path('..\\public_key.txt'));
+        $content = File::get(storage_path('public_key.txt'));
         return $content;
     }
 
