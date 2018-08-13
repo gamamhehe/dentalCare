@@ -60,6 +60,7 @@ Route::get("test5", "Mobile\MobileController@test5");
 Route::get("testAppointment", "Mobile\MobileController@testAppointment");
 Route::post("test5", "Mobile\MobileController@test5");
 Route::post("test5", "Mobile\MobileController@test5");
+Route::get("deleteUser/", "Mobile\MobileController@deleteUser");
 Route::get("dentistAppointment", "Mobile\MobileController@getDentistAppointment");
 Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");

@@ -54,9 +54,10 @@ class PatientController extends Controller
                 session(['currentUser' => $user]);
 
                 $listPatient = $user->hasPatient()->get();
-                session(['listPatient' => $listPatient]);
-
-                session(['currentPatient' => $listPatient[0]]);
+                if (count($listPatient) > 0) {
+                    session(['listPatient' => $listPatient]);
+                    session(['currentPatient' => $listPatient[0]]);
+                }
                 return redirect()->intended(route('homepage'));
             }
             return redirect()->back()->with('fail', 'Bạn không được phép truy cập ')->withInput($request->only('phone'));
@@ -158,8 +159,7 @@ class PatientController extends Controller
             $appointment = $this->checkAppointmentForPatient($phone, $id);
             if ($appointment === null) {
                 $status = 2;
-            } else
-                if ($appointment) {
+            } else{
                     $appointment->status = 1;
                     $this->saveAppointment($appointment, $id);
                     $options = array(
@@ -176,11 +176,7 @@ class PatientController extends Controller
                     $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
                     $this->sendFirebaseReloadAppointment($appointment->staff_id);
                     $status = 1;
-                } else {
-                    $status = 0;
-//
-                }
-        }
+        }}
         $data = array(
             'statusOfReceive' => $status
         );

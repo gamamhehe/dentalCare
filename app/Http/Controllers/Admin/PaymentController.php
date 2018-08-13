@@ -71,7 +71,7 @@ class PaymentController extends Controller
         $paymentDetail->created_date = Carbon::now();
         $this->createPaymentDetail($paymentDetail);
         $this->updatePaymentPaid($request->received_money, $request->payment_id);
-        return true;
+        echo '';
     }
 
     public function search($searchValue)
