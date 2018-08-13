@@ -68,7 +68,7 @@
                                     <div class="form-group row add">
                                     @if($appointment->status != 0)
                                     <a class="btn btn-success btn-sm" style="float: right;"
-                                       href="/admin/create-treatment/xxx"> Tạo mới liệu trình
+                                       href="/admin/create-treatment/{{$patient->id}}"> Tạo mới liệu trình
                                     </a>
                                     @endif
                                     @if($appointment->status == 0)
