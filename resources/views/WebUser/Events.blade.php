@@ -2,9 +2,7 @@
 <html lang="en"><head>
 <title> Sự kiện </title>
 <meta charset="utf-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <script src="/assets/user/js/jquery-3.2.1.js"></script>
 <script src="/assets/user/js/jquery.easing.1.3.js"></script>
 
@@ -13,8 +11,7 @@
 
 <script type="text/javascript" src="/assets/user/js/myjs.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
-<link rel="stylesheet"
-href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 <!-- Daterange picker -->
 <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
@@ -148,13 +145,13 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                                 <form action="{!! url('/loginUser') !!}" method="Post">
                                     {{ csrf_field() }}
                                     <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                        <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                        <input type="text" class="form-control" placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}"
                                         required autofocus>
                                         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
 
                                     </div>
                                     <div class="form-group has-feedback">
-                                        <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                        <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required>
                                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                                     </div>
@@ -312,13 +309,13 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                             <form action="{!! url('/loginUser') !!}" method="Post">
                                 {{ csrf_field() }}
                                 <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                    <input type="text" class="form-control" placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}"
                                     required autofocus>
                                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
 
                                 </div>
                                 <div class="form-group has-feedback">
-                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                    <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required>
                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                                 </div>
@@ -367,7 +364,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                     <div>
                         <div>ĐĂNG KÝ TƯ VẤN</div>
 
-                        <div>Hotline: 1900.9090</div>
+                        <div>Hotline: 1900.9999</div>
                     </div>
                 </a></div>
             </div>

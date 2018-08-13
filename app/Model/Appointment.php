@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model
 {
-    //
+    //P
+    protected $primaryKey = "id";
     protected $table = 'tbl_appointments';
-    protected $fillable = ['name','start_time', 'note', 'estimated_time', 'numerical_order', 'phone', 'staff_id', 'is_delete', 'is_coming'];
+    protected $fillable = ['id', 'name','start_time', 'note', 'estimated_time', 'numerical_order', 'phone', 'staff_id', 'is_delete', 'is_coming'];
     public function belongsToUser(){
         return $this->belongsTo('App\Model\User', 'phone', 'phone');
     }

@@ -113,7 +113,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-payment', 'Admin\PaymentController@create')->name('create.payment');
         Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
         Route::get('/search-payment/{searchValue}', 'Admin\PaymentController@search');
-
+        Route::post('/create-paymen-detail', 'Admin\PaymentController@createDetail')->name('create.payment.detail');
         //EventController
         Route::get('/get-list-event', 'Admin\EventController@getListEvent');
         Route::get('/list-event', 'Admin\EventController@loadListEvent')->name('admin.list.event');

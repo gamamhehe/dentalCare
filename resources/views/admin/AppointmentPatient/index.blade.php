@@ -219,7 +219,7 @@
                             <div class="form-group row add">
                                 <label class="control-label col-xs-2" for="title">Bệnh tiền sử :</label>
                                 <div class=" row col-xs-10"
-                                     style=" float: left;border: 2px gray solid;border-radius: 20px;">
+                                     style=" float: left;">
                                     <div class=" ">
                                         @foreach($AnamnesisCatalog as $one)
 

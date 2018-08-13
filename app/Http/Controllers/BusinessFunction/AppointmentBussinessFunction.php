@@ -9,14 +9,11 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 
-use App\Helpers\AppConst;
 use App\Model\Appointment;
 use App\Model\PatientOfAppointment;
-use App\Model\Staff;
 use App\Model\UserHasRole;
 use App\User;
 use DateTime;
-use DeepCopy\f002\A;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
@@ -218,7 +215,11 @@ trait AppointmentBussinessFunction
             if (($currentDateTime->getTimestamp() - $predictAppointmentDate->getTimeStamp()) > 0) {
                 $predictAppointmentDate = $this->addTimeToDate($currentDateTime, '00:10:00');
                 $arrayFreeDentist = $this->getFreeDentistsAtDate($listDentist, $bookingDateDBFormat);
-                $randomDentist = $this->getRandomDentist($arrayFreeDentist);
+                if (count($arrayFreeDentist) == 0) {
+                    $randomDentist = $this->getRandomDentist($listDentist);
+                } else {
+                    $randomDentist = $this->getRandomDentist($arrayFreeDentist);
+                }
                 $suitableDentistId = $randomDentist['id'];
                 $this->logBugAppointment("Predict appointment time before currentime (book appointment at currenday)"
                     . $predictAppointmentDate->format('Y-m-d H:i:s'));
@@ -258,7 +259,9 @@ trait AppointmentBussinessFunction
             return null;
         }
     }
-    public function AppointmentOfPatient($patient_id,$appointment_id){
+
+    public function AppointmentOfPatient($patient_id, $appointment_id)
+    {
         DB::beginTransaction();
         try {
             $patientAppointment = new PatientOfAppointment();
@@ -267,24 +270,25 @@ trait AppointmentBussinessFunction
             $patientAppointment->save();
             DB::commit();
             return true;
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             $exception->getTrace();
             DB::rollback();
             return null;
         }
     }
-    public function updateStatusAppoinment($status,$appointment_id){
-         DB::beginTransaction();
+
+    public function updateStatusAppoinment($status, $appointment_id)
+    {
+        DB::beginTransaction();
         try {
             $appointment = Appointment::find($appointment_id);
-            
             $appointment->status = $status;
             $appointment->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-           return false;
+            return false;
 
         }
 
@@ -709,7 +713,8 @@ trait AppointmentBussinessFunction
     function getCurrentFreeDentist()
     {
         $listAvailableDentist = $this->getAvailableDentistAtDate(Carbon::now());
-        $listCurrentBusyAppointment = Appointment::where('status', 2)->get();
+        $listCurrentBusyAppointment = Appointment::whereDate('start_time', (new DateTime())->format('Y-m-d'))
+            ->where('status', 2)->get();
         $listCurrentBusyDentist = [];
         foreach ($listCurrentBusyAppointment as $appointment) {
             $listCurrentBusyDentist[] = $appointment->staff_id;

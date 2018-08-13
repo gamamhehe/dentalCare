@@ -20,6 +20,8 @@ use App\Http\Controllers\Controller;
 use App\Model\MedicinesQuantity;
 use App\Model\Symptom;
 use App\Model\TreatmentHistory;
+use App\Model\TreatmentHistorySymptom;
+use App\Model\TreatmentImage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -64,7 +66,7 @@ class TreatmentHistoryController extends BaseController
             $symptoms = [];
             if ($symptomIds != null && count($symptomIds) > 0) {
                 for ($i = 0; $i < count($symptomIds); $i++) {
-                    $symptom = new Symptom();
+                    $symptom = new TreatmentHistorySymptom();
                     $symptom->symptom_id = $symptomIds[$i];
                     $symptoms[] = $symptom;
                 }
@@ -96,7 +98,7 @@ class TreatmentHistoryController extends BaseController
                 $symptoms,
                 $images);
             if ($result) {
-                $successResponse = $this->getSuccessObj(200, "OK", "Chỉnh sửa thành công", "No data");
+                $successResponse = $this->getSuccessObj(200, "OK", "Thêm điều trị thành công", "No data");
                 return response()->json($successResponse, 200);
             } else {
                 $error = $this->getErrorObj("Không thể lưu thông tin điều trị", "No exception");

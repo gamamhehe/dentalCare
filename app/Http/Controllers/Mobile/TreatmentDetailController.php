@@ -55,11 +55,13 @@ class TreatmentDetailController extends BaseController
             $medicineQuantities = $request->input('medicine_quantity');
             $detailStepIds = $request->input('step_id');
             $medicines = [];
-            for ($i = 0; $i < count($medicineIds); $i++) {
-                $medicine = new MedicinesQuantity();
-                $medicine->medicine_id = $medicineIds[$i];
-                $medicine->quantity = $medicineQuantities[$i];
-                $medicines[] = $medicine;
+            if ($medicineIds != null) {
+                for ($i = 0; $i < count($medicineIds); $i++) {
+                    $medicine = new MedicinesQuantity();
+                    $medicine->medicine_id = $medicineIds[$i];
+                    $medicine->quantity = $medicineQuantities[$i];
+                    $medicines[] = $medicine;
+                }
             }
             $result = $this->createTreatmentDetailWithModel(
                 $tmHistoryId,
@@ -69,7 +71,7 @@ class TreatmentDetailController extends BaseController
                 $medicines,
                 $images);
             if ($result) {
-                $successResponse = $this->getSuccessObj(200, "OK", "Chỉnh sửa thành công", "No data");
+                $successResponse = $this->getSuccessObj(200, "OK", "Thêm điều trị chi tiết thành công", "No data");
                 return response()->json($successResponse, 200);
             } else {
                 $error = $this->getErrorObj("Không thể lưu thông tin chi tiết điều trị", "No exception");

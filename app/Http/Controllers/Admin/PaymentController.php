@@ -65,13 +65,13 @@ class PaymentController extends Controller
         } else {
             return route('admin.login');
         }
-        $paymentDetail->staff_id = $idStaff;
+        $paymentDetail->staff_id = $sessionUser->belongToStaff()->first()->id;//
         $paymentDetail->payment_id = $request->payment_id;
         $paymentDetail->received_money = $request->received_money;
         $paymentDetail->created_date = Carbon::now();
         $this->createPaymentDetail($paymentDetail);
-        $this->updatePaymentPrepaid($request->received_money, $request->payment_id);
-        return true;
+        $this->updatePaymentPaid($request->received_money, $request->payment_id);
+        echo '';
     }
 
     public function search($searchValue)

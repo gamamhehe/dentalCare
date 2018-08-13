@@ -54,9 +54,10 @@ class PatientController extends Controller
                 session(['currentUser' => $user]);
 
                 $listPatient = $user->hasPatient()->get();
-                session(['listPatient' => $listPatient]);
-
-                session(['currentPatient' => $listPatient[0]]);
+                if (count($listPatient) > 0) {
+                    session(['listPatient' => $listPatient]);
+                    session(['currentPatient' => $listPatient[0]]);
+                }
                 return redirect()->intended(route('homepage'));
             }
             return redirect()->back()->with('fail', 'Bạn không được phép truy cập ')->withInput($request->only('phone'));
@@ -72,7 +73,7 @@ class PatientController extends Controller
 
         return redirect()->intended(route('homepage'));
     }
-    
+
     public function create(Request $request)
     {
         $checkExist = $this->checkExistUser($request->phone);
@@ -87,11 +88,11 @@ class PatientController extends Controller
             $patient->address = $request->address;
             $patient->phone = $request->phone;
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
-            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s') ;
+            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s');
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
             $patientID = $this->createPatient($patient);
-            if($patientID ==false){
+            if ($patientID == false) {
                 return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
             }
             $result = $this->createAnamnesisForPatient($listAnamnesis, $patientID);
@@ -105,7 +106,7 @@ class PatientController extends Controller
             $patient->name = $request->name;
             $patient->address = $request->address;
             $patient->phone = $request->phone;
-            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s') ;
+            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s');
             $patient->gender = $request->gender;
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->district_id = $request->district_id;
@@ -113,7 +114,7 @@ class PatientController extends Controller
             $user->password = Hash::make($user->phone);
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
             //thieu ne  $result = $this->createAnamnesisForPatient($listAnamnesis,$patientID);
-             
+
         }
         if ($result) {
             return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
@@ -187,6 +188,7 @@ class PatientController extends Controller
 
         echo json_encode($data);
     }
+
     public function sendFirebaseReloadAppointment($staffId)
     {
         $staff = $this->getStaffById($staffId);
@@ -200,8 +202,8 @@ class PatientController extends Controller
                         AppConst::ACTION_RELOAD_APPOINTMENT,
                         $staffFirebaseToken->noti_token)
                 );
+                Log::info("Send sendFirebaseReloadAppointment to token: " . $staffFirebaseToken->noti_token);
             }
-            Log::info("Send sendFirebaseReloadAppointment to token: ". $staffFirebaseToken->noti_token);
         } else {
             Log::info("staff in sendFirebaseReloadAppointment null");
         }
@@ -355,7 +357,7 @@ class PatientController extends Controller
             $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
-     
+
         return view('admin.Patient.Treat', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
     }
 }

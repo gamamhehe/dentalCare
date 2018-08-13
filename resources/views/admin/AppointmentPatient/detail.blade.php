@@ -47,6 +47,14 @@
                                                disabled/>
                                     </div>
                                 </div>
+                                <div class="form-group row add">
+                                        <div class="col-sm-4"><label>Số thứ tự</label></div>
+                                        <div class="col-sm-6" style="padding-left: 0px;">
+                                            <input type="text" value="{{$appointment->numerical_order}}" name="special" id="special" 
+                                                   class="form-control pull-right"  style="margin:0px;" disabled 
+                                                   />
+                                        </div>
+                                </div>
                             </div>
                         </div>
                         <!-- right -->
@@ -60,7 +68,7 @@
                                     <div class="form-group row add">
                                     @if($appointment->status != 0)
                                     <a class="btn btn-success btn-sm" style="float: right;"
-                                       href="/admin/create-treatment/xxx"> Tạo mới liệu trình
+                                       href="/admin/create-treatment/{{$patient->id}}"> Tạo mới liệu trình
                                     </a>
                                     @endif
                                     @if($appointment->status == 0)
@@ -70,22 +78,28 @@
                                     </a>
                                     @endif
                                     @endif
+                                    @if($appointment->status ==1 )
+                                     <a class="btn btn-info btn-sm applyChangePatient" style="float: right;"
+                                       href="#"> Đổi bác sĩ
+                                    </a>
+                                    @endif
                                     </div>
                                     <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Họ Tên</label></div>
+                                        <div class="col-sm-4"><label>Họ tên</label></div>
                                         <div class="col-sm-6" style="padding-left: 0px;">
                                             <!-- <a href="/admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a> -->
                                             <a href="#">{{$appointment->name}}</a>
                                         </div>
                                     </div>
                                     <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Số Điện thoại</label></div>
+                                        <div class="col-sm-4"><label>Số điện thoại</label></div>
                                         <div class="col-sm-6" style="padding: 0px;margin: 0px;">
                                             <input type="text" value="{{$appointment->phone}}" name="special" id="special" 
                                                    class="form-control pull-right"  style="margin:0px;" disabled 
                                                    />
                                         </div>
                                     </div>
+                                    
                                     <div class="form-group row add">
                                         <div class="col-sm-4"><label>Bệnh tiền sử</label></div>
                                         <div class="col-sm-6" style="padding-left: 0px;">
@@ -535,9 +549,60 @@
                                   
                                 </div>
                             </div>
-                        
-                     
+                    <div class="col-sm-12" style="padding-top: 2em;">
+                     <button class="btn btn-info" type="button" style=" width: 100%;" id="add" onclick="save(this)" >
+                         <span class="glyphicon glyphicon-plus"></span>Hoàn thành
+                     </button>
+                 </div>
 
+             </div>
+         </form>
+     </div>
+
+ </div>
+</div>
+</div>
+<div id="doc" class="modal fade" role="dialog" >
+    <div class="modal-dialog modal-sm" >
+        <div class="modal-content" >
+            <div class="modal-header"">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="centerThing"><h2 style="text-align: center;" >Cập nhật lịch hẹn bệnh nhân</h2></div>
+            </div>
+            <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
+                 <form method ="post" class="form-horizontal" action="create-appointment-user" enctype="multipart/form-data" id="AppointmentGuestX">
+                 {{ csrf_field() }}
+
+                    <div class="form-group row add">
+                      <div class="form-group">
+                                <label class="control-label col-xs-3" for="title">Số điện thoại</label>
+                                <div class="col-xs-8" style="padding-right: 0px;">
+                                   <div class="col-sm-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                          <input type="text" placeholder="Ngày sinh" name="start_dateX" class="form-control pull-right" id="start_dateX" style="margin:0px;" value="{{$appointment->phone}}"  disabled />
+                          <i class="fa fa-phone"></i>
+                          </div>
+                                  
+                                </div>
+                            </div>
+                      <div class="form-group">
+                                <label class="control-label col-xs-3" for="title">Người khám </label>
+                                <div class="col-xs-8" style="padding-right: 0px;">
+                                    <div class="col-sm-12 col-xs-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                                        <div class="col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
+                                            <select name="PatientSelected" id="PatientSelected" style="height: 30px;width: 100%">
+                                            @foreach($listPatient as $one)
+                                            <option value="{{$one->id}}">{{$one->name}}</option>
+
+                                            @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3 col-xs-12" style="padding-right: 0;padding-left: 0;">
+                                                 <a class="btn btn-info btn-sm" href="#create" data-toggle="modal" data-dismiss="modal">Tạo mới bệnh nhân </a>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
                     <div class="col-sm-12" style="padding-top: 2em;">
                      <button class="btn btn-info" type="button" style=" width: 100%;" id="add" onclick="save(this)" >
                          <span class="glyphicon glyphicon-plus"></span>Hoàn thành
@@ -562,6 +627,11 @@
             $('.form-horizontal').show();
             $('.modal-title').text('Khởi tạo bệnh nhân');
 });
+         $(document).on('click','.applyChangePatient', function() {
+            $('#doc').modal('show');
+            $('.form-horizontal').show();
+            $('.modal-title').text('Bác Sĩ');
+});
        $(document).on('click','.applyApp', function() {
         var case3 = '{{$case3}}';
         if(case3 == 1){
@@ -581,7 +651,9 @@
                 });
             return;
         }else{
-           if($.trim(patientExist) == ''){//no patient
+            var patientExist = '{{$patient}}';
+
+        if($.trim(patientExist) == ''){//no patient
             $('#create').modal('show');
             $('.form-horizontal').show();
             $('.modal-title').text('Khởi tạo bệnh nhân');
@@ -589,8 +661,12 @@
             $('#create2').modal('show');
             $('.form-horizontal').show();
             $('.modal-title').text('');
-        } 
+        }
         }                   
+       
+
+ 
+    // 
 });
         $(document).ready(function () {
             <?php if (Session::has('success')): ?>
