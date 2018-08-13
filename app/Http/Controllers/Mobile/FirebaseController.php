@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Mobile;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+use App\Model\FirebaseToken;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -29,14 +30,15 @@ class FirebaseController extends Controller
             $title = $request->input("title");
             $message = $request->input("message");
             $phone = $request->input("phone");
-            $user = $this->getUserByPhone($phone);
-            if ($user == null) {
+            $firebaseToken = FirebaseToken::where('phone', $phone)->first();
+            if ($firebaseToken == null) {
                 $error = new \stdClass();
                 $error->error = "Không thể tìm thấy số điện thoại";
                 $error->exception = null;
                 return response()->json($error, 400);
             }
-            $token = $user->noti_token;
+            $token = $firebaseToken->noti_token;
+
             $requestObj = Utilities::getFirebaseRequestObj($type, $title, $message, $body, $token);
             $response = Utilities::sendFirebase($requestObj);
             $responseObj = json_decode($response);

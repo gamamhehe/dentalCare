@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblPaymentDetailsTable extends Migration
+class CreateTblNewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateTblPaymentDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_payment_details', function (Blueprint $table) {
+        Schema::create('tbl_news', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('payment_id');
+            $table->string('image_header');
+            $table->longText('content');
+            $table->string('title');
             $table->integer('staff_id');
-            $table->dateTime('date_create');
-            $table->bigInteger('received_money');
+            $table->dateTime('created_date');
             $table->timestamps();
         });
     }
@@ -30,6 +31,8 @@ class CreateTblPaymentDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_payment_details');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('tbl_news');
+        Schema::enableForeignKeyConstraints();
     }
 }

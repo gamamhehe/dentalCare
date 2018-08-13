@@ -91,6 +91,39 @@ class StaffController extends BaseController
         }
     }
 
+    public function updateAppointmentStatus(Request $request)
+    {
+        try {
+            $status = $request->input('status');
+            $appointmentId = $request->input('appointment_id');
+            $appointment = $this->getAppointmentById($appointmentId);
+            $appointment->status = $status;
+            $this->updateAppointment($appointment);
+            $successResponse = $this->getSuccessObj(200, "OK", "Sửa lịch thành công", "No data");
+            return response()->json($successResponse);
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj('Lỗi máy chủ', $ex);
+            return response()->json($error, 500);
+        }
+    }
+
+
+    public function changeDentist(Request $request)
+    {
+        try {
+            $dentistId = $request->input('staff_id');
+            $appointmentId = $request->input('appointment_id');
+            $appointment = $this->getAppointmentById($appointmentId);
+            $appointment->staff_id = $dentistId;
+            $this->updateAppointment($appointment);
+            $successResponse = $this->getSuccessObj(200, "OK", "Đổi nha sĩ thành công", "No data");
+            return response()->json($successResponse);
+        } catch (\Exception $ex) {
+            $error = $this->getErrorObj('Lỗi máy chủ', $ex);
+            return response()->json($error, 500);
+        }
+    }
+
     public function createStaffAcccount(Request $request)
     {
         try {

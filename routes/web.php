@@ -19,7 +19,7 @@ Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
 
 Route::get('datajson', 'Blockchain\BlockchainController@getDataBlockchainJson');
 Route::get('datajsonFromSever', 'Blockchain\BlockchainController@checkLedger');
-
+Route::get('array', 'Blockchain\BlockchainController@setDataTypePayment');
 
 Route::get('/cc', function () {
     return view('WebUser.User.Profile');
@@ -111,7 +111,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::post('/create-patient', 'Admin\PatientController@create');
 
         //payment
-        Route::get('/get-payment-detail', 'Admin\PaymentController@getDetail')->name('getPaymentDetail');
         Route::get('/admin-payment', 'Admin\PaymentController@getList')->name('admin.payment');
         Route::get('/create-payment', 'Admin\PaymentController@viewCreate');
         Route::post('/create-payment', 'Admin\PaymentController@create')->name('create.payment');

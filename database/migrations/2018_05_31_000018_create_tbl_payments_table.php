@@ -20,6 +20,9 @@ class CreateTblPaymentsTable extends Migration
             $table->string('phone');
             $table->boolean('is_done')->default(false);
             $table->timestamps();
+
+
+            $table->foreign('phone')->references('phone')->on('tbl_users');
         });
     }
 
@@ -30,6 +33,8 @@ class CreateTblPaymentsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_payments');
+        Schema::enableForeignKeyConstraints();
     }
 }

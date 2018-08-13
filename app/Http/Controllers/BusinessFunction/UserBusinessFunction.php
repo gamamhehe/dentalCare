@@ -52,7 +52,6 @@ trait UserBusinessFunction
             DB::commit();
             return true;
         } catch (\Exception $e) {
-            Log::info("ERROR LUU USER".$e->getMessage());
             DB::rollback();
             return false;
         }

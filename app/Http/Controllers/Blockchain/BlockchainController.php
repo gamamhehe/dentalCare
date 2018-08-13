@@ -54,10 +54,10 @@ class BlockchainController extends Controller
 
     public function checkBlockChain($blockchain)
     {
-        if ($blockchain[0]->previousHash != 0)
+        if ($blockchain[0]->previous_hash != 0)
             return false;
         for ($i = 0; $i < sizeof($blockchain) - 1; $i++) {
-            if ($blockchain[$i]->Hash != $blockchain[$i + 1]->previousHash)
+            if ($blockchain[$i]->hash != $blockchain[$i + 1]->previous_hash)
                 return false;
         }
         return true;
@@ -71,19 +71,6 @@ class BlockchainController extends Controller
             return $blockchain_2;
         else
             return $blockchain_3;
-    }
-
-    public function checkLedger()
-    {
-        $ledger_1 = $this->callAPI_GetData('163.44.193.228');
-        $ledger_2 = $this->callAPI_GetData('150.95.110.217');
-        $ledger_3 = $this->callAPI_GetData('150.95.108.108');
-
-        if ($this->checkBlockChain($ledger_1) && $this->checkBlockChain($ledger_2)
-            && $this->checkBlockChain($ledger_3))
-            return $this->compareBlockChain($ledger_1, $ledger_2, $ledger_3);
-
-        return "ERROR BLOCKCHAIN";
     }
 
 
@@ -140,4 +127,34 @@ class BlockchainController extends Controller
         }
         return 'feeling';
     }
+
+    public function checkLedger()
+    {
+        $nodeInfo = $this->getNodeInfo();
+
+        $ledger_1 = $this->callAPI_GetData($nodeInfo[0]->ip);
+        $ledger_2 = $this->callAPI_GetData($nodeInfo[1]->ip);
+        $ledger_3 = $this->callAPI_GetData($nodeInfo[2]->ip);
+
+        if ($this->checkBlockChain($ledger_1) && $this->checkBlockChain($ledger_2))
+            return $this->compareBlockChain($ledger_1, $ledger_2, $ledger_3);
+
+        return "ERROR";
+    }
+
+    public function setDataTypePayment()
+    {
+        $listStrings = array("5,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1", "3, 60000000, 5, 2", "9, 4, 3, 2017-08-08 20:00:00, 222222, 3");
+        $arrayString = explode(',', $listStrings[0]);
+        foreach ($listStrings as $element) {
+            $arrayString = explode(',', $element);
+            if ($arrayString[sizeof($arrayString) - 1] == 1)
+                $this->setDataCreatePayment($arrayString);
+            else if ($arrayString[sizeof($arrayString) - 1] == 2)
+                $this->setDataUpdatePayment($arrayString);
+            else
+                $this->setDataPaymentDetail($arrayString);
+        }
+    }
+
 }

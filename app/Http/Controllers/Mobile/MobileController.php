@@ -13,9 +13,11 @@ use App\Jobs\SendReminderJob;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
 use App\Model\Appointment;
+use App\Model\CustomObjectJob;
 use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Staff;
+use App\Model\User;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
@@ -33,7 +35,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Thread;
 
-class MobileController extends Controller
+class MobileController extends BaseController
 {
 
     use AppointmentBussinessFunction;
@@ -120,7 +122,33 @@ class MobileController extends Controller
 
     public function test2(Request $request)
     {
+        $bookingDateDBFormat = '2018-08-09';
 
+        $listDentist = $this->getAvailableDentistAtDate($bookingDateDBFormat);
+        $NUM_OF_DENTIST = count($listDentist);
+        $this->logBugAppointment('NUM_DENTIST' . $NUM_OF_DENTIST);
+        $listAppointment = $this->getAppointmentsByStartTime($bookingDateDBFormat);
+//        $dentistObj = $this->getStaffById($dentistId);
+//        $predictAppointmentDate = new \DateTime();
+        $appointmentArray = $this->getListTopAppointment($listDentist, $bookingDateDBFormat);
+        usort($appointmentArray, array($this, "sortByTimeStamp"));
+        $equallyAppointment = [];
+        $equallyAppointment[] = $appointmentArray[0];
+
+        $this->arrangeEquallyAppointment($equallyAppointment, $appointmentArray, 1);
+
+
+        $arrApp = "";
+        foreach ($appointmentArray as $a) {
+            $arrApp .= $a['id'] . "__";
+
+        }
+        $arrApp2 = "";
+        foreach ($equallyAppointment as $a) {
+            $arrApp2 .= $a['id'] . "__";
+
+        }
+        return $arrApp . '<br>' . $arrApp2;
 
     }
 
@@ -154,13 +182,37 @@ class MobileController extends Controller
 //                return response()->json($appDate->format("Y-m-d H:i:s"));
 //            }
 //        }
+
+        $dateAgo = (new \DateTime())->modify('-8 day');
+        return $dateAgo->format('Y-m-d');
 //        return response()->json('-__-');
-        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
-            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
-        ));
+//        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
+//            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
+//        ));
     }
 
+    public function sendFirebaseReloadAppointment($phone)
+    {
+        $user = User::where('phone', $phone)->first();
+        if ($user != null) {
+            $staff = $user->belongToStaff()->first();
+            if ($staff != null) {
+                $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
+                if ($staffFirebaseToken != null) {
 
+                    $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
+                            $staff->id,
+                            "No message",
+                            AppConst::ACTION_RELOAD_APPOINTMENT,
+                            $staffFirebaseToken->noti_token)
+                    );
+                }
+                $this->logInfo("Send sendFirebaseReloadAppointment func");
+            } else {
+                $this->logInfo("staff in sendFirebaseReloadAppointment null");
+            }
+        }
+    }
 
     public function test4()
     {
@@ -221,6 +273,23 @@ class MobileController extends Controller
     {
         $result = Utilities::sendSMS($phone, $content);
         return response()->json($result, 200);
+    }
+
+    public function testCustomFunc(Request $request)
+    {
+        $customObj = new CustomObjectJob();
+//        $customObj->handle2 = function () {
+//            Log::info("INFO OOO");
+//        };
+        $ser = serialize($customObj);
+        Log::info("SER".$ser);
+//        $this->dispatch(new ExcCustomFuncJob(serialize($customObj)));
+    }
+
+    public function helloPassing()
+    {
+        Log::info("Hello passing");
+
     }
 
     public function getApptTemplate($appointment, $numDentist)

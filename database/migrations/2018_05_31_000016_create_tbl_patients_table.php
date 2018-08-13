@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblStaffsTable extends Migration
+class CreateTblPatientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreateTblStaffsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_staffs', function (Blueprint $table) {
+        Schema::create('tbl_patients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('address');
-            $table->integer('district_id');
-            $table->string('degree')->nullable();
-            $table->string('description')->nullable();
-            $table->date('date_of_birth');
             $table->string('phone');
+            $table->date('date_of_birth');
             $table->string('gender');
-            $table->string('email')->nullable();
             $table->string('avatar')
                 ->default('http://150.95.104.237/assets/images/avatar/default_avatar.jpg');
+            $table->integer('district_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('district_id')->references('id')->on('tbl_districts');
+            $table->foreign('phone')->references('phone')->on('tbl_users');
         });
     }
 
@@ -37,6 +37,8 @@ class CreateTblStaffsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_staffs');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('tbl_patients');
+        Schema::enableForeignKeyConstraints();
     }
 }

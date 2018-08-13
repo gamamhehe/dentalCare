@@ -66,10 +66,6 @@ background-repeat: no-repeat;"></div>
                             <button type="button" class="btn btn-success btn-medicine">Đơn Thuốc</button>
                         </div>
                         <div class="col-sm-7">
-                            <button type="submit" class="col-md-3 btn btn-default btn-success"
-                                    style="margin-right: 10px;float: right;"
-                                    onclick="validateQuestionBeforeCreate(event,this)" id="createQForm">Tạo
-                            </button>
                         </div>
                     </div>
                     <div class="" style="margin-top: 1em;">

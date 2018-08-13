@@ -223,12 +223,12 @@ trait AppointmentBussinessFunction
                 $suitableDentistId = $randomDentist['id'];
                 $this->logBugAppointment("Predict appointment time before currentime (book appointment at currenday)");
             }
-            $endAppointmentTime = $this->addTimeToDate($tmpPredictTime, $estimatedTimeObj->format("H:i:s"));
-            if ($this->isInLunchBreak($endAppointmentTime) || $this->isInLunchBreak($predictAppointmentDate)) {
+            $endAppointmentTimeObj = $this->addTimeToDate($tmpPredictTime, $estimatedTimeObj->format("H:i:s"));
+            if ($this->isInLunchBreak($endAppointmentTimeObj) || $this->isInLunchBreak($predictAppointmentDate)) {
                 $this->logBugAppointment("IS in lunch");
                 $predictAppointmentDate = new \DateTime($bookingDateDBFormat . $defaultStartAfternoon);
-            } else if ($this->isEndOfTheDay($predictAppointmentDate) && !$allowOvertime) {
-                $this->logBugAppointment("isEndOfTheDay");
+            } else if ($this->isEndOfTheDay($endAppointmentTimeObj) && !$allowOvertime) {
+                $this->logBugAppointment("isEndOfTheDay: end time is: ".$endAppointmentTimeObj->format('H:i:s'));
                 throw new \Exception ('isEndOfTheDay');
             }
             $numericalOrder = $listAppointment->count() + 1;
@@ -351,7 +351,7 @@ trait AppointmentBussinessFunction
     public function isEndOfTheDay($apptFinishTimeObj)
     {
         $time = $apptFinishTimeObj->format('H:i:s');
-        if ((strtotime($time) > strtotime('19:00:00'))) {
+        if ((strtotime($time) > strtotime('19:15:00'))) {
             return true;
         }
         return false;
@@ -495,7 +495,7 @@ trait AppointmentBussinessFunction
     {
         $timestampAP1 = $this->getAppointmentTimeStamp($appointment1);
         $timestampAP2 = $this->getAppointmentTimeStamp($appointment2);
-        return $timestampAP1 < $timestampAP2;
+        return $timestampAP1 > $timestampAP2;
     }
 
     /**
@@ -588,6 +588,7 @@ trait AppointmentBussinessFunction
                 if (in_array($appointment->staff_id, $listCurrentFreeDentist)) {
                     return $appointment;
                 } else {
+                    //nha sĩ bận
                     return false;
                 }
             }
@@ -709,5 +710,14 @@ trait AppointmentBussinessFunction
         $appointment = Appointment::where('id', $id)->first();
         $appointment->status = 2;
         $appointment->save();
+    }
+
+    public function getOverdueAppointment($numDate)
+    {
+        $dateAgoObj = (new \DateTime())->modify('-'.$numDate.' day');
+        $appointmentAgo = Appointment::where('start_time', $dateAgoObj->format('Y-m-d'))
+            ->where('status', 0)->get();
+
+
     }
 }

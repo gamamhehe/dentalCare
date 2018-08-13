@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblRequestAbsentTable extends Migration
+class CreateTblMedicinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTblRequestAbsentTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_request_absent', function (Blueprint $table) {
+        Schema::create('tbl_medicines', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('staff_id');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->string('reason')->nullable();
-            $table->boolean('is_deleted')->default(false);
+            $table->string('name');
+            $table->string('use');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -31,6 +29,8 @@ class CreateTblRequestAbsentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_request_absent');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('tbl_medicines');
+        Schema::enableForeignKeyConstraints();
     }
 }

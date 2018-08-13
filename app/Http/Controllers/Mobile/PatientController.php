@@ -15,8 +15,10 @@ use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Jobs\SendFirebaseJob;
 use App\Model\FirebaseToken;
+use App\Model\PatientOfAppointment;
 use Exception;
 use Illuminate\Http\Request;
+use Pusher\Pusher;
 
 class PatientController extends BaseController
 {
@@ -104,9 +106,37 @@ class PatientController extends BaseController
         return $appointment;
     }
 
+    public function receiveManually(Request $request)
+    {
+        try {
+            $patientId = $request->input('patient_id');
+            $appointmentId = $request->input('appointment_id');
+            $appointment = $this->getAppointmentById($appointmentId);
+            if ($appointment->status != 0) {
+                $errorResponse = $this->getErrorObj("Trạng thái lịch hẹn không hợp lệ", "No exception");
+                return response()->json($errorResponse, 400);
+            }
+
+            $patientAppointment = $appointment->hasPatientOfAppointment()->first();
+            if ($patientAppointment != null) {
+                $errorResponse = $this->getErrorObj("Bệnh nhân đã được nhận khám", "No exception");
+                return response()->json($errorResponse, 400);
+            } else {
+                $appointment->status = 1;
+                $this->saveAppointment($appointment, $patientId);
+                $this->sendFirebaseReloadAppointment($appointment->staff_id);
+                $successResponse = $this->getSuccessObj(200, "OK", "Change status success", "No data");
+                return response()->json($successResponse, 200);
+            }
+        } catch (Exception $exception) {
+            $errorResponse = $this->getErrorObj("Lỗi server", $exception);
+            return response()->json($errorResponse, 500);
+        }
+
+    }
+
     public function receive(Request $request)
     {
-
         $patientId = $request->input('patient_id');
         $phone = $this->getPhoneOfPatient($patientId);
         $isExamination = $this->checkPatientIsExamination($patientId);
@@ -118,28 +148,70 @@ class PatientController extends BaseController
             if ($appointment === null) {
                 $error = $this->getErrorObj("Bệnh nhân chưa có lịch hẹn", "No Exception");
                 return response()->json($error, 417);
-            } else if ($appointment) {
+            } else {
                 $appointment->status = 1;
                 $this->saveAppointment($appointment, $patientId);
-//                $options = array(
-//                    'cluster' => 'ap1',
-//                    'encrypted' => true
-//                );
-//                $pusher = new Pusher(
-//                    'e3c057cd172dfd888756',
-//                    '993a258c11b7d6fde229',
-//                    '562929',
-//                    $options
-//                );
-//                $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
+                $this->updateNumAppWebsite($appointment);
                 $this->sendFirebaseReloadAppointment($appointment->staff_id);
                 $successResponse = $this->getSuccessObj(200, "OK", "Nhận bệnh thành công", "No Exception");
                 return response()->json($successResponse, 200);
-            } else {
-                $error = $this->getErrorObj("Lỗi không xác dịnh", "No Exception");
-                return response()->json($error, 400);
             }
         }
+    }
+
+    public function changeAvatar(Request $request)
+    {
+        try {
+            if ($request->hasFile('image')) {
+                $id = $request->input('id');
+                $image = $request->file('image');
+                $tmpPatient = $this->getPatientById($id);
+                if ($tmpPatient != null) {
+                    if ($this->editAvatar($image, $id)) {
+                        $patient = $this->getPatientById($id);
+                        $response = new \stdClass();
+                        $response->status = "OK";
+                        $response->message = "Chỉnh sửa avatar thành côngs";
+                        $response->data = $patient->avatar;
+                        return response()->json($response, 200);
+                    } else {
+                        $error = new \stdClass();
+                        $error->error = "Có lỗi xảy ra, không thể chỉnh sửa avatar";
+                        $error->exception = "Nothing";
+                        return response()->json($error, 400);
+                    }
+                } else {
+                    $error = new \stdClass();
+                    $error->error = "Không thể tìm thấy bệnh nhân ";
+                    $error->exception = "Nothing";
+                    return response()->json($error, 400);
+                }
+            } else {
+                $error = new \stdClass();
+                $error->error = "Lỗi khi nhận hình ảnh ";
+                $error->exception = "Nothing";
+                return response()->json($error, 400);
+            }
+        } catch (\Exception $ex) {
+            $error = new \stdClass();
+            $error->error = "Lỗi máy chủ";
+            $error->exception = $ex->getMessage();
+            return response()->json($error, 400);
+        }
+    }
+    public function updateNumAppWebsite($appointment)
+    {
+        $options = array(
+            'cluster' => 'ap1',
+            'encrypted' => true
+        );
+        $pusher = new Pusher(
+            'e3c057cd172dfd888756',
+            '993a258c11b7d6fde229',
+            '562929',
+            $options
+        );
+        $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
     }
 
     public function sendFirebaseReloadAppointment($staffId)
@@ -149,7 +221,7 @@ class PatientController extends BaseController
             $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
             if ($staffFirebaseToken != null) {
 
-                dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
+                $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
                         $staff->id,
                         "No message",
                         AppConst::ACTION_RELOAD_APPOINTMENT,

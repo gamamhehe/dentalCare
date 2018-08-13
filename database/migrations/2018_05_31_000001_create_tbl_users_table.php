@@ -30,6 +30,8 @@ class CreateTblUsersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_users');
+        Schema::enableForeignKeyConstraints();
     }
 }

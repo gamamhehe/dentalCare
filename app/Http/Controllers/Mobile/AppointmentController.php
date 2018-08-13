@@ -14,6 +14,7 @@ use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Jobs\SendSmsJob;
 use App\Model\Appointment;
@@ -66,6 +67,9 @@ class AppointmentController extends BaseController
         try {
             $date = $request->input('date');
             $appointments = $this->getAppointmentByDate($date);
+            foreach ($appointments as $appointment) {
+                $this->attachFieldAppointment($appointment);
+            }
             return response()->json($appointments, 200);
         } catch (\Exception $exception) {
             $error = $this->getErrorObj("Có lỗi xảy ra", $exception);
@@ -100,77 +104,7 @@ class AppointmentController extends BaseController
         }
     }
 
-    public function bookAppointment(Request $request)
-    {
-        try {
-            $phone = $request->input('phone');
-            $note = $request->input('note');
-            $bookingDate = $request->input('booking_date');
-            $dentistId = $request->input('dentist_id');
-            $patientId = $request->input('patient_id');
-            $estimatedTime = $request->input('estimated_time');
-            $name = $request->input('name');
-            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $name);
-            if ($result != null) {
-                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
-                $startDateTime = new DateTime($result->start_time);
-                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
-                $this->dispatch(new SendSmsJob($phone, $smsMessage));
-                $user = $this->getUserByPhone($phone);
-                if ($user == null) {
-                    $user = new User();
-                    $user->phone = $phone;
-                    $user->password = Hash::make($phone);
 
-                    $userHasRole = new UserHasRole();
-                    $userHasRole->phone = $phone;
-                    $userHasRole->role_id = 1;
-                    $this->createUser($user, $userHasRole);
-
-                    Log::info("USER NULL KHONGOHKAO");
-                    dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
-                }
-                return response()->json($listAppointment, 200);
-            } else {
-                $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
-                    "Result is null, No exception");
-                return response()->json($error, 400);
-            }
-
-        } catch (ApiException $ex) {
-            $error = $this->getErrorObj("Lỗi server", $ex);
-            return response()->json($error, 500);
-        } catch (\Exception $ex) {
-            if ($ex->getMessage() == "isEndOfTheDay") {
-                $currentTime = (new DateTime());
-                if ($this->isEndOfTheDay($currentTime)) {
-                    $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
-                } else {
-                    $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
-                }
-                return response()->json($error, 400);
-            } else {
-                $error = $this->getErrorObj("Lỗi server", $ex);
-                return response()->json($error, 500);
-            }
-        }
-    }
-
-    public function updateStatus(Request $request)
-    {
-        try {
-            $status = $request->input('status');
-            $appointmentId = $request->input('appointment_id');
-            $appointment = $this->getAppointmentById($appointmentId);
-            $appointment->status = $status;
-            $this->updateAppointment($appointment);
-            $successResponse = $this->getSuccessObj(200, "OK", "Sửa lịch thành công", "No data");
-            return response()->json($successResponse);
-        } catch (\Exception $ex) {
-            $error = $this->getErrorObj('Lỗi máy chủ', $ex);
-            return response()->json($error, 500);
-        }
-    }
 
     public function bookAppointmentStaff(Request $request)
     {

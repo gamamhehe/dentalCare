@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblAnamnesisPatientsTable extends Migration
+class CreateTblToothsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateTblAnamnesisPatientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_anamnesis_patients', function (Blueprint $table) {
-            $table->integer('patient_id');
-            $table->integer('anamnesis_id');
-            $table->string('description')->nullable();
-            $table->primary(array('patient_id', 'anamnesis_id'));
+        Schema::create('tbl_tooths', function (Blueprint $table) {
+            $table->integer('tooth_number');
+            $table->string('tooth_name');
+            $table->primary('tooth_number');
             $table->timestamps();
         });
     }
@@ -29,6 +28,8 @@ class CreateTblAnamnesisPatientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_anamnesis_patients');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('tbl_tooths');
+        Schema::enableForeignKeyConstraints();
     }
 }

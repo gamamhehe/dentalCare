@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả Chi Tiết </div>
                          <a href="#" class="create-modal btn btn-success btn-sm">
-                                        <i class="glyphicon glyphicon-plus">XXX</i>
+                                        <i class="glyphicon">Tạo chi trả</i>
                                     </a>
                     </div>
                 </div>
@@ -22,22 +22,22 @@
                             <div class="modal-body">
                                 <form class="form-horizontal" role="form">
                                     <div class="form-group row add">
-                                        <label class="control-label col-sm-2" for="title">Tên :</label>
+                                        <label class="control-label col-sm-2" for="title">Số tiền :</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="name" name="name"
-                                                   placeholder="Your name Here" required>
+                                                   placeholder="Số tiền" required>
                                             <p class="error text-center alert alert-danger hidden"></p>
                                         </div>
                                     </div>
-                                 
+
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-warning" type="submit" id="add" onclick="save()" >
-                                    <span class="glyphicon glyphicon-plus"></span>Save Post
+                                <button class="btn btn-warning" type="submit" id="add" onclick="save()">
+                                    <span class="glyphicon"></span>Thanh toán
                                 </button>
                                 <button class="btn btn-warning" type="button" data-dismiss="modal">
-                                    <span class="glyphicon glyphicon-remobe"></span>Close
+                                    <span class="glyphicon glyphicon-remobe"></span>Đóng
                                 </button>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                     <tr class="even gradeC" align="left">
                                         <td style="text-align: center">{{$paymentDetail->staff}}</td>
                                         <td style="text-align: center">{{number_format($paymentDetail->received_money)}}</td>
-                                        <td style="text-align: center">{{$paymentDetail->date_create }}</td>
+                                        <td style="text-align: center">{{$paymentDetail->created_date }}</td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -122,7 +122,7 @@
          $(document).on('click','.create-modal', function() {
         $('#create').modal('show');
         $('.form-horizontal').show();
-        $('.modal-title').text('Add Post');
+        $('.modal-title').text('Chi trả');
     });
     </script>
 @endsection

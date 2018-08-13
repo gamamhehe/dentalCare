@@ -404,7 +404,7 @@
                     </tr>
                     @foreach($Payment->payment_details as $paymentDetail)
                     <tr>
-                        <th>{{$paymentDetail->date_create}}</th>
+                        <th>{{$paymentDetail->created_date}}</th>
                         <th>{{$paymentDetail->received_money}} VNĐ</th>
                         <th>{{$paymentDetail->staff->name}}</th>
                     </tr>

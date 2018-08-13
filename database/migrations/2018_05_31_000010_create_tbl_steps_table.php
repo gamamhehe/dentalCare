@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblEventsTable extends Migration
+class CreateTblStepsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class CreateTblEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_events', function (Blueprint $table) {
+        Schema::create('tbl_steps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->integer('discount');
-            $table->integer('staff_id');
-            $table->dateTime('created_date');
-            $table->integer('treatment_id');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -33,6 +28,8 @@ class CreateTblEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_events');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('tbl_steps');
+        Schema::enableForeignKeyConstraints();
     }
 }

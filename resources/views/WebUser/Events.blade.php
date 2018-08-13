@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
+
 <script src="/assets/user/js/jquery-3.2.1.js"></script>
 <script src="/assets/user/js/jquery.easing.1.3.js"></script>
 
@@ -520,19 +520,12 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 
 </body>
 </html>
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="/assets/admin/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/assets/admin/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<script src="/assets/admin/bower_components/moment/min/moment.min.js"></script>
-<script src="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+ <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
+        <script src="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- datepicker -->
 <script src="/assets/admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
-</script>
-
+        <script src="/assets/user/js/wow.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
@@ -550,7 +543,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
           swal("{{Session::get('error')}}", "", "error");  
         <?php endif ?>
        $("#startdate").datepicker({
-        startDate: '+1d',
+        startDate: 'd',
         autoclose: true,
     });
 

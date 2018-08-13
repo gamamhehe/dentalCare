@@ -20,10 +20,13 @@ class CreateTblAppointmentsTable extends Migration
             $table->string('note')->nullable();
             $table->time('estimated_time');
             $table->integer('numerical_order');
-            $table->integer('staff_id');
+            $table->integer('staff_id')->unsigned();
             $table->string('phone');
             $table->boolean('status')->default(0);
             $table->timestamps();
+
+            $table->foreign('phone')->references('phone')->on('tbl_users');
+            $table->foreign('staff_id')->references('id')->on('tbl_staffs');
         });
     }
 
@@ -34,6 +37,8 @@ class CreateTblAppointmentsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tbl_appointments');
+        Schema::enableForeignKeyConstraints();
     }
 }
