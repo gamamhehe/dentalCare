@@ -2,139 +2,245 @@
 
 namespace App\Http\Controllers\Blockchain;
 
-use App\Model\Payment;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Key;
+use App\Model\Blockchain;
+use App\Model\Payment;
+use App\Model\PaymentDetail;
+use File;
+use Illuminate\Http\Request;
 use phpseclib\Crypt\RSA;
-use App\Model\TreatmentHistory;
-use App\Model\NodeInfo;
 
 class BlockchainController extends Controller
 {
-
-    public function GenerateKey()
+    public function ReadPublickey()
     {
-        $payment = Payment::where('id', '=', 1)->first();
-        $rsa = new RSA();
-        $key = $rsa->createKey();
-        $privateKey = $key['privatekey'];
-        $publicKey = $key['publickey'];
-        $paymentArray = array(
-            'id' => $payment->id,
-            'paid' => $payment->paid,
-            'total_price' => $payment->total_price,
-            'phone' => $payment->phone,
-            'is_done' => $payment->is_done,
-            'created_at' => $payment->created_at,
-            'type' => 1 // 1 is create payment
-        );
-        $jsonPayment = json_encode($paymentArray);
-        $plaintext = "1222,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1";
-        $method = 'aes-256-cbc';
+        $content = File::get(storage_path('..\\public_key.txt'));
+        return $content;
+    }
+
+    public function CheckPublicKeyNPrivateKey(Request $request)
+    {
+        // $privateKey = $request->privateKey;
+        $encrypted = 'JATClEXRta22mqw6Z5blV5tQk/mcRYVfC/Roz6g1eyD4nrApq0MP4EWUiicftNzpt4k5F10kglsFiMOTp33ftidvkIX8lK7cTleUUN7BmAe/bj6zpCx6cDIxHjbHDhUR+Efc/lHRBQSqA2Wrkp2p66yolyClKHYFbz1KgcpDgmI=';
+        // dd($privateKey);
+        // $origin = "VALID KEY";
+        // $privateKey = "-----BEGIN RSA PRIVATE KEY-----\r\nMIICXQIBAAKBgQCu/Fzjzta9P4X5eg58uJCYM2DqkBDixMsJXaywsrJNRwl4W4BB\r\n7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSHHoutfhft9DTEaBbu7wrtoR1F\r\nmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAhQbSdRm8+v08YjhapVwIDAQAB\r\nAoGBAJYb7yONoDEgeTGWPy9GtOObz5voklO2NeaG8UlzQfmA4uLYu6HSy0HvP35x\r\nVT6+XHrhCEuBEJmxYAtcJGTfnJrUmtkaN8diMBa5oa8BMx9C+VUqMjw7GRh9fjJs\r\nZp1XngJ3ftiZmtxG798gAaSyoEL64fTcJ2FFJtq9jjURZ77BAkEA1ZYFN9aeTo+d\r\nKFJxHXgaK30GD9whfPnetN022qwgU7efSbfOv1jYpye/tP31Pbx1hf+ixQJ+sLi8\r\nTOHIMk2r2QJBANG8CiNkkEwA7PTv2wdKjVYs8zCvi1RewsCEv9AvOcNmY/OCPRTF\r\n1Cnhc9h0/ZLMLSv25AV7pxRM/tRg4UEBsK8CQDTKHYQNkZcNO+Spa7fC5YT2I7dr\r\nywMepwLA4jvt6xeF/OK1gW4dwX6e/mz3j9OwbsOtyUc0NKftIO1HqLl2JRECQBHb\r\nfNF+onqWKZbBRVjdlCMeOKaQi8BnQRW7N8m1+6kTcrctA55dKa9XLtHjRCPXlpED\r\nuG5vFM65r4jNpuAuEKkCQQCB5rjbTNkg0lYZo0ITwDq9zoyiKBHGc3ZvszilhlTF\r\nmtQMGrS/oWlVuxeuE8p7jGf+wzKWj10uXKHwNxFLd73v\r\n-----END RSA PRIVATE KEY-----";
+        $file = File::get($request->privateKey);
+        dd($file);
+        $dec = $this->decrypt($encrypted, $privateKey);
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
-//
-        $encrypted = base64_encode(openssl_encrypt($plaintext, $method, '1', OPENSSL_RAW_DATA, $iv));
-        $enc = $this->encrypt($encrypted, $publicKey);
-        $data = $this->decrypt($enc, $privateKey);
-        $decrypted = openssl_decrypt(base64_decode($data), $method, '1',OPENSSL_RAW_DATA, $iv);
-        dd($decrypted);
+        $method = 'aes-256-cbc';
+        $decrypted = openssl_decrypt(base64_decode($dec), $method, '1', OPENSSL_RAW_DATA, $iv);
+
+        return $decrypted;
     }
 
     public function EncryptCreatePayment($id)
     {
-
-
         $payment = Payment::where('id', '=', $id)->first();
-        $pubKey = '-----BEGIN PUBLIC KEY----- MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANMA8OGlPPizwjZeX5G1vSLRzH/jT4xc +FtRSzgW1lrl/HWfMGSlqskdQNbgxtwMFJVu0cN8ymBsEkRPBwwDTr0CAwEAAQ== -----END PUBLIC KEY-----';
+        $publicKey = $this->ReadPublickey();
 
-//        $history = TreatmentHistory::where('patient_id', '=', $patientId) -> first();
-//
-//        $nameHop = 'Thanh Hung';
-//        $server = NodeInfo::where('name_hopital','=',$nameHop) -> first();
-//
-//        $name = $server -> name_hopital;
-//        $jsonServer = array(
-//            'ip' =>  $server -> ip_server,
-//            'name' => $server -> name_hopital,
-//        );
-//        $jsonHistory = array(
-//
-//        );
-        $paymentArray = array(
-            'id' => $payment->id,
-            'paid' => $payment->paid,
-            'total_price' => $payment->total_price,
-            'phone' => $payment->phone,
-            'is_done' => $payment->is_done,
-            'created_at' => $payment->created_at,
-            'type' => 1 // 1 is create payment
-        );
-        $jsonPayment = json_encode($paymentArray);
-        var_dump($jsonPayment);
-//        $mainJson = json_encode(array_merge($jsonHistory,$jsonServer));
-        $encrypted = openssl_pkey_get_private($jsonPayment, $pubKey);
-
-//        $priKey = $key -> private_key;
-        var_dump($encrypted);
+        // $publicKey = "-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu/Fzjzta9P4X5eg58uJCYM2Dq\r\nkBDixMsJXaywsrJNRwl4W4BB7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSH\r\nHoutfhft9DTEaBbu7wrtoR1FmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAh\r\nQbSdRm8+v08YjhapVwIDAQAB\r\n-----END PUBLIC KEY-----";
+        $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . $payment->created_at . ',1';
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+        $method = 'aes-256-cbc';
+        $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));
+        // dd($publicKey);
+        return $this->encrypt($encrypted, $publicKey);
     }
 
-    public function DecryptTreatmentHistory()
+    public function TestUpdatePayment()
     {
-        $patientId = '1';
-        $key = Key::where('patient_id', '=', $patientId)->first();
-        $priKey = $key->public_key;
+        $idPayment = '1';
+        $idTreatment = '1';
+        $price = "20000";
+        return $this->EncryptUpdatePayment($idPayment, $idTreatment, $price);
+    } // just for test
 
-        //
-
-//        openssl_private_decrypt($encrypted, $decrypted, $priKey);
-//        var_dump($decrypted);
+    public function EncryptUpdatePayment($idPayment, $idTreatment, $price)
+    {
+        $publicKey = $this->ReadPublickey();
+        $dataPayment = $idPayment . "," . $price . "," . $idTreatment . ",2";
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+        $method = 'aes-256-cbc';
+        $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));
+        // dd($publicKey);
+        return $this->encrypt($encrypted, $publicKey);
     }
 
-    //
-//    public function GenerateKey()
-//    {
-//        $rsa = new RSA();
-//        $key = $rsa->createKey();
-//        $privateKey = $key['privatekey'];
-//        $publicKey = $key['publickey'];
-//        $plaintext = '0123';
-//        $password = '123456';
-//        $method = 'aes-256-cbc';
-//
-//// Must be exact 32 chars (256 bit)
-//        $password = substr(hash('sha256', $password, true), 0, 32);
-//// IV must be exact 16 chars (128 bit)
-//        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
-//
-//// av3DYGLkwBsErphcyYp+imUW4QKs19hUnFyyYcXwURU=
-//        $encrypted = base64_encode(openssl_encrypt($plaintext, $method, $password, OPENSSL_RAW_DATA, $iv));
-//        $enc = $this->encrypt($encrypted, $publicKey);
-//        dd($encrypted);
-//
-//// My secret message 1234
-////        $data = $this->decrypt($enc, $privateKey);
-////        $decrypted = openssl_decrypt(base64_decode($data), $method, $password, OPENSSL_RAW_DATA, $iv);
-////        dd($decrypted);
-//    }
-//
+    public function EncryptCreatePaymentDetail($idPaymentDetail)
+    {
+        $payment = PaymentDetail::where('id', '=', $idPaymentDetail)->first();
+        $publicKey = $this->ReadPublickey();
+        // $publicKey = "-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu/Fzjzta9P4X5eg58uJCYM2Dq\r\nkBDixMsJXaywsrJNRwl4W4BB7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSH\r\nHoutfhft9DTEaBbu7wrtoR1FmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAh\r\nQbSdRm8+v08YjhapVwIDAQAB\r\n-----END PUBLIC KEY-----";
+
+        $dataPaymentDetail = $payment->id . "," . $payment->payment_id . "," . $payment->staff_id . "," . $payment->date_create . "," . $payment->received_money . ',3';
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+        $method = 'aes-256-cbc';
+        $encrypted = base64_encode(openssl_encrypt($dataPaymentDetail, $method, '1', OPENSSL_RAW_DATA, $iv));
+        // dd($publicKey);
+        return $this->encrypt($encrypted, $publicKey);
+    }
+
+    public function DecryptDataBlock($id)
+    {
+        $encrypted = Blockchain::where('id', '=', $id)->first()->data_encrypt;
+        $privateKey = "-----BEGIN RSA PRIVATE KEY-----\r\nMIICXQIBAAKBgQCu/Fzjzta9P4X5eg58uJCYM2DqkBDixMsJXaywsrJNRwl4W4BB\r\n7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSHHoutfhft9DTEaBbu7wrtoR1F\r\nmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAhQbSdRm8+v08YjhapVwIDAQAB\r\nAoGBAJYb7yONoDEgeTGWPy9GtOObz5voklO2NeaG8UlzQfmA4uLYu6HSy0HvP35x\r\nVT6+XHrhCEuBEJmxYAtcJGTfnJrUmtkaN8diMBa5oa8BMx9C+VUqMjw7GRh9fjJs\r\nZp1XngJ3ftiZmtxG798gAaSyoEL64fTcJ2FFJtq9jjURZ77BAkEA1ZYFN9aeTo+d\r\nKFJxHXgaK30GD9whfPnetN022qwgU7efSbfOv1jYpye/tP31Pbx1hf+ixQJ+sLi8\r\nTOHIMk2r2QJBANG8CiNkkEwA7PTv2wdKjVYs8zCvi1RewsCEv9AvOcNmY/OCPRTF\r\n1Cnhc9h0/ZLMLSv25AV7pxRM/tRg4UEBsK8CQDTKHYQNkZcNO+Spa7fC5YT2I7dr\r\nywMepwLA4jvt6xeF/OK1gW4dwX6e/mz3j9OwbsOtyUc0NKftIO1HqLl2JRECQBHb\r\nfNF+onqWKZbBRVjdlCMeOKaQi8BnQRW7N8m1+6kTcrctA55dKa9XLtHjRCPXlpED\r\nuG5vFM65r4jNpuAuEKkCQQCB5rjbTNkg0lYZo0ITwDq9zoyiKBHGc3ZvszilhlTF\r\nmtQMGrS/oWlVuxeuE8p7jGf+wzKWj10uXKHwNxFLd73v\r\n-----END RSA PRIVATE KEY-----";
+        // $decrypted = decrypt($encrypted, $privateKey);
+        $dec = $this->decrypt($encrypted, $privateKey);
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+        $method = 'aes-256-cbc';
+        $decrypted = openssl_decrypt(base64_decode($dec), $method, '1', OPENSSL_RAW_DATA, $iv);
+        return $decrypted;
+    }
+
+    public function TestHashBlock()
+    {
+        $encrypted = 'i7NKstBFwqCKgHHY09c+oc4wIYJPVYuS4L3ICt6gCVs/R3bwoX2Vy/KSyjoOlYtRtQEZVD+RiFIAu5cS/8apIA==';
+        $preHash = '0';
+        return $this->HashOfBlock($encrypted, $preHash);
+    } // just for test
+
+    public function HashOfBlock($encrypted, $preHash)
+    {
+        $hashOrigin = $encrypted . time() . $preHash;
+        $hash = hash("sha256", $hashOrigin);
+        return $hash;
+    }
+
     public function encrypt($data, $pubKey)
     {
-        if (openssl_public_encrypt($data, $encrypted, $pubKey))
+        if (openssl_public_encrypt($data, $encrypted, $pubKey)) {
             $data = base64_encode($encrypted);
-        else
+        } else {
             throw new Exception('Unable to encrypt data. Perhaps it is bigger than the key size?');
-
+        }
         return $data;
     }
 
     public function decrypt($data, $priKey)
     {
-        if (openssl_private_decrypt(base64_decode($data), $decrypted, $priKey))
+        if (openssl_private_decrypt(base64_decode($data), $decrypted, $priKey)) {
             $data = $decrypted;
-        else
-            $data = '123';
-
+        }
         return $data;
     }
+
+    public function GenerateKey()
+    {
+        // $payment = Payment::where('id', '=', $id)->first();
+        $rsa = new RSA();
+        $key = $rsa->createKey();
+        $privateKey = $key['privatekey'];
+        $publicKey = $key['publickey'];
+        // dd($publicKey);
+        // $publicKey =
+        // "-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHmgT9iPALr794vrm6AbSTL0Uy\r\npY36+ZS2Oxetzut6PjngwqWLabPmxXeC5LUHRFdl8+1k7BEIAOypt2LDU3EqtbDj\r\n5v3joZNVthGCgv8+GkLGhr0rPXNqR0PuHFcONuoM2pg0Tj9l6qhcHA4gppOjCYhU\r\nNtNkItV1mgHCK0mTewIDAQAB\r\n-----END PUBLIC KEY-----";
+        // $publicKey = '-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDB7dB6ZVYqJ0W31gsRuhKnBAsOK5o3qSDXXeM4MQ/HAmm/aUjA8FFyZT3R/1JmNDA7vo7g1PscftLxhFWib/v/w79gH6bpC+R8wMu3OYvHaHSSz+v+naOMyh+0IAIjEYxOUnTEWpfZHegaMAAz3YGR60thr2a2yc/zNgBSFFbokQIDAQAB-----END PUBLIC KEY-----';
+        // $privateKey = '-----BEGIN RSA PRIVATE KEY----- MIICXgIBAAKBgQC+fdJFgNTErTb3WntzFac5GdfHFGOy6pt1tLI+wK13VIDak0o/ w6vRr2bkLO4R+WJKbKW/itZgrhy0n3q24AghRqldOmkSBBhJH/3pWa/HPCJP2NHR dzETYNjq53F8SgPw1/XehuZWkgsxCjWJcpYBgwT/Zsl3OGBrX8uQORPMkQIDAQAB AoGBAKz/2fpzQUiJQzUrgJgJH0CVfsj3dIAl3x/sBkFFfYS1Qvy+7ZyxWRbq5Ffv khrS0PhkabdmIMHW/ozvlWQGXHpCelrUj4S+TC89JbAOhVWkwRfEDvj7NzRpTz4N hQUmA5OAU1x1x7hqYL7Cs3yNVxfGOhTuolk+uOtJZQk+Jf2RAkEA5+VU7HkU0P8D rWBvoDrq0GLXbO7Y5ap1+QG4ZqezVsy1qbGa8YrQJVPcGHK6svvsLLHcaax3/0xs N6F64qY6xQJBANJKvAUIEMmupL4VWPuzefaDP29UIk07Pj/G49uM/EEGUhN/NTVY thgHuDwE62HGHRumLIem6wddX85/OeNR110CQQC3GQpe1JOtGU2r/XLlzt9Mvl5e MpCrdlZD0CnrVAp0RJpDbGpswS/r6TTlUOE9JVCrUZw5C+aLe6oOmr/OaXYJAkEA mUqrJkvL2Qi6xGlRVSFujXj9G81Lt9qwtNLptFhgZZIS8G1xPvLswjWWYgIAB2Tg QRBwM25EsziopyFs9DzrbQJAKuwMN4R4imuuA/5z85/bEu1r05J9w1T0wo93zp2w 0gQzaDxVvOlYlm7sDMYf7cvdL2y8WkWdzWgU6UQFtktiOg== -----END RSA PRIVATE KEY-----';
+        dd($publicKey . $privateKey);
+
+        // $privateKey ='MIICWwIBAAKBgQDDxLo9OrtMtxndfT9Wr/xAU5fsYuTGLaJdoj6po0aZrl/3VQNs T4EhzZ0aS/7OFTfxlKUr2qnL4OOwL+4kiRDGrHuX3N4u5QJ/sDFLwvWvOC+86fZN aWFRONNWl0bHVYsME+8Eb1iC8rAisi8it4rybYHykso/fL0z4N7fMGnXWwIDAQAB AoGAJs8ZHIpIFy01M3Ng2w6IMzhfJb11HNRvG6DOS1LS7CRlYeK4iwA32TupqUzn dnM+Y+XT2J3Ai2pJuOPHkfaaHG/PHE2AGvbWCQUCa8JEScqUDpdGHS2EaYPQQ6Ph 8V5ylDa2jJZkt0SJY/2GZqBG1j3NQjGC1CkrvUk8Wo9ylAECQQDjxDd+wRwnd3XN HL1JfyjWxh4IWWyBsIM2oEbKKahKOT8V0wZnwOsIaOrA+7FFzYqE+N8ki9NvmVB5 GDTuKJ8zAkEA3AkbtJGOgU6Caw1KSJhWKpkLveT85IGw13H4Ev5vvvI4odaRUkkj FSRe5kbofDGcyE8Q7saB4kPrMGnmjuwHOQJAOiZydK4g3gKl1MQtn4ITjyHtsPwD s+i41018RUj1al3LOWszC3I5j2AZ70NTMxsS7ngLoG0Cgk+GOCRx/wvn+QJAX0Ke OQWPUZIAyoH9eAJjw5twxuydQ/yV6CBSSz7WeC97ry0qyxoY0y1k3IM0YZhFDT+V 0Bom3yOSbepbQ+MRmQJAbOvHPrWw4uCVbpaiIDHhKWYC0mt++W/ujNrPBcyFHkMP qoADJnc3d8mm0XUjm3osJ+kgvwuf6LqZdWWQrmT7rQ==';
+        // $publicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDxLo9OrtMtxndfT9Wr/xAU5fs YuTGLaJdoj6po0aZrl/3VQNsT4EhzZ0aS/7OFTfxlKUr2qnL4OOwL+4kiRDGrHuX 3N4u5QJ/sDFLwvWvOC+86fZNaWFRONNWl0bHVYsME+8Eb1iC8rAisi8it4rybYHy kso/fL0z4N7fMGnXWwIDAQAB';
+        // $paymentArray = array(
+        //     'id' => $payment->id,
+        //     'paid' => $payment->paid,
+        //     'total_price' => $payment->total_price,
+        //     'phone' => $payment->phone,
+        //     'is_done' => $payment->is_done,
+        //     'created_at' => $payment->created_at,
+        //     'type' => 1 // 1 is create payment
+        // );
+        //         $jsonPayment = json_encode($paymentArray);
+        // $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . ',2';
+        $plaintext = "1222,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1";
+        // // var_dump($dataPayment);
+        $method = 'aes-256-cbc';
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+        $encrypted = base64_encode(openssl_encrypt($plaintext, $method, '1', OPENSSL_RAW_DATA, $iv));
+        $enc = $this->encrypt($encrypted, $publicKey);
+
+        $dec = $this->decrypt($enc, $privateKey);
+        dd($encrypted);
+        $decrypted = openssl_decrypt(base64_decode($dec), $method, '1', OPENSSL_RAW_DATA, $iv);
+        dd($decrypted);
+        // return $encrypted;
+    }
+
+//     public function EncryptCreatePayment($id)
+    //     {
+    //         $payment = Payment::where('id', '=', $id)->first();
+    //         $pubKey = '-----BEGIN PUBLIC KEY----- MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANMA8OGlPPizwjZeX5G1vSLRzH/jT4xc +FtRSzgW1lrl/HWfMGSlqskdQNbgxtwMFJVu0cN8ymBsEkRPBwwDTr0CAwEAAQ== -----END PUBLIC KEY-----';
+
+// //        $history = TreatmentHistory::where('patient_id', '=', $patientId) -> first();
+    // //
+    // //        $nameHop = 'Thanh Hung';
+    // //        $server = NodeInfo::where('name_hopital','=',$nameHop) -> first();
+    // //
+    // //        $name = $server -> name_hopital;
+    // //        $jsonServer = array(
+    // //            'ip' =>  $server -> ip_server,
+    // //            'name' => $server -> name_hopital,
+    // //        );
+    // //        $jsonHistory = array(
+    // //
+    // //        );
+    //         $paymentArray = array(
+    //             'id' => $payment->id,
+    //             'paid' => $payment->paid,
+    //             'total_price' => $payment->total_price,
+    //             'phone' => $payment->phone,
+    //             'is_done' => $payment->is_done,
+    //             'created_at' => $payment->created_at,
+    //             'type' => 1 // 1 is create payment
+    //         );
+    //         $jsonPayment = json_encode($paymentArray);
+    //         var_dump($jsonPayment);
+    // //        $mainJson = json_encode(array_merge($jsonHistory,$jsonServer));
+    //         $encrypted = openssl_pkey_get_private($jsonPayment, $pubKey);
+
+// //        $priKey = $key -> private_key;
+    //         var_dump($encrypted);
+    //     }
+
+//     public function DecryptTreatmentHistory()
+    //     {
+    //         $patientId = '1';
+    //         $key = Key::where('patient_id', '=', $patientId)->first();
+    //         $priKey = $key->public_key;
+
+//         //
+
+// //        openssl_private_decrypt($encrypted, $decrypted, $priKey);
+    //         //        var_dump($decrypted);
+    //     }
+
+    //
+    public function GenerateKey2()
+    {
+        $rsa = new RSA();
+        $key = $rsa->createKey();
+        $privateKey = $key['privatekey'];
+        $publicKey = $key['publickey'];
+        dd($publicKey);
+        $plaintext = '1';
+        $password = '123456';
+        $method = 'aes-256-cbc';
+
+        // Must be exact 32 chars (256 bit)
+        $password = substr(hash('sha256', $password, true), 0, 32);
+        // IV must be exact 16 chars (128 bit)
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+
+        // av3DYGLkwBsErphcyYp+imUW4QKs19hUnFyyYcXwURU=
+        $encrypted = base64_encode(openssl_encrypt($plaintext, $method, $password, OPENSSL_RAW_DATA, $iv));
+        $enc = $this->encrypt($encrypted, $publicKey);
+        dd($encrypted);
+
+        // My secret message 1234
+        //        $data = $this->decrypt($enc, $privateKey);
+        //        $decrypted = openssl_decrypt(base64_decode($data), $method, $password, OPENSSL_RAW_DATA, $iv);
+        //        dd($decrypted);
+    }
+    //
 }
