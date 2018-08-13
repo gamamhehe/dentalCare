@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TreatmentHistorySymptom extends Model
 {
-    protected $table = 'tbl_treatment_history_symptom';
+    protected $table = 'tbl_treatment_history_symptoms';
     protected $fillable = ['treatment_history_id', 'symptom_id'];
 
     public function belongsToTreatmentHistory()

@@ -116,12 +116,13 @@ class UserController extends BaseController
             if ($result != null) {
 //                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
-                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime, true);
-                $this->dispatch(new SendSmsJob($phone, $smsMessage));
+                $vnSmsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime, true);
+                $engSmsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+                $this->dispatch(new SendSmsJob($phone, $engSmsMessage));
                 if ($isNewUser) {
                     $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
                 }
-                $successResponse = $this->getSuccessObj(200, "OK", $smsMessage, "Nodata");
+                $successResponse = $this->getSuccessObj(200, "OK", $vnSmsMessage, "Nodata");
                 return response()->json($successResponse, 200);
             } else {
                 $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",

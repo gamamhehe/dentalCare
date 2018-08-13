@@ -124,6 +124,7 @@ class PatientController extends BaseController
             } else {
                 $appointment->status = 1;
                 $this->saveAppointment($appointment, $patientId);
+                $this->updateNumAppWebsite($appointment);
                 $this->sendFirebaseReloadAppointment($appointment->staff_id);
                 $successResponse = $this->getSuccessObj(200, "OK", "Change status success", "No data");
                 return response()->json($successResponse, 200);
@@ -132,7 +133,6 @@ class PatientController extends BaseController
             $errorResponse = $this->getErrorObj("Lỗi server", $exception);
             return response()->json($errorResponse, 500);
         }
-
     }
 
     public function receive(Request $request)
@@ -171,7 +171,7 @@ class PatientController extends BaseController
                         $patient = $this->getPatientById($id);
                         $response = new \stdClass();
                         $response->status = "OK";
-                        $response->message = "Chỉnh sửa avatar thành côngs";
+                        $response->message = "Chỉnh sửa avatar thành công";
                         $response->data = $patient->avatar;
                         return response()->json($response, 200);
                     } else {
@@ -211,6 +211,7 @@ class PatientController extends BaseController
             '562929',
             $options
         );
+        $appointment->pushStatus = 0;
         $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
     }
 
