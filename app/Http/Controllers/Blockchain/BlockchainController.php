@@ -68,9 +68,12 @@ class BlockchainController extends Controller
         return "ERROR";
     }
 
-    public function setDataTypePayment(){
-        $listStrings = array("5,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1", "3, 60000000, 5, 2", "9, 4, 3, 2017-08-08 20:00:00, 222222, 3");
+    public function setDataTypePayment($listStrings){
+        // $listStrings = array("5,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1", "3, 60000000, 5, 2", "9, 4, 3, 2017-08-08 20:00:00, 222222, 3");
         $arrayString = explode ( ',' , $listStrings[0]);
+
+        $this -> deleteDataPayment();
+
         foreach($listStrings as $element){
             $arrayString = explode ( ',' , $element);
             if($arrayString[sizeof($arrayString) - 1] == 1)
