@@ -37,10 +37,10 @@ class BlockchainController extends Controller
     }
 
     public function checkBlockChain($blockchain){
-        if($blockchain[0] -> previousHash != 0)
+        if($blockchain[0] -> previous_hash != 0)
             return false;
         for($i = 0; $i < sizeof($blockchain) - 1; $i++){
-            if($blockchain[$i] -> Hash != $blockchain[$i+1] -> previousHash)
+            if($blockchain[$i] -> hash != $blockchain[$i+1] -> previous_hash)
                 return false;
         }
         return true;
@@ -65,7 +65,7 @@ class BlockchainController extends Controller
         if($this -> checkBlockChain($ledger_1) && $this -> checkBlockChain($ledger_2))
             return $this -> compareBlockChain($ledger_1, $ledger_2, $ledger_3);
             
-        return "ERROR BLOCKCHAIN";
+        return "ERROR";
     }
 
     public function setDataTypePayment(){
