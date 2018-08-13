@@ -28,11 +28,16 @@ class ClassCheckingStatus
     public function checkingStatusContinously()
     {
         $id = $this->addToAllNodeInNetWork($this->dataEncrypt);
+        $blockchainController = new BlockchainController();
+        $newestLedger = $blockchainController->checkLedger();
+        if($newestLedger != null){
+            
+        }
         if (is_integer((int)$id)) {
             while (true) {
                 $status = $this->checkStatus($id - 1);
                 if ($status == 2) {
-                    $newestLedger = json_decode($this->get_data('150.95.110.217/datajson'));
+
                     array_push($newestLedger, json_decode($this->dataEncrypt));
                     $this->saveNewAll($newestLedger);
                     $this->sendToAll();
@@ -44,6 +49,7 @@ class ClassCheckingStatus
         }
         Log::info("ClassCheckingStatus_checkingStatusContinously_idNotInteger " . $id);
     }
+
 
     private
     function sendToAll()
