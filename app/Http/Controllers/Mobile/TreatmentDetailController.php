@@ -55,11 +55,13 @@ class TreatmentDetailController extends BaseController
             $medicineQuantities = $request->input('medicine_quantity');
             $detailStepIds = $request->input('step_id');
             $medicines = [];
-            for ($i = 0; $i < count($medicineIds); $i++) {
-                $medicine = new MedicinesQuantity();
-                $medicine->medicine_id = $medicineIds[$i];
-                $medicine->quantity = $medicineQuantities[$i];
-                $medicines[] = $medicine;
+            if ($medicineIds != null) {
+                for ($i = 0; $i < count($medicineIds); $i++) {
+                    $medicine = new MedicinesQuantity();
+                    $medicine->medicine_id = $medicineIds[$i];
+                    $medicine->quantity = $medicineQuantities[$i];
+                    $medicines[] = $medicine;
+                }
             }
             $result = $this->createTreatmentDetailWithModel(
                 $tmHistoryId,
