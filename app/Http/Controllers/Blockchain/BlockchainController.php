@@ -127,4 +127,17 @@ class BlockchainController extends Controller
 //        array_push($newestLedger, json_decode($dataEncrypt));
 //        return json_encode($newestLedger);
     }
+
+    public function testPerformance()
+    {
+        $dataEncrypt = '{"data_encrypt":"TaiGay","previous_hash":"ThongNatDit","hash":"TuongAnTaiTro"}';
+        $listNode = $this->getListNode();
+        for ($i = 0; $i <= 2000; $i++) {
+            $j = rand() % count($listNode);
+            $url = $listNode[$j]->ip . '/test?data_encrypt=' . $dataEncrypt;
+            $client = new \GuzzleHttp\Client();
+            $client->get($url);
+        }
+        return 'feeling';
+    }
 }

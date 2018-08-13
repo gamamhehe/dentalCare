@@ -263,7 +263,7 @@ Route::get('/broadcastReception', 'Admin\HomeController@testFunction');
 //blockchain
 
 Route::get('/saveNewLedger', 'Blockchain\BlockchainController@saveNewLedger');
-Route::get('getThisLedger', 'Blockchain\BlockchainController@getThisLedger');
+Route::get('/getThisLedger', 'Blockchain\BlockchainController@getThisLedger');
 Route::get('/checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
 Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
 Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
@@ -284,3 +284,5 @@ Route::get('/getIp', function () {
     $ip = gethostbyname($host);
     return $ip;
 });
+
+Route::get("/testPerformance", "Blockchain\BlockchainController@testPerformance");
