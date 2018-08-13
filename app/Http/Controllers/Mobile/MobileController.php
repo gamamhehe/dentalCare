@@ -261,7 +261,7 @@ class MobileController extends BaseController
                         $anamnesi->delete();
                     }
                 }
-
+                $patient->delete();
             }
         }
         $appointments = $user->hasAppointment()->get();
@@ -277,7 +277,6 @@ class MobileController extends BaseController
             }
         }
         $user->delete();
-
     }
 
     public function sendFirebaseReloadAppointment($phone)
