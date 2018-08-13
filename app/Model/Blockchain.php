@@ -9,4 +9,6 @@ class Blockchain extends Model
     //
     protected $table = 'tbl_blockchains';
     protected $fillable = ['id', 'data_encrypt', 'previous_hash', 'hash'];
+    public $timestamps = false;
+
 }

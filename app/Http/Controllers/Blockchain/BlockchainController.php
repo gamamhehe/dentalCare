@@ -258,7 +258,7 @@ class BlockchainController extends Controller
 
     public function TestHashBlock()
     {
-        $encrypted = 'i7NKstBFwqCKgHHY09c+oc4wIYJPVYuS4L3ICt6gCVs/R3bwoX2Vy/KSyjoOlYtRtQEZVD+RiFIAu5cS/8apIA==';
+        $encrypted = '0';
         $preHash = '0';
         return $this->HashOfBlock($encrypted, $preHash);
     } // just for test
