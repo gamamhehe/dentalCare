@@ -93,7 +93,7 @@ trait TreatmentHistoryBusinessFunction
         return $treatmentHistories;
     }
 
-    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines, $symptomIds, $images)
+    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines, $symptoms, $images)
     {
 
         DB::beginTransaction();
