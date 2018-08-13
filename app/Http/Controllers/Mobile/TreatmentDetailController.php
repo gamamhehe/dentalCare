@@ -69,7 +69,7 @@ class TreatmentDetailController extends BaseController
                 $medicines,
                 $images);
             if ($result) {
-                $successResponse = $this->getSuccessObj(200, "OK", "Chỉnh sửa thành công", "No data");
+                $successResponse = $this->getSuccessObj(200, "OK", "Thêm điều trị chi tiết thành công", "No data");
                 return response()->json($successResponse, 200);
             } else {
                 $error = $this->getErrorObj("Không thể lưu thông tin chi tiết điều trị", "No exception");

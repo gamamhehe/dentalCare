@@ -98,7 +98,7 @@ class TreatmentHistoryController extends BaseController
                 $symptoms,
                 $images);
             if ($result) {
-                $successResponse = $this->getSuccessObj(200, "OK", "Chỉnh sửa thành công", "No data");
+                $successResponse = $this->getSuccessObj(200, "OK", "Thêm điều trị thành công", "No data");
                 return response()->json($successResponse, 200);
             } else {
                 $error = $this->getErrorObj("Không thể lưu thông tin điều trị", "No exception");
