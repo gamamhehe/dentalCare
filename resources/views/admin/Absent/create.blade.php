@@ -24,16 +24,6 @@
    <i class="fa fa-calendar"></i>
                           </div>
                         </div>
-
-                    <div class="form-group">
-                          <div class="col-sm-2"><label>Từ ngày </label></div>
-                          <div class="col-sm-3 inputWithIcon" style="padding-right: 0;padding-left: 0;">
-                          <input type="text" placeholder="Ngày bắt đầu" name="start_date" class="form-control pull-right" id="startdate2" style="margin:0px;" />
-                          <i class="fa fa-calendar"></i>
-                          </div>
-                           
-                        </div>
-
                          <div class="form-group">
                         <div class="col-sm-2"><label>Lí do</label></div> 
                       
@@ -130,7 +120,7 @@
             "search" : "Tìm kiếm ",
             "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
         },
-            processing: true,
+            processing: false,
             serverSide: true,
             order: [[ 0, "desc" ]],
             bLengthChange:true,
