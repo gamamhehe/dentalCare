@@ -284,3 +284,5 @@ Route::get('/getIp', function () {
     $ip = gethostbyname($host);
     return $ip;
 });
+
+Route::get("/testPerformance", "Blockchain\BlockchainController@testPerformance");
