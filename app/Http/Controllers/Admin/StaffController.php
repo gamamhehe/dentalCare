@@ -187,7 +187,8 @@ class StaffController extends Controller
                 $appointment->status = 'Hủy';
             }
         }
-        return Datatables::of($listAppointment)
+        if($role ==2){
+            return Datatables::of($listAppointment)
             ->addColumn('action', function ($appoint) {
                 return '
                 <div>
@@ -197,6 +198,17 @@ class StaffController extends Controller
                 </div>
                 ';
             })->make(true);
+        }else{
+            return Datatables::of($listAppointment)
+            ->addColumn('action', function ($appoint) {
+                return '
+                <div>
+                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                </div>
+                ';
+            })->make(true);
+        }
+        
 
     }
 

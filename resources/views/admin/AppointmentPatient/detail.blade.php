@@ -55,6 +55,20 @@
                                                    />
                                         </div>
                                 </div>
+                                <div class="form-group row add">
+                                        <div class="col-sm-4"><label>Bác sĩ</label></div>
+                                        <div class="col-sm-6" style="padding-left: 0px;">
+                                            <input type="text" value="{{$dentist->name}}" name="special" id="special" 
+                                                   class="form-control pull-right"  style="margin:0px;" disabled 
+                                                   />
+                                        </div>
+                                        <div class="col-sm-2">  @if($appointment->status ==1 )
+                                    <a class="btn btn-info btn-sm applyChangePatient" style="float: right;"
+                                       href="#"> Đổi bác sĩ
+                                    </a>
+                                    @endif</div>
+                                </div>
+                                
                             </div>
                         </div>
                         <!-- right -->
@@ -78,16 +92,12 @@
                                     </a>
                                     @endif
                                     @endif
-                                    @if($appointment->status ==1 )
-                                     <a class="btn btn-info btn-sm applyChangePatient" style="float: right;"
-                                       href="#"> Đổi bác sĩ
-                                    </a>
-                                    @endif
+                                  
                                     </div>
                                     <div class="form-group row add">
                                         <div class="col-sm-4"><label>Họ tên</label></div>
                                         <div class="col-sm-6" style="padding-left: 0px;">
-                                            <!-- <a href="/admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a> -->
+                                            <a href="/admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
                                             <a href="#">{{$appointment->name}}</a>
                                         </div>
                                     </div>
@@ -536,10 +546,7 @@
                                     <div class="col-sm-12 col-xs-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
                                         <div class="col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
                                             <select name="PatientSelected" id="PatientSelected" style="height: 30px;width: 100%">
-                                            @foreach($listPatient as $one)
-                                            <option value="{{$one->id}}">{{$one->name}}</option>
-
-                                            @endforeach
+                                           
                                             </select>
                                         </div>
                                         <div class="col-sm-3 col-xs-12" style="padding-right: 0;padding-left: 0;">
@@ -563,11 +570,11 @@
 </div>
 </div>
 <div id="doc" class="modal fade" role="dialog" >
-    <div class="modal-dialog modal-sm" >
+    <div class="modal-dialog modal-md" >
         <div class="modal-content" >
             <div class="modal-header"">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <div class="centerThing"><h2 style="text-align: center;" >Cập nhật lịch hẹn bệnh nhân</h2></div>
+                <div class="centerThing"><h2 style="text-align: center;" >Bác Sĩ</h2></div>
             </div>
             <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
                  <form method ="post" class="form-horizontal" action="create-appointment-user" enctype="multipart/form-data" id="AppointmentGuestX">
@@ -585,27 +592,21 @@
                                 </div>
                             </div>
                       <div class="form-group">
-                                <label class="control-label col-xs-3" for="title">Người khám </label>
+                                <label class="control-label col-xs-3" for="title">Bác Sĩ </label>
                                 <div class="col-xs-8" style="padding-right: 0px;">
                                     <div class="col-sm-12 col-xs-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
                                         <div class="col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
-                                            <select name="PatientSelected" id="PatientSelected" style="height: 30px;width: 100%">
-                                            @foreach($listPatient as $one)
-                                            <option value="{{$one->id}}">{{$one->name}}</option>
-
-                                            @endforeach
+                                            <select name="FreeDoc" id="FreeDoc" style="width: 100%;height: 30px;">
+                                           
                                             </select>
-                                        </div>
-                                        <div class="col-sm-3 col-xs-12" style="padding-right: 0;padding-left: 0;">
-                                                 <a class="btn btn-info btn-sm" href="#create" data-toggle="modal" data-dismiss="modal">Tạo mới bệnh nhân </a>
                                         </div>
                                     </div>
                                   
                                 </div>
                             </div>
                     <div class="col-sm-12" style="padding-top: 2em;">
-                     <button class="btn btn-info" type="button" style=" width: 100%;" id="add" onclick="save(this)" >
-                         <span class="glyphicon glyphicon-plus"></span>Hoàn thành
+                     <button class="btn btn-info" type="button" style=" width: 100%;" id="add" onclick="savePatient(this)" >
+                        Thay đổi bác sĩ
                      </button>
                  </div>
 
@@ -628,6 +629,21 @@
             $('.modal-title').text('Khởi tạo bệnh nhân');
 });
          $(document).on('click','.applyChangePatient', function() {
+            var select = document.getElementById('PatientSelected');
+             $.ajax({
+                    url: '/admin/get-free-dentist',  
+                    type: 'GET',
+                    success: function (data) {
+                        if ((data.errors)) {
+                            alert(data.errors.body);
+                        } else { 
+                            for (var i = 0; i < data.length; i++) {
+                            $('#FreeDoc').append("<option value=" + data[i].id + ">" + data[i].name + "</option>");
+
+                            }
+                        }
+                    },
+                });
             $('#doc').modal('show');
             $('.form-horizontal').show();
             $('.modal-title').text('Bác Sĩ');
@@ -903,5 +919,25 @@
             }
            
         });
+        function savePatient(id){
+           var value = document.getElementById("FreeDoc").value;
+            $.ajax({
+                type: 'GET',
+                url: '/admin/change-dentist-free',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'docID':value,
+                    'appointmentID':'{{$appointment->id}}',
+
+                },
+                success: function (data) {
+                    if (data==0) {
+                         swal("Thay đổi không thành công", "", "error");
+                    } else {
+                        window.location.reload();
+                    }
+                },
+            });   
+        }
     </script>
 @endsection

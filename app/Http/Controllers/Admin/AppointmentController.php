@@ -9,6 +9,7 @@ use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Jobs\SendSmsJob;
 use App\Model\Patient;
+use App\Model\Staff;
 use App\Model\City;
 use App\Model\District;
 use Illuminate\Http\Request;
@@ -101,6 +102,7 @@ class AppointmentController extends Controller
         $result = [];
         $listPatient = [];
         $case3 = 0;
+        $dentist= null;
         if ($checkAppoint == 0) {//khong có lịch hẹn.
 
             $resultPatient = $this->getPatientByPhone($appointment->phone);
@@ -118,6 +120,7 @@ class AppointmentController extends Controller
                 $patient = null;
             }
         } else {// có lịch hẹn
+            $dentist = $appointment->belongsToStaff()->first();
             $case3 = 1;
             $patient = Patient::where('id', $checkAppoint)->first();
             // $result =[];
@@ -139,7 +142,8 @@ class AppointmentController extends Controller
         $city = city::all();
         $District = District::where('city_id', 1)->get();
         $listAnamnesis = AnamnesisCatalog::all(); 
-        return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'citys' => $city, 'District' => $District,'patient' => $patient, 'listTreatmentHistory' => $result,'AnamnesisCatalog' => $listAnamnesis,'listPatient'=>$listPatient,'case3'=>$case3]);
+       
+        return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'citys' => $city, 'District' => $District,'patient' => $patient, 'listTreatmentHistory' => $result,'AnamnesisCatalog' => $listAnamnesis,'listPatient'=>$listPatient,'case3'=>$case3,'dentist'=>$dentist]);
     }
 
     public function startAppointmentController($appointId)
@@ -238,5 +242,23 @@ class AppointmentController extends Controller
         $appointId = $request->appID;
         $resultStatus = $this->updateStatusAppoinment(1,$appointId);
         return redirect()->back()->withSuccess("Done");
+    }
+    public function getFreeDentist(){
+        $list = $this->getCurrentFreeDentist();
+        $listObj =[];
+        foreach ($list as $dentist=>$key) {
+             $x = Staff::find($key);
+              $listObj[]=$x;
+        }
+       return $listObj;
+    }
+    public function changeDentist(Request $request){
+        $id =$request->docID;
+        $appID=$request->appointmentID;
+        $result = $this->updateDentistAppoinment($id,$appID);
+        if($result==false){
+            return 0;
+        }
+         return 1;
     }
 }
