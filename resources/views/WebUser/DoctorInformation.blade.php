@@ -146,13 +146,13 @@
                                             <form action="{!! url('/loginUser') !!}" method="Post">
                                                 {{ csrf_field() }}
                                                 <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                    <input type="text" class="form-control" placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}"
                                                            required autofocus>
                                                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                                                      
                                                 </div>
                                                 <div class="form-group has-feedback">
-                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required>
                                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                                      
                                                 </div>
@@ -310,13 +310,13 @@
                                             <form action="{!! url('/loginUser') !!}" method="Post">
                                                 {{ csrf_field() }}
                                                 <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                    <input type="text" class="form-control" placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}"
                                                            required autofocus>
                                                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                                                      
                                                 </div>
                                                 <div class="form-group has-feedback">
-                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required>
                                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                                      
                                                 </div>
