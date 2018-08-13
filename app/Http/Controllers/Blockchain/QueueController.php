@@ -92,8 +92,7 @@ class QueueController extends Controller
         return '0';
     }
 
-    public
-    function checkExist(Request $request)
+    public function checkExist(Request $request)
     {
         return json_encode($this->isExist($request->ip));
     }

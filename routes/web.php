@@ -220,7 +220,7 @@ Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
 
 ////Blockchain - HungPT
 Route::get('/generateKey', 'Blockchain\BlockchainController@GenerateKey');
-Route::get('/encryptPayment/{id}', 'Blockchain\BlockchainController@EncryptCreatePayment');
+Route::get('/encryptPayment', 'Blockchain\BlockchainController@EncryptCreatePayment');
 Route::get('/decryptBlock/{id}', 'Blockchain\BlockchainController@DecryptDataBlock');
 Route::get('/encryptPaymentDetail/{id}', 'Blockchain\BlockchainController@EncryptCreatePaymentDetail');
 Route::get('/checkKey', 'Blockchain\BlockchainController@CheckPublicKeyNPrivateKey');

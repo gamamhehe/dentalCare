@@ -66,7 +66,7 @@ trait QueueBusinessFunction
         return false;
     }
 
-    private function callTheURL($url)
+    public function callTheURL($url)
     {
         $client = new \GuzzleHttp\Client();
         $request = $client->get($url);

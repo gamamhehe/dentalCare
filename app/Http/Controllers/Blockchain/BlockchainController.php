@@ -17,6 +17,7 @@ use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
 use App\Model\Payment;
 use App\Model\PaymentDetail;
 use File;
+use App\Http\Controllers\Blockchain\QueueController;
 
 
 class BlockchainController extends Controller
@@ -185,8 +186,9 @@ class BlockchainController extends Controller
         return $decrypted;
     }
 
-    public function EncryptCreatePayment($id)
+    public function EncryptCreatePayment(Request $request)
     {
+        $id = $request->id;
         $payment = Payment::where('id', '=', $id)->first();
         $publicKey = $this->ReadPublickey();
 
@@ -196,7 +198,14 @@ class BlockchainController extends Controller
         $method = 'aes-256-cbc';
         $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));
         // dd($publicKey);
-        return $this->encrypt($encrypted, $publicKey);
+        // $queue = new QueueController();
+        // $queue -> runJobQueue()
+        // $url = "127.0.0.1/";
+        $host = gethostname();
+        $ip = gethostbyname($host);
+        $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
+        $this->callTheURL($url); 
+        // return $this->encrypt($encrypted, $publicKey);
     }
 
     public function TestUpdatePayment()
