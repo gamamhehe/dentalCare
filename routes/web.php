@@ -289,4 +289,3 @@ Route::get('/getIp', function () {
     $ip = gethostbyname($host);
     return $ip;
 });
-
