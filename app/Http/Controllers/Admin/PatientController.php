@@ -158,8 +158,7 @@ class PatientController extends Controller
             $appointment = $this->checkAppointmentForPatient($phone, $id);
             if ($appointment === null) {
                 $status = 2;
-            } else
-                if ($appointment) {
+            } else{
                     $appointment->status = 1;
                     $this->saveAppointment($appointment, $id);
                     $options = array(
@@ -176,11 +175,7 @@ class PatientController extends Controller
                     $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
                     $this->sendFirebaseReloadAppointment($appointment->staff_id);
                     $status = 1;
-                } else {
-                    $status = 0;
-//
-                }
-        }
+        }}
         $data = array(
             'statusOfReceive' => $status
         );
