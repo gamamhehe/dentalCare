@@ -63,6 +63,12 @@ trait BlockchainBusinessFunction
         return $nodeInfo;
     }
 
+    public function deleteDataPayment(){
+        Payment::query() -> delete();
+        PaymentDetail::query() -> delete();
+        PaymentUpdateDetail::query() -> delete();
+    }
+
     public function setDataCreatePayment($element)
     {
         DB::beginTransaction();
