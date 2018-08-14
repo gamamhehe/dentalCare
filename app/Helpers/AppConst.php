@@ -84,7 +84,7 @@ class AppConst
 
     public static function getSmsNewUser()
     {
-        return "Cam on ban da dat lich tai phong kham Dental Gold, tai khoan mat khau mac dinh la so dien thoai cua ban.";
+        return "Tai khoan mat khau mac dinh tai Dental Gold la so dien thoai cua ban.";
     }
 
     public static function getSmsMSGForAbsent($name, $startDate, $endDate)
