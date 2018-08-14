@@ -394,7 +394,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-info" type="button" id="addPatientExist">
-                            <span class="glyphicon glyphicon-plus"></span>Tạo bệnh nhân
+                           Tạo bệnh nhân
                         </button>
                         <button class="btn btn-info" type="button" data-dismiss="modal">
                             <span class="glyphicon glyphicon-remobe"></span>Đóng
@@ -506,7 +506,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-info" type="button" id="addPatient">
-                            <span class="glyphicon glyphicon-plus"></span>Tạo bệnh nhân
+                           Tạo bệnh nhân
                         </button>
                     
                         <button class="btn btn-info" type="button" data-dismiss="modal">
@@ -546,7 +546,9 @@
                                     <div class="col-sm-12 col-xs-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
                                         <div class="col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
                                             <select name="PatientSelected" id="PatientSelected" style="height: 30px;width: 100%">
-                                           
+                                                @foreach($listPatient as $one)
+                                                    <option value="{{$one->id}}">{{$one->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-3 col-xs-12" style="padding-right: 0;padding-left: 0;">
@@ -558,7 +560,7 @@
                             </div>
                     <div class="col-sm-12" style="padding-top: 2em;">
                      <button class="btn btn-info" type="button" style=" width: 100%;" id="add" onclick="save(this)" >
-                         <span class="glyphicon glyphicon-plus"></span>Hoàn thành
+                        Cập nhật
                      </button>
                  </div>
 

@@ -45,79 +45,118 @@
             <li class="nav-item">
 
                 @if(Session::has('currentUser'))
-                <li class="nav-item dropdown ">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
-                        class="img-fluid img-responsive" style="max-height: 25px;">
+               <li class="nav-item dropdown ">
+                        @if(Session::has('listPatient'))
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle"
+                                     alt="User Image"
+                                     class="img-fluid img-responsive" style="max-height: 25px;">
+                            </a>
+                        <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
+                                <li class="user-header">
+                                    <div class="container" style=";padding:10px 0px; ">
+                                        <div class="row">
+                                            <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
+                                                <img src="{{Session::get('currentPatient')->avatar}}"
+                                                     class="img-circle img-responsive img-fluid borderImg " id="divAcc1"
+                                                     alt="User Image" width="50px;">
+                                            </div>
+                                            @foreach(\Session::get('listPatient') as $key => $value)
+                                                <div class="col-sm-2">
 
-                    </a>
-                    <ul class="dropdown-menu"
-                    style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
-                    <!-- User image -->
+                                                    <img src="{{ $value->avatar }}"
+                                                         class="img-circle img-responsive img-fluid" alt="User Image"
+                                                         id="{!! $value->id !!}" width="50px;"
+                                                         onclick="changeInfo(this.id)">
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
 
-                    <li class="user-header">
-                        <div class="container" style=";padding:10px 0px; ">
-                            <div class="row">
-                                <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
-                                    <img src="{{Session::get('currentPatient')->avatar}}"
-                                    class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
+                                </li>
+                                <li class="user-header" id="acc1" style="display: block">
+                                    <p>
+
+                                        {{Session::get('currentPatient')->name}}
+                                    </p>
+                                </li>
+                                <li class="user-header" id="acc2" style="display: none">
+                                    <p>
+                                    @foreach(\Session::get('listPatient') as $key)
+                                        @if($key->id != Session::get('currentPatient')->id )
+                                            <h1>{{$key->name}}</h1>
+                                            @endif
+
+                                            @endforeach
+                                            </p>
+                                </li>
+                                <hr>
+
+                                <li class="a-hover">
+                                    <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
+                                </li>
+                                <li class="gachngang"></li>
+                                <li class="  a-hover">
+                                    <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
+                                </li>
+                                <li class="gachngang"></li>
+                                <li class=" a-hover">
+                                    <a href="#"><span>Lịch hẹn</span></a>
+                                </li>
+                                <li class="gachngang"></li>
+
+                                <!-- Menu Body -->
+                                <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                                <div class="pull-left" style="padding-left: 1em;">
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
                                 </div>
-                                @foreach(\Session::get('listPatient') as $key => $value)
-                                <div class="col-sm-2"  >
-
-                                    <img src="{{ $value->avatar }}"
-                                    class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
+                                <div class="pull-right" style="padding-right: 1em;">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
                                 </div>
-                                @endforeach
-                            </div>
-                        </div>
 
-                    </li>
-                    <li class="user-header" id="acc1" style="display: block">
-                        <p>
+                            </li>
+                        </ul>
+                        @else
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                     <img src="/assets/images/avatar/noPatient.jpg" class="user-image img-circle"
+                                     alt="User Image"
+                                     class="img-fluid img-responsive" style="max-height: 25px;">
+                            </a>
+                            <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
+                                
+                                <li class="user-header" id="acc1" style="display: block">
+                                   <div>
+                                        <p style="color: red">
+                                    Tài khoản chưa có hồ sơ bệnh nhân
+                                    </p>
+                                    <p>Hãy liên hệ với nhân viên</p>
 
-                           {{Session::get('currentPatient')->name}}
-                       </p>
-                   </li>
-                   <li class="user-header" id="acc2" style="display: none">
-                    <p>
-                        @foreach(\Session::get('listPatient') as $key)
-                        @if($key->id != Session::get('currentPatient')->id )
-                        <h1>{{$key->name}}</h1>
+                                   </div>
+                                </li>
+                                
+                                <hr>
+
+                               
+                                <!-- Menu Body -->
+                                <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                              
+                                <div align="center">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                                </div>
+
+                            </li>
+                        </ul>
                         @endif
-
-                        @endforeach
-                    </p>
-                </li>
-                <hr>
-
-                <li class="a-hover">
-                    <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
-                </li>
-                <li class="gachngang"></li>
-                <li class="  a-hover">
-                    <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
-                </li>
-                <li class="gachngang"></li>
-                <li class=" a-hover">
-                    <a href="#"><span>Lịch hẹn</span></a>
-                </li>
-                <li class="gachngang"></li>
-
-                <!-- Menu Body -->
-                <!-- Menu Footer-->
-                <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
-
-                    <div class="pull-left" style="padding-left: 1em;">
-                        <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
-                    </div>
-                    <div class="pull-right" style="padding-right: 1em;">
-                        <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
-                    </div>
-
-                </li>
-            </ul>
-        </li>
+                       
+                    </li>
 
         @else
         <li class="nav-item dropdown ">
@@ -209,79 +248,118 @@
         <li class="nav-item">
 
             @if(Session::has('currentUser'))
-            <li class="nav-item dropdown ">
-                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                    <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle" alt="User Image"
-                    class="img-fluid img-responsive" style="max-height: 25px;">
+           <li class="nav-item dropdown ">
+                        @if(Session::has('listPatient'))
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle"
+                                     alt="User Image"
+                                     class="img-fluid img-responsive" style="max-height: 25px;">
+                            </a>
+                        <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
+                                <li class="user-header">
+                                    <div class="container" style=";padding:10px 0px; ">
+                                        <div class="row">
+                                            <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
+                                                <img src="{{Session::get('currentPatient')->avatar}}"
+                                                     class="img-circle img-responsive img-fluid borderImg " id="divAcc1"
+                                                     alt="User Image" width="50px;">
+                                            </div>
+                                            @foreach(\Session::get('listPatient') as $key => $value)
+                                                <div class="col-sm-2">
 
-                </a>
-                <ul class="dropdown-menu"
-                style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
-                <!-- User image -->
+                                                    <img src="{{ $value->avatar }}"
+                                                         class="img-circle img-responsive img-fluid" alt="User Image"
+                                                         id="{!! $value->id !!}" width="50px;"
+                                                         onclick="changeInfo(this.id)">
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
 
-                <li class="user-header">
-                    <div class="container" style=";padding:10px 0px; ">
-                        <div class="row">
-                            <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
-                                <img src="{{Session::get('currentPatient')->avatar}}"
-                                class="img-circle img-responsive img-fluid borderImg "  id="divAcc1" alt="User Image"   width="50px;">
-                            </div>
-                            @foreach(\Session::get('listPatient') as $key => $value)
-                            <div class="col-sm-2"  >
+                                </li>
+                                <li class="user-header" id="acc1" style="display: block">
+                                    <p>
 
-                                <img src="{{ $value->avatar }}"
-                                class="img-circle img-responsive img-fluid" alt="User Image"  id="{!! $value->id !!}" width="50px;" onclick="changeInfo(this.id)">
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
+                                        {{Session::get('currentPatient')->name}}
+                                    </p>
+                                </li>
+                                <li class="user-header" id="acc2" style="display: none">
+                                    <p>
+                                    @foreach(\Session::get('listPatient') as $key)
+                                        @if($key->id != Session::get('currentPatient')->id )
+                                            <h1>{{$key->name}}</h1>
+                                            @endif
 
-                </li>
-                <li class="user-header" id="acc1" style="display: block">
-                    <p>
+                                            @endforeach
+                                            </p>
+                                </li>
+                                <hr>
 
-                       {{Session::get('currentPatient')->name}}
-                   </p>
-               </li>
-               <li class="user-header" id="acc2" style="display: none">
-                <p>
-                    @foreach(\Session::get('listPatient') as $key)
-                    @if($key->id != Session::get('currentPatient')->id )
-                    <h1>{{$key->name}}</h1>
-                    @endif
+                                <li class="a-hover">
+                                    <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
+                                </li>
+                                <li class="gachngang"></li>
+                                <li class="  a-hover">
+                                    <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
+                                </li>
+                                <li class="gachngang"></li>
+                                <li class=" a-hover">
+                                    <a href="#"><span>Lịch hẹn</span></a>
+                                </li>
+                                <li class="gachngang"></li>
 
-                    @endforeach
-                </p>
-            </li>
-            <hr>
+                                <!-- Menu Body -->
+                                <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
-            <li class="a-hover">
-                <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
-            </li>
-            <li class="gachngang"></li>
-            <li class="  a-hover">
-                <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
-            </li>
-            <li class="gachngang"></li>
-            <li class=" a-hover">
-                <a href="#"><span>Lịch hẹn</span></a>
-            </li>
-            <li class="gachngang"></li>
+                                <div class="pull-left" style="padding-left: 1em;">
+                                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
+                                </div>
+                                <div class="pull-right" style="padding-right: 1em;">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                                </div>
 
-            <!-- Menu Body -->
-            <!-- Menu Footer-->
-            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+                            </li>
+                        </ul>
+                        @else
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                     <img src="/assets/images/avatar/noPatient.jpg" class="user-image img-circle"
+                                     alt="User Image"
+                                     class="img-fluid img-responsive" style="max-height: 25px;">
+                            </a>
+                            <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
+                                
+                                <li class="user-header" id="acc1" style="display: block">
+                                   <div>
+                                        <p style="color: red">
+                                    Tài khoản chưa có hồ sơ bệnh nhân
+                                    </p>
+                                    <p>Hãy liên hệ với nhân viên</p>
 
-                <div class="pull-left" style="padding-left: 1em;">
-                    <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
-                </div>
-                <div class="pull-right" style="padding-right: 1em;">
-                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
-                </div>
+                                   </div>
+                                </li>
+                                
+                                <hr>
 
-            </li>
-        </ul>
-    </li>
+                               
+                                <!-- Menu Body -->
+                                <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                              
+                                <div align="center">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                                </div>
+
+                            </li>
+                        </ul>
+                        @endif
+                       
+                    </li>
 
     @else
     <li class="nav-item dropdown ">
@@ -441,7 +519,7 @@
 
 <div class="container">
 <div class="row">
-    <div class="col-md-7 col-sm-12 col-lg-7">
+    <div class="col-md-6 col-sm-12 col-lg-6">
         <ul  style="list-style-type:none;">
             <li class="listType"><i class="fa fa-star text-yellow"></i>Bạn đang tìm kiếm một phòng khám để duy trì sức khỏe răng miệng?</li>
             <li class="listType"><i class="fa fa-star text-yellow"></i>Bạn có một nụ cười tỏa nắng?</li>
@@ -452,7 +530,7 @@
             <p>Bác sỹ tốt sẽ luôn mong làn da và hàm răng của bạn được đẹp chứ không phải vì những mục đích khác. Bác sỹ tốt là người giúp bạn hiểu rõ việc chăm sóc răng miệng và làn da từ những việc nhỏ nhất như đánh răng và bảo vệ làn da đúng cách mới là điều quan trọng nhất,...</p>
         </div>
     </div>
-    <div class="col-md-5 col-sm-12 col-lg-5"  >
+    <div class="col-md-6 col-sm-12 col-lg-6"  >
       <img src="/assets/images/gt1.jpg" alt="" class="img-responsive img-fruid img-center">
   </div>
 </div>

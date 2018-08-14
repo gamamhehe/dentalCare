@@ -34,7 +34,6 @@
         <div class="collapse navbar-toggleable-xs" id="navmn">
             <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
             <ul class="nav navbar-nav float-sm-right">
-
                 <li class="nav-item active">
                     <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
                 </li>
@@ -47,9 +46,7 @@
                 <li class="nav-item">
                     <a class="nav-link  " href="/bang-gia">Bảng giá</a>
                 </li>
-
                 <li class="nav-item">
-
                 @if(Session::has('currentUser'))
                     <li class="nav-item dropdown ">
                         @if(Session::has('listPatient'))
@@ -57,17 +54,10 @@
                                 <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle"
                                      alt="User Image"
                                      class="img-fluid img-responsive" style="max-height: 25px;">
-
                             </a>
-                        @else
-                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <span>{{Session::get('currentUser')->phone}}</span>
-                            </a>
-                        @endif
                         <ul class="dropdown-menu"
                             style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
                             <!-- User image -->
-                            @if(Session::has('listPatient'))
                                 <li class="user-header">
                                     <div class="container" style=";padding:10px 0px; ">
                                         <div class="row">
@@ -122,7 +112,6 @@
 
                                 <!-- Menu Body -->
                                 <!-- Menu Footer-->
-                            @endif
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
@@ -134,6 +123,42 @@
 
                             </li>
                         </ul>
+                        @else
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                     <img src="/assets/images/avatar/noPatient.jpg" class="user-image img-circle"
+                                     alt="User Image"
+                                     class="img-fluid img-responsive" style="max-height: 25px;">
+                            </a>
+                            <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
+                                
+                                <li class="user-header" id="acc1" style="display: block">
+                                   <div>
+                                        <p style="color: red">
+                                    Tài khoản chưa có hồ sơ bệnh nhân
+                                    </p>
+                                    <p>Hãy liên hệ với nhân viên</p>
+
+                                   </div>
+                                </li>
+                                
+                                <hr>
+
+                               
+                                <!-- Menu Body -->
+                                <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                              
+                                <div align="center">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                                </div>
+
+                            </li>
+                        </ul>
+                        @endif
+                       
                     </li>
 
                 @else
@@ -229,19 +254,16 @@
                 <li class="nav-item">
 
                 @if(Session::has('currentUser'))
-                    <li class="nav-item dropdown ">
+                 <li class="nav-item dropdown ">
                         @if(Session::has('listPatient'))
                             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                 <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle"
                                      alt="User Image"
                                      class="img-fluid img-responsive" style="max-height: 25px;">
-
                             </a>
-                        @endif
                         <ul class="dropdown-menu"
                             style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
                             <!-- User image -->
-                            @if(Session::has('listPatient'))
                                 <li class="user-header">
                                     <div class="container" style=";padding:10px 0px; ">
                                         <div class="row">
@@ -296,7 +318,6 @@
 
                                 <!-- Menu Body -->
                                 <!-- Menu Footer-->
-                            @endif
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
@@ -308,6 +329,42 @@
 
                             </li>
                         </ul>
+                        @else
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                     <img src="/assets/images/avatar/noPatient.jpg" class="user-image img-circle"
+                                     alt="User Image"
+                                     class="img-fluid img-responsive" style="max-height: 25px;">
+                            </a>
+                            <ul class="dropdown-menu"
+                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <!-- User image -->
+                                
+                                <li class="user-header" id="acc1" style="display: block">
+                                   <div>
+                                        <p style="color: red">
+                                    Tài khoản chưa có hồ sơ bệnh nhân
+                                    </p>
+                                    <p>Hãy liên hệ với nhân viên</p>
+
+                                   </div>
+                                </li>
+                                
+                                <hr>
+
+                               
+                                <!-- Menu Body -->
+                                <!-- Menu Footer-->
+                            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+
+                              
+                                <div align="center">
+                                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                                </div>
+
+                            </li>
+                        </ul>
+                        @endif
+                       
                     </li>
 
                 @else
@@ -422,7 +479,7 @@
                         @else
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="guestPhone" name="guestPhone"
-                                       placeholder="Số điện thoại" required>
+                                       placeholder="Số điện thoại" required >
                             </div>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="guestName" name="guestName"
@@ -874,8 +931,15 @@
             swal("Vui lòng chọn ngày khám!", "", "error");
         }
         else {
-            document.getElementById('AppointmentGuest').submit();
-        }
+            var vali= /(^0)+([0-9]{9,10})\b/;
 
-    }
+            var result= vali.test(guestPhone);
+            if(result == true){
+                document.getElementById('AppointmentGuest').submit();    
+            }else{
+                   swal("Số điện thoại sai cú pháp!", "Số điện thoại chỉ 10 và 11 kí tự và bắt đầu bằng số 0", "error");
+            }
+           } 
+
+        }
 </script>
