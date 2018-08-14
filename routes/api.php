@@ -40,6 +40,7 @@ Route::get("testpassport", "Mobile\UserController@testPassport");
 Route::post('payment/verifyPayment', "Mobile\PaymentController@verifyPaymentPaypal");
 Route::get("treatmentcategory/all", "Mobile\TreatmentCategoryController@getAll");
 Route::get("tooth/all", "Mobile\ToothController@getAll");
+Route::get("symptom/all", "Mobile\SymptomController@getAll");
 
 Route::post("test", "Mobile\MobileController@testPOST");
 ///ADMIN
@@ -57,8 +58,10 @@ Route::post("test3", "Mobile\MobileController@test3");
 Route::get("test4", "Mobile\MobileController@test4");
 Route::post("test4", "Mobile\MobileController@test4");
 Route::get("test5", "Mobile\MobileController@test5");
+Route::get("testAppointment", "Mobile\MobileController@testAppointment");
 Route::post("test5", "Mobile\MobileController@test5");
 Route::post("test5", "Mobile\MobileController@test5");
+Route::get("deleteUser/", "Mobile\MobileController@deleteUser");
 Route::get("dentistAppointment", "Mobile\MobileController@getDentistAppointment");
 Route::get("token/{phone}", "Mobile\TestController@getToken");
 Route::get("sms/{phone}/{content}", "Mobile\MobileController@testSMS");
@@ -116,8 +119,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post("staff/bookAppointment", "Mobile\StaffController@bookAppointment");
     Route::post("staff/changeAvatar", "Mobile\StaffController@changeAvatar");
     Route::post("staff/changePassword", "Mobile\StaffController@changePassword");
-    Route::post("staff/changeAppointmentStatus", "Mobile\StaffController@updateStatus");
+    Route::post("staff/changeAppointmentStatus", "Mobile\StaffController@updateAppointmentStatus");
     Route::post("staff/changeAppointmentDentist", "Mobile\StaffController@changeDentist");
+    Route::post("staff/doneTreatment", "Mobile\StaffController@doneTreatment");
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff with token----*****************************************************/
     /*************************************-----------------------------*****************************************************/

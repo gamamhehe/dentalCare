@@ -9,13 +9,19 @@ use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Jobs\SendSmsJob;
 use App\Model\Patient;
+use App\Model\Staff;
+use App\Model\City;
+use App\Model\District;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DateTime;
 use DB;
+use App\Model\AnamnesisCatalog;
 use Response;
 use App\Helpers\AppConst;
 use Pusher\Pusher;
+use Carbon\Carbon;
+use App\Model\UserHasRole;
 
 class AppointmentController extends Controller
 {
@@ -91,14 +97,34 @@ class AppointmentController extends Controller
         } else {
             $appointment->statusString = "Đã xóa";
         }
+
         $checkAppoint = $this->checkAppointmentExistPatient($appointId);
         $result = [];
-        if ($checkAppoint == 0) {
-            $patient = null;
-        } else {
+        $listPatient = [];
+        $case3 = 0;
+        $dentist= null; $dentist = $appointment->belongsToStaff()->first();
+        if ($checkAppoint == 0) {//khong có lịch hẹn.
+
+            $resultPatient = $this->getPatientByPhone($appointment->phone);
+
+            if($resultPatient){
+                if(count($resultPatient)==0){//co acc chưa có patient
+                     $patient = null;
+                }
+                else{
+                    $patient =$resultPatient[0];
+                    $listPatient = $resultPatient;
+                }
+               
+            }else{
+                $patient = null;
+            }
+        } else {// có lịch hẹn
+           
+            $case3 = 1;
             $patient = Patient::where('id', $checkAppoint)->first();
             // $result =[];
-            if ($patient) {
+            if ($patient) {// bệnh nhân tồn tại
                 $idPatient = $patient->id;
                 $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
                 foreach ($listTreatmentHistory as $treatmentHistory) {
@@ -107,13 +133,17 @@ class AppointmentController extends Controller
                     }
                 }
 
-            } else {
+            } else { // bệnh nhân không tồn tại.
+
             }
             $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
-          
-        return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'patient' => $patient, 'listTreatmentHistory' => $result]);
+        $city = city::all();
+        $District = District::where('city_id', 1)->get();
+        $listAnamnesis = AnamnesisCatalog::all(); 
+       
+        return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'citys' => $city, 'District' => $District,'patient' => $patient, 'listTreatmentHistory' => $result,'AnamnesisCatalog' => $listAnamnesis,'listPatient'=>$listPatient,'case3'=>$case3,'dentist'=>$dentist]);
     }
 
     public function startAppointmentController($appointId)
@@ -136,6 +166,7 @@ class AppointmentController extends Controller
 
     public function UserAppoinment(Request $request){
     try {
+
         $phone = $request['guestPhone'];
         if($phone==null){
            $phone =  $request['phoneNumber'];
@@ -148,6 +179,14 @@ class AppointmentController extends Controller
             $note = "Không có";
         }
 
+        $checkNewMember = $this->checkNewMember($phone);
+
+
+        $resultAccount = $this->createAccountNewMember($phone);
+        if($resultAccount == false){
+               return redirect()->back()->withError("Có lỗi khi đặt lịch");
+        }
+
         $newformat = date('Y-m-d',strtotime($dateBooking));
         $newApp = $this->createAppointment($newformat, $phone, $note,null,
               null,null, $request->guestName);
@@ -155,11 +194,80 @@ class AppointmentController extends Controller
         $start_time = $newApp->start_time;
         $successMess = "Số thứ tự :".$numerical_order.", Bắt đầu khám vào lúc : ".$start_time; 
         $dateTime = new DateTime($newApp->start_time);
+
+        
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
         $this->dispatch(new SendSmsJob($phone, $smsMessage));
+        if($checkNewMember==true){
+            $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
+        }
         return redirect()->back()->withSuccess($successMess);
        } catch (\Exception $e) {
           return redirect()->back()->withError($errormess);
        }
+    }
+    public function applyAppointment(Request $request){
+        //tao benh nhan
+            $patient = new Patient();
+            $listAnamnesis = $request->anam;
+            $patient->name = $request->name;
+            $patient->address = $request->address;
+            $patient->phone = $request->phone;
+            $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
+            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s') ;
+            $patient->gender = $request->gender;
+            $patient->district_id = $request->district_id;
+            $patientID = $this->createPatient($patient);
+            if($patientID ==false){
+                return false;
+            }
+            $result = $this->createAnamnesisForPatient($listAnamnesis,$patientID);
+            if($result == false){
+                return false;
+            }
+        // POA
+            $appointId = $request->appId;
+            $resultPOA = $this->AppointmentOfPatient($patientID,$appointId);
+            if($resultPOA ==false){
+                return false;
+            }
+        //status
+            $resultStatus = $this->updateStatusAppoinment(1,$appointId);
+            return redirect()->back()->withSuccess("Done");
+
+    }
+    public function applyAppointmentExistPatient(Request $request){
+            $patientID = $request->patientID;
+            $appointId = $request->appID;
+            $resultPOA = $this->AppointmentOfPatient($patientID,$appointId);
+            if($resultPOA ==false){
+                return false;
+            }
+        //status
+            $resultStatus = $this->updateStatusAppoinment(1,$appointId);
+            return redirect()->back()->withSuccess("Done");
+    }
+    public function applyAppointmentWithStatus(Request $request){
+        $appointId = $request->appID;
+        $resultStatus = $this->updateStatusAppoinment(1,$appointId);
+        return redirect()->back()->withSuccess("Done");
+    }
+    public function getFreeDentist(){
+        $list = $this->getCurrentFreeDentist();
+        $listObj =[];
+        foreach ($list as $dentist=>$key) {
+             $x = Staff::find($key);
+              $listObj[]=$x;
+        }
+       return $listObj;
+    }
+    public function changeDentist(Request $request){
+        $id =$request->docID;
+        $appID=$request->appointmentID;
+        $result = $this->updateDentistAppoinment($id,$appID);
+        if($result==false){
+            return 0;
+        }
+         return 1;
     }
 }

@@ -15,9 +15,12 @@ use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
+use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Jobs\SendFirebaseJob;
 use App\Jobs\SendSmsJob;
 use App\Model\AnamnesisPatient;
+use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\RequestAbsent;
 use App\Model\Staff;
@@ -28,6 +31,7 @@ use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use SMSGatewayMe\Client\ApiException;
 
@@ -37,6 +41,7 @@ class StaffController extends BaseController
     use PatientBusinessFunction;
     use AppointmentBussinessFunction;
     use RequestAbsentBusinessFunction;
+    use TreatmentHistoryBusinessFunction;
 
     public function loginStaff(Request $request)
     {
@@ -87,7 +92,56 @@ class StaffController extends BaseController
                 return response()->json($error, 400);
             }
         } catch (\Exception $ex) {
+            Log::info($ex->getTraceAsString());
             return response()->json($this->getErrorObj('Lỗi server', $ex), 400);
+        }
+    }
+
+
+    public function doneTreatment($tmHistory)
+    {
+        try {
+            $dateStr = (new DateTime())->format("Y-m-d");
+            $tmDetails = $this->getListTmDetailByDate($tmHistory->id, $dateStr);
+            $treatment = $tmHistory->belongsToTreatment()->first();
+            $count = 0;
+            if ($tmDetails != null) {
+                $this->logInfo(" tmDetails != null");
+                foreach ($tmDetails as $detail) {
+                    $count++;
+                    $feedback = $detail->hasFeedback()->first();
+                    if ($feedback == null) {
+                        $this->logInfo("$feedback == null");
+                        $dentist = Staff::where('id', $detail->staff_id)->first();
+                        $patientId = $tmHistory->patient_id;
+                        $phone = Patient::where('id', $patientId)->first()->phone;
+                        $firebaseToken = FirebaseToken::where('phone', $phone)->first();
+                        if ($firebaseToken != null) {
+                            $feedbackObj = Utilities::getFeedbackObject(
+                                $dentist->name,
+                                $patientId,
+                                $detail->id,
+                                $dentist->avatar,
+                                $treatment->name,
+                                $detail->created_date);
+                            $this->dispatch(new SendFirebaseJob(
+                                AppConst::RESPONSE_FEEDBACK,
+                                "Thông báo",
+                                "Đánh giá dịch vụ ". $treatment->name . ' lần '.$count,
+                                json_encode($feedbackObj),
+                                $firebaseToken->noti_token
+                            ));
+                            $this->logInfo("Send feedback to".$phone);
+                        }else{
+                            $this->logInfo("Fire base null");
+                        }
+                    }
+                }
+            }
+            return response()->json($this->getSuccessObj(200, "OK", "Gửi khảo sát thành công", "No data"));
+        } catch (Exception $ex) {
+            $errorObj = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($errorObj, 500);
         }
     }
 
@@ -100,6 +154,16 @@ class StaffController extends BaseController
             $appointment->status = $status;
             $this->updateAppointment($appointment);
             $successResponse = $this->getSuccessObj(200, "OK", "Sửa lịch thành công", "No data");
+            if ($status == AppConst::APPT_STATUS_DONE) {
+                $tmHistories = $this->getPatientTreatmentHistory(
+                    $appointment->staff_id,
+                    $appointment->hasPatientOfAppointment()->first()->patient_id,
+                    (new DateTime())->format('Y-m-d')
+                );
+                foreach ($tmHistories as $tmHistory) {
+                    $this->doneTreatment($tmHistory);
+                }
+            }
             return response()->json($successResponse);
         } catch (\Exception $ex) {
             $error = $this->getErrorObj('Lỗi máy chủ', $ex);
@@ -320,7 +384,7 @@ class StaffController extends BaseController
             if ($result != null) {
                 $startDateTime = new DateTime($result->start_time);
                 $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
-                $this->dispatch(new SendSmsJob($phone, $smsMessage));
+//                $this->dispatch(new SendSmsJob($phone, $smsMessage));
                 return response()->json($result, 200);
             } else {
                 $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",

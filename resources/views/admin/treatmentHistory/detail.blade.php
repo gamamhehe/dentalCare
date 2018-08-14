@@ -39,6 +39,7 @@
                                 <th style="text-align: center; width: 30%">Bước khám</th>
                                 <th style="text-align: center; width: 30%">Ngày khám</th>
                                 <th style="text-align: center; width: 20%">Ghi chú</th>
+                                <th style="text-align: center; width: 20%">Tùy chọn</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -55,6 +56,8 @@
                                         </td>
                                         <td style="text-align: center">{{$treatmentHistoryDetail->created_date}}</td>
                                         <td style="text-align: center">{{$treatmentHistoryDetail->note }}</td>
+                                        <td style="text-align: center"> <a class="btn btn-success btn-sm" style="float: right;"
+                                                                           href="/admin/treatment-detail/{{$treatmentHistoryDetail->id}}">Chi tiết</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

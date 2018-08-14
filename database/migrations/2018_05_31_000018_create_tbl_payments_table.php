@@ -18,9 +18,8 @@ class CreateTblPaymentsTable extends Migration
             $table->bigInteger('paid')->default(0);
             $table->bigInteger('total_price');
             $table->string('phone');
-            $table->boolean('is_done')->default(false);
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
-
 
             $table->foreign('phone')->references('phone')->on('tbl_users');
         });

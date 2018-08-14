@@ -5,6 +5,7 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/assets/images/icon/fap16.png"/>
     <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
     <script src="/assets/user/js/jquery-3.2.1.js"></script>
     <script src="/assets/user/js/jquery.easing.1.3.js"></script>
@@ -146,13 +147,13 @@
                                             <form action="{!! url('/loginUser') !!}" method="Post">
                                                 {{ csrf_field() }}
                                                 <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                    <input type="text" class="form-control" placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}"
                                                            required autofocus>
                                                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                                                      
                                                 </div>
                                                 <div class="form-group has-feedback">
-                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required>
                                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                                      
                                                 </div>
@@ -310,13 +311,13 @@
                                             <form action="{!! url('/loginUser') !!}" method="Post">
                                                 {{ csrf_field() }}
                                                 <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                                    <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                                                    <input type="text" class="form-control" placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}"
                                                            required autofocus>
                                                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                                                      
                                                 </div>
                                                 <div class="form-group has-feedback">
-                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                    <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required>
                                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                                      
                                                 </div>
@@ -484,7 +485,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <div><img src="/assets/images/HomePage/logo.png" alt=""></div>
+                    <div><img src="/assets/images/HomePage/footer2.png" alt="" class="img-responsive img-fruid"></div>
                     <br>
                     <div>Website: <a href="https://google.com.vn">projectcapstone.vn</a></div>
                     <div>Bác sĩ tư vấn (24/7) : <a class="zalovb" id="callme"

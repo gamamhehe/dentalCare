@@ -9,14 +9,11 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 
-use App\Helpers\AppConst;
 use App\Model\Appointment;
 use App\Model\PatientOfAppointment;
-use App\Model\Staff;
 use App\Model\UserHasRole;
 use App\User;
 use DateTime;
-use DeepCopy\f002\A;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
@@ -212,23 +209,28 @@ trait AppointmentBussinessFunction
             if ($estimatedTimeStr != null) {
                 $estimatedTimeObj = new DateTime($estimatedTimeStr);
             }
-            $tmpPredictTime = clone $predictAppointmentDate;
             $currentDateTime = new DateTime();
             //process when patient book appointment at the same day, and
 //            $diffDate = ($currentDateTime->diff($predictAppointmentDate));
             if (($currentDateTime->getTimestamp() - $predictAppointmentDate->getTimeStamp()) > 0) {
                 $predictAppointmentDate = $this->addTimeToDate($currentDateTime, '00:10:00');
                 $arrayFreeDentist = $this->getFreeDentistsAtDate($listDentist, $bookingDateDBFormat);
-                $randomDentist = $this->getRandomDentist($arrayFreeDentist);
+                if (count($arrayFreeDentist) == 0) {
+                    $randomDentist = $this->getRandomDentist($listDentist);
+                } else {
+                    $randomDentist = $this->getRandomDentist($arrayFreeDentist);
+                }
                 $suitableDentistId = $randomDentist['id'];
-                $this->logBugAppointment("Predict appointment time before currentime (book appointment at currenday)");
+                $this->logBugAppointment("Predict appointment time before currentime (book appointment at currenday)"
+                    . $predictAppointmentDate->format('Y-m-d H:i:s'));
             }
+            $tmpPredictTime = clone $predictAppointmentDate;
             $endAppointmentTimeObj = $this->addTimeToDate($tmpPredictTime, $estimatedTimeObj->format("H:i:s"));
-            if ($this->isInLunchBreak($endAppointmentTimeObj) || $this->isInLunchBreak($predictAppointmentDate)) {
+            if ($this->isInLunchBreak($predictAppointmentDate, $endAppointmentTimeObj)) {
                 $this->logBugAppointment("IS in lunch");
                 $predictAppointmentDate = new \DateTime($bookingDateDBFormat . $defaultStartAfternoon);
             } else if ($this->isEndOfTheDay($endAppointmentTimeObj) && !$allowOvertime) {
-                $this->logBugAppointment("isEndOfTheDay: end time is: ".$endAppointmentTimeObj->format('H:i:s'));
+                $this->logBugAppointment("isEndOfTheDay: end time is: " . $endAppointmentTimeObj->format('H:i:s'));
                 throw new \Exception ('isEndOfTheDay');
             }
             $numericalOrder = $listAppointment->count() + 1;
@@ -258,6 +260,56 @@ trait AppointmentBussinessFunction
         }
     }
 
+    public function AppointmentOfPatient($patient_id, $appointment_id)
+    {
+        DB::beginTransaction();
+        try {
+            $patientAppointment = new PatientOfAppointment();
+            $patientAppointment->appointment_id = $appointment_id;
+            $patientAppointment->patient_id = $patient_id;
+            $patientAppointment->save();
+            DB::commit();
+            return true;
+        } catch (Exception $exception) {
+            $exception->getTrace();
+            DB::rollback();
+            return null;
+        }
+    }
+
+    public function updateStatusAppoinment($status, $appointment_id)
+    {
+        DB::beginTransaction();
+        try {
+            $appointment = Appointment::find($appointment_id);
+            $appointment->status = $status;
+            $appointment->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+
+        }
+
+    }
+    public function updateDentistAppoinment($id, $appointment_id)
+    {
+        DB::beginTransaction();
+        try {
+            $appointment = Appointment::find($appointment_id);
+            $appointment->staff_id = $id;
+            $appointment->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return false;
+
+        }
+
+    }
+
     public function getListTopAppointment($listAvailableDentist, $dateStr)
     {
         $appoinements = [];
@@ -268,6 +320,19 @@ trait AppointmentBussinessFunction
             }
         }
         return $appoinements;
+    }
+
+    public function attachTopAppointmentForDentist($listAvailableDentist, $dateStr)
+    {
+        foreach ($listAvailableDentist as $dentist) {
+            $tmp = $this->getLastestAppointment($dateStr, $dentist->id);
+            if ($tmp != null) {
+                $dentist->appointment = $tmp;
+            } else {
+                $dentist->appointment = null;
+            }
+        }
+        return $listAvailableDentist;
     }
 
     private function getLastestAppointment($dateStr, $dentistId)
@@ -338,11 +403,23 @@ trait AppointmentBussinessFunction
         return false;
     }
 
-    private function isInLunchBreak($apptFinishTime)
+    private function isInLunchBreak($apptStartTime, $apptFinishTime)
     {
-        $time = $apptFinishTime->format('H:i:s');
-        if ((strtotime($time) > strtotime('12:15:00'))
-            && (strtotime($time) < strtotime('13:00:00'))) {
+        $startTime = $apptStartTime->format('H:i:s');
+        $endTime = $apptFinishTime->format('H:i:s');
+
+        if (((strtotime($endTime) >= strtotime('12:15:00'))
+                && (strtotime($endTime) <= strtotime('13:00:00'))
+                && (strtotime($startTime) <= strtotime('12:00:00')))
+            || ((strtotime($endTime) <= strtotime('13:00:00'))
+                && (strtotime($startTime) >= strtotime('12:00:00')))
+            || ((strtotime($endTime) >= strtotime('13:00:00'))
+                && (strtotime($startTime) >= strtotime('12:00:00'))
+                && (strtotime($startTime) <= strtotime('13:00:00'))
+            )
+            || ((strtotime($endTime) >= strtotime('13:00:00'))
+                && (strtotime($startTime) <= strtotime('12:00:00')))
+        ) {
             return true;
         }
         return false;
@@ -423,7 +500,7 @@ trait AppointmentBussinessFunction
     private function getRandomDentist($arrayDentist)
     {
         $sizeList = sizeof($arrayDentist);
-//        $this->logDebug($arrayDentist);
+//        $this->logBugAppointment($arrayDentist);
         $index = rand(0, $sizeList - 1);
         $randomDentist = $arrayDentist[$index];
         return $randomDentist;
@@ -437,7 +514,7 @@ trait AppointmentBussinessFunction
         return $randomAppointment;
     }
 
-    public function getAvailableDentistAtDate($date)
+    public function getAvailableDentistAtDate($dateStr)
     {
         $roleDentist = 2;
         $dentists = UserHasRole::where('role_id', $roleDentist)->get();
@@ -450,7 +527,7 @@ trait AppointmentBussinessFunction
         }
         $availableDentist = [];
         foreach ($totalDentists as $dentist) {
-            if (!$this->isDentistAbsent($dentist, $date)) {
+            if (!$this->isDentistAbsent($dentist, $dateStr)) {
                 $availableDentist[] = $dentist;
             }
         }
@@ -652,7 +729,8 @@ trait AppointmentBussinessFunction
     function getCurrentFreeDentist()
     {
         $listAvailableDentist = $this->getAvailableDentistAtDate(Carbon::now());
-        $listCurrentBusyAppointment = Appointment::where('status', 2)->get();
+        $listCurrentBusyAppointment = Appointment::whereDate('start_time', (new DateTime())->format('Y-m-d'))
+            ->where('status', 2)->get();
         $listCurrentBusyDentist = [];
         foreach ($listCurrentBusyAppointment as $appointment) {
             $listCurrentBusyDentist[] = $appointment->staff_id;
@@ -714,10 +792,30 @@ trait AppointmentBussinessFunction
 
     public function getOverdueAppointment($numDate)
     {
-        $dateAgoObj = (new \DateTime())->modify('-'.$numDate.' day');
+        $dateAgoObj = (new \DateTime())->modify('-' . $numDate . ' day');
         $appointmentAgo = Appointment::where('start_time', $dateAgoObj->format('Y-m-d'))
             ->where('status', 0)->get();
 
 
+    }
+
+    public function isHavingFreeSlotAtDate($dateStr)
+    {
+        $availableDentist = $this->getAvailableDentistAtDate($dateStr);
+        $this->attachTopAppointmentForDentist($availableDentist, $dateStr);
+        foreach ($availableDentist as $dentist) {
+            $appointment = $dentist->appointment;
+            if ($appointment == null) {
+                return true;
+            }
+            $endApptTimeObj = new DateTime($appointment->start_time);
+            $this->addTimeToDate($endApptTimeObj, $appointment->estimated_time);
+            $endDayTimeObj = new DateTime($dateStr . ' 19:15:00');
+            $diff = ($endDayTimeObj->diff($endApptTimeObj));
+            if ($diff->i > 30) {
+                return true;
+            }
+        }
+        return false;
     }
 }

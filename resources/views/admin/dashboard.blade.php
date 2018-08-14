@@ -18,6 +18,18 @@
                            </span>
                     </div>
                 </div>
+                   <div class="form-group">
+                          <div class="col-sm-2"><label>Từ ngày </label></div>
+                          <div class="col-sm-3 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                          <input type="text" placeholder="Ngày bắt đầu" name="start_date" class="form-control pull-right" id="startdate" style="margin:0px;" />
+                          <i class="fa fa-calendar"></i>
+                          </div>
+                          <div class="col-sm-2"><label>đến ngày</label></div>
+                          <div class="col-sm-3 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+       <input type="text" placeholder="Ngày kết thúc" name="end_date" class="form-control pull-right" id="enddate" style="margin:0px;" />
+   <i class="fa fa-calendar"></i>
+                          </div>
+                        </div>
                 <div class="form-group">
 
                     <form method="post" class="form-horizontal" action="/createNews">
@@ -83,6 +95,9 @@
     </div>
 @endsection
 @section('js')
+<script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+ <link rel="stylesheet" href="/assets/user/css/mycss.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $('#lfm').filemanager('image');
         $(window).on('load', function () {
@@ -91,7 +106,15 @@
                 Page.initLFM();
             });
         });
+           $(document).ready(function() {
+       
+            $("#startdate").datepicker({
+            startDate: 'd',
+            autoclose: true,
+            });
+         
 
+        });
 
     </script>
 @endsection

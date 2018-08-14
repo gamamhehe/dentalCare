@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Mobile;
 use App\Helpers\AppConst;
 use App\Helpers\Utilities;
 use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
+use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\RequestAbsentBusinessFunction;
+use App\Http\Controllers\BusinessFunction\StaffBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Jobs\ExcCustomFuncJob;
 use App\Jobs\SendFirebaseJob;
@@ -17,6 +19,7 @@ use App\Model\CustomObjectJob;
 use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\Staff;
+use App\Model\TreatmentDetail;
 use App\Model\User;
 use Carbon\Carbon;
 use DateTime;
@@ -152,11 +155,6 @@ class MobileController extends BaseController
 
     }
 
-    public function testAppointment(Request $request)
-
-    {
-
-    }
 
     public function getDentistAppointment(Request $request)
 
@@ -173,22 +171,121 @@ class MobileController extends BaseController
      */
     public function test3(Request $request)
     {
-//        $id = $request->query('id');
-//        $appointment = $this->getAppointmentById($id);
-//        if ($appointment != null) {
-//            $crrDate = new DateTime();
-//            $appDate = new DateTime($appointment->start_time);
-//            if ($this->isUpCommingAppointment($crrDate, $appDate)) {
-//                return response()->json($appDate->format("Y-m-d H:i:s"));
-//            }
-//        }
+        try {
 
-        $dateAgo = (new \DateTime())->modify('-8 day');
-        return $dateAgo->format('Y-m-d');
-//        return response()->json('-__-');
-//        $this->dispatch(new SendFirebaseJob("RESPONSE_RELOAD", "No title", "No message", "absent_reload_page",
-//            "e5x915QiBZs:APA91bHSSV-5lGojs0HPxrvGOJ-A6gQ_QqYF-kc7bp-eWFkbQOcVI2L9V0_GTXyYCGyyJgIx5U-MKvX076OMkPhSRJqPYfMN63bv6qEfFeqfvXzqeziGeYZ9nJ2OSovmkltE0xyGNz_FK4V6x9adsIhVlqj3n-KNCQ"
-//        ));
+            $tmHistories = $this->getPatientTreatmentHistory(1, 2, (new DateTime())->format('Y-m-d'));
+            return response()->json($tmHistories);
+        } catch (Exception $exception) {
+
+            return response()->json($exception->getMessage());
+        }
+
+    }
+
+    public function deletePayment($payment)
+    {
+        $paymentDetail = $payment->hasPaymentDetail()->get();
+        if ($paymentDetail != null) {
+            foreach ($paymentDetail as $detail) {
+                $detail->delete();
+            }
+            $paymentDetail->delete();
+        }
+    }
+
+    public function deleteAppointment($appointment)
+    {
+        $poas = $appointment->hasPatientOfAppointment()->get();
+        if ($poas != null) {
+            foreach ($poas as $poa) {
+                $poa->delete();
+            }
+        }
+        $appointment->delete();
+    }
+
+    public function deleteTreatmentDetail($treatmentDetail)
+    {
+
+        $treatmentDetailStep = $treatmentDetail->hasTreatmentDetailStep()->get();
+        $treatmentDetailImage = $treatmentDetail->hasTreatmentImage()->get();
+        $treatmentDetailFeedback = $treatmentDetail->hasFeedback()->get();
+        if ($treatmentDetailStep != null) {
+            foreach ($treatmentDetailStep as $item) {
+                $item->delete();
+            }
+        }
+        if ($treatmentDetailImage != null) {
+            foreach ($treatmentDetailImage as $item) {
+                $item->delete();
+            }
+        }
+        if ($treatmentDetailFeedback != null) {
+            foreach ($treatmentDetailFeedback as $item) {
+                $item->delete();
+            }
+        }
+        $treatmentDetail->delete();
+
+    }
+
+    /**
+     * @param $patientId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteUser(Request $request)
+    {
+
+        $user = User::where('phone', $request->phone)->first();
+        if ($user == null) {
+            $msg = ("Khong tim thay user " . $request->phone);
+            return response()->json(["Error" => $msg]);
+        }
+        $appointments = $user->hasAppointment()->get();
+        if ($appointments != null) {
+            foreach ($appointments as $appointment) {
+                $this->deleteAppointment($appointment);
+            }
+        }
+        $userHasRole = $user->hasUserHasRole()->get();
+        if ($userHasRole != null) {
+            foreach ($userHasRole as $role) {
+                $role->delete();
+            }
+        }
+        $patients = $user->hasPatient()->get();
+        if ($patients != null) {
+            foreach ($patients as $patient) {
+                $treatmentHistories = $patient->hasTreatmentHistory()->get();
+                foreach ($treatmentHistories as $tmHistory) {
+                    $tmDetails = $tmHistory->hasTreatmentDetail()->get();
+                    foreach ($tmDetails as $tmDetail) {
+                        $this->deleteTreatmentDetail($tmDetail);
+                    }
+                    $tmSymptoms = $tmHistory->hasTreatmentSymptom()->get();
+                    if ($tmSymptoms != null) {
+                        foreach ($tmSymptoms as $symptom) {
+                            $symptom->delete();
+                        }
+                    }
+                    $tmHistory->delete();
+                }
+                $payments = $user->hasPayment()->get();
+                if ($payments != null) {
+                    foreach ($payments as $payment) {
+                        $this->deletePayment($payment);
+                    }
+                }
+                $patientAnamnesis = $patient->hasAnamnesisPatient()->get();
+                if ($patientAnamnesis != null) {
+                    foreach ($patientAnamnesis as $anamnesi) {
+                        $anamnesi->delete();
+                    }
+                }
+                $patient->delete();
+            }
+        }
+        $user->delete();
     }
 
     public function sendFirebaseReloadAppointment($phone)
@@ -225,7 +322,7 @@ class MobileController extends BaseController
             $apptDateTime = (new \DateTime($appointment->start_time));
             if ($this->isUpCommingAppointment($currentDateTime, $apptDateTime)) {
                 $numOfReminder++;
-                Utilities::logDebug('Send for appointment id: ' . $appointment->id);
+                Utilities::logInfo('Send for appointment id: ' . $appointment->id);
                 $this->dispatch(new SendReminderJob($appointment->phone));
                 $apss[] = $appointment;
             }
@@ -282,7 +379,7 @@ class MobileController extends BaseController
 //            Log::info("INFO OOO");
 //        };
         $ser = serialize($customObj);
-        Log::info("SER".$ser);
+        Log::info("SER" . $ser);
 //        $this->dispatch(new ExcCustomFuncJob(serialize($customObj)));
     }
 
@@ -406,6 +503,82 @@ class MobileController extends BaseController
         return response()->json($response);
     }
 
+    use PatientBusinessFunction;
+
+    public function testAppointment(Request $request)
+    {
+        try {
+            $numAppt = 0;
+            $timeRnd = ["00:25:00", "00:30:00", "00:35:00", "00:45:00", "00:55:00", "01:30:00"];
+            $timeNum = count($timeRnd);
+            $dateStr = $request->input('date');
+            $listPatient = $this->getListPatient();
+            $arrayPatient = $listPatient->toArray();
+            $listAvDentist = $this->getAvailableDentistAtDate($dateStr);
+            $listPhone = [];
+            foreach ($listPatient as $patient) {
+                $listPhone[] = $patient->belongsToUser()->first()->phone;
+            }
+            $isStaff = $request->input('staff');
+            $rndIsStaff = false;
+            $i = 0;
+            $sizeOfPatient = $listPatient->count();
+            $sizeOfPhone = count($listPhone);
+            $sizeOfDentist = count($listAvDentist);
+            $this->logInfo("SIZE PHONE: " . $sizeOfPhone);
+            $this->logInfo("SIZE DENTIST: " . $sizeOfDentist);
+//            while ($this->isHavingFreeSlotAtDate($dateStr)) {
+            while ($i < 200) {
+                $patientPhone = $listPhone[rand(0, $sizeOfPhone - 1)];
+                if ($rndIsStaff || $isStaff) {
+                    $this->logInfo("Staff false: " .
+                        " dateStr: " . $dateStr .
+                        " patientPhone: " . $patientPhone .
+                        " note : "
+                    );
+                    try {
+                        $appt = $this->createAppointment($dateStr, $patientPhone, "No note", null, null, null, null);
+                        if ($appt != null) {
+                            $numAppt++;
+                        }
+                    } catch (Exception $e) {
+                        Log::info('MobileController ex1: ' . $e->getMessage());
+                    }
+                } else {
+                    $rndTime = $timeRnd[rand(0, $timeNum - 1)];
+                    $patient = $arrayPatient[rand(0, $sizeOfPatient - 1)];
+                    $dentist = $listAvDentist[rand(0, $sizeOfDentist - 1)];
+                    $this->logInfo("Staff true: " .
+                        " patientPhone: " . $patientPhone .
+                        " note : " .
+                        " dentist id: " . $dentist['id'] .
+                        " patient id: " . $patient['id'] .
+                        " rndTime id: " . $rndTime
+                    );
+                    try {
+                        $appt = $this->createAppointment($dateStr, $patientPhone, "No note", $dentist['id'], $patient['id'], $rndTime, 'lucu');
+                        if ($appt != null) {
+                            $numAppt++;
+                        }
+                    } catch (Exception $e) {
+                        Log::info('MobileController ex2: ' . $e->getMessage());
+                    }
+                }
+                $num = rand(0, 1);
+                if ($num == 0) {
+                    $rndIsStaff = false;
+                } else {
+                    $rndIsStaff = true;
+                }
+
+                $i++;
+            }
+            Log::info("Total appt created: " . $numAppt);
+            return response()->json("SUCCESS");
+        } catch (\Exception $exception) {
+            return response()->json($this->getErrorObj("loi server", $exception));
+        }
+    }
 
     public
     function testPOST(Request $request)

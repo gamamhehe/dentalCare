@@ -27,9 +27,11 @@ trait PatientBusinessFunction
         return null;
     }
 
-
+    
     public function getPatientByPhone($phone)
     {
+  
+
         $patients = Patient::where('phone', $phone)->get();
         if ($patients != null) {
             foreach ($patients as $item) {
@@ -65,6 +67,7 @@ trait PatientBusinessFunction
             return $PatientId;
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             return false;
         }
     }
@@ -113,4 +116,5 @@ trait PatientBusinessFunction
     public function getPhoneOfPatient($id){
         return Patient::find($id)->phone;
     }
+   
 }

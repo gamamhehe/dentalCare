@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\BusinessFunction;
 
 
+use App\Helpers\AppConst;
 use App\Model\Payment;
 use App\Model\PaymentDetail;
 use App\Model\PaymentUpdateDetail;
@@ -72,7 +73,7 @@ trait PaymentBusinessFunction
     {
         $listPayment = Payment::where('phone', $phone)->get();
         foreach ($listPayment as $payment) {
-            if ($payment->is_done == false) {
+            if ($payment->status == AppConst::PAYMENT_STATUS_NOT_DONE) {
                 return $payment;
             }
         }
@@ -126,7 +127,7 @@ trait PaymentBusinessFunction
             $payment->paid = $payment->paid + $price;
 
             if ($payment->total_price == $payment->paid) {
-                $payment->is_done = true;
+                $payment->status =  AppConst::PAYMENT_STATUS_DONE;
             }
             $payment->save();
             DB::commit();

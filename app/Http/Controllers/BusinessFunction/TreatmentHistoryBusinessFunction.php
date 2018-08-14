@@ -66,6 +66,12 @@ trait TreatmentHistoryBusinessFunction
             $treatmentHistory->patient = $patient;
             $treatmentHistory->tooth = $treatmentHistory->belongsToTooth()->first();
             $treatmentHistory->payment = $treatmentHistory->belongsToPayment()->first();
+            $symptoms = [];
+            $tmHistorySymptoms = $treatmentHistory->hasTreatmentSymptom()->get();
+            foreach ($tmHistorySymptoms as $tmSymptom) {
+                $symptoms[] = $tmSymptom->belongsToSymptom()->first();
+            }
+            $treatmentHistory->symptoms = $symptoms;
         }
         return $treatmentHistoryList;
     }
@@ -87,7 +93,7 @@ trait TreatmentHistoryBusinessFunction
         return $treatmentHistories;
     }
 
-    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines, $images)
+    public function createTreatmentHistory($treatmentHistory, $detailNote, $detailStepIds, $medicines, $symptoms, $images)
     {
 
         DB::beginTransaction();
@@ -99,14 +105,14 @@ trait TreatmentHistoryBusinessFunction
                 $treatmentHistory->price,
                 $treatmentHistory->description);
 
-            Utilities::logDebug("tmHistoryId save id: " . $tmHistoryId);
+            Utilities::logInfo("tmHistoryId save id: " . $tmHistoryId);
             $tmDetail = new TreatmentDetail();
             $tmDetail->treatment_history_id = $tmHistoryId;
             $tmDetail->staff_id = $treatmentHistory->staff_id;
             $tmDetail->note = $detailNote;
             $tmDetail->created_date = Carbon::now();
             $tmDetail->save();
-            Utilities::logDebug("tmDetail save");
+            Utilities::logInfo("tmDetail save");
             $tmDetailId = $tmDetail->id;
             if ($detailStepIds != null) {
                 foreach ($detailStepIds as $stepId) {
@@ -116,14 +122,20 @@ trait TreatmentHistoryBusinessFunction
                     $tmDetailSteps->save();
                 }
             }
-            Utilities::logDebug("detailStepIds save");
+            Utilities::logInfo("detailStepIds save");
             if ($medicines != null) {
                 foreach ($medicines as $medicine) {
                     $medicine->treatment_detail_id = $tmDetailId;
                     $medicine->save();
                 }
             }
-            Utilities::logDebug("tmDetail save");
+            if ($symptoms != null) {
+                foreach ($symptoms as $symptom) {
+                    $symptom->treatment_history_id = $tmHistoryId;
+                    $symptom->save();
+                }
+            }
+            Utilities::logInfo("tmDetail save");
             if ($images != null) {
                 foreach ($images as $image) {
                     $timestmp = (new \DateTime())->getTimestamp();
@@ -135,7 +147,7 @@ trait TreatmentHistoryBusinessFunction
                     $treatmentImage->save();
                 }
             }
-            Utilities::logDebug("images save");
+            Utilities::logInfo("images save");
 
             DB::commit();
             return true;
@@ -224,6 +236,14 @@ trait TreatmentHistoryBusinessFunction
         return (TreatmentHistory::where('id', $id)->first());
     }
 
+
+    public function getListTmDetailByDate($tmHistoryId, $dateStr)
+    {
+        $tmDetails = TreatmentDetail::whereDate('created_date', $dateStr)
+            ->where('treatment_history_id', $tmHistoryId)
+            ->get();
+        return $tmDetails;
+    }
 
     public function getTreatmentReportByDentist($dentistId, $monthInNumber, $yearInNumber)
     {

@@ -57,14 +57,14 @@ trait TreatmentDetailBusinessFunction
     {
         DB::beginTransaction();
         try {
-            Utilities::logDebug("tmHistoryId save id: " . $tmHistoryId);
+            Utilities::logInfo("tmHistoryId save id: " . $tmHistoryId);
             $tmDetail = new TreatmentDetail();
             $tmDetail->treatment_history_id = $tmHistoryId;
             $tmDetail->staff_id = $staffId;
             $tmDetail->note = $detailNote;
             $tmDetail->created_date = Carbon::now();
             $tmDetail->save();
-            Utilities::logDebug("tmDetail save");
+            Utilities::logInfo("tmDetail save");
             $tmDetailId = $tmDetail->id;
             if ($detailStepIds != null) {
                 foreach ($detailStepIds as $stepId) {
@@ -74,14 +74,14 @@ trait TreatmentDetailBusinessFunction
                     $tmDetailSteps->save();
                 }
             }
-            Utilities::logDebug("detailStepIds save");
+            Utilities::logInfo("detailStepIds save");
             if ($medicines != null) {
                 foreach ($medicines as $medicine) {
                     $medicine->treatment_detail_id = $tmDetailId;
                     $medicine->save();
                 }
             }
-            Utilities::logDebug("tmDetail save");
+            Utilities::logInfo("tmDetail save");
             if ($images != null) {
                 $num = 0;
                 foreach ($images as $image) {
@@ -94,7 +94,7 @@ trait TreatmentDetailBusinessFunction
                     $treatmentImage->save();
                 }
             }
-            Utilities::logDebug("images save");
+            Utilities::logInfo("images save");
             DB::commit();
             return true;
         } catch (\Exception $e) {

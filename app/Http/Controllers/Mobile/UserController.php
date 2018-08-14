@@ -114,14 +114,16 @@ class UserController extends BaseController
             }
             $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $name);
             if ($result != null) {
-                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
+//                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
-                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
-                $this->dispatch(new SendSmsJob($phone, $smsMessage));
+                $vnSmsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime, true);
+                $engSmsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+                $this->dispatch(new SendSmsJob($phone, $engSmsMessage));
                 if ($isNewUser) {
                     $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
                 }
-                return response()->json($listAppointment, 200);
+                $successResponse = $this->getSuccessObj(200, "OK", $vnSmsMessage, "Nodata");
+                return response()->json($successResponse, 200);
             } else {
                 $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
                     "Result is null, No exception");

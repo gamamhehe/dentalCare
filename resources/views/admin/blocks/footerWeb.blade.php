@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <div><img src="/assets/images/HomePage/logo.png" alt=""></div><br>
+                    <div><img src="/assets/images/HomePage/footer2.png" alt="" class="img-responsive img-fruid"></div><br>
                     <div>Website: <a href="https://google.com.vn">projectcapstone.vn</a></div>
                     <div>Bác sĩ tư vấn (24/7) : <a class="zalovb" id="callme" onclick="ga('send', 'event', 'Phone', 'Click', 'Hotline');" href="tel:0968999777" rel="nofollow">1900.7979</a></div>
                 </div>

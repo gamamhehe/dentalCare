@@ -124,15 +124,16 @@ class PatientController extends BaseController
             } else {
                 $appointment->status = 1;
                 $this->saveAppointment($appointment, $patientId);
+                $this->updateNumAppWebsite($appointment);
                 $this->sendFirebaseReloadAppointment($appointment->staff_id);
                 $successResponse = $this->getSuccessObj(200, "OK", "Change status success", "No data");
+                $this->logInfo("VO reload else");
                 return response()->json($successResponse, 200);
             }
         } catch (Exception $exception) {
             $errorResponse = $this->getErrorObj("Lỗi server", $exception);
             return response()->json($errorResponse, 500);
         }
-
     }
 
     public function receive(Request $request)
@@ -171,7 +172,7 @@ class PatientController extends BaseController
                         $patient = $this->getPatientById($id);
                         $response = new \stdClass();
                         $response->status = "OK";
-                        $response->message = "Chỉnh sửa avatar thành côngs";
+                        $response->message = "Chỉnh sửa avatar thành công";
                         $response->data = $patient->avatar;
                         return response()->json($response, 200);
                     } else {
@@ -211,6 +212,7 @@ class PatientController extends BaseController
             '562929',
             $options
         );
+        $appointment->pushStatus = 0;
         $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
     }
 
@@ -218,8 +220,10 @@ class PatientController extends BaseController
     {
         $staff = $this->getStaffById($staffId);
         if ($staff != null) {
+            $this->logInfo("Staff !=null reload");
             $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
             if ($staffFirebaseToken != null) {
+                $this->logInfo("Staff firebase !=null reload");
 
                 $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
                         $staff->id,

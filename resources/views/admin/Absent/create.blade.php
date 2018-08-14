@@ -104,6 +104,7 @@
                  document.getElementById("enddate").placeholder = "Ngày kết thúc";
                  // $("#datepicker2").datepicker("setMinDate", new Date(2018, 10 -1, 25));
                 });
+  
 
         });
    
@@ -119,7 +120,7 @@
             "search" : "Tìm kiếm ",
             "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
         },
-            processing: true,
+            processing: false,
             serverSide: true,
             order: [[ 0, "desc" ]],
             bLengthChange:true,

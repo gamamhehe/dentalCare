@@ -63,12 +63,12 @@
                 <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Giá dịch vụ </label></div>
                     <div class="col-sm-5" style="padding-right: 0;">
-                        <input type="number" class="form-control input-width" id="price" name="price" placeholder="Giá dịch vụ" required="required" min="1" max="5" />
+                        <input type="number" class="form-control input-width" id="price" name="price" placeholder="Giá dịch vụ" required="required"   />
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 1em;" >
                     <div class=""  style="margin-top: 1em;">
-                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Khởi tạo x liệu trình</button>
+                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Khởi tạo liệu trình</button>
                     </div>
                 </div>
 
@@ -102,7 +102,6 @@
     {
     var treatCateID = sel.value;
      $("#max_price").val();
-
             $.ajax({
              url: '/admin/get-treatment-by-cate/'+treatCateID, //this is your uri
             type: 'GET', //this is your method
@@ -127,6 +126,7 @@
                     var min = data[i].min_price;
                       var max = data[i].max_price;
                      $('#min_price').val(min);
+                     $('#price').val(min);
                       $('#max_price').val(max);
                 }
             }
@@ -147,6 +147,7 @@
        var max = $('#Treat').find(':selected').attr('data-max');
         var min = $('#Treat').find(':selected').attr('data-min');
         $('#min_price').val(min);
+          $('#price').val(min);
         $('#max_price').val(max);
          
     }

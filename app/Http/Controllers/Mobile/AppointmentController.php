@@ -170,7 +170,7 @@ class AppointmentController extends BaseController
                     $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                     $smsSendingResult = Utilities::sendSMS($phone, "Cam on ban da dat lich kham, so kham cua ban la " . $result->numerical_order);
                     $smsDecode = json_encode($smsSendingResult);
-                    Utilities::logDebug($smsDecode);
+                    Utilities::logInfo($smsDecode);
                     return response()->json($listAppointment, 200);
                 } else {
 

@@ -50,4 +50,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Model\Appointment', 'phone', 'phone');
     }
+    public function hasPayment()
+    {
+        return $this->hasMany('App\Model\Payment', 'phone', 'phone');
+    }
 }
