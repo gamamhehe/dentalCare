@@ -127,6 +127,7 @@ class PatientController extends BaseController
                 $this->updateNumAppWebsite($appointment);
                 $this->sendFirebaseReloadAppointment($appointment->staff_id);
                 $successResponse = $this->getSuccessObj(200, "OK", "Change status success", "No data");
+                $this->logInfo("VO reload else");
                 return response()->json($successResponse, 200);
             }
         } catch (Exception $exception) {
@@ -219,8 +220,10 @@ class PatientController extends BaseController
     {
         $staff = $this->getStaffById($staffId);
         if ($staff != null) {
+            $this->logInfo("Staff !=null reload");
             $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
             if ($staffFirebaseToken != null) {
+                $this->logInfo("Staff firebase !=null reload");
 
                 $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
                         $staff->id,
