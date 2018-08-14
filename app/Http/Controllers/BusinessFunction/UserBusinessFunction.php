@@ -257,7 +257,14 @@ trait UserBusinessFunction
             return true;
         }
     }
-
+     public function checkNewMember($phone){
+        $result = User::where('phone', $phone)->first();
+        if($result != null){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     public function editAvatar($image, $profileId, $forWho = "user")
     {
