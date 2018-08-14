@@ -384,7 +384,7 @@ class StaffController extends BaseController
             if ($result != null) {
                 $startDateTime = new DateTime($result->start_time);
                 $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
-                $this->dispatch(new SendSmsJob($phone, $smsMessage));
+//                $this->dispatch(new SendSmsJob($phone, $smsMessage));
                 return response()->json($result, 200);
             } else {
                 $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
