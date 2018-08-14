@@ -145,7 +145,7 @@
                               enctype="multipart/form-data" id="createAppoint">
                             {{ csrf_field() }}
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Họ & Tên :</label>
+                                <label class="control-label col-xs-2" for="title">Họ & tên </label>
                                 <div class="col-xs-10">
                                     <input type="text" class="form-control" id="namePatient" name="namePatient"
                                            placeholder="Họ và tên bệnh nhân" required>
@@ -153,7 +153,7 @@
                                 </div>
                             </div>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Địa chỉ :</label>
+                                <label class="control-label col-xs-2" for="title">Địa chỉ</label>
                                 <div class="col-xs-10">
                                     <input type="text" class="form-control" id="addressPatient" name="addressPatient"
                                            placeholder="Địa chỉ cư trú" required>
@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Số Di động :</label>
+                                <label class="control-label col-xs-2" for="title">Số di động </label>
                                 <div class="col-xs-10">
                                     <input type="text" class="form-control" id="phonePatient" name="phonePatient"
                                            placeholder="Số điện thoại di động" required>
@@ -170,20 +170,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-xs-2" for="title">Năm sinh :</label>
-                                <div class="col-xs-10">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i> <input type="date" id="bdayxx" name="bday"
-                                                                                  required="required">
-                                        </div>
-
+                                <label class="control-label col-xs-2" for="title">Năm sinh </label>
+                                <div class="col-xs-5">
+                                    <div class="inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                                          <input type="text" placeholder="Ngày hẹn" id="bdayxx" class="form-control pull-right" style="margin:0px;" />
+                                          <i class="fa fa-calendar"></i>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Giới tính :</label>
-                                <div class="col-xs-10">
+                                <label class="control-label col-xs-2" for="title">Giới tính </label>
+                                <div class="col-xs-3">
                                     <select name="genderPatient" id="genderPatient"
                                             style="height: 30px;width: 5em;float: left;">
                                         <option value="Male">Nam</option>
@@ -191,9 +186,11 @@
                                         <option value="Unknow">Khác</option>
                                     </select>
                                 </div>
+
+
                             </div>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Thành Phố :</label>
+                                <label class="control-label col-xs-2" for="title">Thành phố </label>
                                 <div class="col-xs-3">
                                     <select name="cityPatient" id="cityPatient" style="height: 30px;"
                                             onchange="disctrict(this)">
@@ -203,7 +200,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <label class="control-label col-xs-1" for="title">Quận :</label>
+                                <label class="control-label col-xs-1" for="title">Quận </label>
                                 <div class="col-xs-3">
                                     <select name="districtsPatient" id="districtsPatient" style="height: 30px;">
                                         @foreach($District as $one)
@@ -215,7 +212,7 @@
                             </div>
                             <hr>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Bệnh tiền sử :</label>
+                                <label class="control-label col-xs-2" for="title">Bệnh tiền sử </label>
                                 <div class=" row col-xs-10"
                                      style=" float: left;">
                                     <div class=" ">
@@ -268,6 +265,13 @@
         });
         $(function () {
             $('#datepicker').datepicker({
+                startDate: 'd',
+                autoclose: true,
+            });
+        });
+        $(function () {
+            $('#bdayxx').datepicker({
+                startDate: 'd',
                 autoclose: true,
             });
         });

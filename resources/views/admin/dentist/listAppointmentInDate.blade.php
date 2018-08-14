@@ -13,11 +13,13 @@
                             <table id="dup-table" class="table table-striped table-bordered">
                                 <thead>
                                 <tr style="background-color: #eee;">
-                                    <td class="col-sm-2" style="text-align: left;">Ngày bắt đầu</td>
-                                    <td class="col-sm-2">Thời gian khám </td>
-                                    <td class="col-sm-3" style="text-align: left;">Ghi Chú</td>
-                                    <td class="col-sm-3" style="text-align: left;">Trạng thái</td>
-                                    <td class="col-sm-3">Tùy chọn </td>
+                                     <td class="col-sm-1" >Số Điện Thoại</td>
+                                    <td class="col-sm-1" >Số Thứ tự</td>
+                                    <td class="col-sm-1" style="text-align: left;">Ngày bắt đầu</td>
+                                    <td class="col-sm-1">Thời gian khám</td>
+                                    <td class="col-sm-2" style="text-align: left;">Ghi Chú</td>
+                                    <td class="col-sm-2" style="text-align: left;">Trạng thái</td>
+                                    <td class="col-sm-2">Tùy chọn</td>
                                 </tr>
                                 </thead>
                             </table>
@@ -67,11 +69,15 @@
                 pageLength: 5,
                 ajax: '/admin/get-appointment-in-date',
                 columns : [
+                      {data: 'phone'},
+                     {data: 'numerical_order'},
                     {data: 'start_time'},
                     {data: 'estimated_time'},
                     {data: 'note'},
                     {data: 'status'},
-                    {data: 'action'},
+                    {
+                        data: 'action'
+                    },
                 ],
             });
         });

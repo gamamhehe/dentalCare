@@ -102,7 +102,7 @@ class AppointmentController extends Controller
         $result = [];
         $listPatient = [];
         $case3 = 0;
-        $dentist= null;
+        $dentist= null; $dentist = $appointment->belongsToStaff()->first();
         if ($checkAppoint == 0) {//khong có lịch hẹn.
 
             $resultPatient = $this->getPatientByPhone($appointment->phone);
@@ -120,7 +120,7 @@ class AppointmentController extends Controller
                 $patient = null;
             }
         } else {// có lịch hẹn
-            $dentist = $appointment->belongsToStaff()->first();
+           
             $case3 = 1;
             $patient = Patient::where('id', $checkAppoint)->first();
             // $result =[];
