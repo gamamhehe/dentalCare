@@ -104,7 +104,7 @@ Route::middleware('auth:api')->group(function () {
     //appointment
     Route::get("appointment/all", "Mobile\AppointmentController@getAll");
     Route::get("appointment/getById/{id}", "Mobile\AppointmentController@getById");
-    Route::get("appointment/getByDate", "Mobile\AppointmentController@getByDate");
+    Route::get("appointment/getByDate", "Mobile\AppointmentControllfer@getByDate");
     Route::get("appointment/getByPhone/{phone}", "Mobile\AppointmentController@getByPhone");
     Route::get("appointment/getUserAppointmentByCurrentDate/", "Mobile\AppointmentController@getUserAppointmentByCurrentDate");
     //payment

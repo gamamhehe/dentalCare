@@ -98,10 +98,9 @@ class StaffController extends BaseController
     }
 
 
-    public function doneTreatment(Request $request)
+    public function doneTreatment($tmHistory)
     {
         try {
-            $tmHistory = $this->getTreatmentHistoryById($request->input('treatment_history_id'));
             $dateStr = (new DateTime())->format("Y-m-d");
             $tmDetails = $this->getListTmDetailByDate($tmHistory->id, $dateStr);
             $treatment = $tmHistory->belongsToTreatment()->first();
@@ -155,6 +154,16 @@ class StaffController extends BaseController
             $appointment->status = $status;
             $this->updateAppointment($appointment);
             $successResponse = $this->getSuccessObj(200, "OK", "Sửa lịch thành công", "No data");
+            if ($status == AppConst::APPT_STATUS_DONE) {
+                $tmHistories = $this->getPatientTreatmentHistory(
+                    $appointment->staff_id,
+                    $appointment->hasPatientOfAppointment()->first()->patient_id,
+                    (new DateTime())->format('Y-m-d')
+                );
+                foreach ($tmHistories as $tmHistory) {
+                    $this->doneTreatment($tmHistory);
+                }
+            }
             return response()->json($successResponse);
         } catch (\Exception $ex) {
             $error = $this->getErrorObj('Lỗi máy chủ', $ex);
