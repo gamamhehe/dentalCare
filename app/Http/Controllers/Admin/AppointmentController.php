@@ -165,6 +165,7 @@ class AppointmentController extends Controller
     }
 
     public function UserAppoinment(Request $request){
+
     try {
 
         $phone = $request['guestPhone'];
@@ -178,6 +179,8 @@ class AppointmentController extends Controller
         if($note == null){
             $note = "Không có";
         }
+        $checkNewMember = $this->checkNewMember($phone);
+        
         $resultAccount = $this->createAccountNewMember($phone);
         if($resultAccount == false){
                return redirect()->back()->withError("Có lỗi khi đặt lịch");
@@ -190,6 +193,10 @@ class AppointmentController extends Controller
         $start_time = $newApp->start_time;
         $successMess = "Số thứ tự :".$numerical_order.", Bắt đầu khám vào lúc : ".$start_time; 
         $dateTime = new DateTime($newApp->start_time);
+
+        if($checkNewMember==false){
+            $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
+        }
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
         $this->dispatch(new SendSmsJob($phone, $smsMessage));
         return redirect()->back()->withSuccess($successMess);
