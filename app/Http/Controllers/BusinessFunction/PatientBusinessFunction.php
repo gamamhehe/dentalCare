@@ -116,4 +116,12 @@ trait PatientBusinessFunction
     public function getPhoneOfPatient($id){
         return Patient::find($id)->phone;
     }
+    public function checkNewMember($phone){
+        $result = $this->getPatientByPhone($phone);
+        if(count($result)!=0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
