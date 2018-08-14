@@ -12,6 +12,7 @@ use App\Model\RequestAbsent;
 use App\Model\Role;
 use App\Model\Absent;
 use App\Model\Staff;
+use App\Model\TreatmentDetail;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -33,23 +34,26 @@ trait StaffBusinessFunction
             return false;
         }
     }
-    public function getStaffForDataTable(){
-         $staffs = Staff::all();
-        foreach ($staffs as $staff ) {
+
+    public function getStaffForDataTable()
+    {
+        $staffs = Staff::all();
+        foreach ($staffs as $staff) {
             $staff->hasUserHasRole = $staff->belongsToUser()->first()->hasUserHasRole()->get();
             $staffName = "";
-            foreach ($staff->hasUserHasRole as $key ) {
+            foreach ($staff->hasUserHasRole as $key) {
                 $key->roleName = $key->belongsToRole()->first()->name;
-                if(strlen($staffName)==0){
-               $staffName = $staffName." ".$key->roleName; 
-                }else{
-                  $staffName = $staffName." - ".$key->roleName;   
+                if (strlen($staffName) == 0) {
+                    $staffName = $staffName . " " . $key->roleName;
+                } else {
+                    $staffName = $staffName . " - " . $key->roleName;
                 }
             }
             $staff->RoleStaff = $staffName;
-        } 
+        }
         return $staffs;
     }
+
     public function updateStaff($request, $idStaff)
     {
         DB::beginTransaction();
@@ -117,19 +121,22 @@ trait StaffBusinessFunction
     {
         return Staff::all();
     }
-    public function getListDentist(){
-        $dentist=[];
+
+    public function getListDentist()
+    {
+        $dentist = [];
         $staffs = $this->getListStaff();
         foreach ($staffs as $staff) {
             $staff->role = $staff->belongsToUser()->first()->hasUserHasRole()->get();
             foreach ($staff->role as $key) {
-                if($key->role_id==2){
+                if ($key->role_id == 2) {
                     $dentist[] = $staff;
                 }
             }
         }
         return $dentist;
     }
+
     public function getListStaffRequestAbsent($staffId)
     {
         $staff = Staff::where('id', $staffId)->first();
@@ -144,7 +151,7 @@ trait StaffBusinessFunction
                         null : $absent->belongsToStaff()->first();
                     $reqAbsent->message_from_staff = $absent->message_from_staff;
                     $reqAbsent->created_time = $absent->created_time;
-                    $reqAbsent->is_approved = $absent->is_approved==null? 0: $absent->is_approved;
+                    $reqAbsent->is_approved = $absent->is_approved == null ? 0 : $absent->is_approved;
                 } else {
                     $reqAbsent->staff_approve = null;
                     $reqAbsent->message_from_staff = null;
@@ -175,7 +182,7 @@ trait StaffBusinessFunction
                         null : $absent->belongsToStaff()->first();
                     $reqAbsent->message_from_staff = $absent->message_from_staff;
                     $reqAbsent->created_time = $absent->created_time;
-                    $reqAbsent->is_approved = ($absent->is_approved == null? 0 : $absent->is_approved);
+                    $reqAbsent->is_approved = ($absent->is_approved == null ? 0 : $absent->is_approved);
                 } else {
                     $reqAbsent->staff_approve = null;
                     $reqAbsent->message_from_staff = null;
@@ -187,5 +194,24 @@ trait StaffBusinessFunction
         } else {
             return null;
         }
+    }
+
+
+    public function getPatientTreatmentHistory($staffId, $patientId, $dateStr)
+    {
+        $tmDetails = TreatmentDetail::where('staff_id', $staffId)
+            ->whereDate('created_date', $dateStr)
+            ->get();
+        Log::info('SIZE ' . json_encode($tmDetails));
+        $tmHistories = [];
+        foreach ($tmDetails as $detail) {
+            $tmHistory = $detail->belongsToTreatmentHistory()
+                ->where('patient_id', $patientId)
+                ->first();
+            if ($tmHistory != null) {
+                $tmHistories[] = $tmHistory;
+            }
+        }
+        return $tmHistories;
     }
 }
