@@ -194,11 +194,12 @@ class AppointmentController extends Controller
         $successMess = "Số thứ tự :".$numerical_order.", Bắt đầu khám vào lúc : ".$start_time; 
         $dateTime = new DateTime($newApp->start_time);
 
+        
+        $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
+        $this->dispatch(new SendSmsJob($phone, $smsMessage));
         if($checkNewMember==false){
             $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
         }
-        $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
-        $this->dispatch(new SendSmsJob($phone, $smsMessage));
         return redirect()->back()->withSuccess($successMess);
        } catch (\Exception $e) {
           return redirect()->back()->withError($errormess);
