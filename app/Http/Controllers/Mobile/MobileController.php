@@ -171,6 +171,15 @@ class MobileController extends BaseController
      */
     public function test3(Request $request)
     {
+        try {
+
+            $tmHistories = $this->getPatientTreatmentHistory(1, 2, (new DateTime())->format('Y-m-d'));
+            return response()->json($tmHistories);
+        } catch (Exception $exception) {
+
+            return response()->json($exception->getMessage());
+        }
+
     }
 
     public function deletePayment($payment)
@@ -232,6 +241,18 @@ class MobileController extends BaseController
             $msg = ("Khong tim thay user " . $request->phone);
             return response()->json(["Error" => $msg]);
         }
+        $appointments = $user->hasAppointment()->get();
+        if ($appointments != null) {
+            foreach ($appointments as $appointment) {
+                $this->deleteAppointment($appointment);
+            }
+        }
+        $userHasRole = $user->hasUserHasRole()->get();
+        if ($userHasRole != null) {
+            foreach ($userHasRole as $role) {
+                $role->delete();
+            }
+        }
         $patients = $user->hasPatient()->get();
         if ($patients != null) {
             foreach ($patients as $patient) {
@@ -262,18 +283,6 @@ class MobileController extends BaseController
                     }
                 }
                 $patient->delete();
-            }
-        }
-        $appointments = $user->hasAppointment()->get();
-        if ($appointments != null) {
-            foreach ($appointments as $appointment) {
-                $this->deleteAppointment($appointment);
-            }
-        }
-        $userHasRole = $user->hasUserHasRole()->get();
-        if ($userHasRole != null) {
-            foreach ($userHasRole as $role) {
-                $role->delete();
             }
         }
         $user->delete();
