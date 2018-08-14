@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class TreatmentHistorySymptom extends Model
 {
     protected $table = 'tbl_treatment_history_symptoms';
-    protected $primaryKey = ['treatment_history_id', 'role_id'];
+    protected $primaryKey = ['treatment_history_id', 'symptom_id'];
     public $incrementing = false;
     protected $fillable = ['treatment_history_id', 'symptom_id'];
 
