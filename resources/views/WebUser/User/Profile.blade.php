@@ -5,6 +5,7 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/assets/images/icon/fap16.png"/>
     <script type="text/javascript" src="/assets/user/bootstrap/bootstrap.js"></script>
     <script src="/assets/user/js/jquery-3.2.1.js"></script>
     <script src="/assets/user/js/jquery.easing.1.3.js"></script>
@@ -484,7 +485,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <div><img src="/assets/images/HomePage/logo.png" alt=""></div>
+                    <div><img src="/assets/images/HomePage/footer2.png" alt="" class="img-responsive img-fruid"></div>
                     <br>
                     <div>Website: <a href="https://google.com.vn">projectcapstone.vn</a></div>
                     <div>Bác sĩ tư vấn (24/7) : <a class="zalovb" id="callme"
