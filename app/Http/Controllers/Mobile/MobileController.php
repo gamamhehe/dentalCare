@@ -357,6 +357,9 @@ class MobileController extends BaseController
                 $this->logInfo("staff in sendFirebaseReloadAppointment null");
             }
         }
+    }  public function sendFirebaseReloadClinicAppointment(Request $request)
+    {
+        $this->sendFirebaseReloadMobileAppointment();
     }
 
     public function test4()

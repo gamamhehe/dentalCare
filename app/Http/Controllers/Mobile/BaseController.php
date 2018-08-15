@@ -47,7 +47,8 @@ class BaseController extends Controller
         return $message;
     }
 
-    public function logInfo($message){
+    public function logInfo($message)
+    {
         Log::info("MyLOG: " . $message);
     }
 
@@ -71,6 +72,18 @@ class BaseController extends Controller
         } else {
             $this->logInfo("staff in sendFirebaseReloadAppointment null");
         }
+    }
+
+    public function sendFirebaseReloadMobileAppointment()
+    {
+        $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
+                "reload appointment",
+                "No message",
+                AppConst::ACTION_RELOAD_CLINIC_APPOINTMENT,
+                '/topics/' . AppConst::TOPIC_RELOAD_APPOINTMENT
+            )
+        );
+        $this->logInfo("staff in sendFirebaseReloadAppointment null");
     }
 
     public function updateNumAppWebsite($appointment)

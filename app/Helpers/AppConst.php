@@ -19,6 +19,7 @@ class AppConst
     const RESPONSE_RELOAD = 'RESPONSE_RELOAD';
 
     const TOPIC_PROMOTION = "PROMOTION";
+    const TOPIC_RELOAD_APPOINTMENT = "TOPIC_RELOAD_APPOINTMENT";
 
     const MSG_SMS_APPOINTMENT = "";
     const MSG_REMINDER_APPOINTMENT = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";
