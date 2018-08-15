@@ -33,7 +33,7 @@
                         <table class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;">
                             <thead>
                             <tr>
-                                <th style="text-align: center; " class="col-xs-2">Họ Tên</th>
+                                <th style="text-align: center; " class="col-xs-6 ">Họ Tên</th>
                                 <th style="text-align: center; " class="col-xs-1">Số điện thoại</th>
                                 <th style="text-align: center; " class="col-xs-3">Địa Chỉ</th>
                                 <th style="text-align: center; " class="col-xs-1">Ngày Sinh</th>
@@ -45,11 +45,11 @@
                             @if($patientList != null)
                                 @foreach($patientList as $patient)
                                     <tr>
-                                        <td>{{$patient->name}}</td>
-                                        <td>{{$patient->phone}}</td>
-                                        <td>{{$patient->address}}</td>
-                                        <td>{{$patient->date_of_birth}}</td>
-                                        <td>
+                                        <th style="text-align: center; " class="col-xs-6 ">{{$patient->name}}</th>
+                                        <th style="text-align: center; " class="col-xs-1  ">{{$patient->phone}}</th>
+                                        <th style="text-align: center; " class="col-xs-3  ">{{$patient->address}}</th>
+                                        <th style="text-align: center; " class="col-xs-1  ">{{$patient->date_of_birth}}</th>
+                                        <th  style="text-align: center; " class="col-xs-2  "> 
                                             <div style="padding-left: 1.8em;">
                                             <a href="thong-tin-benh-nhan/{{$patient->id}}" class="btn btn-sm btn-default btn-info">Thông tin bệnh nhân</a>
                                             <button type="button" class="btn btn-sm btn-success"
@@ -69,7 +69,7 @@
         </div>
         <!-- tao lich hen -->
         <div id="create" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>

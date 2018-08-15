@@ -241,16 +241,16 @@ class PatientController extends Controller
             foreach ($data as $row) {
                 $output .= '
         <tr>
-         <td>' . $row->name . '</td>
-         <td>' . $row->phone . '</td>
-         <td>' . $row->address . '</td>
-         <td>' . $row->date_of_birth . '</td>
-         <td>
+         <th  style="text-align: center; " class="col-xs-6  ">' . $row->name . '</th>
+         <th   style="text-align: center; " class="col-xs-1  ">' . $row->phone . '</th>
+         <th  style="text-align: center; " class="col-xs-3  ">' . $row->address . '</th>
+         <th  style="text-align: center; " class="col-xs-1  ">' . $row->date_of_birth . '</th>
+         <th  style="text-align: center; " class="col-xs-2  ">
             <a href="thong-tin-benh-nhan/' . $row->id . '" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
             <button type="button" class="btn btn-default btn-success"
                                  onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button>
            
-                                 </td>
+                                 </th>
         </tr>
         ';
             }

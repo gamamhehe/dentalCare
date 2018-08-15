@@ -520,7 +520,7 @@
 
 <div class="container">
 <div class="row">
-    <div class="col-md-6 col-sm-12 col-lg-6">
+    <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12">
         <ul  style="list-style-type:none;">
             <li class="listType"><i class="fa fa-star text-yellow"></i>Bạn đang tìm kiếm một phòng khám để duy trì sức khỏe răng miệng?</li>
             <li class="listType"><i class="fa fa-star text-yellow"></i>Bạn có một nụ cười tỏa nắng?</li>
@@ -531,8 +531,8 @@
             <p>Bác sỹ tốt sẽ luôn mong làn da và hàm răng của bạn được đẹp chứ không phải vì những mục đích khác. Bác sỹ tốt là người giúp bạn hiểu rõ việc chăm sóc răng miệng và làn da từ những việc nhỏ nhất như đánh răng và bảo vệ làn da đúng cách mới là điều quan trọng nhất,...</p>
         </div>
     </div>
-    <div class="col-md-6 col-sm-12 col-lg-6"  >
-      <img src="/assets/images/gt1.jpg" alt="" class="img-responsive img-fruid img-center">
+    <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12"  >
+      <img src="/assets/images/gt1.jpg" alt="" class="img-responsive"   style=" width: 100%;">
   </div>
 </div>
 </div>
@@ -588,15 +588,15 @@
             </p>
             <p>
                 + <strong>Máy X quang kỹ thuật số CT</strong> thế hệ mới nhất được Bệnh viện thẩm mỹ Gold Clinic nhập trực tiếp từ Mỹ về Việt Nam. Đây là thiết bị chụp X quang mới nhất được các bệnh viện thẩm mỹ uy tín tại Mỹ, Hàn Quốc… áp dụng hiện nay.</p>
-                <div><img src="/assets/images/bvtm-kangnam-2.jpg" alt="" class="img-responsive img-fruid img-center"></div>
+                <div><img src="/assets/images/bvtm-kangnam-2.jpg" alt="" class="img-responsive img-fruid img-center" style=" width: 100%;"></div>
                 <p style="text-align: center;"><em>Máy X-quang kỹ thuật số mới nhất đang được ứng dụng tại Gold Clinic</em></p>
                 
                 + <strong>Công nghệ 3D mô phỏng kết quả sau thẩm mỹ</strong> được xem là cách thức tư vấn thực tế và trực quan cho khách hàng.</p>
-                <img src="/assets/images/bvtm-kangnam-2-2.jpg" alt="" class="img-responsive img-fruid img-center">
+                <img src="/assets/images/bvtm-kangnam-2-2.jpg" alt="" class="img-responsive img-fruid img-center" style=" width: 100%;">
                 <p style="text-align: center;"><em>Phòng phẫu thuật hiện đại tiên tiến chuẩn quốc tế</em></p>
                 <p>Với những phản hồi tích cực Gold Clinic đang là địa chỉ thẩm mỹ được các chị em truyền tai nhau trên các diễn đàn thẩm mỹ, chia sẻ kinh nghiệm làm đẹp trở thành sự lựa chọn đáng tin tưởng của hàng trăm nghìn khách hàng. Đến với Gold Clinic chị em có thể hoàn toàn tự tin và yên tâm có thể khắc phục mọi khuyết điểm ngoại hình với kết quả ổn định, hoàn hảo nhất và độ an toàn cao.</p>
 
-                <p><strong>Liên hệ ngay tổng đài 1900 6466, đến trực tiếp Gold Clinic hoặc Click Đăng ký tư vấn để được giải đáp mọi thắc mắc</strong></p>
+                <p><strong>Liên hệ ngay tổng đài 1900 9999, đến trực tiếp Gold Clinic hoặc Click Đăng ký tư vấn để được giải đáp mọi thắc mắc</strong></p>
             </div>
         </div>
     </div>
