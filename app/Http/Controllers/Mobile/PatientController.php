@@ -106,59 +106,6 @@ class PatientController extends BaseController
         return $appointment;
     }
 
-    public function receiveManually(Request $request)
-    {
-        try {
-            $patientId = $request->input('patient_id');
-            $appointmentId = $request->input('appointment_id');
-            $appointment = $this->getAppointmentById($appointmentId);
-            if ($appointment->status != 0) {
-                $errorResponse = $this->getErrorObj("Trạng thái lịch hẹn không hợp lệ", "No exception");
-                return response()->json($errorResponse, 400);
-            }
-
-            $patientAppointment = $appointment->hasPatientOfAppointment()->first();
-            if ($patientAppointment != null) {
-                $errorResponse = $this->getErrorObj("Bệnh nhân đã được nhận khám", "No exception");
-                return response()->json($errorResponse, 400);
-            } else {
-                $appointment->status = 1;
-                $this->saveAppointment($appointment, $patientId);
-                $this->updateNumAppWebsite($appointment);
-                $this->sendFirebaseReloadAppointment($appointment->staff_id);
-                $successResponse = $this->getSuccessObj(200, "OK", "Change status success", "No data");
-                $this->logInfo("VO reload else");
-                return response()->json($successResponse, 200);
-            }
-        } catch (Exception $exception) {
-            $errorResponse = $this->getErrorObj("Lỗi server", $exception);
-            return response()->json($errorResponse, 500);
-        }
-    }
-
-    public function receive(Request $request)
-    {
-        $patientId = $request->input('patient_id');
-        $phone = $this->getPhoneOfPatient($patientId);
-        $isExamination = $this->checkPatientIsExamination($patientId);
-        if ($isExamination) {
-            $error = $this->getErrorObj("Bệnh nhân đã được nhận khám", 400);
-            return response()->json($error, 400);
-        } else {
-            $appointment = $this->checkAppointmentForPatient($phone, $patientId);
-            if ($appointment === null) {
-                $error = $this->getErrorObj("Bệnh nhân chưa có lịch hẹn", "No Exception");
-                return response()->json($error, 417);
-            } else {
-                $appointment->status = 1;
-                $this->saveAppointment($appointment, $patientId);
-                $this->updateNumAppWebsite($appointment);
-                $this->sendFirebaseReloadAppointment($appointment->staff_id);
-                $successResponse = $this->getSuccessObj(200, "OK", "Nhận bệnh thành công", "No Exception");
-                return response()->json($successResponse, 200);
-            }
-        }
-    }
 
     public function changeAvatar(Request $request)
     {
@@ -198,43 +145,6 @@ class PatientController extends BaseController
             $error->error = "Lỗi máy chủ";
             $error->exception = $ex->getMessage();
             return response()->json($error, 400);
-        }
-    }
-    public function updateNumAppWebsite($appointment)
-    {
-        $options = array(
-            'cluster' => 'ap1',
-            'encrypted' => true
-        );
-        $pusher = new Pusher(
-            'e3c057cd172dfd888756',
-            '993a258c11b7d6fde229',
-            '562929',
-            $options
-        );
-        $appointment->pushStatus = 0;
-        $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
-    }
-
-    public function sendFirebaseReloadAppointment($staffId)
-    {
-        $staff = $this->getStaffById($staffId);
-        if ($staff != null) {
-            $this->logInfo("Staff !=null reload");
-            $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
-            if ($staffFirebaseToken != null) {
-                $this->logInfo("Staff firebase !=null reload");
-
-                $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
-                        $staff->id,
-                        "No message",
-                        AppConst::ACTION_RELOAD_APPOINTMENT,
-                        $staffFirebaseToken->noti_token)
-                );
-            }
-            $this->logInfo("Send sendFirebaseReloadAppointment func");
-        } else {
-            $this->logInfo("staff in sendFirebaseReloadAppointment null");
         }
     }
 

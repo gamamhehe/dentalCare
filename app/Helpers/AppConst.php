@@ -19,6 +19,7 @@ class AppConst
     const RESPONSE_RELOAD = 'RESPONSE_RELOAD';
 
     const TOPIC_PROMOTION = "PROMOTION";
+    const TOPIC_RELOAD_APPOINTMENT = "TOPIC_RELOAD_APPOINTMENT";
 
     const MSG_SMS_APPOINTMENT = "";
     const MSG_REMINDER_APPOINTMENT = "Lịch hẹn của bạn sẽ diễn ra trong vòng 30 phút nữa";
@@ -43,7 +44,9 @@ class AppConst
     const AVATAR_PATH = '/assets/images/avatar/';
 
 
-    const ACTION_RELOAD_APPOINTMENT = "ACTION_RELOAD_APPOINTMENT";
+    const ACTION_RELOAD_DENTIST_APPOINTMENT = "ACTION_RELOAD_DENTIST_APPOINTMENT";
+    const ACTION_RELOAD_CLINIC_APPOINTMENT = "ACTION_RELOAD_CLINIC_APPOINTMENT";
+//    const ACTION_RELOAD_APPOINTMENT = "ACTION_RELOAD_APPOINTMENT";
 //  0 vua tao =>Chua tới
 //  1 da toi
 //  2 dang kham
