@@ -5,10 +5,11 @@
 /vendor
 /.idea
 /.vagrant
-Homestead.json
+Homestead.w
 Homestead.yaml
 npm-debug.log
 yarn-error.log 
 .env
 /composer.json
 /composer.lock
+public_key.txt

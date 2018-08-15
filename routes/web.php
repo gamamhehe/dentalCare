@@ -9,13 +9,17 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 Route::get('initNews', 'Admin\AdminController@initNews');
 Route::get('initStep', 'Admin\AdminController@initStep');
 Route::get('initData', 'Admin\AdminController@initData');
 Route::get('logoutAdmin', 'Admin\StaffController@logout')->name('admin.logout');
 Route::post('loginAdmin', 'Admin\StaffController@login')->name('admin.login.post');
 Route::get('lara-admin', 'Admin\StaffController@loginGet')->name('admin.login');
+
+Route::get('datajson', 'Blockchain\BlockchainController@getDataBlockchainJson');
+Route::get('datajsonFromSever', 'Blockchain\BlockchainController@checkLedger');
+Route::get('array', 'Blockchain\BlockchainController@setDataTypePayment');
 
 Route::get('/cc', function () {
     return view('WebUser.User.Profile');
@@ -37,7 +41,7 @@ Route::get('/signOut', 'Admin\HomeController@logout');
 Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser.post');
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
-Route::get('/lien-he','Admin\HomeController@xxx');
+Route::get('/lien-he', 'Admin\HomeController@xxx');
 Route::post('/create-appointment-user', 'Admin\AppointmentController@UserAppoinment');
 // end webuser
 
@@ -62,8 +66,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::get('/start-appointment/{id}', 'Admin\AppointmentController@startAppointmentController');
 
         //TreatmentController
-        Route::get('/get-treatment/{id}', 'Admin\TreatmentController@getTreatmentByID');//ajax
-        Route::get('/get-treatmentByCate/{id}', 'Admin\TreatmentController@getTreatmentByCategoryId');//ajax
+        Route::get('/get-treatment/{id}', 'Admin\TreatmentController@getTreatmentByID'); //ajax
+        Route::get('/get-treatmentByCate/{id}', 'Admin\TreatmentController@getTreatmentByCategoryId'); //ajax
         Route::get('/get-list-treatment', 'Admin\TreatmentController@getListTreatment');
         Route::get('/list-treatment', 'Admin\TreatmentController@loadListTreatment')->name('admin.list.treatment');
         Route::get('/delete-treatment/{id}', 'Admin\TreatmentController@delete');
@@ -72,7 +76,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::get('/edit-treatment/{id}', 'Admin\TreatmentController@loadeditTreatment');
         Route::post('/edit-treatment/{id}', 'Admin\TreatmentController@edit')->name('admin.edit.treatment');
         //dentist
-
 
     });
     Route::group(['middleware' => 'receptionist'], function () {
@@ -125,12 +128,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     });
 
     //UserController
-//    Route::get('/register', 'Admin\Usercontroller@registerGet');
-//    Route::post('/register', 'Admin\Usercontroller@registerPost');
+    //    Route::get('/register', 'Admin\Usercontroller@registerGet');
+    //    Route::post('/register', 'Admin\Usercontroller@registerPost');
     Route::get('/profile-staff', 'Admin\Staffcontroller@profile');
     //
-
-    Route::get('/appointment-detail/{id}', 'Admin\AppointmentController@detailAppointmentById');
 
     //FeedbackController  //FeedbackController
     Route::get('/delete-feedback/{id}', 'Admin\FeedbackController@delete');
@@ -148,7 +149,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/create-medicines', 'Admin\MedicineController@create');
     Route::get('/edit-medicines/{id}', 'Admin\MedicineController@loadedit');
     Route::post('/edit-medicines/{id}', 'Admin\MedicineController@edit')->name('admin.edit.medicines');
-    //Nurse
+    //NurseW
     Route::get('/live-search', 'Admin\PatientController@index')->name('admin.AppointmentPatient.index');
     Route::get('/live-search/{searchValue}', 'Admin\PatientController@action1')->name('admin.AppointmentPatient.search');
     Route::get('/list-appointment/{id}', 'Admin\PatientController@receive')->name('admin.listAppointment.patient');
@@ -161,8 +162,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/prescription', 'Admin\MedicineController@createPrescriptionForTreatmentDetail')->name('prescription');
 
     //Patient
-    Route::get('/thong-tin-benh-nhan/{id}', 'Admin\PatientController@getInfoPatientById');//ajax
-    Route::get('/get-list-patient/{id}', 'Admin\PatientController@getListPatientById');//ajax
+    Route::get('/thong-tin-benh-nhan/{id}', 'Admin\PatientController@getInfoPatientById'); //ajax
+    Route::get('/get-list-patient/{id}', 'Admin\PatientController@getListPatientById'); //ajax
     // Route::get('/create-Patient', 'Admin\PatientController@create');
     //Dentist
     Route::get('/list-appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
@@ -193,26 +194,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/create-absent', 'Admin\AbsentController@loadcreate')->name('create.Absent');
     Route::post('/create-absent', 'Admin\AbsentController@create');
     Route::get('/manage-absent', 'Admin\AbsentController@loadView')->name('admin.Manage.Absent');
-    Route::get('/get-list-absent', 'Admin\AbsentController@showListAbsentDatatable');//for staff
+    Route::get('/get-list-absent', 'Admin\AbsentController@showListAbsentDatatable'); //for staff
     Route::get('/delete-absent', 'Admin\AbsentController@deleteAbsent');
-    Route::get('/get-list-absent-admin', 'Admin\AbsentController@showListAbsentDatatableAdmin');//for admin
+    Route::get('/get-list-absent-admin', 'Admin\AbsentController@showListAbsentDatatableAdmin'); //for admin
     Route::post('/approve-absent', 'Admin\AbsentController@approve');
     Route::get('/valid-absent', 'Admin\AbsentController@count');
     Route::get('/admin-absent', 'Admin\AbsentController@changeView')->name('admin.absent');
 
     //TreatmentDetail
-    Route::post('/create-treatment-detail', 'Admin\TreatmentDetailController@createTreatmentDetailController');//add
-    Route::post('/update-step', 'Admin\TreatmentDetailController@update');//update
+    Route::post('/create-treatment-detail', 'Admin\TreatmentDetailController@createTreatmentDetailController'); //add
+    Route::post('/update-step', 'Admin\TreatmentDetailController@update'); //update
     Route::get('/treatment-detail/{id}', 'Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment
     Route::post('/create-appointment', 'Admin\AppointmentController@add');
-    Route::get('/create-appointment', 'Admin\StaffController@createAppointmentByStaff');//new Page
-
+    Route::get('/create-appointment', 'Admin\StaffController@createAppointmentByStaff'); //new Page
 
     //treatmentHistory
     Route::get('/treatment-history', 'Admin\TreatmentHistoryController@getList')->name('admin.treatmentHistory');
     Route::get('/get-treatment-history-detail', 'Admin\TreatmentHistoryController@getDetail')->name('gettreatmentHistoryDetail');
-
 
     //city
     Route::get('/get-district/{id}', 'Admin\PatientController@getDistrictbyCity');
@@ -221,9 +220,26 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
 });
 
 Route::post('/api/call', 'Admin\PatientController@login')->name('user.login');
-Route::get('/generateKey', 'BlockchainController@GenerateKey');
-Route::get('/encrypt', 'BlockchainController@EncryptTreatmentHistory');
 
+////Blockchain - HungPT
+Route::get('/generateKey', 'Blockchain\BlockchainController@GenerateKey');
+Route::get('/encryptPayment', 'Blockchain\BlockchainController@EncryptCreatePayment');
+Route::get('/decryptBlock/{id}', 'Blockchain\BlockchainController@DecryptDataBlock');
+Route::get('/encryptPaymentDetail/{id}', 'Blockchain\BlockchainController@EncryptCreatePaymentDetail');
+Route::get('/checkKey', 'Blockchain\BlockchainController@CheckPublicKeyNPrivateKey');
+
+Route::get('checkPrivateKey', function () {
+    return view('admin/syncData');
+});
+
+// Route::get('/readPublicKey', 'Blockchain\BlockchainController@ReadPublickey');
+
+//test
+Route::get('/hashBlock', 'Blockchain\BlockchainController@TestHashBlock');
+Route::get('/updatePayment', 'Blockchain\BlockchainController@TestUpdatePayment');
+
+
+////
 
 Route::post('/loginUser', 'Admin\PatientController@login')->name('user.login');
 
@@ -255,3 +271,31 @@ Route::get('/broadcastDentist', function () {
 use App\Events\ReceiveAppointment;
 
 Route::get('/broadcastReception', 'Admin\HomeController@testFunction');
+
+
+//blockchain
+
+Route::get('/saveNewLedger', 'Blockchain\BlockchainController@saveNewLedger');
+Route::get('getThisLedger', 'Blockchain\BlockchainController@getThisLedger');
+Route::get('/checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
+Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
+Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
+Route::get('/updateQueue', 'Blockchain\QueueController@updateQueue');
+Route::get('/runJobQueue', 'Blockchain\QueueController@runJobQueue');
+Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
+
+
+Route::get('/test', 'Blockchain\BlockchainController@test');
+
+use App\Model\Queue;
+
+Route::get('/getAllQueue', function () {
+    dd(Queue::all());
+});
+Route::get('/getIp', function () {
+    $host = gethostname();
+    $ip = gethostbyname($host);
+    return $ip;
+});
+
+Route::get("/testPerformance", "Blockchain\BlockchainController@testPerformance");

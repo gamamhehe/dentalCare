@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblKeysTable extends Migration
+class CreateTblBlockchainsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTblKeysTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_keys', function (Blueprint $table) {
-            $table->string('patient_id');
-            $table->longText('private_key');
-            $table->longText('public_key');
-            $table->timestamps();
+        Schema::create('tbl_blockchains', function (Blueprint $table) {
+            $table->increments('id');
+            $table->longText('data_encrypt');
+            $table->string('previous_hash');
+            $table->string('hash');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateTblKeysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_keys');
+        Schema::dropIfExists('tbl_blockchains');
     }
 }

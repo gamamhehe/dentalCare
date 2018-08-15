@@ -1,6 +1,17 @@
 <?php
 /**
  * Created by PhpStorm.
+<<<<<<< HEAD
+ * User: Luc
+ * Date: 27-Jun-18
+ * Time: 23:10
+ * User: gamamhehe
+ * Date: 6/17/2018
+ * Time: 3:34 PM
+ * User: Luc
+ * Date: 27-Jun-18
+ * Time: 23:10
+=======
  * User: gamamhehe
  * Date: 6/17/2018
  * Time: 3:34 PM
@@ -10,6 +21,7 @@
  * Date: 27-Jun-18
  * Time: 23:10
  * >>>>>>> UAT
+>>>>>>> UAT
  */
 
 namespace App\Http\Controllers\BusinessFunction;

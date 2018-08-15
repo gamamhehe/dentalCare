@@ -7257,6 +7257,7 @@ class AdminController extends Controller
     public function initDistrict()
     {
 
+
     }
 
     public function initEvent()

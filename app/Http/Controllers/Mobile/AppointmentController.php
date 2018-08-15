@@ -141,13 +141,13 @@ class AppointmentController extends BaseController
                     "Result is null, No exception");
                 return response()->json($error, 400);
             }
-
         } catch (ApiException $e) {
             $error = $this->getErrorObj("Lỗi server", $e->getMessage());
             return response()->json($error, 400);
         } catch (\Exception $ex) {
             $error = $this->getErrorObj("Lỗi server", $ex->getMessage());
             return response()->json($error, 400);
+
         }
     }
 

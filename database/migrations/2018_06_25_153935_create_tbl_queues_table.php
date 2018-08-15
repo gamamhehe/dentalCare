@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblNodeInfoTable extends Migration
+class CreateTblQueuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateTblNodeInfoTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_node_info', function (Blueprint $table) {
-            $table->string("ip")->primary();
-            $table->string("name");
+        Schema::create('tbl_queues', function (Blueprint $table) {
+            $table->increments('id');
+            $table->longText('data_encrypt');
+            $table->boolean('status');
+            $table->string('ip');
             $table->timestamps();
         });
-
-
     }
 
     /**
@@ -29,6 +29,6 @@ class CreateTblNodeInfoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_node_info');
+        Schema::dropIfExists('tbl_queues');
     }
 }
