@@ -57,7 +57,7 @@
                                      class="img-fluid img-responsive" style="max-height: 25px;">
                             </a>
                         <ul class="dropdown-menu"
-                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            style="position: absolute;right: 0;background-color: whitesmoke">
                             <!-- User image -->
                                 <li class="user-header">
                                     <div class="container" style=";padding:10px 0px; ">
@@ -337,7 +337,7 @@
                                      class="img-fluid img-responsive" style="max-height: 25px;">
                             </a>
                             <ul class="dropdown-menu"
-                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            style="position: absolute;right: 0;background-color: whitesmoke">
                             <!-- User image -->
                                 
                                 <li class="user-header" id="acc1" style="display: block">

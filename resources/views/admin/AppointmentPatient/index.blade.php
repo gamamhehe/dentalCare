@@ -80,13 +80,13 @@
                               enctype="multipart/form-data" id="createAppoint">
                             {{ csrf_field() }}
                             <div class="form-group row add">
-                                <label class="control-label col-xs-4" for="title">Số điện thoại:</label>
-                                <div class="col-xs-6" style="padding-right: 0;padding-left: 0;">
+                                <label class="control-label col-sm-4 col-xs-12" for="title">Số điện thoại:</label>
+                                <div class="col-sm-6 col-xs-8" style="padding-right: 0;padding-left: 0;">
                                     <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
                                            required="required">
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
-                                <div class="col-xs-2" style="">
+                                <div class="col-sm-2 col-xs-4" style="">
                                     <button class="btn btn-success" type="button" onclick="checkValid()">Check</button>
                                 </div>
                             </div>

@@ -1389,7 +1389,7 @@ a.nav-link {
     background-color: #0275d8;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: 0.4s;
-    height: 70px;
+    
 }
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link:hover {
