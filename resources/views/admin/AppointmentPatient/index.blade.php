@@ -5,27 +5,24 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left"><h1>Tìm kiếm bệnh nhân</h1></div>
-                        <div class="col-sm-7" style="text-align: right">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="text-align: left"><h3>Tìm kiếm bệnh nhân</h3></div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="text-align: right" style="margin-top: 20px;">
                             @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
-                                <button class="btn btn-success create-patient" id="Patient">Tạo bệnh nhân</button>
+                                <button class="btn btn-success btn-lg create-patient" id="Patient" style="">Tạo bệnh nhân</button>
                             @endif
-                            <button class="btn btn-success create-modal" id="Appoint">Tạo lịch hẹn</button>
+                            <button class="btn btn-success btn-lg create-modal" id="Appoint">Tạo lịch hẹn</button>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="form-group">
-                        <input type="text" name="search" id="search" class="form-control"
-                               placeholder="Số điên thoại bệnh nhân" value="{{old('search')}}"/>
-                        <div class="row" style="margin-bottom: 1em;">
-                            <div class="" style="margin-top: 1em;">
-                                <button type="button" class="col-md-3 btn btn-default btn-success"
-                                        style="margin-right: 10px;float: right;" onclick="search()">Tìm
+                    <div class="form-group row">
+                        <div class="col-md-10 col-xs-8"><input type="text" name="search" id="search" class="form-control"
+                               placeholder="Số điên thoại bệnh nhân" style="margin:0px;"  value="{{old('search')}}"/></div>
+                        <div class="col-md-2 col-xs-3"> 
+                                <button type="button" class="btn btn-default btn-success"  
+                                         onclick="search()" style="width: 100%;min-width: 60px;">Tìm
                                 </button>
-                            </div>
                         </div>
-
                     </div>
 
 
@@ -33,11 +30,11 @@
                         <table class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;">
                             <thead>
                             <tr>
-                                <th style="text-align: center; " class="col-xs-6 ">Họ Tên</th>
-                                <th style="text-align: center; " class="col-xs-1">Số điện thoại</th>
-                                <th style="text-align: center; " class="col-xs-3">Địa Chỉ</th>
-                                <th style="text-align: center; " class="col-xs-1">Ngày Sinh</th>
-                                <th style="text-align: center; " class="col-xs-2">Tùy chọn</th>
+                                <th style="text-align: center; " class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">Họ Tên</th>
+                                <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">Số điện thoại</th>
+                                <th style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">Địa Chỉ</th>
+                                <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">Ngày Sinh</th>
+                                <th style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">Tùy chọn</th>
 
                             </tr>
                             </thead>
@@ -45,11 +42,11 @@
                             @if($patientList != null)
                                 @foreach($patientList as $patient)
                                     <tr>
-                                        <th style="text-align: center; " class="col-xs-6 ">{{$patient->name}}</th>
-                                        <th style="text-align: center; " class="col-xs-1  ">{{$patient->phone}}</th>
-                                        <th style="text-align: center; " class="col-xs-3  ">{{$patient->address}}</th>
-                                        <th style="text-align: center; " class="col-xs-1  ">{{$patient->date_of_birth}}</th>
-                                        <th  style="text-align: center; " class="col-xs-2  "> 
+                                        <th style="text-align: center; " class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">{{$patient->name}}</th>
+                                        <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">{{$patient->phone}}</th>
+                                        <th style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">{{$patient->address}}</th>
+                                        <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">{{$patient->date_of_birth}}</th>
+                                        <th  style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "> 
                                             <div style="padding-left: 1.8em;">
                                             <a href="thong-tin-benh-nhan/{{$patient->id}}" class="btn btn-sm btn-default btn-info">Thông tin bệnh nhân</a>
                                             <button type="button" class="btn btn-sm btn-success"
@@ -69,7 +66,7 @@
         </div>
         <!-- tao lich hen -->
         <div id="create" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -80,20 +77,20 @@
                               enctype="multipart/form-data" id="createAppoint">
                             {{ csrf_field() }}
                             <div class="form-group row add">
-                             <div class="control-label col-sm-4 col-xs-12"><label>Số điện thoại:</label></div>
-                                <div class="col-sm-6 col-xs-7" style="padding-right: 0;padding-left: 0;">
+                             <div class="control-label col-md-4 col-sm-4 col-xs-12"><label>Số điện thoại </label></div>
+                                <div class="col-md-6 col-sm-6 col-xs-8" style="padding-right: 0;padding-left: 0;">
                                     <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
                                            required="required" placeholder="Số điện thoại" style="margin:0px;">
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
-                                <div class="col-sm-2 col-xs-4" style="">
+                                <div class="col-sm-2 col-xs-2" style="">
                                     <button class="btn btn-success" type="button" onclick="checkValid()">Kiểm tra</button>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-4 col-xs-12" for="title">Danh sách bệnh nhân</label>
-                                <div class="col-sm-6 col-xs-12" style="padding-right: 0;padding-left: 0;">
-                                    <select style="min-width: 25em;margin:0px;width: 100%"
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12" for="title">Danh sách bệnh nhân</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="padding-right: 0;padding-left: 0;">
+                                    <select style="margin:0px;width: 100%"
                                             id="PatientSelect" class="selectSpecialTwo col-sm-6 col-xs-7">
 
                                     </select>
@@ -101,21 +98,21 @@
                             </div>
                             <div class="form-group">
                                
-                                <div class="control-label col-sm-4 col-xs-6" for="body"><label>Ngày đặt </label></div>
-                          <div class="col-sm-6 col-xs-6 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                                <div class="control-label col-sm-4 col-xs-7" for="body"><label>Ngày đặt </label></div>
+                          <div class="col-sm-6 col-xs-5 inputWithIcon" style="padding-right: 0;padding-left: 0;">
                               <input type="text" placeholder="Ngày hẹn" id="datepicker" class="form-control pull-right" id="startdate" style="margin:0px;" />
                               <i class="fa fa-calendar"></i>
                           </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-4  col-xs-6 " for="body">Thời gian dự kiến:</label>
-                                <div class="col-sm-6 col-xs-6" style="padding-right: 0;padding-left: 0;">
-                                    <select class="hour selectSpecialTwo" name="estimateTime " id="estimateTime" style="width: auto;margin:0px;">
+                                <label class="control-label col-sm-4  col-xs-7 " for="body">Thời gian dự kiến </label>
+                                <div class="col-sm-6 col-xs-5" style="padding-right: 0;padding-left: 0;">
+                                    <select class="hour selectSpecialTwo" name="estimateTime " id="estimateTime" style=" margin:0px;">
                                         @for ($i = 1; $i < 19; $i++)
                                             <option value="{{$i * 5}}">{{$i * 5}}</option>
                                         @endfor
 
-                                    </select>&nbsp
+                                    </select> 
 
                                 </div>
                             </div>
@@ -135,7 +132,7 @@
         <!-- tao nguoi benh -->
         <div id="createPatient" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
-                <div class="modal-content" style="width: 900px;text-align: center;">
+                <div class="modal-content"  >
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"></h4>
@@ -145,24 +142,24 @@
                               enctype="multipart/form-data" id="createAppoint">
                             {{ csrf_field() }}
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Họ & tên </label>
-                                <div class="col-xs-10">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" for="title">Họ & tên </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
                                     <input type="text" class="form-control" id="namePatient" name="namePatient"
                                            placeholder="Họ và tên bệnh nhân" required>
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
                             </div>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Địa chỉ</label>
-                                <div class="col-xs-10">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" for="title">Địa chỉ</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
                                     <input type="text" class="form-control" id="addressPatient" name="addressPatient"
                                            placeholder="Địa chỉ cư trú" required>
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
                             </div>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Số điện thoại </label>
-                                <div class="col-xs-10">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" for="title">Số điện thoại </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
                                     <input type="text" class="form-control" id="phonePatient" name="phonePatient"
                                            placeholder="Số điện thoại" required>
                                     <p class="error text-center alert alert-danger hidden"></p>
@@ -170,17 +167,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-xs-2" for="title">Ngày sinh </label>
-                                <div class="col-xs-5">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Ngày sinh </label>
+                                <div class="col-md-4 col-sm-3 col-xs-8">
                                     <div class="inputWithIcon" style="padding-right: 0;padding-left: 0;">
                                           <input type="text" placeholder="Ngày sinh" id="bdayxx" class="form-control pull-right" style="margin:0px;" />
                                           <i class="fa fa-calendar"></i>
                                     </div>
                                 </div>
-                                <label class="control-label col-xs-2" for="title">Giới tính </label>
-                                <div class="col-xs-3">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Giới tính </label>
+                                <div class="col-md-4 col-sm-3 col-xs-8">
                                     <select name="genderPatient" id="genderPatient" class="selectSpecialTwo" 
-                                            style="margin: 0px;">
+                                            style="margin: 0px; ">
                                         <option value="Male">Nam</option>
                                         <option value="FeMale">Nữ</option>
                                         <option value="Unknow">Khác</option>
@@ -190,9 +187,9 @@
 
                             </div>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Thành phố </label>
-                                <div class="col-xs-3">
-                                    <select name="cityPatient" id="cityPatient"  style="margin: 0px;"
+                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Thành phố </label>
+                                <div class="col-md-4 col-sm-3 col-xs-8">
+                                    <select name="cityPatient" id="cityPatient"  style="margin: 0px; "
                                             onchange="disctrict(this)" class="selectSpecialTwo" >
                                         @foreach($citys as $city)
                                             <option value="{{$city->id}}">{{$city->name}}</option>
@@ -200,9 +197,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <label class="control-label col-xs-1" for="title">Quận </label>
-                                <div class="col-xs-3">
-                                    <select name="districtsPatient" id="districtsPatient" class="selectSpecialTwo"  style="margin: 0px;">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Quận </label>
+                                <div class="col-md-4 col-sm-3 col-xs-8">
+                                    <select name="districtsPatient" id="districtsPatient" class="selectSpecialTwo"  style="margin: 0px; ">
                                         @foreach($District as $one)
                                             <option value="{{$one->id}}">{{$one->name}}</option>
 
@@ -212,13 +209,13 @@
                             </div>
                             <hr>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Bệnh tiền sử </label>
-                                <div class=" row col-xs-10"
+                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Bệnh tiền sử </label>
+                                <div class=" row col-md-10 col-sm-9 col-xs-12"
                                      style=" float: left;">
                                     <div class=" ">
                                         @foreach($AnamnesisCatalog as $one)
 
-                                            <div class="col-xs-3" style="text-align: left;">
+                                            <div class="col-xs-6" style="text-align: left;">
                                                 <input type="checkbox" class="anam" name="anam[]" value="{{$one->id}}" id="myCheck" onclick="myFunction()">
                                                 {{$one->name}}
                                             </div>
@@ -232,7 +229,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-warning" type="button" id="addPatient">
-                            <span class="glyphicon glyphicon-plus"></span>Tạo bệnh nhân
+                           </span>Tạo bệnh nhân
                         </button>
                         <button class="btn btn-warning" type="button" data-dismiss="modal">
                             <span class="glyphicon glyphicon-remobe"></span>Close
@@ -249,7 +246,7 @@
     </html> -->
 @endsection
 @section('js')
-<link rel="stylesheet" href="/assets/user/css/mycss.css">
+    <link rel="stylesheet" href="/assets/user/css/mycss.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
