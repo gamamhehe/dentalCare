@@ -171,6 +171,59 @@ class StaffController extends BaseController
         }
     }
 
+    public function receiveAppointmentManually(Request $request)
+    {
+        try {
+            $patientId = $request->input('patient_id');
+            $appointmentId = $request->input('appointment_id');
+            $appointment = $this->getAppointmentById($appointmentId);
+            if ($appointment->status != 0) {
+                $errorResponse = $this->getErrorObj("Trạng thái lịch hẹn không hợp lệ", "No exception");
+                return response()->json($errorResponse, 400);
+            }
+
+            $patientAppointment = $appointment->hasPatientOfAppointment()->first();
+            if ($patientAppointment != null) {
+                $errorResponse = $this->getErrorObj("Bệnh nhân đã được nhận khám", "No exception");
+                return response()->json($errorResponse, 400);
+            } else {
+                $appointment->status = 1;
+                $this->saveAppointment($appointment, $patientId);
+                $this->updateNumAppWebsite($appointment);
+                $this->sendFirebaseReloadMobile($appointment->staff_id, AppConst::ACTION_RELOAD_DENTIST_APPOINTMENT);
+                $successResponse = $this->getSuccessObj(200, "OK", "Change status success", "No data");
+                $this->logInfo("VO reload else");
+                return response()->json($successResponse, 200);
+            }
+        } catch (Exception $exception) {
+            $errorResponse = $this->getErrorObj("Lỗi server", $exception);
+            return response()->json($errorResponse, 500);
+        }
+    }
+
+    public function receiveAppointment(Request $request)
+    {
+        $patientId = $request->input('patient_id');
+        $phone = $this->getPhoneOfPatient($patientId);
+        $isExamination = $this->checkPatientIsExamination($patientId);
+        if ($isExamination) {
+            $error = $this->getErrorObj("Bệnh nhân đã được nhận khám", 400);
+            return response()->json($error, 400);
+        } else {
+            $appointment = $this->checkAppointmentForPatient($phone, $patientId);
+            if ($appointment === null) {
+                $error = $this->getErrorObj("Bệnh nhân chưa có lịch hẹn", "No Exception");
+                return response()->json($error, 417);
+            } else {
+                $appointment->status = 1;
+                $this->saveAppointment($appointment, $patientId);
+                $this->updateNumAppWebsite($appointment);
+                $this->sendFirebaseReloadMobile($appointment->staff_id, AppConst::ACTION_RELOAD_DENTIST_APPOINTMENT);
+                $successResponse = $this->getSuccessObj(200, "OK", "Nhận bệnh thành công", "No Exception");
+                return response()->json($successResponse, 200);
+            }
+        }
+    }
 
     public function changeDentist(Request $request)
     {

@@ -9,6 +9,7 @@ use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
+use App\Http\Controllers\Mobile\BaseController;
 use App\Jobs\SendFirebaseJob;
 use App\Model\FirebaseToken;
 use App\Model\Patient;
@@ -28,7 +29,7 @@ use DateTime;
 use Pusher\Pusher;
 use App\Http\Controllers\Controller;
 
-class PatientController extends Controller
+class PatientController extends BaseController
 {
 
     use AppointmentBussinessFunction;
@@ -174,7 +175,7 @@ class PatientController extends Controller
                     );
                     $appointment->pushStatus = 0;
                     $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
-                    $this->sendFirebaseReloadAppointment($appointment->staff_id);
+                    $this->sendFirebaseReloadMobile($appointment->staff_id, AppConst::ACTION_RELOAD_DENTIST_APPOINTMENT);
                     $status = 1;
         }}
         $data = array(
@@ -182,26 +183,6 @@ class PatientController extends Controller
         );
 
         echo json_encode($data);
-    }
-
-    public function sendFirebaseReloadAppointment($staffId)
-    {
-        $staff = $this->getStaffById($staffId);
-        if ($staff != null) {
-            $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
-            if ($staffFirebaseToken != null) {
-
-                $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
-                        $staffId,
-                        "No message",
-                        AppConst::ACTION_RELOAD_APPOINTMENT,
-                        $staffFirebaseToken->noti_token)
-                );
-                Log::info("Send sendFirebaseReloadAppointment to token: " . $staffFirebaseToken->noti_token);
-            }
-        } else {
-            Log::info("staff in sendFirebaseReloadAppointment null");
-        }
     }
 
     public function listAppointment($id)
