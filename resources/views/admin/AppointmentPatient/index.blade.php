@@ -24,8 +24,6 @@
                                 </button>
                         </div>
                     </div>
-
-
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;">
                             <thead>
@@ -35,25 +33,23 @@
                                 <th style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">Địa Chỉ</th>
                                 <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">Ngày Sinh</th>
                                 <th style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">Tùy chọn</th>
-
                             </tr>
                             </thead>
                             <tbody>
                             @if($patientList != null)
                                 @foreach($patientList as $patient)
                                     <tr>
-                                        <th style="text-align: center; " class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">{{$patient->name}}</th>
-                                        <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">{{$patient->phone}}</th>
-                                        <th style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">{{$patient->address}}</th>
-                                        <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">{{$patient->date_of_birth}}</th>
-                                        <th  style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "> 
+                                        <td style="text-align: center; " class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">{{$patient->name}}</td>
+                                        <td style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">{{$patient->phone}}</td>
+                                        <td style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">{{$patient->address}}</td>
+                                        <td style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">{{$patient->date_of_birth}}</td>
+                                        <td  style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "> 
                                             <div style="padding-left: 1.8em;">
                                             <a href="thong-tin-benh-nhan/{{$patient->id}}" class="btn btn-sm btn-default btn-info">Thông tin bệnh nhân</a>
                                             <button type="button" class="btn btn-sm btn-success"
                                                     onclick="receive('{{$patient->id}}')">Nhận bệnh
                                             </button>
                                             </div>
-                                           
                                         </td>
                                     </tr>
                                 @endforeach
@@ -165,7 +161,6 @@
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Ngày sinh </label>
                                 <div class="col-md-4 col-sm-3 col-xs-8">
@@ -183,8 +178,6 @@
                                         <option value="Unknow">Khác</option>
                                     </select>
                                 </div>
-
-
                             </div>
                             <div class="form-group row add">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Thành phố </label>
@@ -215,21 +208,19 @@
                                     <div class=" ">
                                         @foreach($AnamnesisCatalog as $one)
 
-                                            <div class="col-xs-6" style="text-align: left;">
+                                            <div class="col-md-4 col-xs-6" style="text-align: left;">
                                                 <input type="checkbox" class="anam" name="anam[]" value="{{$one->id}}" id="myCheck" onclick="myFunction()">
                                                 {{$one->name}}
                                             </div>
                                         @endforeach
                                     </div>
                                 </div>
-
                             </div>
-
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-warning" type="button" id="addPatient">
-                           </span>Tạo bệnh nhân
+                          Tạo bệnh nhân
                         </button>
                         <button class="btn btn-warning" type="button" data-dismiss="modal">
                             <span class="glyphicon glyphicon-remobe"></span>Close
@@ -334,8 +325,14 @@
             var birthdateCreate = document.getElementById("bdayxx").value;
             var genderCreate = document.getElementById("genderPatient").value;
             var districtCreate = document.getElementById("districtsPatient").value;
-            if ($.trim(nameCreate) == '') {
+            if ($.trim(nameCreate) == '' ) {
                 swal("Vui lòng nhập họ và tên của bệnh nhân!", "", "error");
+                return;
+            }else if (nameCreate.length < 6 || nameCreate.length > 50 ) {
+                swal("Họ tên phải từ 6 đến 35 kí tự!", "", "error");
+                return;
+            }else if (addressCreate.length < 6 || addressCreate.length > 50 ) {
+                swal("Họ tên phải từ 6 đến 35 kí tự!", "", "error");
                 return;
             }else if ($.trim(addressCreate) == '') {
                 swal("Vui lòng nhập địa chỉ của bệnh nhân  !", "Bấm kiểm tra để có danh sách bệnh nhân", "error");
@@ -343,39 +340,40 @@
             }else if ($.trim(phoneCreate) == '') {
                 swal("Vui lòng nhập số điện thoại  !", "", "error");
                 return;
-            }else if ($.trim(phoneCreate) != '') {
+            }else if ($.trim(birthdateCreate) == "") {
+                swal("Vui lòng chọn năm sinh  !", "", "error");
+                return;
+            } else if ($.trim(phoneCreate) != '') {
                 var vali= /(^0)+([0-9]{9,10})\b/;
-                var result= vali.test(guestPhone);
+                var result= vali.test(phoneCreate);
                 if(result == false){
                      swal("Số điện thoại sai cú pháp!", "Số điện thoại chỉ 10 và 11 kí tự và bắt đầu bằng số 0", "error");
                      return;
                 } 
-            }else if ($.trim(birthdateCreate) == '') {
-                swal("Vui lòng chọn năm sinh  !", "", "error");
-                return;
-            }
-            // $.ajax({
-            //     type: 'POST',
-            //     url: '/admin/create-patient',
-            //     data: {
-            //         "_token": "{{ csrf_token() }}",
-            //         'name': nameCreate,
-            //         'address': addressCreate,
-            //         'phone': phoneCreate,
-            //         'date_of_birth': birthdateCreate,
-            //         'gender': genderCreate,
-            //         'district_id': districtCreate,
-            //         'anam' : data,
+            } 
+           
+            $.ajax({
+                type: 'POST',
+                url: '/admin/create-patient',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'name': nameCreate,
+                    'address': addressCreate,
+                    'phone': phoneCreate,
+                    'date_of_birth': birthdateCreate,
+                    'gender': genderCreate,
+                    'district_id': districtCreate,
+                    'anam' : data,
 
-            //     },
-            //     success: function (data) {
-            //         if ((data.errors)) {
-            //             alert(data.errors.body);
-            //         } else {
-            //             swal("Khởi tạo bệnh nhân thành công", "", "success");
-            //         }
-            //     },
-            // });
+                },
+                success: function (data) {
+                    if ((data.errors)) {
+                        alert(data.errors.body);
+                    } else {
+                        swal("Khởi tạo bệnh nhân thành công", "", "success");
+                    }
+                },
+            });
         });
 
         function disctrict(sel) {
