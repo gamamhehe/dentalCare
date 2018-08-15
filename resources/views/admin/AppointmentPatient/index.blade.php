@@ -80,37 +80,37 @@
                               enctype="multipart/form-data" id="createAppoint">
                             {{ csrf_field() }}
                             <div class="form-group row add">
-                                <label class="control-label col-sm-4 col-xs-12" for="title">Số điện thoại:</label>
-                                <div class="col-sm-6 col-xs-8" style="padding-right: 0;padding-left: 0;">
+                             <div class="control-label col-sm-4 col-xs-12"><label>Số điện thoại:</label></div>
+                                <div class="col-sm-6 col-xs-7" style="padding-right: 0;padding-left: 0;">
                                     <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
-                                           required="required">
+                                           required="required" placeholder="Số điện thoại" style="margin:0px;">
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
                                 <div class="col-sm-2 col-xs-4" style="">
-                                    <button class="btn btn-success" type="button" onclick="checkValid()">Check</button>
+                                    <button class="btn btn-success" type="button" onclick="checkValid()">Kiểm tra</button>
                                 </div>
                             </div>
-                            <div class="form-group row add">
-                                <label class="control-label col-xs-4" for="title">Danh sách bệnh nhân:</label>
-                                <div class="col-xs-8" style="padding-right: 0;padding-left: 0;">
-                                    <select style="height: 2em;min-width: 25em;"
-                                            id="PatientSelect">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-12" for="title">Danh sách bệnh nhân</label>
+                                <div class="col-sm-6 col-xs-12" style="padding-right: 0;padding-left: 0;">
+                                    <select style="min-width: 25em;margin:0px;width: 100%"
+                                            id="PatientSelect" class="selectSpecialTwo col-sm-6 col-xs-7">
 
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                
-                                <div class="control-label col-sm-4 col-xs-4" for="body"><label>Ngày đặt </label></div>
-                          <div class="col-sm-5 inputWithIcon" style="padding-right: 0;padding-left: 0;">
-                          <input type="text" placeholder="Ngày hẹn" id="datepicker" class="form-control pull-right" id="startdate" style="margin:0px;" />
-                          <i class="fa fa-calendar"></i>
+                                <div class="control-label col-sm-4 col-xs-6" for="body"><label>Ngày đặt </label></div>
+                          <div class="col-sm-6 col-xs-6 inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                              <input type="text" placeholder="Ngày hẹn" id="datepicker" class="form-control pull-right" id="startdate" style="margin:0px;" />
+                              <i class="fa fa-calendar"></i>
                           </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-xs-4" for="body">Estimate time:</label>
-                                <div class="col-xs-8">
-                                    <select class="hour" name="estimateTime" id="estimateTime" style="width: auto;">
+                                <label class="control-label col-sm-4  col-xs-6 " for="body">Thời gian dự kiến:</label>
+                                <div class="col-sm-6 col-xs-6" style="padding-right: 0;padding-left: 0;">
+                                    <select class="hour selectSpecialTwo" name="estimateTime " id="estimateTime" style="width: auto;margin:0px;">
                                         @for ($i = 1; $i < 19; $i++)
                                             <option value="{{$i * 5}}">{{$i * 5}}</option>
                                         @endfor
@@ -161,26 +161,26 @@
                                 </div>
                             </div>
                             <div class="form-group row add">
-                                <label class="control-label col-xs-2" for="title">Số di động </label>
+                                <label class="control-label col-xs-2" for="title">Số điện thoại </label>
                                 <div class="col-xs-10">
                                     <input type="text" class="form-control" id="phonePatient" name="phonePatient"
-                                           placeholder="Số điện thoại di động" required>
+                                           placeholder="Số điện thoại" required>
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-xs-2" for="title">Năm sinh </label>
+                                <label class="control-label col-xs-2" for="title">Ngày sinh </label>
                                 <div class="col-xs-5">
                                     <div class="inputWithIcon" style="padding-right: 0;padding-left: 0;">
-                                          <input type="text" placeholder="Ngày hẹn" id="bdayxx" class="form-control pull-right" style="margin:0px;" />
+                                          <input type="text" placeholder="Ngày sinh" id="bdayxx" class="form-control pull-right" style="margin:0px;" />
                                           <i class="fa fa-calendar"></i>
                                     </div>
                                 </div>
                                 <label class="control-label col-xs-2" for="title">Giới tính </label>
                                 <div class="col-xs-3">
-                                    <select name="genderPatient" id="genderPatient"
-                                            style="height: 30px;width: 5em;float: left;">
+                                    <select name="genderPatient" id="genderPatient" class="selectSpecialTwo" 
+                                            style="margin: 0px;">
                                         <option value="Male">Nam</option>
                                         <option value="FeMale">Nữ</option>
                                         <option value="Unknow">Khác</option>
@@ -192,8 +192,8 @@
                             <div class="form-group row add">
                                 <label class="control-label col-xs-2" for="title">Thành phố </label>
                                 <div class="col-xs-3">
-                                    <select name="cityPatient" id="cityPatient" style="height: 30px;"
-                                            onchange="disctrict(this)">
+                                    <select name="cityPatient" id="cityPatient"  style="margin: 0px;"
+                                            onchange="disctrict(this)" class="selectSpecialTwo" >
                                         @foreach($citys as $city)
                                             <option value="{{$city->id}}">{{$city->name}}</option>
 
@@ -202,7 +202,7 @@
                                 </div>
                                 <label class="control-label col-xs-1" for="title">Quận </label>
                                 <div class="col-xs-3">
-                                    <select name="districtsPatient" id="districtsPatient" style="height: 30px;">
+                                    <select name="districtsPatient" id="districtsPatient" class="selectSpecialTwo"  style="margin: 0px;">
                                         @foreach($District as $one)
                                             <option value="{{$one->id}}">{{$one->name}}</option>
 
@@ -271,7 +271,7 @@
         });
         $(function () {
             $('#bdayxx').datepicker({
-                startDate: 'd',
+                endDate: 'd',
                 autoclose: true,
             });
         });
@@ -293,7 +293,17 @@
             var estimateTimeReal = document.getElementById("estimateTime").value;
             var patientID = document.getElementById("PatientSelect").value;
             var datepicker = document.getElementById("datepicker").value;
-            $.ajax({
+            if ($.trim(phone) == '') {
+                swal("Vui lòng điền số điện thoại!", "Hãy bấm Kiểm tra để xác nhận số điện thoại", "error");
+                return;
+            }else if ($.trim(patientID) == '') {
+                swal("Vui lòng chọn bệnh nhân  !", "Bấm kiểm tra để có danh sách bệnh nhân", "error");
+                return;
+            }else if ($.trim(datepicker) == '') {
+                swal("Vui lòng chọn ngày đặt cho lịch hẹn  !", "", "error");
+                return;
+            }else{
+                 $.ajax({
                 type: 'POST',
                 url: '/admin/create-appointment',
                 data: {
@@ -308,10 +318,12 @@
 
                         swal("Đặt lịch thành công", "", "success");
                     } else {
-                        swal("Dặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
+                        swal("Đặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
                     }
                 },
             });
+            }
+           
         });
 
         $("#addPatient").click(function () {
@@ -325,28 +337,48 @@
             var birthdateCreate = document.getElementById("bdayxx").value;
             var genderCreate = document.getElementById("genderPatient").value;
             var districtCreate = document.getElementById("districtsPatient").value;
-            $.ajax({
-                type: 'POST',
-                url: '/admin/create-patient',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'name': nameCreate,
-                    'address': addressCreate,
-                    'phone': phoneCreate,
-                    'date_of_birth': birthdateCreate,
-                    'gender': genderCreate,
-                    'district_id': districtCreate,
-                    'anam' : data,
+            if ($.trim(nameCreate) == '') {
+                swal("Vui lòng nhập họ và tên của bệnh nhân!", "", "error");
+                return;
+            }else if ($.trim(addressCreate) == '') {
+                swal("Vui lòng nhập địa chỉ của bệnh nhân  !", "Bấm kiểm tra để có danh sách bệnh nhân", "error");
+                return;
+            }else if ($.trim(phoneCreate) == '') {
+                swal("Vui lòng nhập số điện thoại  !", "", "error");
+                return;
+            }else if ($.trim(phoneCreate) != '') {
+                var vali= /(^0)+([0-9]{9,10})\b/;
+                var result= vali.test(guestPhone);
+                if(result == false){
+                     swal("Số điện thoại sai cú pháp!", "Số điện thoại chỉ 10 và 11 kí tự và bắt đầu bằng số 0", "error");
+                     return;
+                } 
+            }else if ($.trim(birthdateCreate) == '') {
+                swal("Vui lòng chọn năm sinh  !", "", "error");
+                return;
+            }
+            // $.ajax({
+            //     type: 'POST',
+            //     url: '/admin/create-patient',
+            //     data: {
+            //         "_token": "{{ csrf_token() }}",
+            //         'name': nameCreate,
+            //         'address': addressCreate,
+            //         'phone': phoneCreate,
+            //         'date_of_birth': birthdateCreate,
+            //         'gender': genderCreate,
+            //         'district_id': districtCreate,
+            //         'anam' : data,
 
-                },
-                success: function (data) {
-                    if ((data.errors)) {
-                        alert(data.errors.body);
-                    } else {
-                        swal("Khởi tạo bệnh nhân thành công", "", "success");
-                    }
-                },
-            });
+            //     },
+            //     success: function (data) {
+            //         if ((data.errors)) {
+            //             alert(data.errors.body);
+            //         } else {
+            //             swal("Khởi tạo bệnh nhân thành công", "", "success");
+            //         }
+            //     },
+            // });
         });
 
         function disctrict(sel) {

@@ -11,6 +11,7 @@ html.login {
  height: 100%;
     margin: 0;
 }
+
 .img-center{
     display:block;
     margin:auto;
@@ -368,7 +369,7 @@ h5.list:after {
     transition:.3s;
   }
 .selectSpecial{
-     width:100%;
+    width:100%;
     border:2px solid #aaa;
     border-radius:4px;
     margin:8px 0;
@@ -378,6 +379,19 @@ h5.list:after {
     transition:.3s;
 }
 .selectSpecial:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
+}
+.selectSpecialTwo{
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+}
+.selectSpecialTwo:focus{
     border-color:dodgerBlue;
     box-shadow:0 0 8px 0 dodgerBlue;
 }
@@ -1389,7 +1403,6 @@ a.nav-link {
     background-color: #0275d8;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: 0.4s;
-    
 }
 .thanhmenu ul.navbar-nav li.nav-item
 a.nav-link:hover {
@@ -1536,13 +1549,18 @@ img.centerThing{
     flex-grow: 1;
     max-width: 100%;
 }
+.dropdownHead{
+    position: absolute;right: 0;left: auto;background-color: whitesmoke;
+}
 @media (min-width: 768px)
 .col-md {
     flex-basis: 0;
     flex-grow: 1;
     max-width: 100%;
 }
-
+.dropdownHead{
+    position: absolute;right: 0;left: auto;background-color: whitesmoke;
+}
 .top
 {
     overflow: hidden;
@@ -1567,6 +1585,9 @@ img.centerThing{
 
 @media (max-width: 576px)
 {   
+    .dropdownHead{
+    position: absolute;right: 0;background-color: whitesmoke;
+}
     *{}
     .resOFF{
         display: block;
@@ -1655,7 +1676,9 @@ img.centerThing{
 @media (min-width: 577px) and (max-width:991px)
 {
     *{}
-    
+    .dropdownHead{
+    position: absolute;right: 0;left: auto;background-color: whitesmoke;
+}
     .nut a.fa {
         margin: 0;
         margin-top: 10px;
