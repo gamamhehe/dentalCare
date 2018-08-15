@@ -342,7 +342,9 @@ class MobileController extends BaseController
             if ($staff != null) {
                 $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
                 if ($staffFirebaseToken != null) {
-
+                    if ($staffFirebaseToken == 'null') {
+                        return response()->json("User has logout");
+                    }
                     $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
                             $staff->id,
                             "No message",
