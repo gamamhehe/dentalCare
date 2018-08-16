@@ -122,7 +122,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post("staff/changePassword", "Mobile\StaffController@changePassword");
     Route::post("staff/changeAppointmentStatus", "Mobile\StaffController@updateAppointmentStatus");
     Route::post("staff/changeAppointmentDentist", "Mobile\StaffController@changeDentist");
-    Route::post("staff/doneTreatment", "Mobile\StaffController@doneTreatment");
+    Route::post("staff/doneTreatment/{tmId}", "Mobile\StaffController@doneTreatment");
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff with token----*****************************************************/
     /*************************************-----------------------------*****************************************************/
