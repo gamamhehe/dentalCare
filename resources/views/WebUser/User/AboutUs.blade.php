@@ -436,7 +436,7 @@
             <div class="col-xs-10">
                 <a href="#" class="btnkn2tv create-modal" style="color: white;">
                     <div>
-                        <div>ĐĂNG KÝ TƯ VẤN</div>
+                        <div>Đặt lịch hẹn</div>
 
                         <div>Hotline: 1900.9999</div>
                     </div>
@@ -489,7 +489,7 @@
                   </div>
 
                   <div class="col-sm-12" style="margin: 8px 0;">
-                    <textarea name="guestNote" id="guestNote" style="resize: none;width: 100%" rows="4" placeholder="Nhu cầu khi khám"></textarea>
+                    <textarea name="guestNote" id="guestNote" style="resize: none;width: 100%" rows="4" placeholder="Ghi chú"></textarea>
                 </div>
 
 
@@ -598,7 +598,7 @@
                     <p style="text-align: center;"><em>Phòng phẫu thuật hiện đại tiên tiến chuẩn quốc tế</em></p>
                     <p>Với những phản hồi tích cực Gold Clinic đang là địa chỉ thẩm mỹ được các chị em truyền tai nhau trên các diễn đàn thẩm mỹ, chia sẻ kinh nghiệm làm đẹp trở thành sự lựa chọn đáng tin tưởng của hàng trăm nghìn khách hàng. Đến với Gold Clinic chị em có thể hoàn toàn tự tin và yên tâm có thể khắc phục mọi khuyết điểm ngoại hình với kết quả ổn định, hoàn hảo nhất và độ an toàn cao.</p>
 
-                    <p><strong>Liên hệ ngay tổng đài 1900 9999, đến trực tiếp Gold Clinic hoặc Click Đăng ký tư vấn để được giải đáp mọi thắc mắc</strong></p>
+                    <p><strong>Liên hệ ngay tổng đài 1900 9999, đến trực tiếp Gold Clinic hoặc Click Đặt lịch hẹn để được giải đáp mọi thắc mắc</strong></p>
                 </div>
             </div>
         </div>

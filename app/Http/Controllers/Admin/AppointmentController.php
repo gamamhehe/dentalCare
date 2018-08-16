@@ -43,11 +43,12 @@ class AppointmentController extends Controller
     }
 
     public function add(Request $request)
-    {
+    {   
        try {
-            $phone = $request['phone'];
+        $phone = $request['phone'];
         $estimateTimeReal = $request['estimateTimeReal'];
         $patientId = $request['patientID'];
+        $dentistID = $request['dentistID'];
         $dateBooking = $request['datepicker'];
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
@@ -58,8 +59,14 @@ class AppointmentController extends Controller
             $newApp = $this->createAppointment($newformat, $phone, $request->note, $staff_id,
                 $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName,true);
         } else {
-            $newApp = $this->createAppointment($newformat, $phone, $request->note, null,
+            if($dentistID == 0){
+                  $newApp = $this->createAppointment($newformat, $phone, $request->note, null,
                 $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName,true);
+            }else{
+                $newApp = $this->createAppointment($newformat, $phone, $request->note, $dentistID,
+                $patientId, date('H:i:s', mktime(0, $estimateTimeReal, 0)), $patientName,true);
+            }
+          
         }
         $dateTime = new DateTime($newApp->start_time);
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
@@ -104,9 +111,7 @@ class AppointmentController extends Controller
         $case3 = 0;
         $dentist= null; $dentist = $appointment->belongsToStaff()->first();
         if ($checkAppoint == 0) {//khong có lịch hẹn.
-
             $resultPatient = $this->getPatientByPhone($appointment->phone);
-
             if($resultPatient){
                 if(count($resultPatient)==0){//co acc chưa có patient
                      $patient = null;
@@ -115,12 +120,10 @@ class AppointmentController extends Controller
                     $patient =$resultPatient[0];
                     $listPatient = $resultPatient;
                 }
-               
             }else{
                 $patient = null;
             }
         } else {// có lịch hẹn
-           
             $case3 = 1;
             $patient = Patient::where('id', $checkAppoint)->first();
             // $result =[];
@@ -164,7 +167,7 @@ class AppointmentController extends Controller
         $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
     }
 
-    public function UserAppoinment(Request $request){
+    public function UserAppointment(Request $request){
     try {
 
         $phone = $request['guestPhone'];

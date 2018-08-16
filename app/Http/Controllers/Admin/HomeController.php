@@ -19,6 +19,7 @@ use App\Staff;
 use App\TreatmentCategory;
 use Config;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
+use App\Http\Controllers\BusinessFunction\AppointmentBussinessFunction;
 use Illuminate\Support\Facades\Session;
 use Pusher\Pusher;
 use Yajra\Datatables\Facades\Datatables;
@@ -27,9 +28,9 @@ class HomeController extends Controller
 
     use TreatmentBusinessFunction;
     use UserBusinessFunction;
-    use StaffBusinessFunction;
     use NewsBussinessFunction;
     use AnamnesisBusinessFunction;
+    use AppointmentBussinessFunction;
     public function homepage(Request $request){
     	 return view('WebUser.HomePage');
     }
@@ -81,23 +82,23 @@ class HomeController extends Controller
         $value = $request->session()->get('currentPatient');
         $id = $value->id;
         $list = $this->getListAnamnesisByPatient($id);
-        $listAppointment = $value->hasAppointment()->get();
+        
+        $listAppointment = $this->getAppointmentByPhoneFuture($value->phone);
         $listReal =[];
         $today = Carbon::now();
+       
         foreach ($listAppointment as $Appointment) {
-            $Appointment->detail = $Appointment->belongsToAppointment()->first();
 
-            $timeFormat  =$Appointment->detail->estimated_time;
-            $dateFormat  =$Appointment->detail->start_time;
+            $timeFormat  =$Appointment->estimated_time;
+            $dateFormat  =$Appointment->start_time;
             $newDatetime = new DateTime($dateFormat);
             $result = $this->addTimeToDate($newDatetime,$timeFormat);
-             $Appointment->detail->dateComming = $result->format('Y-m-d');
-            $Appointment->detail->timeComming = $result->format('H:i');
-            if( $Appointment->detail->start_time > $today){
-                    $listReal[] = $Appointment;
-            }
+            $Appointment->dentist = $Appointment->belongsToStaff()->first();
+            $Appointment->dateComming = $result->format('Y-m-d');
+            $Appointment->timeComming = $result->format('H:i');
+            
         }
-        return view("WebUser.User.Profile",['patient'=>$value,'anamnesis'=>$list,'listAppointment'=>$listReal]);
+        return view("WebUser.User.Profile",['patient'=>$value,'anamnesis'=>$list,'listAppointment'=>$listAppointment]);
     }
     private function addTimeToDate($date, $timeStr)
     {

@@ -436,7 +436,7 @@
     <div class="col-xs-10">
         <a href="#" class="btnkn2tv create-modal" style="color: white;">
             <div>
-                <div>ĐĂNG KÝ TƯ VẤN</div>
+                <div>Đặt lịch hẹn</div>
 
                 <div>Hotline: 1900.9999</div>
             </div>
@@ -489,7 +489,7 @@
               </div>
 
               <div class="col-sm-12" style="margin: 8px 0;">
-                <textarea name="guestNote" id="guestNote" style="resize: none;width: 100%" rows="4" placeholder="Nhu cầu khi khám"></textarea>
+                <textarea name="guestNote" id="guestNote" style="resize: none;width: 100%" rows="4" placeholder="Ghi chú"></textarea>
             </div>
 
 
