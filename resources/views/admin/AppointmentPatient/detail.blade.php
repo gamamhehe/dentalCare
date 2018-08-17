@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Chi tiết lịch hẹn')
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -98,7 +99,7 @@
                                         <div class="col-sm-4"><label>Họ tên</label></div>
                                         <div class="col-sm-6" style="padding-left: 0px;">
                                             <a href="/admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
-                                            <a href="#">{{$appointment->name}}</a>
+                                           
                                         </div>
                                     </div>
                                     <div class="form-group row add">
@@ -572,44 +573,34 @@
 </div>
 </div>
 <div id="doc" class="modal fade" role="dialog" >
-    <div class="modal-dialog modal-md" >
+    <div class="modal-dialog modal-lg" >
         <div class="modal-content" >
             <div class="modal-header"">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <div class="centerThing"><h2 style="text-align: center;" >Bác Sĩ</h2></div>
             </div>
-            <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
+            <div class="modal-body" >
                  <form method ="post" class="form-horizontal" action="create-appointment-user" enctype="multipart/form-data" id="AppointmentGuestX">
                  {{ csrf_field() }}
 
                     <div class="form-group row add">
-                      <div class="form-group">
-                                <label class="control-label col-xs-3" for="title">Số điện thoại</label>
-                                <div class="col-xs-8" style="padding-right: 0px;">
-                                   <div class="col-sm-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
-                          <input type="text" placeholder="Ngày sinh" name="start_dateX" class="form-control pull-right" id="start_dateX" style="margin:0px;" value="{{$appointment->phone}}"  disabled />
-                          <i class="fa fa-phone"></i>
-                          </div>
-                                  
-                                </div>
-                            </div>
-                      <div class="form-group">
-                                <label class="control-label col-xs-3" for="title">Bác Sĩ </label>
-                                <div class="col-xs-8" style="padding-right: 0px;">
-                                    <div class="col-sm-12 col-xs-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
-                                        <div class="col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
-                                            <select name="FreeDoc" id="FreeDoc" style="width: 100%;height: 30px;">
-                                           
-                                            </select>
-                                        </div>
-                                    </div>
-                                  
-                                </div>
-                            </div>
+                       <div class="col-sm-12" style="padding-top: 2em;">
+                        <table class="table table-striped table-bordered Mytable-hover" style="text-align: center;">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center; " class="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">Bác Sĩ</th>
+                                <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">Trạng thái</th>
+                                 <th style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">Tùy chọn</th>
+                                 
+                            </tr>
+                            </thead>
+                            <tbody id="docTwo">
+                        
+                            </tbody>
+                        </table>
+                        </div>
                     <div class="col-sm-12" style="padding-top: 2em;">
-                     <button class="btn btn-info" type="button" style=" width: 100%;" id="add" onclick="savePatient(this)" >
-                        Thay đổi bác sĩ
-                     </button>
+                    
                  </div>
 
              </div>
@@ -633,17 +624,14 @@
          $(document).on('click','.applyChangePatient', function() {
             var select = document.getElementById('PatientSelected');
              $.ajax({
-                    url: '/admin/get-free-dentist',  
+                    url: '/admin/get-free-dentist-status',  
                     type: 'GET',
-                    success: function (data) {
-                        if ((data.errors)) {
-                            alert(data.errors.body);
-                        } else { 
-                            for (var i = 0; i < data.length; i++) {
-                            $('#FreeDoc').append("<option value=" + data[i].id + ">" + data[i].name + "</option>");
-
-                            }
-                        }
+                    dataType: 'json',
+                   success: function (data) {
+                    $('tbody').html(data.table_data);
+                 
+                        $('#total_records').text(data.total_data);
+                    }, error: function (data) {
                     },
                 });
             $('#doc').modal('show');
@@ -663,6 +651,7 @@
                         if ((data.errors)) {
                             alert(data.errors.body);
                         } else {
+                             location.reload(true);
                             swal("Nhận bệnh thành công", "", "success");
                         }
                     },
@@ -922,13 +911,13 @@
            
         });
         function savePatient(id){
-           var value = document.getElementById("FreeDoc").value;
+           
             $.ajax({
                 type: 'GET',
                 url: '/admin/change-dentist-free',
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    'docID':value,
+                    'docID':id,
                     'appointmentID':'{{$appointment->id}}',
 
                 },
@@ -941,5 +930,6 @@
                 },
             });   
         }
+
     </script>
 @endsection

@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Chi tiết đánh giá')
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->

@@ -1161,7 +1161,7 @@ class AdminController extends Controller
         ]);
         TreatmentCategory::create([
             'name' => 'Trám Răng',
-            'description' => ' XXX',
+            'description' => 'Trám răng nhanh đẹp',
             'icon_link' => '/assets/images/icon/tramrangthammy.png',
             'estimate_time' => '3'
         ]);

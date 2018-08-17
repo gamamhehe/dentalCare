@@ -13,13 +13,13 @@
                 <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Tên liệu trình </label></div>
                     <div class="col-sm-10" style="padding-right: 0;">
-                        <input type="text" class="form-control input-width" id="name" name="name" placeholder="Tên thuốc" required="required" />
+                        <input type="text" class="form-control input-width" id="name" name="name" placeholder="Tên liệu trình" required="required" />
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Mô tả </label></div>
                     <div class="col-sm-10" style="padding-right: 0;">
-                        <input type="text" class="form-control input-width" id="description" name="description" placeholder="Đặc tả" required="required" />
+                        <input type="text" class="form-control input-width" id="description" name="description" placeholder="Mô tả" required="required" />
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 1em;">

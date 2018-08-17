@@ -30,10 +30,9 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     $(document).ready(function() {
-        <?php if (Session::has('success')): ?>
-        swal("{{$Session:get('message')}}", "", "success");
+         <?php if (Session::has('success')): ?>
+       swal("{{ Session::get('success')}}", "", "success");
         <?php endif ?>
-
     });
 
     $(function() {
@@ -59,7 +58,6 @@
                 {data: 'max_price'},
                 {data: 'min_price'},
                 {
-
                     data: 'action'
                 },
             ],

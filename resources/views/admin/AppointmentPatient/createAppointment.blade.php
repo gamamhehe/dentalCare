@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Khởi tạo lịch hẹn')
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->

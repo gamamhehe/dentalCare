@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Danh sách lịch hẹn')
 @section('content')
     <div class="content-wrapper">
         <div class="box">

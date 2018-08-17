@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Tìm kiếm bệnh nhân')
 @section('content')
     <div class="content-wrapper">
         <div class="box">
@@ -16,13 +17,9 @@
                 </div>
                 <div class="panel-body">
                     <div class="form-group row">
-                        <div class="col-md-10 col-xs-8"><input type="text" name="search" id="search" class="form-control"
+                        <div class="col-md-12 col-xs-12"><input type="text" name="search" id="search" class="form-control"
                                placeholder="Số điên thoại bệnh nhân" style="margin:0px;"  value="{{old('search')}}"/></div>
-                        <div class="col-md-2 col-xs-3"> 
-                                <button type="button" class="btn btn-default btn-success"  
-                                         onclick="search()" style="width: 100%;min-width: 60px;">Tìm
-                                </button>
-                        </div>
+                        
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;">
@@ -92,6 +89,22 @@
                                     </select>
                                 </div>
                             </div>
+                             @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12" for="title">Danh sách bác sĩ</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="padding-right: 0;padding-left: 0;">
+                                    <select style="margin:0px;width: 100%"
+                                            id="DentistSelect" class="selectSpecialTwo col-sm-6 col-xs-7">
+                                            <option value="0" selected>Mặc định</option>
+                                        @foreach($dentists as $dentist)
+                                            <option value="{{$dentist->id}}">{{$dentist->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            @else
+                            <input type="hidden" id="DentistSelect" value="0">
+                            @endif
                             <div class="form-group">
                                
                                 <div class="control-label col-sm-4 col-xs-7" for="body"><label>Ngày đặt </label></div>
@@ -103,13 +116,9 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4  col-xs-7 " for="body">Thời gian dự kiến </label>
                                 <div class="col-sm-6 col-xs-5" style="padding-right: 0;padding-left: 0;">
-                                    <select class="hour selectSpecialTwo" name="estimateTime " id="estimateTime" style=" margin:0px;">
-                                        @for ($i = 1; $i < 19; $i++)
-                                            <option value="{{$i * 5}}">{{$i * 5}}</option>
-                                        @endfor
-
-                                    </select> 
-
+                                 <input type="number" placeholder="Thời lượng" id="estimateTime" name="estimateTime "  class="form-control pull-right" max="90" min="10
+                                 .0
+                                 "  style="margin:0px;" />
                                 </div>
                             </div>
                         </form>
@@ -281,6 +290,11 @@
             var estimateTimeReal = document.getElementById("estimateTime").value;
             var patientID = document.getElementById("PatientSelect").value;
             var datepicker = document.getElementById("datepicker").value;
+
+             var dentistID = document.getElementById("DentistSelect").value;
+             if(dentistID==null){
+                alert("xxx");return;
+             }
             if ($.trim(phone) == '') {
                 swal("Vui lòng điền số điện thoại!", "Hãy bấm Kiểm tra để xác nhận số điện thoại", "error");
                 return;
@@ -297,6 +311,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     'phone': phone,
+                    'dentistID':dentistID,
                     'estimateTimeReal': estimateTimeReal,
                     'patientID': patientID,
                     'datepicker': datepicker,
@@ -434,23 +449,9 @@
                 dataType: 'json',
                 success: function (data) {
                     $('tbody').html(data.table_data);
-                    // $('#Patient').prop('disabled', false)
-                    // $('#Appoint').prop('disabled', false)
-                    // if (data.total_data == -1) {
-                        // swal("Hãy tạo tài khoản", "", "error");
-                        // $('#xxx').text(" ");
-                        // $('#Patient').prop('disabled', false)
-                        // $('#Appoint').prop('disabled', true)
-
-
-                    // }
-                    // if (data.total_data == 0) {
-                    //     swal("Chưa có hồ sơ bệnh nhân", "", "error");
+                 
                         $('#total_records').text(data.total_data);
-                        // $('#Appoint').prop('disabled', true)
-                    // }
                 }, error: function (data) {
-                    // swal('Error:', "", data);
                 }
             });
         })
