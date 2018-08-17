@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4  col-xs-7 " for="body">Thời gian dự kiến </label>
                                 <div class="col-sm-6 col-xs-5" style="padding-right: 0;padding-left: 0;">
-                                 <input type="number" placeholder="Ngày hẹn" id="estimateTime" name="estimateTime "  class="form-control pull-right" max="90" min="10
+                                 <input type="number" placeholder="Thời lượng" id="estimateTime" name="estimateTime "  class="form-control pull-right" max="90" min="10
                                  .0
                                  "  style="margin:0px;" />
                                 </div>

@@ -10,7 +10,7 @@ namespace App\Helpers;
 
 
 use DateTime;
-
+use Carbon\Carbon;
 class AppConst
 {
     const RESPONSE_REMINDER = 'RESPONSE_REMINDER';
@@ -92,10 +92,10 @@ class AppConst
 
     public static function getSmsMSGForAbsent($name, $startDate, $endDate)
     {
-//
-//        $startDate = $date->format("d-m-Y");
-//        $endDate = $date->format("d-m-Y");
-//        return "Đon xin nghi cua " . $name . " da duoc chap nhan.Bat dau tu ngay "
-//            . $startDate . 'den het ngay  ' . $startTime . '  .';
+
+       $startDate = (new Carbon($startDate))->format("d-m-Y");
+       $endDate = (new Carbon($endDate))->format("d-m-Y");
+       return "Đon xin nghi cua " . $name . " da duoc chap nhan.Bat dau tu ngay "
+           . $startDate . 'den het ngay  ' . $endDate . '  .';
     }
 }

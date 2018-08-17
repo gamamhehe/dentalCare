@@ -363,8 +363,12 @@ class StaffController extends Controller
 
     }
     public function createAppointmentByStaff(Request $request){
-        
-        return view("admin.AppointmentPatient.createAppointmentManual");
+        $RoleDentist = UserHasRole::where('role_id','2')->get();
+        $dentist=[];
+        foreach ($RoleDentist as $key ) {
+            $dentist[] = $key->belongsToUser()->first()->belongToStaff()->first();
+        }
+        return view("admin.AppointmentPatient.createAppointmentManual",['dentists'=>$dentist]);
     }
 
 }
