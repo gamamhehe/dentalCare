@@ -564,7 +564,7 @@ id="navHeader">
                 @if(Session::has('currentUser'))
                 <div class="col-sm-12">
                     <input type="text" class="form-control" id="guestPhone" name="guestPhone"
-                    placeholder="Số điện thoại" disabled
+                    placeholder="{{Session::get('currentUser')->phone}}" 
                     value="{{Session::get('currentUser')->phone}}">
                     <input type="hidden" id="phoneNumber" name="phoneNumber"
                     value="{{Session::get('currentUser')->phone}}">
@@ -991,7 +991,7 @@ swal("{{$errors->first('pass') }}", "", "error");
         swal(phone, "", "error");
     }
     $.ajax({
-            url: '/admin/get-city', //this is your uri
+            url: '/get-city', //this is your uri
             type: 'GET', //this is your method
             dataType: 'json',
             success: function (data) {
@@ -1023,7 +1023,7 @@ swal("{{$errors->first('pass') }}", "", "error");
                 .append('<option value="whatever">Chưa có thành phố</option>')
                 .val('whatever')
                 ;
-                alert(showNotice("error", obj.responseText));
+                
             },
         });
 });
@@ -1062,7 +1062,7 @@ $(document).on('click', '.create-patient', function () {
 function disctrict(sel) {
     var treatCateID = sel.value;
     $.ajax({
-            url: '/admin/get-district/' + treatCateID, //this is your uri
+            url: '/get-district/' + treatCateID, //this is your uri
             type: 'GET', //this is your method
             dataType: 'json',
             success: function (data) {
@@ -1102,10 +1102,10 @@ function save() {
     var guestName = $('#guestName').val();
     var guestPhone = $('#guestPhone').val();
     var guestTime = $('#startdate').val();
-    if ($.trim(guestName) == '') {
-        swal("Vui lòng điền họ tên!", "", "error");
-    } else if ($.trim(guestPhone) == '') {
+    if ($.trim(guestPhone) == '') {
         swal("Vui lòng điền số điện thoại!", "", "error");
+    } else if ($.trim(guestName) == '') {
+        swal("Vui lòng điền họ tên!", "", "error");
 
     } else if ($.trim(guestTime) == '') {
         swal("Vui lòng chọn ngày khám!", "", "error");
@@ -1137,8 +1137,8 @@ if ($.trim(nameCreate) == '' ) {
 }else if (nameCreate.length < 6 || nameCreate.length > 50 ) {
     swal("Họ tên phải từ 6 đến 35 kí tự!", "", "error");
     return;
-}else if (addressCreate.length < 6 || addressCreate.length > 50 ) {
-    swal("Họ tên phải từ 6 đến 35 kí tự!", "", "error");
+}else if (addressCreate.length < 4 || addressCreate.length > 50 ) {
+    swal("Địa chỉ phải từ 4 đến 35 kí tự!", "", "error");
     return;
 }else if ($.trim(addressCreate) == '') {
     swal("Vui lòng nhập địa chỉ của bệnh nhân  !", "Bấm kiểm tra để có danh sách bệnh nhân", "error");

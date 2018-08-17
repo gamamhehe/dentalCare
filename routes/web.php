@@ -43,6 +43,8 @@ Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
 Route::get('/lien-he', 'Admin\HomeController@xxx');
 Route::post('/create-appointment-user', 'Admin\AppointmentController@UserAppointment');
+Route::get('get-city', 'Admin\PatientController@getCityForDistrict');
+    Route::get('get-district/{id}', 'Admin\PatientController@getDistrictbyCity');
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
