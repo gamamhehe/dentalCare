@@ -226,7 +226,7 @@ Route::get('/generateKey', 'Blockchain\BlockchainController@GenerateKey');
 Route::get('/encryptPayment', 'Blockchain\BlockchainController@EncryptCreatePayment');
 Route::get('/decryptBlock/{id}', 'Blockchain\BlockchainController@DecryptDataBlock');
 Route::get('/encryptPaymentDetail/{id}', 'Blockchain\BlockchainController@EncryptCreatePaymentDetail');
-Route::get('/checkKey', 'Blockchain\BlockchainController@CheckPublicKeyNPrivateKey');
+Route::post('/checkKey', 'Blockchain\BlockchainController@CheckPublicKeyNPrivateKey');
 
 Route::get('checkPrivateKey', function () {
     return view('admin/syncData');

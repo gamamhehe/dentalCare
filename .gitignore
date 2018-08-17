@@ -12,3 +12,4 @@ yarn-error.log
 .env
 /composer.json
 /composer.lock
+public_key.txt
