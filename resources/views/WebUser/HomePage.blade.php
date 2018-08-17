@@ -33,7 +33,7 @@ id="navHeader">
 </button>
 
 <div class="collapse navbar-toggleable-xs" id="navmn">
-    <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+    <a class="navbar-brand logo" href="#"><img src="/assets/images/Logo/word.png" style="max-width: 300px;width: 100%" class="img-responsive img-fruid"></a>
     <ul class="nav navbar-nav float-sm-right">
         <li class="nav-item active">
             <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
@@ -551,9 +551,9 @@ id="navHeader">
 <div id="create" class="modal fade" role="dialog">
 <div class="modal-dialog modal-sm">
     <div class="modal-content" style="height: 400px;min-height: 400px;">
-        <div class="modal-header" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
+        <div class="modal-header" >
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div><img src="/assets/images/HomePage/logo.png" alt="" class="centerThing"></div>
+            <div><img src="/assets/images/Logo/word.png" class="centerThing" style="width: 100%;max-width: 300px;"></div>
         </div>
         <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
             <form method="post" class="form-horizontal" action="create-appointment-user"
@@ -896,7 +896,7 @@ style="background: url(/assets/images/HomePage/t3-bg.jpg);width: 100%;padding-to
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                        <div><img src="/assets/images/HomePage/logo.png" alt="" class="img-responsive"></div>
+                        <div><img src="/assets/images/Logo/word.png" style="max-width: 300px;width: 100%" class="img-responsive img-fruid"></div>
                         <br>
                         <div>Website: <a href="https://google.com.vn">projectcapstone.vn</a></div>
                         <div>Bác sĩ tư vấn (24/7) : <a class="zalovb" id="callme"

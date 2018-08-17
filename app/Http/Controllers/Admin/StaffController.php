@@ -363,7 +363,8 @@ class StaffController extends Controller
 
     }
     public function createAppointmentByStaff(Request $request){
-        dd("X");
+        
+        return view("admin.AppointmentPatient.createAppointmentManual");
     }
 
 }

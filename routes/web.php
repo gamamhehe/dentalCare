@@ -211,7 +211,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/treatment-detail/{id}', 'Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment
     Route::post('/create-appointment', 'Admin\AppointmentController@add');
-    Route::get('/create-appointment', 'Admin\StaffController@createAppointmentByStaff'); //new Page
+    Route::get('/create-appointment', 'Admin\StaffController@createAppointmentByStaff')->name('admin.AppointmentPatientManual.create'); //new Page
 
     //treatmentHistory
     Route::get('/treatment-history', 'Admin\TreatmentHistoryController@getList')->name('admin.treatmentHistory');
