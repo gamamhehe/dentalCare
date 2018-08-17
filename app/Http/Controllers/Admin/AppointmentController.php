@@ -33,13 +33,7 @@ class AppointmentController extends Controller
     use PatientBusinessFunction;
     public function testFunction(Request $request)
     {
-        $client = new \GuzzleHttp\Client();
-
-// Create a request
-        $request = $client->get('http://163.44.193.228/datajson');
-// Get the actual response without headers
-        $response = $request->getBody()->getContents();
-        return $response;
+        \DB::statement('ALTER TABLE tbl_payments AUTO_INCREMENT = 1000;');
     }
 
     public function add(Request $request)
@@ -217,7 +211,7 @@ class AppointmentController extends Controller
             $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s') ;
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
-            $patientID = $this->createPatient($patient);
+            $patientID = $this->ư($patient);
             if($patientID ==false){
                 return false;
             }
@@ -232,7 +226,7 @@ class AppointmentController extends Controller
                 return false;
             }
         //status
-            $resultStatus = $this->updateStatusAppoinment(1,$appointId);
+            $resultStatus = $this->ư(1,$appointId);
             return redirect()->back()->withSuccess("Done");
 
     }
