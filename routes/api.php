@@ -114,7 +114,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('payment/getPaymentReport/', 'Mobile\PaymentController@getPaymentReport');
     Route::post('payment/updatePaymentPrice/', 'Mobile\PaymentController@updatePaymentPrice');
     //staff
-
+  
     Route::post("staff/createPatient", "Mobile\StaffController@createPatient");
     Route::get("staff/getAppointmentByMonth", "Mobile\StaffController@getStaffAppointmentByMonth");
     Route::post("staff/bookAppointment", "Mobile\StaffController@bookAppointment");
@@ -122,7 +122,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post("staff/changePassword", "Mobile\StaffController@changePassword");
     Route::post("staff/changeAppointmentStatus", "Mobile\StaffController@updateAppointmentStatus");
     Route::post("staff/changeAppointmentDentist", "Mobile\StaffController@changeDentist");
-    Route::post("staff/doneTreatment", "Mobile\StaffController@doneTreatment");
+    Route::post("staff/doneTreatment/{tmId}", "Mobile\StaffController@doneTreatment");
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff with token----*****************************************************/
     /*************************************-----------------------------*****************************************************/
