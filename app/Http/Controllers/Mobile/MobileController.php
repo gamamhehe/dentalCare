@@ -288,6 +288,52 @@ class MobileController extends BaseController
         $user->delete();
     }
 
+    public function doneTreatment($tmHistoryId)
+    {
+        try {
+            $dateStr = (new DateTime())->format("Y-m-d");
+            $tmDetails = $this->getListTmDetailByDate($tmHistoryId, $dateStr);
+            $treatment = $tmHistory->belongsToTreatment()->first();
+            $count = 0;
+            if ($tmDetails != null) {
+                $this->logInfo(" tmDetails != null");
+                foreach ($tmDetails as $detail) {
+                    $count++;
+                    $feedback = $detail->hasFeedback()->first();
+                    if ($feedback == null) {
+                        $this->logInfo("$feedback == null");
+                        $dentist = Staff::where('id', $detail->staff_id)->first();
+                        $patientId = $tmHistory->patient_id;
+                        $phone = Patient::where('id', $patientId)->first()->phone;
+                        $firebaseToken = FirebaseToken::where('phone', $phone)->first();
+                        if ($firebaseToken != null) {
+                            $feedbackObj = Utilities::getFeedbackObject(
+                                $dentist->name,
+                                $patientId,
+                                $detail->id,
+                                $dentist->avatar,
+                                $treatment->name,
+                                $detail->created_date);
+                            $this->dispatch(new SendFirebaseJob(
+                                AppConst::RESPONSE_FEEDBACK,
+                                "Thông báo",
+                                "Đánh giá dịch vụ ". $treatment->name . ' lần '.$count,
+                                json_encode($feedbackObj),
+                                $firebaseToken->noti_token
+                            ));
+                            $this->logInfo("Send feedback to".$phone);
+                        }else{
+                            $this->logInfo("Fire base null");
+                        }
+                    }
+                }
+            }
+            return response()->json($this->getSuccessObj(200, "OK", "Gửi khảo sát thành công", "No data"));
+        } catch (Exception $ex) {
+            $errorObj = $this->getErrorObj("Lỗi máy chủ", $ex);
+            return response()->json($errorObj, 500);
+        }
+    }
     public function sendFirebaseReloadAppointment($phone)
     {
         $user = User::where('phone', $phone)->first();
@@ -296,11 +342,13 @@ class MobileController extends BaseController
             if ($staff != null) {
                 $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
                 if ($staffFirebaseToken != null) {
-
+                    if ($staffFirebaseToken == 'null') {
+                        return response()->json("User has logout");
+                    }
                     $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
                             $staff->id,
                             "No message",
-                            AppConst::ACTION_RELOAD_APPOINTMENT,
+                            AppConst::ACTION_RELOAD_DENTIST_APPOINTMENT,
                             $staffFirebaseToken->noti_token)
                     );
                 }
@@ -309,6 +357,9 @@ class MobileController extends BaseController
                 $this->logInfo("staff in sendFirebaseReloadAppointment null");
             }
         }
+    }  public function sendFirebaseReloadClinicAppointment(Request $request)
+    {
+        $this->sendFirebaseReloadMobileAppointment();
     }
 
     public function test4()

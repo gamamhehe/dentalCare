@@ -56,8 +56,8 @@
                                      alt="User Image"
                                      class="img-fluid img-responsive" style="max-height: 25px;">
                             </a>
-                        <ul class="dropdown-menu"
-                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                        <ul class="dropdown-menu dropdownHead"
+                             >
                             <!-- User image -->
                                 <li class="user-header">
                                     <div class="container" style=";padding:10px 0px; ">
@@ -130,8 +130,8 @@
                                      alt="User Image"
                                      class="img-fluid img-responsive" style="max-height: 25px;">
                             </a>
-                            <ul class="dropdown-menu"
-                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <ul class="dropdown-menu dropdownHead"
+                            >
                             <!-- User image -->
                                 
                                 <li class="user-header" id="acc1" style="display: block">
@@ -169,8 +169,8 @@
                             {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
                             Đăng Nhập
                         </a>
-                        <ul class="dropdown-menu" id="drop"
-                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
+                        <ul class="dropdown-menu dropdownHead" id="drop"
+                            >
                             <!-- User image -->
                             <li class="user-header">
                                 Đăng nhập
@@ -262,8 +262,8 @@
                                      alt="User Image"
                                      class="img-fluid img-responsive" style="max-height: 25px;">
                             </a>
-                        <ul class="dropdown-menu"
-                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                        <ul class="dropdown-menu dropdownHead"
+                            >
                             <!-- User image -->
                                 <li class="user-header">
                                     <div class="container" style=";padding:10px 0px; ">
@@ -336,8 +336,7 @@
                                      alt="User Image"
                                      class="img-fluid img-responsive" style="max-height: 25px;">
                             </a>
-                            <ul class="dropdown-menu"
-                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke">
+                            <ul class="dropdown-menu dropdownHead" >
                             <!-- User image -->
                                 
                                 <li class="user-header" id="acc1" style="display: block">
@@ -375,8 +374,8 @@
                             {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
                             Đăng Nhập
                         </a>
-                        <ul class="dropdown-menu" id="drop"
-                            style="position: absolute;right: 0;left: auto;background-color: whitesmoke;">
+                        <ul class="dropdown-menu dropdownHead" id="drop"
+                           >
                             <!-- User image -->
                             <li class="user-header">
                                 Đăng nhập

@@ -186,6 +186,7 @@ class StaffController extends Controller
             } else if ($appointment->status == 4) {
                 $appointment->status = 'Hủy';
             }
+            $appointment->time = date("H:i:s",strtotime($appointment->start_time));
         }
         if($role ==2){
             return Datatables::of($listAppointment)

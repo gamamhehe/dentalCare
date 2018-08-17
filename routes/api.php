@@ -71,6 +71,7 @@ Route::get("firebase/{topic}/{content}", "Mobile\MobileController@sendFirebase")
 Route::get("topappt", "Mobile\MobileController@topappt");
 
 Route::get("reload/{phone}", "Mobile\MobileController@sendFirebaseReloadAppointment");
+Route::get("reloadappt", "Mobile\MobileController@sendFirebaseReloadClinicAppointment");
 //input bacsiranh?date=value
 Route::get("bacsiranh", "Mobile\TestController@getDentist");
 Route::get("reminder", "Mobile\MobileController@sendReminder");
@@ -121,7 +122,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post("staff/changePassword", "Mobile\StaffController@changePassword");
     Route::post("staff/changeAppointmentStatus", "Mobile\StaffController@updateAppointmentStatus");
     Route::post("staff/changeAppointmentDentist", "Mobile\StaffController@changeDentist");
-    Route::post("staff/doneTreatment", "Mobile\StaffController@doneTreatment");
+    Route::post("staff/doneTreatment/{tmId}", "Mobile\StaffController@doneTreatment");
     /*************************************-----------------------------*****************************************************/
     /*************************************-----End section for staff with token----*****************************************************/
     /*************************************-----------------------------*****************************************************/
@@ -131,11 +132,11 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('patient/createProfile', "Mobile\PatientController@createProfile");
     Route::post("patient/update", "Mobile\PatientController@updatePatientInfo");
-    Route::post("patient/receiveManually", "Mobile\PatientController@receiveManually");
     Route::get('patient/getByPhone', "Mobile\PatientController@getByPhone");
     Route::get('patient/getListPatientByPhone', "Mobile\PatientController@getListPatientByPhone");
     Route::get('staff/getPatientAppointmentByDate', "Mobile\StaffController@getPatientAppointmentByDate");
-    Route::post("patient/receive", "Mobile\PatientController@receive");
+    Route::post("staff/receiveApptManually", "Mobile\StaffController@receiveAppointmentManually");
+    Route::post("staff/receiveAppt", "Mobile\StaffController@receiveAppointment");
     ////////Anamesis
     Route::get('anamnesisCatalog/all','Mobile\AnamnesisController@getAll');
     Route::get('staff/getAvailableDentist', 'Mobile\StaffController@getAvailableDentist');
