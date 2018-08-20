@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Lịch sử bệnh án bệnh nhân')
 @section('content')
     <div class="content-wrapper" >
         <div class="box">

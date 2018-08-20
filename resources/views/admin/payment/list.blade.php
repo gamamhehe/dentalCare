@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Danh sách chi trả')
 @section('content')
     <div class="content-wrapper">
         <div class="box">
@@ -82,14 +83,14 @@
                                                 <form action="{{route('getPaymentDetail')}}">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="idPayment" value="{{$payment->id}}">
-                                                    <button type="submit" class="btn btn-default btn-success">Xem chi tiết Chi Trả
+                                                    <button type="submit" style="float: left;margin-right: 10px;" class="btn btn-default btn-success">Xem chi tiết Chi Trả
                                                     </button>
                                                 </form>
                                                 @if($payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_NOT_DONE)
 
                                                         <input type="hidden" name="idPayment" value="{{$payment->id}}">
-                                                    <a href="#" class="create-modal btn btn-success btn-sm">
-                                                        <i class="glyphicon">Tạo chi trả</i>
+                                                    <a href="#" class="create-modal btn btn-success  ">
+                                                         Tạo chi trả 
                                                     </a>
 
                                                 @endif

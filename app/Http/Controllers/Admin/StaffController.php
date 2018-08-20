@@ -9,6 +9,7 @@ use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentCategoriesBusinessFunction;
 use App\Http\Controllers\BusinessFunction\FeedbackBusinessFunction;
 use App\Model\Staff;
+use App\Model\UserHasRole;
 use App\Model\Role;
 use App\Model\TreatmentCategory;
 use App\Model\User;
@@ -186,6 +187,7 @@ class StaffController extends Controller
             } else if ($appointment->status == 4) {
                 $appointment->status = 'Hủy';
             }
+            $appointment->time = date("H:i:s",strtotime($appointment->start_time));
         }
         if($role ==2){
             return Datatables::of($listAppointment)
@@ -305,6 +307,68 @@ class StaffController extends Controller
         $start = $this->getNumberStart($staff->staffDetail->id);
 
         return view('admin.Staff.profile', ['staff' => $staff, 'start' => $start]);
+    }
+    public function getFreeDentistInStaff(Request $request){
+       $list = $this->getCurrentFreeDentist();
+        $listObj =[];
+        foreach ($list as $dentist=>$key) {
+             $x = Staff::find($key);
+              $listObj[]=$x;
+        }
+        $list2 = UserHasRole::where('role_id','2')->get();
+        $dentist=[];
+        foreach ($list2 as $key ) {
+            $dentist[] = $key->belongsToUser()->first()->belongToStaff()->first();
+        }
+        foreach ($dentist as $key ) {
+            for ($i=0; $i <count($listObj) ; $i++) { 
+                if($key->id == $listObj[$i]->id){
+                    $key->statusCurrent = "Đang rảnh";
+                    $key->booleanStatus = 'color:white;background-color:#5cb85c';
+                    $key->style="StyleStatus".$key->id;
+                    break;
+                }else{
+                    $key->statusCurrent="Đang bận";
+                    $key->booleanStatus = 'color:white;background-color:red';
+                }
+            }
+        }
+       
+        $output = '';
+        $total_row = count($dentist);
+        if ($total_row > 0) {
+            foreach ($dentist as $row) {
+                $output .= '
+        <tr>
+        <th  style="text-align: center; " class="col-xs-4 ">' . $row->name . '</th>
+        <th   style="text-align: center; '. $row->booleanStatus.'" class="col-xs-1">' . $row->statusCurrent . '</th>
+        <th   style="text-align: center; " class="col-xs-1  "> <button class="btn btn-info" type="button" style=" width: 100%;" id="add" onclick="savePatient(' . $row->id . ')" >Chọn bác si</button></th>
+        </tr>
+        ';
+            }
+
+        }
+        if ($total_row == 0) {
+            $output = '
+       <tr>
+        <td align="center" colspan="5">Tất cả bác sĩ đều bận </td>
+       </tr>
+       ';
+        }
+        $data = array(
+            'table_data' => $output,
+            'total_data' => $total_row
+        );
+        echo json_encode($data);
+
+    }
+    public function createAppointmentByStaff(Request $request){
+        $RoleDentist = UserHasRole::where('role_id','2')->get();
+        $dentist=[];
+        foreach ($RoleDentist as $key ) {
+            $dentist[] = $key->belongsToUser()->first()->belongToStaff()->first();
+        }
+        return view("admin.AppointmentPatient.createAppointmentManual",['dentists'=>$dentist]);
     }
 
 }

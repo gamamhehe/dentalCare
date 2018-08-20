@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Khởi tạo đơn thuốc')
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->

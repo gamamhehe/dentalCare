@@ -2,7 +2,6 @@
 <html lang="en"><head>
 <title>Bảng Giá Tham Khảo</title>
 <meta charset="utf-8">
- 
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="/assets/images/icon/fap16.png"/>
 
@@ -443,7 +442,7 @@
             <div class="col-xs-10">
                 <a href="#" class="btnkn2tv create-modal" style="color: white;">
                     <div>
-                        <div>ĐĂNG KÝ TƯ VẤN</div>
+                        <div>Đặt lịch hẹn</div>
 
                         <div>Hotline: 1900.9999</div>
                     </div>
@@ -496,7 +495,7 @@
                       </div>
 
                       <div class="col-sm-12" style="margin: 8px 0;">
-                        <textarea name="guestNote" id="guestNote" style="resize: none;width: 100%" rows="4" placeholder="Nhu cầu khi khám"></textarea>
+                        <textarea name="guestNote" id="guestNote" style="resize: none;width: 100%" rows="4" placeholder="Ghi chú"></textarea>
                     </div>
 
 
@@ -515,7 +514,7 @@
 </div>
 <!-- end regist -->
 	<div class="container" >
-	<div class="row" style="background: url(/assets/images/banggia.jpg);height: 7em;">
+	<div class="row " style="background: url(/assets/images/banggia.jpg);height: 7em;">
 			<div class="col-sm-8 push-sm-2 text-xs-center Bacsititle" >
 			<h1 style="margin-top: 0.8em;color: white"><strong>Bảng giá tham khảo</strong></h1>
 			</div>
@@ -525,9 +524,9 @@
 			<table id="dup-table"  class="table myTable table-bordered Mytable-hover">
       <thead>
       <tr style="background-color: #eee;">
-      <td class="col-sm-1">ID</td>
-      <td class="col-sm-2">Tên dịch vụ</td>
-      <td class="col-sm-9">Mô Tả</td>
+      <td class="col-sm-1 col-xs-1">ID</td>
+      <td class="col-sm-2 col-xs-2">Tên dịch vụ</td>
+      <td class="col-sm-9 col-xs-9">Mô Tả</td>
       </tr>
       </thead>
       </table> 
@@ -599,6 +598,7 @@
             "infoFiltered": "(filtered from _MAX_ total records)",
             "search" : "Tìm kiếm ","infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
         },
+        searching: false,
         processing: false,
         serverSide: true,
         order: [[ 0, "desc" ]],

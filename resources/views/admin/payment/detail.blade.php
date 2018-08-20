@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Chi trả chi tiết')
 @section('content')
     <div class="content-wrapper">
         <div class="box">
@@ -6,7 +7,7 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả Chi Tiết</div>
+                        <div class="col-sm-5" style="text-align: left">Chi Trả Chi Tiết</div>
                         @if($payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_DONE)
                         @else
                             <a href="#" class="create-modal btn btn-success btn-sm">

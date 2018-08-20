@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Danh sách lịch hẹn trong ngày')
 @section('content')
     <div class="content-wrapper" >
         <!-- Content Header (Page header) -->
@@ -64,14 +65,14 @@
                 },
                 processing: false,
                 serverSide: true,
-                order: [[ 0, "desc" ]],
+                order: [[ 2, "desc" ]],
                 bLengthChange:true,
-                pageLength: 5,
+                pageLength: 15,
                 ajax: '/admin/get-appointment-in-date',
                 columns : [
                       {data: 'phone'},
                      {data: 'numerical_order'},
-                    {data: 'start_time'},
+                    {data: 'time'},
                     {data: 'estimated_time'},
                     {data: 'note'},
                     {data: 'status'},

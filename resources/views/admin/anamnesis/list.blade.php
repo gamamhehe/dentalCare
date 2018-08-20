@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Danh sách bệnh tiền sử')
 @section('content')
     <div class="content-wrapper" >
         <!-- Content Header (Page header) -->

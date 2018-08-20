@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Cập nhật chi tiết lần khám')
 @section('content')
     <link rel="stylesheet" href="{{asset("/plugins/datepicker/datepicker3.css")}}">
     <div class="content-wrapper">
