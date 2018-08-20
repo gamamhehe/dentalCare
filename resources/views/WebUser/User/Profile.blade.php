@@ -360,9 +360,9 @@
         </div>
     </div>
     <div class="row" style="background-color: whitesmoke">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div><img src="{{$patient->avatar}}" alt="" class="img-responsive img-fluid" style="text-align: center;"></div>
-              <form enctype="multipart/form-data" action="avatar-profile" method="POST" id="ChangeAvatar">
+             <!--  <form enctype="multipart/form-data" action="avatar-profile" method="POST" id="ChangeAvatar">
                 <div class="row" style="text-align: center;">
                   <div class="col-xs-12">
                         <label style="text-align: center;">Thay đổi ảnh đại diên</label>
@@ -380,10 +380,10 @@
                      <input type="button" class="pull-right btn btn-sm btn-primary" onclick="validate()" value="Đổi ảnh đại diện">
                 </div>
                
-            </form>
+            </form> -->
         </div>
-        <div class="col-sm-7">
-            <div style="padding: 2em 5em;">
+        <div class="col-sm-4">
+            <div>
                 <div class="row" style="padding: 10px;">
                     <div class="col-sm-4">Họ và Tên :</div>
                     <div class="col-sm-8">{{$patient->name}}</div>
@@ -408,11 +408,11 @@
                     <div class="col-sm-4">Bệnh tiền sử :</div>
                     <div class="col-sm-8">
                     @if($anamnesis != null)
-                    @foreach($anamnesis as $anam)
-                    {{$anam->name->name}} 
-                    @endforeach
+                        @foreach($anamnesis as $anam)
+                        {{$anam->name->name}} 
+                        @endforeach
                     @else
-                  <h1>NO</h1>
+                 <p>Không có</p>
                     @endif
                     </div>
                 </div>
@@ -421,25 +421,54 @@
             </div>
 
         </div>
+        <div class="col-sm-6">
+            <div class="banner" >
+        <div id="carousel" class="carousel slide" data-ride="carousel" >
+            <ol class="carousel-indicators">
+                <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel" data-slide-to="1"></li>
+                <li data-target="#carousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+             @foreach($listAppointment as $key => $appointment)
+                @if($key == 0)
+                 <div class="carousel-item active lichhen1">
+                @else
+               <div class="carousel-item  lichhen2">
+                @endif
+                    <div class="carousel-caption textbanner" style="left:0%">
+                        <div class="goi">
+                            <h3 class="tdbanner1">{{$appointment->name}}</h3>
+                            <h4 class="tdbanner2">Ngày {{$appointment->dateComming}}</h4>
+                            <div class="nutbanner">
+                                <a href="" class="btn btn-outline-secondary">Số thứ tự {{$appointment->numerical_order}} - Vào lúc {{$appointment->timeComming}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               @endforeach
+               
+
+            </div>
+      
+        </div>
     </div>
-    <div class="row">
+    <!-- end banner -->
+</div>
+        </div>
+    </div>
+    <!-- <div class="row">
         <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
             <h3><strong>Lịch hẹn</strong></h3>
             <div class="gach">
                 <div class="tron"></div>
             </div>
         </div>
-    </div>
+    </div> -->
   
 </div>
 <div class="top" style="max-height: 600px;">
-
-    <!-- start menu -->
-
-    <!-- end menu -->
-
-    <!-- start banner -->
-    <div class="banner">
+  <!--   <div class="banner">
         <div id="carousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carousel" data-slide-to="0" class="active"></li>
@@ -455,10 +484,10 @@
                 @endif
                     <div class="carousel-caption textbanner" style="left:0%">
                         <div class="goi">
-                            <h3 class="tdbanner1">{{$appointment->detail->name}}</h3>
-                            <h4 class="tdbanner2">Ngày {{$appointment->detail->dateComming}}</h4>
+                            <h3 class="tdbanner1">{{$appointment->name}}</h3>
+                            <h4 class="tdbanner2">Ngày {{$appointment->dateComming}}</h4>
                             <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số thứ tự {{$appointment->detail->numerical_order}} - Vào lúc {{$appointment->detail->timeComming}}</a>
+                                <a href="" class="btn btn-outline-secondary">Số thứ tự {{$appointment->numerical_order}} - Vào lúc {{$appointment->timeComming}}</a>
                             </div>
                         </div>
                     </div>
@@ -477,8 +506,7 @@
             </div>
         </div>
     </div>
-    <!-- end banner -->
-</div>
+</div> -->
 <!-- footer -->
 <div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
     <div class="contact" id="contact">

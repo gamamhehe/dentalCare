@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Danh sách xin nghỉ nhân viên')
 @section('content')
 <div class="content-wrapper" >
     <!-- Content Header (Page header) -->
@@ -11,7 +12,7 @@
                     <div class="form-group row add">
                         <div class="col-xs-3">
                             <select name="Date" id="Date" style="height: 2.5em;width: 100%">
-                                <option value="" disabled selected hidden>Lọc theo tháng</option> 
+                                <option value=""  selected>Lọc theo tháng</option>
                                 @foreach($dates as $date)
                                 <option value="{{$date->value}}">{{$date->string}}</option>
                                 @endforeach
@@ -19,7 +20,7 @@
                         </div>
                          <div class="col-xs-3">
                             <select name="Staff" id="Staff" style="height: 2.5em;width: 100%">
-                                <option value="" disabled selected hidden>Lọc theo Nhân viên</option> 
+                                <option value=""  selected>Lọc theo Nhân viên</option> 
                                 @foreach($staffs as $staff)
                                 <option value="{{$staff->id}}">{{$staff->name}}</option>
                                 @endforeach
@@ -143,6 +144,7 @@
              
           },
           success: function(data){
+            alert("XX");
             // if ((data==1)) {
             //     swal("Đặt lịch nghỉ thành công", "Kiểm tra và xóa những lịch hẹn trùng", "success");
             //        $('#dup-table').DataTable().ajax.reload();
@@ -155,7 +157,11 @@
             });
     });
      $(document).on('click','#addApprove', function() {
-        
+         var message = document.getElementById("#message").value;
+            if ($.trim(message) == '' ) {
+                swal("Vui lòng nhập lời nhắn phản hồi!", "", "error");
+                return;
+            }
         $.ajax({
           type: 'POST',
           url: '/admin/approve-absent',
@@ -163,7 +169,6 @@
              "_token": "{{ csrf_token() }}",
             'Absent': $('#idAbsent').val(),
             'message':$('#message').val()
-             
           },
           success: function(data){
             if ((data==1)) {

@@ -31,7 +31,12 @@ trait AppointmentBussinessFunction
 
         return $appointments;
     }
-
+     public function getAppointmentByPhoneFuture($phone)
+    {
+        $appointments = Appointment::where('phone', $phone)
+           ->whereDate('start_time','>=' ,Carbon::now()->format('Y-m-d'))->get();
+        return $appointments;
+    }
     public function getAppointmentByPhone($phone)
     {
         $appointments = Appointment::where('phone', $phone)

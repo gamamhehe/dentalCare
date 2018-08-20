@@ -130,7 +130,8 @@ trait AbsentBusinessFunction
             Absent::create([
                 'staff_approve_id' => $idAdmin,
                 'request_absent_id' => $idAbsent,
-                'message_from_staff' => $message
+                'message_from_staff' => $message,
+                'created_time'=> Carbon::now(),
             ]);
             DB::commit();
             return true;

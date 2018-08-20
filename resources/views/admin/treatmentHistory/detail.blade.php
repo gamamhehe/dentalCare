@@ -1,4 +1,5 @@
 @extends('admin.master')
+@section('title', 'Danh sách tiền sử bệnh án')
 @section('content')
     <div class="content-wrapper" >
         <div class="box">
@@ -6,7 +7,7 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Danh Sách tiền sử bệnh án</div>
+                        <div class="col-sm-5" style="text-align: left">Danh sách tiền sử bệnh án</div>
                     </div>
                 </div>
                 <div class="panel-body">

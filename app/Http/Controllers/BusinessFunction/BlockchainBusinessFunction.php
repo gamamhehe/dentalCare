@@ -77,7 +77,7 @@ trait BlockchainBusinessFunction
                 'paid' => $element[1],
                 'total_price' => $element[2],
                 'phone' => $element[3],
-                'is_done' => $element[4],
+                'status' => $element[4],
                 'created_at' => $element[5],
             ]);
             DB::commit();

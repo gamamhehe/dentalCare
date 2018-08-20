@@ -40,7 +40,7 @@
         <form action="{!! url('/loginAdmin') !!}" method="Post">
             {{ csrf_field() }}
             <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                <input type="text" class="form-control" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                <input type="text" class="form-control" placeholder="Số điện thoại" name="phone" value="{{ old('phone') }}"
                        required autofocus>
                 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                 @if ($errors->has('phone'))
@@ -50,7 +50,7 @@
                 @endif
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password" name="password" required style="background-color: #fff;">
+                <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required style="background-color: #fff;">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 @if ($errors->has('password'))
                     <span class="help-block">

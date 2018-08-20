@@ -53,7 +53,7 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     @yield('css')
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue-light sidebar-mini">
 <input type="hidden" value="{{Session::get('currentAdmin')->belongToStaff()->first()->id}}" id="staff_id">
 <div class="wrapper">
     @include('admin.blocks.header')

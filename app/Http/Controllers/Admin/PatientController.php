@@ -9,6 +9,7 @@ use App\Http\Controllers\BusinessFunction\PatientBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\AnamnesisBusinessFunction;
+use App\Http\Controllers\Mobile\BaseController;
 use App\Jobs\SendFirebaseJob;
 use App\Model\FirebaseToken;
 use App\Model\Patient;
@@ -28,7 +29,7 @@ use DateTime;
 use Pusher\Pusher;
 use App\Http\Controllers\Controller;
 
-class PatientController extends Controller
+class PatientController extends BaseController
 {
 
     use AppointmentBussinessFunction;
@@ -73,29 +74,11 @@ class PatientController extends Controller
 
         return redirect()->intended(route('homepage'));
     }
-
-    public function create(Request $request)
-    {
-        $checkExist = $this->checkExistUser($request->phone);
+    public function createPatientWeb(Request $request){
+         $checkExist = $this->checkExistUser($request->phone);
         if ($checkExist) {
-            $patient = new Patient();
-            $listAnamnesis = $request->anam;
-            $userHasRole = new UserHasRole();
-            $userHasRole->phone = $request->phone;
-            $userHasRole->role_id = 4;
-            $userHasRole->start_time = Carbon::now();
-            $patient->name = $request->name;
-            $patient->address = $request->address;
-            $patient->phone = $request->phone;
-            $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
-            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s');
-            $patient->gender = $request->gender;
-            $patient->district_id = $request->district_id;
-            $patientID = $this->createPatient($patient);
-            if ($patientID == false) {
-                return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
-            }
-            $result = $this->createAnamnesisForPatient($listAnamnesis, $patientID);
+
+            return 0;//da ton tai
         } else {
             $patient = new Patient();
             $userHasRole = new UserHasRole();
@@ -113,16 +96,70 @@ class PatientController extends Controller
             $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
-            //thieu ne  $result = $this->createAnamnesisForPatient($listAnamnesis,$patientID);
-
         }
         if ($result) {
+            $listAnamnesis = $request->anam;
+            if($listAnamnesis !=null){
+                $result2 = $this->createAnamnesisForPatient($listAnamnesis, $patientID);
+            }
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+    public function create(Request $request)
+    {
+        $checkExist = $this->checkExistUser($request->phone);
+        if ($checkExist) {
+            $patient = new Patient();
+            
+            $userHasRole = new UserHasRole();
+            $userHasRole->phone = $request->phone;
+            $userHasRole->role_id = 4;
+            $userHasRole->start_time = Carbon::now();
+            $patient->name = $request->name;
+            $patient->address = $request->address;
+            $patient->phone = $request->phone;
+            $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
+            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s');
+            $patient->gender = $request->gender;
+            $patient->district_id = $request->district_id;
+            $result = $this->createPatient($patient);
+            if ($result == false) {
+                return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
+            }
+        } else {
+            $patient = new Patient();
+            $userHasRole = new UserHasRole();
+            $user = new User();
+            $userHasRole->phone = $request->phone;
+            $userHasRole->role_id = 4;
+            $userHasRole->start_time = Carbon::now();
+            $patient->name = $request->name;
+            $patient->address = $request->address;
+            $patient->phone = $request->phone;
+            $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s');
+            $patient->gender = $request->gender;
+            $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
+            $patient->district_id = $request->district_id;
+            $user->phone = $request->phone;
+            $user->password = Hash::make($user->phone);
+            $result = $this->createUserWithRole($user, $patient, $userHasRole);
+        }
+        if ($result) {
+            $listAnamnesis = $request->anam;
+            if($listAnamnesis !=null){
+                $result = $this->createAnamnesisForPatient($listAnamnesis, $patientID);
+            }
             return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
         } else {
             return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
         }
     }
-
+    public function getCityForDistrict(){
+        $city = City::all();
+        return $city;
+    }
     public function get($phone)
     {
         return $this->getPatientByPhone($phone);
@@ -174,7 +211,7 @@ class PatientController extends Controller
                     );
                     $appointment->pushStatus = 0;
                     $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
-                    $this->sendFirebaseReloadAppointment($appointment->staff_id);
+                    $this->sendFirebaseReloadMobile($appointment->staff_id, AppConst::ACTION_RELOAD_DENTIST_APPOINTMENT);
                     $status = 1;
         }}
         $data = array(
@@ -182,26 +219,6 @@ class PatientController extends Controller
         );
 
         echo json_encode($data);
-    }
-
-    public function sendFirebaseReloadAppointment($staffId)
-    {
-        $staff = $this->getStaffById($staffId);
-        if ($staff != null) {
-            $staffFirebaseToken = FirebaseToken::where('phone', $staff->phone)->first();
-            if ($staffFirebaseToken != null) {
-
-                $this->dispatch(new SendFirebaseJob(AppConst::RESPONSE_RELOAD,
-                        $staffId,
-                        "No message",
-                        AppConst::ACTION_RELOAD_APPOINTMENT,
-                        $staffFirebaseToken->noti_token)
-                );
-                Log::info("Send sendFirebaseReloadAppointment to token: " . $staffFirebaseToken->noti_token);
-            }
-        } else {
-            Log::info("staff in sendFirebaseReloadAppointment null");
-        }
     }
 
     public function listAppointment($id)
@@ -216,13 +233,17 @@ class PatientController extends Controller
         $District = District::where('city_id', 1)->get();
         $patientList = Patient::all();
         $listAnamnesis = AnamnesisCatalog::all();
-        return view('admin.AppointmentPatient.index', ['AnamnesisCatalog' => $listAnamnesis, 'citys' => $city, 'District' => $District, 'patientList' => $patientList]);
+        $RoleDentist = UserHasRole::where('role_id','2')->get();
+        $dentist=[];
+        foreach ($RoleDentist as $key ) {
+            $dentist[] = $key->belongsToUser()->first()->belongToStaff()->first();
+        }
+        return view('admin.AppointmentPatient.index', ['AnamnesisCatalog' => $listAnamnesis, 'citys' => $city, 'District' => $District, 'patientList' => $patientList,'dentists'=>$dentist]);
     }
 
     public function action1($valueSearch)
     {
         $output = '';
-
         if ($valueSearch == 'all') {
             $data = Patient::all();
         } else {
@@ -232,25 +253,21 @@ class PatientController extends Controller
                 ->orderBy('name', 'desc')
                 ->get();
         }
-
         $total_row = $data->count();
-
-
         if ($total_row > 0) {
             Session::flash('taikhoan', '456');
             foreach ($data as $row) {
                 $output .= '
         <tr>
-         <td>' . $row->name . '</td>
-         <td>' . $row->phone . '</td>
-         <td>' . $row->address . '</td>
-         <td>' . $row->date_of_birth . '</td>
-         <td>
+         <th  style="text-align: center; " class="col-xs-6  ">' . $row->name . '</th>
+         <th   style="text-align: center; " class="col-xs-1  ">' . $row->phone . '</th>
+         <th  style="text-align: center; " class="col-xs-3  ">' . $row->address . '</th>
+         <th  style="text-align: center; " class="col-xs-1  ">' . $row->date_of_birth . '</th>
+         <th  style="text-align: center; " class="col-xs-2  ">
             <a href="thong-tin-benh-nhan/' . $row->id . '" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
             <button type="button" class="btn btn-default btn-success"
                                  onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button>
-           
-                                 </td>
+                                 </th>
         </tr>
         ';
             }
@@ -279,7 +296,8 @@ class PatientController extends Controller
         $listPatient = Patient::where('phone', $phone)->get();
         $request->session()->remove('listPatient');
         session(['listPatient' => $listPatient]);
-        $image = $request['avatar'];
+        $image =  $request->file('avatar');
+        dd($image);
         $id = $request['patientID'];
         $result = $this->editAvatar($image, $id);
         return redirect('/myProfile');

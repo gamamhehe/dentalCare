@@ -10,8 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Model\RequestAbsent;
 use Carbon\Carbon;
 use DB;
+use Month;
 use Yajra\Datatables\Facades\Datatables;
-
+use App\Helpers\AppConst;
+use App\Jobs\SendSmsJob;
 class AbsentController extends Controller
 {
     //
@@ -77,14 +79,13 @@ class AbsentController extends Controller
         
         $id = $request->Absent;
         $absentCurrent = $this->getAbsentById($id);
-
         $idCurrentAdmin = $request->session()->get('currentAdmin', null)->belongToStaff()->first();
         $checkBeforeApprove = $this->checkAbsentForStaffWasApprove($idCurrentAdmin,$absentCurrent->start_date,$absentCurrent->end_date);
         if ($checkBeforeApprove) {//ngày nghỉ hợp lệ
              $result = $this->approveAbsent($id, $idCurrentAdmin->id, $request->message);
             if($result){
-                $smsMessage = AppConst::getSmsMSGForAbsent( "Phuc Huynh", $absentCurrent->start_date,$absentCurrent->end_date);
-                $this->dispatch(new SendSmsJob("0915469963", $smsMessage));
+                $smsMessage = AppConst::getSmsMSGForAbsent( $idCurrentAdmin->name, $absentCurrent->start_date,$absentCurrent->end_date);
+                $this->dispatch(new SendSmsJob($idCurrentAdmin->phone, $smsMessage));
                 return 1;
             }else{
                 return "Ngày nghỉ đã chấp nhận từ trước!";
@@ -143,10 +144,16 @@ class AbsentController extends Controller
         return $total;
     }
     public function searchAbsent(Request $request){
+
         $status = $request['statusApp'];//never null
         $dateTime = $request['date'];
         $staffId = $request['staff'];
-        if($dateTime == null && $staffId == null){
+        if($dateTime != null){
+            $listAbsent = RequestAbsent::where(Month(start_date),8)->get();
+        }else{
+            dd("L");
+        }
+        if($dateTime == null && $staffId == null && $status !=null){
              $listAbsent = RequestAbsent::where('is_deleted',$status)->get();
         }else if($dateTime == null && $staffId !=null){
             $listAbsent = RequestAbsent::where('is_deleted',$status)

@@ -42,7 +42,9 @@ Route::post('loginUser', 'Admin\PatientController@login')->name('admin.loginUser
 Route::get('changeCP/{id}', 'Admin\PatientController@changeCurrentPatient');
 Route::post('/avatar-profile', 'Admin\PatientController@changeAvatar');
 Route::get('/lien-he', 'Admin\HomeController@xxx');
-Route::post('/create-appointment-user', 'Admin\AppointmentController@UserAppoinment');
+Route::post('/create-appointment-user', 'Admin\AppointmentController@UserAppointment');
+Route::get('get-city', 'Admin\PatientController@getCityForDistrict');
+    Route::get('get-district/{id}', 'Admin\PatientController@getDistrictbyCity');
 // end webuser
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
@@ -106,6 +108,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::get('/edit-event/{id}', 'Admin\EventController@loadeditEvent');
         Route::post('/edit-event/{id}', 'Admin\EventController@edit')->name('admin.edit.event');
         //patient
+        Route::post('/create-patient-web', 'Admin\PatientController@createPatientWeb');
         Route::post('/create-patient', 'Admin\PatientController@create');
         Route::get('/apply-appointment', 'Admin\AppointmentController@applyAppointment');// no patient
         Route::get('/apply-appointment-exist', 'Admin\AppointmentController@applyAppointmentExistPatient');// have patient patient
@@ -165,6 +168,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/thong-tin-benh-nhan/{id}', 'Admin\PatientController@getInfoPatientById'); //ajax
     Route::get('/get-list-patient/{id}', 'Admin\PatientController@getListPatientById'); //ajax
     // Route::get('/create-Patient', 'Admin\PatientController@create');
+    Route::get('/get-free-dentist-status', 'Admin\StaffController@getFreeDentistInStaff');
     //Dentist
     Route::get('/list-appointment', 'Admin\StaffController@viewAppointment')->name('admin.listAppointment.dentist');
     Route::get('/list-appointment-in-date', 'Admin\StaffController@viewAppointmentInDate')->name('admin.listAppointmentInDate.dentist');
@@ -207,13 +211,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/treatment-detail/{id}', 'Admin\TreatmentDetailController@viewTreatmentDetailController');
     //appointment
     Route::post('/create-appointment', 'Admin\AppointmentController@add');
-    Route::get('/create-appointment', 'Admin\StaffController@createAppointmentByStaff'); //new Page
+    Route::get('/create-appointment', 'Admin\StaffController@createAppointmentByStaff')->name('admin.AppointmentPatientManual.create'); //new Page
 
     //treatmentHistory
     Route::get('/treatment-history', 'Admin\TreatmentHistoryController@getList')->name('admin.treatmentHistory');
     Route::get('/get-treatment-history-detail', 'Admin\TreatmentHistoryController@getDetail')->name('gettreatmentHistoryDetail');
 
     //city
+    Route::get('/get-city', 'Admin\PatientController@getCityForDistrict');
     Route::get('/get-district/{id}', 'Admin\PatientController@getDistrictbyCity');
     Route::get('/change-session', 'Admin\StaffController@changeSession');
 
