@@ -209,6 +209,8 @@ class BlockchainController extends Controller
         $method = 'aes-256-cbc';
         $decrypted = openssl_decrypt(base64_decode($dec), $method, '1', OPENSSL_RAW_DATA, $iv);
 
+        
+
         if($decrypted == "VALID") {
             $listData = [];
             $ledger = $this -> checkLedger();
@@ -223,7 +225,6 @@ class BlockchainController extends Controller
                     }
                 }
             }
-            dd($listData);
             $this-> setDataTypePayment($listData);
         }
     }
