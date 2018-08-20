@@ -52,17 +52,21 @@ class QueueController extends Controller
     }
 
 
-    public function runJobQueue(Request $request)
+    public function runJobQueue($dataEncrypt)
     {
-        if ($this->isExist($this->clientIp)) {
-            $dataEncrypt = $request->data_encrypt;
-            $obj = new ClassCheckingStatus($dataEncrypt);
-            $func = array($obj, 'checkingStatusContinously');
-            BlockchainQueue::dispatch($func);
-            return 'success';
-        }
-        Log::info('QueueController_runJobQueue_ClientIpNotInNetwork: ' . $this->clientIp);
-        return 'fail';
+//        Log::info("Before if");
+//        if ($this->isExist($this->clientIp)) {
+//        $dataEncrypt = $request->data_encrypt;
+//            dd($dataEncrypt);
+        Log::info("Run job queue function");
+        $obj = new ClassCheckingStatus($dataEncrypt);
+        $func = array($obj, 'checkingStatusContinously');
+        $this->dispatch(new BlockchainQueue($func));
+        BlockchainQueue::dispatch($func);
+        return 'success';
+//        }
+//        Log::info('QueueController_runJobQueue_ClientIpNotInNetwork: ' . $this->clientIp);
+//        return 'fail';
     }
 
     public function updateQueue(Request $request)

@@ -110,9 +110,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         //patient
         Route::post('/create-patient-web', 'Admin\PatientController@createPatientWeb');
         Route::post('/create-patient', 'Admin\PatientController@create');
-        Route::get('/apply-appointment','Admin\AppointmentController@applyAppointment');// no patient
-        Route::get('/apply-appointment-exist','Admin\AppointmentController@applyAppointmentExistPatient');// have patient patient
-        Route::get('/apply-appointment-change-status','Admin\AppointmentController@applyAppointmentWithStatus');// already exist
+        Route::get('/apply-appointment', 'Admin\AppointmentController@applyAppointment');// no patient
+        Route::get('/apply-appointment-exist', 'Admin\AppointmentController@applyAppointmentExistPatient');// have patient patient
+        Route::get('/apply-appointment-change-status', 'Admin\AppointmentController@applyAppointmentWithStatus');// already exist
         //payment
         Route::get('/admin-payment', 'Admin\PaymentController@getList')->name('admin.payment');
         Route::get('/create-payment', 'Admin\PaymentController@viewCreate');
@@ -286,7 +286,7 @@ Route::get('/checkStatus', 'Blockchain\QueueController@checkStatusOfRecord');
 Route::get('/addToQueue', 'Blockchain\QueueController@addToQueue');
 Route::get('/checkExist', 'Blockchain\QueueController@checkExist');
 Route::get('/updateQueue', 'Blockchain\QueueController@updateQueue');
-Route::get('/runJobQueue', 'Blockchain\QueueController@runJobQueue');
+//Route::get('/runJobQueue', 'Blockchain\QueueController@runJobQueue');
 Route::get('/updateAll', 'Blockchain\QueueController@updateAll');
 
 
