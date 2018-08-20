@@ -67,14 +67,33 @@ class BlockchainController extends Controller
         return true;
     }
 
-    public function compareBlockChain($blockchain_1, $blockchain_2, $blockchain_3)
+    public function compareBlockChain($listLedger)
     {
-        if ($blockchain_1 == $blockchain_2)
-            return $blockchain_1;
-        else if ($blockchain_2 == $blockchain_3)
-            return $blockchain_2;
-        else
-            return $blockchain_3;
+        $list = [];
+        $count = [];
+
+        foreach($listLedger as $ledger){
+            $vt = -1;
+            for($i = 0; $i < sizeOf($list); $i++){
+                if($ledger == $list[$i]){
+                    $vt = $i;
+                    break;
+                }
+            }
+
+            if($vt > -1){
+                $count[$vt] += 1;
+            }else{
+                $list[] = $ledger;
+                $count[] = 1;
+            }
+        }
+
+        for($i = 0; $i < sizeOf($count); $i++){
+            if($count[$i] == max($count)){
+                return $list[$i];
+            }
+        }
     }
 
 
@@ -135,27 +154,31 @@ class BlockchainController extends Controller
     public function checkLedger()
     {
         $nodeInfo = $this->getNodeInfo();
+        $listLedger = [];
 
-        $ledger_1 = $this->callAPI_GetData($nodeInfo[0]->ip);
-        $ledger_2 = $this->callAPI_GetData($nodeInfo[1]->ip);
-        $ledger_3 = $this->callAPI_GetData($nodeInfo[2]->ip);
+        for ($i = 0; $i < sizeOf($nodeInfo); $i++){
+            $listLedger[] = $this->callAPI_GetData($nodeInfo[$i]->ip);
+        }
 
-        if ($this->checkBlockChain($ledger_1) && $this->checkBlockChain($ledger_2))
-            return $this->compareBlockChain($ledger_1, $ledger_2, $ledger_3);
-
-        return "ERROR";
+        foreach($listLedger as $ledger){
+            if(!($this->checkBlockChain($ledger)))
+                return "ERROR";
+        }
+        
+        return $this->compareBlockChain($listLedger);
     }
 
     public function setDataTypePayment($listStrings)
     {
         // $listStrings = array("5,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1", "3, 60000000, 5, 2", "9, 4, 3, 2017-08-08 20:00:00, 222222, 3");
-        $arrayString = explode(',', $listStrings[0]);
+        // $arrayString = explode(',', $listStrings[0]);
         
         $this -> deleteDataPayment();
 
         foreach ($listStrings as $element) {
             $arrayString = explode(',', $element);
-            if ($arrayString[sizeof($arrayString) - 1] == 1)
+            dd($arrayString);
+            if ($arrayString[sizeof($arrayString) - 1] == 1){}
                 $this->setDataCreatePayment($arrayString);
             else if ($arrayString[sizeof($arrayString) - 1] == 2)
                 $this->setDataUpdatePayment($arrayString);
