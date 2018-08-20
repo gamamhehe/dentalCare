@@ -202,7 +202,7 @@ class BlockchainController extends Controller
         // dd($privateKey);
         // $origin = "VALID KEY";
         // $privateKey = "-----BEGIN RSA PRIVATE KEY-----\r\nMIICXQIBAAKBgQCu/Fzjzta9P4X5eg58uJCYM2DqkBDixMsJXaywsrJNRwl4W4BB\r\n7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSHHoutfhft9DTEaBbu7wrtoR1F\r\nmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAhQbSdRm8+v08YjhapVwIDAQAB\r\nAoGBAJYb7yONoDEgeTGWPy9GtOObz5voklO2NeaG8UlzQfmA4uLYu6HSy0HvP35x\r\nVT6+XHrhCEuBEJmxYAtcJGTfnJrUmtkaN8diMBa5oa8BMx9C+VUqMjw7GRh9fjJs\r\nZp1XngJ3ftiZmtxG798gAaSyoEL64fTcJ2FFJtq9jjURZ77BAkEA1ZYFN9aeTo+d\r\nKFJxHXgaK30GD9whfPnetN022qwgU7efSbfOv1jYpye/tP31Pbx1hf+ixQJ+sLi8\r\nTOHIMk2r2QJBANG8CiNkkEwA7PTv2wdKjVYs8zCvi1RewsCEv9AvOcNmY/OCPRTF\r\n1Cnhc9h0/ZLMLSv25AV7pxRM/tRg4UEBsK8CQDTKHYQNkZcNO+Spa7fC5YT2I7dr\r\nywMepwLA4jvt6xeF/OK1gW4dwX6e/mz3j9OwbsOtyUc0NKftIO1HqLl2JRECQBHb\r\nfNF+onqWKZbBRVjdlCMeOKaQi8BnQRW7N8m1+6kTcrctA55dKa9XLtHjRCPXlpED\r\nuG5vFM65r4jNpuAuEKkCQQCB5rjbTNkg0lYZo0ITwDq9zoyiKBHGc3ZvszilhlTF\r\nmtQMGrS/oWlVuxeuE8p7jGf+wzKWj10uXKHwNxFLd73v\r\n-----END RSA PRIVATE KEY-----";
-        $privateKey =  $file->fread($file->getSize());
+        $privateKey = $file->fread($file->getSize());
         // dd($privateKey);
         $dec = $this->decrypt($encrypted, $privateKey);
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
@@ -244,10 +244,13 @@ class BlockchainController extends Controller
         // $queue = new QueueController();
         // $queue -> runJobQueue()
         // $url = "127.0.0.1/";
-        $host = gethostname();
-        $ip = gethostbyname($host);
-        $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
-        $this->callTheURL($url);
+//        $host = gethostname();
+//        $ip = gethostbyname($host);
+//        $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
+//        Log::info("BlockchainController_EncryptPayment");
+//        $this->callTheURL($url);
+        $queueController = new QueueController();
+        $queueController->runJobQueue($this->encrypt($encrypted, $publicKey));
         // return $this->encrypt($encrypted, $publicKey);
     }
 

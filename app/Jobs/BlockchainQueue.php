@@ -39,6 +39,7 @@ class BlockchainQueue implements ShouldQueue
 
     public function handle()
     {
+        Log::info("BlockchainQueue");
         call_user_func($this->process_function);
     }
 

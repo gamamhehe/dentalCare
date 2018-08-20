@@ -31,6 +31,8 @@ trait BlockchainBusinessFunction
             Blockchain::query()->delete();
             $count = 0;
             $number = 1;
+//            tbl_blockchains
+            \DB::statement('ALTER TABLE tbl_blockchains AUTO_INCREMENT = 1;');
             foreach ($ledgerObject as $element) {
                 $block = new Blockchain();
                 $tmp = (Object)$element;
