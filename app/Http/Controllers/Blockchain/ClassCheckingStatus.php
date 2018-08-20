@@ -40,7 +40,7 @@ class ClassCheckingStatus
                     $this->updateAllQueue($id);
                     return;
                 }
-                sleep(1);
+                sleep(0.1);
             }
         }
         Log::info("ClassCheckingStatus_checkingStatusContinously_idNotInteger " . $id);
