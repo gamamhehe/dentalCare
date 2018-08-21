@@ -12,10 +12,10 @@
                     <table id="dup-table" class="table myTable table-bordered Mytable-hover">
                         <thead>
                         <tr style="background-color: #eee;">
-                            <td class="col-sm-1">id</td>
+                            <td class="col-sm-1">ID</td>
                             <td class="col-sm-6" style="text-align: left;">Nội dung</td>
                             <td class="col-sm-1" style="text-align: left;">Đánh giá</td>
-                            <td class="col-sm-2">xx </td>
+                            <td class="col-sm-2">Tùy chọn </td>
                         </tr>
                         </thead>
                     </table>
@@ -48,7 +48,7 @@
             "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
             "zeroRecords": "Không tìm thấy kết quả ",
             "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",
-            "infoEmpty": "Không có kết quả .",
+            "infoEmpty": " ",
             "infoFiltered": "(filtered from _MAX_ total records)",
             "search" : "Tìm kiếm ",
             "infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
