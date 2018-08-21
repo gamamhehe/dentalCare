@@ -615,7 +615,7 @@ id="navHeader">
 </div>
 <div class="top">
 <!-- start banner -->
-<div class="banner">
+<div class="banner" style="">
     <div id="carousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carousel" data-slide-to="0" class="active"></li>
@@ -629,9 +629,9 @@ id="navHeader">
                     <div class="goi">
                         <h3 class="tdbanner1">&nbsp</h3>
                         <h4 class="tdbanner2"></h4>
-                        <div class="nutbanner">
+                     <!--    <div class="nutbanner">
                             <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -640,9 +640,9 @@ id="navHeader">
                     <div class="goi">
                         <!--   <h3 class="tdbanner1">Nha khoa Gold</h3>
                         <h4 class="tdbanner2">Dental Gold</h4> -->
-                        <div class="nutbanner">
+                      <!--   <div class="nutbanner">
                             <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -651,9 +651,9 @@ id="navHeader">
                     <div class="goi">
                         <!--        <h3 class="tdbanner1">Nha khoa Gold</h3>
                         <h4 class="tdbanner2">Dental Gold</h4> -->
-                        <div class="nutbanner">
+                      <!--   <div class="nutbanner">
                             <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -891,7 +891,7 @@ style="background: url(/assets/images/HomePage/t3-bg.jpg);width: 100%;padding-to
         </div>
     </div>
     <!-- footer -->
-    <div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
+    <div class="footer" style="background: url(/assets/images/footer2.jpg);">
         <div class="contact" id="contact">
             <div class="container">
                 <div class="row">
@@ -936,7 +936,7 @@ style="background: url(/assets/images/HomePage/t3-bg.jpg);width: 100%;padding-to
                 </div>
             </div>
         </div>
-        <div class="container" style="background-color: black;width: 100%">
+        <div class="container" style="width: 100%">
             <div class="row">
                 <div class="col-xs-12">
                     <p>Designed by Phuc. All Rights Reserved</p>

@@ -18,19 +18,19 @@
             <div class="panel-body">
                 <div class="form-group row add">
                     <div class="col-sm-2"><label>Họ Tên</label></div>
-                    <div class="col-sm-6" style="padding-left: 0px;">
+                    <div class="col-sm-4" style="padding-left: 0px;">
                         <input type="text" value="{{$patient->name}}" name="name" class="form-control pull-right"
                                id="startdate" style="margin:0px;" disabled/>
                     </div>
                 </div>
                 <div class="form-group row add">
                     <div class="col-sm-2"><label>Địa chỉ</label></div>
-                    <div class="col-sm-6" style="padding-left: 0px;">
+                    <div class="col-sm-4" style="padding-left: 0px;">
                         <input type="text" value="{{$patient->address}}" name="name" class="form-control pull-right"
                                id="startdate" style="margin:0px;" disabled/>
                     </div>
-                    <div class="col-sm-1"><label>Giới tính</label></div>
-                    <div class="col-sm-3" style="padding-left: 0px;">
+                    <div class="col-sm-2"><label>Giới tính</label></div>
+                    <div class="col-sm-2" style="padding-left: 0px;">
                         <input type="text" value="{{$patient->gender}}" name="name" class="form-control pull-right"
                                id="startdate" style="margin:0px;" disabled/>
                     </div>
@@ -54,24 +54,13 @@
                         <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right"
                                id="startdate" style="margin:0px;" disabled/>
                     </div>
-                    <div class="col-sm-2"><label>Bệnh tiền sử</label></div>
+                     <div class="col-sm-2"><label>Lịch hẹn tiếp theo</label></div>
                     <div class="col-sm-4" style="padding-left: 0px;">
                         <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right"
                                id="startdate" style="margin:0px;" disabled/>
                     </div>
                 </div>
-                <div class="form-group row add">
-                    <div class="col-sm-2"><label>Tài chính</label></div>
-                    <div class="col-sm-4" style="padding-left: 0px;">
-                        <input type="text" placeholder="Hết thiếu hay thiếu nói 1 lời" name="name"
-                               class="form-control pull-right" id="startdate" style="margin:0px;" disabled/>
-                    </div>
-                    <div class="col-sm-2"><label>Lịch hẹn tiếp theo</label></div>
-                    <div class="col-sm-4" style="padding-left: 0px;">
-                        <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right"
-                               id="startdate" style="margin:0px;" disabled/>
-                    </div>
-                </div>
+              
 
             </div>
         </div>

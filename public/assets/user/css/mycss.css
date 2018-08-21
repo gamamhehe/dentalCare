@@ -1277,7 +1277,8 @@ p, .gallery h3, .chefs h3, .contact h3 {
 }
 
 .nutbanner a.btn:hover {
-    color: blue;
+    color: #f04c23;
+    background-color: white;
     border: 1px solid #f04c23;
 }
 
@@ -1435,7 +1436,7 @@ a.nav-link.biendoichumenu.active{
     font-weight: 600;
     z-index: 1;
     right:-300px; top:300px;
-    background: red;
+    background: blue;
     animation: mymove 10s infinite;
     animation-delay: 0s;
     animation-timing-function: ease;
@@ -1445,11 +1446,11 @@ a.nav-link.biendoichumenu.active{
     animation-play-state: running;
 }
 @-webkit-keyframes mymove {
-    0%   {background-color:#c61b25;  right:-300px;  top:300px;}
-    10%  {background-color:#c61b25;  right:0px; top:300px;}
-    60%  {background-color:#c61b25;  right:0px; top:300px;}
-    70%  {background-color:#c61b25;  right:-300px; top:300px;}
-    100% {background-color:#c61b25; right:-300px;top:300px;}
+    0%   {    right:-300px;  top:300px;}
+    10%  {   right:0px; top:300px;}
+    60%  {  right:0px; top:300px;}
+    70%  {  right:-300px; top:300px;}
+    100% {  right:-300px;top:300px;}
 }
 
 
