@@ -31,6 +31,8 @@ trait BlockchainBusinessFunction
             Blockchain::query()->delete();
             $count = 0;
             $number = 1;
+//            tbl_blockchains
+            \DB::statement('ALTER TABLE tbl_blockchains AUTO_INCREMENT = 1;');
             foreach ($ledgerObject as $element) {
                 $block = new Blockchain();
                 $tmp = (Object)$element;
@@ -77,7 +79,7 @@ trait BlockchainBusinessFunction
                 'paid' => $element[1],
                 'total_price' => $element[2],
                 'phone' => $element[3],
-                'is_done' => $element[4],
+                'status' => $element[4],
                 'created_at' => $element[5],
             ]);
             DB::commit();

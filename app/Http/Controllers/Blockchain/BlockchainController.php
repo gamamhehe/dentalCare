@@ -3,22 +3,15 @@
 namespace App\Http\Controllers\Blockchain;
 
 use App\Http\Controllers\BusinessFunction\BlockchainBusinessFunction;
-use App\Http\Controllers\BusinessFunction\NodeInfoBusinessFunction;
-use App\Model\Blockchain;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Model\Key;
-use Illuminate\Support\Facades\Log;
-use phpDocumentor\Reflection\Types\Array_;
-use phpseclib\Crypt\RSA;
-use App\Model\TreatmentHistory;
-use App\Model\NodeInfo;
 use App\Http\Controllers\BusinessFunction\QueueBusinessFunction;
+use App\Http\Controllers\Controller;
+use App\Model\Blockchain;
 use App\Model\Payment;
 use App\Model\PaymentDetail;
 use File;
-use App\Http\Controllers\Blockchain\QueueController;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use phpseclib\Crypt\RSA;
 
 class BlockchainController extends Controller
 {
@@ -30,7 +23,6 @@ class BlockchainController extends Controller
     {
         $this->clientIp = \request()->ip();
     }
-
 
     public function convertDataToJson()
     {
@@ -58,32 +50,58 @@ class BlockchainController extends Controller
 
     public function checkBlockChain($blockchain)
     {
-        if ($blockchain[0]->previous_hash != 0)
+        if ($blockchain[0]->previous_hash != 0) {
             return false;
+        }
+
         for ($i = 0; $i < sizeof($blockchain) - 1; $i++) {
-            if ($blockchain[$i]->hash != $blockchain[$i + 1]->previous_hash)
+            if ($blockchain[$i]->hash != $blockchain[$i + 1]->previous_hash) {
                 return false;
+            }
+
         }
         return true;
     }
 
-    public function compareBlockChain($blockchain_1, $blockchain_2, $blockchain_3)
+    public function compareBlockChain($listLedger)
     {
-        if ($blockchain_1 == $blockchain_2)
-            return $blockchain_1;
-        else if ($blockchain_2 == $blockchain_3)
-            return $blockchain_2;
-        else
-            return $blockchain_3;
+        $list = [];
+        $count = [];
+
+        foreach($listLedger as $ledger){
+            $vt = -1;
+            for($i = 0; $i < sizeOf($list); $i++){
+                if($ledger == $list[$i]){
+                    $vt = $i;
+                    break;
+                }
+            }
+
+            if($vt > -1){
+                $count[$vt] += 1;
+            }else{
+                $list[] = $ledger;
+                $count[] = 1;
+            }
+        }
+
+        for($i = 0; $i < sizeOf($count); $i++){
+            if($count[$i] == max($count)){
+                return $list[$i];
+            }
+        }
     }
 
+    
 
     public function saveNewLedger(Request $request)
     {
         if ($this->isExist($this->clientIp)) {
             $newestLedger = $this->callTheURL($this->clientIp . '/getThisLedger');
-            if ($newestLedger != 'fail')
+            if ($newestLedger != 'fail') {
                 return $this->saveNewAll(json_decode($newestLedger));
+            }
+
         }
         Log::info('BlockchainController_SaveNewLedger_ClientIpNotInNetwork: ' . $this->clientIp);
         return 'fail';
@@ -115,8 +133,8 @@ class BlockchainController extends Controller
             echo $result;
         }
 //        $newestLedger = json_decode($this->callTheURL('150.95.110.217/datajson'));
-//        array_push($newestLedger, json_decode($dataEncrypt));
-//        return json_encode($newestLedger);
+        //        array_push($newestLedger, json_decode($dataEncrypt));
+        //        return json_encode($newestLedger);
     }
 
     public function testPerformance()
@@ -135,32 +153,37 @@ class BlockchainController extends Controller
     public function checkLedger()
     {
         $nodeInfo = $this->getNodeInfo();
+        $listLedger = [];
 
-        $ledger_1 = $this->callAPI_GetData($nodeInfo[0]->ip);
-        $ledger_2 = $this->callAPI_GetData($nodeInfo[1]->ip);
-        $ledger_3 = $this->callAPI_GetData($nodeInfo[2]->ip);
+        for ($i = 0; $i < sizeOf($nodeInfo); $i++){
+            $listLedger[] = $this->callAPI_GetData($nodeInfo[$i]->ip);
+        }
 
-        if ($this->checkBlockChain($ledger_1) && $this->checkBlockChain($ledger_2))
-            return $this->compareBlockChain($ledger_1, $ledger_2, $ledger_3);
-
-        return "ERROR";
-    }
+        foreach($listLedger as $ledger){
+            if(!($this->checkBlockChain($ledger)))
+                return "ERROR";
+        }
+        
+        return $this->compareBlockChain($listLedger);
+    } 
 
     public function setDataTypePayment($listStrings)
     {
         // $listStrings = array("5,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1", "3, 60000000, 5, 2", "9, 4, 3, 2017-08-08 20:00:00, 222222, 3");
         $arrayString = explode(',', $listStrings[0]);
-        
-        $this -> deleteDataPayment();
+
+        $this->deleteDataPayment();
 
         foreach ($listStrings as $element) {
             $arrayString = explode(',', $element);
-            if ($arrayString[sizeof($arrayString) - 1] == 1)
+            if ($arrayString[sizeof($arrayString) - 1] == 1) {
                 $this->setDataCreatePayment($arrayString);
-            else if ($arrayString[sizeof($arrayString) - 1] == 2)
+            } else if ($arrayString[sizeof($arrayString) - 1] == 2) {
                 $this->setDataUpdatePayment($arrayString);
-            else
+            } else {
                 $this->setDataPaymentDetail($arrayString);
+            }
+
         }
     }
 
@@ -173,20 +196,37 @@ class BlockchainController extends Controller
     public function CheckPublicKeyNPrivateKey(Request $request)
     {
         $file = $request->file('privateKey')->openFile();
-        dd($file->fread($file->getSize()));
-        $privateKey = "";
+        // dd($file->fread($file->getSize()));
+        // $privateKey = "";
         $encrypted = 'JATClEXRta22mqw6Z5blV5tQk/mcRYVfC/Roz6g1eyD4nrApq0MP4EWUiicftNzpt4k5F10kglsFiMOTp33ftidvkIX8lK7cTleUUN7BmAe/bj6zpCx6cDIxHjbHDhUR+Efc/lHRBQSqA2Wrkp2p66yolyClKHYFbz1KgcpDgmI=';
         // dd($privateKey);
         // $origin = "VALID KEY";
         // $privateKey = "-----BEGIN RSA PRIVATE KEY-----\r\nMIICXQIBAAKBgQCu/Fzjzta9P4X5eg58uJCYM2DqkBDixMsJXaywsrJNRwl4W4BB\r\n7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSHHoutfhft9DTEaBbu7wrtoR1F\r\nmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAhQbSdRm8+v08YjhapVwIDAQAB\r\nAoGBAJYb7yONoDEgeTGWPy9GtOObz5voklO2NeaG8UlzQfmA4uLYu6HSy0HvP35x\r\nVT6+XHrhCEuBEJmxYAtcJGTfnJrUmtkaN8diMBa5oa8BMx9C+VUqMjw7GRh9fjJs\r\nZp1XngJ3ftiZmtxG798gAaSyoEL64fTcJ2FFJtq9jjURZ77BAkEA1ZYFN9aeTo+d\r\nKFJxHXgaK30GD9whfPnetN022qwgU7efSbfOv1jYpye/tP31Pbx1hf+ixQJ+sLi8\r\nTOHIMk2r2QJBANG8CiNkkEwA7PTv2wdKjVYs8zCvi1RewsCEv9AvOcNmY/OCPRTF\r\n1Cnhc9h0/ZLMLSv25AV7pxRM/tRg4UEBsK8CQDTKHYQNkZcNO+Spa7fC5YT2I7dr\r\nywMepwLA4jvt6xeF/OK1gW4dwX6e/mz3j9OwbsOtyUc0NKftIO1HqLl2JRECQBHb\r\nfNF+onqWKZbBRVjdlCMeOKaQi8BnQRW7N8m1+6kTcrctA55dKa9XLtHjRCPXlpED\r\nuG5vFM65r4jNpuAuEKkCQQCB5rjbTNkg0lYZo0ITwDq9zoyiKBHGc3ZvszilhlTF\r\nmtQMGrS/oWlVuxeuE8p7jGf+wzKWj10uXKHwNxFLd73v\r\n-----END RSA PRIVATE KEY-----";
-        $file = File::get($request->privateKey);
-        dd($file);
+        $privateKey = $file->fread($file->getSize());
+        // dd($privateKey);
         $dec = $this->decrypt($encrypted, $privateKey);
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $decrypted = openssl_decrypt(base64_decode($dec), $method, '1', OPENSSL_RAW_DATA, $iv);
 
-        return $decrypted;
+        
+
+        if($decrypted == "VALID") {
+            $listData = [];
+            $ledger = $this -> checkLedger();
+            // dd($ledger);
+            foreach($ledger as $block){
+                $decryptedBlock = $block-> data_encrypt;
+                if($decryptedBlock != '0')
+                {   
+                    $encryptedBlock = $this-> DecryptDataBlock($decryptedBlock);
+                    if($encryptedBlock){
+                        $listData[] = $encryptedBlock;
+                    }
+                }
+            }
+            $this-> setDataTypePayment($listData);
+        }
     }
 
     public function EncryptCreatePayment(Request $request)
@@ -204,10 +244,13 @@ class BlockchainController extends Controller
         // $queue = new QueueController();
         // $queue -> runJobQueue()
         // $url = "127.0.0.1/";
-        $host = gethostname();
-        $ip = gethostbyname($host);
-        $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
-        $this->callTheURL($url); 
+//        $host = gethostname();
+//        $ip = gethostbyname($host);
+//        $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
+//        Log::info("BlockchainController_EncryptPayment");
+//        $this->callTheURL($url);
+        $queueController = new QueueController();
+        $queueController->runJobQueue($this->encrypt($encrypted, $publicKey));
         // return $this->encrypt($encrypted, $publicKey);
     }
 
@@ -244,15 +287,15 @@ class BlockchainController extends Controller
         return $this->encrypt($encrypted, $publicKey);
     }
 
-    public function DecryptDataBlock($id)
+    public function DecryptDataBlock($encrypted)
     {
-        $encrypted = Blockchain::where('id', '=', $id)->first()->data_encrypt;
         $privateKey = "-----BEGIN RSA PRIVATE KEY-----\r\nMIICXQIBAAKBgQCu/Fzjzta9P4X5eg58uJCYM2DqkBDixMsJXaywsrJNRwl4W4BB\r\n7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSHHoutfhft9DTEaBbu7wrtoR1F\r\nmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAhQbSdRm8+v08YjhapVwIDAQAB\r\nAoGBAJYb7yONoDEgeTGWPy9GtOObz5voklO2NeaG8UlzQfmA4uLYu6HSy0HvP35x\r\nVT6+XHrhCEuBEJmxYAtcJGTfnJrUmtkaN8diMBa5oa8BMx9C+VUqMjw7GRh9fjJs\r\nZp1XngJ3ftiZmtxG798gAaSyoEL64fTcJ2FFJtq9jjURZ77BAkEA1ZYFN9aeTo+d\r\nKFJxHXgaK30GD9whfPnetN022qwgU7efSbfOv1jYpye/tP31Pbx1hf+ixQJ+sLi8\r\nTOHIMk2r2QJBANG8CiNkkEwA7PTv2wdKjVYs8zCvi1RewsCEv9AvOcNmY/OCPRTF\r\n1Cnhc9h0/ZLMLSv25AV7pxRM/tRg4UEBsK8CQDTKHYQNkZcNO+Spa7fC5YT2I7dr\r\nywMepwLA4jvt6xeF/OK1gW4dwX6e/mz3j9OwbsOtyUc0NKftIO1HqLl2JRECQBHb\r\nfNF+onqWKZbBRVjdlCMeOKaQi8BnQRW7N8m1+6kTcrctA55dKa9XLtHjRCPXlpED\r\nuG5vFM65r4jNpuAuEKkCQQCB5rjbTNkg0lYZo0ITwDq9zoyiKBHGc3ZvszilhlTF\r\nmtQMGrS/oWlVuxeuE8p7jGf+wzKWj10uXKHwNxFLd73v\r\n-----END RSA PRIVATE KEY-----";
         // $decrypted = decrypt($encrypted, $privateKey);
         $dec = $this->decrypt($encrypted, $privateKey);
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $decrypted = openssl_decrypt(base64_decode($dec), $method, '1', OPENSSL_RAW_DATA, $iv);
+        
         return $decrypted;
     }
 
