@@ -414,6 +414,8 @@ class StaffController extends BaseController
             $bookingDate = $request->input('booking_date');
             $dentistId = $request->input('dentist_id');
             $patientId = $request->input('patient_id');
+            $patientName = $request->input('name');
+            $allowOvertime = $request->input('is_allow_overtime');
             $estimatedTime = $request->input('estimated_time');
             $appdateObj = new DateTime($bookingDate);
             $dentist = $this->getStaffById($dentistId);
@@ -433,10 +435,11 @@ class StaffController extends BaseController
                     "No Excepton");
                 return response()->json($error, 400);
             }
-            $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime);
+            $result =
+                $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $patientName, $estimatedTime,$allowOvertime == 1);
             if ($result != null) {
-                $startDateTime = new DateTime($result->start_time);
-                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
+//                $startDateTime = new DateTime($result->start_time);
+//                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
 //                $this->dispatch(new SendSmsJob($phone, $smsMessage));
                 return response()->json($result, 200);
             } else {

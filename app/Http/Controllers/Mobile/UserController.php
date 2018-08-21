@@ -122,6 +122,7 @@ class UserController extends BaseController
                 if ($isNewUser) {
                     $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
                 }
+                $this->sendFirebaseReloadMobileAppointment();
                 $successResponse = $this->getSuccessObj(200, "OK", $vnSmsMessage, "Nodata");
                 return response()->json($successResponse, 200);
             } else {
