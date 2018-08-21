@@ -26,7 +26,7 @@ class FeedbackController extends Controller
     {
         $sessionUser = $request->session()->get('currentAdmin', null);
         $roleID = $sessionUser->hasUserHasRole()->first()->belongsToRole()->first()->id;
-        return view('admin.feedback.list', ['role' => $roleID]);
+        return view('admin.Feedback.list', ['role' => $roleID]);
     }
     public function getListFeedback(Request $request)
     {
