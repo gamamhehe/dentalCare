@@ -145,7 +145,7 @@ trait PaymentBusinessFunction
         try {
             $paymentDetail->save();
             DB::commit();
-            return true;
+            return $paymentDetail->id;
         } catch (\Exception $e) {
             DB::rollback();
             return false;

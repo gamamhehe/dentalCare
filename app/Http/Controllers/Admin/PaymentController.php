@@ -60,17 +60,15 @@ class PaymentController extends Controller
     {
         $paymentDetail = new PaymentDetail();
         $sessionUser = $request->session()->get('currentAdmin', null);
-        if ($sessionUser) {
-            $idStaff = $sessionUser->belongToStaff()->first()->id;
-        } else {
-            return route('admin.login');
-        }
         $paymentDetail->staff_id = $sessionUser->belongToStaff()->first()->id;//
         $paymentDetail->payment_id = $request->payment_id;
         $paymentDetail->received_money = $request->received_money;
         $paymentDetail->created_date = Carbon::now();
-        $this->createPaymentDetail($paymentDetail);
+        $idPaymentDetail = $this->createPaymentDetail($paymentDetail);
+        $queueController = new QueueController();
+        $blockchainController = new BlockchainController();
         $this->updatePaymentPaid($request->received_money, $request->payment_id);
+        $queueController->runJobQueue($blockchainController->EncryptCreatePaymentDetail($idPaymentDetail));
         echo '';
     }
 

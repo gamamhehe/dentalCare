@@ -181,6 +181,9 @@ trait TreatmentHistoryBusinessFunction
             if ($payment) {
                 $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
+                $queueController = new QueueController();
+                $blockchainController = new BlockchainController();
+                $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price + $payment->total_price));
             } else {
                 $idPayment = $this->createPayment($total_price, $phone);
                 $queueController = new QueueController();
