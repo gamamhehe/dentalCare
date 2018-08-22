@@ -262,11 +262,11 @@ class BlockchainController extends Controller
 
     public function EncryptCreatePaymentDetail($idPaymentDetail)
     {
-        $payment = PaymentDetail::where('id', '=', $idPaymentDetail)->first();
+        $paymentDetail = PaymentDetail::where('id', '=', $idPaymentDetail)->first();
         $publicKey = $this->ReadPublickey();
         // $publicKey = "-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu/Fzjzta9P4X5eg58uJCYM2Dq\r\nkBDixMsJXaywsrJNRwl4W4BB7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSH\r\nHoutfhft9DTEaBbu7wrtoR1FmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAh\r\nQbSdRm8+v08YjhapVwIDAQAB\r\n-----END PUBLIC KEY-----";
 
-        $dataPaymentDetail = $payment->id . "," . $payment->payment_id . "," . $payment->staff_id . "," . $payment->created_date . "," . $payment->received_money . ',3';
+        $dataPaymentDetail = $paymentDetail->id . "," . $paymentDetail->payment_id . "," . $paymentDetail->staff_id . "," . $paymentDetail->created_date . "," . $paymentDetail->received_money . ',3';
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $encrypted = base64_encode(openssl_encrypt($dataPaymentDetail, $method, '1', OPENSSL_RAW_DATA, $iv));
