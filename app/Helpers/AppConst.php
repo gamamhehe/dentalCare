@@ -62,9 +62,9 @@ class AppConst
 //  const PAYMENT_STATUS_
 //  const PAYMENT_STATUS_
 //  const PAYMENT_STATUS_
-    const PAYMENT_STATUS_NOT_DONE = 1;
-    const PAYMENT_STATUS_DONE = 2;
-    const PAYMENT_STATUS_CANCEL = 3;
+    const PAYMENT_STATUS_NOT_DONE = 0;
+    const PAYMENT_STATUS_DONE = 1;
+    const PAYMENT_STATUS_CANCEL = 2;
 
     /**
      * @param $order numerical_order of appointment
