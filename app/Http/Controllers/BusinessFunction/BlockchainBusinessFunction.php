@@ -104,7 +104,7 @@ trait BlockchainBusinessFunction
             ]);
             $payment = Payment::where('id', $element[1])->first();
             var_dump($payment->paid);
-            dd($element[4]);
+            var_dump($element[4]);
             $payment->paid = $payment->paid + $element[4];
             $payment->save();
             DB::commit();
