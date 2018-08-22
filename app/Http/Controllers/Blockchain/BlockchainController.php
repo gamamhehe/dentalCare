@@ -229,9 +229,8 @@ class BlockchainController extends Controller
         }
     }
 
-    public function EncryptCreatePayment(Request $request)
+    public function EncryptCreatePayment($id)
     {
-        $id = $request->id;
         $payment = Payment::where('id', '=', $id)->first();
         $publicKey = $this->ReadPublickey();
 
@@ -249,8 +248,9 @@ class BlockchainController extends Controller
 //        $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
 //        Log::info("BlockchainController_EncryptPayment");
 //        $this->callTheURL($url);
-        $queueController = new QueueController();
-        $queueController->runJobQueue($this->encrypt($encrypted, $publicKey));
+        return $this->encrypt($encrypted, $publicKey);
+//        $queueController = new QueueController();
+//        $queueController->runJobQueue($this->encrypt($encrypted, $publicKey));
         // return $this->encrypt($encrypted, $publicKey);
     }
 

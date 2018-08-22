@@ -10,6 +10,8 @@ namespace App\Http\Controllers\BusinessFunction;
 
 use App\Helpers\AppConst;
 use App\Helpers\Utilities;
+use App\Http\Controllers\Blockchain\BlockchainController;
+use App\Http\Controllers\Blockchain\QueueController;
 use App\Model\Patient;
 use App\Model\TreatmentDetail;
 use App\Model\TreatmentDetailStep;
@@ -35,6 +37,7 @@ trait TreatmentHistoryBusinessFunction
         }
         return $data;
     }
+
     public function getTreatmentHistory($id)
     {
         $patient = Patient::where('id', $id)->first();
@@ -180,16 +183,9 @@ trait TreatmentHistoryBusinessFunction
                 $idPayment = $payment->id;
             } else {
                 $idPayment = $this->createPayment($total_price, $phone);
-//                $payment = Payment::where('id', '=', $idPayment)->first();
-//                $publicKey = $this->ReadPublickey();
-//                $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . $payment->created_at . ',1';
-//                $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
-//                $method = 'aes-256-cbc';
-//                $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));
-//                $host = gethostname();
-//                $ip = gethostbyname($host);
-//                $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
-//                $this->callTheURL($url);
+                $queueController = new QueueController();
+                $blockchainController = new BlockchainController();
+                $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
             }
             $idTreatmentHistory = TreatmentHistory::create([
                 'treatment_id' => $idTreatment,
@@ -281,7 +277,9 @@ trait TreatmentHistoryBusinessFunction
         return $data;
 //            ->select('',);
 
-    } public function getTreatmentReportByReceptionist( $monthInNumber, $yearInNumber)
+    }
+
+    public function getTreatmentReportByReceptionist($monthInNumber, $yearInNumber)
     {
         $data = DB::select(DB::raw("
                       SELECT count(*) as num, subquery.treatment_id, subquery.treatment_name  FROM (
