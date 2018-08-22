@@ -79,7 +79,7 @@ class Utilities
             $body = AppConst::MSG_REMINDER_APPOINTMENT;
             $title = "Nhắc nhở cuộc hẹn";
             $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc " . $startTime;
-            $fbToken = FirebaseToken::where('phone', $staff->phone)->first();
+            $fbToken = FirebaseToken::where('phone', $phone)->first();
             if ($fbToken == null) {
                 self::logInfo('Firebase Appointment: Cannot find user with phone: ' . $phone);
                 return "'Firebase Appointment: Cannot find user with phone: ' . $phone";
