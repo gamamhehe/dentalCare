@@ -74,23 +74,18 @@ class Utilities
         try {
             $phone = $appointment->phone;
             $startTime = (new DateTime($appointment->start_time))->format('H:i:s');
-
             $type = AppConst::RESPONSE_REMINDER;
             $body = AppConst::MSG_REMINDER_APPOINTMENT;
             $title = "Nhắc nhở cuộc hẹn";
             $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc " . $startTime;
             $fbToken = FirebaseToken::where('phone', $phone)->first();
-            Log::info("Before fbtoken");
             if ($fbToken == null) {
-                Log::info("fbtoken null");
                 self::logInfo('Firebase Appointment: Cannot find user with phone: ' . $phone);
                 return "'Firebase Appointment: Cannot find user with phone: ' . $phone";
             } else if ($fbToken->noti_token == "NO_TOKEN") {
-                Log::info("fbtoken NO_TOKEN");
                 self::logInfo("Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN");
                 return "Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN";
             } else {
-                Log::info("fbtoken ELSE");
                 $token = $fbToken->noti_token;
                 $requestObj = self::getFirebaseRequestObj($type, $title, $message, $body, $token);
                 self::logInfo("Firebase Appointment:  Request is " . json_encode($requestObj));
