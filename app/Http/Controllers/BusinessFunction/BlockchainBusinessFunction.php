@@ -95,7 +95,6 @@ trait BlockchainBusinessFunction
                 ]);
                 $payment->save();
             }
-            var_dump(1);
             DB::commit();
             return true;
         } catch (\Exception $e) {

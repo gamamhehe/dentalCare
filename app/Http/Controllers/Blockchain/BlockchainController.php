@@ -176,13 +176,10 @@ class BlockchainController extends Controller
         foreach ($listStrings as $element) {
             $arrayString = explode(',', $element);
             if ($arrayString[sizeof($arrayString) - 1] == 1) {
-                var_dump($arrayString);
                 $this->setDataCreatePayment($arrayString);
             } else if ($arrayString[sizeof($arrayString) - 1] == 2) {
-                var_dump($arrayString);
                 $this->setDataUpdatePayment($arrayString);
             } else {
-                var_dump($arrayString);
                 $this->setDataPaymentDetail($arrayString);
             }
         }
@@ -346,7 +343,6 @@ class BlockchainController extends Controller
         //         $jsonPayment = json_encode($paymentArray);
         // $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . ',2';
         $plaintext = "1222,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1";
-        // // var_dump($dataPayment);
         $method = 'aes-256-cbc';
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $encrypted = base64_encode(openssl_encrypt($plaintext, $method, '1', OPENSSL_RAW_DATA, $iv));
