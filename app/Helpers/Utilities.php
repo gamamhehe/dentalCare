@@ -163,7 +163,7 @@ class Utilities
             $response = $request->getBody()->getContents();
             return $response;
         } catch (GuzzleException $ex) {
-            Log::info("Error send firebase " . $ex->getMessage());
+            Log::info("Error send firebase " . $ex->getMessage() . " File: ". $ex->getFile(). " Line: " . $ex->getLine());
             throw new Exception($ex);
         }
     }
