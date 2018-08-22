@@ -88,7 +88,7 @@ trait BlockchainBusinessFunction
             }else{
                 Payment::create([
                     'id' => $element[0],
-                    'paid' => '0',
+                    'paid' => 0,
                     'total_price' => $element[2],
                     'phone' => $element[3],
                     'status' => $element[4],
@@ -117,6 +117,9 @@ trait BlockchainBusinessFunction
             ]);
             $payment = Payment::where('id', $element[1])->first();
             $payment->paid = $payment->paid + $element[4];
+            if ($payment->total_price == $payment->paid) {
+                $payment->status =  AppConst::PAYMENT_STATUS_DONE;
+            }
             $payment->save();
             DB::commit();
             return true;
