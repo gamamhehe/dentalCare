@@ -170,11 +170,8 @@ class PaymentController extends BaseController
                 return response()->json($error, 400);
             }
         } catch (\Exception $exc) {
-            $error = $this->getErrorObj(
-                "Unknown error occurred!",
-                $this->getExceptionMsg($exc)
-            );
-            $this->logInfo("EXCEPTION: " . $exc->getMessage());
+            $error = $this->getErrorObj("Unknown error occurred!", $exc);
+            $this->logInfo("EXCEPTION: " . $exc->getMessage() . " File: ".$exc->getFile()." Line: " . $exc->getLine());
             return response()->json($error, 400);
         }
 
