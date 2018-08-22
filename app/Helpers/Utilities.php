@@ -95,7 +95,9 @@ class Utilities
                 return $responseObj;
             }
         } catch (Exception $ex) {
-            self::logInfo("Firebase Appointment: Exception when sending firebase reminding appointment: " . $ex->getMessage());
+            self::logInfo("Firebase Appointment: Exception when sending firebase reminding appointment: " . $ex->getMessage()
+            . " File: ". $ex->getFile() . " Line: " . $ex->getLine()
+            );
             return $ex->getMessage();
         }
     }
