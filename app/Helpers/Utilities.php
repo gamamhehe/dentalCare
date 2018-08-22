@@ -80,13 +80,17 @@ class Utilities
             $title = "Nhắc nhở cuộc hẹn";
             $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc " . $startTime;
             $fbToken = FirebaseToken::where('phone', $phone)->first();
+            Log::info("Before fbtoken");
             if ($fbToken == null) {
+                Log::info("fbtoken null");
                 self::logInfo('Firebase Appointment: Cannot find user with phone: ' . $phone);
                 return "'Firebase Appointment: Cannot find user with phone: ' . $phone";
             } else if ($fbToken->noti_token == "NO_TOKEN") {
+                Log::info("fbtoken NO_TOKEN");
                 self::logInfo("Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN");
                 return "Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN";
             } else {
+                Log::info("fbtoken ELSE");
                 $token = $fbToken->noti_token;
                 $requestObj = self::getFirebaseRequestObj($type, $title, $message, $body, $token);
                 self::logInfo("Firebase Appointment:  Request is " . json_encode($requestObj));
@@ -97,7 +101,7 @@ class Utilities
             }
         } catch (\Exception $ex) {
             self::logInfo("Firebase Appointment: Exception when sending firebase reminding appointment: " . $ex->getMessage()
-            . " File: ". $ex->getFile() . " Line: " . $ex->getLine()
+                . " File: " . $ex->getFile() . " Line: " . $ex->getLine()
             );
             return $ex->getMessage();
         }
@@ -163,7 +167,7 @@ class Utilities
             $response = $request->getBody()->getContents();
             return $response;
         } catch (GuzzleException $ex) {
-            Log::info("Error send firebase " . $ex->getMessage() . " File: ". $ex->getFile(). " Line: " . $ex->getLine());
+            Log::info("Error send firebase " . $ex->getMessage() . " File: " . $ex->getFile() . " Line: " . $ex->getLine());
             throw new Exception($ex);
         }
     }
