@@ -66,9 +66,9 @@ trait BlockchainBusinessFunction
     }
 
     public function deleteDataPayment(){
-        Payment::query() -> delete();
-        PaymentDetail::query() -> delete();
         PaymentUpdateDetail::query() -> delete();
+        PaymentDetail::query() -> delete();
+        Payment::query() -> delete();
     }
 
     public function setDataCreatePayment($element)
