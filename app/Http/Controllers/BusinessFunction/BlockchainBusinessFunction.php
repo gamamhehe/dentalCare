@@ -102,10 +102,12 @@ trait BlockchainBusinessFunction
                 'created_date' => $element[3],
                 'received_money' => $element[4],
             ]);
+            dd(1);
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             return false;
         }
     }
