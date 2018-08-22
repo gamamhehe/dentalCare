@@ -118,14 +118,14 @@ trait BlockchainBusinessFunction
         DB::beginTransaction();
         try {
             $payment = Payment::find($element[0]);
-            $nameTreatment = Treatment::where('id', $element[2])->first()->name;
-            $updateInformation = 'Tổng tiền chi trả thay đổi từ ' . $payment->total_price . ' VND sang '
-                . $element[1] . ' VND để thanh toán cho liệu trình ' . $nameTreatment;
+            $nameTreatment = Treatment::where('id', $element[3])->first()->name;
+            $updateInformation = 'Tổng tiền chi trả thay đổi từ ' . $element[1] . ' VND sang '
+                . $element[2] . ' VND để thanh toán cho liệu trình ' . $nameTreatment;
             PaymentUpdateDetail::create([
                 'payment_id' => $element[0],
                 'update_information' => $updateInformation,
             ]);
-            $payment->total_price = (int)$element[1];
+            $payment->total_price = (int)$element[2];
             $payment->save();
             DB::commit();
             return true;

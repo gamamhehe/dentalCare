@@ -265,10 +265,10 @@ class BlockchainController extends Controller
         return $this->EncryptUpdatePayment($idPayment, $idTreatment, $price);
     } // just for test
 
-    public function EncryptUpdatePayment($idPayment, $idTreatment, $price)
+    public function EncryptUpdatePayment($idPayment, $idTreatment, $price, $beforePrice)
     {
         $publicKey = $this->ReadPublickey();
-        $dataPayment = $idPayment . "," . $price . "," . $idTreatment . ",2";
+        $dataPayment = $idPayment . "," . $beforePrice . "," . $price . "," . $idTreatment . ",2";
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));
