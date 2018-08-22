@@ -169,7 +169,6 @@ class BlockchainController extends Controller
 
     public function setDataTypePayment($listStrings)
     {
-        // $listStrings = array("5,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1", "3, 60000000, 5, 2", "9, 4, 3, 2017-08-08 20:00:00, 222222, 3");
         $arrayString = explode(',', $listStrings[0]);
 
         $this->deleteDataPayment();
@@ -186,7 +185,6 @@ class BlockchainController extends Controller
                 $this->setDataPaymentDetail($arrayString);
                 var_dump($arrayString);
             }
-
         }
     }
 
@@ -236,25 +234,11 @@ class BlockchainController extends Controller
     {
         $payment = Payment::where('id', '=', $id)->first();
         $publicKey = $this->ReadPublickey();
-
-        // $publicKey = "-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu/Fzjzta9P4X5eg58uJCYM2Dq\r\nkBDixMsJXaywsrJNRwl4W4BB7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSH\r\nHoutfhft9DTEaBbu7wrtoR1FmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAh\r\nQbSdRm8+v08YjhapVwIDAQAB\r\n-----END PUBLIC KEY-----";
-        $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . ',1';
+        $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->status . "," . ',1';
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));
-        // dd($publicKey);
-        // $queue = new QueueController();
-        // $queue -> runJobQueue()
-        // $url = "127.0.0.1/";
-//        $host = gethostname();
-//        $ip = gethostbyname($host);
-//        $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
-//        Log::info("BlockchainController_EncryptPayment");
-//        $this->callTheURL($url);
         return $this->encrypt($encrypted, $publicKey);
-//        $queueController = new QueueController();
-//        $queueController->runJobQueue($this->encrypt($encrypted, $publicKey));
-        // return $this->encrypt($encrypted, $publicKey);
     }
 
     public function TestUpdatePayment()

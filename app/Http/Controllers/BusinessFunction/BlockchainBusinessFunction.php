@@ -103,6 +103,8 @@ trait BlockchainBusinessFunction
                 'received_money' => $element[4],
             ]);
             $payment = Payment::where('id', $element[1])->first();
+            var_dump($payment->paid);
+            dd($element[4]);
             $payment->paid = $payment->paid + $element[4];
             $payment->save();
             DB::commit();
