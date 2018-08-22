@@ -136,7 +136,7 @@ class PaymentController extends BaseController
             $payment->paid = $payment->total_price;
             $payment->status = AppConst::PAYMENT_STATUS_DONE;
             $paymentDetail = new PaymentDetail();
-            $paypalStaff = $this->getStaffByName('paypal');
+            $paypalStaff = $this->getStaffByName('Paypal');
             $paymentDetail->payment_id = $localPaymentId;
             $paymentDetail->received_money = $received_money;
             $paymentDetail->created_date = Carbon::now();

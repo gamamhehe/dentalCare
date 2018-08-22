@@ -628,7 +628,7 @@ class AdminController extends Controller
             'password' => Hash::make('123'),
         ]);
         Staff::create([
-            'name' => 'Paypal test',
+            'name' => 'Paypal',
             'degree' => 'Paypal',
             'address' => 'Paypal',
             'district_id' => 16,
