@@ -79,11 +79,21 @@ trait BlockchainBusinessFunction
         DB::beginTransaction();
         try {
             $payment = Payment::where('id', $element[0])->first();
-//            $payment->paid = $element[1];
-            $payment->total_price = $element[2];
-            $payment->phone = $element[3];
-            $payment->status = $element[4];
-            $payment->save();
+            if ($payment) {
+                $payment->paid = 0;
+                $payment->total_price = $element[2];
+                $payment->phone = $element[3];
+                $payment->status = $element[4];
+                $payment->save();
+            }else{
+                Payment::create([
+                    'id' => $element[0],
+                    'paid' => '0',
+                    'total_price' => $element[2],
+                    'phone' => $element[3],
+                    'status' => $element[4],
+                ]);
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {

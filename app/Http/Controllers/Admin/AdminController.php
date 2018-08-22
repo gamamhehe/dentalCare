@@ -75,14 +75,14 @@ class AdminController extends Controller
             $this->initNewType();
             $this->initPatientOfAppointment();
             $this->initTreatment();
-            $this->initPaymentDetail();
-            $this->initTreatmentHistory();
-            $this->initTreatmentDetail();
+//            $this->initPaymentDetail();
+//            $this->initTreatmentHistory();
+//            $this->initTreatmentDetail();
             $this->initTreatmentStep();
             $this->initEvent();
             $this->initRequestAbsent();
             $this->initAbsent();
-            $this->initTreatmentDetailStep();
+//            $this->initTreatmentDetailStep();
             $this->initSymptom();
 
 
