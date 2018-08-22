@@ -89,8 +89,8 @@ class Utilities
             } else {
                 $token = $fbToken->noti_token;
                 $requestObj = self::getFirebaseRequestObj($type, $title, $message, $body, $token);
-                $response = self::sendFirebase($requestObj);
                 self::logInfo("Firebase Appointment:  Request is " . json_decode($requestObj));
+                $response = self::sendFirebase($requestObj);
                 $responseObj = json_decode($response);
                 self::logInfo("Firebase Appointment:  Response is " . $response);
                 return $responseObj;
