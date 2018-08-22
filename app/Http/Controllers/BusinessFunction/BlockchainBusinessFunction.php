@@ -68,7 +68,9 @@ trait BlockchainBusinessFunction
     public function deleteDataPayment(){
         PaymentUpdateDetail::query() -> delete();
         PaymentDetail::query() -> delete();
-        Payment::query() -> delete();
+//        Payment::query() -> delete();
+        \DB::statement('ALTER TABLE tbl_payment_details AUTO_INCREMENT = 1;');
+        \DB::statement('ALTER TABLE tbl_payement_update_details AUTO_INCREMENT = 1;');
     }
 
     public function setDataCreatePayment($element)
