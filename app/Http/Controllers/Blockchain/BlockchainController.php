@@ -238,7 +238,7 @@ class BlockchainController extends Controller
         $publicKey = $this->ReadPublickey();
 
         // $publicKey = "-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu/Fzjzta9P4X5eg58uJCYM2Dq\r\nkBDixMsJXaywsrJNRwl4W4BB7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSH\r\nHoutfhft9DTEaBbu7wrtoR1FmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAh\r\nQbSdRm8+v08YjhapVwIDAQAB\r\n-----END PUBLIC KEY-----";
-        $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . $payment->created_at . ',1';
+        $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . ',1';
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));

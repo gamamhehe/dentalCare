@@ -65,9 +65,10 @@ trait BlockchainBusinessFunction
         return $nodeInfo;
     }
 
-    public function deleteDataPayment(){
-        PaymentUpdateDetail::query() -> delete();
-        PaymentDetail::query() -> delete();
+    public function deleteDataPayment()
+    {
+        PaymentUpdateDetail::query()->delete();
+        PaymentDetail::query()->delete();
 //        Payment::query() -> delete();
         \DB::statement('ALTER TABLE tbl_payment_details AUTO_INCREMENT = 1;');
         \DB::statement('ALTER TABLE tbl_payment_update_details AUTO_INCREMENT = 1;');
@@ -77,13 +78,12 @@ trait BlockchainBusinessFunction
     {
         DB::beginTransaction();
         try {
-            Payment::create([
-                'paid' => $element[1],
-                'total_price' => $element[2],
-                'phone' => $element[3],
-                'status' => $element[4],
-                'created_at' => $element[5],
-            ]);
+            $payment = Payment::where('id', $element[0])->first();
+            $payment->paid = $element[1];
+            $payment->total_price = $element[2];
+            $payment->phone = $element[3];
+            $payment->status = $element[4];
+            $payment->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
