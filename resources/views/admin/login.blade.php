@@ -32,7 +32,7 @@
  
 <div class="login-box">
     <div class="login-logo">
-        <a href="/"><b>Dental Gold</b></a>
+        <img src="/assets/images/Logo/logo.png" class="img-responsive img-center img-fruid" style="width: 100%;max-width: 200px;" alt="">
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body" style="background: rgba(230, 230, 230,0.7);border-radius: 25px;" >
@@ -70,7 +70,7 @@
             </div>
         </form>
         <!-- /.social-auth-links -->
-        <a href="#">Tôi không nhớ mật khẩu</a><br>
+        <!-- <a href="#">Tôi không nhớ mật khẩu</a><br> -->
         <!-- <a href="register.html" class="text-center">Register a new membership</a> -->
     </div>
     <!-- /.login-box-body -->
