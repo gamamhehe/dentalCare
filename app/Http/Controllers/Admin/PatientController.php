@@ -110,9 +110,9 @@ class PatientController extends BaseController
     public function create(Request $request)
     {
         $checkExist = $this->checkExistUser($request->phone);
+        $listAnamnesis = $request->anam;
         if ($checkExist) {
             $patient = new Patient();
-            
             $userHasRole = new UserHasRole();
             $userHasRole->phone = $request->phone;
             $userHasRole->role_id = 4;
@@ -125,8 +125,13 @@ class PatientController extends BaseController
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
             $result = $this->createPatient($patient);
-            if ($result == false) {
-                return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
+            if ($result != false) {
+                if($listAnamnesis !=null){
+                  $result2 = $this->createAnamnesisForPatient($listAnamnesis, $result);
+                }
+                return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
+            }else{
+                 return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
             }
         } else {
             $patient = new Patient();
@@ -144,17 +149,19 @@ class PatientController extends BaseController
             $patient->district_id = $request->district_id;
             $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
-            $result = $this->createUserWithRole($user, $patient, $userHasRole);
-        }
-        if ($result) {
-            $listAnamnesis = $request->anam;
-            if($listAnamnesis !=null){
-                $result = $this->createAnamnesisForPatient($listAnamnesis, $patientID);
+            if($listAnamnesis != null){
+                 $result = $this->createUserWithAnamnesis($user, $patient, $userHasRole,$listAnamnesis);
+            }else{
+                 $result = $this->createUserWithRole($user, $patient, $userHasRole);
             }
-            return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
-        } else {
-            return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
+           
+             if ($result) {
+                    return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
+                } else {
+                   return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
+                }
         }
+       
     }
     public function getCityForDistrict(){
         $city = City::all();
@@ -320,16 +327,39 @@ class PatientController extends BaseController
     public function getInfoPatientById($id)
     {
         $patient = Patient::where('id', $id)->first();
-        $result = [];
+        $result = null;
         if ($patient) {
             $idPatient = $patient->id;
             $result = $this->getTreatmentHistory($idPatient);
         }
         $anam = $this->getListAnamnesisByPatient($id);
+        $appClosest = $this->getAppointmentByPhoneFutureClosest($patient->phone);
+                $start_time ="Không có lịch hẹn";
+                if($appClosest !=null){
+                    $start_time =  $appClosest->start_time;
+        }
         if ($anam == null) {
             $anam = "Không có";
+        }else{
+            $size = count($anam);
+            $anamString = "Không có";
+
+            if($size>0){
+                  for ($i=0; $i < count($anam) ; $i++) { 
+                       if($i==0){
+                        $anamString =  $anam[$i]->name;
+                       }else{
+                        $anamString =  $anamString." - ". $anam[$i]->name ;
+                       }
+                    }
+                    $anamString = $anamString ." . ";
+                   
+            }
         }
-        return view('admin.Patient.detail', ['Anamnesis' => $anam, 'patient' => $patient, 'listTreatmentHistory' => $result]);
+        if(count($result) == 0){
+            $result = null;
+        }
+        return view('admin.Patient.detail', ['Anamnesis' => $anamString, 'patient' => $patient, 'listTreatmentHistory' => $result,'appFuture'=>$start_time]);
 
     }
 

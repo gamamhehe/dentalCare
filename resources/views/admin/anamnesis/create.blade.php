@@ -3,12 +3,16 @@
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content">
-            <div class="container"  >
-                <div class="row" style="text-align: center;">
+           <div class="box">
+            <div class="panel panel-default" style="">
+                 <div class="panel-heading">
+                   <div class="row" style="text-align: center;">
                     <label><h1>Tạo Bệnh tiền sử</h1></label>
                 </div>
-
+                 </div>
+                    <div class="panel-body">
+                          <div class="form-group row">
+                             <div class="col-md-12 col-xs-12">
                 <form method ="post" class="form-horizontal" action="create-anamnesis" enctype="multipart/form-data" id="createAnamnesis">
                     {{ csrf_field() }}
                     <div class="row" style="margin-bottom: 1em;">
@@ -28,12 +32,18 @@
                     <div class=""  style="margin-top: 1em;">
                         <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)">Tạo</button>
                     </div>
-
                 </form>
+          </div>
+                          </div>
+                    </div>
             </div>
+            </div>
+           
+              
 
 
-        </section>
+
+        
 
 
     </div>

@@ -1,7 +1,7 @@
 @extends('admin.master')
 @section('title', 'Thông tin bệnh nhân')
 @section('content')
-    <div class="content-wrapper">
+<div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="panel panel-default" style="">
             <div class="panel-heading">
@@ -51,12 +51,12 @@
                 <div class="form-group row add">
                     <div class="col-sm-2"><label>Bệnh tiền sử</label></div>
                     <div class="col-sm-4" style="padding-left: 0px;">
-                        <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right"
+                        <input type="text" value="{{$Anamnesis}}"  name="name" class="form-control pull-right"
                                id="startdate" style="margin:0px;" disabled/>
                     </div>
                      <div class="col-sm-2"><label>Lịch hẹn tiếp theo</label></div>
                     <div class="col-sm-4" style="padding-left: 0px;">
-                        <input type="text" placeholder="Ngày bắt đầu" name="name" class="form-control pull-right"
+                        <input type="text" value="{{$appFuture}}" name="name" class="form-control pull-right"
                                id="startdate" style="margin:0px;" disabled/>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <br/>
                     <br/>
                     <div id="accordion" class="accordion-container">
-                        @if($listTreatmentHistory)
+                        @if($listTreatmentHistory  )
                             @foreach($listTreatmentHistory as $treatmentHistory)
                                 <article class="content-entry">
                                     <div class="article-title">
@@ -164,7 +164,8 @@
                                     </div>
                                 </article>
                             @endforeach
-                        @else
+                        @endif
+                        @if($listTreatmentHistory == null)
                             <div class="container" style="background-color: whitesmoke;width: 100%;height: 200px;">
                                 <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân chưa từng điều trị</h1>
                             </div>

@@ -8,15 +8,19 @@ use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use App\Http\Controllers\BusinessFunction\UserBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentCategoriesBusinessFunction;
 use App\Http\Controllers\BusinessFunction\FeedbackBusinessFunction;
+use Illuminate\Support\Facades\Hash;
 use App\Model\Staff;
 use App\Model\UserHasRole;
 use App\Model\Role;
+use App\Model\City;
+use App\Model\District;
 use App\Model\TreatmentCategory;
 use App\Model\User;
 use App\Model\Tooth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Facades\Datatables;
 
@@ -49,28 +53,67 @@ class StaffController extends Controller
     public function create(Request $request)
     {
 
-        // $checkExist = $this->checkExistUser($request->phone);
-        // if ($checkExist) {
-        //     return false;
-        // }
-        // $userHasRole = new UserHasRole();
-        // $userHasRole->phone = $request->phone;
-        // $userHasRole->role_id = $request->role_id;
-        // $userHasRole->start_time = Carbon::now();
-        // $staff = new Staff();
-        // $user = new User();
-        // $staff->name = $request->name;
-        // $staff->address = $request->address;
-        // $staff->phone = $request->phone;
-        // $staff->date_of_birth = $request->date_of_birth;
-        // $staff->gender = $request->gender;
-        // $staff->avatar = $request->avatar;
-        // $staff->district_id = $request->district_id;
-        // $staff->degree = $request->degree;
-        // $user->phone = $user->phone;
-        // $user->password = Hash::make($user->phone);
+        $checkExist = $this->checkExistUser($request->phone);
+        if ($checkExist) {
+            return false;
+        }
+        $userHasRole = new UserHasRole();
+        $userHasRole->phone = $request->phone;
+        $userHasRole->role_id = $request->role_id;
+        $userHasRole->start_time = Carbon::now();
+        $staff = new Staff();
+        $user = new User();
+        $staff->name = $request->name;
+        $staff->address = $request->address;
+        $staff->phone = $request->phone;
+        $staff->date_of_birth = $request->date_of_birth;
+        $staff->gender = $request->gender;
+        $staff->avatar = $request->avatar;
+        $staff->district_id = $request->district_id;
+        $staff->degree = $request->degree;
+        $user->phone = $user->phone;
+        $user->password = Hash::make($user->phone);
 
-        // $this->createUserWithRole($user, $staff, $userHasRole);
+        $this->createUserWithRole($user, $staff, $userHasRole);
+    }
+    public function createStaff(Request $request){
+         $checkExist = $this->checkExistUser($request->phone);
+        if ($checkExist) {
+            return 0;
+        }
+        $district = District::where('id',$request->district_id)->first();
+        $districtName = $district->name;
+        $cityName = $district->belongsToCity()->first()->name;
+        $address = $request->address .", ".$districtName . ", ".$cityName; 
+
+        $userHasRole = new UserHasRole();
+        $userHasRole->phone = $request->phone;
+        $userHasRole->role_id = $request->role_id;
+        $userHasRole->start_time = Carbon::now();
+
+        $staff = new Staff();
+        $staff->name = $request->name;
+        $staff->address = $address;
+        $totalAddress = $request->address. ", ".$request->district_id.", ".$request->city;
+        $staff->phone = $request->phone;
+        $staff->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s');
+        $staff->gender = $request->gender;
+        $staff->avatar = "/assets/images/avatar/default_avatar.jpg";
+        $staff->district_id = $request->district_id;
+        $staff->email = $request->email;
+        $staff->degree = $request->degree;
+        $staff->description = $request->description;
+        $user = new User();
+        $user->phone = $request->phone;
+        $user->password = Hash::make($user->phone);
+        $result = $this->createStaffWithRole($user,$staff,$userHasRole);
+
+        if($result == false){
+                return 1;
+        }else{
+            return 2;
+        }
+
     }
 
     public function getStaff(Request $request)
@@ -80,23 +123,25 @@ class StaffController extends Controller
         return Datatables::of($staffs)->addColumn('action', function ($staffs) {
             return '
                  <a href="#" class="show-modal btn btn-info btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
-                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '">
+                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '" data-role="' . $staffs->RoleStaff . '">
                                             <i class="fa fa-eye"></i>
                                         </a>
                 <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
-                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '">
+                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '" data-role="' . $staffs->RoleStaff . '">
                                             <i class="glyphicon glyphicon-pencil"></i>
                                         </a>
-               <button value="' . $staffs->id . '" class="btn btn-danger btn-sm btn-dell">  <i class="glyphicon glyphicon-trash" ></i></button>';
+                ';
         })->make(true);
 
     }
 
-    public function createStaff(Request $request)
+    public function listStaff(Request $request)
     {
         $post = Staff::all();
+        $city = City::all();
         $role = Role::all();
-        return view('admin.dentist.list', ['post' => $post, 'roles' => $role]);
+        $district = District::all();
+        return view('admin.dentist.list', ['post' => $post, 'roles' => $role,'citys'=>$city,'District'=>$district]);
     }
 
     public function login(Request $request)

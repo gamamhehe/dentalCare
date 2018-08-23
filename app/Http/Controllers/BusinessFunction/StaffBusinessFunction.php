@@ -214,4 +214,21 @@ trait StaffBusinessFunction
         }
         return $tmHistories;
     }
+    public function createStaffWithRole($user, $staff, $userHasRole)
+    {
+        DB::beginTransaction();
+        try {
+            $user->save();
+            $staff->save();
+            $userHasRole->save();
+            
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+
+            DB::rollback();
+             dd($e);
+            return false;
+        }
+    }
 }

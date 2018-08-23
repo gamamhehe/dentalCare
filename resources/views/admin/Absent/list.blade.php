@@ -1,15 +1,18 @@
 @extends('admin.master')
 @section('title', 'Danh sách xin nghỉ nhân viên')
 @section('content')
-<div class="content-wrapper" >
-    <!-- Content Header (Page header) -->
-    <section class="content" >
-        <div class="container"  >
-            <div class="row " style="text-align: center; margin-right: 4em">
-                <label><h1>Danh sách Đơn xin nghỉ</h1></label>
-            </div>
-              <div class="row layout" style=" margin-right: 4em;"  >
-                    <div class="form-group row add">
+<div class="content-wrapper">
+    <div class="box">
+            <div class="panel panel-default" style="">
+                <div class="panel-heading">
+                    <div class="row " style="text-align: center; margin-right: 4em">
+                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  ><label><h1>Danh sách Đơn xin nghỉ</h1></label></div>
+                            
+                    </div>
+                </div>
+               <div class="panel-body">
+                 
+               <div class="form-group row"  >
                         <div class="col-xs-3">
                             <select name="Date" id="Date" style="height: 2.5em;width: 100%">
                                 <option value=""  selected>Lọc theo tháng</option>
@@ -37,10 +40,9 @@
                            <button class="btn btn-info" style="width: 100%;" id="search" > Tìm </button>
                         </div>
                        
-                    </div>
                 </div>
-            <div class="row layout" style=" margin-right: 4em"  >
-                <table id="dup-table" class="table table-striped Mytable-hover">
+            <div class=" ">
+                <table id="dup-table" class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;width: 100%">
                     <thead>
                     <tr style="background-color: #eee;">
                         <td class="col-sm-1">Mã</td>
@@ -52,6 +54,14 @@
                     </thead>
                 </table>
             </div>
+               </div>
+            </div>
+    </div>
+
+
+       
+          
+              
         </div>
         <div id="create" class="modal fade" role="dialog">
                     <div class="modal-dialog">
@@ -107,8 +117,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-    </section>
+            
+ 
 </div>
 @endsection 
 @section('js')
@@ -185,6 +195,7 @@
     $(function() {
         $('#dup-table').DataTable({
             language: {
+
             "lengthMenu": "Tổng kết quả Hiển thị _MENU_ ",
             "zeroRecords": "Không tìm thấy kết quả ",
             "info": "Hiển thị trang _PAGE_ trong tổng _PAGES_ trang",

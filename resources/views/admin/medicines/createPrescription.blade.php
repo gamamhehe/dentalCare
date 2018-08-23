@@ -1,7 +1,7 @@
 @extends('admin.master')
 @section('title', 'Khởi tạo đơn thuốc')
 @section('content')
-    <div class="content-wrapper">
+<div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content">
             <div class="row" style="text-align: center;">

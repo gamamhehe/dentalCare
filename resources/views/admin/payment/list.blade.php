@@ -1,7 +1,7 @@
 @extends('admin.master')
 @section('title', 'Danh sách chi trả')
 @section('content')
-    <div class="content-wrapper">
+<div class="content-wrapper">
         <div class="box">
 
             <div class="panel panel-default" style="">

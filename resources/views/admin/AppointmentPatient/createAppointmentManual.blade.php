@@ -3,13 +3,15 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content">
-        <div class="container"  >
-            <div class="row" style="text-align: center;">
-                <label><h1>Khởi tạo lịch hẹn</h1></label>
-            </div>
-
-            <form method ="post" class="form-horizontal" action="create-treatment" enctype="multipart/form-data" id="createNews">
+   <div class="box">
+            <div class="panel panel-default" style="">
+                <div class="panel-heading">
+                          <div class="row" style="text-align: center;">
+                            <label><h1>Khởi tạo lịch hẹn</h1></label>
+                        </div>
+                </div>
+            <div class="panel-body">
+                <form method ="post" class="form-horizontal" action="create-treatment" enctype="multipart/form-data" id="createNews">
                 {{ csrf_field() }}
                 <div class="modal-body">
                         <form method="post" class="form-horizontal" action="create-appointment"
@@ -75,14 +77,19 @@
                         </form>
                     </div>
 
-            </form>
-        </div>
+                </form>
+            </div>
+            </div>
+    </div>
+            
 
-
-    </section>
-
-
+           
 </div>
+
+
+
+
+ 
 @endsection
 @section('js')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

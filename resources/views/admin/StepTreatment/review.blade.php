@@ -2,7 +2,7 @@
 @section('title', 'Chi tiết lần khám')
 @section('content')
   <link rel="stylesheet" href="{{asset("/plugins/datepicker/datepicker3.css")}}">
-    <div class="content-wrapper">
+  <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content">
             <div class="">

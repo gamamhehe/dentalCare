@@ -2,184 +2,182 @@
 @section('title', 'Chi tiết lịch hẹn')
 @section('content')
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="panel panel-default" style="">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-sm-12" style="text-align: center;"><h1>Chi tiết lịch hẹn</h1></div>
+        <div class="box">
+            <div class="panel panel-default" style="">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-12" style="text-align: center;"><h1>Chi tiết lịch hẹn</h1></div>
+                    </div>
                 </div>
-            </div>
-        </div>
+                <div class="panel-body">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <!-- left -->
+                            <div class="col-xs-6">
+                                <div class="box-header with-border box-warning">
+                                    <h3 class="box-title" style="float: left;">Thông tin lịch hẹn</h3>
 
-<!-- nhan benh -->
-        
-        <div class="box box-info">
-            <div class="panel-body">
-                <div class="container">
-                    <div class="col-md-12">
-                        <!-- left -->
-                        <div class="col-xs-6">
-                            <div class="box-header with-border box-warning">
-                                <h3 class="box-title" style="float: left;">Thông tin lịch hẹn</h3>
-
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group row add">
-                                    <div class="col-sm-4"><label>Thời gian bắt đầu</label></div>
-                                    <div class="col-sm-6" style="padding-left: 0px;">
-                                        <input type="text" value="{{$appointment->start_time}}" name="name"
-                                               class="form-control pull-right"  style="margin:0px;"
-                                               disabled/>
-                                    </div>
                                 </div>
-                                <div class="form-group row add">
-                                    <div class="col-sm-4"><label>Thời gian cuộc hẹn</label></div>
-                                    <div class="col-sm-6" style="padding-left: 0px;">
-                                        <input type="text" value="{{$appointment->estimated_time}}" name="name"
-                                               class="form-control pull-right"  style="margin:0px;"
-                                               disabled/>
-                                    </div>
-                                </div>
-                                <div class="form-group row add">
-                                    <div class="col-sm-4"><label>Trạng thái</label></div>
-                                    <div class="col-sm-6" style="padding-left: 0px;">
-                                        <input type="text" value="{{$appointment->statusString}}" name="name"
-                                               class="form-control pull-right"  style="margin:0px;"
-                                               disabled/>
-                                    </div>
-                                </div>
-                                <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Số thứ tự</label></div>
-                                        <div class="col-sm-6" style="padding-left: 0px;">
-                                            <input type="text" value="{{$appointment->numerical_order}}" name="special" id="special" 
-                                                   class="form-control pull-right"  style="margin:0px;" disabled 
-                                                   />
-                                        </div>
-                                </div>
-                                <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Bác sĩ</label></div>
-                                        <div class="col-sm-6" style="padding-left: 0px;">
-                                            <input type="text" value="{{$dentist->name}}" name="special" id="special" 
-                                                   class="form-control pull-right"  style="margin:0px;" disabled 
-                                                   />
-                                        </div>
-                                        <div class="col-sm-2">  @if($appointment->status ==1 )
-                                    <a class="btn btn-info btn-sm applyChangePatient" style="float: right;"
-                                       href="#"> Đổi bác sĩ
-                                    </a>
-                                    @endif</div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <!-- right -->
-                        <div class="col-xs-6">
-                           
-                                <div class="box-header with-border box-info">
-                                    <h3 class="box-title" style="float: left;">Thông tin tài khoản</h3>
-                                </div>
-                                 @if($patient != null)
                                 <div class="panel-body">
                                     <div class="form-group row add">
-                                    @if($appointment->status != 0)
-                                    <a class="btn btn-success btn-sm" style="float: right;"
-                                       href="/admin/create-treatment/{{$patient->id}}"> Tạo mới liệu trình
-                                    </a>
-                                    @endif
-                                    @if($appointment->status == 0)
-                                    @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
-                                      <a class="btn btn-info btn-sm applyApp" style="float: right;"
-                                       href="#"> Nhận bệnh
-                                    </a>
-                                    @endif
-                                    @endif
-                                  
-                                    </div>
-                                    <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Họ tên</label></div>
+                                        <div class="col-sm-4"><label>Thời gian bắt đầu</label></div>
                                         <div class="col-sm-6" style="padding-left: 0px;">
-                                            <a href="/admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
-                                           
+                                            <input type="text" value="{{$appointment->start_time}}" name="name"
+                                                   class="form-control pull-right"  style="margin:0px;"
+                                                   disabled/>
                                         </div>
                                     </div>
                                     <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Số điện thoại</label></div>
-                                        <div class="col-sm-6" style="padding: 0px;margin: 0px;">
-                                            <input type="text" value="{{$appointment->phone}}" name="special" id="special" 
-                                                   class="form-control pull-right"  style="margin:0px;" disabled 
-                                                   />
+                                        <div class="col-sm-4"><label>Thời gian cuộc hẹn</label></div>
+                                        <div class="col-sm-6" style="padding-left: 0px;">
+                                            <input type="text" value="{{$appointment->estimated_time}}" name="name"
+                                                   class="form-control pull-right"  style="margin:0px;"
+                                                   disabled/>
                                         </div>
+                                    </div>
+                                    <div class="form-group row add">
+                                        <div class="col-sm-4"><label>Trạng thái</label></div>
+                                        <div class="col-sm-6" style="padding-left: 0px;">
+                                            <input type="text" value="{{$appointment->statusString}}" name="name"
+                                                   class="form-control pull-right"  style="margin:0px;"
+                                                   disabled/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row add">
+                                            <div class="col-sm-4"><label>Số thứ tự</label></div>
+                                            <div class="col-sm-6" style="padding-left: 0px;">
+                                                <input type="text" value="{{$appointment->numerical_order}}" name="special" id="special" 
+                                                       class="form-control pull-right"  style="margin:0px;" disabled 
+                                                       />
+                                            </div>
+                                    </div>
+                                    <div class="form-group row add">
+                                            <div class="col-sm-4"><label>Bác sĩ</label></div>
+                                            <div class="col-sm-6" style="padding-left: 0px;">
+                                                <input type="text" value="{{$dentist->name}}" name="special" id="special" 
+                                                       class="form-control pull-right"  style="margin:0px;" disabled 
+                                                       />
+                                            </div>
+                                            <div class="col-sm-2">  @if($appointment->status ==1 )
+                                        <a class="btn btn-info btn-sm applyChangePatient" style="float: right;"
+                                           href="#"> Đổi bác sĩ
+                                        </a>
+                                        @endif</div>
                                     </div>
                                     
-                                    <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Bệnh tiền sử</label></div>
-                                        <div class="col-sm-6" style="padding-left: 0px;">
-                                            <ul style="padding: 0px;margin: 0px;">
-                                                @if($patient->Anamnesis)
-                                                    @foreach($patient->Anamnesis as $key)
-                                                        <li>{{$key->name->name}}</li>
+                                </div>
+                            </div>
+                            <!-- right -->
+                            <div class="col-xs-6">
+                               
+                                    <div class="box-header with-border box-info">
+                                        <h3 class="box-title" style="float: left;">Thông tin tài khoản</h3>
+                                    </div>
+                                     @if($patient)
+                                    <div class="panel-body">
+                                        <div class="form-group row add">
+                                        @if($appointment->status != 0)
+                                        <a class="btn btn-success btn-sm" style="float: right;"
+                                           href="/admin/create-treatment/{{$patient->id}}"> Tạo mới liệu trình
+                                        </a>
+                                        @endif
+                                        @if($appointment->status == 0)
+                                        @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                                          <a class="btn btn-info btn-sm applyApp" style="float: right;"
+                                           href="#"> Nhận bệnh
+                                        </a>
+                                        @endif
+                                        @endif
+                                      
+                                        </div>
+                                        <div class="form-group row add">
+                                            <div class="col-sm-4"><label>Họ tên</label></div>
+                                            <div class="col-sm-6" style="padding-left: 0px;">
+                                                <a href="/admin/thong-tin-benh-nhan/{{$patient->id}}">{{$patient->name}}</a>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="form-group row add">
+                                            <div class="col-sm-4"><label>Số điện thoại</label></div>
+                                            <div class="col-sm-6" style="padding: 0px;margin: 0px;">
+                                                <input type="text" value="{{$appointment->phone}}" name="special" id="special" 
+                                                       class="form-control pull-right"  style="margin:0px;" disabled 
+                                                       />
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row add">
+                                            <div class="col-sm-4"><label>Bệnh tiền sử</label></div>
+                                            <div class="col-sm-6" style="padding-left: 0px;">
+                                                <ul style="padding: 0px;margin: 0px;">
+                                                <!--     @if($patient->Anamnesis)
+                                                        @foreach($patient->Anamnesis as $key)
+                                                            <li>{{$key->name->name}}</li>
 
-                                                    @endforeach
-                                                @else
-                                                    <p>Không có .</p>
-                                                @endif
-                                            </ul>
+                                                        @endforeach
+                                                    @else
+                                                        <p>Không có .</p>
+                                                    @endif -->
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                 @else
-                                <div class="panel-body">
-                                 <div class="form-group row add">
-                                    <div class="col-sm-11">  * Bệnh nhân mới.Hãy cập nhật thông tin bệnh nhân</div>
-                                    <div class="col-sm-1">
-                                            @if($appointment->status != 0)
-                                            <a class="btn btn-success btn-sm" style="float: right;"
-                                               href="#"> Tạo mới liệu trình
-                                            </a>
-                                            @endif
-                                            @if($appointment->status == 0)
-                                                @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
-                                                  <a class="btn btn-info btn-sm applyApp" style="float: right;"
-                                                   href="#"> Nhận bệnh
+                                     @else
+                                    <div class="panel-body">
+                                     <div class="form-group row add">
+                                        <div class="col-sm-11">  * Bệnh nhân mới.Hãy cập nhật thông tin bệnh nhân</div>
+                                        <div class="col-sm-1">
+                                                @if($appointment->status != 0)
+                                                <a class="btn btn-success btn-sm" style="float: right;"
+                                                   href="#"> Tạo mới liệu trình
                                                 </a>
                                                 @endif
-                                            @endif
-                                    </div>
-                                 
-                                    </div>
-                                    <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Họ Tên</label></div>
-                                        <div class="col-sm-6" style="padding: 0px;margin: 0px;">
-                                            <input type="text" value="{{$appointment->name}}" name="name"
-                                                   class="form-control pull-right" id="phone" style="margin:0px;width: 100%"
-                                                   disabled/>
+                                                @if($appointment->status == 0)
+                                                    @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                                                      <a class="btn btn-info btn-sm applyApp" style="float: right;"
+                                                       href="#"> Nhận bệnh
+                                                    </a>
+                                                    @endif
+                                                @endif
                                         </div>
-                                    </div>
-                                    <div class="form-group row add">
-                                        <div class="col-sm-4"><label>Điện thoại</label></div>
-                                        <div class="col-sm-6" style="padding: 0px;margin: 0px;">
-                                            <input type="text" value="{{$appointment->phone}}" name="phone"
-                                                   class="form-control pull-right" id="phone" style="margin:0px;width: 100%"
-                                                   disabled/>
+                                     
                                         </div>
+                                        <div class="form-group row add">
+                                            <div class="col-sm-4"><label>Họ Tên</label></div>
+                                            <div class="col-sm-6" style="padding: 0px;margin: 0px;">
+                                                <input type="text" value="{{$appointment->name}}" name="name"
+                                                       class="form-control pull-right" id="phone" style="margin:0px;width: 100%"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row add">
+                                            <div class="col-sm-4"><label>Điện thoại</label></div>
+                                            <div class="col-sm-6" style="padding: 0px;margin: 0px;">
+                                                <input type="text" value="{{$appointment->phone}}" name="phone"
+                                                       class="form-control pull-right" id="phone" style="margin:0px;width: 100%"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
-                                    
-                                </div>
-                            @endif
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
+                 </div>
         </div>
-
         <div class="box box-info">
-            <div class="box-header with-border box-info">
-                <h3 class="box-title">Tiền sử bệnh án</h3>
+            <div class="box box-title">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-12" style="text-align: center;"> <h4 class="box-title">Tiền sử bệnh án</h4></div>
+                    </div>
+                </div>
             </div>
             <div class="panel-body">
                 <!-- start -->
-                <div class="container">
+                <div class="form-group row">
                     <br/>
                     <br/>
                     <div id="accordion" class="accordion-container">
@@ -292,6 +290,11 @@
             </div>
         </div>
     </div>
+       
+
+ 
+
+     
 @if($patient != null)
 <div id="create" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg" >
@@ -542,7 +545,7 @@
                                 </div>
                             </div>
                       <div class="form-group">
-                                <label class="control-label col-xs-3" for="title">Người khám </label>
+                                <label class="control-label col-xs-3" for="title">Bệnh nhân khám </label>
                                 <div class="col-xs-8" style="padding-right: 0px;">
                                     <div class="col-sm-12 col-xs-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
                                         <div class="col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
@@ -761,6 +764,7 @@
                     if ((data.errors)) {
                          swal("Nhận bệnh không thành công", "", "error");
                     } else {
+                         location.reload(true);
                         swal("Nhận bệnh thành công", "", "success");
                     }
                 },

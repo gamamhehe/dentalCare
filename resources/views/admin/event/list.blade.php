@@ -1,7 +1,7 @@
 @extends('admin.master')
 @section('title', 'Danh sách Sự kiện')
 @section('content')
-<div class="content-wrapper" >
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content" >
         <div class="container"  >

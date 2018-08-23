@@ -70,7 +70,8 @@
                               enctype="multipart/form-data" id="createAppoint">
                             {{ csrf_field() }}
                             <div class="form-group row add">
-                             <div class="control-label col-md-4 col-sm-4 col-xs-12"><label>Số điện thoại </label></div>
+                             <div class="control-label col-md-4 col-sm-4 col-xs-12">
+                             <label>Số điện thoại </label></div>
                                 <div class="col-md-6 col-sm-6 col-xs-8" style="padding-right: 0;padding-left: 0;">
                                     <input type="text" class="form-control" id="phoneXXX" name="phoneXXX"
                                            required="required" placeholder="Số điện thoại" style="margin:0px;">
@@ -114,11 +115,10 @@
                           </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-4  col-xs-7 " for="body">Thời gian dự kiến </label>
+                                <label class="control-label col-sm-4  col-xs-7 inputWithIcon " for="body">Thời gian dự kiến </label>
                                 <div class="col-sm-6 col-xs-5" style="padding-right: 0;padding-left: 0;">
-                                 <input type="number" placeholder="Thời lượng" id="estimateTime" name="estimateTime "  class="form-control pull-right" max="90" min="10
-                                 .0
-                                 "  style="margin:0px;" />
+                                 <input type="number" placeholder="Thời lượng" id="estimateTime" name="estimateTime "  class="form-control pull-right"  
+                                  style="margin:0px; " />
                                 </div>
                             </div>
                         </form>
@@ -155,14 +155,6 @@
                                 </div>
                             </div>
                             <div class="form-group row add">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" for="title">Địa chỉ</label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <input type="text" class="form-control" id="addressPatient" name="addressPatient"
-                                           placeholder="Địa chỉ cư trú" required>
-                                    <p class="error text-center alert alert-danger hidden"></p>
-                                </div>
-                            </div>
-                            <div class="form-group row add">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" for="title">Số điện thoại </label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
                                     <input type="text" class="form-control" id="phonePatient" name="phonePatient"
@@ -170,25 +162,15 @@
                                     <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Ngày sinh </label>
-                                <div class="col-md-4 col-sm-3 col-xs-8">
-                                    <div class="inputWithIcon" style="padding-right: 0;padding-left: 0;">
-                                          <input type="text" placeholder="Ngày sinh" id="bdayxx" class="form-control pull-right" style="margin:0px;" />
-                                          <i class="fa fa-calendar"></i>
-                                    </div>
-                                </div>
-                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Giới tính </label>
-                                <div class="col-md-4 col-sm-3 col-xs-8">
-                                    <select name="genderPatient" id="genderPatient" class="selectSpecialTwo" 
-                                            style="margin: 0px; ">
-                                        <option value="Male">Nam</option>
-                                        <option value="FeMale">Nữ</option>
-                                        <option value="Unknow">Khác</option>
-                                    </select>
+                            <div class="form-group row add">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" for="title">Địa chỉ</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" class="form-control" id="addressPatient" name="addressPatient"
+                                           placeholder="Địa chỉ cư trú" required>
+                                    <p class="error text-center alert alert-danger hidden"></p>
                                 </div>
                             </div>
-                            <div class="form-group row add">
+                               <div class="form-group row add">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Thành phố </label>
                                 <div class="col-md-4 col-sm-3 col-xs-8">
                                     <select name="cityPatient" id="cityPatient"  style="margin: 0px; "
@@ -209,6 +191,25 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Ngày sinh </label>
+                                <div class="col-md-4 col-sm-3 col-xs-8">
+                                    <div class="inputWithIcon" style="padding-right: 0;padding-left: 0;">
+                                          <input type="text" placeholder="Ngày sinh" id="bdayxx" class="form-control pull-right" style="margin:0px;" />
+                                          <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Giới tính </label>
+                                <div class="col-md-4 col-sm-3 col-xs-8">
+                                    <select name="genderPatient" id="genderPatient" class="selectSpecialTwo" 
+                                            style="margin: 0px; ">
+                                        <option value="Male">Nam</option>
+                                        <option value="FeMale">Nữ</option>
+                                        <option value="Unknow">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                         
                             <hr>
                             <div class="form-group row add">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-4" for="title">Bệnh tiền sử </label>
@@ -218,7 +219,7 @@
                                         @foreach($AnamnesisCatalog as $one)
 
                                             <div class="col-md-4 col-xs-6" style="text-align: left;">
-                                                <input type="checkbox" class="anam" name="anam[]" value="{{$one->id}}" id="myCheck" onclick="myFunction()">
+                                                <input type="checkbox" class="anam" name="anam[]" value="{{$one->id}}" id="myCheck"  >
                                                 {{$one->name}}
                                             </div>
                                         @endforeach
@@ -290,7 +291,7 @@
             var estimateTimeReal = document.getElementById("estimateTime").value;
             var patientID = document.getElementById("PatientSelect").value;
             var datepicker = document.getElementById("datepicker").value;
-
+            var estimateTime = document.getElementById("estimateTime").value;
              var dentistID = document.getElementById("DentistSelect").value;
              if(dentistID==null){
                 alert("xxx");return;
@@ -303,6 +304,9 @@
                 return;
             }else if ($.trim(datepicker) == '') {
                 swal("Vui lòng chọn ngày đặt cho lịch hẹn  !", "", "error");
+                return;
+            }else if (estimateTime >90 || estimateTime < 10) {
+                swal("Thời gian cuộc hẹn từ 10 - 90 phút !", "", "error");
                 return;
             }else{
                  $.ajax({
@@ -347,7 +351,7 @@
                 swal("Họ tên phải từ 6 đến 35 kí tự!", "", "error");
                 return;
             }else if (addressCreate.length < 6 || addressCreate.length > 50 ) {
-                swal("Họ tên phải từ 6 đến 35 kí tự!", "", "error");
+                swal("Địa chỉ phải từ 6 đến 35 kí tự!", "", "error");
                 return;
             }else if ($.trim(addressCreate) == '') {
                 swal("Vui lòng nhập địa chỉ của bệnh nhân  !", "Bấm kiểm tra để có danh sách bệnh nhân", "error");

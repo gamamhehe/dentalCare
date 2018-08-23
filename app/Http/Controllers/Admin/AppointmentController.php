@@ -98,7 +98,6 @@ class AppointmentController extends Controller
         } else {
             $appointment->statusString = "Đã xóa";
         }
-
         $checkAppoint = $this->checkAppointmentExistPatient($appointId);
         $result = [];
         $listPatient = [];
@@ -136,10 +135,11 @@ class AppointmentController extends Controller
             $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
+       
+
         $city = city::all();
         $District = District::where('city_id', 1)->get();
         $listAnamnesis = AnamnesisCatalog::all(); 
-       
         return view('admin.AppointmentPatient.detail', ['appointment' => $appointment, 'citys' => $city, 'District' => $District,'patient' => $patient, 'listTreatmentHistory' => $result,'AnamnesisCatalog' => $listAnamnesis,'listPatient'=>$listPatient,'case3'=>$case3,'dentist'=>$dentist]);
     }
 
@@ -214,10 +214,11 @@ class AppointmentController extends Controller
             $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s') ;
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
-            $patientID = $this->ư($patient);
+            $patientID = $this->createPatient($patient);
             if($patientID ==false){
                 return false;
             }
+
             $result = $this->createAnamnesisForPatient($listAnamnesis,$patientID);
             if($result == false){
                 return false;
@@ -229,7 +230,7 @@ class AppointmentController extends Controller
                 return false;
             }
         //status
-            $resultStatus = $this->ư(1,$appointId);
+            $resultStatus = $this->updateStatusAppoinment(1,$appointId);
             return redirect()->back()->withSuccess("Done");
 
     }
