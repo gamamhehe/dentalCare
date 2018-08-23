@@ -425,11 +425,11 @@ class StaffController extends BaseController
 //                return response()->json($error, 400);
 //            }
             $patient = $this->getPatientById($patientId);
-            if ($patient == null) {
-                $error = $this->getErrorObj("Không thể tìm thấy bệnh nhân",
-                    "No exception");
-                return response()->json($error, 400);
-            }
+//            if ($patient == null) {
+//                $error = $this->getErrorObj("Không thể tìm thấy bệnh nhân",
+//                    "No exception");
+//                return response()->json($error, 400);
+//            }
             $result =
                 $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $patientName, $estimatedTime, $allowOvertime == 1);
             return response()->json($result, 200);
