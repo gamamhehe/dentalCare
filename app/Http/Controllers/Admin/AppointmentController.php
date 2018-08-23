@@ -194,9 +194,10 @@ class AppointmentController extends Controller
 
         
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
-        $this->dispatch(new SendSmsJob($phone, $smsMessage));
         if($checkNewMember==true){
-            $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
+            $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser($newApp->numerical_order, $dateTime)));
+        }else{
+            $this->dispatch(new SendSmsJob($phone, $smsMessage));
         }
         return redirect()->back()->withSuccess($successMess);
        } catch (\Exception $e) {

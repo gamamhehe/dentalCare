@@ -90,10 +90,18 @@ class UserController extends BaseController
 
     public function bookAppointment(Request $request)
     {
+        $currentTime = Carbon::now();
         try {
             $phone = $request->input('phone');
             $note = $request->input('note');
             $bookingDate = $request->input('booking_date');
+            $bookingDateObj = new DateTime($bookingDate);
+            if (($currentTime->format("Y-m-d") == $bookingDateObj->format("Y-m-d"))
+                && $this->isEndOfTheDay($currentTime)
+                || $this->isInThePast($bookingDateObj)) {
+                $error = $this->getErrorObj("Đã quá thời gian đặt lịch, bạn vui lòng chọn ngày khác", "No exc");
+                return response()->json($error, 400);
+            }
             $dentistId = $request->input('dentist_id');
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');
@@ -104,7 +112,6 @@ class UserController extends BaseController
                 $user = new User();
                 $user->phone = $phone;
                 $user->password = Hash::make($phone);
-
                 $userHasRole = new UserHasRole();
                 $userHasRole->phone = $phone;
                 $userHasRole->role_id = 1;
@@ -114,19 +121,18 @@ class UserController extends BaseController
             }
             $result = $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $name);
             if ($result != null) {
-//                $listAppointment = $this->getAppointmentsByStartTime($bookingDate);
                 $startDateTime = new DateTime($result->start_time);
                 $vnSmsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime, true);
-                $engSmsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
-                $this->dispatch(new SendSmsJob($phone, $engSmsMessage));
                 if ($isNewUser) {
-                    $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser()));
+                    $this->dispatch(new SendSmsJob($phone, AppConst::getSmsNewUser($result->numerical_order, $startDateTime)));
+                } else {
+                    $this->dispatch(new SendSmsJob($phone, AppConst::getSmsMSG($result->numerical_order, $startDateTime)));
                 }
                 $this->sendFirebaseReloadMobileAppointment();
                 $successResponse = $this->getSuccessObj(200, "OK", $vnSmsMessage, "Nodata");
                 return response()->json($successResponse, 200);
             } else {
-                $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
+                $error = $this->getErrorObj("Đã quá thời gian đặt lịch, bạn vui lòng chọn ngày khác",
                     "Result is null, No exception");
                 return response()->json($error, 400);
             }
@@ -136,11 +142,10 @@ class UserController extends BaseController
             return response()->json($error, 500);
         } catch (\Exception $ex) {
             if ($ex->getMessage() == "isEndOfTheDay") {
-                $currentTime = (new DateTime());
                 if ($this->isEndOfTheDay($currentTime)) {
-                    $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
+                    $error = $this->getErrorObj("Đã quá thời gian đặt lịch, bạn vui lòng chọn ngày khác", $ex);
                 } else {
-                    $error = $this->getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác", $ex);
+                    $error = $this->getErrorObj("Lịch hẹn ngày " . $bookingDateObj->format('d-m-Y') . " đã đầy, bạn vui lòng chọn ngày khác", $ex);
                 }
                 return response()->json($error, 400);
             } else {
