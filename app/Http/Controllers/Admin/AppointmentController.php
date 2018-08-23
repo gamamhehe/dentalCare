@@ -215,7 +215,7 @@ class AppointmentController extends Controller
             $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s') ;
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
-            $patientID = $this->ư($patient);
+            $patientID = $this->createPatient($patient);
             if($patientID ==false){
                 return false;
             }
@@ -230,7 +230,7 @@ class AppointmentController extends Controller
                 return false;
             }
         //status
-            $resultStatus = $this->ư(1,$appointId);
+            $resultStatus = $this->createPatient(1,$appointId);
             return redirect()->back()->withSuccess("Done");
 
     }
