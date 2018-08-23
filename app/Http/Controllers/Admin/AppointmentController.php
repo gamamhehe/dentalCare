@@ -231,7 +231,7 @@ class AppointmentController extends Controller
                 return false;
             }
         //status
-            $resultStatus = $this->updateStatusAppoinment(1,$appointId);
+            $resultStatus = $this->createPatient(1,$appointId);
             return redirect()->back()->withSuccess("Done");
 
     }
