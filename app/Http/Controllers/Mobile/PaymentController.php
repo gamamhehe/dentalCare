@@ -136,7 +136,7 @@ class PaymentController extends BaseController
             $payment->paid = $payment->total_price;
             $payment->status = AppConst::PAYMENT_STATUS_DONE;
             $paymentDetail = new PaymentDetail();
-            $paypalStaff = $this->getStaffByName('paypal');
+            $paypalStaff = $this->getStaffByName('Paypal');
             $paymentDetail->payment_id = $localPaymentId;
             $paymentDetail->received_money = $received_money;
             $paymentDetail->created_date = Carbon::now();
@@ -170,11 +170,8 @@ class PaymentController extends BaseController
                 return response()->json($error, 400);
             }
         } catch (\Exception $exc) {
-            $error = $this->getErrorObj(
-                "Unknown error occurred!",
-                $this->getExceptionMsg($exc)
-            );
-            $this->logInfo("EXCEPTION: " . $exc->getMessage());
+            $error = $this->getErrorObj("Unknown error occurred!", $exc);
+            $this->logInfo("EXCEPTION: " . $exc->getMessage() . " File: ".$exc->getFile()." Line: " . $exc->getLine());
             return response()->json($error, 400);
         }
 

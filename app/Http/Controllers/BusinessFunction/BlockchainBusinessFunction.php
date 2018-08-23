@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
-
+use App\Helpers\AppConst;
 use App\Model\Absent;
 use App\Model\Blockchain;
 use App\Model\Role;
@@ -65,26 +65,40 @@ trait BlockchainBusinessFunction
         return $nodeInfo;
     }
 
-    public function deleteDataPayment(){
-        Payment::query() -> delete();
-        PaymentDetail::query() -> delete();
-        PaymentUpdateDetail::query() -> delete();
+    public function deleteDataPayment()
+    {
+        PaymentUpdateDetail::query()->delete();
+        PaymentDetail::query()->delete();
+//        Payment::query() -> delete();
+        \DB::statement('ALTER TABLE tbl_payment_details AUTO_INCREMENT = 1;');
+        \DB::statement('ALTER TABLE tbl_payment_update_details AUTO_INCREMENT = 1;');
     }
 
     public function setDataCreatePayment($element)
     {
         DB::beginTransaction();
         try {
-            Payment::create([
-                'paid' => $element[1],
-                'total_price' => $element[2],
-                'phone' => $element[3],
-                'status' => $element[4],
-                'created_at' => $element[5],
-            ]);
+            $payment = Payment::where('id', $element[0])->first();
+            if ($payment) {
+                $payment->paid = 0;
+                $payment->total_price = $element[2];
+                $payment->phone = $element[3];
+                $payment->status = $element[4];
+                $payment->save();
+            }else{
+                Payment::create([
+                    'id' => $element[0],
+                    'paid' => 0,
+                    'total_price' => $element[2],
+                    'phone' => $element[3],
+                    'status' => $element[4],
+                ]);
+                $payment->save();
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
             return false;
         }
@@ -100,6 +114,12 @@ trait BlockchainBusinessFunction
                 'created_date' => $element[3],
                 'received_money' => $element[4],
             ]);
+            $payment = Payment::where('id', $element[1])->first();
+            $payment->paid = $payment->paid + $element[4];
+            if ($payment->total_price == $payment->paid) {
+                $payment->status =  AppConst::PAYMENT_STATUS_DONE;
+            }
+            $payment->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -113,14 +133,15 @@ trait BlockchainBusinessFunction
         DB::beginTransaction();
         try {
             $payment = Payment::find($element[0]);
-            $nameTreatment = Treatment::where('id', $element[2])->first()->name;
-            $updateInformation = 'Tổng tiền chi trả thay đổi từ ' . $payment->total_price . ' VND sang '
-                . $element[1] . ' VND để thanh toán cho liệu trình ' . $nameTreatment;
+            $nameTreatment = Treatment::where('id', $element[3])->first()->name;
+            $total_price = (int)$element[1] + (int)$element[2];
+            $updateInformation = 'Tổng tiền chi trả thay đổi từ ' . $element[1] . ' VND sang '
+                . $total_price . ' VND để thanh toán cho liệu trình ' . $nameTreatment;
             PaymentUpdateDetail::create([
                 'payment_id' => $element[0],
                 'update_information' => $updateInformation,
             ]);
-            $payment->total_price = (int)$element[1];
+            $payment->total_price = $total_price;
             $payment->save();
             DB::commit();
             return true;

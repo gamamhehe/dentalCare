@@ -62,7 +62,7 @@ class QueueController extends Controller
         $obj = new ClassCheckingStatus($dataEncrypt);
         $func = array($obj, 'checkingStatusContinously');
         $this->dispatch(new BlockchainQueue($func));
-        BlockchainQueue::dispatch($func);
+//        BlockchainQueue::dispatch($func);
         return 'success';
 //        }
 //        Log::info('QueueController_runJobQueue_ClientIpNotInNetwork: ' . $this->clientIp);

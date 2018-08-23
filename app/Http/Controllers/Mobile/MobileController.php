@@ -171,14 +171,21 @@ class MobileController extends BaseController
      */
     public function test3(Request $request)
     {
-        try {
-
-            $tmHistories = $this->getPatientTreatmentHistory(1, 2, (new DateTime())->format('Y-m-d'));
-            return response()->json($tmHistories);
-        } catch (Exception $exception) {
-
-            return response()->json($exception->getMessage());
-        }
+//        try {
+//
+//            $tmHistories = $this->getPatientTreatmentHistory(1, 2, (new DateTime())->format('Y-m-d'));
+//            return response()->json($tmHistories);
+//        } catch (Exception $exception) {
+//
+//            return response()->json($exception->getMessage());
+//        }
+//        if ($this->isInThePast(new DateTime('2018-08-22'))) {
+//            return "TRUE";
+//        }else {
+//            return "FALSE";
+//        }
+//        return (new DateTime())->getTimestamp();
+        return strtotime('2018-08-22 13:09:00');
 
     }
 
@@ -374,7 +381,7 @@ class MobileController extends BaseController
             if ($this->isUpCommingAppointment($currentDateTime, $apptDateTime)) {
                 $numOfReminder++;
                 Utilities::logInfo('Send for appointment id: ' . $appointment->id);
-                $this->dispatch(new SendReminderJob($appointment->phone));
+                $this->dispatch(new SendReminderJob($appointment));
                 $apss[] = $appointment;
             }
         }

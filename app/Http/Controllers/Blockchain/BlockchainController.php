@@ -169,7 +169,6 @@ class BlockchainController extends Controller
 
     public function setDataTypePayment($listStrings)
     {
-        // $listStrings = array("5,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1", "3, 60000000, 5, 2", "9, 4, 3, 2017-08-08 20:00:00, 222222, 3");
         $arrayString = explode(',', $listStrings[0]);
 
         $this->deleteDataPayment();
@@ -183,7 +182,6 @@ class BlockchainController extends Controller
             } else {
                 $this->setDataPaymentDetail($arrayString);
             }
-
         }
     }
 
@@ -229,29 +227,15 @@ class BlockchainController extends Controller
         }
     }
 
-    public function EncryptCreatePayment(Request $request)
+    public function EncryptCreatePayment($id)
     {
-        $id = $request->id;
         $payment = Payment::where('id', '=', $id)->first();
         $publicKey = $this->ReadPublickey();
-
-        // $publicKey = "-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu/Fzjzta9P4X5eg58uJCYM2Dq\r\nkBDixMsJXaywsrJNRwl4W4BB7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSH\r\nHoutfhft9DTEaBbu7wrtoR1FmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAh\r\nQbSdRm8+v08YjhapVwIDAQAB\r\n-----END PUBLIC KEY-----";
-        $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . $payment->created_at . ',1';
+        $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->status . "," . ',1';
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));
-        // dd($publicKey);
-        // $queue = new QueueController();
-        // $queue -> runJobQueue()
-        // $url = "127.0.0.1/";
-//        $host = gethostname();
-//        $ip = gethostbyname($host);
-//        $url = $ip . "/runJobQueue?data_encrypt=" . $this->encrypt($encrypted, $publicKey);
-//        Log::info("BlockchainController_EncryptPayment");
-//        $this->callTheURL($url);
-        $queueController = new QueueController();
-        $queueController->runJobQueue($this->encrypt($encrypted, $publicKey));
-        // return $this->encrypt($encrypted, $publicKey);
+        return $this->encrypt($encrypted, $publicKey);
     }
 
     public function TestUpdatePayment()
@@ -262,10 +246,10 @@ class BlockchainController extends Controller
         return $this->EncryptUpdatePayment($idPayment, $idTreatment, $price);
     } // just for test
 
-    public function EncryptUpdatePayment($idPayment, $idTreatment, $price)
+    public function EncryptUpdatePayment($idPayment, $idTreatment, $price, $beforePrice)
     {
         $publicKey = $this->ReadPublickey();
-        $dataPayment = $idPayment . "," . $price . "," . $idTreatment . ",2";
+        $dataPayment = $idPayment . "," . $beforePrice . "," . $price . "," . $idTreatment . ",2";
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $encrypted = base64_encode(openssl_encrypt($dataPayment, $method, '1', OPENSSL_RAW_DATA, $iv));
@@ -275,11 +259,11 @@ class BlockchainController extends Controller
 
     public function EncryptCreatePaymentDetail($idPaymentDetail)
     {
-        $payment = PaymentDetail::where('id', '=', $idPaymentDetail)->first();
+        $paymentDetail = PaymentDetail::where('id', '=', $idPaymentDetail)->first();
         $publicKey = $this->ReadPublickey();
         // $publicKey = "-----BEGIN PUBLIC KEY-----\r\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu/Fzjzta9P4X5eg58uJCYM2Dq\r\nkBDixMsJXaywsrJNRwl4W4BB7Zck98q7NXmwa6kNHv8qIrLNgEpMhL5hBt+dVeSH\r\nHoutfhft9DTEaBbu7wrtoR1FmqxgpWhNO6CxKgVE480blf0mwBRI9CAvwqiuedAh\r\nQbSdRm8+v08YjhapVwIDAQAB\r\n-----END PUBLIC KEY-----";
 
-        $dataPaymentDetail = $payment->id . "," . $payment->payment_id . "," . $payment->staff_id . "," . $payment->date_create . "," . $payment->received_money . ',3';
+        $dataPaymentDetail = $paymentDetail->id . "," . $paymentDetail->payment_id . "," . $paymentDetail->staff_id . "," . $paymentDetail->created_date . "," . $paymentDetail->received_money . ',3';
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $method = 'aes-256-cbc';
         $encrypted = base64_encode(openssl_encrypt($dataPaymentDetail, $method, '1', OPENSSL_RAW_DATA, $iv));
@@ -359,7 +343,6 @@ class BlockchainController extends Controller
         //         $jsonPayment = json_encode($paymentArray);
         // $dataPayment = $payment->id . "," . $payment->paid . "," . $payment->total_price . "," . $payment->phone . "," . $payment->is_done . "," . ',2';
         $plaintext = "1222,2000000,50000000,01279011096,1,2017-08-08 20:00:00,1";
-        // // var_dump($dataPayment);
         $method = 'aes-256-cbc';
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
         $encrypted = base64_encode(openssl_encrypt($plaintext, $method, '1', OPENSSL_RAW_DATA, $iv));

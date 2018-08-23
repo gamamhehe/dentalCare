@@ -223,8 +223,12 @@ trait AppointmentBussinessFunction
             $currentDateTime = new DateTime();
             //process when patient book appointment at the same day, and
 //            $diffDate = ($currentDateTime->diff($predictAppointmentDate));
-            if (($currentDateTime->getTimestamp() - $predictAppointmentDate->getTimeStamp()) > 0) {
-                $predictAppointmentDate = $this->addTimeToDate($currentDateTime, '00:10:00');
+            if (($currentDateTime->getTimestamp() - $predictAppointmentDate->getTimeStamp()) > 0
+            && !$this->isEndOfTheDay($currentDateTime)
+                && !$this->isInEarlyDay($currentDateTime)
+            ) {
+//                $predictAppointmentDate = $this->addTimeToDate($currentDateTime, '00:10:00');
+                $predictAppointmentDate = $currentDateTime;
                 $arrayFreeDentist = $this->getFreeDentistsAtDate($listDentist, $bookingDateDBFormat);
                 if (count($arrayFreeDentist) == 0) {
                     $randomDentist = $this->getRandomDentist($listDentist);
@@ -440,6 +444,24 @@ trait AppointmentBussinessFunction
     {
         $time = $apptFinishTimeObj->format('H:i:s');
         if ((strtotime($time) > strtotime('19:15:00'))) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isInEarlyDay($apptFinishTimeObj)
+    {
+        $time = $apptFinishTimeObj->format('H:i:s');
+        if ((strtotime($time) >= strtotime('00:00:00')) && (strtotime($time) < strtotime('07:00:00'))) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isInThePast($apptFinishTimeObj)
+    {
+        $date = $apptFinishTimeObj->format('Y-m-d');
+        if ((strtotime($date) < strtotime('00:00:00'))) {
             return true;
         }
         return false;

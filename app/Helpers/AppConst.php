@@ -62,9 +62,9 @@ class AppConst
 //  const PAYMENT_STATUS_
 //  const PAYMENT_STATUS_
 //  const PAYMENT_STATUS_
-    const PAYMENT_STATUS_NOT_DONE = 1;
-    const PAYMENT_STATUS_DONE = 2;
-    const PAYMENT_STATUS_CANCEL = 3;
+    const PAYMENT_STATUS_NOT_DONE = 0;
+    const PAYMENT_STATUS_DONE = 1;
+    const PAYMENT_STATUS_CANCEL = 2;
 
     /**
      * @param $order numerical_order of appointment
@@ -85,9 +85,14 @@ class AppConst
         }
     }
 
-    public static function getSmsNewUser()
+    public static function getSmsNewUser($order, $dateObj)
     {
-        return "Tai khoan mat khau mac dinh tai Dental Gold la so dien thoai cua ban.";
+        $startTime = $dateObj->format("H:i");
+        $startDate = $dateObj->format("d-m-Y");
+        return "Cam on ban da dat lich kham, so thu tu cua ban la "
+            . $order . ' .Du kien kham vao luc ' . $startTime . ' ngay ' . $startDate .
+            ' tai 190 Truong Chinh - Quan 12 - TP HCM'
+            .' .Tai khoan va mat khau tai Dental Gold la so dien thoai cua ban.';
     }
 
     public static function getSmsMSGForAbsent($name, $startDate, $endDate)

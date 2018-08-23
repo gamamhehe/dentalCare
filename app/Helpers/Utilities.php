@@ -74,28 +74,30 @@ class Utilities
         try {
             $phone = $appointment->phone;
             $startTime = (new DateTime($appointment->start_time))->format('H:i:s');
-
             $type = AppConst::RESPONSE_REMINDER;
             $body = AppConst::MSG_REMINDER_APPOINTMENT;
             $title = "Nhắc nhở cuộc hẹn";
             $message = "Bạn có cuộc hẹn ngày hôm nay vào lúc " . $startTime;
-            $user = User::where('phone', $phone)->first();
-            if ($user == null) {
+            $fbToken = FirebaseToken::where('phone', $phone)->first();
+            if ($fbToken == null) {
                 self::logInfo('Firebase Appointment: Cannot find user with phone: ' . $phone);
                 return "'Firebase Appointment: Cannot find user with phone: ' . $phone";
-            } else if ($user->noti_token == "NO_TOKEN") {
+            } else if ($fbToken->noti_token == "NO_TOKEN") {
                 self::logInfo("Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN");
                 return "Firebase Appointment: user with phone " . $phone . " Has NO_TOKEN";
             } else {
-                $token = $user->noti_token;
+                $token = $fbToken->noti_token;
                 $requestObj = self::getFirebaseRequestObj($type, $title, $message, $body, $token);
+                self::logInfo("Firebase Appointment:  Request is " . json_encode($requestObj));
                 $response = self::sendFirebase($requestObj);
                 $responseObj = json_decode($response);
                 self::logInfo("Firebase Appointment:  Response is " . $response);
                 return $responseObj;
             }
-        } catch (Exception $ex) {
-            self::logInfo("Firebase Appointment: Exception when sending firebase reminding appointment: " . $ex->getMessage());
+        } catch (\Exception $ex) {
+            self::logInfo("Firebase Appointment: Exception when sending firebase reminding appointment: " . $ex->getMessage()
+                . " File: " . $ex->getFile() . " Line: " . $ex->getLine()
+            );
             return $ex->getMessage();
         }
     }
@@ -160,7 +162,7 @@ class Utilities
             $response = $request->getBody()->getContents();
             return $response;
         } catch (GuzzleException $ex) {
-            Log::info("Error send firebase " . $ex->getMessage());
+            Log::info("Error send firebase " . $ex->getMessage() . " File: " . $ex->getFile() . " Line: " . $ex->getLine());
             throw new Exception($ex);
         }
     }
