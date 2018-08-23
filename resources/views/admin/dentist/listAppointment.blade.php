@@ -1,12 +1,12 @@
 @extends('admin.master')
 @section('title', 'Danh sách lịch hẹn')
 @section('content')
-    <div class="content-wrapper">
+<div class="content-wrapper">
         <div class="box">
          <div class="panel panel-default" style="">
             <div class="panel-heading">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: left"> <label><h1>Danh sách lịch hẹn </h1></label></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  > <label><h3>Danh sách lịch hẹn </h3></label></div>
                     </div>
             </div>
             <div class="panel-body">

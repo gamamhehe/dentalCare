@@ -73,9 +73,9 @@ trait AnamnesisBusinessFunction
     public function getListAnamnesisByPatient($id){
         $AnamnesisPatient = AnamnesisPatient::where('patient_id',$id)->get();
         foreach ($AnamnesisPatient as $key) {
-            $key->name = $key->belongsToAnamnesisCatalog()->first();
+            $key->name = $key->belongsToAnamnesisCatalog()->first()->name;
         }
-        return null;
+        return $AnamnesisPatient;
     }
     public function createAnamnesisForPatient($array,$patientId){
         foreach ($array as $key => $value) {

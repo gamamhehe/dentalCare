@@ -174,12 +174,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::get('/list-appointment-in-date', 'Admin\StaffController@viewAppointmentInDate')->name('admin.listAppointmentInDate.dentist');
     Route::get('/get-appointment', 'Admin\StaffController@getListAppointmentForStaff');
     Route::get('/get-dentist', 'Admin\StaffController@getStaff');
-    Route::get('/list-staff', 'Admin\StaffController@createStaff');
-    Route::post('/create-staff', 'Admin\StaffController@create');
+    Route::get('/list-staff', 'Admin\StaffController@listStaff')->name('admin.Staff.list');
+    Route::post('/create-staff', 'Admin\StaffController@createStaff');
     Route::get('/get-appointment-in-date', 'Admin\StaffController@getListAppointmentInDateForStaff');
     Route::get('/add-post', 'Admin\StaffController@addPost');
     Route::post('/edit-post', 'Admin\StaffController@editPost');
-    Route::get('/delete-post', 'Admin\StaffController@deletePost');
+    Route::get('/delete-staff', 'Admin\StaffController@deleteStaff');
 
     Route::get('/create-treatment/{id}', 'Admin\StaffController@createTreatmentByStaff')->name('create.treatmentHistory');
     Route::get('/check-coming/{id}', 'Admin\StaffController@checkComingPatient');

@@ -1,12 +1,12 @@
 @extends('admin.master')
 @section('title', 'Lịch sử bệnh án bệnh nhân')
 @section('content')
-    <div class="content-wrapper" >
+<div class="content-wrapper">
         <div class="box">
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Lịch sử bệnh án bệnh nhân</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  > <label><h3>Lịch sử bệnh án bệnh nhân </h3></label></div>
                     </div>
                 </div>
                 <div class="panel-body">

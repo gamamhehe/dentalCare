@@ -1,7 +1,7 @@
 @extends('admin.master')
 @section('title', 'Chỉnh sửa tin tức')
 @section('content')
-    <div class="content-wrapper" >
+<div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content" >
     <div class="container"  >
@@ -12,7 +12,7 @@
         <table id="dup-table" class="table myTable table-bordered Mytable-hover">
           <thead>
           <tr style="height: 1.3em;">
-            <td class="col-sm-1">id</td>
+            <td class="col-sm-1">ID</td>
             <td class="col-sm-6" style="text-align: left;">Tên Bài Viết</td>
             <td class="col-sm-3">Lựa chọn</td>
           </tr>

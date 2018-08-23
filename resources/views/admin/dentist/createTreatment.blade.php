@@ -6,7 +6,7 @@
     <section class="content">
         <div class="container"  >
             <div class="row" style="text-align: center;">
-                <label><h1>Khởi tạo liệu trình </h1></label>
+                <label><h3>Khởi tạo liệu trình </h31></label>
             </div>
 
             <form method ="post" class="form-horizontal" action="{{ route('admin.createTreatmentHistoryPatient.dentist') }}" enctype="multipart/form-data" id="createTreat" >

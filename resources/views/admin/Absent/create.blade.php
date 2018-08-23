@@ -2,10 +2,8 @@
 @section('title', 'Khởi tạo đơn xin nghỉ')
 @section('content')
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content">
             <div class="col-xs-6">
-            
               <div class="box box-info">
                 <div class="row" style="text-align: center;">
                     <label><h1>Đơn xin nghỉ</h1></label>

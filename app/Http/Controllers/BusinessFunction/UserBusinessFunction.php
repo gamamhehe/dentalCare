@@ -73,6 +73,7 @@ trait UserBusinessFunction
             throw new Exception($e->getMessage());
         }
     }
+    
 
     public function createUserWithAnamnesis($user, $patient, $userHasRole, $listAnamnesisId)
     {

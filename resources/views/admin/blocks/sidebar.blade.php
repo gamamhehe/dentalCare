@@ -53,12 +53,11 @@
             <li>
                 <a href="{{ route('admin.absent')}}"><i class="fa fa-list-alt"></i><span>Xin nghỉ</span></a>
             </li>
-            <li class="treeview">
-                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí lịch sử bệnh án</span><span
-                            class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.treatmentHistory')}}">Danh sách lịch sử bệnh án</a></li>
-                </ul>
+            <li>
+                <a href="{{ route('admin.treatmentHistory')}}"><i class="fa fa-list-alt"></i><span>Quản lí lịch sử bệnh án</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin.Staff.list')}}"><i class="fa fa-list-alt"></i><span>Quản lí nhân sự</span></a>
             </li>
             @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
                 <li>

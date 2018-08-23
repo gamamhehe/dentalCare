@@ -1,15 +1,16 @@
 @extends('admin.master')
 @section('title', 'Danh sách lịch hẹn trong ngày')
 @section('content')
-    <div class="content-wrapper" >
-        <!-- Content Header (Page header) -->
-        <section class="content" >
-            <div class=""  >
-                <div class="row " style="text-align: center; margin-right: 4em">
-                    <label><h1>Danh sách lịch hẹn trong ngày </h1></label>
-                </div>
+    <div class="content-wrapper">
+        <div class="box">
                 <div class="panel panel-default" style="">
-                    <div class="panel-body">
+                    <div class="panel-heading">
+                        <div class="row " style="text-align: center; margin-right: 4em">
+                            <label><h3>Danh sách lịch hẹn trong ngày </h3></label>
+                        </div>
+                    </div>
+                </div>
+                 <div class="panel-body">
                         <div class="form-group">
                             <table id="dup-table" class="table table-striped table-bordered">
                                 <thead>
@@ -26,11 +27,11 @@
                             </table>
                         </div>
                     </div>
-                </div>
-
             </div>
-        </section>
     </div>
+               
+                   
+
 @endsection
 @section('js')
     <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
