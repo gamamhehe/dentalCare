@@ -110,14 +110,14 @@
                                             <div class="col-sm-4"><label>Bệnh tiền sử</label></div>
                                             <div class="col-sm-6" style="padding-left: 0px;">
                                                 <ul style="padding: 0px;margin: 0px;">
-                                                <!--     @if($patient->Anamnesis)
+                                                    @if($patient->Anamnesis)
                                                         @foreach($patient->Anamnesis as $key)
-                                                            <li>{{$key->name->name}}</li>
+                                                            <li>{{$key->name}}</li>
 
                                                         @endforeach
                                                     @else
                                                         <p>Không có .</p>
-                                                    @endif -->
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </div>
