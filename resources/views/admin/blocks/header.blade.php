@@ -5,7 +5,7 @@
         <span class="logo-mini"><img src="/assets/images/Logo/logo.png" alt="" class="img-responsive" style="width: 100%;max-height: 50px;padding-top:5px; "></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
-        <img src="/assets/images/Logo/word.png" alt="" class="img-responsive" style="width: 100%;max-height: 100px;padding-top:10px; ">
+      <!--   <img src="/assets/images/Logo/word.png" alt="" class="img-responsive" style="width: 100%;  padding-top:10px; "> -->
         </span>
   <!--        <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
