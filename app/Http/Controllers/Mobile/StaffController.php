@@ -127,12 +127,12 @@ class StaffController extends BaseController
                             $this->dispatch(new SendFirebaseJob(
                                 AppConst::RESPONSE_FEEDBACK,
                                 "Thông báo",
-                                "Đánh giá dịch vụ ". $treatment->name . ' lần '.$count,
+                                "Đánh giá dịch vụ " . $treatment->name . ' lần ' . $count,
                                 json_encode($feedbackObj),
                                 $firebaseToken->noti_token
                             ));
-                            $this->logInfo("Send feedback to".$phone);
-                        }else{
+                            $this->logInfo("Send feedback to" . $phone);
+                        } else {
                             $this->logInfo("Fire base null");
                         }
                     }
@@ -408,51 +408,47 @@ class StaffController extends BaseController
 
     public function bookAppointment(Request $request)
     {
+        $phone = $request->input('phone');
+        $note = $request->input('note');
+        $bookingDate = $request->input('booking_date');
+        $dentistId = $request->input('dentist_id');
+        $patientId = $request->input('patient_id');
+        $patientName = $request->input('name');
+        $allowOvertime = $request->input('is_allow_overtime');
+        $estimatedTime = $request->input('estimated_time');
+        $appdateObj = new DateTime($bookingDate);
         try {
-            $phone = $request->input('phone');
-            $note = $request->input('note');
-            $bookingDate = $request->input('booking_date');
-            $dentistId = $request->input('dentist_id');
-            $patientId = $request->input('patient_id');
-            $patientName = $request->input('name');
-            $allowOvertime = $request->input('is_allow_overtime');
-            $estimatedTime = $request->input('estimated_time');
-            $appdateObj = new DateTime($bookingDate);
-            $dentist = $this->getStaffById($dentistId);
-            if ($dentist == null) {
-                $error = $this->getErrorObj("Không thể tìm thấy số điện thoại nha sĩ",
-                    "No exception");
-                return response()->json($error, 400);
-            }
+//            $dentist = $this->getStaffById($dentistId);
+//            if ($dentist == null) {
+//                $error = $this->getErrorObj("Không thể tìm thấy số điện thoại nha sĩ",
+//                    "No exception");
+//                return response()->json($error, 400);
+//            }
             $patient = $this->getPatientById($patientId);
             if ($patient == null) {
                 $error = $this->getErrorObj("Không thể tìm thấy bệnh nhân",
                     "No exception");
                 return response()->json($error, 400);
             }
-            if ($this->isEndOfTheDay($appdateObj)) {
-                $error = $this->getErrorObj("Dã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
-                    "No Excepton");
-                return response()->json($error, 400);
-            }
             $result =
-                $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $patientName, $estimatedTime,$allowOvertime == 1);
-            if ($result != null) {
-//                $startDateTime = new DateTime($result->start_time);
-//                $smsMessage = AppConst::getSmsMSG($result->numerical_order, $startDateTime);
-//                $this->dispatch(new SendSmsJob($phone, $smsMessage));
-                return response()->json($result, 200);
-            } else {
-                $error = Utilities::getErrorObj("Đã quá giờ đặt lịch, bạn vui lòng chọn ngày khác",
-                    "Result is null, No exception");
-                return response()->json($error, 400);
-            }
+                $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $patientName, $estimatedTime, $allowOvertime == 1);
+            return response()->json($result, 200);
         } catch (ApiException $e) {
-            $error = Utilities::getErrorObj("Lỗi server", $e->getMessage());
+            $error = Utilities::getErrorObj("Lỗi server", $e);
             return response()->json($error, 400);
         } catch (\Exception $ex) {
-            $error = Utilities::getErrorObj("Lỗi server", $ex->getMessage());
-            return response()->json($error, 400);
+            if ($ex->getMessage() == "isEndOfTheDay" && ($allowOvertime == 0)) {
+                $currentTime = new DateTime();
+                if ($this->isEndOfTheDay($currentTime)) {
+                    $error = $this->getErrorObj("Đã quá thời gian đặt lịch, bạn vui lòng chọn ngày khác", $ex);
+                } else {
+                    $error = $this->getErrorObj("Lịch hẹn ngày " . $appdateObj->format('d-m-Y') . " đã đầy, bạn vui lòng chọn ngày khác", $ex);
+                }
+                return response()->json($error, 400);
+            } else {
+                $error = Utilities::getErrorObj("Lỗi server", $ex);
+                return response()->json($error, 400);
+            }
         }
     }
 
