@@ -431,7 +431,7 @@ class StaffController extends BaseController
 //                return response()->json($error, 400);
 //            }
             $result =
-                $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $patientName, $estimatedTime, $allowOvertime == 1);
+                $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $patientName, $allowOvertime == 1);
             return response()->json($result, 200);
         } catch (ApiException $e) {
             $error = Utilities::getErrorObj("Lỗi server", $e);
