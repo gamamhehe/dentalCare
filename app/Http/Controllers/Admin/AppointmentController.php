@@ -125,9 +125,12 @@ class AppointmentController extends Controller
                 $idPatient = $patient->id;
                 $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
                 foreach ($listTreatmentHistory as $treatmentHistory) {
-                    if ($treatmentHistory->finish_date == null) {
+                    $giagoc = $treatmentHistory->price;
+                    $giadagiam = $treatmentHistory->total_price;
+
+
                         $result[] = $treatmentHistory;
-                    }
+                    
                 }
 
             } else { // bệnh nhân không tồn tại.
