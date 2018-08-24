@@ -6,10 +6,10 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="sidebar">
                 <a href="{{ route('admin.AppointmentPatient.index')}}"><i
-                            class="fa fa-list-alt"></i> <span>Bệnh nhân</span></a>
+                            class="fa fa-list-alt"></i><span>Bệnh nhân</span></a>
             </li>
             <li class="treeview" class="sidebar sideHover">
-                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Lịch hẹn </span>
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i><span>Lịch hẹn </span>
                     @if(Session::get('currentAppointmentComming') != 0)
                         <span class="pull-right-container">
               <span class="label label-primary pull-right" style="margin-right: 20px"
@@ -32,7 +32,7 @@
             </li>
             
             <li class="sidebar">
-                <a href="{{ route('admin.absent')}}"><i class="fa fa-list-alt"></i><span>Xin nghỉ</span></a>
+                <a href="{{ route('admin.absent')}}"><i class="fa fa-list-alt"></i><span>Nghỉ phép</span></a>
             </li>
             <li>
                 <a href="{{ route('admin.treatmentHistory')}}"><i class="fa fa-list-alt"></i><span>Quản lí lịch sử bệnh án</span></a>
@@ -47,7 +47,7 @@
             @endif
             @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
                 <li class="treeview">
-                    <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí tin tức</span><span
+                    <a href="javascript:void(0);"><i class="fa fa-list-alt"></i><span>Quản lí tin tức</span><span
                                 class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin.list.news')}}">Danh sách tin tức</a></li>
@@ -56,7 +56,7 @@
                 </li>
             @endif
             <li class="treeview">
-                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí bệnh nguy hiểm</span><span
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i><span>Quản lí bệnh nguy hiểm</span><span
                             class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.list.anamnesis')}}">Danh sách bệnh tiền sử</a></li>
@@ -65,7 +65,7 @@
             </li>
             @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
                 <li class="treeview">
-                    <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí sự kiện</span><span
+                    <a href="javascript:void(0);"><i class="fa fa-list-alt"></i><span>Quản lí sự kiện</span><span
                                 class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin.list.event')}}">Danh sách sự kiện</a></li>
@@ -75,7 +75,7 @@
                 </li>
             @endif
             <li class="treeview">
-                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí đánh giá </span><span
+                <a href="javascript:void(0);"><i class="fa fa-list-alt"></i><span>Quản lí đánh giá </span><span
                             class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.list.feedback')}}">Danh sách đánh giá</a></li>
@@ -86,7 +86,7 @@
               
             @if(Session::get('roleAdmin') == 2 or Session::get('roleAdmin') == 1)
                 <li class="treeview">
-                    <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí tủ thuốc </span><span
+                    <a href="javascript:void(0);"><i class="fa fa-list-alt"></i><span>Quản lí tủ thuốc </span><span
                                 class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin.list.medicines')}}">Danh sách thuốc</a></li>
@@ -96,7 +96,7 @@
             @endif
             @if(Session::get('roleAdmin') == 2 or Session::get('roleAdmin') == 1)
                 <li class="treeview">
-                    <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Quản lí Liệu trình </span><span
+                    <a href="javascript:void(0);"><i class="fa fa-list-alt"></i><span>Quản lí Liệu trình </span><span
                                 class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin.list.treatment')}}">Danh sách liệu trình</a></li>

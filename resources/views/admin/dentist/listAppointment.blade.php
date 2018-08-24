@@ -22,7 +22,7 @@
                                 @endif
                                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="text-align: left;">Ngày bắt đầu
                                 </td>
-                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Thời gian khám</th>
+                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Thời lượng khám</th>
                                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: left;">Ghi chú</th>
                                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: left;">Trạng thái
                                 </th>

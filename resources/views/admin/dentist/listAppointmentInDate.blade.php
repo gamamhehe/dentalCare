@@ -15,16 +15,16 @@
                     <table id="dup-table" class="table table-striped table-bordered">
                         <thead>
                         <tr style="background-color: #eee;">
-                            <td class="col-sm-1">Số điện thoại</td>
+                            <th class="col-lg-0.5 col-md-1 col-sm-1 col-xs-1">Số điện thoại</th>
                             @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
-                                <td class="col-sm-1">Số thứ tự</td>
+                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Số thứ tự</th>
                             @endif
-                            <td class="col-sm-1">Bác sĩ</td>
-                            <td class="col-sm-1" style="text-align: left;">Ngày bắt đầu</td>
-                            <td class="col-sm-1">Thời gian khám</td>
-                            <td class="col-sm-2" style="text-align: left;">Ghi chú</td>
-                            <td class="col-sm-2" style="text-align: left;">Trạng thái</td>
-                            <td class="col-sm-2">Tùy chọn</td>
+                            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Bác sĩ</th>
+                            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Giờ bắt đầu</th>
+                            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Thời lượng khám</th>
+                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Ghi chú</th>
+                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Trạng thái</th>
+                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Tùy chọn</th>
                         </tr>
                         </thead>
                     </table>
