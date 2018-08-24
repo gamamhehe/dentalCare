@@ -31,18 +31,21 @@ trait AppointmentBussinessFunction
 
         return $appointments;
     }
-      public function getAppointmentByPhoneFutureClosest($phone)
+
+    public function getAppointmentByPhoneFutureClosest($phone)
     {
         $appointments = Appointment::where('phone', $phone)
-           ->whereDate('start_time','>=' ,Carbon::now()->format('Y-m-d'))->first();
+            ->whereDate('start_time', '>=', Carbon::now()->format('Y-m-d'))->first();
         return $appointments;
     }
-     public function getAppointmentByPhoneFuture($phone)
+
+    public function getAppointmentByPhoneFuture($phone)
     {
         $appointments = Appointment::where('phone', $phone)
-           ->whereDate('start_time','>=' ,Carbon::now()->format('Y-m-d'))->get();
+            ->whereDate('start_time', '>=', Carbon::now()->format('Y-m-d'))->get();
         return $appointments;
     }
+
     public function getAppointmentByPhone($phone)
     {
         $appointments = Appointment::where('phone', $phone)
@@ -224,7 +227,7 @@ trait AppointmentBussinessFunction
             //process when patient book appointment at the same day, and
 //            $diffDate = ($currentDateTime->diff($predictAppointmentDate));
             if (($currentDateTime->getTimestamp() - $predictAppointmentDate->getTimeStamp()) > 0
-            && !$this->isEndOfTheDay($currentDateTime)
+                && !$this->isEndOfTheDay($currentDateTime)
                 && !$this->isInEarlyDay($currentDateTime)
             ) {
 //                $predictAppointmentDate = $this->addTimeToDate($currentDateTime, '00:10:00');
@@ -308,6 +311,7 @@ trait AppointmentBussinessFunction
         }
 
     }
+
     public function updateDentistAppoinment($id, $appointment_id)
     {
         DB::beginTransaction();
@@ -681,7 +685,6 @@ trait AppointmentBussinessFunction
 
     public function checkAppointmentForPatient($phone, $idPatient)
     {
-        $listCurrentFreeDentist = $this->getCurrentFreeDentist();
         $listIdAppointmentOfPhone = Appointment::where('phone', $phone)
             ->whereDate('start_time', Carbon::now()->format('Y-m-d'))
             ->where('status', 0)
@@ -695,12 +698,7 @@ trait AppointmentBussinessFunction
                 ->first();
             if ($AppointmentOfPatient) {
                 $appointment = Appointment::where('id', $AppointmentOfPatient->appointment_id)->first();
-                if (in_array($appointment->staff_id, $listCurrentFreeDentist)) {
-                    return $appointment;
-                } else {
-                    //nha sĩ bận
-                    return false;
-                }
+                return $appointment;
             }
             $listIdAppointmentNullPatient = [];
             foreach ($listIdAppointmentOfPhone as $idAppointmentOfPhone) {
@@ -712,15 +710,13 @@ trait AppointmentBussinessFunction
                 }
             }
             if (count($listIdAppointmentNullPatient) == 0) {
+                dd($listIdAppointmentNullPatient);
                 return null;
             } else {
                 foreach ($listIdAppointmentNullPatient as $appointmentNullPatient) {
                     $appointment = Appointment::where('id', $appointmentNullPatient)->first();
-                    if (in_array($appointment->staff_id, $listCurrentFreeDentist)) {
-                        return $appointment;
-                    }
+                    return $appointment;
                 }
-                return false;
             }
         }
     }

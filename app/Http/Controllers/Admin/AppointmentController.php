@@ -127,9 +127,7 @@ class AppointmentController extends Controller
                 $giadagiam=0;
                 $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
                 foreach ($listTreatmentHistory as $treatmentHistory) {
-
                     $giagoc = $treatmentHistory->price;
-
                     $giadagiam = $treatmentHistory->total_price;
                     $phanTramGiam = (100-($giadagiam%$giagoc)*100);
                     $final = 100-$phanTramGiam;
