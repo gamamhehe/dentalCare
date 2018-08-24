@@ -37,7 +37,7 @@ class StaffController extends Controller
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         if ($sessionAdmin != null) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.AppointmentPatient.index');
         }
         return view('admin.login');
     }
@@ -198,6 +198,8 @@ class StaffController extends Controller
             } else if ($appointment->status == 4) {
                 $appointment->status = 'Hủy';
             }
+            $appointment->dentist = $appointment->belongsToStaff()->first()->name;
+
         }
         return Datatables::of($listAppointment)
             ->addColumn('action', function ($appoint) {
@@ -250,6 +252,7 @@ class StaffController extends Controller
                 $appointment->status = 'Hủy';
             }
             $appointment->time = date("H:i:s", strtotime($appointment->start_time));
+            $appointment->dentist = $appointment->belongsToStaff()->first()->name;
         }
         if ($role == 2) {
             return Datatables::of($listAppointment)

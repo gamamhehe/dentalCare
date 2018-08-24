@@ -1,31 +1,37 @@
 @extends('admin.master')
 @section('title', 'Danh sách lịch hẹn')
 @section('content')
-<div class="content-wrapper">
+    <div class="content-wrapper">
         <div class="box">
-         <div class="panel panel-default" style="">
-            <div class="panel-heading">
+            <div class="panel panel-default" style="">
+                <div class="panel-heading">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  > <label><h3>Danh sách lịch hẹn </h3></label></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><label><h3>Danh sách lịch hẹn </h3></label>
+                        </div>
                     </div>
-            </div>
-            <div class="panel-body">
-                <div class="form-group">
-                            <table id="dup-table" class="table table-striped table-bordered">
-                                <thead>
-                                <tr style="background-color: #eee;">
-                                    <th class="col-lg-0.5 col-md-1 col-sm-1 col-xs-1" >Số Điện Thoại</th>
-                                    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1" >Số Thứ tự</th>
-                                    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="text-align: left;">Ngày bắt đầu</td>
-                                    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Thời gian khám</th>
-                                    <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: left;">Ghi Chú</th>
-                                    <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: left;">Trạng thái</th>
-                                    <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Tùy chọn</th>
-                                </tr>
-                                </thead>
-                            </table>
                 </div>
-            </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <table id="dup-table" class="table table-striped table-bordered">
+                            <thead>
+                            <tr style="background-color: #eee;">
+                                <th class="col-lg-0.5 col-md-1 col-sm-1 col-xs-1">Số điện thoại</th>
+                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Số thứ tự</th>
+                                @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                                    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Bác sĩ</th>
+                                @endif
+                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="text-align: left;">Ngày bắt đầu
+                                </td>
+                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Thời gian khám</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: left;">Ghi chú</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: left;">Trạng thái
+                                </th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Tùy chọn</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -70,8 +76,15 @@
                 ajax: '/admin/get-appointment',
                 columns: [
                     {data: 'phone'},
-                     {data: 'numerical_order'},
-                    {data: 'start_time'},
+                    {data: 'numerical_order'},
+                        @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                    {
+                        data: 'dentist'
+                    },
+                        @endif
+                    {
+                        data: 'start_time'
+                    },
                     {data: 'estimated_time'},
                     {data: 'note'},
                     {data: 'status'},
@@ -134,6 +147,7 @@
                 }
             });
         }
+
         function checkStart(id) {
             $.ajax({
                 url: '/admin/start-appointment/' + id, //this is your uri
