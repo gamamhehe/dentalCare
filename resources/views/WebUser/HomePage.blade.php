@@ -532,7 +532,7 @@ id="navHeader">
     <div class="container" style="    border: 1px solid white;
     padding: 5px;">
     <div class="row">
-        <div class="col-xs-1"><img src="/assets/images/Homepage/dktv.png" alt="No Image" style="float: left;"
+        <div class="col-xs-1"><img src="/assets/images/HomePage/dktv.png" alt="No Image" style="float: left;"
          class="img-responsive img-fruid"></div>
          <div class="col-xs-10">
             <a href="#" class="btnkn2tv create-modal" style="color: white;">
@@ -898,10 +898,10 @@ style="background: url(/assets/images/HomePage/t3-bg.jpg);width: 100%;padding-to
                     <div class="col-sm-4">
                         <div><img src="/assets/images/Logo/word.png" style="max-width: 300px;width: 100%" class="img-responsive img-fruid"></div>
                         <br>
-                        <div>Website: <a href="https://google.com.vn">projectcapstone.vn</a></div>
+                        <div>Website: <a href="http://dentalgold.site">dentalgold.site</a></div>
                         <div>Bác sĩ tư vấn (24/7) : <a class="zalovb" id="callme"
                          onclick="ga('send', 'event', 'Phone', 'Click', 'Hotline');"
-                         href="tel:0968999777" rel="nofollow">1900.7979</a></div>
+                         href="tel:0968999777" rel="nofollow">1900.9999</a></div>
                      </div>
                      <div class="col-sm-4">
                         <div class="place">Hà Nội</div>
@@ -939,7 +939,7 @@ style="background: url(/assets/images/HomePage/t3-bg.jpg);width: 100%;padding-to
         <div class="container" style="width: 100%">
             <div class="row">
                 <div class="col-xs-12">
-                    <p>Designed by Phuc. All Rights Reserved</p>
+                    <p>Thiết kế bởi nhóm đồ án đại học FPT - Dental Gold Clinic.</p>
                 </div>
             </div>
         </div>
