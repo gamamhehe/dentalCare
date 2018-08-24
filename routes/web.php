@@ -56,6 +56,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::get('sync-payment', function () {
             return view('admin/syncData');
         })->name('admin.sync.payment');
+        Route::post('sync-payment-post', 'Blockchain\BlockchainController@CheckPublicKeyNPrivateKey')->name('admin.sync.payment.post');
     });
     Route::group(['middleware' => 'dentist'], function () {
         //MedicineController
