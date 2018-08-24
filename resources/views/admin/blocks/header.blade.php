@@ -4,7 +4,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><img src="/assets/images/Logo/logo.png" alt="" class="img-responsive" style="width: 100%;max-height: 100px; "></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg" style="padding-bottom: 20px;"><img src="/assets/images/Logo/word.png" alt="" class="img-responsive img-center logo-header"></span>
+        <span class="logo-lg" style="padding-bottom: 20px;"><img src="/assets/images/Logo/word.png" alt="" class="img-responsive img-center logo-header" style="padding-top:10px"></span>
   <!--        <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="hidden-xs">{{Session::get('currentAdmin')->belongToStaff()->first()->name}}</span>

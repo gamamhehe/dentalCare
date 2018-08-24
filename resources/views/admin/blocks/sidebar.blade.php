@@ -105,9 +105,8 @@
                 </li>
             @endif
             @if(Session::get('roleAdmin') == 1)
-                <li class="treeview">
-                    <a href="{{ route('admin.sync.payment')}}"><i class="fa fa-list-alt"></i> <span>Đồng bộ chi trả</span><span
-                                class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <li class="sidebar">
+                    <a href="{{ route('admin.sync.payment')}}"><i class="fa fa-list-alt"></i><span>Đồng bộ chi trả</span></a>
                 </li>
             @endif
             
