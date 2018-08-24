@@ -127,7 +127,7 @@ class AppointmentController extends Controller
                 foreach ($listTreatmentHistory as $treatmentHistory) {
                     $giagoc = $treatmentHistory->price;
                     $giadagiam = $treatmentHistory->total_price;
-                    $phanTramGiam = ($gia)
+//                    $phanTramGiam = ($gia);
 
 
                         $result[] = $treatmentHistory;
