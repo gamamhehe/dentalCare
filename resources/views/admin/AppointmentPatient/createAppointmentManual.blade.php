@@ -32,7 +32,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12" style="padding-right: 0;padding-left: 0;">
                                     <select style="margin:0px;width: 100%"
                                             id="PatientSelect" class="selectSpecialTwo col-sm-6 col-xs-7">
-
+                                        <option disabled selected value>Bấm kiểm tra để cập nhật danh sách bệnh nhân</option>
                                     </select>
                                 </div>
                             </div>
@@ -118,6 +118,7 @@
 
                     ;
                     if (data.length == 0) {
+                          $('#PatientSelect').append("<option disabled selected value>Bấm kiểm tra để cập nhật danh sách bệnh nhân</option>");
                         swal("Số điện thoại không tồn tại", "", "error");
                     } else {
                         swal("Số điện thoại hợp lệ.", "Hãy chọn bệnh nhân", "success");
@@ -126,6 +127,7 @@
                         }
                     }
                 }, error: function (data) {
+                   $('#PatientSelect').append("<option disabled selected value>Bấm kiểm tra để cập nhật danh sách bệnh nhân</option>");
                     swal("Vui lòng điền số điện thoại", "", "error");
                 }
             });
@@ -157,32 +159,33 @@
                 swal("Vui lòng chọn ngày đặt cho lịch hẹn  !", "", "error");
                 return;
             }else{
-                 $.ajax({
-                type: 'POST',
-                url: '/admin/create-appointment',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'phone': phone,
-                    'dentistID':dentistID,
-                    'estimateTimeReal': estimateTimeReal,
-                    'patientID': patientID,
-                    'datepicker': datepicker,
-                },
-                success: function (data) {
-                    if (data!= 0) {
-                        var date = new Date("d-m-y h:i:s",data['start_time']);
-                        var numberOrder = data['numerical_order'];
-                        const dateTime = data['start_time'];
-                        const parts = dateTime.split(/[- :]/);
-                        const wanted = 'Vào lúc : ' + parts[3] + ':' + parts[4]+ 'Ngày :'+ parts[2] + '/' + parts[1] + '/' + parts[0] ;
-                        console.log(dateTime);
-                        var message = "Số thứ tự "+numberOrder;
-                        swal(message, wanted, "success");
-                    } else {
-                        swal("Đặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
-                    }
-                },
-            });
+                alert(patientID);
+            //      $.ajax({
+            //     type: 'POST',
+            //     url: '/admin/create-appointment',
+            //     data: {
+            //         "_token": "{{ csrf_token() }}",
+            //         'phone': phone,
+            //         'dentistID':dentistID,
+            //         'estimateTimeReal': estimateTimeReal,
+            //         'patientID': patientID,
+            //         'datepicker': datepicker,
+            //     },
+            //     success: function (data) {
+            //         if (data!= 0) {
+            //             var date = new Date("d-m-y h:i:s",data['start_time']);
+            //             var numberOrder = data['numerical_order'];
+            //             const dateTime = data['start_time'];
+            //             const parts = dateTime.split(/[- :]/);
+            //             const wanted = 'Vào lúc : ' + parts[3] + ':' + parts[4]+ 'Ngày :'+ parts[2] + '/' + parts[1] + '/' + parts[0] ;
+            //             console.log(dateTime);
+            //             var message = "Số thứ tự "+numberOrder;
+            //             swal(message, wanted, "success");
+            //         } else {
+            //             swal("Đặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
+            //         }
+            //     },
+            // });
             }
            
         });

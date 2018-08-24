@@ -62,7 +62,7 @@
 <script>
     $(document).ready(function() {
         <?php if (Session::has('success')): ?>
-        swal("Sự kiện đã được tạo!", "", "error");
+        swal("Liệu trình đã được tạo!", "", "error");
         <?php endif ?>
 
         function xxx(evt,sel){

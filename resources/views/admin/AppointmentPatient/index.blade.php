@@ -232,9 +232,6 @@
                         <button class="btn btn-warning" type="button" id="addPatient">
                           Tạo bệnh nhân
                         </button>
-                        <button class="btn btn-warning" type="button" data-dismiss="modal">
-                            <span class="glyphicon glyphicon-remobe"></span>Close
-                        </button>
                     </div>
                 </div>
             </div>

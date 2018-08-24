@@ -17,7 +17,7 @@
                             <div class="row" style="margin-right: 2px;padding-bottom: 1em;margin-top: 1em;">
                                    @foreach($listStep as $one)
                                     <div class="form-group row" style="margin-bottom: 1em;border-bottom: 1px; ">
-                                            <div class="col-md-7 col-sm-7 col-xs-12"  >
+                                            <div class="col-md-7 col-sm-7 col-xs-12" style="padding-left:5em;" >
                                          {{$one->stepName->name}}
                                          
                                             </div>
@@ -34,7 +34,8 @@
                             <div class="col-sm-6">
                                     <div class="row" style="color: green;text-align: center;border-bottom: 1px green solid;"><h3>Hình Ảnh</h3></div>     
 
-                                <div class="row" id="divImage" style="min-height: 200px;bpadding-bottom: 1em;margin-top: 1em;" >
+                                <div class="row" id="divImage" style="min-height: 100px;padding-bottom: 1em;margin-top: 1em;" >
+                                @if($listImg != null)
                                 @foreach($listImg as $img)
                             <div id="" class="col-lg-2 col-sm-2 col-xs-2">
                             <div class="" style="max-height: 150px;max-width: 100px;min-height: 150px;min-width: 100px;"> 
@@ -42,11 +43,19 @@
                             </div>
                             </div>
                                 @endforeach
+                                @else
+                                <p><h5 style="color: blue;">Không có hình ảnh điều trị</h5></p>
+                                @endif
+                                @if($listImg == null)
+                                
+                                @endif
                                 </div>
                               
                             </div>
                         </div>
                     </div>
+                     <div class="form-group row"  >
+                     </div>
                      <div class="form-group row">
                         <div class="col-sm-4">
                             <button type="button" class="btn btn-success btn-medicine">Đơn Thuốc</button>
