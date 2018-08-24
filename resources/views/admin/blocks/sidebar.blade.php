@@ -2,32 +2,14 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left info">
-                {{ Session::get('nameUser') }}
-                <br>
-                {{--@php--}}
-                {{--$gmailUser = Session::get('gmailAddress')--}}
-                {{--@endphp--}}
-                {{--@if($gmailUser != '')--}}
-                {{--<small>({{ Session::get('gmailAddress') }})</small>--}}
-                {{--@else--}}
-                {{--<small>(Not Yet Login Gmail)</small>--}}
-                {{--@endif--}}
-            </div>
-        </div>
+       
         <ul class="sidebar-menu" data-widget="tree">
-            <li>
-                <a href="{!! route('admin.dashboard') !!}">
-                    <i class="fa fa-dashboard"></i> <span>Trang chủ</span>
-                    </span>
-                </a>
-            </li>
-            <li>
+          
+            <li class="sidebar">
                 <a href="{{ route('admin.AppointmentPatient.index')}}"><i
-                            class="fa fa-list-alt"></i><span>Bệnh nhân</span></a>
+                            class="fa fa-list-alt"></i> Bệnh nhân </a>
             </li>
-            <li class="treeview">
+            <li class="treeview" class="sidebar sideHover">
                 <a href="javascript:void(0);"><i class="fa fa-list-alt"></i> <span>Lịch hẹn </span>
                     @if(Session::get('currentAppointmentComming') != 0)
                         <span class="pull-right-container">
@@ -50,7 +32,7 @@
                 </ul>
             </li>
             
-            <li>
+            <li class="sidebar">
                 <a href="{{ route('admin.absent')}}"><i class="fa fa-list-alt"></i><span>Xin nghỉ</span></a>
             </li>
             <li>
@@ -127,3 +109,4 @@
         </ul>
     </section>
 </aside>
+  <link rel="stylesheet" href="/assets/user/css/mycss.css">
