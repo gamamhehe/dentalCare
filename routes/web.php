@@ -219,6 +219,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     //treatmentHistory
     Route::get('/treatment-history', 'Admin\TreatmentHistoryController@getList')->name('admin.treatmentHistory');
     Route::get('/get-treatment-history-detail', 'Admin\TreatmentHistoryController@getDetail')->name('gettreatmentHistoryDetail');
+    Route::get('/search-treatment-history/{searchValue}', 'Admin\TreatmentHistoryController@search');
 
     //city
     Route::get('/get-city', 'Admin\PatientController@getCityForDistrict');

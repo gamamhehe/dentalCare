@@ -169,6 +169,13 @@ trait TreatmentHistoryBusinessFunction
         }
     }
 
+    public function searchTreatmentHistory($searchValue){
+        $listPatient = Patient::where('phone', 'like', $searchValue . '%')
+            ->orWhere('name', 'like', '%' . $searchValue . '%')
+            ->pluck('id');
+        return TreatmentHistory::whereIn('patient_id', $listPatient)->get();
+    }
+
     public function createTreatmentProcess($idTreatment, $idPatient, $toothNumber, $price, $description)
     {
         DB::beginTransaction();
@@ -180,22 +187,22 @@ trait TreatmentHistoryBusinessFunction
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;
 
             if ($payment) {
-                  
+
                 $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
                 $queueController = new QueueController();
                 // $blockchainController = new BlockchainController();
                 // $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price, $payment->total_price));
             } else {
-                 
+
                 $idPayment = $this->createPayment($total_price, $phone);
                 $queueController = new QueueController();
                 // $blockchainController = new BlockchainController();
                 // $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
-                 
+
             }
-            if($description==null){
-                $description="";
+            if ($description == null) {
+                $description = "";
             }
             $idTreatmentHistory = TreatmentHistory::create([
                 'treatment_id' => $idTreatment,
