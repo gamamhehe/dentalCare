@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\BusinessFunction;
 
+use App\Helpers\AppConst;
 use App\Model\AnamnesisPatient;
 use App\Model\FirebaseToken;
 use App\Model\Patient;
@@ -189,12 +190,21 @@ trait UserBusinessFunction
         }
     }
 
-    public function getUserPhones($keyword)
+    public function getUserPatientPhones($keyword)
     {
         $phones = User::where('phone', 'like', '%' . $keyword . '%')
             ->pluck('phone')
             ->toArray();
-        return $phones;
+        $result = [];
+        foreach ($phones as $phone) {
+            $uHasRole = UserHasRole::where('phone', $phone)
+                ->where('role_id', AppConst::ROLE_PATIENT)
+                ->first();
+            if ($uHasRole != null) {
+                $result [] = $phone;
+            }
+        }
+        return $result;
     }
 
 
