@@ -222,7 +222,6 @@ class PatientController extends BaseController
             $status = -1;
         } else {
             $appointment = $this->checkAppointmentForPatient($phone, $id);
-            dd($appointment);
             if ($appointment === null) {
                 $status = 2;
             } else {
