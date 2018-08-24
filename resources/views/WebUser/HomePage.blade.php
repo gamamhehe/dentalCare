@@ -22,10 +22,13 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
 <!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
 <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
 </head>
 <body>
-<nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;"
+<nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;margin-bottom: 0px;"
 id="navHeader">
 <div class="container">
     <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
@@ -613,66 +616,43 @@ id="navHeader">
 </div>
 </div>
 </div>
-<div class="top">
-<!-- start banner -->
-<div class="banner" style="">
-    <div id="carousel" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel" data-slide-to="1"></li>
-            <li data-target="#carousel" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active hinhmot ">
+<div class="container">
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
 
-                <div class="carousel-caption textbanner">
-                    <div class="goi">
-                        <h3 class="tdbanner1">&nbsp</h3>
-                        <h4 class="tdbanner2"></h4>
-                     <!--    <div class="nutbanner">
-                            <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item  hinhhai img-responsive">
-                <div class="carousel-caption textbanner">
-                    <div class="goi">
-                        <!--   <h3 class="tdbanner1">Nha khoa Gold</h3>
-                        <h4 class="tdbanner2">Dental Gold</h4> -->
-                      <!--   <div class="nutbanner">
-                            <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item  hinhba img-responsive">
-                <div class="carousel-caption textbanner">
-                    <div class="goi">
-                        <!--        <h3 class="tdbanner1">Nha khoa Gold</h3>
-                        <h4 class="tdbanner2">Dental Gold</h4> -->
-                      <!--   <div class="nutbanner">
-                            <a href="#" class="btn btn-outline-secondary create-modal">Đặt Lịch ngay</a>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="/assets/images/Carousel/carousel1.jpg" alt="Los Angeles" style="width:100%;">
+      </div>
 
-        </div>
-        <div class="nutchuyen">
-            <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-                <i class="fa fa-angle-double-left fa-2x"></i>
-            </a>
-            <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-                <i class="fa fa-angle-double-right fa-2x"></i>
-            </a>
-        </div>
+      <div class="item">
+        <img src="/assets/images/Carousel/carousel2.jpg" alt="Chicago" style="width:100%;">
+      </div>
+    
+      <div class="item">
+        <img src="/assets/images/Carousel/carousel3.jpg" alt="New york" style="width:100%;">
+      </div>
     </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
 </div>
-<!-- end banner -->
-</div>
-<div class="container"
-style="background: url(/assets/images/HomePage/t3-bg.jpg);width: 100%;padding-top: 30px;padding-bottom: 50px;">
+ 
+<div class="container" style="background: url(/assets/images/HomePage/t3-bg.jpg);width: 100%;padding-top: 30px;padding-bottom: 50px;">
 <div class="row">
 <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
     <h3 class="wow bounceInLeft"><strong>CÔNG NGHỆ PHẪU THUẬT THẨM MỸ HOT NHẤT</strong></h3>
