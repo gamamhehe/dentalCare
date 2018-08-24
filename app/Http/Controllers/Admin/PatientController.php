@@ -260,13 +260,13 @@ class PatientController extends BaseController
         foreach ($RoleDentist as $key ) {
             $dentist[] = $key->belongsToUser()->first()->belongToStaff()->first();
         }
-        // foreach ($patientList as $patient) {
-        //      $address ="";
-        //     $patient->cityDetail = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
-        //     $patient->disctrictDetail = $patient->belongsToDistrict()->first()->name;
-        //     $address = $patient->address."  $patient->disctrictDetail  " ."  ,$patient->cityDetail";
-        //      $patient->address=  $address;
-        // }
+        foreach ($patientList as $patient) {
+             $address ="";
+            $patient->cityDetail = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
+            $patient->disctrictDetail = $patient->belongsToDistrict()->first()->name;
+            $address = $patient->address."  $patient->disctrictDetail  " ."  ,$patient->cityDetail";
+             $patient->address=  $address;
+        }
         return view('admin.AppointmentPatient.index', ['AnamnesisCatalog' => $listAnamnesis, 'citys' => $city, 'District' => $District, 'patientList' => $patientList,'dentists'=>$dentist]);
     }
 
