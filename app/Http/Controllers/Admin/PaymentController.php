@@ -87,9 +87,9 @@ class PaymentController extends Controller
                 if ($row->status) {
                     $output .= '
          <tr class="even gradeC" align="left">
-            <td style="text-align: center">{{$row->phone}}</td>
-            <td style="text-align: center">{{$row->total_price}}</td>
-            <td style="text-align: center">{!! $row->paid !!}</td>
+            <td style="text-align: center">'.$row->phone.'</td>
+            <td style="text-align: center">'.$row->total_price.'</td>
+            <td style="text-align: center">'. $row->paid .'</td>
             <td style="text-align: center">Đã Hoàn Thành</td>
             <td align="center" style="width: 20%">
             <form action="/admin/get-payment-detail">
