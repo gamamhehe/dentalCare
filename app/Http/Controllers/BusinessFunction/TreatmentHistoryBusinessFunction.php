@@ -184,8 +184,8 @@ trait TreatmentHistoryBusinessFunction
                 $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
                 $queueController = new QueueController();
-                $blockchainController = new BlockchainController();
-                $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price, $payment->total_price));
+                // $blockchainController = new BlockchainController();
+                // $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price, $payment->total_price));
             } else {
                  
                 $idPayment = $this->createPayment($total_price, $phone);
@@ -193,6 +193,9 @@ trait TreatmentHistoryBusinessFunction
                 // $blockchainController = new BlockchainController();
                 // $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
                  
+            }
+            if($description==null){
+                $description="";
             }
             $idTreatmentHistory = TreatmentHistory::create([
                 'treatment_id' => $idTreatment,

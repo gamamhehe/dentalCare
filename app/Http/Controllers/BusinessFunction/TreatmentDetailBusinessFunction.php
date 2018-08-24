@@ -33,9 +33,7 @@ trait TreatmentDetailBusinessFunction
 
     public function createTreatmentDetail($idTreatmentHistory, $note, $dentist_id)
     {
-        if ($note == null) {
-            $note = "&nsbp";
-        }
+         
         DB::beginTransaction();
         try {
             $idTreatmentDetail = TreatmentDetail::create([

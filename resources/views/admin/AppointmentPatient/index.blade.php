@@ -305,8 +305,11 @@
             }else if ($.trim(datepicker) == '') {
                 swal("Vui lòng chọn ngày đặt cho lịch hẹn  !", "", "error");
                 return;
-            }else if (estimateTime >90 || estimateTime < 10) {
-                swal("Thời gian cuộc hẹn từ 10 - 90 phút !", "", "error");
+            }else if (estimateTimeReal < 10  ) {
+                swal("Thời gian cuộc hẹn tối thiểu là 10 phút  !", "", "error");
+                return;
+            }else if (estimateTimeReal > 90 ) {
+                swal("Thời gian cuộc hẹn tối đa là 90 phút  !", "", "error");
                 return;
             }else{
                  $.ajax({
@@ -326,7 +329,7 @@
                         var numberOrder = data['numerical_order'];
                         const dateTime = data['start_time'];
                         const parts = dateTime.split(/[- :]/);
-                        const wanted = 'Vào lúc : ' + parts[3] + ':' + parts[4]+ 'Ngày :'+ parts[2] + '/' + parts[1] + '/' + parts[0] ;
+                        const wanted = 'Vào lúc: ' + parts[3] + ':' + parts[4]+ ' - Ngày:'+ parts[2] + '/' + parts[1] + '/' + parts[0] ;
                         console.log(dateTime);
                         var message = "Số thứ tự "+numberOrder;
                         swal(message, wanted, "success");

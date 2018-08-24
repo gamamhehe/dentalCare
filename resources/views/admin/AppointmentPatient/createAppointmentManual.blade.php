@@ -146,9 +146,6 @@
             var datepicker = document.getElementById("datepicker").value;
 
              var dentistID = document.getElementById("DentistSelect").value;
-             if(dentistID==null){
-                alert("xxx");return;
-             }
             if ($.trim(phone) == '') {
                 swal("Vui lòng điền số điện thoại!", "Hãy bấm Kiểm tra để xác nhận số điện thoại", "error");
                 return;
@@ -158,34 +155,42 @@
             }else if ($.trim(datepicker) == '') {
                 swal("Vui lòng chọn ngày đặt cho lịch hẹn  !", "", "error");
                 return;
+            }else if ($.trim(estimateTimeReal) == '') {
+                swal("Vui lòng điền thời gian cuộc hẹn  !", "", "error");
+                return;
+            }else if (estimateTimeReal < 10  ) {
+                swal("Thời gian cuộc hẹn tối thiểu là 10 phút  !", "", "error");
+                return;
+            }else if (estimateTimeReal > 90 ) {
+                swal("Thời gian cuộc hẹn tối đa là 90 phút  !", "", "error");
+                return;
             }else{
-                alert(patientID);
-            //      $.ajax({
-            //     type: 'POST',
-            //     url: '/admin/create-appointment',
-            //     data: {
-            //         "_token": "{{ csrf_token() }}",
-            //         'phone': phone,
-            //         'dentistID':dentistID,
-            //         'estimateTimeReal': estimateTimeReal,
-            //         'patientID': patientID,
-            //         'datepicker': datepicker,
-            //     },
-            //     success: function (data) {
-            //         if (data!= 0) {
-            //             var date = new Date("d-m-y h:i:s",data['start_time']);
-            //             var numberOrder = data['numerical_order'];
-            //             const dateTime = data['start_time'];
-            //             const parts = dateTime.split(/[- :]/);
-            //             const wanted = 'Vào lúc : ' + parts[3] + ':' + parts[4]+ 'Ngày :'+ parts[2] + '/' + parts[1] + '/' + parts[0] ;
-            //             console.log(dateTime);
-            //             var message = "Số thứ tự "+numberOrder;
-            //             swal(message, wanted, "success");
-            //         } else {
-            //             swal("Đặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
-            //         }
-            //     },
-            // });
+                 $.ajax({
+                type: 'POST',
+                url: '/admin/create-appointment',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'phone': phone,
+                    'dentistID':dentistID,
+                    'estimateTimeReal': estimateTimeReal,
+                    'patientID': patientID,
+                    'datepicker': datepicker,
+                },
+                success: function (data) {
+                    if (data!= 0) {
+                        var date = new Date("d-m-y h:i:s",data['start_time']);
+                        var numberOrder = data['numerical_order'];
+                        const dateTime = data['start_time'];
+                        const parts = dateTime.split(/[- :]/);
+                        const wanted = 'Vào lúc: ' + parts[3] + ':' + parts[4]+ ' - Ngày:'+ parts[2] + '/' + parts[1] + '/' + parts[0] ;
+                        console.log(dateTime);
+                        var message = "Số thứ tự "+numberOrder;
+                        swal(message, wanted, "success");
+                    } else {
+                        swal("Đặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
+                    }
+                },
+            });
             }
            
         });

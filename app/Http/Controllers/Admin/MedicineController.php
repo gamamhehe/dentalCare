@@ -74,10 +74,10 @@ class MedicineController extends Controller
                 $tmp = "'".$row->name."'";
                 $output .= '
         <tr>
-         <td>' . $row->name . '</td>
-         <td>' . $row->use . '</td>
-         <td><button type="button" class="btn btn-default btn-success"
-                                        style="margin-right: 10px;float: right;" onclick="addToPrescription('.$tmp.','.$row->id.')">Thêm vào đơn thuốc
+         <td class="col-md-5 col-xs-12 ">' . $row->name . '</td>
+         <td class="col-md-4 col-xs-12">' . $row->use . '</td>
+         <td class="col-md-3 col-xs-12"><button type="button" class="btn btn-default divcenter btn-success"
+                                        style="margin-right: 10px;float: center;" onclick="addToPrescription('.$tmp.','.$row->id.')"><i class="fa fa-plus"></i>
                                 </button></td>
         </tr>
         ';

@@ -165,131 +165,131 @@
                         </div>
                     </div>
                 </div>
-                 </div>
+            </div>
         </div>
         <div class="box box-info">
-            <div class="box box-title">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-sm-12" style="text-align: center;"> <h4 class="box-title">Lịch sử bệnh án</h4></div>
+            <div class="panel panel-default" style="">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12" style="text-align: center;"> <h4>Lịch sử bệnh án</h4></div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="panel-body">
-                <!-- start -->
-                <div class="form-group row">
-                    <br/>
-                    <br/>
-                    <div id="accordion" class="accordion-container">
-                        @if($listTreatmentHistory)
-                            @foreach($listTreatmentHistory as $treatmentHistory)
-                                <article class="content-entry">
-                                    <div class="article-title">
-                                        <div class="row">
-                                            <h4 class="panel-title">
-                                                <div class="container">
-                                                    <h4>
-                                                        <i style="position: relative; top: 5px;left: 5px;"></i>{{$treatmentHistory->treatment->name}}
+                    <div class="panel-body">
+                        <!-- start -->
+                        <div class="form-group row">
+                           <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div id="accordion" class="accordion-container ">
+                                @if($listTreatmentHistory)
+                                    @foreach($listTreatmentHistory as $treatmentHistory)
+                                        <article class="content-entry">
+                                            <div class="article-title">
+                                                <div class="row">
+                                                    <h4 class="panel-title">
+                                                        <div class="container">
+                                                            <h4>
+                                                                <i style="position: relative; top: 5px;left: 5px;"></i>{{$treatmentHistory->treatment->name}}
+                                                            </h4>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="col-sm-4">Giá gốc
+                                                                : {{$treatmentHistory->price}} VNĐ
+                                                            </div>
+                                                            <div class="col-sm-4">Khuyến mãi : 0%</div>
+                                                            <div class="col-sm-4">Tổng tiền
+                                                                : {{$treatmentHistory->total_price}} VNĐ
+                                                            </div>
+                                                            <div class="col-sm-4">Răng
+                                                                : {{$treatmentHistory->tooth->tooth_name}}</div>
+                                                            <div class="col-sm-4">Ngày bắt đầu
+                                                                : {{$treatmentHistory->created_date}}</div>
+                                                            <div class="col-sm-4">
+                                                                @if($treatmentHistory->finish_date)
+                                                                    Ngày kết thúc :  {{$treatmentHistory->finish_date}}
+                                                                @else
+                                                                    <a href="{{ route("admin.stepTreatment", ['idTreatmentHistory' => $treatmentHistory->id,
+                        'idTreatment' => $treatmentHistory->treatment->id])}}" class="btn btn-success" role="button">Skip</a>
+                                                                @endif</div>
+                                                        </div>
                                                     </h4>
                                                 </div>
-                                                <div class="container">
-                                                    <div class="col-sm-4">Giá gốc
-                                                        : {{$treatmentHistory->price}} VNĐ
-                                                    </div>
-                                                    <div class="col-sm-4">Khuyến mãi : 0%</div>
-                                                    <div class="col-sm-4">Tổng tiền
-                                                        : {{$treatmentHistory->total_price}} VNĐ
-                                                    </div>
-                                                    <div class="col-sm-4">Răng
-                                                        : {{$treatmentHistory->tooth->tooth_name}}</div>
-                                                    <div class="col-sm-4">Ngày bắt đầu
-                                                        : {{$treatmentHistory->created_date}}</div>
-                                                    <div class="col-sm-4">
-                                                        @if($treatmentHistory->finish_date)
-                                                            Ngày kết thúc :  {{$treatmentHistory->finish_date}}
-                                                        @else
-                                                            <a href="{{ route("admin.stepTreatment", ['idTreatmentHistory' => $treatmentHistory->id,
-                'idTreatment' => $treatmentHistory->treatment->id])}}" class="btn btn-success" role="button">Skip</a>
-                                                        @endif</div>
-                                                </div>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-content">
-                                        @foreach($treatmentHistory->details as $a)
-                                            @if($a)
-                                                <div class="row">
-                                                    <div class="col-sm-2">BÁC SĨ :</div>
-                                                    <div class="col-sm-8">{{$a->dentist->name}} </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-2">Ngày điều trị</div>
-                                                    <div class="col-sm-8">{{$a->create_date}} </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-2">Các bước đã thực hiện:</div>
-                                                    <div class="col-sm-8">
-                                                        @foreach($a->treatment_detail_steps as $step)
-                                                            <div class="row">
-                                                                <div class="col-sm-8">{{$step->step->name}} </div>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-2">Toa thuốc</div>
-                                                    <div class="col-sm-9">
-                                                        <table class="table table-striped Mytable-hover">
-                                                            <tr>
-                                                                <th>Tên thuốc</th>
-                                                                <th>Số lượng</th>
-                                                            </tr>
-                                                            <tbody>
-                                                            @foreach($a->prescriptions as $prescription)
-                                                                <tr>
-                                                                    <td>{{$prescription->medicine->name}}</td>
-                                                                    <td>{{$prescription->quantity}} viên</td>
-                                                                </tr>
-                                                            @endforeach
-                                                            </tbody>
-                                                        </table>
-
-                                                    </div>
-                                                </div>
-                                                <div class="row" style="margin-top: 10px;">
-                                                    @foreach($a->treatment_images as $b)
-                                                        <div class="col-sm-4">
-                                                            <img src="{{$b->image_link}}" alt=""
-                                                                 class="img-responsive img-fluid">
+                                            </div>
+                                            <div class="accordion-content">
+                                                @foreach($treatmentHistory->details as $a)
+                                                    @if($a)
+                                                        <div class="row">
+                                                            <div class="col-sm-2">BÁC SĨ :</div>
+                                                            <div class="col-sm-8">{{$a->dentist->name}} </div>
                                                         </div>
-                                                    @endforeach
-                                                </div>
-                                                <hr>
-                                            @else
-                                                <div class="row">
-                                                    <div class="col-sm-2">BÁC SĨ :</div>
-                                                    <div class="col-sm-8">NULL nhé</div>
-                                                </div>
-                                            @endif
-                                        @endforeach
+                                                        <div class="row">
+                                                            <div class="col-sm-2">Ngày điều trị</div>
+                                                            <div class="col-sm-8">{{$a->create_date}} </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2">Các bước đã thực hiện:</div>
+                                                            <div class="col-sm-8">
+                                                                @foreach($a->treatment_detail_steps as $step)
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">{{$step->step->name}} </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2">Toa thuốc</div>
+                                                            <div class="col-sm-9">
+                                                                <table class="table table-striped Mytable-hover">
+                                                                    <tr>
+                                                                        <th>Tên thuốc</th>
+                                                                        <th>Số lượng</th>
+                                                                    </tr>
+                                                                    <tbody>
+                                                                    @foreach($a->prescriptions as $prescription)
+                                                                        <tr>
+                                                                            <td>{{$prescription->medicine->name}}</td>
+                                                                            <td>{{$prescription->quantity}} viên</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 10px;">
+                                                            @foreach($a->treatment_images as $b)
+                                                                <div class="col-sm-4">
+                                                                    <img src="{{$b->image_link}}" alt=""
+                                                                         class="img-responsive img-fluid">
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <hr>
+                                                    @else
+                                                        <div class="row">
+                                                            <div class="col-sm-2">BÁC SĨ :</div>
+                                                            <div class="col-sm-8">NULL nhé</div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </article>
+                                    @endforeach
+                                @else
+                                    <div class="container" style="background-color: whitesmoke;width: 100%;height: 200px;">
+                                        <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân chưa từng điều trị</h1>
                                     </div>
-                                </article>
-                            @endforeach
-                        @else
-                            <div class="container" style="background-color: whitesmoke;width: 100%;height: 200px;">
-                                <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân chưa từng điều trị</h1>
+                                @endif
                             </div>
-                        @endif
+                           </div>
+                            
+                            <!--/#accordion-->
+
+
+                        </div>
                     </div>
-                    <br/>
-                    <br/>
-                    <!--/#accordion-->
-
-
-                </div>
             </div>
         </div>
     </div>
+ 
        
 
  

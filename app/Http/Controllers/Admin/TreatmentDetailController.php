@@ -17,9 +17,7 @@ class TreatmentDetailController extends Controller
 	use MedicineBusinessFunction;
   use TreatmentBusinessFunction;
   	public function createTreatmentDetailController(Request $request){
-  		 // $idTreatmentHistory=$request['idTreatmentHistory'];
- 
-      //details
+   
   		$idTreatmentHistory=$request->idTreatmentHistory;
   		$description =$request['description'];
   		$dentist = $request->session()->get('currentAdmin');
