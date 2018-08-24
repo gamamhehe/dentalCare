@@ -1,31 +1,27 @@
 @extends('admin.master')
 @section('title', 'Chi tiết lần khám')
 @section('content')
-  <link rel="stylesheet" href="{{asset("/plugins/datepicker/datepicker3.css")}}">
   <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content">
-            <div class="">
-                <div class="row" style="text-align: center;">
-                    <label><h1>Xem lại chi tiết lần khám  </h1></label>
-                   <div class="row" style="margin-left: 35em;"> <hr style="
-height: 55px;
-background-image: url(/assets/images/icon/type_4.png);
-background-repeat: no-repeat;"></div>
+            <div class="box" style="border: none">
+               <div class="panel-heading" style="padding-bottom: 0px;border-bottom-width: 0px;padding-top: 0px;">
+                       <div class="row" style="text-align: center;">
+                        <label><h1 style="margin-bottom: 0px;">Xem lại chi tiết lần khám  </h1></label>
+                       <div class="row img-center"><p><img class="img-center" src="https://vivaclinic.vn/wp-content/uploads/2017/09/SHARP-3.png" data-src="https://vivaclinic.vn/wp-content/uploads/2017/09/SHARP-3.png" width="196" height="50" alt=""></p></div>
+                        </div>
                 </div>
-                    {{ csrf_field() }}
-                    <div class="row">
+                <div class="panel-body" style="padding-top: 0px;">
+                    <div class="form-group row"  >
                         <div class="col-sm-12">
                             <div class="col-sm-6">
-                            <div class="row" style="color: green;text-align: center;border-bottom: 1px green solid;    margin-right: 1em"><h1>Các bước đã chọn để điều trị</h1></div>
+                            <div class="row" style="color: green;text-align: center;border-bottom: 1px green solid;    margin-right: 1em"><h3>Các bước đã chọn để điều trị</h3></div>
                             <div class="row" style="margin-right: 2px;padding-bottom: 1em;margin-top: 1em;">
                                    @foreach($listStep as $one)
-                                    <div class="row" style="margin-bottom: 1em;border-bottom: 1px; ">
-                                        <div class="col-sm-5" id="content">
+                                    <div class="form-group row" style="margin-bottom: 1em;border-bottom: 1px; ">
+                                            <div class="col-md-7 col-sm-7 col-xs-12"  >
                                          {{$one->stepName->name}}
                                          
-                                        </div>
-                                        <div class="col-sm-4" style="padding-right: 0;">
+                                            </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12" style="padding-right: 0; ">
                                             <input type="checkbox" checked data-toggle="toggle" disabled 
                                                    data-size="mini" data-style="slow" data-onstyle="success"
                                                    data-offstyle="danger" data-on="" data-off="">
@@ -36,7 +32,7 @@ background-repeat: no-repeat;"></div>
                              
                             </div>
                             <div class="col-sm-6">
-                                    <div class="row" style="color: green;text-align: center;border-bottom: 1px green solid;"><h1>Hình Ảnh</h1></div>     
+                                    <div class="row" style="color: green;text-align: center;border-bottom: 1px green solid;"><h3>Hình Ảnh</h3></div>     
 
                                 <div class="row" id="divImage" style="min-height: 200px;bpadding-bottom: 1em;margin-top: 1em;" >
                                 @foreach($listImg as $img)
@@ -51,7 +47,14 @@ background-repeat: no-repeat;"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-bottom: 1em;">
+                     <div class="form-group row">
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-success btn-medicine">Đơn Thuốc</button>
+                        </div>
+                        <div class="col-sm-7">
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin-bottom: 1em;">
                         <div class="col-sm-12">
                             <div class="col-sm-2"><label>Miêu tả bệnh </label></div>
                             <div class="col-sm-10" style="padding-right: 0;">
@@ -62,19 +65,14 @@ background-repeat: no-repeat;"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <button type="button" class="btn btn-success btn-medicine">Đơn Thuốc</button>
-                        </div>
-                        <div class="col-sm-7">
-                        </div>
-                    </div>
+                   
+                </div>
+            </div>
+                    {{ csrf_field() }}
+                    
                     <div class="" style="margin-top: 1em;">
                     </div>
-                    <div>
-                    </div>
-                    <!-- popup -->
-                     <div id="create" class="modal fade" role="dialog">
+                    <div id="create" class="modal fade" role="dialog">
                     <div class="modal-dialog  ">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -109,21 +107,10 @@ background-repeat: no-repeat;"></div>
                             
                         </div>
                     </div>
-                </div>
-                </div>
+                    </div>
+</div>
                     <!-- end popup -->
                     <input type="hidden" name="idTreatmentHistory" value="{{Request::get('idTreatmentHistory')}}">
-            </div>
-            <!-- popup -->
-           
-            <!-- endpopup -->
-
-
-        </section>
-
-
-    </div>
-
 
 @endsection
 @section('js')

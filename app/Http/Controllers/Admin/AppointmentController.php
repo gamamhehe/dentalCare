@@ -62,6 +62,7 @@ class AppointmentController extends Controller
             }
           
         }
+        
         $dateTime = new DateTime($newApp->start_time);
         $smsMessage = AppConst::getSmsMSG($newApp->numerical_order, $dateTime);
         $this->dispatch(new SendSmsJob($phone, $smsMessage));

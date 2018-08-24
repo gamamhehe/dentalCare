@@ -322,8 +322,14 @@
                 },
                 success: function (data) {
                     if (data!= 0) {
-
-                        swal("Đặt lịch thành công", "", "success");
+                        var date = new Date("d-m-y h:i:s",data['start_time']);
+                        var numberOrder = data['numerical_order'];
+                        const dateTime = data['start_time'];
+                        const parts = dateTime.split(/[- :]/);
+                        const wanted = 'Vào lúc : ' + parts[3] + ':' + parts[4]+ 'Ngày :'+ parts[2] + '/' + parts[1] + '/' + parts[0] ;
+                        console.log(dateTime);
+                        var message = "Số thứ tự "+numberOrder;
+                        swal(message, wanted, "success");
                     } else {
                         swal("Đặt lịch không thành công", "Vui lòng xem lại thời gian đặt", "error");
                     }

@@ -178,17 +178,21 @@ trait TreatmentHistoryBusinessFunction
             $payment = $this->checkPaymentIsDone($phone);
             $percentDiscountOfTreatment = $this->checkDiscount($idTreatment);
             $total_price = $price - $price * $percentDiscountOfTreatment / 100;
+
             if ($payment) {
+                  
                 $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
                 $queueController = new QueueController();
                 $blockchainController = new BlockchainController();
                 $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price, $payment->total_price));
             } else {
+                 
                 $idPayment = $this->createPayment($total_price, $phone);
                 $queueController = new QueueController();
-                $blockchainController = new BlockchainController();
-                $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
+                // $blockchainController = new BlockchainController();
+                // $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
+                 
             }
             $idTreatmentHistory = TreatmentHistory::create([
                 'treatment_id' => $idTreatment,

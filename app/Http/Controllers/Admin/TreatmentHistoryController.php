@@ -18,6 +18,7 @@ class TreatmentHistoryController extends Controller
     use TreatmentBusinessFunction;
     use AppointmentBussinessFunction;
     public function createTreatmentHistory(Request $request){
+         
          $idTreatmentHistory = $this->createTreatmentProcess($request->treatment_id,$request->patient_id,$request->tooth_number,$request->price,$request->description);
          if($idTreatmentHistory){
             return redirect()->route("admin.stepTreatment", ['idTreatmentHistory' => $idTreatmentHistory,

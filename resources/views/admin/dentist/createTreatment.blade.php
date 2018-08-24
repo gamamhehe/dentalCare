@@ -3,19 +3,23 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content">
-        <div class="container"  >
-            <div class="row" style="text-align: center;">
-                <label><h3>Khởi tạo liệu trình </h31></label>
-            </div>
-
-            <form method ="post" class="form-horizontal" action="{{ route('admin.createTreatmentHistoryPatient.dentist') }}" enctype="multipart/form-data" id="createTreat" >
+   
+         <div class="box">
+            <div class="panel panel-default" style="">
+                <div class="panel-heading" style="padding: 0 10px;">
+                    <div class="row" style="text-align: center;">
+                        <label><h3>Khởi tạo liệu trình </h3></label>
+                    </div>
+                </div>
+                <div class="panel-body"> 
+                    <div class="modal-body">
+                           <form method ="post" class="form-horizontal" action="{{ route('admin.createTreatmentHistoryPatient.dentist') }}" enctype="multipart/form-data" id="createTreat" >
                 {{ csrf_field() }}
                
                 <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Loại răng </label></div>
-                    <div class="col-sm-10" style="padding-right: 0;">
-                        <select name="tooth_number" style="height: 2em;" >
+                    <div class="col-sm-10"  >
+                        <select name="tooth_number"    class="selectSpecialTwo col-sm-6"   >
                             @foreach($listTooth as $Tooth)
                                 <option value="{{$Tooth->tooth_number}}" name="tooth_numberID">{{$Tooth->tooth_name}}</option>
                             @endforeach
@@ -26,7 +30,7 @@
                  <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Ghi chú </label></div>
                     <div class="col-sm-10" style="padding-right: 0;">
-                        <textarea id="tinyMCE" name="description" rows="7"
+                        <textarea id="tinyMCE" name="description" rows="5"
                                   class="form-control"
                                   id="input"
                                   placeholder="Write your message..">{!!old('description')!!}</textarea>
@@ -36,7 +40,7 @@
                 <div class="row" style="margin-bottom: 1em;">
                     <div class="col-sm-2"><label>Loại liệu trình </label></div>
                     <div class="col-sm-5" style="padding-right: 0;">
-                        <select name="TreatmentCate" style="height: 2em;min-width: 25em;" onchange="getTreat(this);" id="TreatmentCate" >
+                        <select name="TreatmentCate"   class="selectSpecialTwo" onchange="getTreat(this);" id="TreatmentCate" style="width: 100%" >
                         <option value="0" name="treat_id">Chọn liệu Trình</option>
                             @foreach($listTreatmentCategories as $TreatmentCategories)
                                 <option value="{{$TreatmentCategories->id}}" name="treat_id">{{$TreatmentCategories->name}}</option>
@@ -44,7 +48,7 @@
                         </select>
                      </div>
                      <div class="col-sm-5" style="padding-right: 0;">
-                        <select name="treatment_id" style="height: 2em;min-width: 25em;" onchange="getTreatPrice(this);" id="Treat">
+                        <select name="treatment_id"   class="selectSpecialTwo" style="width: 100%" onchange="getTreatPrice(this);" id="Treat">
                              
                         </select>
                      </div>
@@ -62,22 +66,25 @@
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 1em;">
-                    <div class="col-sm-2"><label>Giá dịch vụ </label></div>
+                    <div class="col-sm-2"><label>Chi phí dịch vụ </label></div>
                     <div class="col-sm-5" style="padding-right: 0;">
                         <input type="number" class="form-control input-width" id="price" name="price" placeholder="Giá dịch vụ" required="required"   />
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 1em;" >
                     <div class=""  style="margin-top: 1em;">
-                        <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Khởi tạo liệu trình</button>
+                        <button type="button" class="col-md-3 btn btn-default btn-success" style="float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Khởi tạo liệu trình</button>
                     </div>
                 </div>
 
             </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
         </div>
 
-
-    </section>
 
 
 </div>
@@ -94,7 +101,7 @@
         });
 
     $(document).ready(function() {
-    getTreat(sel);
+    getTreat(obj);
        <?php if (Session::has('success')): ?>
      swal("{{ Session::get('success')}}", "", "success");
         <?php endif ?>   
@@ -156,12 +163,16 @@
         // swal("Bài viết chưa được tạo!", "", "error");
  var conceptName = $('#TreatmentCate').find(":selected").val();
  var price = document.getElementById('price').value;
+ var max_price = document.getElementById('max_price').value;
+ var min_price = document.getElementById('min_price').value;
  if(conceptName == 0){
      swal("Hãy chọn liệu trình !", "", "error");
  }
  else if($.trim(price) == ''){
             swal("Hãy điền chi phí liệu trình!", "", "error");
 
+        }else if(price >max_price || price < min_price){
+            swal("Chi phí nằm ngoài hạn mức cho phép!", "", "error");            
         }else{
      document.getElementById('createTreat').submit();
  }

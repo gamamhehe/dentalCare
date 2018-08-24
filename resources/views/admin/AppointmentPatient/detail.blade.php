@@ -171,7 +171,7 @@
             <div class="box box-title">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-12" style="text-align: center;"> <h4 class="box-title">Tiền sử bệnh án</h4></div>
+                        <div class="col-sm-12" style="text-align: center;"> <h4 class="box-title">Lịch sử bệnh án</h4></div>
                     </div>
                 </div>
             </div>
