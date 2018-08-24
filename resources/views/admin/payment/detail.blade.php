@@ -146,7 +146,6 @@
                     },
                     success: function (data) {
                         if ((data.errors)) {
-                            alert(data.errors.body);
                         } else {
                             swal("Thành toán thành công", "", "success");
                             setTimeout(function () {

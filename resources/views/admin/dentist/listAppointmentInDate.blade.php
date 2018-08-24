@@ -128,8 +128,11 @@
                         swal("Cuộc hẹn này chưa được bắt đầu", "", "error");
                     }
                     if(data.statusDone == 1){
-                        swal("Hoàn tất cuộc hẹn", "success");
+                        swal("Hoàn tất cuộc hẹn",'', "success");
                     }
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
                 },error: function (data) {
                     swal("Check connnection", "", "error");
                 }
