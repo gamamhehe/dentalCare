@@ -53,7 +53,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     })->name('admin.dashboard');
 
     Route::group(['middleware' => 'superAdmin'], function () {
-
+        Route::get('sync-payment', function () {
+            return view('admin/syncData');
+        })->name('admin.sync.payment');
     });
     Route::group(['middleware' => 'dentist'], function () {
         //MedicineController
@@ -233,9 +235,7 @@ Route::get('/decryptBlock/{id}', 'Blockchain\BlockchainController@DecryptDataBlo
 Route::get('/encryptPaymentDetail/{id}', 'Blockchain\BlockchainController@EncryptCreatePaymentDetail');
 Route::post('/checkKey', 'Blockchain\BlockchainController@CheckPublicKeyNPrivateKey');
 
-Route::get('checkPrivateKey', function () {
-    return view('admin/syncData');
-});
+
 
 // Route::get('/readPublicKey', 'Blockchain\BlockchainController@ReadPublickey');
 
