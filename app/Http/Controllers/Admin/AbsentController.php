@@ -65,13 +65,13 @@ class AbsentController extends Controller
     public function showNotApprove()
     {
         $result = $this->getListAbsentNotApprove();
-        return view('admin.absent.list', ['listAbsent' => $result]);
+        return view('admin.Absent.list', ['listAbsent' => $result]);
     }
 
     public function showList()
     {
         $result = $this->getListAbsent();
-        return view('admin.absent.list', ['listAbsent' => $result]);
+        return view('admin.Absent.list', ['listAbsent' => $result]);
     }
 
     public function approve(Request $request)
@@ -115,7 +115,7 @@ class AbsentController extends Controller
                 }
         }
         
-        return view('admin.absent.list',['staffs'=>$listStaff,'dates'=>$listDate]);
+        return view('admin.Absent.list',['staffs'=>$listStaff,'dates'=>$listDate]);
     }
     public function deleteAbsent(Request $request){
         if ($this->deleteAbsentById($request->id)) {
