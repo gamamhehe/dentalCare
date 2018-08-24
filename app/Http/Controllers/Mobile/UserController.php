@@ -209,7 +209,7 @@ class UserController extends BaseController
     {
         try {
             $keyword = $request->input('keyword');
-            $phones = $this->getUserPhones($keyword);
+            $phones = $this->getUserPatientPhones($keyword);
             return response()->json($phones, 200);
         } catch (Exception $ex) {
             return response()->json($this->getErrorObj('Lỗi server', $ex), 400);
