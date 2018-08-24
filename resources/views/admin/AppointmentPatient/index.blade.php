@@ -230,7 +230,10 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-warning" type="button" id="addPatient">
-                          Tạo bệnh nhân
+                          Khởi tạo bệnh nhân
+                        </button>
+                        <button class="btn btn-warning" type="button" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remobe"></span>Đóng
                         </button>
                     </div>
                 </div>
