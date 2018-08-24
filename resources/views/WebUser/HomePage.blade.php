@@ -28,15 +28,13 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
 </head>
 <body>
-<nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;margin-bottom: 0px;"
-id="navHeader">
+<nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;margin-bottom: 0px;" id="navHeader">
 <div class="container">
     <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
     data-target="#navmn">
-</button>
-
+    </button>
 <div class="collapse navbar-toggleable-xs" id="navmn">
-    <a class="navbar-brand logo" href="#"><img src="/assets/images/Logo/word.png" style="max-width: 300px;width: 100%" class="img-responsive img-fruid"></a>
+    <a class="navbar-brand logo" href="#"><img src="/assets/images/Logo/word.png" style="width: 150px;max-width: 150px;width: 100%" class="img-responsive img-fruid"></a>
     <ul class="nav navbar-nav float-sm-right">
         <li class="nav-item active">
             <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
@@ -59,8 +57,7 @@ id="navHeader">
                     alt="User Image"
                     class="img-fluid img-responsive" style="max-height: 25px;">
                 </a>
-                <ul class="dropdown-menu dropdownHead"
-                >
+                <ul class="dropdown-menu dropdownHead">
                 <!-- User image -->
                 <li class="user-header">
                     <div class="container" style=";padding:10px 0px; ">
@@ -81,11 +78,9 @@ id="navHeader">
                             @endforeach
                         </div>
                     </div>
-
                 </li>
                 <li class="user-header" id="acc1" style="display: block">
                     <p>
-
                         {{Session::get('currentPatient')->name}}
                     </p>
                 </li>
@@ -100,7 +95,6 @@ id="navHeader">
                     </p>
                 </li>
                 <hr>
-
                 <li class="a-hover">
                     <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
                 </li>
@@ -113,9 +107,6 @@ id="navHeader">
                     <a href="#"><span>Lịch hẹn</span></a>
                 </li>
                 <li class="gachngang"></li>
-
-                <!-- Menu Body -->
-                <!-- Menu Footer-->
                 <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                     <div class="row" style="padding-bottom: 1em;">
@@ -131,46 +122,32 @@ id="navHeader">
                         <a href="/signOut" class="btn btn-block btn-success btn-flat">Đăng xuất</a>
                         </div>
                     </div>
-
                 </li>
-            </ul>
-            @else
+                </ul>
+                @else
             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                <img src="/assets/images/avatar/noPatient.jpg" class="user-image img-circle"
                alt="User Image"
                class="img-fluid img-responsive" style="max-height: 25px;">
-           </a>
-           <ul class="dropdown-menu dropdownHead"
-           >
-           <!-- User image -->
-
-           <li class="user-header" id="acc1" style="display: block">
+            </a>
+            <ul class="dropdown-menu dropdownHead">
+            <li class="user-header" id="acc1" style="display: block">
              <div>
                 <p style="color: red">
                     Tài khoản chưa có hồ sơ bệnh nhân
                 </p>
                 <p>Hãy liên hệ với nhân viên</p>
-
             </div>
-        </li>
-
-        <hr>
-
-
-        <!-- Menu Body -->
-        <!-- Menu Footer-->
-        <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
-
-
-            <div align="center">
-                <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
-            </div>
-
-        </li>
-    </ul>
-    @endif
-
-</li>
+            </li>
+            <hr>
+            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+                <div align="center">
+                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                </div>
+            </li>
+            </ul>
+                @endif
+            </li>
 
 @else
 <li class="nav-item dropdown ">

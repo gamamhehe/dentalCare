@@ -123,15 +123,18 @@ class AppointmentController extends Controller
             // $result =[];
             if ($patient) {// bệnh nhân tồn tại
                 $idPatient = $patient->id;
+                $giagoc=0;
+                $giadagiam=0;
                 $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
                 foreach ($listTreatmentHistory as $treatmentHistory) {
+
                     $giagoc = $treatmentHistory->price;
+
                     $giadagiam = $treatmentHistory->total_price;
-                    $phanTramGiam = ($gia)
-
-
+                    $phanTramGiam = (100-($giadagiam%$giagoc)*100);
+                    $final = 100-$phanTramGiam;
+                    $treatmentHistory->percentDiscount = $final;
                         $result[] = $treatmentHistory;
-                    
                 }
 
             } else { // bệnh nhân không tồn tại.
@@ -140,8 +143,6 @@ class AppointmentController extends Controller
             $patient->Anamnesis = $this->getListAnamnesisByPatient($patient->id);
 
         }
-       
-
         $city = city::all();
         $District = District::where('city_id', 1)->get();
         $listAnamnesis = AnamnesisCatalog::all(); 

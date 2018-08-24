@@ -37,7 +37,7 @@ class StaffController extends Controller
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         if ($sessionAdmin != null) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.AppointmentPatient.index');
         }
         return view('admin.login');
     }
