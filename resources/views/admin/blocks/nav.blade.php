@@ -49,7 +49,7 @@
                 {{--</ul>--}}
             {{--</li>--}}
             <!-- User Account: style can be found in dropdown.less -->
-            <li class="dropdown user user-menu">
+            <li class="dropdown user user-menu" style="width: 280px; text-align: center">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="hidden-xs">{{Session::get('currentAdmin')->belongToStaff()->first()->name}}</span>
                 </a>

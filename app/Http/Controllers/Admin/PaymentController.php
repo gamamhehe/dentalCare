@@ -67,9 +67,9 @@ class PaymentController extends Controller
         $paymentDetail->received_money = $request->received_money;
         $paymentDetail->created_date = Carbon::now();
         $idPaymentDetail = $this->createPaymentDetail($paymentDetail);
+        $this->updatePaymentPaid($request->received_money, $request->payment_id);
         $queueController = new QueueController();
         $blockchainController = new BlockchainController();
-        $this->updatePaymentPaid($request->received_money, $request->payment_id);
         $queueController->runJobQueue($blockchainController->EncryptCreatePaymentDetail($idPaymentDetail));
         echo '';
     }
