@@ -697,9 +697,6 @@ trait AppointmentBussinessFunction
                 $appointment = Appointment::where('id', $AppointmentOfPatient->appointment_id)->first();
                 if (in_array($appointment->staff_id, $listCurrentFreeDentist)) {
                     return $appointment;
-                } else {
-                    //nha sĩ bận
-                    return false;
                 }
             }
             $listIdAppointmentNullPatient = [];
@@ -720,7 +717,6 @@ trait AppointmentBussinessFunction
                         return $appointment;
                     }
                 }
-                return false;
             }
         }
     }
