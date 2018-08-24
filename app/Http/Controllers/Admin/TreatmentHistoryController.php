@@ -7,7 +7,7 @@ use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentDetailBusinessFunction;
 use App\Http\Controllers\BusinessFunction\TreatmentHistoryBusinessFunction;
 use Illuminate\Http\Request;
-use \Carbon\Carbon;
+use App\Model\Medicine;
 use App\Http\Controllers\Controller;
 
 class TreatmentHistoryController extends Controller
@@ -22,9 +22,10 @@ class TreatmentHistoryController extends Controller
     {
 
         $idTreatmentHistory = $this->createTreatmentProcess($request->treatment_id, $request->patient_id, $request->tooth_number, $request->price, $request->description);
+        $medicineList = Medicine::all();
         if ($idTreatmentHistory) {
             return redirect()->route("admin.stepTreatment", ['idTreatmentHistory' => $idTreatmentHistory,
-                'idTreatment' => $request->treatment_id]);
+                'idTreatment' => $request->treatment_id, 'medicineList' => $medicineList] );
 
         } else {
             return redirect()->back()->withSuccess("Chưa");
