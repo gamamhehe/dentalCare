@@ -74,8 +74,10 @@ class PatientController extends BaseController
 
         return redirect()->intended(route('homepage'));
     }
-    public function createPatientWeb(Request $request){
-         $checkExist = $this->checkExistUser($request->phone);
+
+    public function createPatientWeb(Request $request)
+    {
+        $checkExist = $this->checkExistUser($request->phone);
         if ($checkExist) {
 
             return 0;//da ton tai
@@ -94,17 +96,17 @@ class PatientController extends BaseController
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->district_id = $request->district_id;
             $user->phone = $request->phone;
-            $address ="";
+            $address = "";
             $city = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
             $district = $patient->belongsToDistrict()->first()->name;
-            $address = $patient->address." ".$district .", ".$city;
-            $patient->address=  $address;
+            $address = $patient->address . " " . $district . ", " . $city;
+            $patient->address = $address;
             $user->password = Hash::make($user->phone);
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
         }
         if ($result) {
             $listAnamnesis = $request->anam;
-            if($listAnamnesis !=null){
+            if ($listAnamnesis != null) {
                 $result2 = $this->createAnamnesisForPatient($listAnamnesis, $patientID);
             }
             return 1;
@@ -112,6 +114,7 @@ class PatientController extends BaseController
             return 2;
         }
     }
+
     public function create(Request $request)
     {
         $checkExist = $this->checkExistUser($request->phone);
@@ -129,19 +132,19 @@ class PatientController extends BaseController
             $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s');
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
-            $address ="";
+            $address = "";
             $city = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
             $district = $patient->belongsToDistrict()->first()->name;
-            $address = $patient->address." ".$district .", ".$city;
-            $patient->address=  $address;
+            $address = $patient->address . " " . $district . ", " . $city;
+            $patient->address = $address;
             $result = $this->createPatient($patient);
             if ($result != false) {
-                if($listAnamnesis !=null){
-                  $result2 = $this->createAnamnesisForPatient($listAnamnesis, $result);
+                if ($listAnamnesis != null) {
+                    $result2 = $this->createAnamnesisForPatient($listAnamnesis, $result);
                 }
                 return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
-            }else{
-                 return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
+            } else {
+                return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
             }
         } else {
             $patient = new Patient();
@@ -157,31 +160,34 @@ class PatientController extends BaseController
             $patient->gender = $request->gender;
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->district_id = $request->district_id;
-            $address ="";
+            $address = "";
             $city = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
             $district = $patient->belongsToDistrict()->first()->name;
-            $address = $patient->address." ".$district .", ".$city;
-            $patient->address=  $address;
+            $address = $patient->address . " " . $district . ", " . $city;
+            $patient->address = $address;
             $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
-            if($listAnamnesis != null){
-                 $result = $this->createUserWithAnamnesis($user, $patient, $userHasRole,$listAnamnesis);
-            }else{
-                 $result = $this->createUserWithRole($user, $patient, $userHasRole);
+            if ($listAnamnesis != null) {
+                $result = $this->createUserWithAnamnesis($user, $patient, $userHasRole, $listAnamnesis);
+            } else {
+                $result = $this->createUserWithRole($user, $patient, $userHasRole);
             }
-           
-             if ($result) {
-                    return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
-                } else {
-                   return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
-                }
+
+            if ($result) {
+                return redirect()->back()->withSuccess("Bệnh nhân đã được tạo");
+            } else {
+                return redirect()->back()->withSuccess("Bệnh nhân chưa được tạo");
+            }
         }
-       
+
     }
-    public function getCityForDistrict(){
+
+    public function getCityForDistrict()
+    {
         $city = City::all();
         return $city;
     }
+
     public function get($phone)
     {
         return $this->getPatientByPhone($phone);
@@ -216,26 +222,28 @@ class PatientController extends BaseController
             $status = -1;
         } else {
             $appointment = $this->checkAppointmentForPatient($phone, $id);
+            dd($appointment);
             if ($appointment === null) {
                 $status = 2;
-            } else{
-                    $appointment->status = 1;
-                    $this->saveAppointment($appointment, $id);
-                    $options = array(
-                        'cluster' => 'ap1',
-                        'encrypted' => true
-                    );
-                    $pusher = new Pusher(
-                        'e3c057cd172dfd888756',
-                        '993a258c11b7d6fde229',
-                        '562929',
-                        $options
-                    );
-                    $appointment->pushStatus = 0;
-                    $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
-                    $this->sendFirebaseReloadMobile($appointment->staff_id, AppConst::ACTION_RELOAD_DENTIST_APPOINTMENT);
-                    $status = 1;
-        }}
+            } else {
+                $appointment->status = 1;
+                $this->saveAppointment($appointment, $id);
+                $options = array(
+                    'cluster' => 'ap1',
+                    'encrypted' => true
+                );
+                $pusher = new Pusher(
+                    'e3c057cd172dfd888756',
+                    '993a258c11b7d6fde229',
+                    '562929',
+                    $options
+                );
+                $appointment->pushStatus = 0;
+                $pusher->trigger('receivePatient', 'ReceivePatient', $appointment);
+                $this->sendFirebaseReloadMobile($appointment->staff_id, AppConst::ACTION_RELOAD_DENTIST_APPOINTMENT);
+                $status = 1;
+            }
+        }
         $data = array(
             'statusOfReceive' => $status
         );
@@ -255,19 +263,19 @@ class PatientController extends BaseController
         $District = District::where('city_id', 1)->get();
         $patientList = Patient::all();
         $listAnamnesis = AnamnesisCatalog::all();
-        $RoleDentist = UserHasRole::where('role_id','2')->get();
-        $dentist=[];
-        foreach ($RoleDentist as $key ) {
+        $RoleDentist = UserHasRole::where('role_id', '2')->get();
+        $dentist = [];
+        foreach ($RoleDentist as $key) {
             $dentist[] = $key->belongsToUser()->first()->belongToStaff()->first();
         }
         foreach ($patientList as $patient) {
-             $address ="";
+            $address = "";
             $patient->cityDetail = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
             $patient->disctrictDetail = $patient->belongsToDistrict()->first()->name;
-            $address = $patient->address."  $patient->disctrictDetail  " ."  ,$patient->cityDetail";
-             $patient->address=  $address;
+            $address = $patient->address . "  $patient->disctrictDetail  " . "  ,$patient->cityDetail";
+            $patient->address = $address;
         }
-        return view('admin.AppointmentPatient.index', ['AnamnesisCatalog' => $listAnamnesis, 'citys' => $city, 'District' => $District, 'patientList' => $patientList,'dentists'=>$dentist]);
+        return view('admin.AppointmentPatient.index', ['AnamnesisCatalog' => $listAnamnesis, 'citys' => $city, 'District' => $District, 'patientList' => $patientList, 'dentists' => $dentist]);
     }
 
     public function action1($valueSearch)
@@ -275,7 +283,7 @@ class PatientController extends BaseController
         $output = '';
         if ($valueSearch == 'all') {
             $data = Patient::all();
-             
+
         } else {
             $data = DB::table('tbl_patients')
                 ->where('phone', 'like', $valueSearch . '%')
@@ -327,7 +335,7 @@ class PatientController extends BaseController
         $listPatient = Patient::where('phone', $phone)->get();
         $request->session()->remove('listPatient');
         session(['listPatient' => $listPatient]);
-        $image =  $request->file('avatar');
+        $image = $request->file('avatar');
         dd($image);
         $id = $request['patientID'];
         $result = $this->editAvatar($image, $id);
@@ -358,32 +366,32 @@ class PatientController extends BaseController
         }
         $anam = $this->getListAnamnesisByPatient($id);
         $appClosest = $this->getAppointmentByPhoneFutureClosest($patient->phone);
-                $start_time ="Không có lịch hẹn";
-                if($appClosest !=null){
-                    $start_time =  $appClosest->start_time;
+        $start_time = "Không có lịch hẹn";
+        if ($appClosest != null) {
+            $start_time = $appClosest->start_time;
         }
         if ($anam == null) {
             $anam = "Không có";
-        }else{
+        } else {
             $size = count($anam);
             $anamString = "Không có";
 
-            if($size>0){
-                  for ($i=0; $i < count($anam) ; $i++) { 
-                       if($i==0){
-                        $anamString =  $anam[$i]->name;
-                       }else{
-                        $anamString =  $anamString." - ". $anam[$i]->name ;
-                       }
+            if ($size > 0) {
+                for ($i = 0; $i < count($anam); $i++) {
+                    if ($i == 0) {
+                        $anamString = $anam[$i]->name;
+                    } else {
+                        $anamString = $anamString . " - " . $anam[$i]->name;
                     }
-                    $anamString = $anamString ." . ";
-                   
+                }
+                $anamString = $anamString . " . ";
+
             }
         }
-        if(count($result) == 0){
+        if (count($result) == 0) {
             $result = null;
         }
-        return view('admin.Patient.detail', ['Anamnesis' => $anamString, 'patient' => $patient, 'listTreatmentHistory' => $result,'appFuture'=>$start_time]);
+        return view('admin.Patient.detail', ['Anamnesis' => $anamString, 'patient' => $patient, 'listTreatmentHistory' => $result, 'appFuture' => $start_time]);
 
     }
 
