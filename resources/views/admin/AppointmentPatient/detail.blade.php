@@ -194,7 +194,7 @@
                                                             <div class="col-sm-4">Giá gốc
                                                                 : {{$treatmentHistory->price}} VNĐ
                                                             </div>
-                                                            <div class="col-sm-4">Khuyến mãi : 0%</div>
+                                                            <div class="col-sm-4">Khuyến mãi : {{$treatmentHistory->percentDiscount}}%</div>
                                                             <div class="col-sm-4">Tổng tiền
                                                                 : {{$treatmentHistory->total_price}} VNĐ
                                                             </div>

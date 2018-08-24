@@ -6,7 +6,7 @@
         <section class="content" >
             <div class="container"  >
                 <div class="row " style="text-align: center; margin-right: 4em">
-                    <label><h1>Danh sách Đánh giá Bác sĩ</h1></label>
+                    <label><h1>Danh sách Đánh giá Nha sĩ</h1></label>
                 </div>
                 <div class="row layout" style=" margin-right: 4em"  >
                     <table id="dup-table" class="table myTable table-bordered Mytable-hover">
