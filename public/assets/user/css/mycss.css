@@ -11,12 +11,26 @@ html.login {
  height: 100%;
     margin: 0;
 }
-
+/*.sidebar:hover{
+    background-color: red;
+}*/
+img.img-responsive.img-center.logo-header {
+    max-height: 200px;padding-top:10px;width: 100%;
+}
+li.sideHover{
+    color: red;
+}
+ 
+.user-panel{
+     background-image: url("/assets/images/small.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;max-height: 100px;height: 100px;
+}
+  
 .img-center{
     display:block;
     margin:auto;
-   /*  width:100%;
-     height:auto;*/
+    
 }
 .navHidden{
     visibility: hidden;
@@ -1609,6 +1623,10 @@ img.centerThing{
 
 @media (max-width: 576px)
 {   
+    img.img-responsive.img-center.logo-header {
+    max-height: 200px;padding-top:10px;width: 50%;  display:block;
+    margin:auto;
+}
     .dropdownHead{
     position: absolute;right: 0;background-color: whitesmoke;
 }

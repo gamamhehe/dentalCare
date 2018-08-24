@@ -2,7 +2,6 @@
 @section('title', 'Khởi tạo lịch hẹn')
 @section('content')
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
    <div class="box">
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
@@ -39,7 +38,7 @@
                             </div>
                              @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
                             <div class="form-group add row">
-                                <label class="control-label col-md-4 col-sm-4 col-xs-12" for="title">Danh sách bác sĩ</label>
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12" for="title">Danh sách nha sĩ</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12" style="padding-right: 0;padding-left: 0;">
                                     <select style="margin:0px;width: 100%"
                                             id="DentistSelect" class="selectSpecialTwo col-sm-6 col-xs-7">

@@ -94,6 +94,11 @@ class PatientController extends BaseController
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->district_id = $request->district_id;
             $user->phone = $request->phone;
+            $address ="";
+            $city = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
+            $district = $patient->belongsToDistrict()->first()->name;
+            $address = $patient->address." ".$district .", ".$city;
+            $patient->address=  $address;
             $user->password = Hash::make($user->phone);
             $result = $this->createUserWithRole($user, $patient, $userHasRole);
         }
@@ -124,6 +129,11 @@ class PatientController extends BaseController
             $patient->date_of_birth = (new Carbon($request->date_of_birth))->format('Y-m-d H:i:s');
             $patient->gender = $request->gender;
             $patient->district_id = $request->district_id;
+            $address ="";
+            $city = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
+            $district = $patient->belongsToDistrict()->first()->name;
+            $address = $patient->address." ".$district .", ".$city;
+            $patient->address=  $address;
             $result = $this->createPatient($patient);
             if ($result != false) {
                 if($listAnamnesis !=null){
@@ -147,6 +157,11 @@ class PatientController extends BaseController
             $patient->gender = $request->gender;
             $patient->avatar = " http://150.95.104.237/assets/images/avatar/default_avatar.jpg";
             $patient->district_id = $request->district_id;
+            $address ="";
+            $city = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
+            $district = $patient->belongsToDistrict()->first()->name;
+            $address = $patient->address." ".$district .", ".$city;
+            $patient->address=  $address;
             $user->phone = $request->phone;
             $user->password = Hash::make($user->phone);
             if($listAnamnesis != null){
@@ -245,6 +260,13 @@ class PatientController extends BaseController
         foreach ($RoleDentist as $key ) {
             $dentist[] = $key->belongsToUser()->first()->belongToStaff()->first();
         }
+        // foreach ($patientList as $patient) {
+        //      $address ="";
+        //     $patient->cityDetail = $patient->belongsToDistrict()->first()->belongsToCity()->first()->name;
+        //     $patient->disctrictDetail = $patient->belongsToDistrict()->first()->name;
+        //     $address = $patient->address."  $patient->disctrictDetail  " ."  ,$patient->cityDetail";
+        //      $patient->address=  $address;
+        // }
         return view('admin.AppointmentPatient.index', ['AnamnesisCatalog' => $listAnamnesis, 'citys' => $city, 'District' => $District, 'patientList' => $patientList,'dentists'=>$dentist]);
     }
 
@@ -253,12 +275,14 @@ class PatientController extends BaseController
         $output = '';
         if ($valueSearch == 'all') {
             $data = Patient::all();
+             
         } else {
             $data = DB::table('tbl_patients')
                 ->where('phone', 'like', $valueSearch . '%')
                 ->orWhere('name', 'like', '%' . $valueSearch . '%')
                 ->orderBy('name', 'desc')
                 ->get();
+
         }
         $total_row = $data->count();
         if ($total_row > 0) {
@@ -266,11 +290,11 @@ class PatientController extends BaseController
             foreach ($data as $row) {
                 $output .= '
         <tr>
-         <th  style="text-align: center; " class="col-xs-6  ">' . $row->name . '</th>
-         <th   style="text-align: center; " class="col-xs-1  ">' . $row->phone . '</th>
-         <th  style="text-align: center; " class="col-xs-3  ">' . $row->address . '</th>
-         <th  style="text-align: center; " class="col-xs-1  ">' . $row->date_of_birth . '</th>
-         <th  style="text-align: center; " class="col-xs-2  ">
+         <th  style="text-align: center; " class="col-lg-2 col-md-2 col-sm-2 col-xs-2  ">' . $row->name . '</th>
+         <th   style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1  ">' . $row->phone . '</th>
+         <th  style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">' . $row->address . '</th>
+         <th  style="text-align: center; " class="col-lg-1 col-md-1 col-sm-1 col-xs-1  ">' . $row->date_of_birth . '</th>
+         <th  style="text-align: center; " class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
             <a href="thong-tin-benh-nhan/' . $row->id . '" class="btn btn-default btn-info">Thông tin bệnh nhân</a>
             <button type="button" class="btn btn-default btn-success"
                                  onclick="receive(' . $row->id . ')">Nhận bệnh nhân</button>

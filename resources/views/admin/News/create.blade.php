@@ -3,56 +3,52 @@
 @section('content')
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content">
-         <div class="container"  >
-             <div class="row" style="text-align: center;">
-                 <label><h1>Tạo Tin Tức</h1></label>
-             </div>
-
-             <form method ="post" class="form-horizontal" action="create-news" enctype="multipart/form-data" id="createNews">
+      <div class="box">
+        <div class="panel panel-default" style="">
+            <div class="panel-heading">
+                <div class="row" style="text-align: center;">
+                <label><h1>Tạo Tin Tức</h1></label>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="modal-body">
+                      <form method ="post" class="form-horizontal" action="create-news" enctype="multipart/form-data" id="createNews">
                   {{ csrf_field() }}
-                   <div class="row" style="margin-bottom: 1em;">
-                        
-                            <div class="col-sm-2"><label>Tiêu đề</label></div>
-                            <div class="col-sm-10" style="padding-right: 0;">  
-                              
+                   <div class="form-group row add"  >
+                      <div class="control-label col-md-2 col-sm-2 col-xs-12"><label>Tiêu đề</label></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
                               <input type="text" class="form-control input-width" id="title" name="title" placeholder="Input Title News" required="required" />
-                              
                             </div>
-                        
                     </div>
-                    <div class="row" style="margin-bottom: 1em;">
-                    
-                        <div class="col-sm-2"><label>Ảnh tiêu đề</label></div>
-                        <div class="col-sm-10">  
-                            <div class="col-sm-10" style="padding-left: 0 " id="divan">  
+                    <div class="form-group row add"  >
+                      <div class="control-label col-md-2 col-sm-2 col-xs-12"><label>Ảnh tiêu đề</label></div>
+                             <div class="col-md-8 col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
                                 <input id="thumbnail" class="form-control" type="text" name="image_header"  required="required" readonly="readonly"  >  
-                                <!-- <label id="thumbnail"></label> -->
                             </div>
                             <div class="col-sm-2"> 
                             <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary" >
                                <i class="fa fa-picture-o"></i> Chọn ảnh</a>
                             </div>
-                        </div>
                     </div>
-                    <div class="row" style="margin-bottom: 1em;" >
-                        <div class="col-sm-2"><label>Nội dung </label></div>
-                    <div class="col-sm-10">
-                    <textarea id="tinyMCE" name="content" rows="10"                              
+                    <div class="form-group row add"  >
+                       <div class="control-label col-md-2 col-sm-2 col-xs-12"><label>Nội dung </label></div>
+                       <div class="col-md-10 col-sm-10 col-xs-12" style="padding-right: 0;padding-left: 0;">
+                    <textarea id="tinyMCE" name="content" rows="10"                         
                               placeholder="Write your message.." s ></textarea></div>         
-                  </div>
-                 <div class="row"> <div class=""  style="margin-top: 1em;">
+                    </div>
+                 <div class="form-group row add" >
+               <div class="control-label col-md-12 col-sm-12 col-xs-12"  style="padding-right: 0px;">
                          <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Tạo câu hỏi</button>
-                     </div></div>
+                     </div></div> 
 
              </form>
-         </div>
+                </div>
+            </div>
+        </div>
+      </div>
+</div>
 
-          
-        </section>
-
-
-    </div>
+ 
 @endsection
 @section('js')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

@@ -2,26 +2,27 @@
 @section('title', 'Chỉnh sửa tin tức')
 @section('content')
    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content">
-         <div class="container"  >
-             <div class="row" style="text-align: center;">
-                 <label><h1>Chỉnh sửa Tin tức</h1></label>
-             </div>
-             <form method ="post" class="form-horizontal" action="{{ route('admin.edit.news', ['id' => $news->id]) }}" enctype="multipart/form-data" id="createNews">
+        <div class="box">
+        <div class="panel panel-default" style="">
+            <div class="panel-heading">
+                <div class="row" style="text-align: center;">
+                     <label><h1>Chỉnh sửa Tin tức</h1></label>
+                 </div>
+            </div>
+            <div class="panel-body">
+                <div class="modal-body">
+                 <form method ="post" class="form-horizontal" action="{{ route('admin.edit.news', ['id' => $news->id]) }}" enctype="multipart/form-data" id="createNews">
                   {{ csrf_field() }}
-                   <div class="row  " style="margin-bottom: 1em;">
-                            <div class="col-sm-2"><label>Tiêu đề </label></div>
-                            <div class="col-sm-10" style="padding-right: 0;">
+                    <div class="form-group row add"  >
+                      <div class="control-label col-md-2 col-sm-2 col-xs-12"><label>Tiêu đề </label></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
                               <input type="text" class="form-control input-width" id="title" name="title" placeholder="Input Title News" required="required" value="{{$news->title}}" />
                             </div>
                     </div>
-                    <div class="row  " style="margin-bottom: 1em;">
-                    
-                        <div class="col-sm-2"><label>Ảnh tiêu đề</label></div>
+                     <div class="form-group row add"  >
+                      <div class="control-label col-md-2 col-sm-2 col-xs-12"><label>Ảnh tiêu đề</label></div>
                         <input type="hidden" value="{{$news->id}} " name="News_id" />
-                        <div class="col-sm-10">  
-                            <div class="col-sm-10" style="padding-left: 0 " id="divan">  
+                       <div class="col-md-8 col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">  
                                 <input id="thumbnail" class="form-control" type="text" name="image_header"  required="required" readonly="readonly" value="{{$news->image_header}}" >  
                                 <!-- <label id="thumbnail"></label> -->
                             </div>
@@ -30,29 +31,26 @@
                                <i class="fa fa-picture-o"></i> Chọn ảnh</a>
                             </div>
                         </div>
-                    </div>
-                    <div class="row  " style="margin-bottom: 1em;" >
-                        <div class="col-sm-2"><label>Nội dung </label></div>
-                    <div class="col-sm-10">
+                 
+                     <div class="form-group row add"  >
+                       <div class="control-label col-md-2 col-sm-2 col-xs-12"><label>Ảnh tiêu đề</label></div>
+                    <div class="col-md-10 col-sm-10 col-xs-12" style="padding-right: 0;padding-left: 0;">
                     <textarea id="tinyMCE" name="content" rows="10"                         
                               placeholder="Write your message.." >{{$news->content}}</textarea></div>
                   </div>
-                 <div class="row">
-                     <div class=""  style="margin-top: 1em;">
+                   <div class="form-group row add" >
+               <div class="control-label col-md-12 col-sm-12 col-xs-12"  style="padding-right: 0px;">
                          <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Lưu bài viết</button>
                      </div>
                  </div>
-
-
-
              </form>
-         </div>
-
-        </section>
-
-
-
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
+            
+       
 @endsection
 @section('js')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
