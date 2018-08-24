@@ -154,7 +154,7 @@ trait PaymentBusinessFunction
 
     public function searchPayment($phone)
     {
-        return Payment::where('phone', $phone)->get();
+        return Payment::where('phone', 'like', $phone . '%')->get();
     }
 
     public function getDetailListPaymentById($idPayment)

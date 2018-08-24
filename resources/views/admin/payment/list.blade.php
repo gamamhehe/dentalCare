@@ -1,27 +1,19 @@
 @extends('admin.master')
 @section('title', 'Danh sách chi trả')
 @section('content')
-<div class="content-wrapper">
+    <div class="content-wrapper">
         <div class="box">
 
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả </div>
+                        <div class="col-sm-5" style="text-align: left">Danh Sách Chi Trả</div>
                     </div>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
                         <input type="text" name="search" id="search" class="form-control"
                                placeholder="Số điên thoại bệnh nhân" value="{{old('search')}}"/>
-                        <div class="row" style="margin-bottom: 1em;">
-                            <div class="" style="margin-top: 1em;">
-                                <button type="button" class="col-md-3 btn btn-default btn-success"
-                                        style="margin-right: 10px;float: right;" onclick="search()">Tìm
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
                     <div id="create" class="modal fade" role="dialog">
                         <div class="modal-dialog">
@@ -83,14 +75,15 @@
                                                 <form action="{{route('getPaymentDetail')}}">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="idPayment" value="{{$payment->id}}">
-                                                    <button type="submit" style="float: left;margin-right: 10px;" class="btn btn-default btn-success">Xem chi tiết Chi Trả
+                                                    <button type="submit" style="float: left;margin-right: 10px;"
+                                                            class="btn btn-default btn-success">Xem chi tiết Chi Trả
                                                     </button>
                                                 </form>
                                                 @if($payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_NOT_DONE)
 
-                                                        <input type="hidden" name="idPayment" value="{{$payment->id}}">
+                                                    <input type="hidden" name="idPayment" value="{{$payment->id}}">
                                                     <a href="#" class="create-modal btn btn-success  ">
-                                                         Tạo chi trả 
+                                                        Tạo chi trả
                                                     </a>
 
                                                 @endif
@@ -123,24 +116,20 @@
             $('.form-horizontal').show();
             $('.modal-title').text('Chi trả');
         });
-
-        function search() {
-
+        $('#search').on('keyup', function () {
             var searchValue = document.getElementById('search').value;
-            if (!searchValue) {
-                swal("Nhập số điên thoại", "", "error");
-                return;
+            if (searchValue){
+                $.ajax({
+                    url: '/admin/search-payment/' + searchValue, //this is your uri
+                    type: 'GET', //this is your method
+                    dataType: 'json',
+                    success: function (data) {
+                        $('tbody').html(data.table_data);
+                    }, error: function (data) {
+                        swal('Error:', "", "error");
+                    }
+                });
             }
-            $.ajax({
-                url: '/admin/search-payment/' + searchValue, //this is your uri
-                type: 'GET', //this is your method
-                dataType: 'json',
-                success: function (data) {
-                    $('tbody').html(data.table_data);
-                }, error: function (data) {
-                    swal('Error:', "", "error");
-                }
-            });
-        }
+        })
     </script>
 @endsection
