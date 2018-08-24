@@ -142,6 +142,7 @@ class PaymentController extends BaseController
             $paymentDetail->created_date = Carbon::now();
             $paymentDetail->staff_id = $paypalStaff->id;
             $result = $this->updatePaymentModel($payment, $paymentDetail);
+            $this->updateBlockChainData($paymentDetail->id);
 //            $this->logInfo('userid: '.$user->id);
 //            $this->logInfo('paymentdetail id:'.$paymentDetail->id);
 
@@ -205,6 +206,7 @@ class PaymentController extends BaseController
                 $paymentDetail->received_money = $amount;
                 $paymentDetail->created_date = Carbon::now();
                 $this->updatePaymentModel($payment, $paymentDetail);
+                $this->updateBlockChainData($paymentDetail->id);
                 $listPayment = $this->getPaymentByPhone($patientPhone);
 //                $successReponse = $this->getSuccessObj(200, "OK", "Thanh toán thành công", "No data");
                 return response()->json($listPayment);

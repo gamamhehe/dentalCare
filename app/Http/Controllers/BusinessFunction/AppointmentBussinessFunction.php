@@ -847,4 +847,22 @@ trait AppointmentBussinessFunction
         }
         return false;
     }
+
+    public function getUserNumAppointmentAtDate($phone, $dateStr)
+    {
+        $numAppointment = Appointment::where('phone', $phone)
+            ->whereDate('start_time', $dateStr)
+            ->count('id');
+        return $numAppointment;
+    }
+
+    public function isMaxAppointmentAtDate($phone, $dateStr)
+    {
+        $numAppointment = $this->getUserNumAppointmentAtDate($phone, $dateStr);
+        $this->logBugAppointment("NUM APPOINTMENT " . $numAppointment);
+        if ($numAppointment > 5) {
+            return true;
+        }
+        return false;
+    }
 }

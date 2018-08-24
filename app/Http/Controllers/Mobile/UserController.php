@@ -102,6 +102,10 @@ class UserController extends BaseController
                 $error = $this->getErrorObj("Đã quá thời gian đặt lịch, bạn vui lòng chọn ngày khác", "No exc");
                 return response()->json($error, 400);
             }
+            if ($this->isMaxAppointmentAtDate($phone, $bookingDate)) {
+                $error = $this->getErrorObj("Số điện thoại của bạn đã đặt quá 5 lịch hẹn trong ngày " . $bookingDateObj->format('d-m-Y'), "No Exception");
+                return response()->json($error, 400);
+            }
             $dentistId = $request->input('dentist_id');
             $patientId = $request->input('patient_id');
             $estimatedTime = $request->input('estimated_time');

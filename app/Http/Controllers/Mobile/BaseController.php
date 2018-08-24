@@ -10,6 +10,8 @@ namespace App\Http\Controllers\Mobile;
 
 
 use App\Helpers\AppConst;
+use App\Http\Controllers\Blockchain\BlockchainController;
+use App\Http\Controllers\Blockchain\QueueController;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendFirebaseJob;
 use App\Model\FirebaseToken;
@@ -72,6 +74,13 @@ class BaseController extends Controller
         } else {
             $this->logInfo("staff in sendFirebaseReloadAppointment null");
         }
+    }
+
+    public function updateBlockChainData($idPaymentDetail)
+    {
+        $queueController = new QueueController();
+        $blockchainController = new BlockchainController();
+        $queueController->runJobQueue($blockchainController->EncryptCreatePaymentDetail($idPaymentDetail));
     }
 
     public function sendFirebaseReloadMobileAppointment()
