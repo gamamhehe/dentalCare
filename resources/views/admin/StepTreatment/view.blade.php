@@ -241,7 +241,6 @@
                         $('tbody').html(data.table_data);
 
                         if (data.total_data == 0) {
-                            swal("Không có loại thuốc này", "", "error");
                             $('#total_records').text(data.total_data);
                         }
                     }, error: function (data) {
