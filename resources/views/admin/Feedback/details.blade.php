@@ -20,7 +20,7 @@
                         </div>
                     </div>
                    <div class="form-group row add"  >
-                    <div class="control-label col-md-3 col-sm-3 col-xs-12"><label>Bác Sĩ chịu trách nhiệm </label></div>
+                    <div class="control-label col-md-3 col-sm-3 col-xs-12"><label>Nha Sĩ chịu trách nhiệm </label></div>
                       <div class="col-md-6 col-sm-6 col-xs-8" style="padding-right: 0;padding-left: 0;">
                             <input type="text" class="form-control input-width" id="dentist_name" name="dentist_name" placeholder="Input Title News" readonly="readonly" value="{{$Feedback->treatment_detail->name}}" />
                         </div>
@@ -44,9 +44,9 @@
 
                         <div class="col-md-6 col-sm-6 col-xs-8" style="padding-right: 0;padding-left: 0;">
                             <div class="col-sm-12" style="padding-left: 0 " id="divan">
-                                 <textarea rows="4"  style="width:100%;" required="required" name="content">
-                                     {{$Feedback->content}}
-                                 </textarea>
+                                  <textarea rows="4" cols="50" style="width: 100%">
+                                      {{$Feedback->content}}
+                                    </textarea>
                             </div>
                         </div>
 
