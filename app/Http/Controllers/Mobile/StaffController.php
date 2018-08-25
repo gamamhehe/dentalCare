@@ -234,6 +234,7 @@ class StaffController extends BaseController
             $appointment->staff_id = $dentistId;
             $this->updateAppointment($appointment);
             $this->sendFirebaseReloadMobile($dentistId, AppConst::ACTION_RELOAD_DENTIST_APPOINTMENT);
+            $this->updateNumAppWebsite($appointment);
             $successResponse = $this->getSuccessObj(200, "OK", "Đổi nha sĩ thành công", "No data");
             return response()->json($successResponse);
         } catch (\Exception $ex) {
