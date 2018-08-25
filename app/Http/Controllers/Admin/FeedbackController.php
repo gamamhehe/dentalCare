@@ -70,7 +70,7 @@ class FeedbackController extends Controller
     {
         $Feedback = $this->getFeedbackID($id);
         $Feedback->treatment_detail_id = $Feedback->belongsToTreatmentDetail()->first()->belongsToStaff()->first();
-        return view('admin.feedback.views', ['Feedback' => $Feedback]);
+        return view('admin.Feedback.views', ['Feedback' => $Feedback]);
     }
     //user
     public function edit(Request $request, $id)
