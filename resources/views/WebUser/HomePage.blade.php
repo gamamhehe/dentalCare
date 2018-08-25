@@ -593,7 +593,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 </div>
 </div>
 </div>
-<div class="container">
+<div class="">
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
