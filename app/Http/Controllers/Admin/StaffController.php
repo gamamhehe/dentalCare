@@ -212,51 +212,69 @@ class StaffController extends Controller
             $listAppointment = $this->viewAppointmentForReception();
         }
         foreach ($listAppointment as $appointment) {
-            if ($appointment->status == 0) {
+               $appointment->statusButton="1";
+             if ($appointment->status == 0) {
                 $appointment->status = 'Bệnh nhân chưa đến';
             } else if ($appointment->status == 1) {
-                $appointment->status = 'Bệnh nhân đã đến';
+                $appointment->status = "Bệnh nhân đã đến";
             } else if ($appointment->status == 2) {
                 $appointment->status = 'Đang khám';
             } else if ($appointment->status == 3) {
                 $appointment->status = 'Đã khám';
+               
             } else if ($appointment->status == 4) {
                 $appointment->status = 'Hủy';
             }
             $appointment->dentist = $appointment->belongsToStaff()->first()->name;
-
         }
         return Datatables::of($listAppointment)
             ->addColumn('action', function ($appoint) {
-                if ($appoint->status == 'Bệnh nhân đã đến') {
-                    return '
-                    <div>
-                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
-                </div>
-                    ';
-                } else
-                    if ($appoint->status == 'Đang khám') {
-                        return '
-                   <div>
-                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button>
-                </div>
-                    ';
-                    } else {
-                        return '
-                <div>
-                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                </div>
-                ';
-                    }
-            })->make(true);
+            if(Session::get('roleAdmin') == 2 or Session::get('roleAdmin') == 1){
+                            if ($appoint->status == 'Bệnh nhân đã đến') {
+                                return '<div>
+                                <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                                <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
+                            </div>';
+                            } else if ($appoint->status == 'Đang khám') {
+                                    return '<div>
+                                <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                                <button type="button" class="btn btn-sm  btn-success"onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button></div>
+                                ';
+                                } else {
+                                    return '
+                            <div>
+                                <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                            </div>
+                            ';
+                                }
+            }else{
+                 return '<div><a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a></div>';
+            }
+            })->addColumn('buttonStatus',function ($appointment) {
+                if ($appointment->status == 'Bệnh nhân chưa đến') {
+               return "<h4><span class=\"label label-primary\" style=\"display: block; 
+    min-height: 100%;\">Bệnh nhân chưa đến</span></h4>";
+            } else if ($appointment->status == 'Bệnh nhân đã đến') {
+                 return "<h4><span class=\"label label-success\" style=\"display: block; 
+    min-height: 100%;\">Bệnh nhân đã đến</span></h4>";
+            } else if ($appointment->status == 'Đang khám') {
+                 return "<h4><span class=\"label label-success\" style=\"display: block; 
+    min-height: 100%;\">Đang khám</span></h4>";
+            } else if ($appointment->status =='Đã khám') {
+                 return "<h4><span class=\"label label-warning\" style=\"display: block; 
+    min-height: 100%;\">Đã khám</span></h4>";
+            } else if ($appointment->status =='Hủy') {
+               return "<h4><span class=\"label label-default\" style=\"display: block; 
+    min-height: 100%;\">Hủy</span></h4>";
+            }
+            }) ->rawColumns(['buttonStatus', 'action'])->make(true);
 
     }
 
     public function getListAppointmentInDateForStaff(Request $request)
     {
         $sessionAdmin = $request->session()->get('currentAdmin', null);
+
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
 
         if ($role == 2) {
@@ -265,63 +283,63 @@ class StaffController extends Controller
             $listAppointment = $this->viewAppointmentInDateForReception();
         }
         foreach ($listAppointment as $appointment) {
+            $appointment->statusButton="";
             if ($appointment->status == 0) {
                 $appointment->status = 'Bệnh nhân chưa đến';
-                $appointment->statusButton ='<button type="button" class="btn btn-sm btn-primary" disabled>Primary</button>';
             } else if ($appointment->status == 1) {
                 $appointment->status = 'Bệnh nhân đã đến';
-                $appointment->statusButton='<button type="button" class="btn btn-sm btn-success" disabled>Success</button>';
             } else if ($appointment->status == 2) {
                 $appointment->status = 'Đang khám';
-                 $appointment->statusButton='<button type="button" class="btn btn-sm btn-warning" disabled>Success</button>';
             } else if ($appointment->status == 3) {
                 $appointment->status = 'Đã khám';
-                 $appointment->statusButton='<button type="button" class="btn btn-sm btn-info" disabled>Success</button>';
             } else if ($appointment->status == 4) {
                 $appointment->status = 'Hủy';
-                $appointment->statusButton='<button type="button" class="btn btn-sm btn-danger" disabled >Success</button>';
+               
             }
             $appointment->time = date("H:i:s", strtotime($appointment->start_time));
             $appointment->dentist = $appointment->belongsToStaff()->first()->name;
         }
-        dd($listAppointment);
-        if ($role == 2) {
-            return Datatables::of($listAppointment)
-                ->addColumn('action', function ($appoint) {
-                    if ($appoint->status == 'Bệnh nhân đã đến') {
-                        return '
-                    <div>
-                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
-                </div>
-                    ';
-                    } else
-                        if ($appoint->status == 'Đang khám') {
-                            return '
-                   <div>
-                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                    <button type="button" class="btn btn-sm  btn-success" onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button>
-                </div>
-                    ';
-                        } else {
-                            return '
-                <div>
-                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                </div>
-                ';
-                        }
-                })->make(true);
-        } else {
-            return Datatables::of($listAppointment)
-                ->addColumn('action', function ($appoint) {
-                    return '
-                <div>
-                    <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
-                </div>
-                ';
-                })->make(true);
-        }
-
+        return Datatables::of($listAppointment)
+            ->addColumn('action', function ($appoint) {
+            if(Session::get('roleAdmin') == 2 or Session::get('roleAdmin') == 1){
+                            if ($appoint->status == 'Bệnh nhân đã đến') {
+                                return '<div>
+                                <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                                <button type="button" class="btn btn-sm  btn-success" onclick="checkStart(' . $appoint->id . ')">Bắt đầu</button>
+                            </div>';
+                            } else if ($appoint->status == 'Đang khám') {
+                                    return '<div>
+                                <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                                <button type="button" class="btn btn-sm  btn-success"onclick="checkDone(' . $appoint->id . ')">Hoàn tất</button></div>
+                                ';
+                                } else {
+                                    return '
+                            <div>
+                                <a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a>
+                            </div>
+                            ';
+                                }
+            }else{
+                 return '<div><a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a></div>';
+            }
+            })->addColumn('buttonStatus',function ($appointment) {
+                if ($appointment->status == 'Bệnh nhân chưa đến') {
+               return "<h4><span class=\"label label-primary\" style=\"display: block; 
+    min-height: 100%;\">Bệnh nhân chưa đến</span></h4>";
+            } else if ($appointment->status == 'Bệnh nhân đã đến') {
+                 return "<h4><span class=\"label label-success\" style=\"display: block; 
+    min-height: 100%;\">Bệnh nhân đã đến</span></h4>";
+            } else if ($appointment->status == 'Đang khám') {
+                 return "<h4><span class=\"label label-success\" style=\"display: block; 
+    min-height: 100%;\">Đang khám</span></h4>";
+            } else if ($appointment->status =='Đã khám') {
+                 return "<h4><span class=\"label label-warning\" style=\"display: block; 
+    min-height: 100%;\">Đã khám</span></h4>";
+            } else if ($appointment->status =='Hủy') {
+               return "<h4><span class=\"label label-default\" style=\"display: block; 
+    min-height: 100%;\">Hủy</span></h4>";
+            }
+            }) ->rawColumns(['buttonStatus', 'action'])->make(true);
 
     }
 

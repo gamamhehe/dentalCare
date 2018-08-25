@@ -128,11 +128,10 @@ class AppointmentController extends Controller
                 $giadagiam=0;
                 $listTreatmentHistory = $this->getTreatmentHistory($idPatient);
                 foreach ($listTreatmentHistory as $treatmentHistory) {
-                    $giagoc = $treatmentHistory->price;
-                    $giadagiam = $treatmentHistory->total_price;
-                    $phanTramGiam = (100-($giadagiam%$giagoc)*100);
-                    $final = 100-$phanTramGiam;
-                    $treatmentHistory->percentDiscount = $final;
+                    $giagoc = $treatmentHistory->price; 
+                    $giadagiam = $treatmentHistory->total_price;  
+                    $phanTramGiam = ($giagoc-$giadagiam)/$giagoc*100;
+                    $treatmentHistory->percentDiscount = $phanTramGiam;
                         $result[] = $treatmentHistory;
                 }
 
@@ -313,6 +312,14 @@ class AppointmentController extends Controller
     {
         $time = $apptFinishTimeObj->format('H:i:s');
         if ((strtotime($time) >= strtotime('00:00:00')) && (strtotime($time) < strtotime('07:00:00'))) {
+            return true;
+        }
+        return false;
+    }
+    public function isInThePast($apptFinishTimeObj)
+    {
+        $date = $apptFinishTimeObj->format('Y-m-d');
+        if ((strtotime($date) < strtotime('00:00:00'))) {
             return true;
         }
         return false;
