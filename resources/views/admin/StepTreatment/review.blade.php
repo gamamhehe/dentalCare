@@ -118,7 +118,11 @@
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
+         function preventBack(){window.history.forward();}
+  setTimeout("preventBack()", 0);
+  window.onunload=function(){null};
             $(document).ready(function () {
+
             <?php if (session('message')=="success"): ?>
               swal("Tạo thành công!", "", "success");  
             <?php endif ?>
