@@ -196,7 +196,7 @@ class MobileController extends BaseController
             foreach ($paymentDetail as $detail) {
                 $detail->delete();
             }
-            $paymentDetail->delete();
+            $payment->delete();
         }
     }
 
