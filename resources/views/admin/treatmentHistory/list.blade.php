@@ -1,23 +1,19 @@
 @extends('admin.master')
 @section('title', 'Lịch sử bệnh án bệnh nhân')
 @section('content')
-<div class="content-wrapper">
+    <div class="content-wrapper">
         <div class="box">
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  > <label><h3>Lịch sử bệnh án bệnh nhân </h3></label></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><label><h3>Lịch sử bệnh án bệnh nhân </h3>
+                            </label></div>
                     </div>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <input type="text" name="search" id="search" class="form-control" placeholder="Số điên thoại hoặc tên bệnh nhân" value="{{old('search')}}" />
-                        <div class="row" style="margin-bottom: 1em;" >
-                            <div class=""  style="margin-top: 1em;">
-                                <button type="button" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="search()" >Tìm</button>
-                            </div>
-                        </div>
-
+                        <input type="text" name="search" id="search" class="form-control"
+                               placeholder="Số điên thoại hoặc tên bệnh nhân" value="{{old('search')}}"/>
                     </div>
 
 
@@ -43,13 +39,16 @@
                                         <td style="text-align: center">{{$treatmentHistory->treatment->name}}</td>
                                         <td style="text-align: center">{{$treatmentHistory->tooth_number}}</td>
                                         <td style="text-align: center">{!!$treatmentHistory->description!!}</td>
-                                        <td style="text-align: center">{{number_format($treatmentHistory->price)}} VNĐ</td>
+                                        <td style="text-align: center">{{number_format($treatmentHistory->price)}}VNĐ
+                                        </td>
                                         <td align="center">
                                             <div>
                                                 <form action="{{route('gettreatmentHistoryDetail')}}">
                                                     {{ csrf_field() }}
-                                                    <input type="hidden" name="idTreatmentHistory" value="{{$treatmentHistory->id}}">
-                                                    <button type="submit" class="btn btn-default btn-success">Xem chi tiết
+                                                    <input type="hidden" name="idTreatmentHistory"
+                                                           value="{{$treatmentHistory->id}}">
+                                                    <button type="submit" class="btn btn-default btn-success">Xem chi
+                                                        tiết
                                                     </button>
                                                 </form>
                                             </div>
@@ -74,19 +73,22 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-        function search(){
-
-            $.ajax({
-                url: '/admin/live_search/'+ searchValue, //this is your uri
-                type: 'GET', //this is your method
-
-                dataType: 'json',
-                success: function(data){
-                },error: function (data) {
-                    swal('Error:',"", data);
-                }
-            });
-        }
+        $('#search').on('keyup', function () {
+            var searchValue = document.getElementById('search').value;
+            if (searchValue) {
+                $.ajax({
+                        url: '/admin/search-treatment-history/' + searchValue, //this is your uri
+                        type: 'GET', //this is your method
+                        dataType: 'json',
+                        success: function (data) {
+                            $('tbody').html(data.table_data);
+                        }, error: function (data) {
+                            swal('Error:', "", "error");
+                        }
+                    }
+                )
+            }
+        })
 
     </script>
 @endsection

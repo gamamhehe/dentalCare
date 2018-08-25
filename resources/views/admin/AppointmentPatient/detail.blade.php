@@ -207,7 +207,7 @@
                                                                     Ngày kết thúc :  {{$treatmentHistory->finish_date}}
                                                                 @else
                                                                     <a href="{{ route("admin.stepTreatment", ['idTreatmentHistory' => $treatmentHistory->id,
-                        'idTreatment' => $treatmentHistory->treatment->id])}}" class="btn btn-success" role="button">Skip</a>
+                        'idTreatment' => $treatmentHistory->treatment->id])}}" class="btn btn-success" role="button">Tiếp tục</a>
                                                                 @endif</div>
                                                         </div>
                                                     </h4>

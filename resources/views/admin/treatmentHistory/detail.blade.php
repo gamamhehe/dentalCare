@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-group">
                         <label>Miêu tả: </label>
-                        <span>{{$treatmentHistory->description}}</span>
+                        <span>{!!$treatmentHistory->description !!}</span>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" style="text-align: center">

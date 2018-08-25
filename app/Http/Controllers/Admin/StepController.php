@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BusinessFunction\TreatmentBusinessFunction;
+use App\Model\Medicine;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Step;
@@ -18,7 +19,8 @@ class StepController extends Controller
         $idTreatment=$request['idTreatment'];
         $list = $this->showTreatmentStepForTreatment($idTreatment);
         $countList =count($list);
-        return view("admin.StepTreatment.view", ['list' => $list,'count'=>$countList]);
+        $medicineList = Medicine::all();
+        return view("admin.StepTreatment.view", ['list' => $list,'count'=>$countList, 'medicineList' => $medicineList]);
 //=======
        //   $listStepTreatment = $request['listStepTreatment'];
       
