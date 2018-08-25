@@ -57,7 +57,7 @@
                 serverSide: true,
                 order: [[ 0, "desc" ]],
                 bLengthChange:true,
-                pageLength: 5,
+                pageLength: 10,
                 ajax: '/admin/get-list-anamnesis',
                 columns : [
 

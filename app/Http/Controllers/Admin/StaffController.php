@@ -20,6 +20,7 @@ use App\Model\Tooth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Facades\Datatables;
@@ -120,7 +121,6 @@ class StaffController extends Controller
 
     public function getStaff(Request $request)
     {
-
         $staffs = $this->getStaffForDataTable();
         return Datatables::of($staffs)->addColumn('action', function ($staffs) {
             return '
@@ -129,14 +129,39 @@ class StaffController extends Controller
                                             <i class="fa fa-eye"></i>
                                         </a>
                 <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
-                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '" data-role="' . $staffs->RoleStaff . '">
+                                           data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '" data-role="' . $staffs->staffRoleID . '">
                                             <i class="glyphicon glyphicon-pencil"></i>
                                         </a>
                 ';
         })->make(true);
 
     }
-
+    public function editStaff(Request $request){
+      
+        DB::beginTransaction();
+        try {
+            $staff = Staff::find($request->id);
+            $staff->name = $request->name;
+            $staff->address = $request->address;
+            $staff->gender = $request->gender;
+            $userHasRole = UserHasRole::where('phone', $staff->phone)->get();
+            if ($userHasRole[0]->role_id != $request->role_id) {
+                $userHasRole[0]->end_time = Carbon::now();
+                // $userHasRole = new UserHasRole();
+                $userHasRole[0]->role_id = $request->role_id;
+                $userHasRole[0]->start_time = Carbon::now();
+                
+            }
+            $userHasRole[0]->save();
+            $staff->save();
+            DB::commit();
+            return 0;
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return 1;
+        }
+    }
     public function listStaff(Request $request)
     {
         $post = Staff::all();
@@ -388,7 +413,9 @@ class StaffController extends Controller
 
         return view('admin.Staff.profile', ['staff' => $staff, 'start' => $start]);
     }
+    public function getAllStaffAjax(Request $request){
 
+    }
     public function getFreeDentistInStaff(Request $request)
     {
         $list = $this->getCurrentFreeDentist();
