@@ -1514,7 +1514,7 @@ a.nav-link.biendoichumenu.active{
     color: #fff !important;
     font-weight: 600;
     z-index: 1;
-    right:-300px; top:300px;
+    right:-400px; top:300px;
     background: blue;
     animation: mymove 10s infinite;
     animation-delay: 0s;
@@ -1525,11 +1525,11 @@ a.nav-link.biendoichumenu.active{
     animation-play-state: running;
 }
 @-webkit-keyframes mymove {
-    0%   {    right:-300px;  top:300px;}
+    0%   {    right:-400px;  top:300px;}
     10%  {   right:0px; top:300px;}
     60%  {  right:0px; top:300px;}
-    70%  {  right:-300px; top:300px;}
-    100% {  right:-300px;top:300px;}
+    70%  {  right:-400px; top:300px;}
+    100% {  right:-400px;top:300px;}
 }
 
 

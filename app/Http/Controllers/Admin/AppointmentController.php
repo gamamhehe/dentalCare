@@ -12,6 +12,7 @@ use App\Model\Patient;
 use App\Model\Staff;
 use App\Model\City;
 use App\Model\District;
+use App\Model\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DateTime;
@@ -172,17 +173,24 @@ class AppointmentController extends Controller
         if($phone==null){
            $phone =  $request['phoneNumber'];
         }
-        $dateBooking = $request['start_date'];
+        $dateBooking = $request['start_date']; 
         $errormess ="Lịch hẹn ngày ".$dateBooking." đã đầy";
 
         $note = $request['guestNote'];
         if($note == null){
             $note = "Không có";
         }
-
+        $bookingDateObj = new DateTime($request['start_date']);   
+        if ($this->isMaxAppointmentAtDate($phone, $bookingDateObj)) {
+                 return redirect()->back()->withError("Số điện thoại của bạn đã đặt quá 5 lịch hẹn trong ngày");
+        }
+         $currentTime = Carbon::now();
+         if (($currentTime->format("Y-m-d") == $bookingDateObj->format("Y-m-d"))
+                && $this->isEndOfTheDay($currentTime)
+                || $this->isInThePast($bookingDateObj)) {
+                return redirect()->back()->withError("Đã quá thời gian đặt lịch, bạn vui lòng chọn ngày khác");
+        }   
         $checkNewMember = $this->checkNewMember($phone);
-
-
         $resultAccount = $this->createAccountNewMember($phone);
         if($resultAccount == false){
                return redirect()->back()->withError("Có lỗi khi đặt lịch");
@@ -205,6 +213,7 @@ class AppointmentController extends Controller
         }
         return redirect()->back()->withSuccess($successMess);
        } catch (\Exception $e) {
+        dd($e);
           return redirect()->back()->withError($errormess);
        }
     }
@@ -272,5 +281,40 @@ class AppointmentController extends Controller
             return 0;
         }
          return 1;
+    }
+     public function getUserNumAppointmentAtDate($phone, $dateStr)
+    {
+        $numAppointment = Appointment::where('phone', $phone)
+            ->whereDate('start_time', $dateStr)
+            ->count('id');
+        return $numAppointment;
+
+    }
+     public function isMaxAppointmentAtDate($phone, $dateStr)
+    {
+        $numAppointment = $this->getUserNumAppointmentAtDate($phone, $dateStr);
+
+        $this->logBugAppointment("NUM APPOINTMENT " . $numAppointment);
+        if ($numAppointment > 5) {
+            return true;
+        }
+        return false;
+    }
+    public function isEndOfTheDay($apptFinishTimeObj)
+    {
+        $time = $apptFinishTimeObj->format('H:i:s');
+        if ((strtotime($time) > strtotime('19:15:00'))) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isInEarlyDay($apptFinishTimeObj)
+    {
+        $time = $apptFinishTimeObj->format('H:i:s');
+        if ((strtotime($time) >= strtotime('00:00:00')) && (strtotime($time) < strtotime('07:00:00'))) {
+            return true;
+        }
+        return false;
     }
 }

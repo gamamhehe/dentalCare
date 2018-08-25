@@ -64,7 +64,7 @@ class FeedbackController extends Controller
         $contet = $Feedback->content;
         $Feedback->content = trim($contet); 
         $Feedback->treatment_detail = $Feedback->belongsToTreatmentDetail()->first()->belongsToStaff()->first();
-        return view('admin.feedback.details', ['Feedback' => $Feedback]);
+        return view('admin.Feedback.details', ['Feedback' => $Feedback]);
     }
     public function getViewsFeedback(Request $request, $id)
     {

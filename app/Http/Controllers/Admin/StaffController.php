@@ -267,18 +267,24 @@ class StaffController extends Controller
         foreach ($listAppointment as $appointment) {
             if ($appointment->status == 0) {
                 $appointment->status = 'Bệnh nhân chưa đến';
+                $appointment->statusButton ='<button type="button" class="btn btn-sm btn-primary" disabled>Primary</button>';
             } else if ($appointment->status == 1) {
                 $appointment->status = 'Bệnh nhân đã đến';
+                $appointment->statusButton='<button type="button" class="btn btn-sm btn-success" disabled>Success</button>';
             } else if ($appointment->status == 2) {
                 $appointment->status = 'Đang khám';
+                 $appointment->statusButton='<button type="button" class="btn btn-sm btn-warning" disabled>Success</button>';
             } else if ($appointment->status == 3) {
                 $appointment->status = 'Đã khám';
+                 $appointment->statusButton='<button type="button" class="btn btn-sm btn-info" disabled>Success</button>';
             } else if ($appointment->status == 4) {
                 $appointment->status = 'Hủy';
+                $appointment->statusButton='<button type="button" class="btn btn-sm btn-danger" disabled >Success</button>';
             }
             $appointment->time = date("H:i:s", strtotime($appointment->start_time));
             $appointment->dentist = $appointment->belongsToStaff()->first()->name;
         }
+        dd($listAppointment);
         if ($role == 2) {
             return Datatables::of($listAppointment)
                 ->addColumn('action', function ($appoint) {

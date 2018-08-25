@@ -16,10 +16,12 @@
                         <thead>
                         <tr style="background-color: #eee;">
                             <th class="col-lg-0.5 col-md-1 col-sm-1 col-xs-1">Số điện thoại</th>
+                            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Số thứ tự</th>
                             @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
-                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Số thứ tự</th>
+                                
+                                 <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Nha sĩ</th>
                             @endif
-                            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Bác sĩ</th>
+                           
                             <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Giờ bắt đầu</th>
                             <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Thời lượng khám</th>
                             <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Ghi chú</th>
@@ -86,7 +88,7 @@
                     },
                     {data: 'estimated_time'},
                     {data: 'note'},
-                    {data: 'status'},
+                    {data: 'statusButton'},
                     {
                         data: 'action'
                     },
