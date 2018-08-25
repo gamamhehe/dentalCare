@@ -75,31 +75,32 @@
                                         {{ csrf_field() }}
                                         <input type="hidden" id="idAbsent">
                                     <div class="form-group row add">
-                                    <label class="control-label col-xs-3" for="title">Người chấp thuận:</label>
+                                    <label class="control-label col-xs-4" for="title">Người chấp thuận:</label>
                                     <div class="col-xs-8">
                                         <input type="text" class="form-control" id="staffApprove" name="staffApprove"
                                                required="required" disabled>
                                     </div>
                                     </div>
                                     <div class="form-group row add">
-                                    <label class="control-label col-xs-3" for="title">Nhân viên làm đơn :</label>
+                                    <label class="control-label col-xs-4" for="title">Nhân viên làm đơn :</label>
                                     <div class="col-xs-8">
                                         <input type="text" class="form-control" id="staff" name="staff"
                                                required="required" disabled>
                                     </div>
                                     </div>
                                     <div class="form-group row add">
-                                        <label class="control-label col-xs-3" for="title">Ngày nghỉ:</label>
+                                        <label class="control-label col-xs-4" for="title">Ngày nghỉ:</label>
                                         <div class="col-xs-8">
+                                          <input type="text" class="form-control col-xs-5" id="start_date" name="start_date"
+                                           required="required" disabled>
                                             <input type="text" class="form-control col-xs-5" id="end_date" name="end_date"
                                                    required="required" disabled>
-                                            <input type="text" class="form-control col-xs-5" id="start_date" name="start_date"
-                                           required="required" disabled>
+                                          
                                         </div>
                                     </div>
                                          
                                     <div class="form-group">
-                                        <label class="control-label col-xs-3" for="title">Lời nhắn</label>
+                                        <label class="control-label col-xs-4" for="title">Lời nhắn</label>
                                             <div class="input-group date col-xs-8 " style="    padding-left: 15px">
                                                  <textarea  type="text" class="form-control input-width" id="message" name="message" placeholder="Lời nhắn" required="required"   cols="50" rows="3"></textarea>
                                             </div>
@@ -136,7 +137,7 @@
         $('#create').modal('show');
         $('.form-horizontal').show();
         $('.modal-title').text('Khởi tạo lịch hẹn');
-        $('#staffApprove').val($(this).data('id'));
+        $('#staffApprove').val($(this).data('admin'));
         $('#idAbsent').val($(this).data('id'));
         $('#staff').val($(this).data('name'));
         $('#start_date').val($(this).data('start'));
@@ -167,7 +168,8 @@
             });
     });
      $(document).on('click','#addApprove', function() {
-         var message = document.getElementById("#message").value;
+
+         var message = document.getElementById("message").value;
             if ($.trim(message) == '' ) {
                 swal("Vui lòng nhập lời nhắn phản hồi!", "", "error");
                 return;

@@ -17,7 +17,7 @@
                    <div class="form-group row add"  >
                       <div class="control-label col-md-2 col-sm-2 col-xs-12"><label>Tiêu đề</label></div>
                             <div class="col-md-8 col-sm-8 col-xs-12" style="padding-right: 0;padding-left: 0;">
-                              <input type="text" class="form-control input-width" id="title" name="title" placeholder="Input Title News" required="required" />
+                              <input type="text" class="form-control input-width" id="title" name="title" placeholder="Tiêu đề tin tức" required="required" />
                             </div>
                     </div>
                     <div class="form-group row add"  >
