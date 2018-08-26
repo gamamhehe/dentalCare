@@ -136,7 +136,7 @@
                                                                             <button type="button"
                                                                                     class="btn btn-default divcenter btn-success"
                                                                                     style="margin-right: 10px;float: center;"
-                                                                                    onclick="addToPrescription('.$tmp.','.$row->id.')">
+                                                                                    onclick="addToPrescription('{!!$medicine->name!!}', '{{$medicine->id}}')">
                                                                                 <i class="fa fa-plus"></i>
                                                                             </button>
                                                                         </td>
@@ -296,10 +296,13 @@
                 }
             }
             document.getElementById('prescription').insertAdjacentHTML('beforeend',
-                " <div class='row' name='medicine'> <div class='col-xs-6'> <input type='hidden' name='medicine[]' value='" + id +
-                "'><span>" + name + "</span></div> <div class='col-xs-6'> <input type='number' name='quantity[]' value='1' min='1' max='99' style='width:50%;border-radius:5px;border:1px green solid;'> vien</div></div>");
+                " <div class='row' name='medicine' id='"+ id+ "'> <div class='col-xs-5'> <input type='hidden' name='medicine[]' value='" + id +
+                "'><span>" + name + "</span></div> <div class='col-xs-5'> <input type='number' name='quantity[]' value='1' min='1' max='99' style='width:50%;border-radius:5px;border:1px green solid;'> vien</div>" +
+                "<div class='col-xs-2'><button onclick='remove(" + id + ")'>x</button></div></div>");
         }
-
+        function remove(id){
+            $("#" + id).remove();
+        }
         //end don thuoc
     </script>
 @endsection

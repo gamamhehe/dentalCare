@@ -174,8 +174,7 @@ trait TreatmentHistoryBusinessFunction
         }
     }
 
-    public function searchTreatmentHistory($searchValue)
-    {
+    public function searchTreatmentHistory($searchValue){
         $listPatient = Patient::where('phone', 'like', $searchValue . '%')
             ->orWhere('name', 'like', '%' . $searchValue . '%')
             ->pluck('id');
@@ -197,14 +196,14 @@ trait TreatmentHistoryBusinessFunction
                 $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
                 $queueController = new QueueController();
-                $blockchainController = new BlockchainController();
-                $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price, $payment->total_price));
+                 $blockchainController = new BlockchainController();
+                 $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price, $payment->total_price));
             } else {
 
                 $idPayment = $this->createPayment($total_price, $phone);
                 $queueController = new QueueController();
-                $blockchainController = new BlockchainController();
-                $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
+                 $blockchainController = new BlockchainController();
+                 $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
 
             }
             if ($description == null) {
