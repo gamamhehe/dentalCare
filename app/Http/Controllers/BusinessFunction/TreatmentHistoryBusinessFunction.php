@@ -125,6 +125,11 @@ trait TreatmentHistoryBusinessFunction
             $tmDetail->save();
             Utilities::logInfo("tmDetail save");
             $tmDetailId = $tmDetail->id;
+//update block chain data
+            $queueController = new QueueController();
+            $blockchainController = new BlockchainController();
+            $queueController->runJobQueue($blockchainController->EncryptCreatePaymentDetail($tmDetailId));
+
             if ($detailStepIds != null) {
                 foreach ($detailStepIds as $stepId) {
                     $tmDetailSteps = new TreatmentDetailStep();
