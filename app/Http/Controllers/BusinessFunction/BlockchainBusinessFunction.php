@@ -86,7 +86,7 @@ trait BlockchainBusinessFunction
                 $payment->status = $element[4];
                 $payment->save();
             }else{
-                Payment::create([
+                $payment = Payment::create([
                     'id' => $element[0],
                     'paid' => 0,
                     'total_price' => $element[2],
