@@ -125,6 +125,11 @@ trait TreatmentHistoryBusinessFunction
             $tmDetail->save();
             Utilities::logInfo("tmDetail save");
             $tmDetailId = $tmDetail->id;
+//update block chain data
+            $queueController = new QueueController();
+            $blockchainController = new BlockchainController();
+            $queueController->runJobQueue($blockchainController->EncryptCreatePaymentDetail($tmDetailId));
+
             if ($detailStepIds != null) {
                 foreach ($detailStepIds as $stepId) {
                     $tmDetailSteps = new TreatmentDetailStep();
@@ -191,14 +196,14 @@ trait TreatmentHistoryBusinessFunction
                 $this->updatePayment($total_price, $payment->id, $idTreatment);
                 $idPayment = $payment->id;
                 $queueController = new QueueController();
-                // $blockchainController = new BlockchainController();
-                // $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price, $payment->total_price));
+                 $blockchainController = new BlockchainController();
+                 $queueController->runJobQueue($blockchainController->EncryptUpdatePayment($idPayment, $idTreatment, $total_price, $payment->total_price));
             } else {
 
                 $idPayment = $this->createPayment($total_price, $phone);
                 $queueController = new QueueController();
-                // $blockchainController = new BlockchainController();
-                // $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
+                 $blockchainController = new BlockchainController();
+                 $queueController->runJobQueue($blockchainController->EncryptCreatePayment($idPayment));
 
             }
             if ($description == null) {

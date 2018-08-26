@@ -102,13 +102,13 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title"></h4>
+                                    <h3 class="modal-title" style="text-align: center;"></h3>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row" style="text-align: center;">
                                         <div class="panel-body col-md-6 col-sm-12 col-xs-12">
                                             <div class="box" style="border-top:green 3px solid">
-                                                <div><h3 class="box-title">Tìm Đơn Thuốc</h3></div>
+                                                <div><h4 class="box-title">Các loại thuốc</h4></div>
             <div class="box-body">
                 <div class="form-group row">
                     <div class="col-xs-12"><input type="text" name="search"
@@ -116,46 +116,47 @@
                                                   class="form-control"
                                                   placeholder="Tên thuốc"/></div>
 
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered" style="display: block;height: 500px;overflow-y: scroll;">
-                        <thead>
-                        <tr>
-                            <th class="col-md-4 col-xs-12">Tên thuốc</th>
-                            <th class="col-md-4 col-xs-12">Công dụng</th>
-                            <th class="col-md-2 col-xs-12">Tùy chọn</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if($medicineList)
-                            @foreach($medicineList as $medicine)
-                                <tr>
-                                    <td class="col-md-4 col-xs-12 ">{{$medicine->name }}</td>
-                                    <td class="col-md-4 col-xs-12"> {{$medicine->use }}</td>
-                                    <td class="col-md-3 col-xs-12">
-                                        <button type="button"
-                                                class="btn btn-default divcenter btn-success"
-                                                style="margin-right: 10px;float: center;"
-                                                onclick="addToPrescription('{{$medicine->name}}','{{$medicine->id}}')">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="panel-body col-md-6 col-sm-12 col-xs-12">
-        <div class="box" style="border-top:green 3px solid">
-            <div><label><h3>Đơn Thuốc</h3></label></div>
-            <div class="box-body">
-                <input type="hidden" name="_token"
-                       value="<?php echo csrf_token(); ?>">
-                <div class="form-group row">
+
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-bordered" style="display: block;height: 500px;overflow-y: scroll;">
+                                                            <thead>
+                                                            <tr>
+                                                                <th class="col-md-4 col-xs-12">Tên thuốc</th>
+                                                                <th class="col-md-4 col-xs-12">Công dụng</th>
+                                                                <th class="col-md-2 col-xs-12">Tùy chọn</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @if($medicineList)
+                                                                @foreach($medicineList as $medicine)
+                                                                    <tr>
+                                                                        <td class="col-md-4 col-xs-12 ">{{$medicine->name }}</td>
+                                                                        <td class="col-md-4 col-xs-12"> {{$medicine->use }}</td>
+                                                                        <td class="col-md-3 col-xs-12">
+                                                                            <button type="button"
+                                                                                    class="btn btn-default divcenter btn-success"
+                                                                                    style="margin-right: 10px;float: center;"
+                                                                                    onclick="addToPrescription('{!!$medicine->name!!}', '{{$medicine->id}}')">
+                                                                                <i class="fa fa-plus"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body col-md-6 col-sm-12 col-xs-12">
+                                            <div class="box" style="border-top:green 3px solid">
+                                                <div style="text-align: center"><label><h4>Đơn thuốc</h4></label></div>
+                                                <div class="box-body">
+                                                    <input type="hidden" name="_token"
+                                                           value="<?php echo csrf_token(); ?>">
+                                                    <div class="form-group row">
                                                         <div class="col-xs-6">Tên thuốc</div>
                                                         <div class="col-xs-6">Số lượng</div>
                                                     </div>
@@ -296,10 +297,13 @@
                 }
             }
             document.getElementById('prescription').insertAdjacentHTML('beforeend',
-                " <div class='row' name='medicine'> <div class='col-xs-6'> <input type='hidden' name='medicine[]' value='" + id +
-                "'><span>" + name + "</span></div> <div class='col-xs-6'> <input type='number' name='quantity[]' value='1' min='1' max='99' style='width:50%;border-radius:5px;border:1px green solid;'> vien</div></div>");
+                " <div class='row' name='medicine' id='"+ id+ "'> <div class='col-xs-5'> <input type='hidden' name='medicine[]' value='" + id +
+                "'><span>" + name + "</span></div> <div class='col-xs-5'> <input type='number' name='quantity[]' value='1' min='1' max='99' style='width:50%;border-radius:5px;border:1px green solid;'> viên</div>" +
+                "<div class='col-xs-2'><button class='btn btn-danger btn-sm'  onclick='remove(" + id + ")'>Xóa</button></div></div>");
         }
-
+        function remove(id){
+            $("#" + id).remove();
+        }
         //end don thuoc
     </script>
 @endsection
