@@ -29,6 +29,7 @@ use App\Model\UserHasRole;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
+use function GuzzleHttp\Psr7\try_fopen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -434,16 +435,23 @@ class StaffController extends BaseController
 //            }
             $result =
                 $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $patientName, $allowOvertime == 1);
-            if ($allowOvertime == 0 && $result !=null) {
+            if ($result != null) {
                 $newApptDateObj = new DateTime($result->start_time);
-                $this->dispatch(new SendSmsJob($phone,
-                  AppConst::getStaffSMSForAppt($result->numerical_order, $newApptDateObj)));
+                if ($allowOvertime == 0) {
+                    $this->dispatch(new SendSmsJob($phone,
+                        AppConst::getStaffSMSForAppt($result->numerical_order, $newApptDateObj)));
+                }
+                $responseMSG = AppConst::getSmsMSG($result->numerical_order, $newApptDateObj, true);
+                return response()->json($responseMSG, 200);
+            } else {
+                $error = $this->getErrorObj("Không thể đặt lịch, bạn vui lòng chọn ngày khác", "No exception");
+                return response()->json($error, 400);
             }
-            return response()->json($result, 200);
         } catch (ApiException $e) {
             $error = Utilities::getErrorObj("Lỗi server", $e);
             return response()->json($error, 400);
-        } catch (\Exception $ex) {
+        } catch
+        (\Exception $ex) {
             if ($ex->getMessage() == "isEndOfTheDay" && ($allowOvertime == 0)) {
                 $currentTime = new DateTime();
                 if ($this->isEndOfTheDay($currentTime)) {
