@@ -507,14 +507,14 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 </div>
 </div>
 </div>
-<div class="box_dktv" style="overflow: hidden;width: 220px;max-width: 300px;">
+<div class="box_dktv" style="overflow: hidden;width: 240px;max-width: 400px;">
 <div class="divOut" style="padding: 4px;">
     <div class="container" style="    border: 1px solid white;
-    padding: 5px;">
+    padding: 5px;padding-right: 0px;">
     <div class="row">
-        <div class="col-xs-1"><img src="/assets/images/HomePage/dktv.png" alt="No Image" style="float: left;"
+        <div class="col-xs-3" style="padding-right: 0;"><img src="/assets/images/HomePage/dktv.png" alt="No Image" style="float: left;"
          class="img-responsive img-fruid"></div>
-         <div class="col-xs-10">
+         <div class="col-xs-9" style="padding-left: 0;padding-right: 0;">
             <a href="#" class="btnkn2tv create-modal" style="color: white;">
                 <div>
                     <div>Đặt lịch hẹn</div>
@@ -567,7 +567,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 
                 <div class="col-sm-12" style="margin: 8px 0;">
                     <div class="col-sm-12 inputWithIcon" style="padding-right: 0;padding-left: 0;">
-                        <input type="text" placeholder="Ngày bắt đầu" name="start_date"
+                        <input type="text" placeholder="Ngày hẹn" name="start_date"
                         class="form-control pull-right" id="startdate" style="margin:0px;"/>
                         <i class="fa fa-calendar"></i>
                     </div>
@@ -582,7 +582,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
                 <div class="col-sm-12" style="padding-top: 2em;">
                     <button class="btn btn-warning" type="button" style=" width: 100%;" id="add"
                     onclick="save(this)">
-                    <span class="glyphicon glyphicon-plus"></span>Hoàn thành
+                    Đặt lịch
                 </button>
             </div>
 
@@ -593,7 +593,7 @@ href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-dat
 </div>
 </div>
 </div>
-<div class="container">
+<div class="">
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">

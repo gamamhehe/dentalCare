@@ -64,13 +64,15 @@ class FeedbackController extends Controller
         $contet = $Feedback->content;
         $Feedback->content = trim($contet); 
         $Feedback->treatment_detail = $Feedback->belongsToTreatmentDetail()->first()->belongsToStaff()->first();
-        return view('admin.feedback.details', ['Feedback' => $Feedback]);
+        return view('admin.Feedback.details', ['Feedback' => $Feedback]);
     }
     public function getViewsFeedback(Request $request, $id)
     {
         $Feedback = $this->getFeedbackID($id);
+        $content = trim($Feedback->content);
+        $Feedback->content = $content;
         $Feedback->treatment_detail_id = $Feedback->belongsToTreatmentDetail()->first()->belongsToStaff()->first();
-        return view('admin.feedback.views', ['Feedback' => $Feedback]);
+        return view('admin.Feedback.views', ['Feedback' => $Feedback]);
     }
     //user
     public function edit(Request $request, $id)

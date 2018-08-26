@@ -41,8 +41,10 @@ trait StaffBusinessFunction
         foreach ($staffs as $staff) {
             $staff->hasUserHasRole = $staff->belongsToUser()->first()->hasUserHasRole()->get();
             $staffName = "";
+            $staffRoleID = "";
             foreach ($staff->hasUserHasRole as $key) {
                 $key->roleName = $key->belongsToRole()->first()->name;
+                $staffRoleID = $key->belongsToRole()->first()->id;
                 if (strlen($staffName) == 0) {
                     $staffName = $staffName . " " . $key->roleName;
                 } else {
@@ -50,6 +52,7 @@ trait StaffBusinessFunction
                 }
             }
             $staff->RoleStaff = $staffName;
+            $staff->staffRoleID = $staffRoleID;
         }
         return $staffs;
     }

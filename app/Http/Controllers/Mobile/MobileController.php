@@ -192,12 +192,19 @@ class MobileController extends BaseController
     public function deletePayment($payment)
     {
         $paymentDetail = $payment->hasPaymentDetail()->get();
+        $paymentUpdateDetail = $payment->hasPaymentUpdateDetail()->get();
         if ($paymentDetail != null) {
             foreach ($paymentDetail as $detail) {
                 $detail->delete();
             }
-            $paymentDetail->delete();
         }
+
+        if ($paymentUpdateDetail != null) {
+            foreach ($paymentUpdateDetail as $detail) {
+                $detail->delete();
+            }
+        }
+        $payment->delete();
     }
 
     public function deleteAppointment($appointment)
@@ -324,12 +331,12 @@ class MobileController extends BaseController
                             $this->dispatch(new SendFirebaseJob(
                                 AppConst::RESPONSE_FEEDBACK,
                                 "Thông báo",
-                                "Đánh giá dịch vụ ". $treatment->name . ' lần '.$count,
+                                "Đánh giá dịch vụ " . $treatment->name . ' lần ' . $count,
                                 json_encode($feedbackObj),
                                 $firebaseToken->noti_token
                             ));
-                            $this->logInfo("Send feedback to".$phone);
-                        }else{
+                            $this->logInfo("Send feedback to" . $phone);
+                        } else {
                             $this->logInfo("Fire base null");
                         }
                     }
@@ -341,6 +348,7 @@ class MobileController extends BaseController
             return response()->json($errorObj, 500);
         }
     }
+
     public function sendFirebaseReloadAppointment($phone)
     {
         $user = User::where('phone', $phone)->first();
@@ -364,7 +372,9 @@ class MobileController extends BaseController
                 $this->logInfo("staff in sendFirebaseReloadAppointment null");
             }
         }
-    }  public function sendFirebaseReloadClinicAppointment(Request $request)
+    }
+
+    public function sendFirebaseReloadClinicAppointment(Request $request)
     {
         $this->sendFirebaseReloadMobileAppointment();
     }

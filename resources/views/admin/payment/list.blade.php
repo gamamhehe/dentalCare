@@ -27,7 +27,7 @@
                                         <div class="form-group row add">
                                             <label class="control-label col-sm-2" for="title">Số tiền :</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="name" name="name"
+                                                <input type="number" class="form-control" id="money" name="money" min="10000" value="10000" 
                                                        placeholder="Số tiền" required>
                                                 <p class="error text-center alert alert-danger hidden"></p>
                                             </div>
@@ -81,11 +81,11 @@
                                                 </form>
                                                 @if($payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_NOT_DONE)
 
-                                                    <input type="hidden" name="idPayment" value="{{$payment->id}}">
-                                                    <a href="#" class="create-modal btn btn-success  ">
+                                                    <input type="hidden" name="idPayment" id="idPayment" value="{{$payment->id}}">
+                                                    <a href="#" class="create-modal btn btn-success" data-ID="{{$payment->id}}">
                                                         Tạo chi trả
                                                     </a>
-
+                                                 
                                                 @endif
                                             </div>
                                         </td>
@@ -98,7 +98,7 @@
                 </div>
             </div>
         </div>
-
+ <input type="hidden" id="idE" value="0">
     </div>
 
     <!-- </body>
@@ -111,10 +111,12 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+        x = 0;
         $(document).on('click', '.create-modal', function () {
             $('#create').modal('show');
             $('.form-horizontal').show();
             $('.modal-title').text('Chi trả');
+              x =$(this).data('id');
         });
         $('#search').on('keyup', function () {
             var searchValue = document.getElementById('search').value;
@@ -130,6 +132,36 @@
                     }
                 });
             }
-        })
+        });
+        function save(){
+           var money = document.getElementById("money").value;
+           var idPayment = x;
+            alert(idPayment);
+            if ($.trim(money) == '') {
+                swal("Vui lòng điền họ số tiền!", "", "error");
+                return;
+            } else {
+               
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/create-paymen-detail',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'payment_id': idPayment,
+                        'received_money': money,
+                    },
+                    success: function (data) {
+                        if ((data.errors)) {
+                        } else {
+                            swal("Thành toán thành công", "", "success");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+
+                        }
+                    },
+                });
+            }
+        }
     </script>
 @endsection

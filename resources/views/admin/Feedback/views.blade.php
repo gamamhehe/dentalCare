@@ -6,7 +6,7 @@
         <section class="content">
             <div class="container"  >
                 <div class="row" style="text-align: center;">
-                    <label><h1>Chi tiết Feedback</h1></label>
+                    <label><h1>Chi tiết đánh giá</h1></label>
                 </div>
                 <form method ="post" class="form-horizontal" action="{{ route('admin.edit.news', ['id' => 7]) }}" enctype="multipart/form-data" id="createNews">
                     {{ csrf_field() }}
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
-                        <div class="col-sm-2"><label>Bác Sĩ chịu trách nhiệm </label></div>
+                        <div class="col-sm-2"><label>Nha Sĩ chịu trách nhiệm </label></div>
                         <div class="col-sm-10" style="padding-right: 0;">
                             <input type="text" class="form-control input-width" id="title" name="title" placeholder="Input Title News" readonly="readonly" value="{{$Feedback->treatment_detail_id->name}}" />
                         </div>
@@ -30,10 +30,10 @@
                     </div>
                     <div class="row layout" style="margin-bottom: 1em;margin-right: 4em">
                         <div class="col-sm-2"><label>Đánh giá</label></div>
-                        <div class="col-sm-10" style="padding-right: 0;">
-                            @for( $x = 1; $x <= $Feedback->number_start; $x++)
-                            {{--<input type="text" class="form-control input-width" id="title" name="title" placeholder="Input Title News" readonly="readonly" value="{{$Feedback->number_start}} sao" />--}}
-                                <span style="height: 3px;width: 1.3em;">☆</span>
+                        <div class="col-sm-10" style="padding-right: 0;"> 
+                            @for( $x = 1; $x <= $Feedback->num_of_stars; $x++)
+                            <i class="fa fa-star text-yellow"></i> 
+                          
                             @endfor
                         </div>
                     </div>
@@ -41,9 +41,10 @@
                         <div class="col-sm-2"><label>Nội dung</label></div>
                         <input type="hidden" value="" name="News_id" />
                         <div class="col-sm-10">
-                            <div class="col-sm-12" style="padding-left: 0 " id="divan">
-                                 <textarea rows="4"  style="width:100%;" readonly="readonly">
-                                     {{$Feedback->content}}</textarea>
+                            <div class="col-sm-12" style="padding-left: 0 " id="divan" >
+                                     <textarea rows="4" cols="50" style="width: 100%">
+                                     {{$Feedback->content}}
+                                    </textarea>
                             </div>
                         </div>
 

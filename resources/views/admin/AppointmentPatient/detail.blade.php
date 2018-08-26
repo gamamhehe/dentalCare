@@ -167,6 +167,7 @@
                 </div>
             </div>
         </div>
+         @if($listTreatmentHistory)
         <div class="box box-info">
             <div class="panel panel-default" style="">
                     <div class="panel-heading">
@@ -273,10 +274,7 @@
                                             </div>
                                         </article>
                                     @endforeach
-                                @else
-                                    <div class="container" style="background-color: whitesmoke;width: 100%;height: 200px;">
-                                        <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân chưa từng điều trị</h1>
-                                    </div>
+                              
                                 @endif
                             </div>
                            </div>
@@ -288,6 +286,7 @@
                     </div>
             </div>
         </div>
+        @endif
     </div>
  
        

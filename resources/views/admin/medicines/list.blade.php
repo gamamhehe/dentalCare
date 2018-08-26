@@ -13,7 +13,7 @@
                     <tr style="background-color: #eee;">
                         <td class="col-sm-1">id</td>
                         <td class="col-sm-3" style="text-align: left;">Tên thuốc</td>
-                        <td class="col-sm-1">Use</td>
+                        <td class="col-sm-1">Công dụng</td>
                         <td class="col-sm-2">Đặc tả</td>
                         <td class="col-sm-2">Lựa chọn</td>
                     </tr>

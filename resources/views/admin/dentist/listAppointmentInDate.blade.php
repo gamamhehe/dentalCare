@@ -10,26 +10,28 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <table id="dup-table" class="table table-striped table-bordered">
-                        <thead>
-                        <tr style="background-color: #eee;">
-                            <th class="col-lg-0.5 col-md-1 col-sm-1 col-xs-1">Số điện thoại</th>
-                            @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
-                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Số thứ tự</th>
-                            @endif
-                            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Bác sĩ</th>
-                            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Giờ bắt đầu</th>
-                            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Thời lượng khám</th>
-                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Ghi chú</th>
-                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Trạng thái</th>
-                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Tùy chọn</th>
-                        </tr>
-                        </thead>
-                    </table>
+             <div class="panel-body">
+                    <div class="form-group">
+                          <table class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;" id="dup-table" >
+                            <thead>
+                            <tr style="background-color: #eee;">
+                                <th style="text-align: center;" class="col-lg-1 col-md-1 col-sm-1 col-xs-1">STT</th>
+                                 <th style="text-align: center;" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Số điện thoại</th>
+                                
+                                @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
+                                     <th style="text-align: center;" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Nha sĩ</th>
+                                @endif
+                                 <th style="text-align: center;" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: left;">Ngày bắt đầu
+                                </th>
+                                 <th style="text-align: center;" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Thời lượng khám</th>
+                                 <th style="text-align: center;" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="text-align: left;">Trạng thái
+                                </th>
+                                <th style="text-align: center;" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Tùy chọn</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 
@@ -74,8 +76,9 @@
                 pageLength: 15,
                 ajax: '/admin/get-appointment-in-date',
                 columns: [
-                    {data: 'phone'},
+                    
                     {data: 'numerical_order'},
+                    {data: 'phone'},
                         @if(Session::get('roleAdmin') == 3 or Session::get('roleAdmin') == 1)
                     {
                         data: 'dentist'
@@ -85,8 +88,7 @@
                         data: 'time'
                     },
                     {data: 'estimated_time'},
-                    {data: 'note'},
-                    {data: 'status'},
+                    {data: 'buttonStatus'},
                     {
                         data: 'action'
                     },

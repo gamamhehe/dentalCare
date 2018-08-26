@@ -10,8 +10,10 @@
                 </div>
             </div>
             <div class="panel-body">
-                    <a href="#" class="btn btn-info create-modal ">  Thêm mới</a>
-                    <div class="row layout" style=" margin-right: 4em"  >
+            <div class="row " style="text-align: center; margin-right: 4em">
+                    <a href="#" class="btn btn-success create-modal " style="float:right; ">  Thêm mới</a>
+                    </div>
+                   <div class="">
                     <table id="dup-table" class="table myTable table-bordered Mytable-hover">
                         <thead>
                           <tr style="height: 1.3em;">
@@ -27,7 +29,7 @@
         </div>
 
     </div>
-    <div class=""  >
+<div class=""  >
 <div id="create" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -88,7 +90,7 @@
                            <div class="col-md-3 col-sm-3 col-xs-12"><label class="control-label  " for="body">Email</label></div>
                            <div class="col-md-9 col-sm-9  col-xs-12">
                             <input type="text" class="form-control" id="emailC" name="emailC"
-                            placeholder="email" required >
+                            placeholder="Email" required >
                             <p class="error text-center alert alert-danger hidden"></p>
                             </div>
                         </div>
@@ -175,7 +177,7 @@
                 <div class="form-group row add">
                     <label class="control-label col-sm-3" for="title">Tên</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="name" name="name"
+                        <input type="text" class="form-control" id="nameE" name="nameE"
                         placeholder="Họ và tên" required>
                         <p class="error text-center alert alert-danger hidden"></p>
                     </div>
@@ -183,56 +185,44 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="body">Địa chỉ</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="address" name="address"
+                        <input type="text" class="form-control" id="addressE" name="addressE"
                         placeholder="Địa  chỉ" required>
                         <p class="error text-center alert alert-danger hidden"></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3" for="body">Quận</label>
+                    <label class="control-label col-sm-3" for="body">Ngày Sinh</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="district" name="address"
-                        placeholder="Quận" required>
+                        <input type="text" class="form-control" id="date_of_birthE" name="date_of_birthE"
+                         disabled>
                         <p class="error text-center alert alert-danger hidden"></p>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3" for="body">Bằng cấp</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="degree" name="degree"
-                        placeholder="Bằng cấp" >
-                        <p class="error text-center alert alert-danger hidden"></p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3" for="body">Ghi chú</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="description" name="Ghi chú"
-                        placeholder="Your Body Here" required>
-                        <p class="error text-center alert alert-danger hidden"></p>
-                    </div>
-                </div>
+                 
+                <input type="hidden" id="idE" name="idE">
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="body">Số điện thoại</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="phone" name="phone"
-                        placeholder="Số điện thoại" required>
+                        <input type="text" class="form-control" id="phoneE" name="phoneE"
+                        placeholder="Số điện thoại"  disabled>
                         <p class="error text-center alert alert-danger hidden"></p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="body">Giới tính</label>
                     <div class="col-sm-4">
-                        <select name="gender">
+                        <select name="gender" id="sexE" class="selectSpecialTwo">
                             <option value="Male">Nam</option>
                             <option value="Female">Nữ</option>
                             <option value="Option">Khác</option>
                         </select>
                         <p class="error text-center alert alert-danger hidden"></p>
                     </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label col-sm-3" for="body">Vai trò</label>
                     <div class="col-sm-4">
-                        <select name="role">
+                        <select name="roleE" id="roleE" class="selectSpecialTwo">
                             @foreach($roles as $role)
                             <option value="{{$role->id}}">{{$role->name}}</option>
                             @endforeach
@@ -243,8 +233,8 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-warning" type="submit" id="add" onclick="save()" >
-                <span class="glyphicon glyphicon-plus"></span>Khởi tạo
+            <button class="btn btn-warning" type="submit" id="updateStaff" >
+                <span class="glyphicon glyphicon-plus"></span>Hoàn tất chỉnh sửa
             </button>
             <button class="btn btn-warning" type="button" data-dismiss="modal">
                 <span class="glyphicon glyphicon-remobe"></span>Đóng
@@ -349,15 +339,12 @@
     </div>
 </div>
 </div>
-
 </div>
-
 @endsection
 @section('js')
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
+ 
+    <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 $(document).ready(function() {
@@ -379,15 +366,16 @@ $(document).on('click', '.show-modal', function() {
     $('#roleShow').text($(this).data('role'));
 });
 $(document).on('click','.edit-modal', function() {
-    $('#create').modal('show');
+   
     $('.form-horizontal').show();
     $('.modal-title').text('Chỉnh sửa nhân viên');
-    $('#idShow').text($(this).data('id'));
-    $('#nameShow').text($(this).data('name'));
-    $('#addressShow').text($(this).data('address'));
-    $('#dateShow').text($(this).data('date'));
-    $('#phoneShow').text($(this).data('phone'));
-    $('#sexShow').text($(this).data('sex'));
+    document.getElementById("nameE").value =$(this).data('name');
+     document.getElementById("addressE").value =$(this).data('address');
+     document.getElementById("phoneE").value =$(this).data('phone');
+      document.getElementById("date_of_birthE").value =$(this).data('date');
+    $('#roleE').val($(this).data('role'));
+     document.getElementById("idE").value =$(this).data('id');
+     $('#edit').modal('show');
 });
 function disctrict(sel) {
     var treatCateID = sel.value;
@@ -453,11 +441,11 @@ $('#dup-table').DataTable({
         "infoFiltered": "(filtered from _MAX_ total records)",
         "search" : "Tìm kiếm ","infoFiltered": "(Đã tìm từ _MAX_ kết quả)"
     },
-    processing: true,
-    serverSide: true,
-    order: [[ 0, "desc" ]],
-    bLengthChange:true,
-    pageLength: 5,
+   processing: true,
+                serverSide: true,
+                order: [[ 0, "desc" ]],
+                bLengthChange:true,
+                pageLength: 10,
     ajax: '/admin/get-dentist',
     columns : [
 
@@ -541,11 +529,57 @@ $("#addStaff").click(function () {
     },
     success: function (data) {
         if (data == 0) {
-            swal("Số điện thoại trùng", "", "error");
+            swal("Số điện thoại đã tồn tại", "", "error");
         } else if(data == 1) {
+            $('#dup-table').DataTable().ajax.reload();
+            $('#create').modal('show');
+                $(document.body).on('hidden.bs.modal', function () {
+                    $('#create').removeData('bs.modal')
+                });
             swal("Tạo không thành công", "", "error");
         }else{
-swal("Khởi tạo thành công", "", "success");
+        var table = $('#dup-table').dataTable()
+                    table.fnStandingRedraw();
+        swal("Khởi tạo thành công", "", "success");
+        }
+    },
+});
+});
+$("#updateStaff").click(function () {
+    var id = document.getElementById("idE").value;
+    var nameCreate = document.getElementById("nameE").value;
+    var roleCreate = document.getElementById("roleE").value;
+    var addressCreate = document.getElementById("addressE").value;
+    var gender = document.getElementById("sexE").value;
+    var phone = document.getElementById("phoneE").value;
+    if ($.trim(nameCreate) == '' ) {
+        swal("Vui lòng nhập họ và tên của nhân viên!", "", "error");
+        return;
+    }else if (nameCreate.length < 6 || nameCreate.length > 250 ) {
+        swal("Họ tên phải từ 6 đến 250 kí tự!", "", "error");
+        return;
+    }else if (addressCreate.length < 6 || addressCreate.length > 250 ) {
+        swal("Địa chỉ phải từ 6 đếnxx 250 kí tự!", "", "error");
+        return;
+    }    
+   
+   $.ajax({
+    type: 'POST',
+    url: '/admin/edit-staff',
+    data: {
+        "_token": "{{ csrf_token() }}",
+        'id' : id,
+        'name': nameCreate,
+        'address': addressCreate,
+        'gender': gender,
+        'role_id' : roleCreate,
+        'phone':phone,
+    },
+    success: function (data) {
+        if (data == 1) {
+            swal("Cập nhật không thành công", "", "error");
+        }  else if (data==0){
+        swal("Cập nhật thành công", "", "success");
         }
     },
 });

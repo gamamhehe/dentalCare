@@ -132,7 +132,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
         Route::get('/edit-event/{id}', 'Admin\EventController@loadeditEvent');
         Route::post('/edit-event/{id}', 'Admin\EventController@edit')->name('admin.edit.event');
     });
-
+    Route::get('/get-list-staff', 'Admin\Staffcontroller@getAllStaffAjax');
     //UserController
     //    Route::get('/register', 'Admin\Usercontroller@registerGet');
     //    Route::post('/register', 'Admin\Usercontroller@registerPost');
@@ -181,6 +181,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admins'], function () {
     Route::post('/create-staff', 'Admin\StaffController@createStaff');
     Route::get('/get-appointment-in-date', 'Admin\StaffController@getListAppointmentInDateForStaff');
     Route::get('/add-post', 'Admin\StaffController@addPost');
+    Route::post('/edit-staff', 'Admin\StaffController@editStaff');
+
     Route::post('/edit-post', 'Admin\StaffController@editPost');
     Route::get('/delete-staff', 'Admin\StaffController@deleteStaff');
 
