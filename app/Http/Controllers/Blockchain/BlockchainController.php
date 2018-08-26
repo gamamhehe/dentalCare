@@ -177,6 +177,7 @@ class BlockchainController extends Controller
             $arrayString = explode(',', $element);
             if ($arrayString[sizeof($arrayString) - 1] == 1) {
                 $this->setDataCreatePayment($arrayString);
+                var_dump($arrayString);
             } else if ($arrayString[sizeof($arrayString) - 1] == 2) {
 //                $this->setDataUpdatePayment($arrayString);
             } else {
