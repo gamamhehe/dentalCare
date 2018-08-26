@@ -440,7 +440,7 @@ class StaffController extends BaseController
                     $this->dispatch(new SendSmsJob($phone,
                         AppConst::getStaffSMSForAppt($result->numerical_order, $newApptDateObj)));
                 }
-                $responseMSG = AppConst::getSmsMSG($result->numerical_order, $newApptDateObj, true);
+                $responseMSG = AppConst::getStaffResponseForAppt($result->name, $result->numerical_order, $newApptDateObj);
                 return response()->json($responseMSG, 200);
             } else {
                 $error = $this->getErrorObj("Không thể đặt lịch, bạn vui lòng chọn ngày khác", "No exception");
