@@ -434,6 +434,11 @@ class StaffController extends BaseController
 //            }
             $result =
                 $this->createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTime, $patientName, $allowOvertime == 1);
+            if ($allowOvertime == 0 && $result !=null) {
+                $newApptDateObj = new DateTime($result->start_time);
+                $this->dispatch(new SendSmsJob($phone,
+                  AppConst::getStaffSMSForAppt($result->numerical_order, $newApptDateObj)));
+            }
             return response()->json($result, 200);
         } catch (ApiException $e) {
             $error = Utilities::getErrorObj("Lỗi server", $e);
