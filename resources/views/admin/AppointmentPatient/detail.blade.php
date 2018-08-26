@@ -6,7 +6,8 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-12" style="text-align: center;"><h1>Chi tiết lịch hẹn</h1></div>
+                        <div class="col-sm-12" style="text-align: center;">
+                        <label><h3>Chi tiết lịch hẹn</h3></label></div>
                     </div>
                 </div>
                 <div class="panel-body">

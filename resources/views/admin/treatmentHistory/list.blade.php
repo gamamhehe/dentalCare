@@ -6,7 +6,7 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><label><h3>Lịch sử bệnh án bệnh nhân </h3>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;"><label><h3>Lịch sử bệnh án bệnh nhân </h3>
                             </label></div>
                     </div>
                 </div>
@@ -18,16 +18,16 @@
 
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" style="text-align: center">
+                        <table class="Mytable-hover table table-striped table-bordered" style="text-align: center">
                             <thead>
                             <tr>
-                                <th style="text-align: center; width: 15%">Họ Tên</th>
-                                <th style="text-align: center; width: 10%">Số điện thoại</th>
-                                <th style="text-align: center; width: 25%">Liệu trình khám</th>
-                                <th style="text-align: center; width: 5%">Răng</th>
-                                <th style="text-align: center; width: 20%">Miêu tả</th>
-                                <th style="text-align: center; width: 10%">Giá cả</th>
-                                <th style="text-align: center; width: 15%">Tùy Chọn</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Họ Tên</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Số điện thoại</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Liệu trình khám</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Số Răng</th>
+                               
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Giá cả</th>
+                                <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="text-align: center">Tùy Chọn</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -38,7 +38,7 @@
                                         <td style="text-align: center">{{$treatmentHistory->patient->phone}}</td>
                                         <td style="text-align: center">{{$treatmentHistory->treatment->name}}</td>
                                         <td style="text-align: center">{{$treatmentHistory->tooth_number}}</td>
-                                        <td style="text-align: center">{!!$treatmentHistory->description!!}</td>
+                                       
                                         <td style="text-align: center">{{number_format($treatmentHistory->price)}}VNĐ
                                         </td>
                                         <td align="center">
@@ -47,7 +47,7 @@
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="idTreatmentHistory"
                                                            value="{{$treatmentHistory->id}}">
-                                                    <button type="submit" class="btn btn-default btn-success">Xem chi
+                                                    <button type="submit" class="btn btn-default btn-info">Xem chi
                                                         tiết
                                                     </button>
                                                 </form>

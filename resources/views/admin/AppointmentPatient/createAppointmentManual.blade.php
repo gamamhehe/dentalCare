@@ -6,7 +6,7 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                           <div class="row" style="text-align: center;">
-                            <label><h1>Khởi tạo lịch hẹn</h1></label>
+                            <label><h3>Khởi tạo lịch hẹn</h3></label>
                         </div>
                 </div>
             <div class="panel-body">
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="form-group add row" style="text-align: center;">
-                                <button class="btn btn-info centerThing" type="button" id="add">
+                                <button class="btn btn-success centerThing" type="button" id="add">
                                    Khởi tạo
                                 </button>
                             </div>

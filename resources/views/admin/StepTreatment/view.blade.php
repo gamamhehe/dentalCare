@@ -109,53 +109,53 @@
                                         <div class="panel-body col-md-6 col-sm-12 col-xs-12">
                                             <div class="box" style="border-top:green 3px solid">
                                                 <div><h3 class="box-title">Tìm Đơn Thuốc</h3></div>
-                                                <div class="box-body">
-                                                    <div class="form-group row">
-                                                        <div class="col-xs-12"><input type="text" name="search"
-                                                                                      id="search"
-                                                                                      class="form-control"
-                                                                                      placeholder="Tên thuốc"/></div>
+            <div class="box-body">
+                <div class="form-group row">
+                    <div class="col-xs-12"><input type="text" name="search"
+                                                  id="search"
+                                                  class="form-control"
+                                                  placeholder="Tên thuốc"/></div>
 
-                                                    </div>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-bordered" style="display: block;height: 500px;overflow-y: scroll;">
-                                                            <thead>
-                                                            <tr>
-                                                                <th class="col-md-4 col-xs-12">Tên thuốc</th>
-                                                                <th class="col-md-4 col-xs-12">Công dụng</th>
-                                                                <th class="col-md-2 col-xs-12">Tùy chọn</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            @if($medicineList)
-                                                                @foreach($medicineList as $medicine)
-                                                                    <tr>
-                                                                        <td class="col-md-4 col-xs-12 ">{{$medicine->name }}</td>
-                                                                        <td class="col-md-4 col-xs-12"> {{$medicine->use }}</td>
-                                                                        <td class="col-md-3 col-xs-12">
-                                                                            <button type="button"
-                                                                                    class="btn btn-default divcenter btn-success"
-                                                                                    style="margin-right: 10px;float: center;"
-                                                                                    onclick="addToPrescription('.$tmp.','.$row->id.')">
-                                                                                <i class="fa fa-plus"></i>
-                                                                            </button>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            @endif
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body col-md-6 col-sm-12 col-xs-12">
-                                            <div class="box" style="border-top:green 3px solid">
-                                                <div><label><h3>Đơn Thuốc</h3></label></div>
-                                                <div class="box-body">
-                                                    <input type="hidden" name="_token"
-                                                           value="<?php echo csrf_token(); ?>">
-                                                    <div class="form-group row">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" style="display: block;height: 500px;overflow-y: scroll;">
+                        <thead>
+                        <tr>
+                            <th class="col-md-4 col-xs-12">Tên thuốc</th>
+                            <th class="col-md-4 col-xs-12">Công dụng</th>
+                            <th class="col-md-2 col-xs-12">Tùy chọn</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($medicineList)
+                            @foreach($medicineList as $medicine)
+                                <tr>
+                                    <td class="col-md-4 col-xs-12 ">{{$medicine->name }}</td>
+                                    <td class="col-md-4 col-xs-12"> {{$medicine->use }}</td>
+                                    <td class="col-md-3 col-xs-12">
+                                        <button type="button"
+                                                class="btn btn-default divcenter btn-success"
+                                                style="margin-right: 10px;float: center;"
+                                                onclick="addToPrescription('{{$medicine->name}}','{{$medicine->id}}')">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body col-md-6 col-sm-12 col-xs-12">
+        <div class="box" style="border-top:green 3px solid">
+            <div><label><h3>Đơn Thuốc</h3></label></div>
+            <div class="box-body">
+                <input type="hidden" name="_token"
+                       value="<?php echo csrf_token(); ?>">
+                <div class="form-group row">
                                                         <div class="col-xs-6">Tên thuốc</div>
                                                         <div class="col-xs-6">Số lượng</div>
                                                     </div>

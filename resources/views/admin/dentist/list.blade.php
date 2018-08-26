@@ -6,7 +6,7 @@
         <div class="panel panel-default" style="">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="text-align: left"><h3>Danh sách nhân viên</h3></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;"><h3>Danh sách nhân viên</h3></div>
                 </div>
             </div>
             <div class="panel-body">
@@ -17,7 +17,7 @@
                     <table id="dup-table" class="table myTable table-bordered Mytable-hover">
                         <thead>
                           <tr style="height: 1.3em;">
-                            <td class="col-sm-1">id</td>
+                            <td class="col-sm-1">STT</td>
                             <td class="col-sm-6" style="text-align: left;">Họ và tên</td>
                             <td class="col-sm-3" style="text-align: left;">Chức vụ</td>
                             <td class="col-sm-3">Lựa chọn</td>

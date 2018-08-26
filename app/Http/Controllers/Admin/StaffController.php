@@ -126,11 +126,11 @@ class StaffController extends Controller
             return '
                  <a href="#" class="show-modal btn btn-info btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
                                            data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '" data-role="' . $staffs->RoleStaff . '">
-                                            <i class="fa fa-eye"></i>
+                                            Xem chi tiết
                                         </a>
                 <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="' . $staffs->id . '" data-name="' . $staffs->name . '" data-address="' . $staffs->address . '"
                                            data-date="' . $staffs->date_of_birth . '" data-phone="' . $staffs->phone . '"  data-sex="' . $staffs->gender . '" data-role="' . $staffs->staffRoleID . '">
-                                            <i class="glyphicon glyphicon-pencil"></i>
+                                            Chỉnh sửa
                                         </a>
                 ';
         })->make(true);

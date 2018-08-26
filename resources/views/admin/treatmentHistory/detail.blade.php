@@ -7,7 +7,7 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-5" style="text-align: left"><label><h3>Danh sách lịch sử bệnh án</h3></label></div>
+                        <div class="col-sm-12" style="text-align: center;"><label><h3>Danh sách lịch sử bệnh án</h3></label></div>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -37,10 +37,10 @@
                         <table class="table table-striped table-bordered" style="text-align: center">
                             <thead>
                             <tr>
-                                <th style="text-align: center; width: 30%">Bước khám</th>
-                                <th style="text-align: center; width: 30%">Ngày khám</th>
-                                <th style="text-align: center; width: 20%">Ghi chú</th>
-                                <th style="text-align: center; width: 20%">Tùy chọn</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Bước khám</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Ngày khám</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Ghi chú</th>
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center">Tùy chọn</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -57,7 +57,7 @@
                                         </td>
                                         <td style="text-align: center">{{$treatmentHistoryDetail->created_date}}</td>
                                         <td style="text-align: center">{{$treatmentHistoryDetail->note }}</td>
-                                        <td style="text-align: center"> <a class="btn btn-success btn-sm" style="float: right;"
+                                        <td style="text-align: center"> <a class="btn btn-success btn-sm" 
                                                                            href="/admin/treatment-detail/{{$treatmentHistoryDetail->id}}">Chi tiết</a></td>
                                     </tr>
                                 @endforeach

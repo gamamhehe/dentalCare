@@ -16,7 +16,7 @@
 <!-- Daterange picker -->
 <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
-<!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
+ 
 <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
 </head>

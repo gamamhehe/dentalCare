@@ -3,7 +3,6 @@
 <head>
 <title> Trang chủ </title>
 <meta charset="utf-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/png" href="/assets/images/icon/fap16.png"/>
 <script src="/assets/user/js/jquery-3.2.1.js"></script>
@@ -13,18 +12,16 @@
 <script src="/assets/user/js/jquery.fancybox.js"></script>
 
 <script type="text/javascript" src="/assets/user/js/myjs.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese"
-rel="stylesheet">
-<link rel="stylesheet"
-href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<link href="https://fonts.googleapis.com/css?family=Italianno|Open+Sans:300,400,600,700,800&amp;subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 <!-- Daterange picker -->
 <link rel="stylesheet" href="/assets/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
-<!-- <link rel="stylesheet" href="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"> -->
+ 
 <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+   
 <link rel="stylesheet" href="/assets/user/css/mycss.css">
 </head>
 <body>
