@@ -251,7 +251,8 @@ trait AppointmentBussinessFunction
                 $this->logBugAppointment("isEndOfTheDay: end time is: " . $endAppointmentTimeObj->format('H:i:s'));
                 throw new \Exception ('isEndOfTheDay');
             }
-            $numericalOrder = $listAppointment->count() + 1;
+            $listAppointmentToday = $this->getAppointmentsByStartTime($bookingDateDBFormat);
+            $numericalOrder = $listAppointmentToday->count() + 1;
             $appointment = new Appointment();
             $appointment->lockForUpdate();
             $appointment->phone = $phone;
