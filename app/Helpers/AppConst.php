@@ -85,6 +85,20 @@ class AppConst
         }
     }
 
+    public static function getStaffSMSForAppt($order, $date)
+    {
+        $startTime = $date->format("H:i");
+        $startDate = $date->format("d-m-Y");
+        return  'Ban co lich hen vao ngay ' . $startDate . ' So thu tu la '. $order .' .Du kien kham vao luc ' . $startTime . '  tai 190 Truong Chinh - Quan 12 - TP HCM';
+    }
+public static function getStaffResponseForAppt($patientName, $order, $date)
+    {
+        $startTime = $date->format("H:i");
+        $startDate = $date->format("d-m-Y");
+        return  'Lịch hẹn mới cho bệnh nhân ' . $patientName.
+            ' khám ngày ' . $startDate. ' vào lúc ' .$startTime. ' số thứ tự là ' .$order;
+    }
+
     public static function getSmsNewUser($order, $dateObj)
     {
         $startTime = $dateObj->format("H:i");
