@@ -463,7 +463,8 @@
                                <div>
                                        <input type="hidden" name="amount" value="{{ $Payment->total_price - $Payment->paid }}">
                                        <input type="hidden" name="payment_id" value="{{ $Payment->id}}">
-                                   <a href="paypal/{{ $Payment->total_price - $Payment->paid }}/{{ $Payment->id}}" class="btn btn-success">View</a>
+                                   <a href="paypal/{{ $Payment->total_price - $Payment->paid }}/{{ $Payment->id}}" class="btn btn-success">Paypal</a>
+                                 <!--   <button id="close-image" href="#"><img src="/assets/images/xpaypal_PNG1.png"></button> -->
                                </div>
                            </div></a>
                    </div>

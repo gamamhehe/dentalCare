@@ -57,7 +57,7 @@
                 <ul class="dropdown-menu dropdownHead">
                 <!-- User image -->
                 <li class="user-header">
-                    <div class="container" style=";padding:10px 0px; ">
+                    <div class="container" style=";padding:10px 0px;">
                         <div class="row">
                             <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
                                 <img src="{{Session::get('currentPatient')->avatar}}"
@@ -105,7 +105,6 @@
                 </li>
                 <li class="gachngang"></li>
                 <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
-
                     <div class="row" style="padding-bottom: 1em;">
                         <div class="col-xs-6"><a href="/thong-tin-ca-nhan" class="btn btn-block btn-success btn-flat">Hồ sơ</a></div> 
                         <div class="col-xs-6"> 
@@ -145,78 +144,58 @@
             </ul>
                 @endif
             </li>
+            @else
+            <li class="nav-item dropdown ">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" >
+            Đăng Nhập</a>
+            <ul class="dropdown-menu dropdownHead" >
+            <li class="user-header" style="display: block">
+                Đăng nhập
+            </li>
+            <li class="user-header" style="background-color: whitesmoke">
+                <div class="container" style=";padding:10px 0px;" >
+                        <div class="row" style="margin-left: 0;padding-left: 20px;" >
+                            <form action="{!! url('/loginUser') !!}" method="Post">
+                                {{ csrf_field() }}
+                                <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                    <input type="text" class="form-control" placeholder="Số điện thoại"
+                                    name="phone" value="{{ old('phone') }}"
+                                    required autofocus>
+                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input type="password" class="form-control" placeholder="Mật khẩu"
+                                    name="password" required>
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-6">
+                                                            <button type="button"
+                                                            class="btn btn-primary btn-block btn-flat create-patient">Đăng Ký
+                                                        </button>
+                                                    </div>
+                                                    <!-- /.col -->
+                                                    <div class="col-xs-6">
 
-@else
-<li class="nav-item dropdown ">
-    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" id="buttonLogin">
-        {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
-        {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
-        Đăng Nhập
-    </a>
-    <ul class="dropdown-menu dropdownHead" id="drop"
-    >
-    <!-- User image -->
-    <li class="user-header">
-        Đăng nhập
+                                                        <button type="submit"
+                                                        class="btn btn-primary btn-block btn-flat">Đăng nhập
+                                                    </button>
+                                                </div>
 
-    </li>
-    <!-- Menu Body -->
+                                                <!-- /.col -->
 
-    <!-- Menu Footer-->
-    <li class="user-footer" style="background-color: whitesmoke">
-        <div class="col-ms-12 col-md-offset-12">
-            <div class="panel panel-default">
-                <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
-
-                    <form action="{!! url('/loginUser') !!}" method="Post">
-                        {{ csrf_field() }}
-                        <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                            <input type="text" class="form-control" placeholder="Số điện thoại"
-                            name="phone" value="{{ old('phone') }}"
-                            required autofocus>
-                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input type="password" class="form-control" placeholder="Mật khẩu"
-                            name="password" required>
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-
-                        </div>
-                                        <!--    @if (\Session::has('fail'))
-                                            <span class="help-block has-error" style="color: #dd4b39">
-                                               <strong>{!! \Session::get('fail') !!} </strong>
-                                            </span>
-                                            @endif -->
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <button type="button"
-                                                    class="btn btn-primary btn-block btn-flat create-patient">Đăng Ký
-                                                </button>
                                             </div>
-                                            <!-- /.col -->
-                                            <div class="col-xs-6">
-
-                                                <button type="submit"
-                                                class="btn btn-primary btn-block btn-flat">Đăng nhập
-                                            </button>
-                                        </div>
-
-                                        <!-- /.col -->
-
-                                    </div>
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                </li>
+                </div>
+               
+            </li>
             </ul>
-        </li>
-        @endif
-    </li>
-
-
+            </li>
+            @endif
+           
 </ul>
+ </li>
 </div>
 </div>
 </nav>

@@ -82,7 +82,8 @@
                                                 @if($payment->status == \App\Helpers\AppConst::PAYMENT_STATUS_NOT_DONE)
 
                                                     <input type="hidden" name="idPayment" id="idPayment" value="{{$payment->id}}">
-                                                    <a href="#" class="create-modal btn btn-success" data-ID="{{$payment->id}}">
+                                                    <a href="#" class="create-modal btn btn-success"  
+                                                    data-paid="{{number_format($payment->total_price - $payment->paid) }}" data-ID="{{$payment->id}}">
                                                         Tạo chi trả
                                                     </a>
                                                  
@@ -117,6 +118,8 @@
             $('.form-horizontal').show();
             $('.modal-title').text('Chi trả');
               x =$(this).data('id');
+            
+              paid =$(this).data('paid'); 
         });
         $('#search').on('keyup', function () {
             var searchValue = document.getElementById('search').value;
@@ -135,11 +138,14 @@
         });
         function save(){
            var money = document.getElementById("money").value;
+           var numberCouldPay = paid;
+            
            var idPayment = x;
-            alert(idPayment);
             if ($.trim(money) == '') {
-                swal("Vui lòng điền họ số tiền!", "", "error");
+                swal("Vui lòng điền số tiền!", "", "error");
                 return;
+            } else if(Number(money) > Number(numberCouldPay)){
+                    swal("Vui lòng điền số tiền phù hợp!", "", "error"); return;
             } else {
                
                 $.ajax({
