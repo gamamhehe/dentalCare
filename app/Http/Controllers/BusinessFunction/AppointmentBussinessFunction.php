@@ -157,10 +157,6 @@ trait AppointmentBussinessFunction
             $listDentist = $this->getAvailableDentistAtDate($bookingDateDBFormat);
             $NUM_OF_DENTIST = count($listDentist);
             $this->logBugAppointment('NUM_DENTIST' . $NUM_OF_DENTIST);
-//            DB::table('tbl_appointments')
-//                ->where('start_time',$bookingDateDBFormat)
-//                ->lockForUpdate()
-//                ->get();
             $listAppointment = $this->getAppointmentsByStartTime($bookingDateDBFormat);
             $dentistObj = $this->getStaffById($dentistId);
             $predictAppointmentDate = new \DateTime();
