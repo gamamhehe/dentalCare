@@ -73,10 +73,9 @@ trait AppointmentBussinessFunction
 
     public function getNumericalOrder($startTime, $appotID)
     {
-        $listApptToday = getAppointmentsByStartTime($startTime);
+        $listApptToday = $this->getAppointmentsByStartTime($startTime);
         $index = 0;
         if ($listApptToday != null) {
-
             foreach ($listApptToday as $item) {
                 $index++;
                 if ($item->id == $appotID) {
@@ -286,7 +285,7 @@ trait AppointmentBussinessFunction
             $appointment->save();
 //            $listAppointmentToday = $this->getAppointmentsByStartTime($bookingDateDBFormat);
 //            $numericalOrder = $listAppointmentToday->count();
-            $appointment->numerical_order = $this->getNumericalOrder($bookingDateDBFormat);
+            $appointment->numerical_order = $this->getNumericalOrder($bookingDateDBFormat, $appointment->id);
             $appointment->save();
             if ($patientId != null) {
                 $patientAppointment = new PatientOfAppointment();
