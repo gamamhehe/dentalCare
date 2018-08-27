@@ -103,10 +103,7 @@
                                 <li class="  a-hover">
                                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                                 </li>
-                                <li class="gachngang"></li>
-                                <li class=" a-hover">
-                                    <a href="#"><span>Lịch hẹn</span></a>
-                                </li>
+                                
                                 <li class="gachngang"></li>
 
                                 <!-- Menu Body -->
@@ -307,10 +304,8 @@
                                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                                 </li>
                                 <li class="gachngang"></li>
-                                <li class=" a-hover">
-                                    <a href="#"><span>Lịch hẹn</span></a>
-                                </li>
-                                <li class="gachngang"></li>
+                                
+                                
 
                                 <!-- Menu Body -->
                                 <!-- Menu Footer-->

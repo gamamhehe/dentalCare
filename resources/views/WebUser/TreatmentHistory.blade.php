@@ -105,13 +105,7 @@
                                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                                 </li>
                                 <li class="gachngang"></li>
-                                <li class=" a-hover">
-                                    <a href="#"><span>Lịch hẹn</span></a>
-                                </li>
-                                <li class="gachngang"></li>
-
-                                <!-- Menu Body -->
-                                <!-- Menu Footer-->
+                              
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
 
                                 <div class="pull-left" style="padding-left: 1em;">
@@ -308,10 +302,7 @@
                                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                                 </li>
                                 <li class="gachngang"></li>
-                                <li class=" a-hover">
-                                    <a href="#"><span>Lịch hẹn</span></a>
-                                </li>
-                                <li class="gachngang"></li>
+                                
 
                                 <!-- Menu Body -->
                                 <!-- Menu Footer-->
@@ -447,84 +438,129 @@
     <div class="panel-group" id="accordion">
 
         @if($listTreatmentHistory)
-            @foreach($listTreatmentHistory as $treatmentHistory)
-            <div class="panel panel-default">
-            <div class="panel-heading">
-            <h4 class="panel-title">
-            <div class="container">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$treatmentHistory->treatment->id}}">{{$treatmentHistory->treatment->name}} </a>
-            </div>
-            <div class="container">
-            <div class="col-sm-4">Giá           : {{$treatmentHistory->treatment->max_price}}  VNĐ</div>
-            <div class="col-sm-4">Khuyến mãi    : 0%</div>
-            <div class="col-sm-4">Còn lại       : {{$treatmentHistory->treatment->max_price}} VNĐ</div>
-            <div class="col-sm-4">Răng          : {{$treatmentHistory->tooth->tooth_name}}</div>
-            <div class="col-sm-4">Ngày bắt đầu  : {{$treatmentHistory->created_date}}</div>
-            <div class="col-sm-4">Ngày kết thúc : {{$treatmentHistory->finish_date}}</div>
-            </div>
-            </h4>
-            </div>
-            <div id="collapse{{$treatmentHistory->treatment->id}}" class="panel-collapse collapse in">
-            <div class="panel-body">
-                @foreach($treatmentHistory->details as $a)
-
-                <div class="container" style="border: solid 1px grey;">
-                <div class="row">
-                <div class="col-sm-2">BÁC SĨ : </div>
-                <div class="col-sm-8">{{$a->dentist->name}} </div>
-                </div>
-                <div class="row">
-                <div class="col-sm-2">Ngày điều trị</div>
-                <div class="col-sm-8">{{$a->created_date}} </div>
-                </div>
-                <div class="row">
-                <div class="col-sm-2">Các bước đã thực hiện:</div>
-                <div class="col-sm-8">
-                    @foreach($a->treatment_detail_steps as $step)
+            <div class="box box-info">
+            <div class="panel panel-default" style="">
+                    <div class="panel-heading">
                         <div class="row">
-                            <div class="col-sm-8">+{{$step->step->name}} </div>
+                            
                         </div>
-                    @endforeach
-                </div>
-                </div>
-                <div class="row">
-                <div class="col-sm-2">Toa thuốc</div>
-                <div class="col-sm-8">
-                giảm đau--------------------------30 viên <br>
-                chóng sưng------------------------40 viên <br>
-                aprical analink 500gram-----------40 viên <br>
-                </div>
-                </div>
-                <div class="row" style="margin-top: 10px;">
-                    @foreach($a->treatment_images as $b)
-                        <div class="col-sm-4">
-                            <img src="{{$b->image_link}}" alt="" class="img-responsive img-fluid">
+                    </div>
+                    <div class="panel-body">
+                        <!-- start -->
+                        <div class="form-group row">
+                           <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div id="accordion" class="accordion-container ">
+                                @if($listTreatmentHistory)
+                                    @foreach($listTreatmentHistory as $treatmentHistory)
+                                        <article class="content-entry">
+                                            <div class="article-title">
+                                                <div class="row">
+                                                    <h4 class="panel-title">
+                                                        <div class="container">
+                                                            <h4>
+                                                                <i style="position: relative; top: 5px;left: 5px;"></i>{{$treatmentHistory->treatment->name}}
+                                                            </h4>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="col-sm-4">Giá gốc
+                                                                : {{$treatmentHistory->price}} VNĐ
+                                                            </div>
+                                                            <div class="col-sm-4">Khuyến mãi : {{$treatmentHistory->percentDiscount}}%</div>
+                                                            <div class="col-sm-4">Tổng tiền
+                                                                : {{$treatmentHistory->total_price}} VNĐ
+                                                            </div>
+                                                            <div class="col-sm-4">Răng
+                                                                : {{$treatmentHistory->tooth->tooth_name}}</div>
+                                                            <div class="col-sm-4">Ngày bắt đầu
+                                                                : {{$treatmentHistory->created_date}}</div>
+                                                            <div class="col-sm-4">
+                                                                @if($treatmentHistory->finish_date)
+                                                                    Ngày kết thúc :  {{$treatmentHistory->finish_date}}
+                                                                @else
+                                                                    
+                                                                @endif</div>
+                                                        </div>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-content">
+                                                @foreach($treatmentHistory->details as $a)
+                                                    @if($a)
+                                                        <div class="row" style="padding-top: 15px;">
+                                                            <div class="col-sm-2">BÁC SĨ :</div>
+                                                            <div class="col-sm-8">{{$a->dentist->name}} </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2">Ngày điều trị</div>
+                                                            <div class="col-sm-8">{{$a->create_date}} </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2">Các bước đã thực hiện:</div>
+                                                            <div class="col-sm-8">
+                                                                @foreach($a->treatment_detail_steps as $step)
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">{{$step->step->name}} </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2">Toa thuốc</div>
+                                                            <div class="col-sm-9">
+                                                                <table class="table table-striped Mytable-hover">
+                                                                    <tr>
+                                                                        <th>Tên thuốc</th>
+                                                                        <th>Số lượng</th>
+                                                                    </tr>
+                                                                    <tbody>
+                                                                    @foreach($a->prescriptions as $prescription)
+                                                                        <tr>
+                                                                            <td>{{$prescription->medicine->name}}</td>
+                                                                            <td>{{$prescription->quantity}} viên</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 10px;">
+                                                            @foreach($a->treatment_images as $b)
+                                                                <div class="col-sm-4" style="max-width: 180px;max-height: 300px;">
+                                                                    <img src="{{$b->image_link}}" alt=""
+                                                                         class="img-responsive img-fluid">
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <hr>
+                                                    @else
+                                                        <div class="row">
+                                                            <div class="col-sm-2">BÁC SĨ :</div>
+                                                            <div class="col-sm-8">NULL nhé</div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </article>
+                                    @endforeach
+                              
+                                @endif
+                            </div>
+                           </div>
+                            
+                            <!--/#accordion-->
+
+
                         </div>
-                    @endforeach
-
-                </div>
-                </div>
-                @endforeach
-
-
+                    </div>
             </div>
-            </div>
-
-            </div>
-            @endforeach
+        </div>
         @else
             <div class="container" style="background-color: whitesmoke;width: 100%;height: 200px;">
                     <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân chưa từng điều trị</h1>
             </div>
         @endif
-
-
-
-
-
-
-
-
+ 
     </div>
 </div>
 <div class="footer" style="background: url(/assets/images/footer2.jpg);margin-top: 30px;">
@@ -590,4 +626,31 @@ function changeInfo(id) {
             }
         });
     }
+   $(function () {
+            var Accordion = function (el, multiple) {
+                this.el = el || {};
+                this.multiple = multiple || false;
+
+                var links = this.el.find('.article-title');
+                links.on('click', {
+                    el: this.el,
+                    multiple: this.multiple
+                }, this.dropdown)
+            }
+
+            Accordion.prototype.dropdown = function (e) {
+                var $el = e.data.el;
+                $this = $(this),
+                    $next = $this.next();
+
+                $next.slideToggle();
+                $this.parent().toggleClass('open');
+
+                if (!e.data.multiple) {
+                    $el.find('.accordion-content').not($next).slideUp().parent().removeClass('open');
+                }
+                ;
+            }
+            var accordion = new Accordion($('.accordion-container'), false);
+        }); 
 </script>

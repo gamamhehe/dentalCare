@@ -102,10 +102,7 @@
                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                 </li>
                 <li class="gachngang"></li>
-                <li class=" a-hover">
-                    <a href="#"><span>Lịch hẹn</span></a>
-                </li>
-                <li class="gachngang"></li>
+              
                 <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
                     <div class="row" style="padding-bottom: 1em;">
                         <div class="col-xs-6"><a href="/thong-tin-ca-nhan" class="btn btn-block btn-success btn-flat">Hồ sơ</a></div> 
@@ -276,10 +273,7 @@
                 <li class="  a-hover">
                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                 </li>
-                <li class="gachngang"></li>
-                <li class=" a-hover">
-                    <a href="#"><span>Lịch hẹn</span></a>
-                </li>
+                
                 <li class="gachngang"></li>
                 <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
                     <div class="row" style="padding-bottom: 1em;">

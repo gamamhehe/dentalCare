@@ -66,14 +66,14 @@
               <ul class="nav nav-tabs">
                
                 <li class="active"><a data-toggle="tab" href="#menu2"><i class="fa fa-user"></i>Thông tin</a></li>
-                <li><a data-toggle="tab" href="#menu3"><i class="fa fa-calendar"></i>Sẽ thêm sau</a></li>
+                <!-- <li><a data-toggle="tab" href="#menu3"><i class="fa fa-calendar"></i>Sẽ thêm sau</a></li> -->
               </ul>
               
               <!-- Tab content -->
               <div class="tab-content">
                 <div id="menu1" class="tab-pane fade">
                   <h3>Thông tin</h3>
-                  <p>Hok biết ghi gì</p>
+                  
                 </div>
                 <div id="menu2" class="tab-pane fade in active">
 
@@ -92,7 +92,7 @@
                       <p>Địa chỉ : </p>
                     </div>
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                      <p>{{$staff->staffDetail->address}} <br>Quận,Thành phố</p>
+                      <p>{{$staff->staffDetail->address}} </p>
                     </div>
                   </div>
                   <div class="row">
@@ -100,7 +100,7 @@
                       <p>Email : </p>
                     </div>
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                      <a href=""><h1>Init DB xong thì thêm vào !!!!  </h1></a>
+                      <a href="">{{$staff->staffDetail->email}}</a>
                     </div>
                   </div>
 

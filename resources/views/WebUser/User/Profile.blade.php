@@ -101,10 +101,8 @@
                             <li class="  a-hover">
                                 <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                             </li>
-                            <li class="gachngang"></li>
-                            <li class=" a-hover">
-                                <a href="#"><span>Lịch hẹn</span></a>
-                            </li>
+                            
+                             
                               <li class="gachngang"></li>
 
                             <!-- Menu Body -->
@@ -265,10 +263,7 @@
                             <li class="  a-hover">
                                 <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                             </li>
-                            <li class="gachngang"></li>
-                            <li class=" a-hover">
-                                <a href="#"><span>Lịch hẹn</span></a>
-                            </li>
+                           
                               <li class="gachngang"></li>
 
                             <!-- Menu Body -->
@@ -359,28 +354,9 @@
             </div>
         </div>
     </div>
-    <div class="row" style="background-color: whitesmoke">
+    <div class="row" style="background-color: whitesmoke;">
         <div class="col-sm-2">
             <div><img src="{{$patient->avatar}}" alt="" class="img-responsive img-fluid" style="text-align: center;"></div>
-             <!--  <form enctype="multipart/form-data" action="avatar-profile" method="POST" id="ChangeAvatar">
-                <div class="row" style="text-align: center;">
-                  <div class="col-xs-12">
-                        <label style="text-align: center;">Thay đổi ảnh đại diên</label>
-                  </div>
-                </div>
-               <div class="row">
-                   <div class="col-xs-12">
-                        <input type="file" name="avatar" id="avatar" >
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="patientID" value="{{$patient->id}}">
-                   </div>
-
-               </div>
-                <div class="row" style="float: right;">
-                     <input type="button" class="pull-right btn btn-sm btn-primary" onclick="validate()" value="Đổi ảnh đại diện">
-                </div>
-               
-            </form> -->
         </div>
         <div class="col-sm-4">
             <div>
@@ -421,41 +397,34 @@
             </div>
 
         </div>
-        <div class="col-sm-6">
-            <div class="banner" >
-        <div id="carousel" class="carousel slide" data-ride="carousel" >
-            <ol class="carousel-indicators">
-                <li data-target="#carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel" data-slide-to="1"></li>
-                <li data-target="#carousel" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-             @foreach($listAppointment as $key => $appointment)
-                @if($key == 0)
-                 <div class="carousel-item active lichhen1">
-                @else
-               <div class="carousel-item  lichhen2">
-                @endif
-                    <div class="carousel-caption textbanner" style="left:0%">
-                        <div class="goi">
-                            <h3 class="tdbanner1">{{$appointment->name}}</h3>
-                            <h4 class="tdbanner2">Ngày {{$appointment->dateComming}}</h4>
-                            <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số thứ tự {{$appointment->numerical_order}} - Vào lúc {{$appointment->timeComming}}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               @endforeach
-               
+        <div class="col-sm-6" >
+        <div class="row"><h4 style="color: blue;text-align: center;">Danh sách lịch hẹn tương lai</h4></div>
+           
+             
+           
+            <table class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Ngày</th>
+        <th>Số thứ tự</th>
+        <th>Giờ</th>
+      </tr>
+    </thead>
+    <tbody>
+     @foreach($listAppointment as $key => $appointment)
+      <tr>
+        <td>{{$key}}</td>
+        <td>{{$appointment->dateComming}} </td>
+        <td>{{$appointment->numerical_order}}</td>
+        <td>{{$appointment->timeComming}} </td>
+      </tr>
+        @endforeach
 
-            </div>
+    </tbody>
+  </table>
+        </div>
       
-        </div>
-    </div>
-    <!-- end banner -->
-</div>
-        </div>
     </div>
     <!-- <div class="row">
         <div class="col-sm-8 push-sm-2 text-xs-center Bacsititle">
@@ -467,46 +436,7 @@
     </div> -->
   
 </div>
-<div class="top" style="max-height: 600px;">
-  <!--   <div class="banner">
-        <div id="carousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel" data-slide-to="1"></li>
-                <li data-target="#carousel" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-             @foreach($listAppointment as $key => $appointment)
-                @if($key == 0)
-                 <div class="carousel-item active lichhen1">
-                @else
-               <div class="carousel-item  lichhen2">
-                @endif
-                    <div class="carousel-caption textbanner" style="left:0%">
-                        <div class="goi">
-                            <h3 class="tdbanner1">{{$appointment->name}}</h3>
-                            <h4 class="tdbanner2">Ngày {{$appointment->dateComming}}</h4>
-                            <div class="nutbanner">
-                                <a href="" class="btn btn-outline-secondary">Số thứ tự {{$appointment->numerical_order}} - Vào lúc {{$appointment->timeComming}}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               @endforeach
-               
-
-            </div>
-            <div class="nutchuyen">
-                <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-                    <i class="fa fa-angle-double-left fa-2x"></i>
-                </a>
-                <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-                    <i class="fa fa-angle-double-right fa-2x"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</div> -->
+ 
 <!-- footer -->
 <div class="footer" style="background: url(/assets/images/footer2.jpg);">
     <div class="contact" id="contact">

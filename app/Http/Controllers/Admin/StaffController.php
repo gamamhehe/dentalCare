@@ -203,6 +203,7 @@ class StaffController extends Controller
 
     public function getListAppointmentForStaff(Request $request)
     {
+
         $sessionAdmin = $request->session()->get('currentAdmin', null);
         $role = $sessionAdmin->hasUserHasRole()->first()->belongsToRole()->first()->id;
 
@@ -227,6 +228,7 @@ class StaffController extends Controller
             }
             $appointment->dentist = $appointment->belongsToStaff()->first()->name;
         }
+        
         return Datatables::of($listAppointment)
             ->addColumn('action', function ($appoint) {
             if(Session::get('roleAdmin') == 2 or Session::get('roleAdmin') == 1){
@@ -251,18 +253,18 @@ class StaffController extends Controller
                  return '<div><a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a></div>';
             }
             })->addColumn('buttonStatus',function ($appointment) {
-                if ($appointment->status == 'Mới') {
+                if ($appointment->status == 'Bệnh nhân chưa đến') {
                return "<h4><span class=\"label label-primary\" style=\"display: block; 
-    min-height: 100%;\">Bệnh nhân chưa đến</span></h4>";
+    min-height: 100%;\">Mới</span></h4>";
             } else if ($appointment->status == 'Bệnh nhân đã đến') {
                  return "<h4><span class=\"label label-success\" style=\"display: block; 
-    min-height: 100%;\">Bệnh nhân đã đến</span></h4>";
+    min-height: 100%;\">Sẵn Sàng</span></h4>";
             } else if ($appointment->status == 'Đang khám') {
                  return "<h4><span class=\"label label-success\" style=\"display: block; 
-    min-height: 100%;\">Đang khám</span></h4>";
+    min-height: 100%;\">Đang Khám</span></h4>";
             } else if ($appointment->status =='Đã khám') {
                  return "<h4><span class=\"label label-warning\" style=\"display: block; 
-    min-height: 100%;\">Đã khám</span></h4>";
+    min-height: 100%;\">Hoàn Thành</span></h4>";
             } else if ($appointment->status =='Hủy') {
                return "<h4><span class=\"label label-default\" style=\"display: block; 
     min-height: 100%;\">Hủy</span></h4>";
@@ -323,21 +325,21 @@ class StaffController extends Controller
                  return '<div><a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a></div>';
             }
             })->addColumn('buttonStatus',function ($appointment) {
-                if ($appointment->status == 'Mới') {
+                if ($appointment->status == 'Bệnh nhân chưa đến') {
                return "<h4><span class=\"label label-primary\" style=\"display: block; 
-    min-height: 100%;\">Bệnh nhân chưa đến</span></h4>";
+    min-height: 100%;\">Mới</span></h4>";
             } else if ($appointment->status == 'Bệnh nhân đã đến') {
                  return "<h4><span class=\"label label-success\" style=\"display: block; 
-    min-height: 100%;\">Bệnh nhân đã đến</span></h4>";
+    min-height: 100%;\">Sẵn Sàng</span></h4>";
             } else if ($appointment->status == 'Đang khám') {
-                 return "<h4><span class=\"label label-success\" style=\"display: block; 
-    min-height: 100%;\">Đang khám</span></h4>";
-            } else if ($appointment->status =='Đã khám') {
                  return "<h4><span class=\"label label-warning\" style=\"display: block; 
-    min-height: 100%;\">Đã khám</span></h4>";
+    min-height: 100%;\">Đang Khám</span></h4>";
+            } else if ($appointment->status =='Đã khám') {
+                 return "<h4><span class=\"label \" style=\"display: block; background-color:  #009933 ;
+    min-height: 100%;\">Hoàn Thành</span></h4>";
             } else if ($appointment->status =='Hủy') {
                return "<h4><span class=\"label label-default\" style=\"display: block; 
-    min-height: 100%;\">Hủy</span></h4>";
+    min-height: 100%;background-color:  red ;\">Hủy</span></h4>";
             }
             }) ->rawColumns(['buttonStatus', 'action'])->make(true);
 
@@ -434,7 +436,12 @@ class StaffController extends Controller
         $staff->staffDetail = $staff->belongToStaff()->first();
         $staff->Role = $staff->hasUserHasRole()->first()->belongsToRole()->first();
         $start = $this->getNumberStart($staff->staffDetail->id);
-
+        
+         $address = "";
+            $city =  $staff->staffDetail->belongsToDistrict()->first()->belongsToCity()->first()->name;
+            $dis = $staff->staffDetail->belongsToDistrict()->first()->name;
+            $address = $staff->staffDetail->address. " - " . $dis. " - " . $city ;
+         $staff->staffDetail->address = $address;
         return view('admin.Staff.profile', ['staff' => $staff, 'start' => $start]);
     }
     public function getAllStaffAjax(Request $request){
