@@ -125,6 +125,7 @@ trait AppointmentBussinessFunction
      */
     public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name, $allowOvertime = false)
     {
+        DB::lock('tbl_appointments');
         DB::beginTransaction();
         try {
             $this->logBugAppointment("                                 ");
@@ -270,6 +271,7 @@ trait AppointmentBussinessFunction
                 $patientAppointment->save();
             }
             DB::commit();
+            DB::unlock();
             $this->logBugAppointment("New appointment id" . ($appointment->id));
             $this->logBugAppointment("End createAppointment");
             return $appointment;
