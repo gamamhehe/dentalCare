@@ -529,7 +529,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <div class="centerThing"><h2 style="text-align: center;" >Cập nhật lịch hẹn bệnh nhân</h2></div>
             </div>
-            <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
+            <div class="modal-body" style="background: url(/assets/images/bgPop.jpg);">
                  <form method ="post" class="form-horizontal" action="create-appointment-user" enctype="multipart/form-data" id="AppointmentGuestX">
                  {{ csrf_field() }}
 
