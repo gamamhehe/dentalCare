@@ -19,10 +19,11 @@
 <link rel="stylesheet" href="/assets/user/bootstrap/bootstrap.css">
  
 <link rel="stylesheet" href="/assets/user/bootstrap/font-awesome.css">
+
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 
+ <link rel="stylesheet" href="/assets/user/css/mycss.css">
    
-<link rel="stylesheet" href="/assets/user/css/mycss.css">
+
 </head>
 <body>
 <nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;margin-bottom: 0px;" id="navHeader">
@@ -31,7 +32,8 @@
     data-target="#navmn">
     </button>
 <div class="collapse navbar-toggleable-xs" id="navmn">
-    <a class="navbar-brand logo" href="#"><img src="/assets/images/Logo/word.png" style="width: 150px;max-width: 150px;width: 100%" class="img-responsive img-fruid"></a>
+    
+     <a class=" logo" href="/" style="padding-top: 10px;"><img src="/assets/images/Logo/logo.png" class="  img-responsive img-fruid" style="width: 100%;max-width: 55px;float: left;padding-top: 7px;"    ></a>
     <ul class="nav navbar-nav float-sm-right">
         <li class="nav-item active">
             <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
@@ -43,7 +45,182 @@
             <a class="nav-link  " href="/su-kien">Sự kiện</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+            <a class="nav-link  " href="/bang-gia">Dịch vụ</a>
+        </li>
+        <li class="nav-item">
+            @if(Session::has('currentUser'))
+            <li class="nav-item dropdown ">
+                @if(Session::has('listPatient'))
+                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                    <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle"
+                    alt="User Image"
+                    class="img-fluid img-responsive" style="max-height: 25px;">
+                </a>
+                <ul class="dropdown-menu dropdownHead">
+                <!-- User image -->
+                <li class="user-header">
+                    <div class="container" style=";padding:10px 0px;">
+                        <div class="row">
+                            <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
+                                <img src="{{Session::get('currentPatient')->avatar}}"
+                                class="img-circle img-responsive img-fluid borderImg " id="divAcc1"
+                                alt="User Image" width="50px;">
+                            </div>
+                            @foreach(\Session::get('listPatient') as $key => $value)
+                            <div class="col-sm-2">
+
+                                <img src="{{ $value->avatar }}"
+                                class="img-circle img-responsive img-fluid" alt="User Image"
+                                id="{!! $value->id !!}" width="50px;"
+                                onclick="changeInfo(this.id)">
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </li>
+                <li class="user-header" id="acc1" style="display: block">
+                    <p>
+                        {{Session::get('currentPatient')->name}}
+                    </p>
+                </li>
+                <li class="user-header" id="acc2" style="display: none">
+                    <p>
+                        @foreach(\Session::get('listPatient') as $key)
+                        @if($key->id != Session::get('currentPatient')->id )
+                        <h1>{{$key->name}}</h1>
+                        @endif
+
+                        @endforeach
+                    </p>
+                </li>
+                <hr>
+                <li class="a-hover">
+                    <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
+                </li>
+                <li class="gachngang"></li>
+                <li class="  a-hover">
+                    <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
+                </li>
+                <li class="gachngang"></li>
+                <li class=" a-hover">
+                    <a href="#"><span>Lịch hẹn</span></a>
+                </li>
+                <li class="gachngang"></li>
+                <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+                    <div class="row" style="padding-bottom: 1em;">
+                        <div class="col-xs-6"><a href="/thong-tin-ca-nhan" class="btn btn-block btn-success btn-flat">Hồ sơ</a></div> 
+                        <div class="col-xs-6"> 
+                            <button type="button"
+                                class="btn btn-block btn-primary btn-block btn-flat create-patient">Đăng Ký
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" >
+                    <div class="col-xs-12"> 
+                        <a href="/signOut" class="btn btn-block btn-success btn-flat">Đăng xuất</a>
+                        </div>
+                    </div>
+                </li>
+                </ul>
+                @else
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+               <img src="/assets/images/avatar/noPatient.jpg" class="user-image img-circle"
+               alt="User Image"
+               class="img-fluid img-responsive" style="max-height: 25px;">
+            </a>
+            <ul class="dropdown-menu dropdownHead">
+            <li class="user-header" id="acc1" style="display: block">
+             <div>
+                <p style="color: red">
+                    Tài khoản chưa có hồ sơ bệnh nhân
+                </p>
+                <p>Hãy liên hệ với nhân viên</p>
+            </div>
+            </li>
+            <hr>
+            <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
+                <div align="center">
+                    <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
+                </div>
+            </li>
+            </ul>
+                @endif
+            </li>
+            @else
+            <li class="nav-item dropdown ">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="background-color: #337ab7;" >
+            Đăng Nhập</a>
+            <ul class="dropdown-menu dropdownHead" >
+            <li class="user-header" style="display: block">
+                Đăng nhập
+            </li>
+            <li class="user-header" style="background-color: whitesmoke">
+                <div class="container" style=";padding:10px 0px;" >
+                        <div class="row" style="margin-left: 0;padding-left: 20px;" >
+                            <form action="{!! url('/loginUser') !!}" method="Post">
+                                {{ csrf_field() }}
+                                <div class="form-group  {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                    <input type="text" class="form-control" placeholder="Số điện thoại"
+                                    name="phone" value="{{ old('phone') }}"
+                                    required autofocus style="" style="height: 18.861px;">
+                                   
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input type="password" class="form-control" placeholder="Mật khẩu"
+                                    name="password" required>
+                                    
+                                </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-6">
+                                                            <button type="button"
+                                                            class="btn btn-primary btn-block btn-flat create-patient">Đăng Ký
+                                                        </button>
+                                                    </div>
+                                                    <!-- /.col -->
+                                                    <div class="col-xs-6">
+
+                                                        <button type="submit"
+                                                        class="btn btn-primary btn-block btn-flat">Đăng nhập
+                                                    </button>
+                                                </div>
+
+                                                <!-- /.col -->
+
+                                            </div>
+                                </form>
+                            </div>
+                </div>
+               
+            </li>
+            </ul>
+            </li>
+            @endif
+           
+</ul>
+ </li>
+</div>
+</div>
+</nav>
+<nav class="navbar navbar-light navbar-fixed-top bg-faded navHidden thanhmenu" id="navTop">
+<div class="container">
+    <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
+    data-target="#navmn">
+    </button>
+<div class="collapse navbar-toggleable-xs" id="navmn">
+    
+     <a class=" logo" href="/" style="padding-top: 10px;"><img src="/assets/images/Logo/logo.png" class="  img-responsive img-fruid" style="width: 100%;max-width: 55px;float: left;padding-top: 7px;"    ></a>
+    <ul class="nav navbar-nav float-sm-right">
+        <li class="nav-item active">
+            <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link  " href="/danh-sach-bac-si">Chuyên Gia</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link  " href="/su-kien">Sự kiện</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link  " href="/bang-gia">Dịch vụ</a>
         </li>
         <li class="nav-item">
             @if(Session::has('currentUser'))
@@ -161,12 +338,12 @@
                                     <input type="text" class="form-control" placeholder="Số điện thoại"
                                     name="phone" value="{{ old('phone') }}"
                                     required autofocus>
-                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                    
                                 </div>
                                 <div class="form-group has-feedback">
                                     <input type="password" class="form-control" placeholder="Mật khẩu"
                                     name="password" required>
-                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                  
                                 </div>
                                                     <div class="row">
                                                         <div class="col-xs-6">
@@ -196,207 +373,6 @@
            
 </ul>
  </li>
-</div>
-</div>
-</nav>
-<nav class="navbar navbar-light navbar-fixed-top bg-faded navHidden thanhmenu" id="navTop">
-<div class="container">
-    <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
-    data-target="#navmn">
-</button>
-
-<div class="collapse navbar-toggleable-xs" id="navmn">
-    <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
-    <ul class="nav navbar-nav float-sm-right">
-
-        <li class="nav-item active">
-            <a class="nav-link " href="/gioi-thieu">Giới Thiệu</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link  " href="/danh-sach-bac-si">Chuyên Gia</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link  " href="/su-kien">Sự kiện</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link  " href="/bang-gia">Bảng giá</a>
-        </li>
-
-        <li class="nav-item">
-
-            @if(Session::has('currentUser'))
-            <li class="nav-item dropdown ">
-                @if(Session::has('listPatient'))
-                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                    <img src="{{Session::get('currentPatient')->avatar}}" class="user-image img-circle"
-                    alt="User Image"
-                    class="img-fluid img-responsive" style="max-height: 25px;">
-                </a>
-                <ul class="dropdown-menu dropdownHead"
-                >
-                <!-- User image -->
-                <li class="user-header">
-                    <div class="container" style=";padding:10px 0px; ">
-                        <div class="row">
-                            <div class="col-sm-4 hoverImg" style="float: left;padding-left: 20px;">
-                                <img src="{{Session::get('currentPatient')->avatar}}"
-                                class="img-circle img-responsive img-fluid borderImg " id="divAcc1"
-                                alt="User Image" width="50px;">
-                            </div>
-                            @foreach(\Session::get('listPatient') as $key => $value)
-                            <div class="col-sm-2">
-
-                                <img src="{{ $value->avatar }}"
-                                class="img-circle img-responsive img-fluid" alt="User Image"
-                                id="{!! $value->id !!}" width="50px;"
-                                onclick="changeInfo(this.id)">
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                </li>
-                <li class="user-header" id="acc1" style="display: block">
-                    <p>
-
-                        {{Session::get('currentPatient')->name}}
-                    </p>
-                </li>
-                <li class="user-header" id="acc2" style="display: none">
-                    <p>
-                        @foreach(\Session::get('listPatient') as $key)
-                        @if($key->id != Session::get('currentPatient')->id )
-                        <h1>{{$key->name}}</h1>
-                        @endif
-
-                        @endforeach
-                    </p>
-                </li>
-                <hr>
-
-                <li class="a-hover">
-                    <a href="/lich-su-benh-an">Lịch sử khám bệnh</a>
-                </li>
-                <li class="gachngang"></li>
-                <li class="  a-hover">
-                    <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
-                </li>
-                <li class="gachngang"></li>
-                <li class=" a-hover">
-                    <a href="#"><span>Lịch hẹn</span></a>
-                </li>
-                <li class="gachngang"></li>
-
-                <!-- Menu Body -->
-                <!-- Menu Footer-->
-                <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
-
-                    <div class="pull-left" style="padding-left: 1em;">
-                        <a href="/thong-tin-ca-nhan" class="btn btn-success btn-flat">Hồ sơ</a>
-                    </div>
-                    <div class="pull-right" style="padding-right: 1em;">
-                        <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
-                    </div>
-
-                </li>
-            </ul>
-            @else
-            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-               <img src="/assets/images/avatar/noPatient.jpg" class="user-image img-circle"
-               alt="User Image"
-               class="img-fluid img-responsive" style="max-height: 25px;">
-           </a>
-           <ul class="dropdown-menu dropdownHead" >
-            <!-- User image -->
-
-            <li class="user-header" id="acc1" style="display: block">
-             <div>
-                <p style="color: red">
-                    Tài khoản chưa có hồ sơ bệnh nhân
-                </p>
-                <p>Hãy liên hệ với nhân viên</p>
-
-            </div>
-        </li>
-
-        <hr>
-
-
-        <!-- Menu Body -->
-        <!-- Menu Footer-->
-        <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
-
-
-            <div align="center">
-                <a href="/signOut" class="btn btn-success btn-flat">Đăng xuất</a>
-            </div>
-
-        </li>
-    </ul>
-    @endif
-
-</li>
-
-@else
-<li class="nav-item dropdown ">
-    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" id="buttonLogin">
-        {{--<img src="assets/images/icon/user.jpg" class="user-image img-circle" alt="User Image"--}}
-        {{--class="img-fluid img-responsive" style="max-height: 25px;">--}}
-        Đăng Nhập
-    </a>
-    <ul class="dropdown-menu dropdownHead" id="drop"
-    >
-    <!-- User image -->
-    <li class="user-header">
-        Đăng nhập
-
-    </li>
-    <!-- Menu Body -->
-
-    <!-- Menu Footer-->
-    <li class="user-footer" style="background-color: whitesmoke">
-        <div class="col-ms-12 col-md-offset-12">
-            <div class="panel panel-default">
-                <div class="panel-body" style="padding-left: 0.5em;padding-right: 0.5em;">
-
-                    <form action="{!! url('/loginUser') !!}" method="Post">
-                        {{ csrf_field() }}
-                        <div class="form-group has-feedback {{ $errors->has('phone') ? ' has-error' : '' }}">
-                            <input type="text" class="form-control" placeholder="Số điện thoại"
-                            name="phone" value="{{ old('phone') }}"
-                            required autofocus>
-                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input type="password" class="form-control" placeholder="Mật khẩu"
-                            name="password" required>
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-
-                        </div>
-
-                        <div class="row">
-                            <!-- /.col -->
-                            <div class="col-xs-12">
-                                <button type="submit"
-                                class="btn btn-primary btn-block btn-flat">Đăng nhập
-                            </button>
-                        </div>
-                        <!-- /.col -->
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</li>
-</ul>
-</li>
-@endif
-</li>
-
-
-</ul>
 </div>
 </div>
 </nav>
@@ -509,9 +485,9 @@
     <div class="modal-content" style="height: 400px;min-height: 400px;">
         <div class="modal-header" >
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div><img src="/assets/images/Logo/word.png" class="centerThing" style="width: 100%;max-width: 300px;"></div>
+            <div><img src="/assets/images/Logo/word.png" class="centerThing" style="width: 100%;max-width: 300px;" class="centerThing" style="width: 100%;max-width: 300px;"></div>
         </div>
-        <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
+        <div class="modal-body" style="background: url(/assets/images/bgPop.jpg);">
             <form method="post" class="form-horizontal" action="create-appointment-user"
             enctype="multipart/form-data" id="AppointmentGuest">
             {{ csrf_field() }}
@@ -753,14 +729,14 @@
         </div>
         <!-- end dich vu noi bat -->
         <!-- banner 2 -->
-        <div>
+     <!--    <div>
             <div>
                 <img src="/assets/images/HomePage/banner.jpg" alt="" class="img-responsive" style=" width: 100%;
 
                 background-size: cover;
                 background-position: center;">
             </div>
-        </div>
+        </div> -->
     </div>
     <!-- end banner 2 -->
     <!-- thiết bị-->
@@ -795,20 +771,20 @@
         <div class="row">
             <div class="col-sm-4  " style="float: left;">
                 <div class="motmon">
-                    <img src="/assets/images/HomePage/pay1.PNG" alt=""
+                    <img src="/assets/images/HomePage/pay1.png" alt=""
                     class="img-fluid img-responsive"
                     style=" width: 100%;max-height:300px;">
                 </div>
             </div>
             <div class="col-sm-4 ">
                 <div class="motmon">
-                    <img src="/assets/images/HomePage/pay2.PNG" alt="" class="img-responsive"
+                    <img src="/assets/images/HomePage/paypal.png" alt="" class="img-responsive"
                     style=" width: 100%;max-height:300px;">
                 </div>
             </div>
             <div class="col-sm-4 ">
                 <div class="motmon">
-                    <img src="/assets/images/HomePage/pay3.PNG" alt="" class="img-responsive"
+                    <img src="/assets/images/HomePage/pay2.png" alt="" class="img-responsive"
                     style=" width: 100%;max-height:300px;">
                 </div>
             </div>
@@ -818,18 +794,14 @@
     <!-- end Feedback -->
 
     <!-- end liên hệ -->
-    <div id="particle-canvas" style="width: 100%;height: 400px;position:relative;z-index: 1">
-        <div style="height: 300px;width: 100%;z-index: 2;position:absolute;z-index:2">
-
-        </div>
-    </div>
+ 
     <!-- footer -->
     <div class="footer" style="background: url(/assets/images/footer2.jpg);">
         <div class="contact" id="contact">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                        <div><img src="/assets/images/Logo/word.png" style="max-width: 300px;width: 100%" class="img-responsive img-fruid"></div>
+                        <div><img src="/assets/images/Logo/word.png" class="centerThing" style="width: 100%;max-width: 300px;" style="max-width: 300px;width: 100%" class="img-responsive img-fruid"></div>
                         <br>
                         <div>Website: <a href="http://dentalgold.site">dentalgold.site</a></div>
                         <div>Bác sĩ tư vấn (24/7) : <a class="zalovb" id="callme"

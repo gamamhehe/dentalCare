@@ -251,7 +251,7 @@ class StaffController extends Controller
                  return '<div><a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a></div>';
             }
             })->addColumn('buttonStatus',function ($appointment) {
-                if ($appointment->status == 'Bệnh nhân chưa đến') {
+                if ($appointment->status == 'Mới') {
                return "<h4><span class=\"label label-primary\" style=\"display: block; 
     min-height: 100%;\">Bệnh nhân chưa đến</span></h4>";
             } else if ($appointment->status == 'Bệnh nhân đã đến') {
@@ -323,7 +323,7 @@ class StaffController extends Controller
                  return '<div><a href="appointment-detail/' . $appoint->id . '" class="btn btn-sm btn-success">Chi tiết</a></div>';
             }
             })->addColumn('buttonStatus',function ($appointment) {
-                if ($appointment->status == 'Bệnh nhân chưa đến') {
+                if ($appointment->status == 'Mới') {
                return "<h4><span class=\"label label-primary\" style=\"display: block; 
     min-height: 100%;\">Bệnh nhân chưa đến</span></h4>";
             } else if ($appointment->status == 'Bệnh nhân đã đến') {

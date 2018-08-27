@@ -132,7 +132,7 @@ class AbsentController extends Controller
             if($key->status != null){
                 $key->action = '<a class="btn btn-success btn-sm" disabled><i class="glyphicon glyphicon-edit"></i>Đã chấp nhận</a>';
             }else{
-                $key->action = ' <a id="' . $key->id . '" class="btn btn-warning btn-sm approve-Absent" data-id="' . $key->id . '" data-admin ="' . $currentAdmin->name . '"  data-start="'.$key->start_date.'" data-end="'.$key->end_date.'" data-name="'.$key->nameStaff.'"><i class="glyphicon glyphicon-edit"></i>Chấp Nhận</a> <a id="' . $key->id . '"class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-edit"></i>Từ chối</a>';
+                $key->action = ' <a id="' . $key->id . '" class="btn btn-warning btn-sm approve-Absent" data-id="' . $key->id . '" data-admin ="' . $currentAdmin->name . '"  data-start="'.$key->start_date.'" data-end="'.$key->end_date.'" data-name="'.$key->nameStaff.'"><i class="glyphicon glyphicon-edit"></i>Chấp Nhận</a> <a data-id="' . $key->id . '"class="btn btn-warning btn-delete btn-sm"><i class="glyphicon glyphicon-edit"></i>Xóa</a>';
             }
 
         }

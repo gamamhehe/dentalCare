@@ -30,7 +30,7 @@
         </button>
 
         <div class="collapse navbar-toggleable-xs" id="navmn">
-            <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+              <a class=" logo" href="/" style="padding-top: 10px;"><img src="/assets/images/Logo/logo.png" class="centerThing img-responsive img-fruid" style="width: 100%;max-width: 55px;float: left;padding-top: 7px;"    ></a>
             <ul class="nav navbar-nav float-sm-right">
 
                 <li class="nav-item active">
@@ -43,7 +43,7 @@
                     <a class="nav-link  " href="/su-kien">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+                    <a class="nav-link  " href="/bang-gia">Dịch vụ</a>
                 </li>
                 
                 <li class="nav-item">
@@ -246,7 +246,7 @@
                     <a class="nav-link  " href="/su-kien">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+                    <a class="nav-link  " href="/bang-gia">Dịch vụ</a>
                 </li>
                 
                 <li class="nav-item">
@@ -622,7 +622,7 @@
 
 		<!-- end liên hệ -->
 	<!-- footer -->
-<div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
+<div class="footer" style="background: url(/assets/images/footer2.jpg);">
 	<div class="contact" id="contact">
 		<div class="container">
 			 <div class="row">
