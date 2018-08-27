@@ -253,6 +253,7 @@ trait AppointmentBussinessFunction
             }
             $numericalOrder = $listAppointment->count() + 1;
             $appointment = new Appointment();
+            $appointment->lockForUpdate();
             $appointment->phone = $phone;
             $appointment->note = $note;
             $appointment->estimated_time = $estimatedTimeObj->format("H:i:s");
