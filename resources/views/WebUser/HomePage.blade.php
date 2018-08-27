@@ -104,16 +104,12 @@
                 <li class="gachngang"></li>
               
                 <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
-                    <div class="row" style="padding-bottom: 1em;">
+                    <div class="row" style="margin-right: 0px;
+    margin-left: 0px;padding-bottom: 5px;">
                         <div class="col-xs-6"><a href="/thong-tin-ca-nhan" class="btn btn-block btn-success btn-flat">Hồ sơ</a></div> 
-                        <div class="col-xs-6"> 
-                            <button type="button"
-                                class="btn btn-block btn-primary btn-block btn-flat create-patient">Đăng Ký
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row" >
-                    <div class="col-xs-12"> 
+                       
+                    
+                    <div class="col-xs-6"> 
                         <a href="/signOut" class="btn btn-block btn-success btn-flat">Đăng xuất</a>
                         </div>
                     </div>
@@ -167,14 +163,11 @@
                                     name="password" required>
                                     
                                 </div>
-                                                    <div class="row">
-                                                        <div class="col-xs-6">
-                                                            <button type="button"
-                                                            class="btn btn-primary btn-block btn-flat create-patient">Đăng Ký
-                                                        </button>
-                                                    </div>
+                                                    <div class="row" style="margin-right: 0px;
+    margin-left: 0px;padding-bottom: 5px;">
+                                                      
                                                     <!-- /.col -->
-                                                    <div class="col-xs-6">
+                                                    <div class="col-xs-12">
 
                                                         <button type="submit"
                                                         class="btn btn-primary btn-block btn-flat">Đăng nhập
