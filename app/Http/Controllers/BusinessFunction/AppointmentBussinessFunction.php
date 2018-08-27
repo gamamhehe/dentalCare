@@ -125,7 +125,6 @@ trait AppointmentBussinessFunction
      */
     public function createAppointment($bookingDate, $phone, $note, $dentistId, $patientId, $estimatedTimeStr, $name, $allowOvertime = false)
     {
-        DB::lock('tbl_appointments');
         DB::beginTransaction();
         try {
             $this->logBugAppointment("                                 ");
@@ -140,6 +139,10 @@ trait AppointmentBussinessFunction
             $listDentist = $this->getAvailableDentistAtDate($bookingDateDBFormat);
             $NUM_OF_DENTIST = count($listDentist);
             $this->logBugAppointment('NUM_DENTIST' . $NUM_OF_DENTIST);
+            DB::table('tbl_appointments')
+                ->where('start_time',$bookingDateDBFormat)
+                ->lockForUpdate()
+                ->get();
             $listAppointment = $this->getAppointmentsByStartTime($bookingDateDBFormat);
             $dentistObj = $this->getStaffById($dentistId);
             $predictAppointmentDate = new \DateTime();
@@ -255,7 +258,6 @@ trait AppointmentBussinessFunction
             $listAppointmentToday = $this->getAppointmentsByStartTime($bookingDateDBFormat);
             $numericalOrder = $listAppointmentToday->count() + 1;
             $appointment = new Appointment();
-            $appointment->lockForUpdate();
             $appointment->phone = $phone;
             $appointment->note = $note;
             $appointment->estimated_time = $estimatedTimeObj->format("H:i:s");
@@ -271,7 +273,6 @@ trait AppointmentBussinessFunction
                 $patientAppointment->save();
             }
             DB::commit();
-            DB::unlock();
             $this->logBugAppointment("New appointment id" . ($appointment->id));
             $this->logBugAppointment("End createAppointment");
             return $appointment;
