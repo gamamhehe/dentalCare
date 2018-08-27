@@ -279,8 +279,6 @@ trait AppointmentBussinessFunction
             $appointment->staff_id = $suitableDentistId;
             $appointment->name = $name;
             $appointment->save();
-//            $listAppointmentToday = $this->getAppointmentsByStartTime($bookingDateDBFormat);
-//            $numericalOrder = $listAppointmentToday->count();
             $appointment->numerical_order = $this->getNumericalOrder($bookingDateDBFormat, $appointment->id);
             $appointment->save();
             if ($patientId != null) {
