@@ -39,7 +39,7 @@
                                     @foreach($listImg as $img)
                                 <div id="" class="col-lg-2 col-sm-2 col-xs-2">
                                 <div class="" style="max-height: 150px;max-width: 100px;min-height: 150px;min-width: 100px;"> 
-                                <img class="thumbnail img-responsive img-fruid" style=" display: block;margin-left: auto;    margin-right: auto;" src="{{$img->image_link}}">
+                                <img class="thumbnail img-responsive img-fruid" style=" display: block;margin-left: auto;    margin-right: auto;" src="/{{$img->image_link}}">
                                 </div>
                                 </div>
                                     @endforeach
