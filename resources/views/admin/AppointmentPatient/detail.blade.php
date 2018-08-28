@@ -6,7 +6,8 @@
             <div class="panel panel-default" style="">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-12" style="text-align: center;"><h1>Chi tiết lịch hẹn</h1></div>
+                        <div class="col-sm-12" style="text-align: center;">
+                        <label><h3>Chi tiết lịch hẹn</h3></label></div>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -217,7 +218,7 @@
                                             <div class="accordion-content">
                                                 @foreach($treatmentHistory->details as $a)
                                                     @if($a)
-                                                        <div class="row">
+                                                        <div class="row" style="padding-top: 15px;">
                                                             <div class="col-sm-2">BÁC SĨ :</div>
                                                             <div class="col-sm-8">{{$a->dentist->name}} </div>
                                                         </div>
@@ -257,7 +258,7 @@
                                                         </div>
                                                         <div class="row" style="margin-top: 10px;">
                                                             @foreach($a->treatment_images as $b)
-                                                                <div class="col-sm-4">
+                                                                <div class="col-sm-4" style="max-width: 180px;max-height: 300px;">
                                                                     <img src="{{$b->image_link}}" alt=""
                                                                          class="img-responsive img-fluid">
                                                                 </div>
@@ -528,7 +529,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <div class="centerThing"><h2 style="text-align: center;" >Cập nhật lịch hẹn bệnh nhân</h2></div>
             </div>
-            <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
+            <div class="modal-body" style="background: url(/assets/images/bgPop.jpg);">
                  <form method ="post" class="form-horizontal" action="create-appointment-user" enctype="multipart/form-data" id="AppointmentGuestX">
                  {{ csrf_field() }}
 

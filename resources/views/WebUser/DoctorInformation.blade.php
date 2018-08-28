@@ -24,12 +24,13 @@
 <body>
 <nav class="navbar navbar-light navbar-fixed-top bg-faded navVisible thanhmenu" style="position: static;" id="navHeader">
     <div class="container">
+
         <button class="navbar-toggler hidden-sm-up float-xs-right" type="button" data-toggle="collapse"
                 data-target="#navmn">
         </button>
 
         <div class="collapse navbar-toggleable-xs" id="navmn">
-            <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+             <a class=" logo" href="/" style="padding-top: 10px;"><img src="/assets/images/Logo/logo.png" class="centerThing img-responsive img-fruid" style="width: 100%;max-width: 55px;float: left;padding-top: 7px;"    ></a>
             <ul class="nav navbar-nav float-sm-right">
 
                 <li class="nav-item active">
@@ -42,7 +43,7 @@
                     <a class="nav-link  " href="/su-kien">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+                    <a class="nav-link  " href="/bang-gia">Dịch vụ</a>
                 </li>
                 
                 <li class="nav-item">
@@ -104,10 +105,8 @@
                                 <li class="  a-hover">
                                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                                 </li>
-                                <li class="gachngang"></li>
-                                <li class=" a-hover">
-                                    <a href="#"><span>Lịch hẹn</span></a>
-                                </li>
+                               
+                                
                                 <li class="gachngang"></li>
 
                                 <!-- Menu Body -->
@@ -231,7 +230,7 @@
         </button>
 
         <div class="collapse navbar-toggleable-xs" id="navmn">
-            <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+            <a class=" logo" href="/" style="padding-top: 10px;"><img src="/assets/images/Logo/logo.png" class="centerThing img-responsive img-fruid" style="width: 100%;max-width: 55px;float: left;padding-top: 7px;"    ></a>
             <ul class="nav navbar-nav float-sm-right">
 
                 <li class="nav-item active">
@@ -244,7 +243,7 @@
                     <a class="nav-link  " href="/su-kien">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+                    <a class="nav-link  " href="/bang-gia">Dịch vụ</a>
                 </li>
                 
                 <li class="nav-item">
@@ -307,10 +306,8 @@
                                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                                 </li>
                                 <li class="gachngang"></li>
-                                <li class=" a-hover">
-                                    <a href="#"><span>Lịch hẹn</span></a>
-                                </li>
-                                <li class="gachngang"></li>
+                                 
+                                 
 
                                 <!-- Menu Body -->
                                 <!-- Menu Footer-->
@@ -451,11 +448,11 @@
 <div id="create" class="modal fade" role="dialog" >
 <div class="modal-dialog modal-sm">
     <div class="modal-content" style="height: 400px;min-height: 400px;">
-        <div class="modal-header" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
+        <div class="modal-header"  >
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div><img src="/assets/images/HomePage/logo.png" alt="" class="centerThing"></div>
+            <div><img src="/assets/images/Logo/word.png" class="centerThing" style="width: 100%;max-width: 300px;" class="centerThing" style="width: 100%;max-width: 300px;"></div>
         </div>
-        <div class="modal-body" style="background: url(/assets/images/layoutRegister.jpg);">
+        <div class="modal-body" style="background: url(/assets/images/bgPop.jpg);">
          <form method ="post" class="form-horizontal" action="create-appointment-user" enctype="multipart/form-data" id="AppointmentGuest">
              {{ csrf_field() }}
 
@@ -589,7 +586,7 @@
 </div> -->
  
 	<!-- footer -->
-<div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);">
+<div class="footer" style="background: url(/assets/images/footer2.jpg);">
 	<div class="contact" id="contact">
 		<div class="container">
 			 <div class="row">

@@ -77,15 +77,18 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title"></h4>
+                                    
                                 </div>
                                 <div class="modal-body" style="">
                                     <div class="row" style="text-align: center;">
                             
                                     <div class="panel-body col-xs-12" style="background-color: white;">
                                     <div class="row" style="border-bottom: green 2px solid;">
-                                        <label ><h1 style="text-align: center;font-family: 'Italianno', cursive;
-                            font-size: 48px;">Đơn Thuốc</h1></label>
+                                    <p><h2 style="color: blue">Phòng khám nha khoa Dental Gold</h2></p>
+                                        
+                                         <div class="row img-center"><p><img class="img-center" src="https://vivaclinic.vn/wp-content/uploads/2017/09/SHARP-3.png" data-src="https://vivaclinic.vn/wp-content/uploads/2017/09/SHARP-3.png" width="196" height="40" alt=""></p></div>
+                           
+                                        <label ><h3 style="text-align: center;">Đơn Thuốc</h3></label>
                                     </div>
                                                 <div class="row" style="margin-top:1em ">
                                                         <div class="col-xs-7">Tên thuốc</div>
@@ -141,7 +144,7 @@
             $(document).on('click', '.btn-dell', function (e) {
                 $('#create').modal('show');
                 $('.form-horizontal').show();
-                $('.modal-title').text('Add Post');
+                $('.modal-title').text('Thêm');
             });
             function validateQuestionBeforeCreate(evt, sel) {
                 // swal("Bài viết chưa được tạo!", "", "error");
@@ -161,7 +164,7 @@
              $(document).on('click','.btn-medicine', function() {
             $('#create').modal('show');
             $('.form-horizontal').show();
-            $('.modal-title').text('Đơn thuốc');
+            // $('.modal-title').text('');
         });
      
             

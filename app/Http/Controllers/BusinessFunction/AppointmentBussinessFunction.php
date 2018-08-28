@@ -71,9 +71,27 @@ trait AppointmentBussinessFunction
         return $appointment;
     }
 
+    public function getNumericalOrder($startTime, $appotID)
+    {
+        $listApptToday = $this->getAppointmentsByStartTime($startTime);
+        $index = 0;
+        if ($listApptToday != null) {
+            foreach ($listApptToday as $item) {
+                $index++;
+                if ($item->id == $appotID) {
+                    return $index;
+                }
+            }
+        } else {
+            return 1;
+        }
+    }
+
     public function getAppointmentsByStartTime($startTime)
     {
-        $appointments = Appointment::whereDate('start_time', $startTime)->get();
+        $appointments = Appointment::whereDate('start_time', $startTime)
+            ->orderBy('created_at', 'asc')
+            ->get();
 
         return $appointments;
     }
@@ -251,15 +269,17 @@ trait AppointmentBussinessFunction
                 $this->logBugAppointment("isEndOfTheDay: end time is: " . $endAppointmentTimeObj->format('H:i:s'));
                 throw new \Exception ('isEndOfTheDay');
             }
-            $numericalOrder = $listAppointment->count() + 1;
+//            $listAppointmentToday = $this->getAppointmentsByStartTime($bookingDateDBFormat);
+//            $numericalOrder = $listAppointmentToday->count() + 1;
             $appointment = new Appointment();
             $appointment->phone = $phone;
             $appointment->note = $note;
             $appointment->estimated_time = $estimatedTimeObj->format("H:i:s");
             $appointment->start_time = $predictAppointmentDate->format("Y-m-d H:i:s");
-            $appointment->numerical_order = $numericalOrder;
             $appointment->staff_id = $suitableDentistId;
             $appointment->name = $name;
+            $appointment->save();
+            $appointment->numerical_order = $this->getNumericalOrder($bookingDateDBFormat, $appointment->id);
             $appointment->save();
             if ($patientId != null) {
                 $patientAppointment = new PatientOfAppointment();

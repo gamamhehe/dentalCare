@@ -107,8 +107,8 @@
                                     <div class="accordion-content">
                                         @foreach($treatmentHistory->details as $a)
                                             @if($a)
-                                                <div class="row">
-                                                    <div class="col-sm-2">BÁC SĨ :</div>
+                                                <div class="row" style="padding-top: 15px;">
+                                                    <div class="col-sm-2" >BÁC SĨ :</div>
                                                     <div class="col-sm-8">{{$a->dentist->name}} </div>
                                                 </div>
                                                 <div class="row">
@@ -147,7 +147,7 @@
                                                 </div>
                                                 <div class="row" style="margin-top: 10px;">
                                                     @foreach($a->treatment_images as $b)
-                                                        <div class="col-sm-4">
+                                                        <div class="col-sm-4" style="max-width: 180px;max-height: 300px;">
                                                             <img src="{{$b->image_link}}" alt=""
                                                                  class="img-responsive img-fluid">
                                                         </div>

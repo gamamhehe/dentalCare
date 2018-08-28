@@ -32,7 +32,7 @@
         </button>
 
         <div class="collapse navbar-toggleable-xs" id="navmn">
-            <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+             <a class=" logo" href="/" style="padding-top: 10px;"><img src="/assets/images/Logo/logo.png" class="centerThing img-responsive img-fruid" style="width: 100%;max-width: 55px;float: left;padding-top: 7px;"    ></a>
             <ul class="nav navbar-nav float-sm-right">
 
                 <li class="nav-item active">
@@ -45,7 +45,7 @@
                     <a class="nav-link  " href="/su-kien">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+                    <a class="nav-link  " href="/bang-gia">Dịch vụ</a>
                 </li>
                 
                 <li class="nav-item">
@@ -108,11 +108,7 @@
                                     <a href="/danh-sach-chi-tra"><span>Danh sách chi trả</span></a>
                                 </li>
                                 <li class="gachngang"></li>
-                                <li class=" a-hover">
-                                    <a href="#"><span>Lịch hẹn</span></a>
-                                </li>
-                                <li class="gachngang"></li>
-
+                               
                                 <!-- Menu Body -->
                                 <!-- Menu Footer-->
                             <li class="user-footer" style="background-color: whitesmoke;padding-top: 5px;">
@@ -234,7 +230,7 @@
         </button>
 
         <div class="collapse navbar-toggleable-xs" id="navmn">
-            <!-- <a class="navbar-brand logo" href="#"><img src="images/icon/logo.png" alt=""></a> -->
+            <a class=" logo" href="/" style="padding-top: 10px;"><img src="/assets/images/Logo/logo.png" class="centerThing img-responsive img-fruid" style="width: 100%;max-width: 55px;float: left;padding-top: 7px;"    ></a>
             <ul class="nav navbar-nav float-sm-right">
 
                 <li class="nav-item active">
@@ -247,7 +243,7 @@
                     <a class="nav-link  " href="/su-kien">Sự kiện</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/bang-gia">Bảng giá</a>
+                    <a class="nav-link  " href="/bang-gia">Dịch vụ</a>
                 </li>
                 
                 <li class="nav-item">
@@ -437,19 +433,31 @@
             <h1 style="margin-top: 0.8em;color: white"><strong>Danh sách chi trả</strong></h1>
         </div>
     </div>
-
-
 </div>
 <div class="container">
-    <br />
-    <br />
     <div class="panel-group" id="accordion">
-        @foreach($listPayment as $Payment)
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                   <div class="container">
-                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$Payment->id}}"><div class="container">
+        
+        @if($listPayment)
+            <div class="box box-info">
+            <div class="panel panel-default" style="">
+                    <div class="panel-heading">
+                        <div class="row">
+                            
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <!-- start -->
+                        <div class="form-group row">
+                           <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div id="accordion" class="accordion-container ">
+                                @if($listPayment)
+                                  @foreach($listPayment as $Payment)
+                                        <article class="content-entry">
+                                            <div class="article-title">
+                                                <div class="row">
+                                                    
+                                                         
+                                                         <div class="container">
                                <div class="col-sm-4">Ngày tạo: {{$Payment->created_at}}</div>
                                <div class="col-sm-4">Chi phí : {{$Payment->total_price}} VNĐ</div>
                                <div class="col-sm-4">Đã thu : {{$Payment->paid}} VNĐ</div>
@@ -463,17 +471,15 @@
                                <div>
                                        <input type="hidden" name="amount" value="{{ $Payment->total_price - $Payment->paid }}">
                                        <input type="hidden" name="payment_id" value="{{ $Payment->id}}">
-                                   <a href="paypal/{{ $Payment->total_price - $Payment->paid }}/{{ $Payment->id}}" class="btn btn-success">View</a>
+                                   <a href="paypal/{{ $Payment->total_price - $Payment->paid }}/{{ $Payment->id}}" class="btn btn-success">Paypal</a>
                                </div>
-                           </div></a>
-                   </div>
+                           </div>
+                                                    
+                                                </div>
+                                            </div>
 
-                </h4>
-            </div>
-
-            <div id="collapse{{$Payment->id}}" class="panel-collapse collapse in">
-                <div class="panel-body">
-                <table>
+                                            <div class="accordion-content">
+                                                <table>
                     <tr>
                         <th>Ngày thực hiện </th>
                         <th>Số tiền chi trả : </th>
@@ -488,15 +494,28 @@
                     @endforeach
 
 
-                </table>
-                </div>
+                </table> 
+                                            </div>
+                                        </article>
+                                    @endforeach
+                              
+                                @endif
+                            </div>
+                           </div>
+                        </div>
+                    </div>
             </div>
-
         </div>
-        @endforeach
+        @else
+            <div class="container" style="background-color: whitesmoke;width: 100%;height: 200px;">
+                    <h1 style="text-align: center;margin-top: 2em;">Bệnh nhân chưa từng chi trả </h1>
+            </div>
+        @endif
+ 
     </div>
 </div>
-<div class="footer" style="background: url(/assets/images/HomePage/backgroundfooter.jpg);margin-top: 30px;">
+ 
+<div class="footer" style="background: url(/assets/images/footer2.jpg);margin-top: 30px;">
     <div class="contact" id="contact">
         <div class="container">
             <div class="row">
@@ -555,4 +574,31 @@ function changeInfo(id) {
             }
         });
     }
+      $(function () {
+            var Accordion = function (el, multiple) {
+                this.el = el || {};
+                this.multiple = multiple || false;
+
+                var links = this.el.find('.article-title');
+                links.on('click', {
+                    el: this.el,
+                    multiple: this.multiple
+                }, this.dropdown)
+            }
+
+            Accordion.prototype.dropdown = function (e) {
+                var $el = e.data.el;
+                $this = $(this),
+                    $next = $this.next();
+
+                $next.slideToggle();
+                $this.parent().toggleClass('open');
+
+                if (!e.data.multiple) {
+                    $el.find('.accordion-content').not($next).slideUp().parent().removeClass('open');
+                }
+                ;
+            }
+            var accordion = new Accordion($('.accordion-container'), false);
+        }); 
 </script>

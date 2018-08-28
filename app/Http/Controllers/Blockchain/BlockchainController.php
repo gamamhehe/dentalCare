@@ -225,6 +225,7 @@ class BlockchainController extends Controller
             }
             $this-> setDataTypePayment($listData);
         }
+        return view("admin.syncData");
     }
 
     public function EncryptCreatePayment($id)

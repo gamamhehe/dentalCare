@@ -11,7 +11,7 @@
                     </div>
                 </div>
                <div class="panel-body">
-                 
+              <!--    
                <div class="form-group row"  >
                         <div class="col-xs-3">
                             <select name="Date" id="Date" style="height: 2.5em;width: 100%">
@@ -40,7 +40,7 @@
                            <button class="btn btn-info" style="width: 100%;" id="search" > Tìm </button>
                         </div>
                        
-                </div>
+                </div> -->
             <div class=" ">
                 <table id="dup-table" class="table table-striped table-bordered Mytable-hover" style="text-align: center;overflow-x:auto;width: 100%">
                     <thead>
@@ -142,6 +142,28 @@
         $('#staff').val($(this).data('name'));
         $('#start_date').val($(this).data('start'));
         $('#end_date').val($(this).data('end'));
+    });
+      $(document).on('click','.btn-delete', function() {
+     var id =$(this).data('id');
+     if(id == null){
+       swal("Từ chối không thành công!", "", "error"); 
+       return;
+     }
+      $.ajax(
+            {
+                url: "/admin/delete-absent",
+                method:"get",
+                data: {
+                    id:id
+                },
+                success: function ()
+                {
+
+                    $('#dup-table').DataTable().ajax.reload();
+                     swal("Từ chối thành công!", "", "success");
+                }
+
+            });
     });
      $(document).on('click','#search', function() {
         $.ajax({

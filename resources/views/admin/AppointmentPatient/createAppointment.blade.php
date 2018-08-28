@@ -45,7 +45,7 @@
 
                 <div class="row" style="margin-bottom: 1em;" >
                     <div class=""  style="margin-top: 1em;">
-                        <button type="submit" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Khởi tạo x liệu trình</button>
+                        <button type="submit" class="col-md-3 btn btn-default btn-success" style="margin-right: 10px;float: right;"  onclick="validateQuestionBeforeCreate(event,this)" id="createQForm" >Khởi tạo liệu trình</button>
                     </div>
                 </div>
 
