@@ -160,9 +160,9 @@ class StaffController extends BaseController
                     $appointment->hasPatientOfAppointment()->first()->patient_id,
                     (new DateTime())->format('Y-m-d')
                 );
-                foreach ($tmHistories as $tmHistory) {
-                    $this->doneTreatment($tmHistory);
-                }
+//                foreach ($tmHistories as $tmHistory) {
+//                    $this->doneTreatment($tmHistory);
+//                }
             }
             return response()->json($successResponse);
         } catch (\Exception $ex) {
