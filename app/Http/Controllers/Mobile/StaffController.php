@@ -24,7 +24,6 @@ use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\RequestAbsent;
 use App\Model\Staff;
-use App\Model\TreatmentHistory;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
@@ -99,52 +98,51 @@ class StaffController extends BaseController
     }
 
 
-    public function doneTreatment($tmhID)
+    public function doneTreatment($tmHistory)
     {
-        try {
-            $dateStr = (new DateTime())->format("Y-m-d");
-            $tmHistory = TreatmentHistory::where('id', $tmhID)->first();
-            $tmDetails = $this->getListTmDetailByDate($tmhID, $dateStr);
-            $treatment = $tmHistory->belongsToTreatment()->first();
-            $count = 0;
-            if ($tmDetails != null) {
-                $this->logInfo(" tmDetails != null");
-                foreach ($tmDetails as $detail) {
-                    $count++;
-                    $feedback = $detail->hasFeedback()->first();
-                    if ($feedback == null) {
-                        $this->logInfo("$feedback == null");
-                        $dentist = Staff::where('id', $detail->staff_id)->first();
-                        $patientId = $tmHistory->patient_id;
-                        $phone = Patient::where('id', $patientId)->first()->phone;
-                        $firebaseToken = FirebaseToken::where('phone', $phone)->first();
-                        if ($firebaseToken != null) {
-                            $feedbackObj = Utilities::getFeedbackObject(
-                                $dentist->name,
-                                $patientId,
-                                $detail->id,
-                                $dentist->avatar,
-                                $treatment->name,
-                                $detail->created_date);
-                            $this->dispatch(new SendFirebaseJob(
-                                AppConst::RESPONSE_FEEDBACK,
-                                "Thông báo",
-                                "Đánh giá dịch vụ " . $treatment->name . ' lần ' . $count,
-                                json_encode($feedbackObj),
-                                $firebaseToken->noti_token
-                            ));
-                            $this->logInfo("Send feedback to" . $phone);
-                        } else {
-                            $this->logInfo("Fire base null");
-                        }
-                    }
-                }
-            }
-            return response()->json($this->getSuccessObj(200, "OK", "Gửi khảo sát thành công", "No data"));
-        } catch (Exception $ex) {
-            $errorObj = $this->getErrorObj("Lỗi máy chủ", $ex);
-            return response()->json($errorObj, 500);
-        }
+//        try {
+//            $dateStr = (new DateTime())->format("Y-m-d");
+//            $tmDetails = $this->getListTmDetailByDate($tmHistory->id, $dateStr);
+//            $treatment = $tmHistory->belongsToTreatment()->first();
+//            $count = 0;
+//            if ($tmDetails != null) {
+//                $this->logInfo(" tmDetails != null");
+//                foreach ($tmDetails as $detail) {
+//                    $count++;
+//                    $feedback = $detail->hasFeedback()->first();
+//                    if ($feedback == null) {
+//                        $this->logInfo("$feedback == null");
+//                        $dentist = Staff::where('id', $detail->staff_id)->first();
+//                        $patientId = $tmHistory->patient_id;
+//                        $phone = Patient::where('id', $patientId)->first()->phone;
+//                        $firebaseToken = FirebaseToken::where('phone', $phone)->first();
+//                        if ($firebaseToken != null) {
+//                            $feedbackObj = Utilities::getFeedbackObject(
+//                                $dentist->name,
+//                                $patientId,
+//                                $detail->id,
+//                                $dentist->avatar,
+//                                $treatment->name,
+//                                $detail->created_date);
+//                            $this->dispatch(new SendFirebaseJob(
+//                                AppConst::RESPONSE_FEEDBACK,
+//                                "Thông báo",
+//                                "Đánh giá dịch vụ " . $treatment->name . ' lần ' . $count,
+//                                json_encode($feedbackObj),
+//                                $firebaseToken->noti_token
+//                            ));
+//                            $this->logInfo("Send feedback to" . $phone);
+//                        } else {
+//                            $this->logInfo("Fire base null");
+//                        }
+//                    }
+//                }
+//            }
+//            return response()->json($this->getSuccessObj(200, "OK", "Gửi khảo sát thành công", "No data"));
+//        } catch (Exception $ex) {
+//            $errorObj = $this->getErrorObj("Lỗi máy chủ", $ex);
+//            return response()->json($errorObj, 500);
+//        }
     }
 
     public function updateAppointmentStatus(Request $request)
