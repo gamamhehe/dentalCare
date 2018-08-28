@@ -24,6 +24,7 @@ use App\Model\FirebaseToken;
 use App\Model\Patient;
 use App\Model\RequestAbsent;
 use App\Model\Staff;
+use App\Model\TreatmentHistory;
 use App\Model\User;
 use App\Model\UserHasRole;
 use Carbon\Carbon;
@@ -98,11 +99,12 @@ class StaffController extends BaseController
     }
 
 
-    public function doneTreatment($tmHistory)
+    public function doneTreatment($tmhID)
     {
         try {
             $dateStr = (new DateTime())->format("Y-m-d");
-            $tmDetails = $this->getListTmDetailByDate($tmHistory, $dateStr);
+            $tmHistory = TreatmentHistory::where('id', $tmhID)->first();
+            $tmDetails = $this->getListTmDetailByDate($tmhID, $dateStr);
             $treatment = $tmHistory->belongsToTreatment()->first();
             $count = 0;
             if ($tmDetails != null) {
