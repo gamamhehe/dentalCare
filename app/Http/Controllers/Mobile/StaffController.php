@@ -102,7 +102,7 @@ class StaffController extends BaseController
     {
         try {
             $dateStr = (new DateTime())->format("Y-m-d");
-            $tmDetails = $this->getListTmDetailByDate($tmHistory->id, $dateStr);
+            $tmDetails = $this->getListTmDetailByDate($tmHistory, $dateStr);
             $treatment = $tmHistory->belongsToTreatment()->first();
             $count = 0;
             if ($tmDetails != null) {
